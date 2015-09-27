@@ -24,6 +24,7 @@
 #include <QHash>
 #include <QThread>
 #include <memory>
+#include <map>
 #include <tox/toxav.h>
 
 #if defined(__APPLE__) && defined(__MACH__)
@@ -43,19 +44,26 @@ class CoreVideoSource;
 class CameraSource;
 class VideoSource;
 class VideoFrame;
+class CoreAV;
 struct vpx_image;
 
 struct ToxCall
 {
+    ToxCall() = default;
+    ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av);
+    ~ToxCall();
+
     QTimer *sendAudioTimer;
-    int32_t callId;
-    uint32_t friendId;
-    bool videoEnabled;
-    bool active;
+    uint32_t friendNum;
     bool muteMic;
     bool muteVol;
+    bool videoEnabled; ///< True if our user asked for a video call, sending and recving
     ALuint alSource;
     CoreVideoSource* videoSource;
+    TOXAV_FRIEND_CALL_STATE state; ///< State of the peer (not ours!)
+#ifdef QTOX_FILTER_AUDIO
+    AudioFilterer* filterer;
+#endif
 };
 
 struct ToxGroupCall
@@ -73,49 +81,79 @@ class CoreAV : public QThread
     Q_OBJECT
 
 public:
-    CoreAV() = default;
+    CoreAV(Tox* tox);
     ~CoreAV();
 
-    static bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
-    static void prepareCall(uint32_t friendId, int callId, ToxAV *toxav, bool videoEnabled);
-    static void cleanupCall(int callId);
-    static void playCallAudio(void *toxav, int32_t callId, const int16_t *data,
+    const ToxAV* getToxAv() const;
+
+    void process();
+
+    bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
+    void prepareCall(uint32_t friendId, ToxAV *toxav, bool videoEnabled);
+    void cleanupCall(uint32_t friendId);
+    void playCallAudio(void *toxav, int32_t callId, const int16_t *data,
                               uint16_t samples, void *user_data); // Callback
-    static void sendCallAudio(int callId, ToxAV* toxav);
-    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
+    void sendCallAudio(uint32_t friendId);
+    void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                                 unsigned channels, int sampleRate);
-    static void playCallVideo(void *toxav, int32_t callId, const vpx_image* img, void *user_data);
-    static void sendCallVideo(int callId, ToxAV* toxav, std::shared_ptr<VideoFrame> frame);
-    static void sendGroupCallAudio(int groupId, ToxAV* toxav);
+    void playCallVideo(void *toxav, int32_t callId, const vpx_image* img, void *user_data);
+    void sendCallVideo(uint32_t friendId, std::shared_ptr<VideoFrame> frame);
+    void sendGroupCallAudio(int groupId, ToxAV* toxav);
 
-    static VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
-    static void resetCallSources(); ///< Forces to regenerate each call's audio sources
+    VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
+    void resetCallSources(); ///< Forces to regenerate each call's audio sources
 
-    static void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.
-    static void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call. Call from the GUI thread.
-    static void disableGroupCallMic(int groupId);
-    static void disableGroupCallVol(int groupId);
-    static void enableGroupCallMic(int groupId);
-    static void enableGroupCallVol(int groupId);
-    static bool isGroupCallMicEnabled(int groupId);
-    static bool isGroupCallVolEnabled(int groupId);
-    static bool isGroupAvEnabled(int groupId); ///< True for AV groups, false for text-only groups
+    void joinGroupCall(int groupId); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.
+    void leaveGroupCall(int groupId); ///< Will not leave the group, just stop the call. Call from the GUI thread.
+    void disableGroupCallMic(int groupId);
+    void disableGroupCallVol(int groupId);
+    void enableGroupCallMic(int groupId);
+    void enableGroupCallVol(int groupId);
+    bool isGroupCallMicEnabled(int groupId) const;
+    bool isGroupCallVolEnabled(int groupId) const;
+    bool isGroupAvEnabled(int groupId) const; ///< True for AV groups, false for text-only groups
 
-public slots:
-    static void answerCall(int callId);
-    static void rejectCall(int callId);
-    static void hangupCall(int callId);
-    static void startCall(uint32_t friendId, bool video=false);
-    static void cancelCall(int callId, uint32_t friendId);
+    void startCall(uint32_t friendId, bool video=false);
+    void answerCall(uint32_t friendId);
+    void cancelCall(uint32_t friendId);
 
-    static void micMuteToggle(int callId);
-    static void volMuteToggle(int callId);
+    void micMuteToggle(uint32_t friendId);
+    void volMuteToggle(uint32_t friendId);
+
+signals:
+    void avInvite(uint32_t friendId, bool video);
+    void avStart(uint32_t friendId, bool video);
+    void avCancel(uint32_t friendId);
+    void avEnd(uint32_t friendId);
+    void avRinging(uint32_t friendId, bool video);
+    void avStarting(uint32_t friendId, bool video);
+    void avEnding(uint32_t friendId);
+    void avRequestTimeout(uint32_t friendId);
+    void avPeerTimeout(uint32_t friendId);
+    void avMediaChange(uint32_t friendId, bool videoEnabled);
+    void avCallFailed(uint32_t friendId);
+    void avRejected(uint32_t friendId);
+
+    void videoFrameReceived(vpx_image* frame);
 
 private:
-    static QVector<ToxCall> calls;
-#ifdef QTOX_FILTER_AUDIO
-    static QVector<AudioFilterer*> filterer;
-#endif
+    static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);
+    static void stateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t state, void* self);
+    static void audioBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void* self);
+    static void videoBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void* self);
+    static void audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm, size_t sampleCount,
+                                  uint8_t channels, uint32_t samplingRate, void* self);
+    static void videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h,
+                                   const uint8_t *y, const uint8_t *u, const uint8_t *v,
+                                   int32_t ystride, int32_t ustride, int32_t vstride, void* self);
+
+private:
+    static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64; ///< In kb/s. More than enough for Opus.
+    static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 384; ///< Picked at random by fair dice roll.
+
+private:
+    ToxAV* toxav;
+    static QHash<uint32_t, ToxCall> calls;
     static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
 
     friend class Audio;

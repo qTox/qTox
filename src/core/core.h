@@ -47,7 +47,7 @@ class Core : public QObject
 public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance(); ///< Returns the global widget's Core instance
-    const CoreAV* getAv() const;
+    CoreAV* getAv();
     ~Core();
 
     static const QString TOX_EXT;
@@ -192,21 +192,6 @@ signals:
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
-    void avInvite(uint32_t friendId, int callIndex, bool video);
-    void avStart(uint32_t friendId, int callIndex, bool video);
-    void avCancel(uint32_t friendId, int callIndex);
-    void avEnd(uint32_t friendId, int callIndex);
-    void avRinging(uint32_t friendId, int callIndex, bool video);
-    void avStarting(uint32_t friendId, int callIndex, bool video);
-    void avEnding(uint32_t friendId, int callIndex);
-    void avRequestTimeout(uint32_t friendId, int callIndex);
-    void avPeerTimeout(uint32_t friendId, int callIndex);
-    void avMediaChange(uint32_t friendId, int callIndex, bool videoEnabled);
-    void avCallFailed(uint32_t friendId);
-    void avRejected(uint32_t friendId, int callIndex);
-
-    void videoFrameReceived(vpx_image* frame);
-
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
@@ -245,7 +230,6 @@ private slots:
 
 private:
     Tox* tox;
-    ToxAV* toxav;
     CoreAV* av;
     QTimer *toxTimer;
     Profile& profile;
