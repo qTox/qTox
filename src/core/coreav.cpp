@@ -209,21 +209,6 @@ void CoreAV::cancelCall(uint32_t friendId)
     calls.remove(friendId);
 }
 
-void CoreAV::playCallAudio(void* toxav, int32_t callId, const int16_t *data, uint16_t samples, void *user_data)
-{
-    Q_UNUSED(user_data);
-
-    if (!calls.contains(callId) || calls[callId].muteVol)
-        return;
-
-    if (!calls[callId].alSource)
-        alGenSources(1, &calls[callId].alSource);
-
-    //ToxAvCSettings dest;
-    //if (toxav_get_peer_csettings((ToxAV*)toxav, callId, 0, &dest) == 0)
-    //    playAudioBuffer(calls[callId].alSource, data, samples, dest.audio_channels, dest.audio_sample_rate);
-}
-
 void CoreAV::sendCallAudio(uint32_t callId)
 {
     if (!calls.contains(callId))
@@ -462,7 +447,7 @@ void CoreAV::callCallback(ToxAV*, uint32_t friendNum, bool audio, bool video, vo
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
 }
 
-void CoreAV::stateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t state, void *_self)
+void CoreAV::stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
 
@@ -493,17 +478,17 @@ void CoreAV::stateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t state, voi
     }
 }
 
-void CoreAV::audioBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void *self)
+void CoreAV::audioBitrateCallback(ToxAV*, uint32_t friendNum, bool stable, uint32_t rate, void *)
 {
-    qDebug() << "Audio bitrate is now "<<rate<<", stability:"<<stable;
+    qDebug() << "Audio bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
 }
 
-void CoreAV::videoBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void *self)
+void CoreAV::videoBitrateCallback(ToxAV*, uint32_t friendNum, bool stable, uint32_t rate, void *)
 {
-    qDebug() << "Video bitrate is now "<<rate<<", stability:"<<stable;
+    qDebug() << "Video bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
 }
 
-void CoreAV::audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm,
+void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
                                 size_t sampleCount, uint8_t channels, uint32_t samplingRate, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
@@ -521,7 +506,9 @@ void CoreAV::audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t 
     Audio::playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
-void CoreAV::videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h, const uint8_t *y, const uint8_t *u, const uint8_t *v, int32_t ystride, int32_t ustride, int32_t vstride, void *self)
+void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,
+                                const uint8_t *y, const uint8_t *u, const uint8_t *v,
+                                int32_t ystride, int32_t ustride, int32_t vstride, void *)
 {
     if (!calls.contains(friendNum))
         return;
