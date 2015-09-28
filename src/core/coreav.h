@@ -100,8 +100,6 @@ public:
     bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     void prepareCall(uint32_t friendId, ToxAV *toxav, bool videoEnabled);
     void cleanupCall(uint32_t friendId);
-    void playCallAudio(void *toxav, int32_t callId, const int16_t *data,
-                              uint16_t samples, void *user_data); // Callback
     void sendCallAudio(uint32_t friendId);
     void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                                 unsigned channels, int sampleRate);
