@@ -72,6 +72,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
     // avatar
     if (isCompact())
     {
+        delete textLayout;  // Not needed
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
         mainLayout->addSpacing(18);
