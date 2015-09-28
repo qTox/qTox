@@ -153,10 +153,12 @@ void ProfileForm::show(ContentLayout* contentLayout)
     head->show();
     QWidget::show();
     prFileLabelUpdate();
-    QString DirPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
+    QString DirPath = Settings::getInstance().getMakeToxPortable() ? QApplication::applicationDirPath() :
+                                                                    QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
     bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
     bodyUI->dirPrLink->setOpenExternalLinks(true);
     bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
+    bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
     bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();
 }
