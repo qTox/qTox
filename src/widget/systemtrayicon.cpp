@@ -114,6 +114,8 @@ SystemTrayIcon::SystemTrayIcon()
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
 
+        delete image;   // Not needed anymore.
+
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
                             STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
         status_notifier_register(statusNotifier);
