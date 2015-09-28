@@ -73,12 +73,14 @@ void ContentLayout::clear()
     {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
+        delete item;
     }
 
     while ((item = mainContent->layout()->takeAt(0)) != 0)
     {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
+        delete item;
     }
 }
 
