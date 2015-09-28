@@ -978,13 +978,13 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Choisir un dossier de téléchargement</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="363"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="364"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Appel en cours</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="364"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="365"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Vous ne pouvez pas vous déconnecter avec un appel en cours !</translation>
@@ -1723,42 +1723,32 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.ui" line="862"/>
-        <source>Your name</source>
-        <translation>Votre nom</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="944"/>
-        <source>Your status</source>
-        <translation>Votre état</translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1041"/>
+        <location filename="../src/mainwindow.ui" line="1035"/>
         <source>...</source>
         <translation>…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1143"/>
+        <location filename="../src/mainwindow.ui" line="1137"/>
         <source>Add friends</source>
         <translation>Ajouter des contacts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1187"/>
+        <location filename="../src/mainwindow.ui" line="1181"/>
         <source>Create a group chat</source>
         <translation>Créer un groupe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1228"/>
+        <location filename="../src/mainwindow.ui" line="1222"/>
         <source>View completed file transfers</source>
         <translation>Voir les transfers de fichiers terminés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1266"/>
+        <location filename="../src/mainwindow.ui" line="1260"/>
         <source>Change your settings</source>
         <translation>Changer les options</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1297"/>
+        <location filename="../src/mainwindow.ui" line="1291"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -2196,22 +2186,21 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="14"/>
+        <location filename="../src/widget/form/removefrienddialog.ui" line="20"/>
         <source>Remove friend</source>
         <translation>Supprimer ce contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="20"/>
+        <location filename="../src/widget/form/removefrienddialog.ui" line="26"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Êtes-vous sûr de vouloir supprimer &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; de votre liste de contacts ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="39"/>
         <source>YES</source>
-        <translation>OUI</translation>
+        <translation type="vanished">OUI</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="46"/>
+        <location filename="../src/widget/form/removefrienddialog.ui" line="39"/>
         <source>Also remove chat history</source>
         <translation>Supprimer aussi l&apos;historique de discussion</translation>
     </message>
@@ -2224,13 +2213,13 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="155"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="157"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation>Cliquez et tirez pour sélectionner une zone. Appuyez sur &lt;b&gt;Espace&lt;/b&gt; pour masquer/afficher la fenêtre de qTox, ou &lt;b&gt;Echap&lt;/b&gt; pour annuler.</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="162"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="164"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Appuyer sur &lt;b&gt;Entrée&lt;/b&gt; pour envoyer une capture de la zone choisie, &lt;b&gt;Espace&lt;/b&gt; pour masquer/afficher la fenêtre de qTox, ou &lt;b&gt;Echap&lt;/b&gt; pour annuler.</translation>
@@ -2385,66 +2374,66 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2030"/>
+        <location filename="../src/widget/widget.cpp" line="2043"/>
         <source>Online</source>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1656"/>
+        <location filename="../src/widget/widget.cpp" line="1669"/>
         <source>&amp;Quit</source>
         <translation>&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2038"/>
+        <location filename="../src/widget/widget.cpp" line="2051"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2039"/>
+        <location filename="../src/widget/widget.cpp" line="2052"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Absent</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2040"/>
+        <location filename="../src/widget/widget.cpp" line="2053"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="528"/>
+        <location filename="../src/widget/widget.cpp" line="524"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1174"/>
+        <location filename="../src/widget/widget.cpp" line="1187"/>
         <source>Add friend</source>
         <translation>Ajouter un contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2050"/>
+        <location filename="../src/widget/widget.cpp" line="2063"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2054"/>
+        <location filename="../src/widget/widget.cpp" line="2067"/>
         <source>Edit Profile</source>
         <translation>Éditer le profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2053"/>
+        <location filename="../src/widget/widget.cpp" line="2066"/>
         <source>Change Status</source>
         <translation>Modifier l&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2055"/>
+        <location filename="../src/widget/widget.cpp" line="2068"/>
         <source>Log out</source>
         <translation>Déconnexion</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2051"/>
+        <location filename="../src/widget/widget.cpp" line="2064"/>
         <source>Edit</source>
         <translation>Édition</translation>
     </message>
@@ -2453,7 +2442,7 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Affichage</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2048"/>
+        <location filename="../src/widget/widget.cpp" line="2061"/>
         <source>Filter...</source>
         <translation>Filtre…</translation>
     </message>
@@ -2462,22 +2451,22 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Plein écran</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2052"/>
+        <location filename="../src/widget/widget.cpp" line="2065"/>
         <source>Contacts</source>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2056"/>
+        <location filename="../src/widget/widget.cpp" line="2069"/>
         <source>Add Contact...</source>
         <translation>Ajouter un contact…</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2057"/>
+        <location filename="../src/widget/widget.cpp" line="2070"/>
         <source>Next Conversation</source>
         <translation>Discussion suivante</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2058"/>
+        <location filename="../src/widget/widget.cpp" line="2071"/>
         <source>Previous Conversation</source>
         <translation>Discussion précédente</translation>
     </message>
@@ -2486,92 +2475,104 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Envoyer tout au premier plan</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1176"/>
+        <location filename="../src/widget/widget.cpp" line="1189"/>
         <source>File transfers</source>
         <translation>Transfers de fichiers</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="679"/>
+        <location filename="../src/widget/widget.cpp" line="675"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Fichier exécutable</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="679"/>
+        <location filename="../src/widget/widget.cpp" line="675"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain de vouloir ouvrir ce fichier ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1178"/>
+        <location filename="../src/widget/widget.cpp" line="1191"/>
         <source>Settings</source>
         <translation>Options</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1180"/>
+        <location filename="../src/widget/widget.cpp" line="1193"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="890"/>
+        <location filename="../src/widget/widget.cpp" line="903"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossible d&apos;envoyer la demande de contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="518"/>
+        <location filename="../src/widget/widget.cpp" line="514"/>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>toxcore n&apos;a pas réussi à démarrer, l&apos;application s&apos;arrêtera quand vous fermerez ce message.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="935"/>
+        <location filename="../src/widget/widget.cpp" line="798"/>
+        <location filename="../src/widget/widget.cpp" line="799"/>
+        <source>Your name</source>
+        <translation>Votre nom</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="823"/>
+        <location filename="../src/widget/widget.cpp" line="824"/>
+        <source>Your status</source>
+        <translation>Votre état</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="948"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>absent</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="937"/>
+        <location filename="../src/widget/widget.cpp" line="950"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="939"/>
+        <location filename="../src/widget/widget.cpp" line="952"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>hors ligne</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="943"/>
+        <location filename="../src/widget/widget.cpp" line="956"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="946"/>
+        <location filename="../src/widget/widget.cpp" line="959"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 est maintenant %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1415"/>
+        <location filename="../src/widget/widget.cpp" line="1428"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Inviter dans le groupe</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1415"/>
+        <location filename="../src/widget/widget.cpp" line="1428"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 vous a invité dans un groupe de discussion. Voulez-vous le rejoindre ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1462"/>
+        <location filename="../src/widget/widget.cpp" line="1475"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Inconnu&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1489"/>
+        <location filename="../src/widget/widget.cpp" line="1502"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 a changé le titre en %2</translation>
     </message>
@@ -2581,48 +2582,48 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation>État</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1740"/>
+        <location filename="../src/widget/widget.cpp" line="1753"/>
         <source>Message failed to send</source>
         <translation>Le message n&apos;as pu être envoyé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2001"/>
+        <location filename="../src/widget/widget.cpp" line="2014"/>
         <source>Add new circle...</source>
         <translation>Ajouter un nouveau cercle…</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2027"/>
+        <location filename="../src/widget/widget.cpp" line="2040"/>
         <source>By Name</source>
         <translation>Par nom</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2028"/>
+        <location filename="../src/widget/widget.cpp" line="2041"/>
         <source>By Activity</source>
         <translation>Par activité</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2029"/>
+        <location filename="../src/widget/widget.cpp" line="2042"/>
         <source>All</source>
         <translation>Tout</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2031"/>
+        <location filename="../src/widget/widget.cpp" line="2044"/>
         <source>Offline</source>
         <translation>Hors ligne</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2032"/>
+        <location filename="../src/widget/widget.cpp" line="2045"/>
         <source>Friends</source>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2033"/>
+        <location filename="../src/widget/widget.cpp" line="2046"/>
         <source>Groups</source>
         <translation>Groupes</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2034"/>
-        <location filename="../src/widget/widget.cpp" line="2037"/>
+        <location filename="../src/widget/widget.cpp" line="2047"/>
+        <location filename="../src/widget/widget.cpp" line="2050"/>
         <source>Search Contacts</source>
         <translation>Chercher un contact</translation>
     </message>
