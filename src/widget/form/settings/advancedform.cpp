@@ -95,4 +95,7 @@ bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
 void AdvancedForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
+    bodyUI->syncTypeComboBox->setItemText(0, tr("Synchronized - safe (recommended)"));
+    bodyUI->syncTypeComboBox->setItemText(1, tr("Partially async - risky (20% faster)"));
+    bodyUI->syncTypeComboBox->setItemText(2, tr("Asynchronous - dangerous (fastest)"));
 }
