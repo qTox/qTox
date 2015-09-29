@@ -186,6 +186,7 @@ QString ChatMessage::detectAnchors(const QString &str)
                 "\\w+\\S+)" // any other character, lets domains and other
                 "|(?:\\b)(file:///.*$)" //link to a local file, valid until the end of the line
                 "|(?:\\b)(tox:[a-zA-Z\\d]{76}$)" //link with full user address
+                "|(?:\\b)(mailto:\\S+@\\S+\\.\\S+)" //@mail link
                 "|(?:\\b)(tox:\\S+@\\S+)"); // starts with `tox` then : and only alpha-digits till the end
                 // also accepts tox:agilob@net as simplified TOX ID
     //support for multi-line text
