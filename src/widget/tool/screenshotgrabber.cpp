@@ -97,7 +97,7 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
         this->window->setVisible(false);
         this->window->resetCachedContent();
         // Give the window manager a moment to hide windows
-        QTimer::singleShot(200, this, SLOT(reInit()));
+        QTimer::singleShot(350, this, SLOT(reInit()));
 
     }
     else
