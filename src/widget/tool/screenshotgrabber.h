@@ -35,12 +35,12 @@ class QGraphicsTextItem;
 class QGraphicsScene;
 class QGraphicsView;
 
-class ScreenshotGrabber : public QWidget
+class ScreenshotGrabber : public QObject
 {
     Q_OBJECT
 public:
 
-    ScreenshotGrabber(QWidget* parent);
+    ScreenshotGrabber(QObject* parent);
     ~ScreenshotGrabber() override;
 
     bool eventFilter(QObject* object, QEvent* event) override;
@@ -71,8 +71,6 @@ private:
     bool handleKeyPress(QKeyEvent* event);
     void reject();
 
-    QRect getSystemScreenRect();
-    void adjustWindowSize();
     QPixmap grabScreen();
 
     void beginRectChooser(QGraphicsSceneMouseEvent* event);
