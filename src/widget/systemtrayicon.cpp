@@ -107,14 +107,12 @@ SystemTrayIcon::SystemTrayIcon()
         {
             delete reinterpret_cast<QImage*>(image);
         };
-        QImage* image = new QImage(":/img/icon.png");
-        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
-                                 8, image->width(), image->height(),
-                                 image->bytesPerLine(), callbackFreeImage, image);
-
-        delete image;   // Not needed anymore.
+        QImage image(":/img/icon.png");
+        if (image.format() != QImage::Format_RGBA8888_Premultiplied)
+        image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image.bits(), GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
+                                 8, image.width(), image.height(),
+                                 image.bytesPerLine(), callbackFreeImage, &image);
 
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
                             STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
