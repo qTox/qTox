@@ -1490,8 +1490,8 @@ method_call (GDBusConnection        *conn,
     g_dbus_method_invocation_return_value (invocation, NULL);
 }
 
-static GVariantBuilder *
-get_builder_for_icon_pixmap (StatusNotifier *sn, StatusNotifierIcon icon)
+static GVariant *
+get_icon_pixmap (StatusNotifier *sn, StatusNotifierIcon icon)
 {
     StatusNotifierPrivate *priv = sn->priv;
     GVariantBuilder *builder;
@@ -1535,7 +1535,11 @@ get_builder_for_icon_pixmap (StatusNotifier *sn, StatusNotifierIcon icon)
                 (GDestroyNotify) cairo_surface_destroy,
                 surface));
     g_variant_builder_close (builder);
-    return builder;
+    GVariant *pixmap = g_variant_new ("a(iiay)", builder);
+
+    g_variant_builder_unref(builder);   // Allow the builder to be deallocated
+
+    return pixmap;
 }
 
 static GVariant *
@@ -1585,22 +1589,19 @@ get_prop (GDBusConnection        *conn,
                 ? ((priv->icon[STATUS_NOTIFIER_ICON].icon_name)
                     ? priv->icon[STATUS_NOTIFIER_ICON].icon_name : "") : "");
     else if (!g_strcmp0 (property, "IconPixmap"))
-        return g_variant_new ("a(iiay)",
-                get_builder_for_icon_pixmap (sn, STATUS_NOTIFIER_ICON));
+        return get_icon_pixmap (sn, STATUS_NOTIFIER_ICON);
     else if (!g_strcmp0 (property, "OverlayIconName"))
         return g_variant_new ("s", (!priv->icon[STATUS_NOTIFIER_OVERLAY_ICON].has_pixbuf)
                 ? ((priv->icon[STATUS_NOTIFIER_OVERLAY_ICON].icon_name)
                     ? priv->icon[STATUS_NOTIFIER_OVERLAY_ICON].icon_name : "") : "");
     else if (!g_strcmp0 (property, "OverlayIconPixmap"))
-        return g_variant_new ("a(iiay)",
-                get_builder_for_icon_pixmap (sn, STATUS_NOTIFIER_OVERLAY_ICON));
+        return get_icon_pixmap (sn, STATUS_NOTIFIER_OVERLAY_ICON);
     else if (!g_strcmp0 (property, "AttentionIconName"))
         return g_variant_new ("s", (!priv->icon[STATUS_NOTIFIER_ATTENTION_ICON].has_pixbuf)
                 ? ((priv->icon[STATUS_NOTIFIER_ATTENTION_ICON].icon_name)
                     ? priv->icon[STATUS_NOTIFIER_ATTENTION_ICON].icon_name : "") : "");
     else if (!g_strcmp0 (property, "AttentionIconPixmap"))
-        return g_variant_new ("a(iiay)",
-                get_builder_for_icon_pixmap (sn, STATUS_NOTIFIER_ATTENTION_ICON));
+        return get_icon_pixmap (sn, STATUS_NOTIFIER_ATTENTION_ICON);
     else if (!g_strcmp0 (property, "AttentionMovieName"))
         return g_variant_new ("s", (priv->attention_movie_name)
                 ? priv->attention_movie_name : "");
@@ -1620,7 +1621,7 @@ get_prop (GDBusConnection        *conn,
             return variant;
         }
 
-        builder = get_builder_for_icon_pixmap (sn, STATUS_NOTIFIER_TOOLTIP_ICON);
+        builder = get_icon_pixmap (sn, STATUS_NOTIFIER_TOOLTIP_ICON);
         variant = g_variant_new ("(sa(iiay)ss)",
                 "",
                 builder,
