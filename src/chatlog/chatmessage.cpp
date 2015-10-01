@@ -58,7 +58,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     {
     case ACTION:
         senderText = "*";
-        text = wrapDiv(QString("%1 %2").arg(sender, text), "action");
+        text = wrapDiv(QString("%1 %2").arg(sender.toHtmlEscaped(), text), "action");
         msg->setAsAction();
         break;
     case ALERT:
