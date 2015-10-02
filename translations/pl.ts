@@ -118,7 +118,7 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Ustaw rodzielczość swojej kamery.
-Im większa wartość, tym lepszą jakość obrazu otrzymają twoji znajomi.
+Im większa wartość, tym lepszą jakość obrazu otrzymają twoi znajomi.
 Do lepszej jakości obrazu potrzebne jest jednak lepsze połączenie z internetem.
 Może się zdarzyć, iż twoje połączenie nie jest wystarczająco dobre do wyższej jakości,
 co może spowodować problemy z połączeniami wideo.</translation>
@@ -183,7 +183,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; color:#000000;&quot;&gt;Prawa autorskie © 2014-2015 The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox jest bazującym na Qt graficznym interfejsem dla Toxa.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox jest graficznym interfejsem dla Toxa opartym na Qt.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -533,7 +533,7 @@ Zignorować proxy i połączyć się z Internetem bezpośrednio?</translation>
         <location filename="../src/widget/form/chatform.cpp" line="912"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>qTox nie był w stane zapisać screenshot</translation>
+        <translation>qTox nie był w stanie zapisać screenshota</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="954"/>
@@ -752,7 +752,7 @@ Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietknięt
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="311"/>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation>Wsztrzymany</translation>
+        <translation>Wstrzymany</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="357"/>
@@ -1026,7 +1026,7 @@ Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietknięt
         <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="80"/>
         <source>The translation may not load until qTox restarts.</source>
-        <translation>Zmiana języka może wymagać restart aplikacji.</translation>
+        <translation>Zmiana języka może wymagać restartu aplikacji.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
@@ -1067,8 +1067,8 @@ Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietknięt
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Po naciśnięciu zakończ (X) qTox zminimalizuje się do traya,
-zamias zakończyć swe działanie.</translation>
+        <translation>Po naciśnięciu &quot;zamknij&quot; (X) qTox zminimalizuje się do traya,
+zamiast zakończyć swe działanie.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
@@ -1081,7 +1081,7 @@ zamias zakończyć swe działanie.</translation>
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Po naciścięciu minimalizuj (_) qTox zminimalizuje się to traya,
+        <translation>Po naciścięciu &quot;minimalizuj&quot; (_) qTox zminimalizuje się to traya,
 zamiast do paska zadań.</translation>
     </message>
     <message>
@@ -1158,7 +1158,7 @@ zamiast do paska zadań.</translation>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Jeśli zaznaczone, czaty grupowe będą umieszczone na szczycie listy znajomych. Inaczej będą umieszczone poniżej znajomych którzy są online.</translation>
+        <translation>Jeśli zaznaczone, czaty grupowe będą umieszczone na szczycie listy znajomych, w innym wypadku będą umieszczone poniżej znajomych którzy są online.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
@@ -1218,7 +1218,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Otwórz okno qToxa gdy otrzymasz nową wiadomość i okno nie jest już otwarte.</translation>
+        <translation>Otwórz okno qToxa gdy otrzymasz nową wiadomość jeśli nie jest już otwarte.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
@@ -1392,7 +1392,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="518"/>
         <source>Send a screenshot</source>
-        <translatorcomment>could &quot;zrzut obrazu&quot; be better?</translatorcomment>
+        <translatorcomment>could &quot;zrzut ekranu&quot; be better?</translatorcomment>
         <translation>Wyślij screenshot</translation>
     </message>
     <message>
@@ -1419,7 +1419,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="390"/>
         <source>Not sent</source>
-        <translation>Nie wysłane</translation>
+        <translation>Niewysłane</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="428"/>
@@ -1487,7 +1487,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <location filename="../src/widget/groupwidget.cpp" line="84"/>
         <source>Set title...</source>
         <translatorcomment>better translation? (I have considered translating this as &apos;tytuł&apos;, but it doesn&apos;t look well along with other things IMHO)</translatorcomment>
-        <translation>Ustaw nazwę...</translation>
+        <translation>Zmień nazwę...</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="77"/>
@@ -1523,7 +1523,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Ta gromada znaków mówi innym klientom Tox jak się z tobą skontaktować.
+        <translation>Ten zlepek znaków mówi innym klientom Tox jak się z tobą skontaktować.
 Podziel się tym ze znajomymi by się komunikować.</translation>
     </message>
     <message>
@@ -1724,7 +1724,7 @@ Profil nie zawiera twojej historii.</translation>
         <location filename="../src/widget/loginscreen.cpp" line="139"/>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Hasła które wpisano różnią się.
+        <translation>Wpisane hasła różnią się.
 Proszę, upewnij się iż wpisano to samo hasło.</translation>
     </message>
     <message>
@@ -1917,7 +1917,7 @@ People will be unable to add you with your old ID, but you will keep your curren
         <translatorcomment>better translation?</translatorcomment>
         <translation>NoSpam jest częścią twojego Tox ID.
 Jeśli otrzymuje się spam w postaci zapytania o dodanie do znajomych, powinno się zmienić NoSpam.
-Znajomi nie będą w stanie dodać cię używając stary ID, ale zachowasz obecnych znajomych.</translation>
+Znajomi nie będą w stanie dodać cię używając starego ID, ale zachowasz obecnych znajomych.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="73"/>
@@ -1943,7 +1943,7 @@ Jeśli otrzymujesz spam w postaci zapytań o dodanie do znajomych, zmień NoSpam
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>Zachowanie historii rozmów jest wciąż rozwijane.
+        <translation>Zachowywanie historii rozmów jest wciąż rozwijane.
 Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</translation>
     </message>
 </context>
@@ -2001,7 +2001,7 @@ Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</transl
 Please use another image.</source>
         <translatorcomment>better translation?</translatorcomment>
         <translation>Dany obrazek jest za duży.
-Proszę, użyj inny obrazek.</translation>
+Proszę, użyj innego obrazka.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="280"/>
@@ -2089,7 +2089,7 @@ Proszę, użyj inny obrazek.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="384"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Ta gromada znaków mówi innym klientom Tox jak się z tobą skontaktować.
+        <translation>Ten zlepek znaków mówi innym klientom Tox jak się z tobą skontaktować.
 Podziel się tym ze znajomymi by się komunikować.</translation>
     </message>
     <message>
@@ -2108,6 +2108,7 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="339"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
+        <translatorcomment>shouldn&amp;t that be something like &quot;kod QR save&amp;a&quot; or something?</translatorcomment>
         <translation>Zapisz QrCode (*.png)</translation>
     </message>
 </context>
@@ -2158,7 +2159,7 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <location filename="../src/net/autoupdate.cpp" line="502"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation>Aktualizacja jest dostępna, czy chcesz ją teraz pobrać?
+        <translation>Dostępna jest aktualizacja, czy chcesz ją teraz pobrać?
 Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
@@ -2270,13 +2271,13 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="164"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Kliknij i przeciągnij by wybrać region. Wciśnij &lt;b&gt;Spację&lt;/b&gt; by ukryć/pokazać okno qToxa, lub &lt;b&gt;Escape&lt;/b&gt; by anulować.</translation>
+        <translation>Kliknij i przeciągnij aby wybrać obszar. Wciśnij &lt;b&gt;spację&lt;/b&gt; by ukryć/pokazać okno qToxa, lub &lt;b&gt;Escape&lt;/b&gt; by anulować.</translation>
     </message>
     <message>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="171"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Wciśnij &lt;b&gt;Enter&lt;/b&gt; by wysłać screenshot zaznaczonego obszaru, &lt;b&gt;Spację&lt;/b&gt; by ukryć/pokazać okno qToxa, lub &lt;b&gt;Escape&lt;/b&gt; by anulować.</translation>
+        <translation>Wciśnij &lt;b&gt;Enter&lt;/b&gt; by wysłać screenshot zaznaczonego obszaru, &lt;b&gt;spację&lt;/b&gt; by ukryć/pokazać okno qToxa, lub &lt;b&gt;Escape&lt;/b&gt; by anulować.</translation>
     </message>
 </context>
 <context>
@@ -2351,20 +2352,20 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Nie znaleziono tekstowego wpisu</translation>
+        <translation>Nie znaleziono rekordu TXT</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="105"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translatorcomment>better translation?</translatorcomment>
-        <translation>Nieoczekiwana liczba wartości we wpisie tekstowym</translation>
+        <translation>Nieoczekiwana liczba wartości rekordzie TXT</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="134"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
-        <translation>Wersja Tox DNS użyta przez ten serwer nie jest wspierana</translation>
+        <translation>Wersja Tox DNS używana przez ten serwer nie jest wspierana</translation>
     </message>
     <message>
         <location filename="../src/net/toxdns.cpp" line="146"/>
@@ -2388,7 +2389,7 @@ Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking wh
 Should toxdns1 be used anyway?
 If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
         <translation>Wygląda na to, że qTox musi użyć starego protokołu toxdns1 by uzyskać dostęp do rekordu DNS Tox IDu twojego znajomego.
-Niestety, toxdns1 nie jest bezpieczny, uzywając go, jest ryzyko, że ktoś będzię mógł zmienić treść przesyłaną pomiędzy Toba, a usługą ToxDNS.
+Niestety, toxdns1 nie jest bezpieczny, uzywając go istnieje ryzyko, że ktoś będzie mógł zmienić treść przesyłaną pomiędzy tobą a usługą ToxDNS.
 Czy użyć toxdns1 mimo to?
 Jeżeli nie masz pewności, kliknij „Nie”, wtedy zapytanie do usługi ToxDNS nie będzie wykonane przy pomocy niezabezpieczonego protokołu.</translation>
     </message>
@@ -2672,7 +2673,7 @@ Jeżeli nie masz pewności, kliknij „Nie”, wtedy zapytanie do usługi ToxDNS
     <message>
         <location filename="../src/widget/widget.cpp" line="1502"/>
         <source>%1 has set the title to %2</source>
-        <translation>%1 ustawił(a) nazwę na %2</translation>
+        <translation>%1 zmienił(a) nazwę na %2</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1753"/>
