@@ -25,6 +25,7 @@
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
+#include "src/widget/translator.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>
@@ -100,6 +101,8 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     }
 
     setFixedHeight(78);
+
+    Translator::registerHandler(std::bind(&FileTransferWidget::retranslateUi, this), this);
 }
 
 FileTransferWidget::~FileTransferWidget()
@@ -280,6 +283,8 @@ void FileTransferWidget::onFileTransferAccepted(ToxFile file)
 
     fileInfo = file;
 
+    isStarted = true;
+
     setBackgroundColor(Style::getColor(Style::LightGrey), false);
 
     setupButtons();
@@ -328,7 +333,8 @@ void FileTransferWidget::onFileTransferResumed(ToxFile file)
     fileInfo = file;
 
     ui->etaLabel->setText("");
-    ui->progressLabel->setText(tr("Resuming...", "file transfer widget"));
+    if (!isRemotePaused)
+        ui->progressLabel->setText(tr("Resuming...", "file transfer widget"));
 
     // reset mean
     meanIndex = 0;
@@ -372,9 +378,9 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
 void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool paused)
 {
     if (paused)
-        onFileTransferPaused(file);
+        remoteFileTransferPaused(file);
     else
-        onFileTransferResumed(file);
+        remoteFileTransferResumed(file);
 }
 
 void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
@@ -382,6 +388,46 @@ void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
     /// TODO: Handle broken transfer differently once we have resuming code
     if (broken)
         onFileTransferCancelled(file);
+}
+
+
+
+
+void FileTransferWidget::remoteFileTransferPaused(ToxFile file)
+{
+    if (fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    isRemotePaused = true;
+
+    ui->etaLabel->setText("");
+    ui->progressLabel->setText(tr("Paused", "file transfer widget"));
+
+    // reset mean
+    meanIndex = 0;
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+        meanData[i] = 0.0;
+}
+
+void FileTransferWidget::remoteFileTransferResumed(ToxFile file)
+{
+    if (fileInfo != file)
+        return;
+
+    fileInfo = file;
+
+    isRemotePaused = false;
+
+    ui->etaLabel->setText("");
+    if (ui->topButton->objectName() == "pause")
+        ui->progressLabel->setText(tr("Resuming...", "file transfer widget"));
+
+    // reset mean
+    meanIndex = 0;
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+        meanData[i] = 0.0;
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
@@ -529,4 +575,46 @@ void FileTransferWidget::onTopButtonClicked()
 void FileTransferWidget::onBottomButtonClicked()
 {
     handleButton(ui->bottomButton);
+}
+
+void FileTransferWidget::retranslateUi()
+{
+    QString topObjectName = ui->topButton->objectName();
+    QString bottomObjectName = ui->bottomButton->objectName();
+
+    if (topObjectName == "ok")
+        ui->topButton->setToolTip(tr("Open file"));
+
+    if (topObjectName == "pause")
+        ui->topButton->setToolTip(tr("Pause transfer"));
+
+    if (topObjectName == "resume")
+        ui->topButton->setToolTip(tr("Resume transfer"));
+
+    if (topObjectName == "accept")
+        ui->topButton->setToolTip(tr("Accept transfer"));
+
+
+    if (bottomObjectName == "dir")
+        ui->bottomButton->setToolTip(tr("Open file directory"));
+
+    if (bottomObjectName == "cancel")
+        ui->bottomButton->setToolTip(tr("Cancel transfer"));
+
+
+    if (!isStarted)
+    {
+        if (fileInfo.direction == ToxFile::SENDING)
+            ui->progressLabel->setText(tr("Waiting to send...", "file transfer widget"));
+        else
+            ui->progressLabel->setText(tr("Accept to receive this file", "file transfer widget"));
+    }
+    else
+    {
+        if (topObjectName == "resume" || isRemotePaused)
+            ui->progressLabel->setText(tr("Paused", "file transfer widget"));
+
+        if (!isRemotePaused && topObjectName == "pause" && fileInfo.status != ToxFile::TRANSMITTING)
+            ui->progressLabel->setText(tr("Resuming...", "file transfer widget"));
+    }
 }
