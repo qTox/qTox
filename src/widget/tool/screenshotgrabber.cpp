@@ -181,14 +181,20 @@ void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
         useRegionSelectedTooltip();
 }
 
+/**
+ * @internal
+ *
+ * Align the tooltip centred at top of screen with the mouse cursor.
+ */
 void ScreenshotGrabber::adjustTooltipPosition()
 {
-    QRectF size = this->helperToolbox->childrenBoundingRect();
-    QRect screenRect = QApplication::desktop()->screen()->rect();
-
-    // Align the toolbox center-top.
-    helperToolbox->setX(screenRect.x() + (screenRect.width() - size.width() + size.x()) / 2);
-    helperToolbox->setY(screenRect.y());
+    QRect recGL = QGuiApplication::primaryScreen()->virtualGeometry();
+    QRect rec = qApp->desktop()->screenGeometry(QCursor::pos());
+    const QRectF ttRect = this->helperToolbox->childrenBoundingRect();
+    int x = abs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
+    int y = abs(recGL.y()) + rec.y();
+    helperToolbox->setX(x);
+    helperToolbox->setY(y);
 }
 
 void ScreenshotGrabber::reject()
