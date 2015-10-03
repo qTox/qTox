@@ -54,9 +54,11 @@ bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
 
 void GenericChatroomWidget::compactChange(bool _compact)
 {
+    if (!isCompact())
+        delete textLayout; // has to be first, deleted by layout
+
     setCompact(_compact);
 
-    delete textLayout; // has to be first, deleted by layout
     delete mainLayout;
 
     mainLayout = new QHBoxLayout;
