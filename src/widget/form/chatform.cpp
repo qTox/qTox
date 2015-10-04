@@ -904,16 +904,24 @@ void ChatForm::doScreenshot()
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
-    QTemporaryFile file(Settings::getInstance().getSettingsDirPath()+"screenshots"+QDir::separator()+"qTox-Screenshot-XXXXXXXX.png");
-    if (!file.open())
+    // use ~ISO 8601 for screenshot timestamp, considering FS limitations
+    // https://en.wikipedia.org/wiki/ISO_8601
+    // Windows has to be supported, thus filename can't have `:` in it :/
+    // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
+    QString filepath = QString("%1screenshots%2qTox_Screenshot_%3.png")
+                           .arg(Settings::getInstance().getSettingsDirPath())
+                           .arg(QDir::separator())
+                           .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
+
+    QFile file(filepath);
+
+    if (!file.open(QFile::ReadWrite))
     {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
         return;
     }
-
-    file.setAutoRemove(false);
 
     pixmap.save(&file, "PNG");
 
