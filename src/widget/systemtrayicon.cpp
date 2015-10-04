@@ -72,11 +72,12 @@ SystemTrayIcon::SystemTrayIcon()
         };
         QImage* image = new QImage(":/img/icon.png");
         if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+            *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
         gtkIcon = gtk_status_icon_new_from_pixbuf(pixbuf);
+        g_object_unref(pixbuf);
         gtkMenu = gtk_menu_new();
 
         void (*callbackTrigger)(GtkStatusIcon*, gpointer) =
@@ -107,16 +108,17 @@ SystemTrayIcon::SystemTrayIcon()
         {
             delete reinterpret_cast<QImage*>(image);
         };
-        QImage image(":/img/icon.png");
-        if (image.format() != QImage::Format_RGBA8888_Premultiplied)
-        image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image.bits(), GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
-                                 8, image.width(), image.height(),
-                                 image.bytesPerLine(), callbackFreeImage, &image);
+        QImage* image = new QImage(":/img/icon.png");
+        if (image->format() != QImage::Format_RGBA8888_Premultiplied)
+            *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
+                                 8, image->width(), image->height(),
+                                 image->bytesPerLine(), callbackFreeImage, image);
 
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
                             STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
         status_notifier_register(statusNotifier);
+        g_object_unref(pixbuf);
     }
     #endif
     else if (desktop == "kde"
@@ -188,13 +190,14 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 };
                 QImage* image = new QImage(a->icon().pixmap(64, 64).toImage());
                 if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-                *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+                    *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                          8, image->width(), image->height(),
                                          image->bytesPerLine(), callbackFreeImage, image);
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
+                g_object_unref(pixbuf);
             }
             gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
             void (*callback)(GtkMenu*, gpointer data) = [](GtkMenu*, gpointer a)
@@ -233,13 +236,14 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 };
                 QImage* image = new QImage(a->icon().pixmap(64, 64).toImage());
                 if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-                *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+                    *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                          8, image->width(), image->height(),
                                          image->bytesPerLine(), callbackFreeImage, image);
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
+                g_object_unref(pixbuf);
             }
             gtk_menu_shell_append(GTK_MENU_SHELL(gtkMenu), item);
             void (*callback)(GtkMenu*, gpointer data) = [](GtkMenu*, gpointer a)
@@ -366,11 +370,12 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         };
         QImage* image = new QImage(icon.pixmap(64, 64).toImage());
         if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+            *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
+        g_object_unref(pixbuf);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_GTK_BACKEND
@@ -383,11 +388,12 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         };
         QImage* image = new QImage(icon.pixmap(64, 64).toImage());
         if (image->format() != QImage::Format_RGBA8888_Premultiplied)
-        *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
+            *image = image->convertToFormat(QImage::Format_RGBA8888_Premultiplied);
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
         gtk_status_icon_set_from_pixbuf(gtkIcon, pixbuf);
+        g_object_unref(pixbuf);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
