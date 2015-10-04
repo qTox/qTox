@@ -77,7 +77,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     toxId->setToolTip(bodyUI->toxId->toolTip());
 
     QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
-    toxIdGroup->replaceWidget(bodyUI->toxId, toxId);
+    delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId);     // Original toxId is in heap, delete it
     bodyUI->toxId->hide();
 
     bodyUI->qrLabel->setWordWrap(true);
