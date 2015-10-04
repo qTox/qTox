@@ -254,7 +254,7 @@ QDate GenericChatForm::getLatestDate() const
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);
-    nameLabel->setToolTip(newName); // for overlength names
+    nameLabel->setToolTip(newName.toHtmlEscaped()); // for overlength names
 }
 
 void GenericChatForm::show(ContentLayout* contentLayout)
@@ -294,17 +294,18 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = author.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(author);
+    bool authorIsActiveProfile = author.isActiveProfile();
+    QString authorStr = authorIsActiveProfile ? Core::getInstance()->getUsername() : resolveToxId(author);
 
     ChatMessage::Ptr msg;
     if (isAction)
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, false);
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, authorIsActiveProfile);
         previousId.clear();
     }
     else
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, author.isActiveProfile());
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, authorIsActiveProfile);
         if ( (author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter) )
             msg->hideSender();
 
