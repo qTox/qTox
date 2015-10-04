@@ -45,6 +45,8 @@
 #include <QMessageBox>
 #include <QComboBox>
 #include <QWindow>
+#include <QMenu>
+#include <QMouseEvent>
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}
@@ -84,8 +86,11 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
+    profilePicture->setContextMenuPolicy(Qt::CustomContextMenu);
     profilePicture->setClickable(true);
+    profilePicture->installEventFilter(this);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
+    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showProfilePictureContextMenu(const QPoint&)));
     QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
     publicGrouplayout->insertWidget(0, profilePicture);
     publicGrouplayout->insertSpacing(1, 7);
@@ -161,6 +166,38 @@ void ProfileForm::show(ContentLayout* contentLayout)
     bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
     bodyUI->userName->setFocus();
     bodyUI->userName->selectAll();
+}
+
+bool ProfileForm::eventFilter(QObject *object, QEvent *event)
+{
+    if (object == static_cast<QObject*>(profilePicture) && event->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+        if (mouseEvent->button() == Qt::RightButton)
+            return true;
+    }
+    return false;
+}
+
+void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
+{
+    QPoint pos = profilePicture->mapToGlobal(point);
+
+    QMenu contextMenu;
+    QAction *removeAction = contextMenu.addAction(tr("Remove"));
+    QAction *selectedItem = contextMenu.exec(pos);
+
+    if (selectedItem == removeAction)
+    {
+        QString selfPubKey = Core::getInstance()->getSelfId().publicKey;
+        if (!QFile::remove(Settings::getInstance().getSettingsDirPath()+"avatars/"+selfPubKey.left(64)+".png"))
+        {
+            GUI::showError(tr("Error"), tr("Could not remove avatar."));
+            return;
+        }
+
+        Core::getInstance()->setAvatar({});
+    }
 }
 
 void ProfileForm::copyIdClicked()
