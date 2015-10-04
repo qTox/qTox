@@ -225,7 +225,6 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     if (av_opt_set_dict2(s, &tmp, AV_OPT_SEARCH_CHILDREN) < 0)
     {
         av_dict_free(&tmp);
-        avformat_free_context(s);
     }
     avdevice_list_devices(s, &devlist);
     if (!devlist)
@@ -243,6 +242,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
         devices[i].second = dev->device_description;
     }
     avdevice_free_list_devices(&devlist);
+    avformat_free_context(s);
     return devices;
 }
 
