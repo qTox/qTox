@@ -285,6 +285,12 @@ void Settings::loadPersonnal(Profile* profile)
     SettingsSerializer ps(filePath, profile->getPassword());
     ps.load();
     friendLst.clear();
+
+    ps.beginGroup("Privacy");
+        typingNotification = ps.value("typingNotification", true).toBool();
+        enableLogging = ps.value("enableLogging", true).toBool();
+    ps.endGroup();
+
     ps.beginGroup("Friends");
         int size = ps.beginReadArray("Friend");
         friendLst.reserve(size);
@@ -322,11 +328,6 @@ void Settings::loadPersonnal(Profile* profile)
             circleLst.push_back(cp);
         }
         ps.endArray();
-    ps.endGroup();
-
-    ps.beginGroup("Privacy");
-        typingNotification = ps.value("typingNotification", true).toBool();
-        enableLogging = ps.value("enableLogging", true).toBool();
     ps.endGroup();
 }
 
