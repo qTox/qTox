@@ -76,6 +76,9 @@ SystemTrayIcon::SystemTrayIcon()
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
+        if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+            delete image;
+
         gtkIcon = gtk_status_icon_new_from_pixbuf(pixbuf);
         g_object_unref(pixbuf);
         gtkMenu = gtk_menu_new();
@@ -114,6 +117,8 @@ SystemTrayIcon::SystemTrayIcon()
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
+        if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+            delete image;
 
         statusNotifier = status_notifier_new_from_pixbuf("qtox",
                             STATUS_NOTIFIER_CATEGORY_APPLICATION_STATUS, pixbuf);
@@ -194,6 +199,9 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                          8, image->width(), image->height(),
                                          image->bytesPerLine(), callbackFreeImage, image);
+                if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+                    delete image;
+
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
@@ -240,6 +248,9 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                          8, image->width(), image->height(),
                                          image->bytesPerLine(), callbackFreeImage, image);
+                if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+                    delete image;
+
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
@@ -374,6 +385,9 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
+        if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+            delete image;
+
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
         g_object_unref(pixbuf);
     }
@@ -392,6 +406,9 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image->bits(), GDK_COLORSPACE_RGB, image->hasAlphaChannel(),
                                  8, image->width(), image->height(),
                                  image->bytesPerLine(), callbackFreeImage, image);
+        if(!pixbuf) // If pixbuf initialization fails, it won't trigger the callback.
+            delete image;
+
         gtk_status_icon_set_from_pixbuf(gtkIcon, pixbuf);
         g_object_unref(pixbuf);
     }
