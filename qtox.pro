@@ -498,7 +498,8 @@ SOURCES += \
     src/widget/tool/removefrienddialog.cpp \
     src/widget/contentlayout.cpp \
     src/widget/contentdialog.cpp \
-    src/widget/tool/activatedialog.cpp
+    src/widget/tool/activatedialog.cpp \
+    src/core/toxcall.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -546,4 +547,5 @@ HEADERS += \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \
     src/widget/tool/removefrienddialog.h \
-    src/core/indexedlist.h
+    src/core/indexedlist.h \
+    src/core/toxcall.h

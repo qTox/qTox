@@ -730,7 +730,7 @@ void Core::removeGroup(int groupId, bool fake)
 
     tox_del_groupchat(tox, groupId);
 
-    if (av->groupCalls[groupId].active)
+    if (!av->groupCalls[groupId].inactive)
         av->leaveGroupCall(groupId);
 }
 
