@@ -36,7 +36,9 @@ PlainDb::PlainDb(const QString &db_name, QList<QString> initList)
     }
 
     for (const QString &cmd : initList)
+    {
         db->exec(cmd);
+    }
 }
 
 PlainDb::~PlainDb()

@@ -292,7 +292,7 @@ void Core::start()
         emit idSet(id);
 
     // tox core is already decrypted
-    if (Settings::getInstance().getEnableLogging() && Nexus::getProfile()->isEncrypted())
+    if (Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
 
     loadFriends();

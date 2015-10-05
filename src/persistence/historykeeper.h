@@ -23,6 +23,7 @@
 #include <QMap>
 #include <QList>
 #include <QDateTime>
+#include <QPixmap>
 #include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
@@ -56,8 +57,8 @@ public:
     static bool checkPassword(const TOX_PASS_KEY& passkey, int encrypted = -1);
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
-    static bool removeHistory(int encrypted = -1);
-    static QList<HistMessage> exportMessagesDeleteFile(int encrypted = -1);
+    void removeHistory();
+    static QList<HistMessage> exportMessagesDeleteFile();
 
     void removeFriendHistory(const QString& chat);
     qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
@@ -70,6 +71,12 @@ public:
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);
 
     void setSyncType(Db::syncType sType);
+
+    void saveAvatar(QPixmap& pic, const QString& ownerId);
+    QPixmap getSavedAvatar(const QString &ownerId);
+
+    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
+    QByteArray getAvatarHash(const QString& ownerId);
 
 private:
     HistoryKeeper(GenericDdInterface *db_);

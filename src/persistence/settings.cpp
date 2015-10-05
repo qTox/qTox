@@ -26,6 +26,7 @@
 #include "src/widget/gui.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
+#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
@@ -531,59 +532,22 @@ QString Settings::getSettingsDirPath()
 
 QPixmap Settings::getSavedAvatar(const QString &ownerId)
 {
-    QDir dir(getSettingsDirPath());
-    QString filePath = dir.filePath("avatars/"+ownerId.left(64)+".png");
-    QFileInfo info(filePath);
-    QPixmap pic;
-    if (!info.exists())
-    {
-        QString filePath = dir.filePath("avatar_"+ownerId.left(64));
-        if (!QFileInfo(filePath).exists()) // try without truncation, for old self avatars
-            filePath = dir.filePath("avatar_"+ownerId);
-
-        pic.load(filePath);
-        saveAvatar(pic, ownerId);
-        QFile::remove(filePath);
-    }
-    else
-    {
-        pic.load(filePath);
-    }
-    return pic;
+    return HistoryKeeper::getInstance()->getSavedAvatar(ownerId);
 }
 
 void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
-    QDir dir(getSettingsDirPath());
-    dir.mkdir("avatars/");
-    // ignore nospam (good idea, and also the addFriend funcs which call getAvatar don't have it)
-    QString filePath = dir.filePath("avatars/"+ownerId.left(64)+".png");
-    pic.save(filePath, "png");
+    HistoryKeeper::getInstance()->saveAvatar(pic,ownerId);
 }
 
 void Settings::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
 {
-    QDir dir(getSettingsDirPath());
-    dir.mkdir("avatars/");
-    QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
-    if (!file.open(QIODevice::WriteOnly))
-        return;
-
-    file.write(hash);
-    file.close();
+    HistoryKeeper::getInstance()->saveAvatarHash(hash,ownerId);
 }
 
 QByteArray Settings::getAvatarHash(const QString& ownerId)
 {
-    QDir dir(getSettingsDirPath());
-    dir.mkdir("avatars/");
-    QFile file(dir.filePath("avatars/"+ownerId.left(64)+".hash"));
-    if (!file.open(QIODevice::ReadOnly))
-        return QByteArray();
-
-    QByteArray out = file.readAll();
-    file.close();
-    return out;
+    return HistoryKeeper::getInstance()->getAvatarHash(ownerId);
 }
 
 const QList<DhtServer>& Settings::getDhtServerList() const
