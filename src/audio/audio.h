@@ -69,6 +69,9 @@ public:
     static bool isInputReady(); ///< Returns true if the input device is open and suscribed to
     static bool isOutputClosed(); ///< Returns true if the output device is open
 
+    static void createSource(ALuint* source); ///< Creates an audio output source with the correct volume
+    static void deleteSource(ALuint* source); ///< Kills a previously created audio source
+
     static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
     static bool tryCaptureSamples(int16_t *buf, int samples); ///< Does nothing and return false on failure
 

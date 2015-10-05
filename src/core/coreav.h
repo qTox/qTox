@@ -21,10 +21,8 @@
 #ifndef COREAV_H
 #define COREAV_H
 
-#include <QHash>
-#include <QThread>
+#include <QObject>
 #include <memory>
-#include <map>
 #include <tox/toxav.h>
 
 #if defined(__APPLE__) && defined(__MACH__)
@@ -35,7 +33,7 @@
  #include <AL/alc.h>
 #endif
 
-#include "src/core/indexedlist.h"
+#include "src/core/toxcall.h"
 
 #ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;
@@ -49,43 +47,7 @@ class VideoFrame;
 class CoreAV;
 struct vpx_image;
 
-struct ToxCall
-{
-    ToxCall() = default;
-    ToxCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av);
-    ToxCall(const ToxCall& other) = delete;
-    ToxCall(ToxCall&& other) noexcept;
-    ~ToxCall();
-
-    inline operator int() {return friendNum;}
-    const ToxCall& operator=(const ToxCall& other) = delete;
-    const ToxCall& operator=(ToxCall&& other) noexcept;
-
-    QTimer* sendAudioTimer;
-    uint32_t friendNum;
-    bool ringing; ///< True while we're ringing and the call hasn't started yet
-    bool muteMic;
-    bool muteVol;
-    bool videoEnabled; ///< True if our user asked for a video call, sending and recving
-    ALuint alSource;
-    CoreVideoSource* videoSource;
-    TOXAV_FRIEND_CALL_STATE state; ///< State of the peer (not ours!)
-#ifdef QTOX_FILTER_AUDIO
-    AudioFilterer* filterer;
-#endif
-};
-
-struct ToxGroupCall
-{
-    QTimer *sendAudioTimer;
-    int groupId;
-    bool active = false;
-    bool muteMic;
-    bool muteVol;
-    QHash<int, ALuint> alSources;
-};
-
-class CoreAV : public QThread
+class CoreAV : public QObject
 {
     Q_OBJECT
 
@@ -100,12 +62,11 @@ public:
     bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     void prepareCall(uint32_t friendId, ToxAV *toxav, bool videoEnabled);
     void cleanupCall(uint32_t friendId);
-    void sendCallAudio(uint32_t friendId);
+    bool sendCallAudio(uint32_t friendId); ///< Returns false only on error, but not if there's nothing to send
     void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                                 unsigned channels, int sampleRate);
-    void playCallVideo(void *toxav, int32_t callId, const vpx_image* img, void *user_data);
     void sendCallVideo(uint32_t friendId, std::shared_ptr<VideoFrame> frame);
-    void sendGroupCallAudio(int groupId, ToxAV* toxav);
+    bool sendGroupCallAudio(int groupId);
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
     void resetCallSources(); ///< Forces to regenerate each call's audio sources
@@ -160,8 +121,8 @@ private:
 
 private:
     ToxAV* toxav;
-    static IndexedList<ToxCall> calls;
-    static QHash<int, ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
+    static IndexedList<ToxFriendCall> calls;
+    static IndexedList<ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
 
     friend class Audio;
     friend class Core;

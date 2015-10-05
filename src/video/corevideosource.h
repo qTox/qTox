@@ -50,7 +50,7 @@ private:
     std::atomic_bool biglock; ///< Fast lock
 
 friend class CoreAV;
-friend struct ToxCall;
+friend struct ToxFriendCall;
 };
 
 #endif // COREVIDEOSOURCE_H
