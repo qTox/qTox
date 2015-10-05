@@ -114,13 +114,10 @@ void Audio::setOutputVolume(qreal volume)
 
     for (const ToxGroupCall& call : CoreAV::groupCalls)
     {
-        if (!call.active)
-            continue;
-        for (ALuint source : call.alSources)
-            alSourcef(source, AL_GAIN, outputVolume);
+        alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
 
-    for (const ToxCall& call : CoreAV::calls)
+    for (const ToxFriendCall& call : CoreAV::calls)
     {
         alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
@@ -392,15 +389,18 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
     assert(QThread::currentThread() == audioThread);
     QMutexLocker lock(&audioOutLock);
 
-    ToxGroupCall& call = CoreAV::groupCalls[group];
-
-    if (!call.active || call.muteVol)
+    if (!CoreAV::groupCalls.contains(group))
         return;
 
-    if (!call.alSources.contains(peer))
+    ToxGroupCall& call = CoreAV::groupCalls[group];
+
+    if (call.inactive || call.muteVol)
+        return;
+
+    if (!call.alSource)
     {
-        alGenSources(1, &call.alSources[peer]);
-        alSourcef(call.alSources[peer], AL_GAIN, outputVolume);
+        alGenSources(1, &call.alSource);
+        alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
 
     qreal volume = 0.;
@@ -410,7 +410,7 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
 
     emit groupAudioPlayed(group, peer, volume / bufsize);
 
-    playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
+    playAudioBuffer(call.alSource, data, samples, channels, sample_rate);
 }
 
 void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
@@ -469,6 +469,20 @@ bool Audio::isOutputClosed()
 {
     QMutexLocker locker(&audioOutLock);
     return alOutDev;
+}
+
+void Audio::createSource(ALuint* source)
+{
+    alGenSources(1, source);
+    alSourcef(*source, AL_GAIN, getInstance().outputVolume);
+}
+
+void Audio::deleteSource(ALuint* source)
+{
+    if (alIsSource(*source))
+        alDeleteSources(1, source);
+    else
+        qWarning() << "Trying to delete invalid audio source"<<*source;
 }
 
 /**
