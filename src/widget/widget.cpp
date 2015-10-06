@@ -451,6 +451,16 @@ Widget* Widget::getInstance()
     return instance;
 }
 
+void Widget::moveEvent(QMoveEvent *event)
+{
+    if (event->type() == QEvent::Move)
+    {
+        saveWindowGeometry();
+        saveSplitterGeometry();
+    }
+    QWidget::moveEvent(event);
+}
+
 void Widget::closeEvent(QCloseEvent *event)
 {
     if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)

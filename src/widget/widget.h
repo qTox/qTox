@@ -157,6 +157,7 @@ protected:
     virtual void closeEvent(QCloseEvent *event) final override;
     virtual void changeEvent(QEvent *event) final override;
     virtual void resizeEvent(QResizeEvent *event) final override;
+    virtual void moveEvent(QMoveEvent *event) final override;
 
 private slots:
     void onAddClicked();
