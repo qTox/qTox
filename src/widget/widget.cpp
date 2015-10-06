@@ -1609,6 +1609,13 @@ bool Widget::event(QEvent * e)
             Nexus::getInstance().updateWindowsStates();
 #endif
 
+        case QEvent::KeyPress:
+            if (autoAwayActive) //to accelerate return from "Away" status
+            {
+                emit statusSet(Status::Online);
+                autoAwayActive = false;
+            }
+
         default:
             break;
     }
