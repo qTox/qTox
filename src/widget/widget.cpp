@@ -801,7 +801,7 @@ void Widget::setUsername(const QString& username)
     else
     {
         ui->nameLabel->setText(username);
-        ui->nameLabel->setToolTip(username);    // for overlength names
+        ui->nameLabel->setToolTip(username.toHtmlEscaped());    // for overlength names
     }
 
     QString sanename = username;
@@ -826,7 +826,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
     else
     {
         ui->statusLabel->setText(statusMessage);
-        ui->statusLabel->setToolTip(statusMessage); // for overlength messsages
+        ui->statusLabel->setToolTip(statusMessage.toHtmlEscaped()); // for overlength messsages
     }
 }
 
@@ -1425,7 +1425,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId)), true, false))
+        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId).toHtmlEscaped()), true, false))
         {
             int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
             if (groupId < 0)

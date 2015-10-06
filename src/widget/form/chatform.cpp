@@ -1003,7 +1003,7 @@ void ChatForm::setFriendTyping(bool isTyping)
     chatWidget->setTypingNotificationVisible(isTyping);
 
     Text* text = static_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
-    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
+    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
 void ChatForm::show(ContentLayout* contentLayout)
