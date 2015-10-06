@@ -1093,5 +1093,17 @@ void ChatForm::hideNetcam()
 
 void ChatForm::retranslateUi()
 {
+    QString volObjectName = volButton->objectName();
+    QString micObjectName = micButton->objectName();
     loadHistoryAction->setText(tr("Load chat history..."));
+
+    if (volObjectName == QStringLiteral("green"))
+        volButton->setToolTip(tr("Mute call"));
+    else if (volObjectName == QStringLiteral("red"))
+        volButton->setToolTip(tr("Unmute call"));
+
+    if (micObjectName == QStringLiteral("green"))
+        micButton->setToolTip(tr("Mute microphone"));
+    else if (micObjectName == QStringLiteral("red"))
+        micButton->setToolTip(tr("Unmute microphone"));
 }
