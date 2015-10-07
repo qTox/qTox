@@ -254,7 +254,7 @@ QDate GenericChatForm::getLatestDate() const
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);
-    nameLabel->setToolTip(newName); // for overlength names
+    nameLabel->setToolTip(newName.toHtmlEscaped()); // for overlength names
 }
 
 void GenericChatForm::show(ContentLayout* contentLayout)
@@ -294,17 +294,18 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    QString authorStr = author.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(author);
+    bool authorIsActiveProfile = author.isActiveProfile();
+    QString authorStr = authorIsActiveProfile ? Core::getInstance()->getUsername() : resolveToxId(author);
 
     ChatMessage::Ptr msg;
     if (isAction)
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, false);
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, authorIsActiveProfile);
         previousId.clear();
     }
     else
     {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, author.isActiveProfile());
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, authorIsActiveProfile);
         if ( (author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter) )
             msg->hideSender();
 
@@ -512,12 +513,27 @@ bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 
 void GenericChatForm::retranslateUi()
 {
+    QString callObjectName = callButton->objectName();
+    QString videoObjectName = videoButton->objectName();
+
+    if (callObjectName == QStringLiteral("green"))
+        callButton->setToolTip(tr("Start audio call"));
+    else if (callObjectName == QStringLiteral("yellow"))
+        callButton->setToolTip(tr("Accept audio call"));
+    else if (callObjectName == QStringLiteral("red"))
+        callButton->setToolTip(tr("End audio call"));
+
+    if (videoObjectName == QStringLiteral("green"))
+        videoButton->setToolTip(tr("Start video call"));
+    else if (videoObjectName == QStringLiteral("yellow"))
+        videoButton->setToolTip(tr("Accept video call"));
+    else if (videoObjectName == QStringLiteral("red"))
+        videoButton->setToolTip(tr("End video call"));
+
     sendButton->setToolTip(tr("Send message"));
     emoteButton->setToolTip(tr("Smileys"));
     fileButton->setToolTip(tr("Send file(s)"));
     screenshotButton->setToolTip(tr("Send a screenshot"));
-    callButton->setToolTip(tr("Start an audio call"));
-    videoButton->setToolTip(tr("Start a video call"));
     saveChatAction->setText(tr("Save chat log"));
     clearAction->setText(tr("Clear displayed messages"));
 }
