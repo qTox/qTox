@@ -35,6 +35,7 @@ class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
 class OfflineMsgEngine;
+class CoreAV;
 
 class ChatForm : public GenericChatForm
 {
@@ -53,13 +54,6 @@ public:
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
-    void startCall(uint32_t friendId, bool video);
-    void answerCall(uint32_t friendId);
-    void hangupCall(uint32_t friendId);
-    void cancelCall(uint32_t friendId);
-    void rejectCall(uint32_t friendId);
-    void micMuteToggle(uint32_t friendId);
-    void volMuteToggle(uint32_t friendId);
     void aliasChanged(const QString& alias);
 
 public slots:
@@ -67,12 +61,7 @@ public slots:
     void onFileRecvRequest(ToxFile file);
     void onAvInvite(uint32_t FriendId, bool video);
     void onAvStart(uint32_t FriendId, bool video);
-    void onAvCancel(uint32_t FriendId);
     void onAvEnd(uint32_t FriendId);
-    void onAvRinging(uint32_t FriendId, bool video);
-    void onAvCallFailed(uint32_t FriendId);
-    void onMicMuteToggle();
-    void onVolMuteToggle();
     void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t FriendId);
 
@@ -86,6 +75,8 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onRejectCallTriggered();
+    void onMicMuteToggle();
+    void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
     void onLoadHistory();
     void onUpdateTime();
@@ -96,6 +87,7 @@ private slots:
 
 private:
     void retranslateUi();
+    void showOutgoingCall(bool video);
 
 protected:
     void showNetcam();
@@ -107,6 +99,7 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
+    CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;
     NetCamView* netcam;
