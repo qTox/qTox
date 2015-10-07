@@ -15,7 +15,7 @@ public:
     // Qt
     inline bool isEmpty() { return v.empty(); }
     bool contains(int i) { return std::find_if(begin(), end(), [i](T& t){return (int)t == i;}) != end(); }
-    void remove(int i) { v.erase(std::remove_if(begin(), end(), [i](T& t){return (int)t == i;})); }
+    void remove(int i) { v.erase(std::remove_if(begin(), end(), [i](T& t){return (int)t == i;}), end()); }
     T& operator[](int i)
     {
         iterator it = std::find_if(begin(), end(), [i](T& t){return (int)t == i;});
