@@ -83,6 +83,7 @@ void CoreAV::answerCall(uint32_t friendNum)
     else
     {
         qWarning() << "Failed to answer call with error"<<err;
+        toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         calls.remove(friendNum);
         emit avCallFailed(friendNum);
     }
@@ -90,6 +91,7 @@ void CoreAV::answerCall(uint32_t friendNum)
 
 void CoreAV::startCall(uint32_t friendId, bool video)
 {
+    qDebug() << QString("Starting call with %1").arg(friendId);
     if(calls.contains(friendId))
     {
         qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendId);
@@ -97,7 +99,6 @@ void CoreAV::startCall(uint32_t friendId, bool video)
         return;
     }
 
-    qDebug() << QString("Starting call with %1").arg(friendId);
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (!toxav_call(toxav, friendId, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
     {
@@ -112,8 +113,13 @@ void CoreAV::startCall(uint32_t friendId, bool video)
 void CoreAV::cancelCall(uint32_t friendId)
 {
     qDebug() << QString("Cancelling call with %1").arg(friendId);
-    toxav_call_control(toxav, friendId, TOXAV_CALL_CONTROL_CANCEL, nullptr);
+    if (!toxav_call_control(toxav, friendId, TOXAV_CALL_CONTROL_CANCEL, nullptr))
+    {
+        qWarning() << QString("Failed to cancel call with %1").arg(friendId);
+        return;
+    }
     calls.remove(friendId);
+    emit avCancel(friendId);
 }
 
 bool CoreAV::sendCallAudio(uint32_t callId)
@@ -342,6 +348,11 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 
 void CoreAV::stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void *_self)
 {
+    // This callback needs to run in the CoreAV thread.
+    // Otherwise, there's a deadlock between the Core thread holding an internal
+    // toxav lock and trying to lock the CameraSource to stop it, and the
+    // av thread holding the Camera
+
     CoreAV* self = static_cast<CoreAV*>(_self);
 
     assert(self->calls.contains(friendNum));
