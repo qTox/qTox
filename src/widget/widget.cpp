@@ -341,7 +341,16 @@ void Widget::init()
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
     restoreState(Settings::getInstance().getWindowState());
-    ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState());
+    if (!ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState()))
+    {
+        // Set the status panel (friendlist) to a reasonnable width by default/on first start
+        constexpr int spWidthPc = 33;
+        ui->mainSplitter->resize(size());
+        QList<int> sizes = ui->mainSplitter->sizes();
+        sizes[0] = ui->mainSplitter->width()*spWidthPc/100;
+        sizes[1] = ui->mainSplitter->width() - sizes[0];
+        ui->mainSplitter->setSizes(sizes);
+    }
 
     connect(settingsWidget, &SettingsWidget::compactToggled, contactListWidget, &FriendListWidget::onCompactChanged);
     connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
