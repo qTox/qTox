@@ -5,6 +5,7 @@
 #include "src/video/camerasource.h"
 #include "src/video/corevideosource.h"
 #include <QTimer>
+#include <QtConcurrent/QtConcurrent>
 
 #ifdef QTOX_FILTER_AUDIO
 #include "src/audio/audiofilterer.h"
@@ -126,7 +127,10 @@ ToxFriendCall::~ToxFriendCall()
 {
     if (videoEnabled)
     {
-        CameraSource::getInstance().unsubscribe();
+        // This destructor could be running in a toxav callback while holding toxav locks.
+        // If the CameraSource thread calls toxav *_send_frame, we might deadlock the toxav and CameraSource locks,
+        // so we unsuscribe asynchronously, it's fine if the webcam takes a couple milliseconds more to poweroff.
+        QtConcurrent::run([](){CameraSource::getInstance().unsubscribe();});
         if (videoSource)
         {
             videoSource->setDeleteOnClose(true);

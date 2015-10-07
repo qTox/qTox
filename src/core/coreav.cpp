@@ -24,7 +24,9 @@
 #include "src/persistence/settings.h"
 #include "src/video/videoframe.h"
 #include "src/video/corevideosource.h"
-#include <assert.h>
+#include <cassert>
+#include <QThread>
+#include <QTimer>
 #include <QDebug>
 
 #ifdef QTOX_FILTER_AUDIO
@@ -37,7 +39,14 @@ IndexedList<ToxGroupCall> CoreAV::groupCalls;
 using namespace std;
 
 CoreAV::CoreAV(Tox *tox)
+    : coreavThread{new QThread}, iterateTimer{new QTimer{this}}
 {
+    coreavThread->setObjectName("qTox CoreAV");
+    moveToThread(coreavThread.get());
+
+    iterateTimer->setSingleShot(true);
+    connect(iterateTimer.get(), &QTimer::timeout, this, &CoreAV::process);
+
     toxav = toxav_new(tox, nullptr);
 
     toxav_callback_call(toxav, CoreAV::callCallback, this);
@@ -46,6 +55,8 @@ CoreAV::CoreAV(Tox *tox)
     toxav_callback_video_bit_rate_status(toxav, CoreAV::videoBitrateCallback, this);
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
+
+    coreavThread->start();
 }
 
 CoreAV::~CoreAV()
@@ -60,9 +71,26 @@ const ToxAV *CoreAV::getToxAv() const
     return toxav;
 }
 
+void CoreAV::start()
+{
+    // Timers can only be touched from their own thread
+    if (QThread::currentThread() != coreavThread.get())
+        return (void)QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
+    iterateTimer->start();
+}
+
+void CoreAV::stop()
+{
+    // Timers can only be touched from their own thread
+    if (QThread::currentThread() != coreavThread.get())
+        return (void)QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
+    iterateTimer->stop();
+}
+
 void CoreAV::process()
 {
     toxav_iterate(toxav);
+    iterateTimer->start(toxav_iteration_interval(toxav));
 }
 
 bool CoreAV::anyActiveCalls()
@@ -169,6 +197,8 @@ bool CoreAV::sendCallAudio(uint32_t callId)
 
 void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
 {
+    // We might be running in the FFmpeg thread and holding the CameraSource lock
+    // So be careful not to deadlock with anything while toxav locks in toxav_video_send_frame
     if (!calls.contains(callId))
         return;
 
@@ -360,7 +390,7 @@ void CoreAV::stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void *_s
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR)
     {
-        qWarning() << "Call with friend"<<friendNum<<"died of unnatural causes";
+        qWarning() << "Call with friend"<<friendNum<<"died of unnatural causes!";
         calls.remove(friendNum);
         emit self->avCallFailed(friendNum);
     }

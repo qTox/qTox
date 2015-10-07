@@ -332,6 +332,7 @@ void Core::start()
         GUI::setEnabled(true);
 
     process(); // starts its own timer
+    av->start();
 }
 
 /* Using the now commented out statements in checkConnection(), I watched how
@@ -346,11 +347,13 @@ void Core::start()
 void Core::process()
 {
     if (!isReady())
+    {
+        av->stop();
         return;
+    }
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
     tox_iterate(tox);
-    av->process();
 
 #ifdef DEBUG
     //we want to see the debug messages immediately
@@ -367,8 +370,7 @@ void Core::process()
         tolerance = 3*CORE_DISCONNECT_TOLERANCE;
     }
 
-    unsigned sleeptime = qMin(tox_iteration_interval(tox), toxav_iteration_interval(av->getToxAv()));
-    sleeptime = qMin(sleeptime, CoreFile::corefileIterationInterval());
+    unsigned sleeptime = qMin(tox_iteration_interval(tox), CoreFile::corefileIterationInterval());
     toxTimer->start(sleeptime);
 }
 
@@ -729,9 +731,7 @@ void Core::removeGroup(int groupId, bool fake)
         return;
 
     tox_del_groupchat(tox, groupId);
-
-    if (!av->groupCalls[groupId].inactive)
-        av->leaveGroupCall(groupId);
+    av->leaveGroupCall(groupId);
 }
 
 QString Core::getUsername() const
@@ -1202,6 +1202,7 @@ void Core::setNospam(uint32_t nospam)
 void Core::killTimers(bool onlyStop)
 {
     assert(QThread::currentThread() == coreThread);
+    av->stop();
     toxTimer->stop();
     if (!onlyStop)
     {
