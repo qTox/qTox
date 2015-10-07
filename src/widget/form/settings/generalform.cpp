@@ -479,5 +479,7 @@ bool GeneralForm::eventFilter(QObject *o, QEvent *e)
 
 void GeneralForm::retranslateUi()
 {
+    int proxyType = bodyUI->proxyType->currentIndex();
     bodyUI->retranslateUi(this);
+    bodyUI->proxyType->setCurrentIndex(proxyType);
 }
