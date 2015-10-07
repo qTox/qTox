@@ -130,6 +130,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     CallConfirmWidget *callConfirm;
     void enableCallButtons();
+    void disableCallButtons();
     bool isTyping;
     void SendMessageStr(QString msg);
 };
