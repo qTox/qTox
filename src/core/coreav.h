@@ -40,6 +40,7 @@ class AudioFilterer;
 #endif
 
 class QTimer;
+class QThread;
 class CoreVideoSource;
 class CameraSource;
 class VideoSource;
@@ -56,8 +57,6 @@ public:
     ~CoreAV();
 
     const ToxAV* getToxAv() const;
-
-    void process();
 
     bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     void prepareCall(uint32_t friendId, ToxAV *toxav, bool videoEnabled);
@@ -88,6 +87,10 @@ public:
     void micMuteToggle(uint32_t friendId);
     void volMuteToggle(uint32_t friendId);
 
+public slots:
+    void start();
+    void stop();
+
 signals:
     void avInvite(uint32_t friendId, bool video);
     void avStart(uint32_t friendId, bool video);
@@ -99,6 +102,7 @@ signals:
     void videoFrameReceived(vpx_image* frame);
 
 private:
+    void process();
     static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);
     static void stateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t state, void* self);
     static void audioBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void* self);
@@ -108,6 +112,9 @@ private:
     static void videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h,
                                    const uint8_t *y, const uint8_t *u, const uint8_t *v,
                                    int32_t ystride, int32_t ustride, int32_t vstride, void* self);
+    /// Intercepts a function call and moves it to another thread
+    /// Useful to move callbacks from the toxcore thread to our thread
+    template <class... Args> void asyncTransplantThunk(void(*fun)(Args...), Args... args);
 
 private:
     static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64; ///< In kb/s. More than enough for Opus.
@@ -115,11 +122,12 @@ private:
 
 private:
     ToxAV* toxav;
+    std::unique_ptr<QThread> coreavThread;
+    std::unique_ptr<QTimer> iterateTimer;
     static IndexedList<ToxFriendCall> calls;
     static IndexedList<ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
 
     friend class Audio;
-    friend class Core;
 };
 
 #endif // COREAV_H
