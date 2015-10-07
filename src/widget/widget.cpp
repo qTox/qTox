@@ -906,13 +906,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(coreav, &CoreAV::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
     connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
     connect(coreav, &CoreAV::avRinging, newfriend->getChatForm(), &ChatForm::onAvRinging);
-    connect(coreav, &CoreAV::avStarting, newfriend->getChatForm(), &ChatForm::onAvStarting);
-    connect(coreav, &CoreAV::avEnding, newfriend->getChatForm(), &ChatForm::onAvEnding);
-    connect(coreav, &CoreAV::avRequestTimeout, newfriend->getChatForm(), &ChatForm::onAvRequestTimeout);
-    connect(coreav, &CoreAV::avPeerTimeout, newfriend->getChatForm(), &ChatForm::onAvPeerTimeout);
-    connect(coreav, &CoreAV::avMediaChange, newfriend->getChatForm(), &ChatForm::onAvMediaChange);
     connect(coreav, &CoreAV::avCallFailed, newfriend->getChatForm(), &ChatForm::onAvCallFailed);
-    connect(coreav, &CoreAV::avRejected, newfriend->getChatForm(), &ChatForm::onAvRejected);
     connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);

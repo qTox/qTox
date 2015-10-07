@@ -69,13 +69,7 @@ public slots:
     void onAvCancel(uint32_t FriendId);
     void onAvEnd(uint32_t FriendId);
     void onAvRinging(uint32_t FriendId, bool video);
-    void onAvStarting(uint32_t FriendId, bool video);
-    void onAvEnding(uint32_t FriendId);
-    void onAvRequestTimeout(uint32_t FriendId);
-    void onAvPeerTimeout(uint32_t FriendId);
-    void onAvMediaChange(uint32_t FriendId, bool video);
     void onAvCallFailed(uint32_t FriendId);
-    void onAvRejected(uint32_t FriendId);
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onAvatarChange(uint32_t FriendId, const QPixmap& pic);

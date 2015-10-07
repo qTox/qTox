@@ -94,13 +94,7 @@ signals:
     void avCancel(uint32_t friendId);
     void avEnd(uint32_t friendId);
     void avRinging(uint32_t friendId, bool video);
-    void avStarting(uint32_t friendId, bool video);
-    void avEnding(uint32_t friendId);
-    void avRequestTimeout(uint32_t friendId);
-    void avPeerTimeout(uint32_t friendId);
-    void avMediaChange(uint32_t friendId, bool videoEnabled);
     void avCallFailed(uint32_t friendId);
-    void avRejected(uint32_t friendId);
 
     void videoFrameReceived(vpx_image* frame);
 
