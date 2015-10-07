@@ -258,8 +258,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
 
     qDebug() << "onAvInvite";
 
-    callButton->disconnect();
-    videoButton->disconnect();
+    disableCallButtons();
     if (video)
     {
         callConfirm = new CallConfirmWidget(videoButton, *f);
@@ -310,8 +309,7 @@ void ChatForm::onAvStart(uint32_t FriendId, bool video)
 
     audioInputFlag = true;
     audioOutputFlag = true;
-    callButton->disconnect();
-    videoButton->disconnect();
+    disableCallButtons();
 
     if (video)
     {
@@ -418,8 +416,7 @@ void ChatForm::onAvStarting(uint32_t FriendId, bool video)
 
     qDebug() << "onAvStarting";
 
-    callButton->disconnect();
-    videoButton->disconnect();
+    disableCallButtons();
     if (video)
     {
         callButton->setObjectName("grey");
@@ -489,7 +486,6 @@ void ChatForm::onAvRequestTimeout(uint32_t FriendId)
 
     enableCallButtons();
     stopCounter();
-
     hideNetcam();
 }
 
@@ -520,6 +516,7 @@ void ChatForm::onAvRejected(uint32_t FriendId)
     callConfirm = nullptr;
 
     enableCallButtons();
+    stopCounter();
 
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("Call rejected"),
                                                          ChatMessage::INFO,
@@ -587,6 +584,7 @@ void ChatForm::onRejectCallTriggered()
     emit rejectCall(f->getFriendID());
 
     enableCallButtons();
+    stopCounter();
 }
 
 void ChatForm::onCallTriggered()
@@ -643,6 +641,31 @@ void ChatForm::enableCallButtons()
     audioInputFlag = false;
     audioOutputFlag = false;
 
+    disableCallButtons();
+
+    if (disableCallButtonsTimer == nullptr)
+    {
+        disableCallButtonsTimer = new QTimer();
+        connect(disableCallButtonsTimer, SIGNAL(timeout()),
+                this, SLOT(onEnableCallButtons()));
+        disableCallButtonsTimer->start(1500); // 1.5sec
+        qDebug() << "timer started!!";
+    }
+
+}
+
+void ChatForm::disableCallButtons()
+{
+    qDebug() << "disableCallButtons";
+
+    // Prevents race enable / disable / onEnable, when it should be disabled
+    if (disableCallButtonsTimer)
+    {
+        disableCallButtonsTimer->stop();
+        delete disableCallButtonsTimer;
+        disableCallButtonsTimer = nullptr;
+    }
+
     micButton->setObjectName("grey");
     micButton->style()->polish(micButton);
     micButton->setToolTip("");
@@ -660,16 +683,6 @@ void ChatForm::enableCallButtons()
     videoButton->style()->polish(videoButton);
     videoButton->setToolTip("");
     videoButton->disconnect();
-
-    if (disableCallButtonsTimer == nullptr)
-    {
-        disableCallButtonsTimer = new QTimer();
-        connect(disableCallButtonsTimer, SIGNAL(timeout()),
-                this, SLOT(onEnableCallButtons()));
-        disableCallButtonsTimer->start(1500); // 1.5sec
-        qDebug() << "timer started!!";
-    }
-
 }
 
 void ChatForm::onEnableCallButtons()

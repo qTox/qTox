@@ -90,7 +90,14 @@ void CoreAV::answerCall(uint32_t friendNum)
 
 void CoreAV::startCall(uint32_t friendId, bool video)
 {
-    assert(!calls.contains(friendId));
+    if(calls.contains(friendId))
+    {
+        qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendId);
+        emit avCallFailed(friendId);
+        return;
+    }
+
+    qDebug() << QString("Starting call with %1").arg(friendId);
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     if (!toxav_call(toxav, friendId, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
     {
@@ -311,10 +318,16 @@ void CoreAV::resetCallSources()
     }
 }
 
-void CoreAV::callCallback(ToxAV*, uint32_t friendNum, bool audio, bool video, void *_self)
+void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool video, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
-    const auto& callIt = calls.insert({friendNum, video, *self});
+    if (self->calls.contains(friendNum))
+    {
+        qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
+        toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
+        return;
+    }
+    const auto& callIt = self->calls.insert({friendNum, video, *self});
 
     // We don't get a state callback when answering, so fill the state ourselves in advance
     int state = 0;
