@@ -63,6 +63,7 @@ CoreAV::~CoreAV()
 {
     for (const ToxFriendCall& call : calls)
         cancelCall(call.callId);
+    stop();
     toxav_kill(toxav);
 }
 
@@ -98,56 +99,82 @@ bool CoreAV::anyActiveCalls()
     return !calls.isEmpty();
 }
 
-void CoreAV::answerCall(uint32_t friendNum)
+bool CoreAV::isCallVideoEnabled(uint32_t friendNum)
 {
+    assert(calls.contains(friendNum));
+    return calls[friendNum].videoEnabled;
+}
+
+bool CoreAV::answerCall(uint32_t friendNum)
+{
+    if (QThread::currentThread() != coreavThread.get())
+    {
+        bool ret;
+        QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
+                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+        return ret;
+    }
+
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
     if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
     {
         calls[friendNum].inactive = false;
-        emit avStart(friendNum, calls[friendNum].videoEnabled);
+        return true;
     }
     else
     {
         qWarning() << "Failed to answer call with error"<<err;
         toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         calls.remove(friendNum);
-        emit avCallFailed(friendNum);
+        return false;
     }
 }
 
-void CoreAV::startCall(uint32_t friendId, bool video)
+bool CoreAV::startCall(uint32_t friendNum, bool video)
 {
-    qDebug() << QString("Starting call with %1").arg(friendId);
-    if(calls.contains(friendId))
+    if (QThread::currentThread() != coreavThread.get())
     {
-        qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendId);
-        emit avCallFailed(friendId);
-        return;
+        bool ret;
+        (void)QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
+                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
+        return ret;
+    }
+
+    qDebug() << QString("Starting call with %1").arg(friendNum);
+    if(calls.contains(friendNum))
+    {
+        qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
+        return false;
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendId, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
-    {
-        emit avCallFailed(friendId);
-        return;
-    }
+    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+        return false;
 
-    calls.insert({friendId, video, *this});
-    emit avRinging(friendId, video);
+    calls.insert({friendNum, video, *this});
+    return true;
 }
 
-void CoreAV::cancelCall(uint32_t friendId)
+bool CoreAV::cancelCall(uint32_t friendNum)
 {
-    qDebug() << QString("Cancelling call with %1").arg(friendId);
-    if (!toxav_call_control(toxav, friendId, TOXAV_CALL_CONTROL_CANCEL, nullptr))
+    if (QThread::currentThread() != coreavThread.get())
     {
-        qWarning() << QString("Failed to cancel call with %1").arg(friendId);
-        return;
+        bool ret;
+        (void)QMetaObject::invokeMethod(this, "cancelCall", Qt::BlockingQueuedConnection,
+                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+        return ret;
     }
-    calls.remove(friendId);
-    emit avCancel(friendId);
+
+    qDebug() << QString("Cancelling call with %1").arg(friendNum);
+    if (!toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr))
+    {
+        qWarning() << QString("Failed to cancel call with %1").arg(friendNum);
+        return false;
+    }
+    calls.remove(friendNum);
+    return true;
 }
 
 bool CoreAV::sendCallAudio(uint32_t callId)
@@ -357,12 +384,22 @@ void CoreAV::resetCallSources()
 void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool video, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
+
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get())
+    {
+        return (void)QMetaObject::invokeMethod(self, "callCallback", Qt::QueuedConnection,
+                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                                Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, _self));
+    }
+
     if (self->calls.contains(friendNum))
     {
         qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
         toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         return;
     }
+    qDebug() << QString("Received call invite from %1").arg(friendNum);
     const auto& callIt = self->calls.insert({friendNum, video, *self});
 
     // We don't get a state callback when answering, so fill the state ourselves in advance
@@ -376,26 +413,34 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
 }
 
-void CoreAV::stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void *_self)
+void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void *_self)
 {
-    // This callback needs to run in the CoreAV thread.
-    // Otherwise, there's a deadlock between the Core thread holding an internal
-    // toxav lock and trying to lock the CameraSource to stop it, and the
-    // av thread holding the Camera
-
     CoreAV* self = static_cast<CoreAV*>(_self);
 
-    assert(self->calls.contains(friendNum));
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get())
+    {
+        return (void)QMetaObject::invokeMethod(self, "stateCallback", Qt::QueuedConnection,
+                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                                Q_ARG(uint32_t, state), Q_ARG(void*, _self));
+    }
+
+    if(!self->calls.contains(friendNum))
+    {
+        qWarning() << QString("stateCallback called, but call %1 is already dead").arg(friendNum);
+        return;
+    }
     ToxFriendCall& call = self->calls[friendNum];
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR)
     {
         qWarning() << "Call with friend"<<friendNum<<"died of unnatural causes!";
         calls.remove(friendNum);
-        emit self->avCallFailed(friendNum);
+        emit self->avEnd(friendNum);
     }
     else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED)
     {
+        qDebug() << "Call with friend"<<friendNum<<"finished quietly";
         calls.remove(friendNum);
         emit self->avEnd(friendNum);
     }
@@ -412,13 +457,33 @@ void CoreAV::stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void *_s
     }
 }
 
-void CoreAV::audioBitrateCallback(ToxAV*, uint32_t friendNum, bool stable, uint32_t rate, void *)
+void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, bool stable, uint32_t rate, void *_self)
 {
+    CoreAV* self = static_cast<CoreAV*>(_self);
+
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get())
+    {
+        return (void)QMetaObject::invokeMethod(self, "audioBitrateCallback", Qt::QueuedConnection,
+                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                                Q_ARG(bool, stable), Q_ARG(uint32_t, rate), Q_ARG(void*, _self));
+    }
+
     qDebug() << "Audio bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
 }
 
-void CoreAV::videoBitrateCallback(ToxAV*, uint32_t friendNum, bool stable, uint32_t rate, void *)
+void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, bool stable, uint32_t rate, void *_self)
 {
+    CoreAV* self = static_cast<CoreAV*>(_self);
+
+    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    if (QThread::currentThread() != self->coreavThread.get())
+    {
+        return (void)QMetaObject::invokeMethod(self, "videoBitrateCallback", Qt::QueuedConnection,
+                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                                Q_ARG(bool, stable), Q_ARG(uint32_t, rate), Q_ARG(void*, _self));
+    }
+
     qDebug() << "Video bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
 }
 

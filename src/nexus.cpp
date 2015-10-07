@@ -49,6 +49,8 @@
 #include <QSignalMapper>
 #endif
 
+Q_DECLARE_OPAQUE_POINTER(ToxAV*)
+
 static Nexus* nexus{nullptr};
 
 Nexus::Nexus(QObject *parent) :
@@ -90,6 +92,7 @@ void Nexus::start()
     qRegisterMetaType<int64_t>("int64_t");
     qRegisterMetaType<QPixmap>("QPixmap");
     qRegisterMetaType<Profile*>("Profile*");
+    qRegisterMetaType<ToxAV*>("ToxAV*");
     qRegisterMetaType<ToxFile>("ToxFile");
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
