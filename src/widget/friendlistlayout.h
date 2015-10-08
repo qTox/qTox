@@ -43,6 +43,7 @@ public:
     QLayout* getLayoutOffline() const;
 
 private:
+    void init();
     QLayout* getFriendLayout(Status s) const;
 
     GenericChatItemLayout friendOnlineLayout;

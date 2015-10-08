@@ -20,6 +20,18 @@
 #include <cassert>
 
 FriendListLayout::FriendListLayout()
+    : QVBoxLayout()
+{
+    init();
+}
+
+FriendListLayout::FriendListLayout(QWidget* parent)
+    : QVBoxLayout(parent)
+{
+    init();
+}
+
+void FriendListLayout::init()
 {
     setSpacing(0);
     setMargin(0);
@@ -32,12 +44,6 @@ FriendListLayout::FriendListLayout()
 
     addLayout(friendOnlineLayout.getLayout());
     addLayout(friendOfflineLayout.getLayout());
-}
-
-FriendListLayout::FriendListLayout(QWidget* parent)
-    : QVBoxLayout(parent)
-{
-    FriendListLayout();
 }
 
 void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
