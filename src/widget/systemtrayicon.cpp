@@ -94,22 +94,16 @@ SystemTrayIcon::SystemTrayIcon()
         g_signal_connect(gtkIcon, "button-release-event", G_CALLBACK(callbackButtonClick), this);
     }
     #endif
-    else if (desktop == "kde" && getenv("KDE_SESSION_VERSION") == QString("5"))
+    else if (desktop == "kde" && getenv("KDE_SESSION_VERSION") == QStringLiteral("5"))
     {
-        qDebug() << "Using the Qt backend";
+        qDebug() << "Using the Qt backend on KDE5";
         qtIcon = new QSystemTrayIcon;
         backendType = SystrayBackendType::Qt;
         connect(qtIcon, &QSystemTrayIcon::activated, this, &SystemTrayIcon::activated);
     }
-    else if (desktop == "kde"
-             && getenv("KDE_SESSION_VERSION") == QString("5"))
-    {
-        backendType = SystrayBackendType::KDE5;
-        qWarning() << "Detected a KDE5 session, but we don't have Status Notifier support. Disabling the systray icon";
-    }
     else
     {
-        qDebug() << "Using the Qt backend";
+        qDebug() << "Using the Qt backend, because nothing else matches";
         qtIcon = new QSystemTrayIcon;
         backendType = SystrayBackendType::Qt;
         connect(qtIcon, &QSystemTrayIcon::activated, this, &SystemTrayIcon::activated);
