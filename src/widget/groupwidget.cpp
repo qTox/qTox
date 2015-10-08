@@ -27,6 +27,7 @@
 #include "src/widget/style.h"
 #include "src/core/core.h"
 #include "tool/croppinglabel.h"
+#include "src/widget/translator.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -56,6 +57,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
             emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
         }
     });
+    Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
 
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
@@ -82,7 +84,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     menu.addSeparator();
 
     QAction* setTitle = menu.addAction(tr("Set title..."));
-    QAction* quitGroup = menu.addAction(tr("Quit group","Menu to quit a groupchat"));
+    QAction* quitGroup = menu.addAction(tr("Quit group", "Menu to quit a groupchat"));
 
     QAction* selectedItem = menu.exec(event->globalPos());
 
@@ -145,9 +147,13 @@ void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
     if (g)
-        statusMessageLabel->setText(tr("%1 users in chat").arg(g->getPeersCount()));
-    else
-        statusMessageLabel->setText(tr("0 users in chat"));
+    {
+        int peersCount = g->getPeersCount();
+        if (peersCount == 1)
+            statusMessageLabel->setText(tr("1 user in chat"));
+        else
+            statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
+    }
 }
 
 void GroupWidget::setAsActiveChatroom()
@@ -248,4 +254,17 @@ void GroupWidget::dropEvent(QDropEvent *ev)
 void GroupWidget::setName(const QString& name)
 {
     nameLabel->setText(name);
+}
+
+void GroupWidget::retranslateUi()
+{
+    Group* g = GroupList::findGroup(groupId);
+    if (g)
+    {
+        int peersCount = g->getPeersCount();
+        if (peersCount == 1)
+            statusMessageLabel->setText(tr("1 user in chat"));
+        else
+            statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
+    }
 }

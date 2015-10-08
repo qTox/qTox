@@ -1003,7 +1003,7 @@ void ChatForm::setFriendTyping(bool isTyping)
     chatWidget->setTypingNotificationVisible(isTyping);
 
     Text* text = static_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
-    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName()) + "</div>");
+    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
 void ChatForm::show(ContentLayout* contentLayout)
@@ -1093,5 +1093,17 @@ void ChatForm::hideNetcam()
 
 void ChatForm::retranslateUi()
 {
+    QString volObjectName = volButton->objectName();
+    QString micObjectName = micButton->objectName();
     loadHistoryAction->setText(tr("Load chat history..."));
+
+    if (volObjectName == QStringLiteral("green"))
+        volButton->setToolTip(tr("Mute call"));
+    else if (volObjectName == QStringLiteral("red"))
+        volButton->setToolTip(tr("Unmute call"));
+
+    if (micObjectName == QStringLiteral("green"))
+        micButton->setToolTip(tr("Mute microphone"));
+    else if (micObjectName == QStringLiteral("red"))
+        micButton->setToolTip(tr("Unmute microphone"));
 }

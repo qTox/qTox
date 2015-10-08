@@ -164,7 +164,11 @@ void GroupChatForm::onSendTriggered()
 
 void GroupChatForm::onUserListChanged()
 {
-    nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(group->getPeersCount()));
+    int peersCount = group->getPeersCount();
+    if (peersCount == 1)
+        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
+    else
+        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 
     QLayoutItem *child;
     while ((child = namesListLayout->takeAt(0)))
@@ -204,7 +208,7 @@ void GroupChatForm::onUserListChanged()
     }
 
     // Enable or disable call button
-    if (group->getPeersCount() != 1)
+    if (peersCount != 1)
     {
         callButton->setEnabled(true);
         callButton->setObjectName("green");
@@ -367,5 +371,9 @@ void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 
 void GroupChatForm::retranslateUi()
 {
-    nusersLabel->setText(GroupChatForm::tr("%1 users in chat", "Number of users in chat").arg(group->getPeersCount()));
+    int peersCount = group->getPeersCount();
+    if (peersCount == 1)
+        nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
+    else
+        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 }
