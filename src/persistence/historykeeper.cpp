@@ -273,7 +273,7 @@ QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const
     int sender_id = getAliasID(sender);
 
     cmds.push_back(QString("INSERT INTO history (timestamp, chat_id, sender, message, alias) VALUES (%1, %2, %3, '%4', '%5');")
-                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message)).arg(dispName));
+                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message.toUtf8())).arg(QString(dispName.toUtf8())));
     cmds.push_back(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
 
     return cmds;
