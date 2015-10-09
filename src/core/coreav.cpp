@@ -395,6 +395,9 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 
     if (self->calls.contains(friendNum))
     {
+        /// NOTE: Hanging up from a callback is supposed to be UB,
+        /// but since currently the toxav callbacks are fired from the toxcore thread,
+        /// we'll always reach this point through a non-blocking queud connection, so not in the callback.
         qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
         toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         return;
