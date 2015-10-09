@@ -40,7 +40,8 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
-    passkey = *core->createPasskey(password);
+    if (!password.isEmpty())
+        passkey = *core->createPasskey(password);
 
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);

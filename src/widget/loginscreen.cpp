@@ -94,7 +94,9 @@ void LoginScreen::reset()
         ui->loginPassword->setFocus();
     }
 
+    ui->autoLoginCB->blockSignals(true);
     ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
+    ui->autoLoginCB->blockSignals(false);
 }
 
 #ifdef Q_OS_MAC
