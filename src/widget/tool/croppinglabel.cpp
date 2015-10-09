@@ -126,7 +126,7 @@ void CroppingLabel::setElidedText()
 {
     QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
     if (elidedText != origText)
-        setToolTip(origText);
+        setToolTip(origText.toHtmlEscaped());
     else
         setToolTip(QString());
 
