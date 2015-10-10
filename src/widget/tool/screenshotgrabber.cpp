@@ -19,15 +19,16 @@
 
 #include "screenshotgrabber.h"
 
-#include <QGraphicsSceneMouseEvent>
+#include <QApplication>
+#include <QDebug>
+#include <QDesktopWidget>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsRectItem>
-#include <QDesktopWidget>
+#include <QGraphicsSceneMouseEvent>
 #include <QGraphicsView>
-#include <QApplication>
 #include <QMouseEvent>
 #include <QScreen>
-#include <QDebug>
+#include <QTimer>
 
 #include "screengrabberchooserrectitem.h"
 #include "screengrabberoverlayitem.h"

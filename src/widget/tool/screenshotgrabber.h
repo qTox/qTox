@@ -20,20 +20,18 @@
 #ifndef SCREENSHOTGRABBER_H
 #define SCREENSHOTGRABBER_H
 
-#include <QWidget>
 #include <QPixmap>
-#include <QPoint>
-#include <QTimer>
 
-class ScreenGrabberChooserRectItem;
 class QGraphicsSceneMouseEvent;
-class ScreenGrabberOverlayItem;
 class QGraphicsPixmapItem;
-class ToolBoxGraphicsItem;
 class QGraphicsRectItem;
 class QGraphicsTextItem;
 class QGraphicsScene;
 class QGraphicsView;
+class QKeyEvent;
+class ScreenGrabberChooserRectItem;
+class ScreenGrabberOverlayItem;
+class ToolBoxGraphicsItem;
 
 class ScreenshotGrabber : public QObject
 {
