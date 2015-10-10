@@ -51,7 +51,6 @@ ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
     window->installEventFilter(this);
 
     setupScene();
-    installEventFilter(this);
 }
 
 void ScreenshotGrabber::reInit()
