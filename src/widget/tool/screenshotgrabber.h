@@ -43,9 +43,9 @@ public:
 
     bool eventFilter(QObject* object, QEvent* event) override;
 
-public slots:
-
     void showGrabber();
+
+public slots:
     void acceptRegion();
     void reInit();
 
