@@ -54,9 +54,12 @@ AddFriendForm::AddFriendForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
-    connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
+    connect(&toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
+    connect(&toxId, &QLineEdit::textChanged, this, &AddFriendForm::onIdChanged);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
+
+    onIdChanged(QString()); //validate empty id
 
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 }
@@ -105,11 +108,7 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (id.isEmpty())
-    {
-        GUI::showWarning(tr("Couldn't add friend"), tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
-    }
-    else if (ToxId::isToxId(id))
+    if (ToxId::isToxId(id))
     {
         if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
             GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
@@ -141,6 +140,15 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
         this->toxId.clear();
         this->message.clear();
     }
+}
+
+void AddFriendForm::onIdChanged(const QString &id)
+{
+    QString tId = id.trimmed();
+    bool isValidId = ToxId::isToxId(tId) || QRegExp("\\S+@\\S+").exactMatch(tId);
+    toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
+    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format. Is's must be 76 digital or alphabet characters length or similar name@domain.com."));
+    sendButton.setEnabled(isValidId);
 }
 
 void AddFriendForm::setIdFromClipboard()

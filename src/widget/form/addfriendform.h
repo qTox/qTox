@@ -49,6 +49,7 @@ public slots:
 
 private slots:
     void onSendTriggered();
+    void onIdChanged(const QString &id);
 
 private:
     void retranslateUi();
