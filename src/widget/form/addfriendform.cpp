@@ -24,6 +24,7 @@
 #include <QErrorMessage>
 #include <QApplication>
 #include <QClipboard>
+#include <QRegularExpression>
 #include <tox/tox.h>
 #include "src/nexus.h"
 #include "src/core/core.h"
@@ -145,9 +146,12 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
 void AddFriendForm::onIdChanged(const QString &id)
 {
     QString tId = id.trimmed();
-    bool isValidId = ToxId::isToxId(tId) || QRegExp("\\S+@\\S+").exactMatch(tId);
+    QRegularExpression dnsIdExpression("^\\S+@\\S+$");
+    bool isValidId = ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
+
     toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
-    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format. Is's must be 76 digital or alphabet characters length or similar name@domain.com."));
+    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format. It must have length of 76 hexadecimal characters or similar name@domain.com."));
+
     sendButton.setEnabled(isValidId);
 }
 
