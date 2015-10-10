@@ -58,6 +58,9 @@ void Friend::loadHistory()
 
 void Friend::setName(QString name)
 {
+   if (name.isEmpty())
+       name = userID.publicKey;
+
     userName = name;
     if (userAlias.size() == 0)
     {
