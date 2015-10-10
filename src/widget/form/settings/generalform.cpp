@@ -106,7 +106,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
 
-    for (QString color : Style::themeColorNames)
+    for (QString color : Style::getThemeColorNames())
         bodyUI->themeColorCBox->addItem(color);
 
     bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
@@ -482,4 +482,12 @@ void GeneralForm::retranslateUi()
     int proxyType = bodyUI->proxyType->currentIndex();
     bodyUI->retranslateUi(this);
     bodyUI->proxyType->setCurrentIndex(proxyType);
+
+    QStringList colorThemes(Style::getThemeColorNames());
+    for (int i = 0; i != colorThemes.size(); ++i)
+    {
+        bodyUI->themeColorCBox->setItemText(i, colorThemes[i]);
+    }
+
+    bodyUI->styleBrowser->setItemText(0, tr("None"));
 }

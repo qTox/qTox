@@ -71,9 +71,12 @@ static QColor palette[] = {
 
 static QMap<QString, QString> dict;
 
-QStringList Style::themeColorNames = {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"), QObject::tr("Violet")};
-QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"), QColor("#c23716"), QColor("#4617b5")};
+QStringList Style::getThemeColorNames()
+{
+    return {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"), QObject::tr("Violet")};
+}
 
+QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"), QColor("#c23716"), QColor("#4617b5")};
 
 QString Style::getStylesheet(const QString &filename)
 {

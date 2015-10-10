@@ -58,6 +58,7 @@ public:
         SmallLight  // [SystemDefault - 2]px, light
     };
 
+    static QStringList getThemeColorNames();
     static QString getStylesheet(const QString& filename);
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
@@ -68,7 +69,6 @@ public:
     static void applyTheme(); ///< Reloads some CCS
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
 
-    static QStringList themeColorNames;
     static QList<QColor> themeColorColors;
 
 signals:
