@@ -1027,6 +1027,9 @@ QSplitter:handle{
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item>
