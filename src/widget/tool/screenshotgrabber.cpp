@@ -37,6 +37,7 @@
 
 ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
     : QObject(parent)
+    , mKeysBlocked(false)
     , scene(0)
     , mQToxVisible(true)
 {
@@ -55,9 +56,10 @@ ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
 
 void ScreenshotGrabber::reInit()
 {
+    window->resetCachedContent();
     setupScene();
     showGrabber();
-    blocked = false;
+    mKeysBlocked = false;
 }
 
 ScreenshotGrabber::~ScreenshotGrabber()
@@ -93,23 +95,23 @@ void ScreenshotGrabber::showGrabber()
 
 bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
 {
+    if (mKeysBlocked)
+        return false;
+
     if (event->key() == Qt::Key_Escape)
         reject();
     else if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
         acceptRegion();
-    else if (event->key() == Qt::Key_Space && !blocked) // hide/show qTox window
-    {
-        Widget *Widget = Widget::getInstance();
-        blocked = true;
-        if (Widget->isVisible())
-            Widget->setVisible(false);
-        else
-            Widget->setVisible(true);
-        this->window->setVisible(false);
-        this->window->resetCachedContent();
-        // Give the window manager a moment to hide windows
-        QTimer::singleShot(350, this, SLOT(reInit()));
+    else if (event->key() == Qt::Key_Space) {
+        mKeysBlocked = true;
 
+        if (mQToxVisible)
+            hideVisibleWindows();
+        else
+            restoreHiddenWindows();
+
+        window->hide();
+        QTimer::singleShot(350, this, &ScreenshotGrabber::reInit);
     }
     else
         return false;
@@ -126,7 +128,7 @@ void ScreenshotGrabber::acceptRegion()
     qDebug() << "Screenshot accepted, chosen region" << rect;
     emit screenshotTaken(this->screenGrab.copy(rect));
     this->window->close();
-    Widget::getInstance()->setVisible(true); // show window if it was hidden
+    restoreHiddenWindows();
 }
 
 void ScreenshotGrabber::setupScene()
@@ -195,7 +197,7 @@ void ScreenshotGrabber::reject()
 {
     qDebug() << "Rejected screenshot";
     this->window->close();
-    Widget::getInstance()->setVisible(true); // show window if it was hidden
+    restoreHiddenWindows();
 }
 
 QPixmap ScreenshotGrabber::grabScreen()

@@ -56,8 +56,7 @@ signals:
 
 private:
     friend class ScreenGrabberOverlayItem;
-    // for exception multiple handling during switching window
-    bool blocked = false;
+    bool mKeysBlocked;
 
     void setupScene();
 
