@@ -58,8 +58,7 @@ private:
     // for exception multiple handling during switching window
     bool blocked = false;
 
-    void setupWindow();
-    void setupScene(QGraphicsScene* scene);
+    void setupScene();
 
     void useNothingSelectedTooltip();
     void useRegionSelectedTooltip();

@@ -37,22 +37,24 @@
 
 ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
     : QObject(parent)
+    , scene(0)
 {
-    scene = new QGraphicsScene;
     window = new QGraphicsView (scene); // Top-level widget
-    setupWindow();
-    setupScene(scene);
+    window->setAttribute(Qt::WA_DeleteOnClose);
+    window->setWindowFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
+    window->setContentsMargins(0, 0, 0, 0);
+    window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    window->setFrameShape(QFrame::NoFrame);
+    window->installEventFilter(this);
 
+    setupScene();
     installEventFilter(this);
 }
 
 void ScreenshotGrabber::reInit()
 {
-    delete scene;
-    scene = new QGraphicsScene;
-    window = new QGraphicsView(scene); // Top-level widget
-    setupWindow();
-    setupScene(scene);
+    setupScene();
     showGrabber();
     blocked = false;
 }
@@ -120,28 +122,18 @@ void ScreenshotGrabber::acceptRegion()
     if (rect.width() < 1 || rect.height() < 1)
         return;
 
-    //
     qDebug() << "Screenshot accepted, chosen region" << rect;
     emit screenshotTaken(this->screenGrab.copy(rect));
     this->window->close();
     Widget::getInstance()->setVisible(true); // show window if it was hidden
 }
 
-void ScreenshotGrabber::setupWindow()
+void ScreenshotGrabber::setupScene()
 {
-    this->window->setWindowFlags(Qt::FramelessWindowHint | Qt::X11BypassWindowManagerHint);
-    this->window->setAttribute(Qt::WA_DeleteOnClose);
-    this->window->setContentsMargins(0, 0, 0, 0);
-    this->window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    this->window->setFrameShape(QFrame::NoFrame);
+    delete scene;
+    scene = new QGraphicsScene;
+    window->setScene(scene);
 
-    connect(this->window, &QObject::destroyed, this, &QObject::deleteLater);
-    this->window->installEventFilter(this);
-}
-
-void ScreenshotGrabber::setupScene(QGraphicsScene* scene)
-{
     this->overlay = new ScreenGrabberOverlayItem(this);
     this->helperToolbox = new ToolBoxGraphicsItem;
 
