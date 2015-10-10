@@ -102,6 +102,7 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
     Settings::getInstance().setCamVideoRes(QSize(mode.width, mode.height));
+    Settings::getInstance().setCamVideoFPS(mode.FPS);
     camera.open(devName, mode);
 }
 
@@ -123,10 +124,11 @@ void AVForm::updateVideoModes(int curIndex)
     bodyUI->videoModescomboBox->clear();
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
+    unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
     for (int i=0; i<videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
-        if (mode.width==prefRes.width() && mode.height==prefRes.height() && prefResIndex==-1)
+        if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
             prefResIndex = i;
         QString str;
         if (mode.height && mode.width)
@@ -176,6 +178,14 @@ void AVForm::updateVideoModes(int curIndex)
                 break;
             }
         }
+
+        if (videoModes.size())
+        {
+            bodyUI->videoModescomboBox->setUpdatesEnabled(false);
+            bodyUI->videoModescomboBox->setCurrentIndex(-1);
+            bodyUI->videoModescomboBox->setUpdatesEnabled(true);
+            bodyUI->videoModescomboBox->setCurrentIndex(0);
+        }
     }
 }
 
@@ -192,9 +202,11 @@ void AVForm::onVideoDevChanged(int index)
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     camera.open(dev);
+    killVideoSurface();
+    createVideoSurface();
 }
 
-void AVForm::onResProbingFinished(QList<QSize> res)
+/*void AVForm::onResProbingFinished(QList<QSize> res)
 {
     QSize savedRes = Settings::getInstance().getCamVideoRes();
     int savedResIndex = -1;
@@ -215,7 +227,7 @@ void AVForm::onResProbingFinished(QList<QSize> res)
         bodyUI->videoModescomboBox->setCurrentIndex(savedResIndex);
     else
         bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
-}
+}*/
 
 void AVForm::hideEvent(QHideEvent *)
 {
@@ -242,7 +254,7 @@ void AVForm::getVideoDevices()
             videoDevIndex = bodyUI->videoDevCombobox->count()-1;
     }
     //addItem changes currentIndex -> reset
-    bodyUI->videoDevCombobox->setCurrentIndex(-1);
+    //bodyUI->videoDevCombobox->setCurrentIndex(-1);
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
     bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
@@ -361,7 +373,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
-    camVideoSurface = new VideoSurface(bodyUI->CamFrame);
+    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
     camVideoSurface->setSource(&camera);

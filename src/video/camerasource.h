@@ -59,6 +59,9 @@ public:
     virtual bool subscribe() override;
     virtual void unsubscribe() override;
 
+signals:
+    void deviceOpened();
+
 private:
     CameraSource();
     ~CameraSource();

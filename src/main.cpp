@@ -268,8 +268,8 @@ int main(int argc, char *argv[])
     logFile = nullptr;
 #endif
 
-    CameraSource::destroyInstance();
     Nexus::destroyInstance();
+    CameraSource::destroyInstance();
     Settings::destroyInstance();
     qDebug() << "Clean exit with status"<<errorcode;
     return errorcode;

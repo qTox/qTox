@@ -41,6 +41,12 @@ class MaskablePixmapWidget;
 class Widget;
 class FlyoutOverlayWidget;
 class ContentLayout;
+class QSplitter;
+class GenericNetCamView;
+
+namespace Ui {
+    class MainWindow;
+}
 
 class GenericChatForm : public QWidget
 {
@@ -67,6 +73,7 @@ signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
+    void messageInserted();
 
 public slots:
     void focusInput();
@@ -82,11 +89,16 @@ protected slots:
     void onSelectAllClicked();
     void showFileMenu();
     void hideFileMenu();
+    void onShowMessagesClicked();
+    void onSplitterMoved(int pos, int index);
 
 private:
     void retranslateUi();
 
 protected:
+    void showNetcam();
+    void hideNetcam();
+    virtual GenericNetCamView* createNetcam() = 0;
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
@@ -116,6 +128,8 @@ protected:
     QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
     bool audioInputFlag;
     bool audioOutputFlag;
+    QSplitter* bodySplitter;
+    GenericNetCamView* netcam;
 };
 
 #endif // GENERICCHATFORM_H

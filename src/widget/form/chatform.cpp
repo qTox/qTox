@@ -31,6 +31,7 @@
 #include <QTemporaryFile>
 #include <QGuiApplication>
 #include <QStyle>
+#include <QSplitter>
 #include <cassert>
 #include "chatform.h"
 #include "src/core/core.h"
@@ -41,7 +42,6 @@
 #include "src/core/cstring.h"
 #include "src/widget/tool/callconfirmwidget.h"
 #include "src/widget/friendwidget.h"
-#include "src/video/netcamview.h"
 #include "src/widget/form/loadhistorydialog.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/widget.h"
@@ -52,6 +52,7 @@
 #include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
+#include "src/video/netcamview.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
@@ -76,7 +77,6 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     typingTimer.setSingleShot(true);
 
-    netcam = nullptr;
     callDurationTimer = nullptr;
     disableCallButtonsTimer = nullptr;
 
@@ -87,6 +87,9 @@ ChatForm::ChatForm(Friend* chatFriend)
     callDuration = new QLabel();
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
+
+    chatWidget->setMinimumHeight(160);
+    connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
 
@@ -114,6 +117,8 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    //showNetcam();
 }
 
 ChatForm::~ChatForm()
@@ -747,6 +752,13 @@ void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
     avatar->setPixmap(pic);
 }
 
+GenericNetCamView *ChatForm::createNetcam()
+{
+    NetCamView* view = new NetCamView(f->getFriendID(), this);
+    view->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
+    return view;
+}
+
 void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
@@ -943,6 +955,12 @@ void ChatForm::onLoadHistory()
     }
 }
 
+void ChatForm::onMessageInserted()
+{
+    if (netcam && bodySplitter->sizes()[1] == 0)
+        netcam->setShowMessages(true, true);
+}
+
 void ChatForm::startCounter()
 {
     if (!callDurationTimer)
@@ -1075,22 +1093,6 @@ void ChatForm::SendMessageStr(QString msg)
     }
 }
 
-void ChatForm::showNetcam()
-{
-    if (!netcam)
-        netcam = new NetCamView();
-    netcam->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
-}
-
-void ChatForm::hideNetcam()
-{
-    if (!netcam)
-        return;
-    netcam->hide();
-    delete netcam;
-    netcam = nullptr;
-}
-
 void ChatForm::retranslateUi()
 {
     QString volObjectName = volButton->objectName();
@@ -1106,4 +1108,7 @@ void ChatForm::retranslateUi()
         micButton->setToolTip(tr("Mute microphone"));
     else if (micObjectName == QStringLiteral("red"))
         micButton->setToolTip(tr("Unmute microphone"));
+
+    if (netcam)
+        netcam->setShowMessages(chatWidget->isVisible());
 }
