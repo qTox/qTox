@@ -21,6 +21,7 @@
 #define SCREENSHOTGRABBER_H
 
 #include <QPixmap>
+#include <QPointer>
 
 class QGraphicsSceneMouseEvent;
 class QGraphicsPixmapItem;
@@ -70,8 +71,12 @@ private:
 
     QPixmap grabScreen();
 
+    void hideVisibleWindows();
+    void restoreHiddenWindows();
+
     void beginRectChooser(QGraphicsSceneMouseEvent* event);
 
+private:
     QPixmap screenGrab;
     QGraphicsScene* scene;
     QGraphicsView* window;
@@ -80,6 +85,9 @@ private:
     ScreenGrabberChooserRectItem* chooserRect;
     ToolBoxGraphicsItem* helperToolbox;
     QGraphicsTextItem* helperTooltip;
+
+    bool mQToxVisible;
+    QVector< QPointer<QWidget> >   mHiddenWindows;
 };
 
 

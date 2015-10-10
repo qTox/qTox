@@ -38,6 +38,7 @@
 ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
     : QObject(parent)
     , scene(0)
+    , mQToxVisible(true)
 {
     window = new QGraphicsView (scene); // Top-level widget
     window->setAttribute(Qt::WA_DeleteOnClose);
@@ -206,6 +207,29 @@ QPixmap ScreenshotGrabber::grabScreen()
                               rec.y(),
                               rec.width(),
                               rec.height());
+}
+
+void ScreenshotGrabber::hideVisibleWindows()
+{
+    foreach(QWidget* w, qApp->topLevelWidgets()) {
+        if (w != window && w->isVisible()) {
+            mHiddenWindows << w;
+            w->setVisible(false);
+        }
+    }
+
+    mQToxVisible = false;
+}
+
+void ScreenshotGrabber::restoreHiddenWindows()
+{
+    foreach(QWidget* w, mHiddenWindows) {
+        if (w)
+            w->setVisible(true);
+    }
+
+    mHiddenWindows.clear();
+    mQToxVisible = true;
 }
 
 void ScreenshotGrabber::beginRectChooser(QGraphicsSceneMouseEvent* event)
