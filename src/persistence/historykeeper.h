@@ -93,6 +93,8 @@ private:
 
     ChatType convertToChatType(int);
 
+    void importAvatar();        // may be deleted after all move to new db structure
+
     GenericDdInterface *db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;

@@ -136,11 +136,13 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     }
 
     ans.clear();
+    bool needImportAvatar = false;
     ans = db->exec("PRAGMA table_info('aliases')");
     ans.seek(2);
     if (!ans.value(1).toString().contains("av_hash"))
     {
         //add collum in table
+        needImportAvatar = true;
         db->exec("ALTER TABLE aliases ADD COLUMN av_hash BLOB");
         qDebug() << "Struct DB updated: Added column av_hash in table aliases.";
     }
@@ -149,8 +151,14 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     if (!ans.value(1).toString().contains("avatar"))
     {
         //add collum in table
+        needImportAvatar = true;
         db->exec("ALTER TABLE aliases ADD COLUMN avatar BLOB");
         qDebug() << "Struct DB updated: Added column avatar in table aliases.";
+    }
+
+    if (needImportAvatar)
+    {
+        importAvatar();
     }
 
 
@@ -163,6 +171,37 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     QSqlQuery sqlAnswer = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
     if (sqlAnswer.first())
         messageID = sqlAnswer.value(0).toLongLong();
+}
+
+void HistoryKeeper::importAvatar()
+{
+    QSqlQuery sqlAnswer = db->exec("SELECT * FROM aliases;");
+    while (sqlAnswer.next())
+    {
+        QString userID = sqlAnswer.value(1).toString();
+        QString puth (Settings::getInstance().getSettingsDirPath() +
+                      QString("avatars") + QDir::separator() +
+                      userID +".png");
+        qDebug() << QString("Try import avatar for: %1.").arg(userID);
+        if (QFile::exists(puth))
+        {
+            QPixmap pic(puth);
+            saveAvatar(pic,userID);
+            qDebug() << QString("Import avatar for: %1.").arg(userID);
+        }
+        else
+        {
+            puth = Settings::getInstance().getSettingsDirPath() +
+                    "avatar_" + userID + ".png";
+            if (QFile::exists(puth))
+            {
+                QPixmap pic(puth);
+                saveAvatar(pic,userID);
+                qDebug() << QString("Import from profile_dir avatar for: %1.").arg(userID);
+            }
+        }
+
+    }
 }
 
 HistoryKeeper::~HistoryKeeper()
