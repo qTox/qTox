@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
     parser.process(a);
 
 #ifndef Q_OS_ANDROID
-    IPC::getInstance();
+    IPC& ipc = IPC::getInstance();
 #endif
 
     sodium_init(); // For the auto-updater
@@ -157,7 +157,6 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
-    IPC& ipc = IPC::getInstance();
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
