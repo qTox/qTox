@@ -341,7 +341,8 @@ void Core::start()
     }
     else
     {
-        qDebug() << "Self avatar not found";
+        qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
+        setAvatar({});
     }
 
     ready = true;
@@ -792,10 +793,17 @@ void Core::setUsername(const QString& username)
 
 void Core::setAvatar(const QByteArray& data)
 {
-    QPixmap pic;
-    pic.loadFromData(data);
-    Settings::getInstance().saveAvatar(pic, getSelfId().toString());
-    emit selfAvatarChanged(pic);
+    if (!data.isEmpty())
+    {
+        QPixmap pic;
+        pic.loadFromData(data);
+        Settings::getInstance().saveAvatar(pic, getSelfId().toString());
+        emit selfAvatarChanged(pic);
+    }
+    else
+    {
+        emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
+    }
 
     AvatarBroadcaster::setAvatar(data);
     AvatarBroadcaster::enableAutoBroadcast();

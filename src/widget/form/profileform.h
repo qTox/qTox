@@ -67,7 +67,6 @@ public slots:
 private slots:
     void setToxId(const QString& id);
     void copyIdClicked();
-    void onAvatarClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
     void onRenameClicked();
@@ -78,12 +77,15 @@ private slots:
     void onSaveQrClicked();
     void onDeletePassClicked();
     void onChangePassClicked();
+    void onAvatarClicked();
+    void showProfilePictureContextMenu(const QPoint &point);
 
 private:
     void retranslateUi();
     void prFileLabelUpdate();
 
 private:
+    bool eventFilter(QObject *object, QEvent *event);
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;

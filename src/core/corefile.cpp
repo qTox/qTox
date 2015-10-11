@@ -56,12 +56,20 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
 {
     QMutexLocker mlocker(&fileSendMutex);
 
+    if (data.isEmpty())
+    {
+        tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, 0,
+                                         nullptr, nullptr, 0, nullptr);
+        return;
+    }
+
     static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
     uint8_t avatarHash[TOX_HASH_LENGTH];
     tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
     uint64_t filesize = data.size();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
-                                     avatarHash, avatarHash, TOX_HASH_LENGTH, nullptr);
+                                         avatarHash, avatarHash, TOX_HASH_LENGTH, nullptr);
+
     if (fileNum == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "sendAvatarFile: Can't create the Tox file sender";
