@@ -74,6 +74,7 @@ AVForm::AVForm() :
 
 AVForm::~AVForm()
 {
+    killVideoSurface();
     Translator::unregister(this);
     delete bodyUI;
 }
