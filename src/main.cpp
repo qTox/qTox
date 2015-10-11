@@ -234,7 +234,7 @@ int main(int argc, char *argv[])
     else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
         time_t event = ipc.postEvent("activate");
-        if (ipc.waitUntilAccepted(event, 2))
+        if (!ipc.waitUntilAccepted(event, 2))
         {
             return EXIT_SUCCESS;
         }
