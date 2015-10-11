@@ -52,7 +52,6 @@ private:
     void retranslateUi();
 
 private slots:
-    void on_videoModescomboBox_currentIndexChanged(int index);
 
     // audio
     void onInDevChanged(const QString& deviceDescriptor);
@@ -63,6 +62,7 @@ private slots:
 
     // camera
     void onVideoDevChanged(int index);
+    void onVideoModesIndexChanged(int index);
     //void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*) final override;

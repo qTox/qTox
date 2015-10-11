@@ -58,6 +58,8 @@ AVForm::AVForm() :
     connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
     connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
     connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
+    connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
+
     connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
     bodyUI->playbackSlider->setValue(100);
@@ -87,7 +89,7 @@ void AVForm::showEvent(QShowEvent*)
     getVideoDevices();
 }
 
-void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
+void AVForm::onVideoModesIndexChanged(int index)
 {
     if (index<0 || index>=videoModes.size())
     {
