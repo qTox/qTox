@@ -19,8 +19,9 @@
 
 #include "src/ipc.h"
 #include "src/persistence/settings.h"
-#include <QDebug>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QThread>
 #include <random>
 #include <unistd.h>
 

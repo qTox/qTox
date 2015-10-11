@@ -21,20 +21,19 @@
 #ifndef IPC_H
 #define IPC_H
 
+#include <ctime>
+#include <functional>
+#include <QMap>
+#include <QObject>
 #include <QSharedMemory>
 #include <QTimer>
-#include <QObject>
-#include <QThread>
 #include <QVector>
-#include <QMap>
-#include <functional>
-#include <ctime>
 
 using IPCEventHandler = std::function<bool (const QByteArray&)>;
 
 #define IPC_PROTOCOL_VERSION "2"
 
-class IPC : public QThread
+class IPC : public QObject
 {
     Q_OBJECT
     IPC();
