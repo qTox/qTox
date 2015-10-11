@@ -464,8 +464,8 @@ void ChatForm::onAvEnding(uint32_t FriendId, int CallId)
 
     enableCallButtons();
     stopCounter();
-    hideNetcam();
     CameraSource::getInstance().unsubscribe();
+    hideNetcam();
 }
 
 void ChatForm::onAvEnd(uint32_t FriendId, int CallId)
@@ -481,7 +481,6 @@ void ChatForm::onAvEnd(uint32_t FriendId, int CallId)
     enableCallButtons();
     stopCounter();
     hideNetcam();
-    Core::getInstance()->getVideoSourceFromCall(callId)->unsubscribe();
 }
 
 void ChatForm::onAvRequestTimeout(uint32_t FriendId, int CallId)
