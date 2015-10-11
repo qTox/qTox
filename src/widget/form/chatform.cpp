@@ -57,6 +57,8 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
+#include "src/video/videosource.h"
+#include "src/video/camerasource.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -138,7 +140,6 @@ void ChatForm::setStatusMessage(QString newMessage)
 void ChatForm::onSendTriggered()
 {
     SendMessageStr(msgEdit->toPlainText());
-
     msgEdit->clear();
 }
 
@@ -256,7 +257,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, int CallId, bool video)
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvInvite";
+    qDebug() << "onAvInvite, callId: " << CallId;
 
     callId = CallId;
     callButton->disconnect();
@@ -307,7 +308,7 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvStart";
+    qDebug() << "onAvStart, callId: " << CallId;
 
     audioInputFlag = true;
     audioOutputFlag = true;
@@ -334,6 +335,7 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
         videoButton->setToolTip("");
         connect(callButton, SIGNAL(clicked()),
                 this, SLOT(onHangupCallTriggered()));
+        hideNetcam();
     }
     callButton->style()->polish(callButton);
     videoButton->style()->polish(videoButton);
@@ -353,12 +355,12 @@ void ChatForm::onAvStart(uint32_t FriendId, int CallId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvCancel(uint32_t FriendId, int)
+void ChatForm::onAvCancel(uint32_t FriendId, int CallId)
 {
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvCancel";
+    qDebug() << "onAvCancel, callId: " << CallId;
 
     delete callConfirm;
     callConfirm = nullptr;
@@ -373,27 +375,12 @@ void ChatForm::onAvCancel(uint32_t FriendId, int)
                          QDateTime::currentDateTime());
 }
 
-void ChatForm::onAvEnd(uint32_t FriendId, int)
-{
-    if (FriendId != f->getFriendID())
-        return;
-
-    qDebug() << "onAvEnd";
-
-    delete callConfirm;
-    callConfirm = nullptr;
-
-    enableCallButtons();
-    stopCounter();
-    hideNetcam();
-}
-
 void ChatForm::onAvRinging(uint32_t FriendId, int CallId, bool video)
 {
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvRinging";
+    qDebug() << "onAvRinging, callId: " << CallId;
 
     callId = CallId;
     callButton->disconnect();
@@ -433,7 +420,7 @@ void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvStarting";
+    qDebug() << "onAvStarting, callId:" << CallId;
 
     callId = CallId;
 
@@ -465,28 +452,44 @@ void ChatForm::onAvStarting(uint32_t FriendId, int CallId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvEnding(uint32_t FriendId, int)
+void ChatForm::onAvEnding(uint32_t FriendId, int CallId)
 {
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvEnding";
+    qDebug() << "onAvEnding, callId: " << CallId;
 
     delete callConfirm;
     callConfirm = nullptr;
 
     enableCallButtons();
     stopCounter();
-
     hideNetcam();
+    CameraSource::getInstance().unsubscribe();
 }
 
-void ChatForm::onAvRequestTimeout(uint32_t FriendId, int)
+void ChatForm::onAvEnd(uint32_t FriendId, int CallId)
 {
     if (FriendId != f->getFriendID())
         return;
 
-    qDebug() << "onAvRequestTimeout";
+    qDebug() << "onAvEnd, callId: " << CallId;
+
+    delete callConfirm;
+    callConfirm = nullptr;
+
+    enableCallButtons();
+    stopCounter();
+    hideNetcam();
+    Core::getInstance()->getVideoSourceFromCall(callId)->unsubscribe();
+}
+
+void ChatForm::onAvRequestTimeout(uint32_t FriendId, int CallId)
+{
+    if (FriendId != f->getFriendID())
+        return;
+
+    qDebug() << "onAvRequestTimeout, callId: " << CallId;
 
     delete callConfirm;
     callConfirm = nullptr;
@@ -537,7 +540,7 @@ void ChatForm::onAvMediaChange(uint32_t FriendId, int CallId, bool video)
     if (FriendId != f->getFriendID() || CallId != callId)
         return;
 
-    qDebug() << "onAvMediaChange";
+    qDebug() << "onAvMediaChange, callId: " << CallId;
 
     if (video)
         showNetcam();
@@ -754,6 +757,7 @@ void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
 
 GenericNetCamView *ChatForm::createNetcam()
 {
+    qDebug() << "creating netcam";
     NetCamView* view = new NetCamView(f->getFriendID(), this);
     view->show(Core::getInstance()->getVideoSourceFromCall(callId), f->getDisplayedName());
     return view;

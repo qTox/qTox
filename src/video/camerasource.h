@@ -45,6 +45,7 @@ struct AVCodecContext;
 class CameraSource : public VideoSource
 {
     Q_OBJECT
+
 public:
     static CameraSource& getInstance();
     static void destroyInstance();

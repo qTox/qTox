@@ -40,6 +40,9 @@ CameraSource::CameraSource()
       biglock{false}, freelistLock{false},
       isOpen{false}, subscriptions{0}
 {
+    //qDebug() << "CameraSource()";
+
+    subscriptions = 0;
     av_register_all();
     avdevice_register_all();
 }
@@ -72,6 +75,8 @@ void CameraSource::open(const QString deviceName)
 
 void CameraSource::open(const QString DeviceName, VideoMode Mode)
 {
+    //qDebug() << "open(const QString DeviceName, VideoMode Mode)";
+
     {
         bool expected = false;
         while (!biglock.compare_exchange_weak(expected, true))
@@ -119,7 +124,7 @@ CameraSource::~CameraSource()
 
     // Free all remaining VideoFrame
     // Locking must be done precisely this way to avoid races
-    for (int i=0; i<freelist.size(); i++)
+    for (int i = 0; i < freelist.size(); i++)
     {
         std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
         if (!vframe)
@@ -132,8 +137,9 @@ CameraSource::~CameraSource()
     if (cctxOrig)
         avcodec_close(cctxOrig);
 
-    for (int i=subscriptions; i; --i)
+    for (int i = subscriptions; i; --i)
         device->close();
+
     device = nullptr;
     // Memfence so the stream thread sees a nullptr device
     std::atomic_thread_fence(std::memory_order_release);
@@ -146,6 +152,8 @@ CameraSource::~CameraSource()
 
 bool CameraSource::subscribe()
 {
+    //qDebug() << "subscribe";
+
     // Fast lock
     {
         bool expected = false;
@@ -156,6 +164,8 @@ bool CameraSource::subscribe()
     if (!isOpen)
     {
         ++subscriptions;
+        //qDebug() << "is not open, subscriptions: " << subscriptions;
+
         biglock = false;
         return true;
     }
@@ -163,6 +173,8 @@ bool CameraSource::subscribe()
     if (openDevice())
     {
         ++subscriptions;
+        //qDebug() << "open device, subscriptions: " << subscriptions;
+
         biglock = false;
         return true;
     }
@@ -177,10 +189,13 @@ bool CameraSource::subscribe()
         biglock = false;
         return false;
     }
+    //qDebug() << "END subscribe";
+
 }
 
 void CameraSource::unsubscribe()
 {
+    //qDebug() << "unsubscribe";
     // Fast lock
     {
         bool expected = false;
@@ -190,20 +205,24 @@ void CameraSource::unsubscribe()
 
     if (!isOpen)
     {
-        --subscriptions;
+        //qDebug() << "is not open";
+        subscriptions--;
         biglock = false;
         return;
     }
 
     if (!device)
     {
-        qWarning() << "Unsubscribing with zero subscriber";
+        //qWarning() << "Unsubscribing with zero subscriber";
         biglock = false;
         return;
     }
+    //qDebug() << "1. device: " << device;
+    //qDebug() << "2. subscriptions:" << subscriptions;
 
-    if (--subscriptions == 0)
+    if (subscriptions - 1 == 0)
     {
+        //qDebug() << "first block";
         closeDevice();
 
         biglock = false;
@@ -214,14 +233,18 @@ void CameraSource::unsubscribe()
     }
     else
     {
+        //qDebug() << "second block";
         device->close();
         biglock = false;
     }
+    subscriptions--;
+
+    //qDebug() << "3. subscriptions: " << subscriptions;
 }
 
 bool CameraSource::openDevice()
 {
-    qDebug() << "Opening device "<<deviceName;
+    //qDebug() << "Opening device: " << deviceName;
 
     if (device)
     {
@@ -243,15 +266,15 @@ bool CameraSource::openDevice()
 
     // We need to open the device as many time as we already have subscribers,
     // otherwise the device could get closed while we still have subscribers
-    for (int i=subscriptions; i>0; i--)
+    for (int i = 0; i < subscriptions; i++)
         device->open();
 
     // Find the first video stream
-    for (unsigned i=0; i<device->context->nb_streams; i++)
+    for (unsigned i = 0; i < device->context->nb_streams; i++)
     {
-        if(device->context->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO)
+        if(device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
         {
-            videoStreamIndex=i;
+            videoStreamIndex = i;
             break;
         }
     }
@@ -259,8 +282,8 @@ bool CameraSource::openDevice()
         return false;
 
     // Get a pointer to the codec context for the video stream
-    cctxOrig=device->context->streams[videoStreamIndex]->codec;
-    codec=avcodec_find_decoder(cctxOrig->codec_id);
+    cctxOrig = device->context->streams[videoStreamIndex]->codec;
+    codec = avcodec_find_decoder(cctxOrig->codec_id);
     if(!codec)
         return false;
 
@@ -268,6 +291,7 @@ bool CameraSource::openDevice()
     cctx = avcodec_alloc_context3(codec);
     if(avcodec_copy_context(cctx, cctxOrig) != 0)
         return false;
+
     cctx->refcounted_frames = 1;
 
     // Open codec
@@ -293,11 +317,11 @@ bool CameraSource::openDevice()
 
 void CameraSource::closeDevice()
 {
-    qDebug() << "Closing device "<<deviceName;
+    //qDebug() << "Closing device " << deviceName;
 
     // Free all remaining VideoFrame
     // Locking must be done precisely this way to avoid races
-    for (int i=0; i<freelist.size(); i++)
+    for (int i = 0; i < freelist.size(); i++)
     {
         std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
         if (!vframe)
@@ -398,9 +422,10 @@ void CameraSource::freelistCallback(int freelistIndex)
 int CameraSource::getFreelistSlotLockless()
 {
     int size = freelist.size();
-    for (int i=0; i<size; ++i)
+    for (int i = 0; i < size; ++i)
         if (freelist[i].expired())
             return i;
-    freelist.resize(size+(size>>1)+4); // Arbitrary growth strategy, should work well
+
+    freelist.resize(size + (size>>1) + 4); // Arbitrary growth strategy, should work well
     return size;
 }

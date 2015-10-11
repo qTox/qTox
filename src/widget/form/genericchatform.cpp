@@ -75,7 +75,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
-    connect(&Settings::getInstance(), &Settings::emojiFontChanged, this, [this]() { chatWidget->forceRelayout(); });
+    connect(&Settings::getInstance(), &Settings::emojiFontChanged,
+            this, [this]() { chatWidget->forceRelayout(); });
 
     msgEdit = new ChatTextEdit();
 
@@ -186,12 +187,16 @@ GenericChatForm::GenericChatForm(QWidget *parent)
 
     menu.addActions(chatWidget->actions());
     menu.addSeparator();
-    saveChatAction = menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onSaveLogClicked()));
-    clearAction = menu.addAction(QIcon::fromTheme("edit-clear"), QString(), this, SLOT(clearChatArea(bool)));
+    saveChatAction = menu.addAction(QIcon::fromTheme("document-save"),
+                                    QString(), this, SLOT(onSaveLogClicked()));
+    clearAction = menu.addAction(QIcon::fromTheme("edit-clear"),
+                                 QString(), this, SLOT(clearChatArea(bool)));
     menu.addSeparator();
 
-    connect(emoteButton, &QPushButton::clicked, this, &GenericChatForm::onEmoteButtonClicked);
-    connect(chatWidget, &ChatLog::customContextMenuRequested, this, &GenericChatForm::onChatContextMenuRequested);
+    connect(emoteButton, &QPushButton::clicked,
+            this, &GenericChatForm::onEmoteButtonClicked);
+    connect(chatWidget, &ChatLog::customContextMenuRequested,
+            this, &GenericChatForm::onChatContextMenuRequested);
 
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L, this, SLOT(clearChatArea()));
 
@@ -576,7 +581,8 @@ void GenericChatForm::showNetcam()
     if (!netcam)
         netcam = createNetcam();
 
-    connect(netcam, &GenericNetCamView::showMessageClicked, this, &GenericChatForm::onShowMessagesClicked);
+    connect(netcam, &GenericNetCamView::showMessageClicked,
+            this, &GenericChatForm::onShowMessagesClicked);
 
     bodySplitter->insertWidget(0, netcam);
     bodySplitter->setCollapsible(0, false);
@@ -586,6 +592,8 @@ void GenericChatForm::hideNetcam()
 {
     if (!netcam)
         return;
+
+    netcam->close();
     netcam->hide();
     delete netcam;
     netcam = nullptr;

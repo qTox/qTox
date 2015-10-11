@@ -78,6 +78,7 @@ void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool vid
     calls[callId].sendAudioTimer->setSingleShot(true);
     connect(calls[callId].sendAudioTimer, &QTimer::timeout, [=](){sendCallAudio(callId,toxav);});
     calls[callId].sendAudioTimer->start();
+
     if (calls[callId].videoEnabled)
     {
         calls[callId].videoSource = new CoreVideoSource;
@@ -237,6 +238,7 @@ void Core::cleanupCall(int32_t callId)
     calls[callId].active = false;
     disconnect(calls[callId].sendAudioTimer,0,0,0);
     calls[callId].sendAudioTimer->stop();
+
     if (calls[callId].videoEnabled)
     {
         CameraSource::getInstance().unsubscribe();
