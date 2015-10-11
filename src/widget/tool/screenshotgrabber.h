@@ -20,20 +20,19 @@
 #ifndef SCREENSHOTGRABBER_H
 #define SCREENSHOTGRABBER_H
 
-#include <QWidget>
 #include <QPixmap>
-#include <QPoint>
-#include <QTimer>
+#include <QPointer>
 
-class ScreenGrabberChooserRectItem;
 class QGraphicsSceneMouseEvent;
-class ScreenGrabberOverlayItem;
 class QGraphicsPixmapItem;
-class ToolBoxGraphicsItem;
 class QGraphicsRectItem;
 class QGraphicsTextItem;
 class QGraphicsScene;
 class QGraphicsView;
+class QKeyEvent;
+class ScreenGrabberChooserRectItem;
+class ScreenGrabberOverlayItem;
+class ToolBoxGraphicsItem;
 
 class ScreenshotGrabber : public QObject
 {
@@ -45,9 +44,9 @@ public:
 
     bool eventFilter(QObject* object, QEvent* event) override;
 
-public slots:
-
     void showGrabber();
+
+public slots:
     void acceptRegion();
     void reInit();
 
@@ -57,11 +56,9 @@ signals:
 
 private:
     friend class ScreenGrabberOverlayItem;
-    // for exception multiple handling during switching window
-    bool blocked = false;
+    bool mKeysBlocked;
 
-    void setupWindow();
-    void setupScene(QGraphicsScene* scene);
+    void setupScene();
 
     void useNothingSelectedTooltip();
     void useRegionSelectedTooltip();
@@ -73,8 +70,12 @@ private:
 
     QPixmap grabScreen();
 
+    void hideVisibleWindows();
+    void restoreHiddenWindows();
+
     void beginRectChooser(QGraphicsSceneMouseEvent* event);
 
+private:
     QPixmap screenGrab;
     QGraphicsScene* scene;
     QGraphicsView* window;
@@ -83,6 +84,9 @@ private:
     ScreenGrabberChooserRectItem* chooserRect;
     ToolBoxGraphicsItem* helperToolbox;
     QGraphicsTextItem* helperTooltip;
+
+    bool mQToxVisible;
+    QVector< QPointer<QWidget> >   mHiddenWindows;
 };
 
 
