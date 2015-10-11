@@ -233,15 +233,10 @@ int main(int argc, char *argv[])
     }
     else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
-        uint32_t dest = 0;
-        if (parser.isSet("p"))
-            dest = Settings::getInstance().getCurrentProfileId();
-
-        time_t event = ipc.postEvent("activate", QByteArray(), dest);
+        time_t event = ipc.postEvent("activate");
         if (ipc.waitUntilAccepted(event, 2))
         {
-            if (!ipc.isCurrentOwner())
-                return EXIT_SUCCESS;
+            return EXIT_SUCCESS;
         }
     }
 #endif
