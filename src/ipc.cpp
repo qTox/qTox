@@ -186,11 +186,13 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
 {
     bool result = false;
     time_t start = time(0);
-    while (!(result = isEventAccepted(postTime)))
-    {
-        qApp->processEvents();
-        if (timeout > 0 && difftime(time(0), start) >= timeout)
+    forever {
+        result = isEventAccepted(postTime);
+        if (result || (timeout > 0 && difftime(time(0), start) >= timeout))
             break;
+
+        qApp->processEvents();
+        QThread::msleep(0);
     }
     return result;
 }
