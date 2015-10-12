@@ -51,8 +51,7 @@ CoreAV::CoreAV(Tox *tox)
 
     toxav_callback_call(toxav, CoreAV::callCallback, this);
     toxav_callback_call_state(toxav, CoreAV::stateCallback, this);
-    toxav_callback_audio_bit_rate_status(toxav, CoreAV::audioBitrateCallback, this);
-    toxav_callback_video_bit_rate_status(toxav, CoreAV::videoBitrateCallback, this);
+    toxav_callback_bit_rate_status(toxav, CoreAV::bitrateCallback, this);
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
 
@@ -460,34 +459,19 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     }
 }
 
-void CoreAV::audioBitrateCallback(ToxAV* toxav, uint32_t friendNum, bool stable, uint32_t rate, void *_self)
+void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, uint32_t vrate, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
 
     // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
     if (QThread::currentThread() != self->coreavThread.get())
     {
-        return (void)QMetaObject::invokeMethod(self, "audioBitrateCallback", Qt::QueuedConnection,
+        return (void)QMetaObject::invokeMethod(self, "bitrateCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                Q_ARG(bool, stable), Q_ARG(uint32_t, rate), Q_ARG(void*, _self));
+                                                Q_ARG(uint32_t, arate), Q_ARG(uint32_t, vrate), Q_ARG(void*, _self));
     }
 
-    qDebug() << "Audio bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
-}
-
-void CoreAV::videoBitrateCallback(ToxAV* toxav, uint32_t friendNum, bool stable, uint32_t rate, void *_self)
-{
-    CoreAV* self = static_cast<CoreAV*>(_self);
-
-    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
-    if (QThread::currentThread() != self->coreavThread.get())
-    {
-        return (void)QMetaObject::invokeMethod(self, "videoBitrateCallback", Qt::QueuedConnection,
-                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                Q_ARG(bool, stable), Q_ARG(uint32_t, rate), Q_ARG(void*, _self));
-    }
-
-    qDebug() << "Video bitrate with"<<friendNum<<" is now "<<rate<<", stability:"<<stable;
+    qDebug() << "Bitrate with"<<friendNum<<" is now "<<arate<<"/"<<vrate;
 }
 
 void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,

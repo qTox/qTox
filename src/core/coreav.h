@@ -97,8 +97,7 @@ signals:
 private slots:
     static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);
     static void stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void* self);
-    static void audioBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void* self);
-    static void videoBitrateCallback(ToxAV *toxAV, uint32_t friendNum, bool stable, uint32_t rate, void* self);
+    static void bitrateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t arate, uint32_t vrate, void* self);
 
 private:
     void process();
