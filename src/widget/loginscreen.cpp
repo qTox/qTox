@@ -27,7 +27,12 @@
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
 #include <QMessageBox>
+#include <QFileInfo>
 #include <QDebug>
+
+#ifdef Q_OS_WIN
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+#endif
 
 LoginScreen::LoginScreen(QWidget *parent) :
     QWidget(parent),
@@ -95,6 +100,10 @@ void LoginScreen::reset()
     }
 
     ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
+    //restrictions on the file name of the profile
+    ui->newUsername->setValidator(new QRegularExpressionValidator(QRegularExpression("[a-zA-Z_\\-\\d]+"), this));
+    ui->newUsername->setMaxLength(16);
+    ui->newUsername->setToolTip(tr("This field is responsible for the file name of the profile. \nYou can only use the following characters: letters from 'A' to 'z', and the characters '-' and '_'."));
 }
 
 #ifdef Q_OS_MAC
@@ -124,33 +133,59 @@ void LoginScreen::onCreateNewProfile()
 
     if (name.isEmpty())
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The username must not be empty."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("The username must not be empty."));
         return;
     }
 
     if (pass.size()!=0 && pass.size() < 6)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters long."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("The password must be at least 6 characters long."));
         return;
     }
 
     if (ui->newPassConfirm->text() != pass)
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
         return;
     }
 
     if (Profile::exists(name))
     {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("A profile with this name already exists."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("A profile with this name already exists."));
         return;
     }
+
+    if (QFile::exists((Settings::getInstance().getSettingsDirPath())+name+".qtox_history"))
+    {
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("Folder of settings already contains files of messages history with the given name."));
+        return;
+    }
+
+    #ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup++; // turn checking on
+    #endif
+    if (!QFileInfo(Settings::getInstance().getSettingsDirPath()).permissions() & QFileDevice::WriteOwner)
+    {
+        // Checking rights
+        QMessageBox::critical(this, tr("Couldn't write to settings directory"),
+                              tr("Check availability of the required write permissions\n%1").arg(Settings::getInstance().getSettingsDirPath()));
+        return;
+    }
+    #ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--; // turn it off again
+    #endif
 
     Profile* profile = Profile::createProfile(name, pass);
     if (!profile)
     {
         // Unknown error
-        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"),
+                              tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
         return;
     }
 
@@ -194,7 +229,8 @@ void LoginScreen::onLogin()
     {
         if (!ProfileLocker::isLockable(name))
         {
-            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Profile already in use. Close other clients."));
+            QMessageBox::critical(this, tr("Couldn't load this profile"),
+                                  tr("Profile already in use. Close other clients."));
             return;
         }
         else

@@ -269,6 +269,7 @@ void ProfileForm::onRenameClicked()
 {
     Nexus& nexus = Nexus::getInstance();
     QString cur = nexus.getProfile()->getName();
+    QRegExp shablon ("[a-zA-Z_\\-\\d]+");
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
     do
     {
@@ -279,6 +280,9 @@ void ProfileForm::onRenameClicked()
         if (Profile::exists(name))
             GUI::showError(tr("Profile already exists", "rename failure title"),
                            tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
+        else if (!shablon.exactMatch(name))
+                 GUI::showError(tr("Failed to rename", "rename failed title"),
+                                  tr("You can only use the following characters: letters from 'A' to 'z', and the characters '-' and '_'."));
         else if (!nexus.getProfile()->rename(name))
             GUI::showError(tr("Failed to rename", "rename failed title"),
                              tr("Couldn't rename the profile to \"%1\"").arg(cur));
