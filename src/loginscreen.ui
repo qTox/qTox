@@ -631,15 +631,6 @@ margin-bottom:45px;</string>
                <bold>true</bold>
               </font>
              </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-radius:5px;
-padding:5px;
-color:white;
-background-color:#6cc865;</string>
-             </property>
              <property name="text">
               <string>Create Profile</string>
              </property>
@@ -995,15 +986,6 @@ margin-bottom:5px;</string>
                <weight>75</weight>
                <bold>true</bold>
               </font>
-             </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">border-radius:5px;
-padding:5px;
-color:white;
-background-color:#6cc865;</string>
              </property>
              <property name="text">
               <string>Load</string>

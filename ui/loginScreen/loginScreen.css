@@ -1,0 +1,12 @@
+#loginButton,
+#createAccountButton {
+  border-radius:5px;
+  padding:5px;
+  color:white;
+  background-color:#42a33a;
+}
+
+#loginButton:hover,
+#createAccountButton:hover {
+  background: #0c530d;
+}
