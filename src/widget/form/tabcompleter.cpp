@@ -91,7 +91,7 @@ void TabCompleter::complete()
 
         // remember charcount to delete next time and advance to next completion
         lastCompletionLength = nextCompletion->length();
-        nextCompletion++;
+        ++nextCompletion;
 
         // we're completing the first word of the line
         if (msgEdit->textCursor().position() == lastCompletionLength)

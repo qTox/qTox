@@ -40,7 +40,7 @@ QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
 AVInputFormat* CameraDevice::iformat{nullptr};
 AVInputFormat* CameraDevice::idesktopFormat{nullptr};
 
-CameraDevice::CameraDevice(const QString devName, AVFormatContext *context)
+CameraDevice::CameraDevice(const QString &devName, AVFormatContext *context)
     : devName{devName}, context{context}, refcount{1}
 {
 }

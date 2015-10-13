@@ -85,7 +85,7 @@ public:
     ContentDialog* createContentDialog() const;
     ContentLayout* createContentDialog(DialogType type);
 
-    static void confirmExecutableOpen(const QFileInfo file);
+    static void confirmExecutableOpen(const QFileInfo &file);
 
     void clearAllReceipts();
     void reloadHistory();

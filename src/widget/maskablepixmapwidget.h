@@ -30,7 +30,7 @@ public:
     ~MaskablePixmapWidget();
     void autopickBackground();
     void setClickable(bool clickable);
-    void setPixmap(const QPixmap &pmap, QColor background);
+    void setPixmap(const QPixmap &pmap, const QColor &background);
     void setPixmap(const QPixmap &pmap);
     QPixmap getPixmap() const;
     void setSize(QSize size);

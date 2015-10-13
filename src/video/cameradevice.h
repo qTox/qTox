@@ -66,7 +66,7 @@ public:
     static QString getDefaultDeviceName();
 
 private:
-    CameraDevice(const QString devName, AVFormatContext *context);
+    CameraDevice(const QString &devName, AVFormatContext *context);
     static CameraDevice* open(QString devName, AVDictionary** options);
     static bool getDefaultInputFormat(); ///< Sets CameraDevice::iformat, returns success/failure
     static QVector<QPair<QString, QString> > getRawDeviceListGeneric(); ///< Uses avdevice_list_devices

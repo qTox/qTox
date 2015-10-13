@@ -81,7 +81,7 @@ void MaskablePixmapWidget::setClickable(bool clickable)
         unsetCursor();
 }
 
-void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, QColor background)
+void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, const QColor &background)
 {
     if (!pmap.isNull())
     {

@@ -179,7 +179,7 @@ void Style::setThemeColor(int color)
         setThemeColor(themeColorColors[color]);
 }
 
-void Style::setThemeColor(QColor color)
+void Style::setThemeColor(const QColor &color)
 {
     if (!color.isValid())
     {
