@@ -149,14 +149,20 @@ void AddFriendForm::onIdChanged(const QString &id)
     bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
 
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-    QString toxIdComment(tr("it must have length of 76 hexadecimal characters or similar name@domain.com", "Tox ID format description"));
+    QString toxIdComment(tr("either 76 hexadecimal characters or name@domain.com", "Tox ID format description"));
 
     if(isValidId)
     {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" (") + toxIdComment + QStringLiteral(")"));
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" (") +
+                           toxIdComment +
+                           QStringLiteral(")"));
     } else
     {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" <font color='red'>(") + toxIdComment + QStringLiteral(")</font>"));
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" <font color='red'>(") +
+                           toxIdComment +
+                           QStringLiteral(")</font>"));
     }
 
     toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
