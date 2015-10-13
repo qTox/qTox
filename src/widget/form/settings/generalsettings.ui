@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-180</y>
         <width>631</width>
-        <height>1396</height>
+        <height>1358</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -97,115 +97,118 @@
            </layout>
           </item>
           <item>
-           <widget class="QGroupBox" name="trayGroup">
-            <property name="title">
-             <string>System Tray</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <layout class="QGridLayout" name="gridLayout">
-               <item row="4" column="1">
-                <widget class="QCheckBox" name="closeToTray">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
-instead of closing itself.</string>
-                 </property>
-                 <property name="text">
-                  <string>Close to tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QCheckBox" name="startInTray">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string comment="toolTip for Start in tray setting">qTox will start minimized in tray.</string>
-                 </property>
-                 <property name="text">
-                  <string>Start in tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QCheckBox" name="minimizeToTray">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
+           <layout class="QVBoxLayout" name="startupLayout">
+            <item>
+             <widget class="QCheckBox" name="cbAutorun">
+              <property name="toolTip">
+               <string>Start qTox on operating system startup (current profile).</string>
+              </property>
+              <property name="text">
+               <string>Autostart</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkUpdates">
+              <property name="text">
+               <string>Check for updates on startup</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_6">
+            <item>
+             <widget class="QCheckBox" name="lightTrayIcon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string comment="toolTip for light icon setting">Enable light tray icon.</string>
+              </property>
+              <property name="text">
+               <string>Light icon</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="showSystemTray">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Show system tray icon</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <property name="leftMargin">
+               <number>40</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="startInTray">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string comment="toolTip for Start in tray setting">qTox will start minimized in tray.</string>
+                </property>
+                <property name="text">
+                 <string>Start in tray</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="minimizeToTray">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string comment="toolTip for minimize to tray setting">After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</string>
-                 </property>
-                 <property name="text">
-                  <string>Minimize to tray</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="showSystemTray">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>Show system tray icon</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QCheckBox" name="lightTrayIcon">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="toolTip">
-                  <string comment="toolTip for light icon setting">Enable light tray icon.</string>
-                 </property>
-                 <property name="text">
-                  <string>Light icon</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
+                </property>
+                <property name="text">
+                 <string>Minimize to tray</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="closeToTray">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string comment="toolTip for close to tray setting">After pressing close (X) qTox will minimize to tray,
+instead of closing itself.</string>
+                </property>
+                <property name="text">
+                 <string>Close to tray</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="autoAwayLayout">
@@ -250,27 +253,6 @@ instead of system taskbar.</string>
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="startupLayout">
-            <item>
-             <widget class="QCheckBox" name="cbAutorun">
-              <property name="toolTip">
-               <string>Start qTox on operating system startup (current profile).</string>
-              </property>
-              <property name="text">
-               <string>Autostart</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="checkUpdates">
-              <property name="text">
-               <string>Check for updates on startup</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
            <layout class="QFormLayout" name="formLayout_2">
             <property name="leftMargin">
              <number>0</number>
@@ -297,6 +279,12 @@ instead of system taskbar.</string>
             </item>
             <item row="3" column="0">
              <widget class="QCheckBox" name="autoacceptFiles">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="toolTip">
                <string comment="autoaccept cb tooltip">You can set this on a per-friend basis by right clicking them.</string>
               </property>
@@ -317,56 +305,50 @@ instead of system taskbar.</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
              <widget class="QLabel" name="label_3">
               <property name="text">
                <string>On new message:</string>
               </property>
              </widget>
             </item>
-            <item row="4" column="1">
-             <widget class="QCheckBox" name="showWindow">
-              <property name="toolTip">
-               <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <property name="leftMargin">
+               <number>40</number>
               </property>
-              <property name="text">
-               <string>Open window</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QCheckBox" name="notifySound">
-              <property name="toolTip">
-               <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
-              </property>
-              <property name="text">
-               <string>Play sound</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <spacer name="horizontalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="3" column="1">
-             <widget class="QCheckBox" name="showInFront">
-              <property name="toolTip">
-               <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-              </property>
-              <property name="text">
-               <string>Focus window</string>
-              </property>
-             </widget>
+              <item>
+               <widget class="QCheckBox" name="notifySound">
+                <property name="toolTip">
+                 <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
+                </property>
+                <property name="text">
+                 <string>Play sound</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="showInFront">
+                <property name="toolTip">
+                 <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
+                </property>
+                <property name="text">
+                 <string>Focus window</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="showWindow">
+                <property name="toolTip">
+                 <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
+                </property>
+                <property name="text">
+                 <string>Open window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -419,36 +401,36 @@ will be sent to them when they appear online to you.</string>
            </widget>
           </item>
           <item>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="2" column="1">
-             <widget class="QCheckBox" name="cbDontGroupWindows">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="text">
-               <string>Open each chat in an individual window</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
+           <layout class="QVBoxLayout" name="verticalLayout_11">
+            <item>
              <widget class="QCheckBox" name="cbSeparateWindow">
               <property name="text">
                <string>Multiple windows mode</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_12">
+              <property name="leftMargin">
+               <number>40</number>
               </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
+              <item>
+               <widget class="QCheckBox" name="cbDontGroupWindows">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Open each chat in an individual window</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -821,24 +803,16 @@ will be sent to them when they appear online to you.</string>
   <tabstop>transComboBox</tabstop>
   <tabstop>lightTrayIcon</tabstop>
   <tabstop>showSystemTray</tabstop>
-  <tabstop>startInTray</tabstop>
-  <tabstop>minimizeToTray</tabstop>
-  <tabstop>closeToTray</tabstop>
   <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>cbAutorun</tabstop>
   <tabstop>checkUpdates</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
-  <tabstop>autoacceptFiles</tabstop>
-  <tabstop>notifySound</tabstop>
-  <tabstop>showInFront</tabstop>
-  <tabstop>showWindow</tabstop>
   <tabstop>statusChanges</tabstop>
   <tabstop>groupAlwaysNotify</tabstop>
   <tabstop>cbGroupchatPosition</tabstop>
   <tabstop>cbFauxOfflineMessaging</tabstop>
   <tabstop>cbCompactLayout</tabstop>
   <tabstop>cbSeparateWindow</tabstop>
-  <tabstop>cbDontGroupWindows</tabstop>
   <tabstop>useEmoticons</tabstop>
   <tabstop>smileyPackBrowser</tabstop>
   <tabstop>emoticonSize</tabstop>
