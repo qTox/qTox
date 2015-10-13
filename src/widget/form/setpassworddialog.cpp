@@ -26,14 +26,14 @@ const double SetPasswordDialog::reasonablePasswordLength = 8.;
 SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::SetPasswordDialog)
-    , body(body+"\n")
+    , body(body + "\n\n")
 {
     ui->setupUi(this);
 
     connect(ui->  passwordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
-    ui->body->setText(body + "\n" + tr("The passwords don't match."));
+    ui->body->setText(body + "\n\n");
     ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 
     if (!extraButton.isEmpty())
@@ -70,7 +70,7 @@ void SetPasswordDialog::onPasswordEdit()
         ui->body->setText(body);
     }
 
-    ui->strengthBar->setValue(getPasswordStrength(pswd));
+    ui->passStrengthMeter->setValue(getPasswordStrength(pswd));
 }
 
 int SetPasswordDialog::getPasswordStrength(QString pass)
