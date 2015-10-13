@@ -638,7 +638,7 @@ margin-bottom:45px;</string>
               <string notr="true">border-radius:5px;
 padding:5px;
 color:white;
-background-color:#6cc865;</string>
+background-color:#42a33a;</string>
              </property>
              <property name="text">
               <string>Create Profile</string>
@@ -1003,7 +1003,7 @@ margin-bottom:5px;</string>
               <string notr="true">border-radius:5px;
 padding:5px;
 color:white;
-background-color:#6cc865;</string>
+background-color:#42a33a;</string>
              </property>
              <property name="text">
               <string>Load</string>
