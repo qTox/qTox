@@ -134,7 +134,6 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     QWidget* widget = new QWidget(nullptr);
     scrollArea->setWidgetResizable(true);
     horLayout = new QHBoxLayout(widget);
-    //FlowLayout* horLayout = new FlowLayout(widget);
     horLayout->addStretch(1);
 
     selfVideoSurface = new LabeledVideo(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this);
