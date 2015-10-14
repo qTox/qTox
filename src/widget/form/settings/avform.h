@@ -63,7 +63,6 @@ private slots:
     // camera
     void onVideoDevChanged(int index);
     void onVideoModesIndexChanged(int index);
-    //void onResProbingFinished(QList<QSize> res);
 
     virtual void hideEvent(QHideEvent*) final override;
     virtual void showEvent(QShowEvent*) final override;

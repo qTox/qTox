@@ -358,13 +358,13 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.h \
         src/widget/form/setpassworddialog.h \
         src/widget/form/tabcompleter.h \
-        src/ipc.h \
         src/net/autoupdate.h \
         src/widget/tool/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
         src/widget/qrwidget.h \
         src/widget/systemtrayicon_private.h \
-        src/widget/loginscreen.h
+        src/widget/loginscreen.h \
+        src/ipc.h
 
     SOURCES += \
         src/widget/form/addfriendform.cpp \
@@ -383,7 +383,6 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.cpp \
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
-        src/ipc.cpp \
         src/widget/flowlayout.cpp \
         src/net/autoupdate.cpp \
         src/widget/tool/callconfirmwidget.cpp \
@@ -426,7 +425,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/persistence/offlinemsgengine.cpp \
         src/widget/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp \
-        src/widget/loginscreen.cpp
+        src/widget/loginscreen.cpp \
+        src/ipc.cpp
 }
 
 win32 {

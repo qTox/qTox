@@ -119,8 +119,6 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
-
-    //showNetcam();
 }
 
 ChatForm::~ChatForm()

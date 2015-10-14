@@ -28,7 +28,6 @@
 
 #include <QPainter>
 #include <QLabel>
-#include <cassert>
 #include <QDebug>
 
 float getSizeRatio(const QSize size)
@@ -99,8 +98,6 @@ QPixmap VideoSurface::getAvatar() const
 
 void VideoSurface::subscribe()
 {
-    assert(hasSubscribed >= 0);
-
     if (source && hasSubscribed++ == 0)
     {
         source->subscribe();
@@ -110,8 +107,6 @@ void VideoSurface::subscribe()
 
 void VideoSurface::unsubscribe()
 {
-    assert(hasSubscribed >= 0);
-
     if (!source || hasSubscribed == 0)
         return;
 
@@ -185,8 +180,9 @@ void VideoSurface::resizeEvent(QResizeEvent* event)
     emit boundaryChanged();
 }
 
-void VideoSurface::showEvent(QShowEvent*)
+void VideoSurface::showEvent(QShowEvent* e)
 {
+    Q_UNUSED(e);
     //emit ratioChanged();
 }
 
