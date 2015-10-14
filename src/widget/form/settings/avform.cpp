@@ -209,29 +209,6 @@ void AVForm::onVideoDevChanged(int index)
     createVideoSurface();
 }
 
-/*void AVForm::onResProbingFinished(QList<QSize> res)
-{
-    QSize savedRes = Settings::getInstance().getCamVideoRes();
-    int savedResIndex = -1;
-    bodyUI->videoModescomboBox->clear();
-    bodyUI->videoModescomboBox->blockSignals(true);
-    for (int i=0; i<res.size(); ++i)
-    {
-        QSize& r = res[i];
-        bodyUI->videoModescomboBox->addItem(QString("%1x%2").arg(QString::number(r.width()),QString::number(r.height())), r);
-        if (r == savedRes)
-            savedResIndex = i;
-    }
-    //reset index, otherwise cameras with only one resolution won't get initialized
-    bodyUI->videoModescomboBox->setCurrentIndex(-1);
-    bodyUI->videoModescomboBox->blockSignals(false);
-
-    if (savedResIndex != -1)
-        bodyUI->videoModescomboBox->setCurrentIndex(savedResIndex);
-    else
-        bodyUI->videoModescomboBox->setCurrentIndex(bodyUI->videoModescomboBox->count()-1);
-}*/
-
 void AVForm::hideEvent(QHideEvent *)
 {
     if (camVideoSurface)
@@ -256,8 +233,6 @@ void AVForm::getVideoDevices()
         if (device.first == settingsInDev)
             videoDevIndex = bodyUI->videoDevCombobox->count()-1;
     }
-    //addItem changes currentIndex -> reset
-    //bodyUI->videoDevCombobox->setCurrentIndex(-1);
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
     bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);

@@ -38,18 +38,16 @@ public:
     LabeledVideo(const QPixmap& avatar, QWidget* parent = 0, bool expanding = true)
         : QFrame(parent)
     {
-        //setFrameStyle(QFrame::Box);
         qDebug() << "Created expanding? " << expanding;
         videoSurface = new VideoSurface(avatar, 0, expanding);
         videoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         videoSurface->setMinimumHeight(32);
-        //videoSurface->setMaximumHeight(96);
+
         connect(videoSurface, &VideoSurface::ratioChanged, this, &LabeledVideo::updateSize);
         label = new CroppingLabel(this);
         label->setTextFormat(Qt::PlainText);
         label->setStyleSheet("color: white");
-        //label->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        //qDebug() << label->sizePolicy();
+
         label->setAlignment(Qt::AlignCenter);
 
         QVBoxLayout* layout = new QVBoxLayout(this);
@@ -102,7 +100,6 @@ private slots:
             int width = videoSurface->height() * videoSurface->getRatio();
             videoSurface->setMinimumWidth(width);
             videoSurface->setMaximumWidth(width);
-            //setMaximumWidth(width + layout()->margin() * 2);
             qDebug() << videoSurface->minimumWidth();
         }
     }
@@ -119,14 +116,11 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
 {
     videoLabelSurface = new LabeledVideo(QPixmap(), this, false);
     videoSurface = videoLabelSurface->getVideoSurface();
-    //videoSurface->setExpanding(false);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 0);
     videoLabelSurface->setContentsMargins(0, 0, 0, 0);
     videoLabelSurface->layout()->setMargin(0);
     videoLabelSurface->setStyleSheet("QFrame { background-color: black; }");
-
-    //verLayout->insertWidget(0, videoLabelSurface, 1);
 
     QSplitter* splitter = new QSplitter(Qt::Vertical, this);
     splitter->setChildrenCollapsible(false);
@@ -145,13 +139,10 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
 
     selfVideoSurface = new LabeledVideo(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this);
     horLayout->addWidget(selfVideoSurface);
-    //horLayout->setAlignment(selfVideoSurface, Qt::AlignCenter | Qt::AlignHCenter);
 
     horLayout->addStretch(1);
     splitter->addWidget(scrollArea);
     scrollArea->setWidget(widget);
-    //verLayout->insertWidget(1, scrollArea);
-    //scrollArea->setMinimumHeight(selfVideoSurface->height());
 
     connect(&Audio::getInstance(), &Audio::groupAudioPlayed, this, &GroupNetCamView::groupAudioPlayed);
 

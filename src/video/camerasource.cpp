@@ -40,8 +40,6 @@ CameraSource::CameraSource()
       biglock{false}, freelistLock{false},
       isOpen{false}, subscriptions{0}
 {
-    //qDebug() << "CameraSource()";
-
     subscriptions = 0;
     av_register_all();
     avdevice_register_all();
@@ -75,8 +73,6 @@ void CameraSource::open(const QString deviceName)
 
 void CameraSource::open(const QString DeviceName, VideoMode Mode)
 {
-    //qDebug() << "open(const QString DeviceName, VideoMode Mode)";
-
     {
         bool expected = false;
         while (!biglock.compare_exchange_weak(expected, true))
@@ -137,7 +133,7 @@ CameraSource::~CameraSource()
     if (cctxOrig)
         avcodec_close(cctxOrig);
 
-    for (int i = subscriptions; i; --i)
+    for(int i = 0; i < subscriptions; i++)
         device->close();
 
     device = nullptr;
@@ -152,8 +148,6 @@ CameraSource::~CameraSource()
 
 bool CameraSource::subscribe()
 {
-    //qDebug() << "subscribe";
-
     // Fast lock
     {
         bool expected = false;
@@ -164,8 +158,6 @@ bool CameraSource::subscribe()
     if (!isOpen)
     {
         ++subscriptions;
-        //qDebug() << "is not open, subscriptions: " << subscriptions;
-
         biglock = false;
         return true;
     }
@@ -173,8 +165,6 @@ bool CameraSource::subscribe()
     if (openDevice())
     {
         ++subscriptions;
-        //qDebug() << "open device, subscriptions: " << subscriptions;
-
         biglock = false;
         return true;
     }
@@ -189,13 +179,11 @@ bool CameraSource::subscribe()
         biglock = false;
         return false;
     }
-    //qDebug() << "END subscribe";
 
 }
 
 void CameraSource::unsubscribe()
 {
-    //qDebug() << "unsubscribe";
     // Fast lock
     {
         bool expected = false;
@@ -205,7 +193,6 @@ void CameraSource::unsubscribe()
 
     if (!isOpen)
     {
-        //qDebug() << "is not open";
         subscriptions--;
         biglock = false;
         return;
@@ -213,18 +200,14 @@ void CameraSource::unsubscribe()
 
     if (!device)
     {
-        //qWarning() << "Unsubscribing with zero subscriber";
+        qWarning() << "Unsubscribing with zero subscriber";
         biglock = false;
         return;
     }
-    //qDebug() << "1. device: " << device;
-    //qDebug() << "2. subscriptions:" << subscriptions;
 
     if (subscriptions - 1 == 0)
     {
-        //qDebug() << "first block";
         closeDevice();
-
         biglock = false;
 
         // Synchronize with our stream thread
@@ -233,19 +216,15 @@ void CameraSource::unsubscribe()
     }
     else
     {
-        //qDebug() << "second block";
         device->close();
         biglock = false;
     }
     subscriptions--;
 
-    //qDebug() << "3. subscriptions: " << subscriptions;
 }
 
 bool CameraSource::openDevice()
 {
-    //qDebug() << "Opening device: " << deviceName;
-
     if (device)
     {
         device->open();
@@ -317,8 +296,6 @@ bool CameraSource::openDevice()
 
 void CameraSource::closeDevice()
 {
-    //qDebug() << "Closing device " << deviceName;
-
     // Free all remaining VideoFrame
     // Locking must be done precisely this way to avoid races
     for (int i = 0; i < freelist.size(); i++)
