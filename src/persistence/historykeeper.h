@@ -78,6 +78,8 @@ public:
     void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
     QByteArray getAvatarHash(const QString& ownerId);
 
+    void removeAvatar(const QString& ownerId);
+
 private:
     HistoryKeeper(GenericDdInterface *db_);
     HistoryKeeper(HistoryKeeper &hk) = delete;

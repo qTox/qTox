@@ -529,6 +529,15 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
 
     return msgs;
 }
+
+void HistoryKeeper::removeAvatar(const QString& ownerId)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
+    query.bindValue(":id", ownerId.left(64));
+    query.exec();
+}
+
 void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
 {
     QByteArray bArray;
