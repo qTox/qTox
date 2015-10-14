@@ -1,8 +1,42 @@
+#LoginScreen {
+  background-color: #1c1c1c;
+}
+
+#line {
+  color: #757575;
+}
+
+#stackedWidget {
+  background-color: #d6d2Cf;
+}
+
+#labelNewProfile,
+#labelLoadProfile {
+  border-style: solid;
+  border-width: 15px 0 15px 15px;
+  border-color: #d6d2cf #d6d2cf #d6d2cf #1c1c1c;
+}
+#labelNewProfile {
+  margin-top:125px;
+  margin-bottom:45px;
+}
+#labelLoadProfile {
+  margin-top:165px;
+  margin-bottom:5px;
+}
+
+QPushButton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 9pt;
+  font-weight: bold;
+}
+
 #loginButton,
 #createAccountButton {
   border-radius:5px;
   padding:5px;
-  color:white;
   background-color:#42a33a;
 }
 
