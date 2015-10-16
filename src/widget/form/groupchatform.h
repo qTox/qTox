@@ -49,6 +49,7 @@ private slots:
     void onCallClicked();
 
 protected:
+    virtual GenericNetCamView* createNetcam() final override;
     virtual void keyPressEvent(QKeyEvent* ev) final override;
     virtual void keyReleaseEvent(QKeyEvent* ev) final override;
     // drag & drop

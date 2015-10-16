@@ -30,26 +30,45 @@ class VideoSurface : public QWidget
     Q_OBJECT
 
 public:
-    VideoSurface(QWidget* parent=0);
-    VideoSurface(VideoSource* source, QWidget* parent=0);
+    VideoSurface(const QPixmap& avatar, QWidget* parent = 0, bool expanding = false);
+    VideoSurface(const QPixmap& avatar, VideoSource* source, QWidget* parent = 0);
     ~VideoSurface();
 
+    bool isExpanding() const;
     void setSource(VideoSource* src); //NULL is a valid option
+    QRect getBoundingRect() const;
+    float getRatio() const;
+    void setAvatar(const QPixmap& pixmap);
+    QPixmap getAvatar() const;
+
+signals:
+    void ratioChanged();
+    void boundaryChanged();
 
 protected:
     void subscribe();
     void unsubscribe();
 
-    virtual void paintEvent(QPaintEvent * event) final override;
+    virtual void paintEvent(QPaintEvent* event) final override;
+    virtual void resizeEvent(QResizeEvent* event) final override;
+    virtual void showEvent(QShowEvent* event) final override;
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);
 
 private:
+    void recalulateBounds();
+    void lock();
+    void unlock();
+
+    QRect boundingRect;
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
     std::atomic_bool frameLock; ///< Fast lock for lastFrame
-    bool hasSubscribed;
+    uint8_t hasSubscribed;
+    QPixmap avatar;
+    float ratio;
+    bool expanding;
 };
 
 #endif // SELFCAMVIEW_H

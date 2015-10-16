@@ -46,45 +46,21 @@ Group::~Group()
     widget->deleteLater();
 }
 
-/*
-void Group::addPeer(int peerId, QString name)
-{
-    if (peers.contains(peerId))
-        qWarning() << "addPeer: peerId already used, overwriting anyway";
-    if (name.isEmpty())
-        peers[peerId] = "<Unknown>";
-    else
-        peers[peerId] = name;
-    nPeers++;
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-}
-
-void Group::removePeer(int peerId)
-{
-    peers.remove(peerId);
-    nPeers--;
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-}
-*/
-
 void Group::updatePeer(int peerId, QString name)
 {
     ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
     QString toxid = id.publicKey;
     peers[peerId] = name;
     toxids[toxid] = name;
-    Friend *f = FriendList::findFriend(id);
-    if (f && f->hasAlias())
-    {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
-    }
 
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-    emit userListChanged(getGroupWidget());
+    Friend *f = FriendList::findFriend(id);
+
+    if (f != nullptr && f->hasAlias())
+    {
+        widget->onUserListChanged();
+        chatForm->onUserListChanged();
+        emit userListChanged(getGroupWidget());
+    }
 }
 
 void Group::setName(const QString& name)
