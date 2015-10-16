@@ -53,8 +53,12 @@ void SetPasswordDialog::onPasswordEdit()
 {
     QString pswd = ui->passwordlineEdit->text();
 
-
-    if (pswd.length() < 6)
+    if (pswd.isEmpty())
+    {
+        ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+        ui->body->setText(body);
+    }
+    else if (pswd.length() < 6)
     {
         ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
         ui->body->setText(body + tr("The password is too short"));
