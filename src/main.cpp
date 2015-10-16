@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
     parser.process(a);
 
 #ifndef Q_OS_ANDROID
-    IPC::getInstance();
+    IPC& ipc = IPC::getInstance();
 #endif
 
     sodium_init(); // For the auto-updater
@@ -157,7 +157,6 @@ int main(int argc, char *argv[])
 
 #ifndef Q_OS_ANDROID
     // Inter-process communication
-    IPC& ipc = IPC::getInstance();
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
@@ -233,15 +232,10 @@ int main(int argc, char *argv[])
     }
     else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
     {
-        uint32_t dest = 0;
-        if (parser.isSet("p"))
-            dest = Settings::getInstance().getCurrentProfileId();
-
-        time_t event = ipc.postEvent("activate", QByteArray(), dest);
-        if (ipc.waitUntilAccepted(event, 2))
+        time_t event = ipc.postEvent("activate");
+        if (!ipc.waitUntilAccepted(event, 2))
         {
-            if (!ipc.isCurrentOwner())
-                return EXIT_SUCCESS;
+            return EXIT_SUCCESS;
         }
     }
 #endif
