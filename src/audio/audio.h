@@ -41,6 +41,12 @@ class QMutex;
 struct Tox;
 class AudioFilterer;
 
+// Public default audio settings
+static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
+static constexpr uint32_t AUDIO_FRAME_DURATION = 20; ///< In milliseconds
+static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, but that's a sane default
+
 class Audio : QObject
 {
     Q_OBJECT
@@ -63,12 +69,17 @@ public:
     static bool isInputReady(); ///< Returns true if the input device is open and suscribed to
     static bool isOutputClosed(); ///< Returns true if the output device is open
 
+    static void createSource(ALuint* source); ///< Creates an audio output source with the correct volume
+    static void deleteSource(ALuint* source); ///< Kills a previously created audio source
+
     static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
-    static bool tryCaptureSamples(uint8_t* buf, int framesize); ///< Does nothing and return false on failure
+    static bool tryCaptureSamples(int16_t *buf, int samples); ///< Does nothing and return false on failure
+
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
     /// May be called from any thread, will always queue a call to playGroupAudio
     /// The first and last argument are ignored, but allow direct compatibility with toxcore
-    static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
+    static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
 #ifdef QTOX_FILTER_AUDIO
@@ -84,7 +95,6 @@ public slots:
 private:
     explicit Audio()=default;
     ~Audio();
-    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:
     static Audio* instance;

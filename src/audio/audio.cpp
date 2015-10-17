@@ -28,6 +28,7 @@
 
 #include "audio.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 
 #include <QDebug>
 #include <QThread>
@@ -83,18 +84,13 @@ void Audio::setOutputVolume(float volume)
     outputVolume = volume;
     alSourcef(alMainSource, AL_GAIN, outputVolume);
 
-    for (const ToxGroupCall& call : Core::groupCalls)
+    for (const ToxGroupCall& call : CoreAV::groupCalls)
     {
-        if (!call.active)
-            continue;
-        for (ALuint source : call.alSources)
-            alSourcef(source, AL_GAIN, outputVolume);
+        alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
 
-    for (const ToxCall& call : Core::calls)
+    for (const ToxFriendCall& call : CoreAV::calls)
     {
-        if (!call.active)
-            continue;
         alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
 }
@@ -145,15 +141,14 @@ void Audio::openInput(const QString& inDevDescr)
     if (tmp)
         alcCaptureCloseDevice(tmp);
 
-    int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    /// TODO: Try to actually detect if our audio source is stereo
+    int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
+        alInDev = alcCaptureOpenDevice(nullptr, AUDIO_SAMPLE_RATE, stereoFlag,
+                                        4 * AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(), AUDIO_SAMPLE_RATE, stereoFlag,
+                                        4 * AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
     if (!alInDev)
         qWarning() << "Cannot open input audio device " + inDevDescr;
     else
@@ -161,7 +156,7 @@ void Audio::openInput(const QString& inDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        core->resetCallSources(); // Force to regen each group call's sources
+        core->getAv()->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
     if (userCount.load() != 0 && alInDev)
@@ -216,7 +211,7 @@ void Audio::openOutput(const QString& outDevDescr)
 
     Core* core = Core::getInstance();
     if (core)
-        core->resetCallSources(); // Force to regen each group call's sources
+        core->getAv()->resetCallSources(); // Force to regen each group call's sources
 }
 
 void Audio::closeInput()
@@ -268,7 +263,7 @@ void Audio::playMono16Sound(const QByteArray& data)
     alDeleteBuffers(1, &buffer);
 }
 
-void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
+void Audio::playGroupAudioQueued(void*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
     QMetaObject::invokeMethod(instance, "playGroupAudio", Qt::BlockingQueuedConnection,
@@ -277,25 +272,26 @@ void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
     emit static_cast<Core*>(core)->groupPeerAudioPlaying(group, peer);
 }
 
-void Audio::playGroupAudio(int group, int peer, const int16_t* data,
+void Audio::playGroupAudio(int group, int, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
+    /// TODO: Move this to CoreAV
     assert(QThread::currentThread() == audioThread);
 
     QMutexLocker lock(audioOutLock);
 
-    ToxGroupCall& call = Core::groupCalls[group];
-
-    if (!call.active || call.muteVol)
+    if (!CoreAV::groupCalls.contains(group))
         return;
 
-    if (!call.alSources.contains(peer))
-    {
-        alGenSources(1, &call.alSources[peer]);
-        alSourcef(call.alSources[peer], AL_GAIN, outputVolume);
-    }
+    ToxGroupCall& call = CoreAV::groupCalls[group];
 
-    playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
+    if (call.inactive || call.muteVol)
+        return;
+
+    if (!call.alSource)
+        alGenSources(1, &call.alSource);
+
+    playAudioBuffer(call.alSource, data, samples, channels, sample_rate);
 }
 
 void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate)
@@ -348,17 +344,30 @@ bool Audio::isOutputClosed()
     return (alOutDev);
 }
 
-bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
+void Audio::createSource(ALuint* source)
+{
+    alGenSources(1, source);
+    alSourcef(*source, AL_GAIN, outputVolume);
+}
+
+void Audio::deleteSource(ALuint* source)
+{
+    if (alIsSource(*source))
+        alDeleteSources(1, source);
+    else
+        qWarning() << "Trying to delete invalid audio source"<<*source;
+}
+
+bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
     QMutexLocker lock(audioInLock);
 
-    ALint samples=0;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples < framesize)
+    ALint curSamples=0;
+    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
+    if (curSamples < samples)
         return false;
 
-    memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
-    alcCaptureSamples(Audio::alInDev, buf, framesize);
+    alcCaptureSamples(Audio::alInDev, buf, samples);
     return true;
 }
 

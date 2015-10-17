@@ -33,6 +33,7 @@ class VideoSource : public QObject
     Q_OBJECT
 
 public:
+    virtual ~VideoSource() = default;
     /// If subscribe sucessfully opens the source, it will start emitting frameAvailable signals
     virtual bool subscribe() = 0;
     /// Stop emitting frameAvailable signals, and free associated resources if necessary
