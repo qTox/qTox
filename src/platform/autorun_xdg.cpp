@@ -26,14 +26,19 @@
 
 namespace Platform
 {
-    QString getAutostartFilePath()
+    QString getAutostartDirPath()
     {
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         QString config = env.value("XDG_CONFIG_HOME");
         if (config.isEmpty())
             config = QDir::homePath() + "/" + ".config";
-        return config + "/" + "autostart/qTox - " +
-               Settings::getInstance().getCurrentProfile() + ".desktop";
+        return config + "/autostart";
+    }
+
+    QString getAutostartFilePath(QString dir)
+    {
+        return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() +
+               ".desktop";
     }
 
     inline QString currentCommandLine()
@@ -45,11 +50,12 @@ namespace Platform
 
 bool Platform::setAutorun(bool on)
 {
-
-    QFile desktop(getAutostartFilePath());
+    QString dirPath = getAutostartDirPath();
+    QFile desktop(getAutostartFilePath(dirPath));
     if (on)
     {
-        if (!desktop.open(QFile::WriteOnly | QFile::Truncate))
+        if (!QDir().mkpath(dirPath) ||
+            !desktop.open(QFile::WriteOnly | QFile::Truncate))
             return false;
         desktop.write("[Desktop Entry]\n");
         desktop.write("Type=Application\n");
@@ -66,7 +72,7 @@ bool Platform::setAutorun(bool on)
 
 bool Platform::getAutorun()
 {
-    return QFile(getAutostartFilePath()).exists();
+    return QFile(getAutostartFilePath(getAutostartDirPath())).exists();
 }
 
 #endif  // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
