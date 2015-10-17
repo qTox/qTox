@@ -16,16 +16,21 @@
   border-width: 15px 0 15px 15px;
   border-color: #d6d2cf #d6d2cf #d6d2cf #1c1c1c;
 }
+
 #labelNewProfile {
   margin-top:125px;
   margin-bottom:45px;
 }
+
 #labelLoadProfile {
   margin-top:165px;
   margin-bottom:5px;
 }
 
-QPushButton {
+#loginPgbtn,
+#newProfilePgbtn,
+#loginButton,
+#createAccountButton {
   background: transparent;
   border: none;
   color: white;
