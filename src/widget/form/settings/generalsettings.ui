@@ -6,24 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>673</width>
-    <height>1100</height>
+    <width>671</width>
+    <height>1098</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="leftMargin">
-    <number>9</number>
-   </property>
-   <property name="topMargin">
-    <number>9</number>
-   </property>
-   <property name="rightMargin">
-    <number>9</number>
-   </property>
-   <property name="bottomMargin">
+   <property name="margin">
     <number>9</number>
    </property>
    <item>
@@ -38,9 +29,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-180</y>
+        <y>0</y>
         <width>631</width>
-        <height>1358</height>
+        <height>1141</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -236,9 +227,6 @@ instead of closing itself.</string>
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
-              </property>
               <property name="suffix">
                <string> minutes</string>
               </property>
@@ -247,6 +235,9 @@ instead of closing itself.</string>
               </property>
               <property name="maximum">
                <number>2147483647</number>
+              </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -329,16 +320,6 @@ instead of closing itself.</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="showInFront">
-                <property name="toolTip">
-                 <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-                </property>
-                <property name="text">
-                 <string>Focus window</string>
-                </property>
-               </widget>
-              </item>
-              <item>
                <widget class="QCheckBox" name="showWindow">
                 <property name="toolTip">
                  <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
@@ -347,6 +328,23 @@ instead of closing itself.</string>
                  <string>Open window</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_15">
+                <property name="leftMargin">
+                 <number>40</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="showInFront">
+                  <property name="toolTip">
+                   <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
+                  </property>
+                  <property name="text">
+                   <string>Focus window</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
