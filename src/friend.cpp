@@ -40,7 +40,7 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 
     widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
-    HistoryKeeper::getInstance()->importAvatar(UserId.publicKey);
+    HistoryKeeper::getInstance()->importAvatarToDatabase(UserId.publicKey);
 }
 
 Friend::~Friend()

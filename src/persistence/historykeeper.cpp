@@ -152,6 +152,7 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     if (!ans.value(1).toString().contains("avatar"))
     {
         //add collum in table
+        needImport = true;
         db->exec("ALTER TABLE aliases ADD COLUMN avatar BLOB");
         qDebug() << "Struct DB updated: Added column avatar in table aliases.";
     }
@@ -167,18 +168,21 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         messageID = sqlAnswer.value(0).toLongLong();
 }
 
-void HistoryKeeper::importAvatar(const QString& ownerId)
+void HistoryKeeper::importAvatarToDatabase(const QString& ownerId)
 {
-    QString puth (Settings::getInstance().getSettingsDirPath() +
-                  QString("avatars") + QDir::separator() +
-                  ownerId +".png");
-    qDebug() << QString("Try import avatar for: %1.").arg(ownerId);
-    getAliasID(ownerId);
-    if (QFile::exists(puth) && !hasAvatar(ownerId))
+    if (needImport)
     {
-        QPixmap pic(puth);
-        saveAvatar(pic,ownerId);
-        qDebug() << QString("Import avatar for: %1.").arg(ownerId);
+        QString puth (Settings::getInstance().getSettingsDirPath() +
+                      QString("avatars") + QDir::separator() +
+                      ownerId +".png");
+        qDebug() << QString("Try import avatar for: %1.").arg(ownerId);
+        getAliasID(ownerId);
+        if (QFile::exists(puth) && !hasAvatar(ownerId))
+        {
+            QPixmap pic(puth);
+            saveAvatar(pic,ownerId);
+            qDebug() << QString("Import avatar for: %1.").arg(ownerId);
+        }
     }
 }
 
