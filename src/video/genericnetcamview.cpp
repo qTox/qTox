@@ -59,7 +59,7 @@ void GenericNetCamView::setShowMessages(bool show, bool notify)
         button->setText(tr("Show Messages"));
 
         if (notify)
-            button->setIcon(QIcon("://ui/chatArea/info.svg"));
+            button->setIcon(QIcon(":/ui/chatArea/info.svg"));
     }
     else
     {

@@ -1234,7 +1234,6 @@ void Settings::setCamVideoFPS(unsigned short newValue)
     camVideoFPS = newValue;
 }
 
-
 QString Settings::getFriendAdress(const QString &publicKey) const
 {
     QMutexLocker locker{&bigLock};
