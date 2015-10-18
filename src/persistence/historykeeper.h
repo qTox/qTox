@@ -79,6 +79,9 @@ public:
     QByteArray getAvatarHash(const QString& ownerId);
 
     void removeAvatar(const QString& ownerId);
+    bool hasAvatar(const QString& ownerId);
+
+    void importAvatar(const QString& ownerId);        // may be deleted after all move to new db structure
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
@@ -94,8 +97,6 @@ private:
     QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
 
     ChatType convertToChatType(int);
-
-    void importAvatar();        // may be deleted after all move to new db structure
 
     GenericDdInterface *db;
     QMap<QString, int> aliases;

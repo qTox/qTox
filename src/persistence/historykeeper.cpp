@@ -136,13 +136,11 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     }
 
     ans.clear();
-    bool needImportAvatar = false;
     ans = db->exec("PRAGMA table_info('aliases')");
     ans.seek(2);
     if (!ans.value(1).toString().contains("av_hash"))
     {
         //add collum in table
-        needImportAvatar = true;
         db->exec("ALTER TABLE aliases ADD COLUMN av_hash BLOB");
         qDebug() << "Struct DB updated: Added column av_hash in table aliases.";
     }
@@ -151,16 +149,9 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     if (!ans.value(1).toString().contains("avatar"))
     {
         //add collum in table
-        needImportAvatar = true;
         db->exec("ALTER TABLE aliases ADD COLUMN avatar BLOB");
         qDebug() << "Struct DB updated: Added column avatar in table aliases.";
     }
-
-    if (needImportAvatar)
-    {
-        importAvatar();
-    }
-
 
     updateChatsID();
     updateAliases();
@@ -173,34 +164,18 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         messageID = sqlAnswer.value(0).toLongLong();
 }
 
-void HistoryKeeper::importAvatar()
+void HistoryKeeper::importAvatar(const QString& ownerId)
 {
-    QSqlQuery sqlAnswer = db->exec("SELECT * FROM aliases;");
-    while (sqlAnswer.next())
+    QString puth (Settings::getInstance().getSettingsDirPath() +
+                  QString("avatars") + QDir::separator() +
+                  ownerId +".png");
+    qDebug() << QString("Try import avatar for: %1.").arg(ownerId);
+    getAliasID(ownerId);
+    if (QFile::exists(puth) && !hasAvatar(ownerId))
     {
-        QString userID = sqlAnswer.value(1).toString();
-        QString puth (Settings::getInstance().getSettingsDirPath() +
-                      QString("avatars") + QDir::separator() +
-                      userID +".png");
-        qDebug() << QString("Try import avatar for: %1.").arg(userID);
-        if (QFile::exists(puth))
-        {
-            QPixmap pic(puth);
-            saveAvatar(pic,userID);
-            qDebug() << QString("Import avatar for: %1.").arg(userID);
-        }
-        else
-        {
-            puth = Settings::getInstance().getSettingsDirPath() +
-                    "avatar_" + userID + ".png";
-            if (QFile::exists(puth))
-            {
-                QPixmap pic(puth);
-                saveAvatar(pic,userID);
-                qDebug() << QString("Import from profile_dir avatar for: %1.").arg(userID);
-            }
-        }
-
+        QPixmap pic(puth);
+        saveAvatar(pic,ownerId);
+        qDebug() << QString("Import avatar for: %1.").arg(ownerId);
     }
 }
 
@@ -536,6 +511,16 @@ void HistoryKeeper::removeAvatar(const QString& ownerId)
     query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
     query.bindValue(":id", ownerId.left(64));
     query.exec();
+}
+
+bool HistoryKeeper::hasAvatar(const QString& ownerId)
+{
+    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
+    if (sqlAnswer.first() && sqlAnswer.value(0).toByteArray()!=NULL)
+    {
+        return true;
+    }
+    return false;
 }
 
 void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)

@@ -25,6 +25,7 @@
 #include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/historykeeper.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)},
@@ -39,6 +40,7 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 
     widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
+    HistoryKeeper::getInstance()->importAvatar(UserId.publicKey);
 }
 
 Friend::~Friend()

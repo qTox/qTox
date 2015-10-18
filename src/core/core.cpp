@@ -329,6 +329,7 @@ void Core::start()
     toxav_register_audio_callback(toxav, playCallAudio, this);
     toxav_register_video_callback(toxav, playCallVideo, this);
 
+    HistoryKeeper::getInstance()->importAvatar(getSelfId().toString().left(64));
     QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
     if (!pic.isNull() && !pic.size().isEmpty())
     {
