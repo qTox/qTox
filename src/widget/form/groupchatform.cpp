@@ -361,7 +361,7 @@ GenericNetCamView *GroupChatForm::createNetcam()
     GroupNetCamView* view = new GroupNetCamView(group->getGroupId(), this);
 
     QStringList names = group->getPeerList();
-    for (unsigned i=0; i<names.size(); ++i)
+    for (int i = 0; i<names.size(); ++i)
     {
         if (!group->isSelfPeerNumber(i))
             static_cast<GroupNetCamView*>(view)->addPeer(i, names[i]);

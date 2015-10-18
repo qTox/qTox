@@ -107,7 +107,6 @@ private slots:
 private:
     CroppingLabel* label;
     VideoSurface* videoSurface;
-    bool selected = false;
 };
 
 GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
