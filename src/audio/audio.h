@@ -47,45 +47,43 @@ class Audio : public QObject
     Q_OBJECT
 
 public:
-    static Audio& getInstance(); ///< Returns the singleton's instance. Will construct on first call.
+    static Audio& getInstance();
 
 public:
     void startAudioThread();
 
-    static float getOutputVolume(); ///< Returns the current output volume, between 0 and 1
+    static float getOutputVolume();
     qreal GetOutputVolume();
-    static void setOutputVolume(float volume); ///< The volume must be between 0 and 1
+    static void setOutputVolume(float volume);
     void SetOutputVolume(qreal volume);
 
-    static void setInputVolume(float volume); ///< The volume must be between 0 and 2
+    static void setInputVolume(float volume);
     void SetInputVolume(qreal volume);
 
-    static void suscribeInput(); ///< Call when you need to capture sound from the open input device.
+    static void suscribeInput();
     void SubscribeInput();
-    static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
+    static void unsuscribeInput();
     void UnSubscribeInput();
 
-    static void openInput(const QString& inDevDescr); ///< Open an input device, use before suscribing
+    static void openInput(const QString& inDevDescr);
     void OpenInput(const QString& inDevDescr);
-    static bool openOutput(const QString& outDevDescr); ///< Open an output device
+    static bool openOutput(const QString& outDevDescr);
     bool OpenOutput(const QString& outDevDescr);
     static void closeInput();
     void CloseInput();
-    static void closeOutput(); ///< Close an output device
+    static void closeOutput();
     void CloseOutput();
 
-    static bool isInputReady(); ///< Returns true if the input device is open and suscribed to
+    static bool isInputReady();
     bool IsInputReady();
-    static bool isOutputClosed(); ///< Returns true if the output device is open
+    static bool isOutputClosed();
     bool IsOutputClosed();
 
-    static void playMono16Sound(const QByteArray& data); ///< Play a 44100Hz mono 16bit PCM sound
+    static void playMono16Sound(const QByteArray& data);
     void PlayMono16Sound(const QByteArray& data);
-    static bool tryCaptureSamples(uint8_t* buf, int framesize); ///< Does nothing and return false on failure
+    static bool tryCaptureSamples(uint8_t* buf, int framesize);
     bool TryCaptureSamples(uint8_t* buf, int framesize);
 
-    /// May be called from any thread, will always queue a call to playGroupAudio
-    /// The first and last argument are ignored, but allow direct compatibility with toxcore
     static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
     void PlayGroupAudio(int group, int peer, const int16_t* data,
@@ -97,7 +95,6 @@ public:
 #endif
 
 public slots:
-    /// Must be called from the audio thread, plays a group call's received audio
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
     static void pauseOutput();
@@ -115,6 +112,7 @@ private:
 private:
     static Audio* instance;
 
+private:
     QThread*            audioThread;
     QMutex              audioInLock;
     QMutex              audioOutLock;

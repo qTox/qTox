@@ -38,6 +38,9 @@
 
 Audio* Audio::instance{nullptr};
 
+/**
+Returns the singleton's instance. Will construct on first call.
+*/
 Audio& Audio::getInstance()
 {
     if (!instance)
@@ -89,6 +92,9 @@ float Audio::getOutputVolume()
     return getInstance().GetOutputVolume();
 }
 
+/**
+Returns the current output volume, between 0 and 1
+*/
 qreal Audio::GetOutputVolume()
 {
     QMutexLocker locker(&audioOutLock);
@@ -100,6 +106,9 @@ void Audio::setOutputVolume(float volume)
     getInstance().SetOutputVolume(volume);
 }
 
+/**
+The volume must be between 0 and 1
+*/
 void Audio::SetOutputVolume(qreal volume)
 {
     QMutexLocker locker(&audioOutLock);
@@ -122,6 +131,9 @@ void Audio::SetOutputVolume(qreal volume)
     }
 }
 
+/**
+The volume must be between 0 and 2
+*/
 void Audio::setInputVolume(float volume)
 {
     getInstance().SetInputVolume(volume);
@@ -139,6 +151,9 @@ void Audio::suscribeInput()
     inst.SubscribeInput();
 }
 
+/**
+ Call when you need to capture sound from the open input device.
+*/
 void Audio::SubscribeInput()
 {
     assert(userCount >= 0);
@@ -170,6 +185,9 @@ void Audio::unsuscribeInput()
     inst.UnSubscribeInput();
 }
 
+/**
+Call once you don't need to capture on the open input device anymore.
+*/
 void Audio::UnSubscribeInput()
 {
     assert(userCount > 0);
@@ -194,6 +212,9 @@ void Audio::openInput(const QString& inDevDescr)
     getInstance().OpenInput(inDevDescr);
 }
 
+/**
+Open an input device, use before suscribing
+*/
 void Audio::OpenInput(const QString& inDevDescr)
 {
     QMutexLocker lock(&audioInLock);
@@ -238,6 +259,9 @@ bool Audio::openOutput(const QString& outDevDescr)
     return getInstance().OpenOutput(outDevDescr);
 }
 
+/**
+Open an output device
+*/
 bool Audio::OpenOutput(const QString &outDevDescr)
 {
     QMutexLocker lock(&audioOutLock);
@@ -288,6 +312,9 @@ void Audio::closeInput()
     getInstance().CloseInput();
 }
 
+/**
+Close an input device, please don't use unless everyone's unsuscribed
+*/
 void Audio::CloseInput()
 {
     qDebug() << "Closing input";
@@ -311,6 +338,9 @@ void Audio::closeOutput()
     getInstance().CloseOutput();
 }
 
+/**
+Close an output device
+*/
 void Audio::CloseOutput()
 {
     qDebug() << "Closing output";
@@ -339,6 +369,9 @@ void Audio::playMono16Sound(const QByteArray& data)
     getInstance().PlayMono16Sound(data);
 }
 
+/**
+Play a 44100Hz mono 16bit PCM sound
+*/
 void Audio::PlayMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(&audioOutLock);
@@ -377,6 +410,11 @@ void Audio::PlayMono16Sound(const QByteArray& data)
     alDeleteBuffers(1, &buffer);
 }
 
+/**
+@brief May be called from any thread, will always queue a call to playGroupAudio.
+
+The first and last argument are ignored, but allow direct compatibility with toxcore.
+*/
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
@@ -392,6 +430,9 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
     getInstance().PlayGroupAudio(group, peer, data, samples, channels, sample_rate);
 }
 
+/**
+Must be called from the audio thread, plays a group call's received audio
+*/
 void Audio::PlayGroupAudio(int group, int peer, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
@@ -465,6 +506,9 @@ bool Audio::isInputReady()
     return getInstance().IsInputReady();
 }
 
+/**
+Returns true if the input device is open and suscribed to
+*/
 bool Audio::IsInputReady()
 {
     QMutexLocker locker(&audioInLock);
@@ -476,6 +520,9 @@ bool Audio::isOutputClosed()
     return getInstance().IsOutputClosed();
 }
 
+/**
+Returns true if the output device is open
+*/
 bool Audio::IsOutputClosed()
 {
     QMutexLocker locker(&audioOutLock);
@@ -487,6 +534,9 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
     return getInstance().TryCaptureSamples(buf, framesize);
 }
 
+/**
+Does nothing and return false on failure
+*/
 bool Audio::TryCaptureSamples(uint8_t* buf, int framesize)
 {
     QMutexLocker lock(&audioInLock);
