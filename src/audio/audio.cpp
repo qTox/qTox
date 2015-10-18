@@ -31,63 +31,78 @@
 #include "src/persistence/settings.h"
 
 #include <QDebug>
-#include <QThread>
-#include <QMutexLocker>
 #include <QTimer>
+#include <QThread>
 
 #include <cassert>
 
-std::atomic<int> Audio::userCount{0};
 Audio* Audio::instance{nullptr};
-QThread* Audio::audioThread{nullptr};
-QMutex* Audio::audioInLock{nullptr};
-QMutex* Audio::audioOutLock{nullptr};
-ALCdevice* Audio::alInDev{nullptr};
-ALCdevice* Audio::alOutDev{nullptr};
-ALCcontext* Audio::alContext{nullptr};
-ALuint Audio::alMainSource{0};
-float Audio::outputVolume{1.0};
-float Audio::inputVolume{1.0};
-QTimer* Audio::timer{nullptr};
 
 Audio& Audio::getInstance()
 {
     if (!instance)
     {
         instance = new Audio();
-        audioThread = new QThread(instance);
-        audioThread->setObjectName("qTox Audio");
-        audioThread->start();
-        audioInLock = new QMutex(QMutex::Recursive);
-        audioOutLock = new QMutex(QMutex::Recursive);
-        instance->moveToThread(audioThread);
-        timer = new QTimer(instance);
-        timer->moveToThread(audioThread);
-        timer->setSingleShot(true);
-        instance->connect(timer, &QTimer::timeout, instance, &Audio::closeOutput);
+        instance->startAudioThread();
     }
     return *instance;
 }
 
+Audio::Audio()
+    : audioThread(new QThread())
+    , audioInLock(QMutex::Recursive)
+    , audioOutLock(QMutex::Recursive)
+    , userCount(0)
+    , alOutDev(nullptr)
+    , alInDev(nullptr)
+    , outputVolume(1.0)
+    , inputVolume(1.0)
+    , alMainSource(0)
+    , alContext(nullptr)
+    , timer(new QTimer(this))
+{
+    timer->setSingleShot(true);
+    connect(timer, &QTimer::timeout, this, &Audio::closeOutput);
+
+    audioThread->setObjectName("qTox Audio");
+    connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
+}
+
 Audio::~Audio()
 {
-    audioThread->exit(0);
+    audioThread->exit();
     audioThread->wait();
     if (audioThread->isRunning())
         audioThread->terminate();
+}
 
-    delete audioThread;
-    delete audioInLock;
-    delete audioOutLock;
+void Audio::startAudioThread()
+{
+    if (!audioThread->isRunning())
+        audioThread->start();
+
+    moveToThread(audioThread);
 }
 
 float Audio::getOutputVolume()
 {
+    return getInstance().GetOutputVolume();
+}
+
+qreal Audio::GetOutputVolume()
+{
+    QMutexLocker locker(&audioOutLock);
     return outputVolume;
 }
 
 void Audio::setOutputVolume(float volume)
 {
+    getInstance().SetOutputVolume(volume);
+}
+
+void Audio::SetOutputVolume(qreal volume)
+{
+    QMutexLocker locker(&audioOutLock);
     outputVolume = volume;
     alSourcef(alMainSource, AL_GAIN, outputVolume);
 
@@ -109,21 +124,30 @@ void Audio::setOutputVolume(float volume)
 
 void Audio::setInputVolume(float volume)
 {
+    getInstance().SetInputVolume(volume);
+}
+
+void Audio::SetInputVolume(qreal volume)
+{
+    QMutexLocker locker(&audioInLock);
     inputVolume = volume;
 }
 
 void Audio::suscribeInput()
 {
+    Audio& inst = Audio::getInstance();
+    inst.SubscribeInput();
+}
 
-    QMutexLocker lock(audioInLock);
-    QMutexLocker locker(audioOutLock);
+void Audio::SubscribeInput()
+{
     assert(userCount >= 0);
 
     qDebug() << "subscribing input";
 
     if (!userCount++)
     {
-        openInput(Settings::getInstance().getInDev());
+        OpenInput(Settings::getInstance().getInDev());
 
 #if (!FIX_SND_PCM_PREPARE_BUG)
         if (alInDev)
@@ -134,16 +158,20 @@ void Audio::suscribeInput()
 #endif
     }
 
-    QTimer::singleShot(1, []()
+    QTimer::singleShot(1, [=]()
     {
-        Audio::openOutput(Settings::getInstance().getOutDev());
+        OpenOutput(Settings::getInstance().getOutDev());
     });
 }
 
 void Audio::unsuscribeInput()
 {
-    QMutexLocker lock(audioInLock);
-    QMutexLocker locker(audioOutLock);
+    Audio& inst = Audio::getInstance();
+    inst.UnSubscribeInput();
+}
+
+void Audio::UnSubscribeInput()
+{
     assert(userCount > 0);
 
     qDebug() << "unsubscribing input" << userCount;
@@ -163,7 +191,12 @@ void Audio::unsuscribeInput()
 
 void Audio::openInput(const QString& inDevDescr)
 {
-    QMutexLocker lock(audioInLock);
+    getInstance().OpenInput(inDevDescr);
+}
+
+void Audio::OpenInput(const QString& inDevDescr)
+{
+    QMutexLocker lock(&audioInLock);
     auto* tmp = alInDev;
     alInDev = nullptr;
     if (tmp)
@@ -198,12 +231,16 @@ void Audio::openInput(const QString& inDevDescr)
     alcCaptureStart(alInDev);
 #endif
     }
-
 }
 
 bool Audio::openOutput(const QString& outDevDescr)
 {
-    QMutexLocker lock(audioOutLock);
+    return getInstance().OpenOutput(outDevDescr);
+}
+
+bool Audio::OpenOutput(const QString &outDevDescr)
+{
+    QMutexLocker lock(&audioOutLock);
     auto* tmp = alOutDev;
     alOutDev = nullptr;
     if (outDevDescr.isEmpty())
@@ -224,7 +261,7 @@ bool Audio::openOutput(const QString& outDevDescr)
         if (tmp)
             alcCloseDevice(tmp);
 
-        alContext=alcCreateContext(alOutDev,nullptr);
+        alContext = alcCreateContext(alOutDev,nullptr);
         if (!alcMakeContextCurrent(alContext))
         {
             qWarning() << "Cannot create output audio context";
@@ -248,8 +285,13 @@ bool Audio::openOutput(const QString& outDevDescr)
 
 void Audio::closeInput()
 {
+    getInstance().CloseInput();
+}
+
+void Audio::CloseInput()
+{
     qDebug() << "Closing input";
-    QMutexLocker lock(audioInLock);
+    QMutexLocker locker(&audioInLock);
     if (alInDev)
     {
         if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
@@ -266,8 +308,13 @@ void Audio::closeInput()
 
 void Audio::closeOutput()
 {
+    getInstance().CloseOutput();
+}
+
+void Audio::CloseOutput()
+{
     qDebug() << "Closing output";
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker locker(&audioOutLock);
 
     if (userCount > 0)
         return;
@@ -289,7 +336,12 @@ void Audio::closeOutput()
 
 void Audio::playMono16Sound(const QByteArray& data)
 {
-    QMutexLocker lock(audioOutLock);
+    getInstance().PlayMono16Sound(data);
+}
+
+void Audio::PlayMono16Sound(const QByteArray& data)
+{
+    QMutexLocker lock(&audioOutLock);
 
     if (!alOutDev)
     {
@@ -337,9 +389,15 @@ void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
 void Audio::playGroupAudio(int group, int peer, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
+    getInstance().PlayGroupAudio(group, peer, data, samples, channels, sample_rate);
+}
+
+void Audio::PlayGroupAudio(int group, int peer, const int16_t* data,
+                           unsigned samples, uint8_t channels, unsigned sample_rate)
+{
     assert(QThread::currentThread() == audioThread);
 
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker lock(&audioOutLock);
 
     ToxGroupCall& call = Core::groupCalls[group];
 
@@ -366,7 +424,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 {
     assert(channels == 1 || channels == 2);
 
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker lock(&audioOutLock);
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
@@ -404,17 +462,34 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 
 bool Audio::isInputReady()
 {
+    return getInstance().IsInputReady();
+}
+
+bool Audio::IsInputReady()
+{
+    QMutexLocker locker(&audioInLock);
     return (alInDev && userCount);
 }
 
 bool Audio::isOutputClosed()
 {
+    return getInstance().IsOutputClosed();
+}
+
+bool Audio::IsOutputClosed()
+{
+    QMutexLocker locker(&audioOutLock);
     return (alOutDev);
 }
 
 bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 {
-    QMutexLocker lock(audioInLock);
+    return getInstance().TryCaptureSamples(buf, framesize);
+}
+
+bool Audio::TryCaptureSamples(uint8_t* buf, int framesize)
+{
+    QMutexLocker lock(&audioInLock);
 
     ALint samples=0;
     alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
@@ -445,7 +520,12 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
 void Audio::pauseOutput()
 {
-    QMutexLocker lock(audioOutLock);
+    getInstance().PauseOutput();
+}
+
+void Audio::PauseOutput()
+{
+    QMutexLocker lock(&audioOutLock);
 
     qDebug() << "Pause";
     if (userCount == 0)
