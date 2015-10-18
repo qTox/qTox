@@ -125,6 +125,7 @@ void NetCamView::setTitle(const QString &title)
 
 void NetCamView::showEvent(QShowEvent *event)
 {
+    Q_UNUSED(event);
     selfFrame->resetBoundary(videoSurface->getBoundingRect());
 }
 
