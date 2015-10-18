@@ -267,7 +267,7 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcePlay(alMainSource);
     alDeleteBuffers(1, &buffer);
 }
-#include <QDebug>
+
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
