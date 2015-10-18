@@ -25,7 +25,9 @@
   margin-bottom:5px;
 }
 
-QPushButton {
+LoginScreen > QPushButton,
+QStackedWidget QPushButton
+{
   background: transparent;
   border: none;
   color: white;
