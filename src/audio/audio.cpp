@@ -188,7 +188,7 @@ void Audio::openInput(const QString& inDevDescr)
         core->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
-    if (/*userCount.load() != 0 && */alInDev)
+    if (alInDev)
     {
         alcCaptureStart(alInDev);
     }
