@@ -55,7 +55,7 @@ Audio::Audio()
     : audioThread(new QThread())
     , audioInLock(QMutex::Recursive)
     , audioOutLock(QMutex::Recursive)
-    , userCount(0)
+    , inputSubscriptions(0)
     , alOutDev(nullptr)
     , alInDev(nullptr)
     , outputVolume(1.0)
@@ -156,11 +156,8 @@ void Audio::suscribeInput()
 */
 void Audio::SubscribeInput()
 {
-    assert(userCount >= 0);
-
-    qDebug() << "subscribing input";
-
-    if (!userCount++)
+    qDebug() << "subscribing input" << inputSubscriptions;
+    if (!inputSubscriptions++)
     {
         OpenInput(Settings::getInstance().getInDev());
 
@@ -190,10 +187,13 @@ Call once you don't need to capture on the open input device anymore.
 */
 void Audio::UnSubscribeInput()
 {
-    assert(userCount > 0);
+    qDebug() << "unsubscribing input" << inputSubscriptions;
+    if (inputSubscriptions > 0)
+        inputSubscriptions--;
+    else if(inputSubscriptions < 0)
+        inputSubscriptions = 0;
 
-    qDebug() << "unsubscribing input" << userCount;
-    if (!--userCount)
+    if (!inputSubscriptions)
     {
         closeOutput();
 #if (!FIX_SND_PCM_PREPARE_BUG)
@@ -324,7 +324,7 @@ void Audio::CloseInput()
         if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
         {
             alInDev = nullptr;
-            userCount = 0;
+            inputSubscriptions = 0;
         }
         else
         {
@@ -346,7 +346,7 @@ void Audio::CloseOutput()
     qDebug() << "Closing output";
     QMutexLocker locker(&audioOutLock);
 
-    if (userCount > 0)
+    if (inputSubscriptions > 0)
         return;
 
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
@@ -512,7 +512,7 @@ Returns true if the input device is open and suscribed to
 bool Audio::IsInputReady()
 {
     QMutexLocker locker(&audioInLock);
-    return (alInDev && userCount);
+    return alInDev && inputSubscriptions;
 }
 
 bool Audio::isOutputClosed()
@@ -578,7 +578,7 @@ void Audio::PauseOutput()
     QMutexLocker lock(&audioOutLock);
 
     qDebug() << "Pause";
-    if (userCount == 0)
+    if (!inputSubscriptions)
         closeOutput();
 }
 

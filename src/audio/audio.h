@@ -116,7 +116,7 @@ private:
     QThread*            audioThread;
     QMutex              audioInLock;
     QMutex              audioOutLock;
-    std::atomic<int>    userCount;
+    std::atomic<int>    inputSubscriptions;
     ALCdevice*          alOutDev;
     ALCdevice*          alInDev;
     qreal               outputVolume;
