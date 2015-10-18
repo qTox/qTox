@@ -89,6 +89,7 @@ void AVForm::showEvent(QShowEvent*)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
+    Audio::suscribeInput();
 }
 
 void AVForm::onVideoModesIndexChanged(int index)
@@ -219,6 +220,7 @@ void AVForm::hideEvent(QHideEvent *)
         killVideoSurface();
     }
     videoDeviceList.clear();
+    Audio::unsuscribeInput();
 }
 
 void AVForm::getVideoDevices()
@@ -313,12 +315,18 @@ void AVForm::onInDevChanged(const QString &deviceDescriptor)
 {
     Settings::getInstance().setInDev(deviceDescriptor);
     Audio::openInput(deviceDescriptor);
+
+    Audio::unsuscribeInput();
+    Audio::suscribeInput();
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
 {
-    Settings::getInstance().setOutDev(deviceDescriptor);
+    Settings::getInstance().setInDev(deviceDescriptor);
     Audio::openOutput(deviceDescriptor);
+
+    Audio::unsuscribeInput();
+    Audio::suscribeInput();
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
