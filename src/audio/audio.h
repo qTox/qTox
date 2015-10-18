@@ -63,7 +63,7 @@ public:
     static void suscribeInput();
     void SubscribeInput();
     static void unsuscribeInput();
-    void UnSubscribeInput();
+    void UnsubscribeInput();
 
     static void openInput(const QString& inDevDescr);
     void OpenInput(const QString& inDevDescr);

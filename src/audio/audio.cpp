@@ -147,8 +147,7 @@ void Audio::SetInputVolume(qreal volume)
 
 void Audio::suscribeInput()
 {
-    Audio& inst = Audio::getInstance();
-    inst.SubscribeInput();
+    getInstance().SubscribeInput();
 }
 
 /**
@@ -178,14 +177,13 @@ void Audio::SubscribeInput()
 
 void Audio::unsuscribeInput()
 {
-    Audio& inst = Audio::getInstance();
-    inst.UnSubscribeInput();
+    getInstance().UnsubscribeInput();
 }
 
 /**
 Call once you don't need to capture on the open input device anymore.
 */
-void Audio::UnSubscribeInput()
+void Audio::UnsubscribeInput()
 {
     qDebug() << "unsubscribing input" << inputSubscriptions;
     if (inputSubscriptions > 0)
@@ -400,8 +398,7 @@ void Audio::PlayMono16Sound(const QByteArray& data)
 
     ALint frequency;
     alGetBufferi(buffer, AL_FREQUENCY, &frequency);
-    float duration = (lengthInSamples / static_cast<float>(frequency)) * 1000;
-
+    qreal duration = (lengthInSamples / static_cast<qreal>(frequency)) * 1000;
     int remaining = timer->interval();
 
     if (duration > remaining)
@@ -526,7 +523,7 @@ Returns true if the output device is open
 bool Audio::IsOutputClosed()
 {
     QMutexLocker locker(&audioOutLock);
-    return (alOutDev);
+    return alOutDev;
 }
 
 bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
@@ -575,8 +572,6 @@ void Audio::pauseOutput()
 
 void Audio::PauseOutput()
 {
-    QMutexLocker lock(&audioOutLock);
-
     qDebug() << "Pause";
     if (!inputSubscriptions)
         closeOutput();
