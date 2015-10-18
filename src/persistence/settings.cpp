@@ -232,6 +232,7 @@ void Settings::loadGlobal()
     s.beginGroup("Video");
         videoDev = s.value("videoDev", "").toString();
         camVideoRes = s.value("camVideoRes",QSize()).toSize();
+        camVideoFPS = s.value("camVideoFPS", 0).toUInt();
     s.endGroup();
 
     // Read the embedded DHT bootsrap nodes list if needed
@@ -431,6 +432,7 @@ void Settings::saveGlobal()
     s.beginGroup("Video");
         s.setValue("videoDev", videoDev);
         s.setValue("camVideoRes",camVideoRes);
+        s.setValue("camVideoFPS",camVideoFPS);
     s.endGroup();
 }
 
@@ -1218,6 +1220,18 @@ void Settings::setCamVideoRes(QSize newValue)
 {
     QMutexLocker locker{&bigLock};
     camVideoRes = newValue;
+}
+
+unsigned short Settings::getCamVideoFPS() const
+{
+    QMutexLocker locker{&bigLock};
+    return camVideoFPS;
+}
+
+void Settings::setCamVideoFPS(unsigned short newValue)
+{
+    QMutexLocker locker{&bigLock};
+    camVideoFPS = newValue;
 }
 
 QString Settings::getFriendAdress(const QString &publicKey) const

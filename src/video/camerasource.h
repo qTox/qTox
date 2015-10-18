@@ -45,6 +45,7 @@ struct AVCodecContext;
 class CameraSource : public VideoSource
 {
     Q_OBJECT
+
 public:
     static CameraSource& getInstance();
     static void destroyInstance();
@@ -58,6 +59,9 @@ public:
     // VideoSource interface
     virtual bool subscribe() override;
     virtual void unsubscribe() override;
+
+signals:
+    void deviceOpened();
 
 private:
     CameraSource();

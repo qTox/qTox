@@ -295,6 +295,13 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
         alSourcef(call.alSources[peer], AL_GAIN, outputVolume);
     }
 
+    qreal volume = 0.;
+    int bufsize = samples * 2 * channels;
+    for (int i = 0; i < bufsize; ++i)
+        volume += abs(data[i]);//std::max(volume, data[i]);
+
+    emit groupAudioPlayed(group, peer, volume / bufsize);
+
     playAudioBuffer(call.alSources[peer], data, samples, channels, sample_rate);
 }
 

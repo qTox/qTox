@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project
+    Copyright © 2014-2015 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,35 +18,97 @@
 */
 
 #include "netcamview.h"
+#include "camerasource.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
 #include "src/core/core.h"
 #include "src/video/videosurface.h"
+#include "src/widget/tool/movablewidget.h"
+#include "src/persistence/settings.h"
 #include <QLabel>
-#include <QHBoxLayout>
+#include <QBoxLayout>
+#include <QFrame>
 
-NetCamView::NetCamView(QWidget* parent)
-    : QWidget(parent)
-    , mainLayout(new QHBoxLayout())
+NetCamView::NetCamView(int friendId, QWidget* parent)
+    : GenericNetCamView(parent)
+    , selfFrame{nullptr}
+    , friendId{friendId}
 {
-    setLayout(mainLayout);
-    setWindowTitle(tr("Tox video"));
-    setMinimumSize(320,240);
+    QString id = FriendList::findFriend(friendId)->getToxId().toString();
+    videoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(id), this);
+    videoSurface->setMinimumHeight(256);
+    videoSurface->setContentsMargins(6, 6, 6, 6);
 
-    videoSurface = new VideoSurface(this);
+    verLayout->insertWidget(0, videoSurface, 1);
 
-    mainLayout->addWidget(videoSurface);
+    selfVideoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this, true);
+    selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
+    selfVideoSurface->setMouseTracking(true);
+    selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    selfFrame = new MovableWidget(videoSurface);
+    selfFrame->show();
+
+    QHBoxLayout* frameLayout = new QHBoxLayout(selfFrame);
+    frameLayout->addWidget(selfVideoSurface);
+    frameLayout->setMargin(0);
+
+    updateRatio();
+    connect(selfVideoSurface, &VideoSurface::ratioChanged, this, &NetCamView::updateRatio);
+
+    connect(videoSurface, &VideoSurface::boundaryChanged, [this]()
+    {
+        QRect boundingRect = videoSurface->getBoundingRect();
+        updateFrameSize(boundingRect.size());
+        selfFrame->setBoundary(boundingRect);
+    });
+
+    connect(videoSurface, &VideoSurface::ratioChanged, [this]()
+    {
+        selfFrame->setMinimumWidth(selfFrame->minimumHeight() * selfVideoSurface->getRatio());
+        QRect boundingRect = videoSurface->getBoundingRect();
+        updateFrameSize(boundingRect.size());
+        selfFrame->resetBoundary(boundingRect);
+    });
+
+    connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap)
+    {
+        selfVideoSurface->setAvatar(pixmap);
+    });
+
+    connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
+    {
+        if (this->friendId == FriendId)
+            videoSurface->setAvatar(pixmap);
+    });
+
+    VideoMode videoMode;
+    QSize videoSize = Settings::getInstance().getCamVideoRes();
+    videoMode.width = videoSize.width();
+    videoMode.height = videoSize.height();
+    qDebug() << "SIZER" << videoSize;
+    videoMode.FPS = Settings::getInstance().getCamVideoFPS();
+    CameraSource::getInstance().open(Settings::getInstance().getVideoDev(), videoMode);
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)
 {
     setSource(source);
-    setTitle(title);
+    selfVideoSurface->setSource(&CameraSource::getInstance());
 
+    setTitle(title);
     QWidget::show();
 }
 
 void NetCamView::hide()
 {
     setSource(nullptr);
+    selfVideoSurface->setSource(nullptr);
+
+    if (selfFrame)
+        selfFrame->deleteLater();
+
+    selfFrame = nullptr;
 
     QWidget::hide();
 }
@@ -59,4 +121,26 @@ void NetCamView::setSource(VideoSource *s)
 void NetCamView::setTitle(const QString &title)
 {
     setWindowTitle(title);
+}
+
+void NetCamView::showEvent(QShowEvent *event)
+{
+    Q_UNUSED(event);
+    selfFrame->resetBoundary(videoSurface->getBoundingRect());
+}
+
+void NetCamView::updateRatio()
+{
+    selfFrame->setMinimumWidth(selfFrame->minimumHeight() * selfVideoSurface->getRatio());
+    selfFrame->setRatio(selfVideoSurface->getRatio());
+}
+
+void NetCamView::updateFrameSize(QSize size)
+{
+    selfFrame->setMaximumSize(size.height() / 3, size.width() / 3);
+
+    if (selfFrame->maximumWidth() > selfFrame->maximumHeight())
+        selfFrame->setMaximumWidth(selfFrame->maximumHeight() * selfVideoSurface->getRatio());
+    else
+        selfFrame->setMaximumHeight(selfFrame->maximumWidth() / selfVideoSurface->getRatio());
 }

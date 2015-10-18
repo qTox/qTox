@@ -1087,8 +1087,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>284</width>
-             <height>398</height>
+             <width>775</width>
+             <height>284</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>

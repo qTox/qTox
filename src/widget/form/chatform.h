@@ -29,7 +29,6 @@
 
 class Friend;
 class FileTransferInstance;
-class NetCamView;
 class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
@@ -99,13 +98,13 @@ private slots:
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
+    void onMessageInserted();
 
 private:
     void retranslateUi();
 
 protected:
-    void showNetcam();
-    void hideNetcam();
+    virtual GenericNetCamView* createNetcam() final override;
     // drag & drop
     virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
     virtual void dropEvent(QDropEvent* ev) final override;
@@ -115,7 +114,6 @@ protected:
 private:
     Friend* f;
     CroppingLabel *statusMessageLabel;
-    NetCamView* netcam;
     int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;

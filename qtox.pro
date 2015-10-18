@@ -358,14 +358,13 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/loadhistorydialog.h \
         src/widget/form/setpassworddialog.h \
         src/widget/form/tabcompleter.h \
-        src/widget/flowlayout.h \
-        src/ipc.h \
         src/net/autoupdate.h \
         src/widget/tool/callconfirmwidget.h \
         src/widget/systemtrayicon.h \
         src/widget/qrwidget.h \
         src/widget/systemtrayicon_private.h \
-        src/widget/loginscreen.h
+        src/widget/loginscreen.h \
+        src/ipc.h
 
     SOURCES += \
         src/widget/form/addfriendform.cpp \
@@ -385,7 +384,6 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/widget/form/setpassworddialog.cpp \
         src/widget/form/tabcompleter.cpp \
         src/widget/flowlayout.cpp \
-        src/ipc.cpp \
         src/net/autoupdate.cpp \
         src/widget/tool/callconfirmwidget.cpp \
         src/widget/systemtrayicon.cpp \
@@ -427,7 +425,8 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
         src/persistence/offlinemsgengine.cpp \
         src/widget/qrwidget.cpp \
         src/widget/genericchatroomwidget.cpp \
-        src/widget/loginscreen.cpp
+        src/widget/loginscreen.cpp \
+        src/ipc.cpp
 }
 
 win32 {
@@ -498,7 +497,10 @@ SOURCES += \
     src/widget/tool/removefrienddialog.cpp \
     src/widget/contentlayout.cpp \
     src/widget/contentdialog.cpp \
-    src/widget/tool/activatedialog.cpp
+    src/widget/tool/activatedialog.cpp \
+    src/widget/tool/movablewidget.cpp \
+    src/video/genericnetcamview.cpp \
+    src/video/groupnetcamview.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -545,4 +547,7 @@ HEADERS += \
     src/widget/contentlayout.h \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \
-    src/widget/tool/removefrienddialog.h
+    src/widget/tool/removefrienddialog.h \
+    src/widget/tool/movablewidget.h \
+    src/video/genericnetcamview.h \
+    src/video/groupnetcamview.h
