@@ -62,8 +62,10 @@ AVForm::AVForm() :
 
     connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
-    bodyUI->playbackSlider->setValue(100);
-    bodyUI->microphoneSlider->setValue(100);
+    connect(bodyUI->playbackSlider, &QSlider::sliderReleased, this, &AVForm::onPlaybackSliderReleased);
+    connect(bodyUI->microphoneSlider, &QSlider::sliderReleased, this, &AVForm::onMicrophoneSliderReleased);
+    bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
+    bodyUI->microphoneSlider->setValue(Settings::getInstance().getInVolume());
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -332,8 +334,18 @@ void AVForm::on_playbackSlider_valueChanged(int value)
 
 void AVForm::on_microphoneSlider_valueChanged(int value)
 {
-    Audio::setOutputVolume(value / 100.0);
+    Audio::setInputVolume(value / 100.0);
     bodyUI->microphoneMax->setText(QString::number(value));
+}
+
+void AVForm::onPlaybackSliderReleased()
+{
+    Settings::getInstance().setOutVolume(bodyUI->playbackSlider->value());
+}
+
+void AVForm::onMicrophoneSliderReleased()
+{
+    Settings::getInstance().setInVolume(bodyUI->microphoneSlider->value());
 }
 
 bool AVForm::eventFilter(QObject *o, QEvent *e)

@@ -154,6 +154,12 @@ public:
     QString getOutDev() const;
     void setOutDev(const QString& deviceSpecifier);
 
+    int getInVolume() const;
+    void setInVolume(int volume);
+
+    int getOutVolume() const;
+    void setOutVolume(int volume);
+
     bool getFilterAudio() const;
     void setFilterAudio(bool newValue);
 
@@ -374,6 +380,8 @@ private:
     // Audio
     QString inDev;
     QString outDev;
+    int inVolume;
+    int outVolume;
     bool filterAudio;
 
     // Video

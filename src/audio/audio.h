@@ -50,6 +50,7 @@ public:
 
     static float getOutputVolume(); ///< Returns the current output volume, between 0 and 1
     static void setOutputVolume(float volume); ///< The volume must be between 0 and 1
+    static void setInputVolume(float volume); ///< The volume must be between 0 and 2
 
     static void suscribeInput(); ///< Call when you need to capture sound from the open input device.
     static void unsuscribeInput(); ///< Call once you don't need to capture on the open input device anymore.
@@ -95,6 +96,7 @@ private:
     static ALCdevice* alOutDev, *alInDev;
     static QMutex* audioInLock, *audioOutLock;
     static float outputVolume;
+    static float inputVolume;
     static ALuint alMainSource;
     static QThread* audioThread;
     static ALCcontext* alContext;

@@ -45,6 +45,7 @@ ALCdevice* Audio::alOutDev{nullptr};
 ALCcontext* Audio::alContext{nullptr};
 ALuint Audio::alMainSource{0};
 float Audio::outputVolume{1.0};
+float Audio::inputVolume{1.0};
 
 Audio& Audio::getInstance()
 {
@@ -97,6 +98,11 @@ void Audio::setOutputVolume(float volume)
             continue;
         alSourcef(call.alSource, AL_GAIN, outputVolume);
     }
+}
+
+void Audio::setInputVolume(float volume)
+{
+    inputVolume = volume;
 }
 
 void Audio::suscribeInput()
@@ -366,6 +372,23 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
     memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
     alcCaptureSamples(Audio::alInDev, buf, framesize);
+
+    if (inputVolume != 1)
+    {
+        int16_t* bufReal = reinterpret_cast<int16_t*>(buf);
+        for (int i = 0; i < framesize; ++i)
+        {
+            int sample = bufReal[i] * pow(inputVolume, 2);
+
+            if (sample < std::numeric_limits<int16_t>::min())
+                sample = std::numeric_limits<int16_t>::min();
+            else if (sample > std::numeric_limits<int16_t>::max())
+                sample = std::numeric_limits<int16_t>::max();
+
+            bufReal[i] = sample;
+        }
+    }
+
     return true;
 }
 
