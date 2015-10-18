@@ -1,32 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.0" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AVForm</name>
     <message>
-        <location filename="../src/widget/form/settings/avform.h" line="42"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="35"/>
         <source>Audio/Video</source>
         <translation>音频/视频</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avform.cpp" line="77"/>
         <source>Initializing Camera...</source>
-        <translation type="vanished">初始化摄像机...</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="138"/>
-        <source>%1x%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="140"/>
-        <location filename="../src/widget/form/settings/avform.cpp" line="146"/>
-        <source>Default resolution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="142"/>
-        <source> at %1 FPS</source>
-        <translation type="unfinished"></translation>
+        <translation>初始化摄像机...</translation>
     </message>
 </context>
 <context>
@@ -36,22 +21,22 @@
         <translation type="obsolete">qTox</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="156"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
         <source>Video Settings</source>
         <translation>视频设置</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="133"/>
         <source>Resolution</source>
         <translation>分辨率</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
         <source>Playback</source>
         <translation>播放音量</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="80"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
         <source>Microphone</source>
         <translation>麦克风音量</translation>
     </message>
@@ -61,62 +46,45 @@
         <translation>音频设置</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="129"/>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="64"/>
         <source>Use slider to set volume of your speakers.</source>
         <translatorcomment> </translatorcomment>
         <translation>使用滑块设置扬声器音量</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="101"/>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="74"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
         <translation>使用滑块来调节麦克风音量（警告：当前不一定会正常工作）</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="82"/>
         <source>Playback device</source>
         <translation>播放设备</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="89"/>
         <source>Capture device</source>
         <translation>音频捕获设备</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="94"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="102"/>
         <source>Rescan audio devices</source>
         <translation>重新扫描音频设备</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="109"/>
         <source>Filter audio</source>
         <translation>过滤音频</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="112"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
         <translation>过滤麦克风声音，使对方从你这听到更清晰的声音</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
-        <source>Video device</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="171"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="191"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="153"/>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -129,152 +97,70 @@ which may lead to problems with video calls.</source>
 这有可能导致视频通话的问题</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
         <source>Hue</source>
-        <translation type="vanished">色彩</translation>
+        <translation>色彩</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
         <source>Brightness</source>
-        <translation type="vanished">亮度</translation>
+        <translation>亮度</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="192"/>
         <source>Saturation</source>
-        <translation type="vanished">饱和度</translation>
+        <translation>饱和度</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="206"/>
         <source>Contrast</source>
-        <translation type="vanished">对比度</translation>
-    </message>
-</context>
-<context>
-    <name>AboutForm</name>
-    <message>
-        <location filename="../src/widget/form/settings/aboutform.h" line="37"/>
-        <source>About</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AboutSettings</name>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="20"/>
-        <source>Form</source>
-        <translation type="unfinished">qTox</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="53"/>
-        <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
-        <source>You are using a qTox nightly build.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="103"/>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="130"/>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="149"/>
-        <source>License</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="176"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="215"/>
-        <source>Authors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="232"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="260"/>
-        <source>Known Issues</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="277"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>对比度</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="159"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="34"/>
         <source>Add Friends</source>
         <translation>添加好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="160"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="37"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="161"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="38"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>好友验证消息</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="162"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="39"/>
         <source>Send friend request</source>
         <translation>发送好友请求</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="163"/>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/widget/form/addfriendform.cpp" line="40"/>
         <source>Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="vanished">用Tox找我聊聊？</translation>
+        <translation>用Tox找我聊聊？</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="89"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
         <translation>请输入一个有效的Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
-        <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="92"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>你不能加你自己为好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="126"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="100"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
@@ -290,7 +176,7 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation type="obsolete">qTox需要使用Tox DNS,此操作无法通过代理服务器实现，是否要忽略代理服务器并直接连接互联网？</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>此Tox ID不存在</translation>
@@ -329,39 +215,24 @@ Ignore the proxy and connect to the Internet directly ?</source>
 <context>
     <name>AdvancedForm</name>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.h" line="37"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="25"/>
         <source>Advanced</source>
         <translation>高级</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="35"/>
         <source>FULL - very safe, slowest (recommended)</source>
-        <translation type="vanished">完全保存 - 非常安全，最慢（推荐）</translation>
+        <translation>完全保存 - 非常安全，最慢（推荐）</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="36"/>
         <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
-        <translation type="vanished">标准 - 几乎和完全保存一样安全，比完全保存快约20%</translation>
+        <translation>标准 - 几乎和完全保存一样安全，比完全保存快约20%</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="37"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation type="vanished">关闭 - 关闭所有安全性选项，一旦发生故障所有的历史记录都会丢失，最快（不推荐）</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="98"/>
-        <source>Synchronized - safe (recommended)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="99"/>
-        <source>Partially async - risky (20% faster)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="100"/>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭 - 关闭所有安全性选项，一旦发生故障所有的历史记录都会丢失，最快（不推荐）</translation>
     </message>
 </context>
 <context>
@@ -398,17 +269,13 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation>聊天记录</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>History</source>
         <translation type="obsolete">历史记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">同步写入数据库</translation>
+        <translation>同步写入数据库</translation>
     </message>
 </context>
 <context>
@@ -513,27 +380,31 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation type="obsolete">加载历史记录...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="170"/>
+        <location filename="../src/widget/form/chatform.cpp" line="177"/>
         <source>Send a file</source>
         <translation>发送文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/chatform.cpp" line="185"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>File not read</source>
-        <translation type="vanished">文件无法读取</translation>
+        <translation>文件无法读取</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="181"/>
-        <location filename="../src/widget/form/chatform.cpp" line="789"/>
+        <location filename="../src/widget/form/chatform.cpp" line="185"/>
+        <location filename="../src/widget/form/chatform.cpp" line="768"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox无法打开 %1</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/chatform.cpp" line="190"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>Bad Idea</source>
-        <translation type="vanished">馊主意</translation>
+        <translation>馊主意</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="188"/>
-        <location filename="../src/widget/form/chatform.cpp" line="795"/>
+        <location filename="../src/widget/form/chatform.cpp" line="190"/>
+        <location filename="../src/widget/form/chatform.cpp" line="773"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>你在试图传输一个特殊（有序）的文件，此操作无法完成</translation>
     </message>
@@ -546,29 +417,17 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation type="obsolete">正在输入...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="1101"/>
+        <location filename="../src/widget/form/chatform.cpp" line="78"/>
         <source>Load chat history...</source>
         <translation>加载聊天历史记录</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="275"/>
+        <location filename="../src/widget/form/chatform.cpp" line="277"/>
         <source>Accept video call</source>
         <translation>接听视频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="180"/>
-        <location filename="../src/widget/form/chatform.cpp" line="789"/>
-        <source>Unable to open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/chatform.cpp" line="187"/>
-        <location filename="../src/widget/form/chatform.cpp" line="795"/>
-        <source>Bad idea</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/chatform.cpp" line="288"/>
+        <location filename="../src/widget/form/chatform.cpp" line="289"/>
         <source>Accept audio call</source>
         <translation>接听音频通话</translation>
     </message>
@@ -578,101 +437,86 @@ Ignore the proxy and connect to the Internet directly ?</source>
         <translation>%1 呼叫</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="322"/>
-        <location filename="../src/widget/form/chatform.cpp" line="434"/>
+        <location filename="../src/widget/form/chatform.cpp" line="326"/>
+        <location filename="../src/widget/form/chatform.cpp" line="447"/>
         <source>End video call</source>
         <translation>结束视频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="331"/>
-        <location filename="../src/widget/form/chatform.cpp" line="443"/>
+        <location filename="../src/widget/form/chatform.cpp" line="335"/>
+        <location filename="../src/widget/form/chatform.cpp" line="456"/>
         <source>End audio call</source>
         <translation>结束音频童话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="343"/>
-        <location filename="../src/widget/form/chatform.cpp" line="707"/>
-        <location filename="../src/widget/form/chatform.cpp" line="1109"/>
+        <location filename="../src/widget/form/chatform.cpp" line="346"/>
+        <location filename="../src/widget/form/chatform.cpp" line="703"/>
         <source>Mute microphone</source>
         <translation>静音麦克风</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="346"/>
-        <location filename="../src/widget/form/chatform.cpp" line="727"/>
-        <location filename="../src/widget/form/chatform.cpp" line="1104"/>
+        <location filename="../src/widget/form/chatform.cpp" line="349"/>
+        <location filename="../src/widget/form/chatform.cpp" line="723"/>
         <source>Mute call</source>
         <translation>静音通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="371"/>
+        <location filename="../src/widget/form/chatform.cpp" line="375"/>
         <source>%1 stopped calling</source>
         <translation>%1 挂断了电话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="393"/>
+        <location filename="../src/widget/form/chatform.cpp" line="412"/>
         <source>Cancel video call</source>
         <translation>取消视频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="401"/>
+        <location filename="../src/widget/form/chatform.cpp" line="420"/>
         <source>Cancel audio call</source>
         <translation>取消音频童话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="409"/>
+        <location filename="../src/widget/form/chatform.cpp" line="428"/>
         <source>Calling to %1</source>
         <translation>正在呼叫 %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="528"/>
+        <location filename="../src/widget/form/chatform.cpp" line="525"/>
         <source>Call rejected</source>
         <translation>通话被拒绝</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="684"/>
+        <location filename="../src/widget/form/chatform.cpp" line="680"/>
         <source>Start audio call</source>
         <translation>开始音频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="687"/>
+        <location filename="../src/widget/form/chatform.cpp" line="683"/>
         <source>Start video call</source>
         <translation>开始视频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="712"/>
-        <location filename="../src/widget/form/chatform.cpp" line="1111"/>
+        <location filename="../src/widget/form/chatform.cpp" line="708"/>
         <source>Unmute microphone</source>
         <translation>取消麦克风静音</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="732"/>
-        <location filename="../src/widget/form/chatform.cpp" line="1106"/>
+        <location filename="../src/widget/form/chatform.cpp" line="728"/>
         <source>Unmute call</source>
         <translation>取消通话静音</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="744"/>
+        <location filename="../src/widget/form/chatform.cpp" line="740"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>文件 &quot;%1&quot; 传输失败</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="934"/>
-        <source>Failed to open temporary file</source>
-        <comment>Temporary file for screenshot</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/chatform.cpp" line="935"/>
-        <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/chatform.cpp" line="981"/>
+        <location filename="../src/widget/form/chatform.cpp" line="904"/>
         <source>Call with %1 ended. %2</source>
         <translation>与 %1 的通话结束. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="1000"/>
+        <location filename="../src/widget/form/chatform.cpp" line="923"/>
         <source>Call duration: </source>
         <translation>通话时长:</translation>
     </message>
@@ -680,17 +524,17 @@ Ignore the proxy and connect to the Internet directly ?</source>
 <context>
     <name>ChatLog</name>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="836"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="66"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="837"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="81"/>
         <source>Select all</source>
         <translation>全选</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/chatlog.cpp" line="503"/>
+        <location filename="../src/chatlog/chatlog.cpp" line="501"/>
         <source>pending</source>
         <translation>待定的，直到（只能直译，译者没看懂这里的代码）</translation>
     </message>
@@ -698,135 +542,107 @@ Ignore the proxy and connect to the Internet directly ?</source>
 <context>
     <name>ChatTextEdit</name>
     <message>
-        <location filename="../src/widget/tool/chattextedit.cpp" line="70"/>
+        <location filename="../src/widget/tool/chattextedit.cpp" line="23"/>
         <source>Type your message here...</source>
         <translation>在这里输入将要发送的消息...</translation>
     </message>
 </context>
 <context>
-    <name>CircleWidget</name>
-    <message>
-        <location filename="../src/widget/circlewidget.cpp" line="86"/>
-        <source>Rename circle</source>
-        <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/circlewidget.cpp" line="87"/>
-        <source>Remove circle</source>
-        <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/circlewidget.cpp" line="91"/>
-        <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Core</name>
     <message>
-        <location filename="../src/core/core.cpp" line="257"/>
+        <location filename="../src/core.cpp" line="260"/>
         <source>Toxing on qTox</source>
         <translation>使用qTox与他人交流</translation>
     </message>
     <message>
+        <location filename="../src/core.cpp" line="261"/>
         <source>qTox User</source>
-        <translation type="vanished">qTox用户</translation>
+        <translation>qTox用户</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="598"/>
-        <source>You need to write a message with your request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/core/core.cpp" line="602"/>
-        <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/core/core.cpp" line="606"/>
+        <location filename="../src/core.cpp" line="763"/>
         <source>Friend is already added</source>
         <translation>此人已被添加为好友</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="624"/>
+        <location filename="../src/core.cpp" line="779"/>
         <source>/me offers friendship.</source>
         <translation>/me 提供了好友关系</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="626"/>
+        <location filename="../src/core.cpp" line="781"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me 提供了好友关系, &quot;%1&quot;</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="168"/>
         <source>Encryption error</source>
-        <translation type="vanished">加密失败</translation>
+        <translation>加密失败</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="168"/>
         <source>The .tox file is encrypted, but encryption was not checked, continuing regardless.</source>
-        <translation type="vanished">.tox文件是加密的，但加密并未被确认，将继续忽略。</translation>
+        <translation>.tox文件是加密的，但加密并未被确认，将继续忽略。</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="171"/>
         <source>Please enter the password for the %1 profile.</source>
         <comment>used in load() when no pw is already set</comment>
-        <translation type="vanished">请为%1用户配置文件输入密码</translation>
+        <translation>请为%1用户配置文件输入密码</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="128"/>
+        <location filename="../src/coreencryption.cpp" line="172"/>
+        <location filename="../src/coreencryption.cpp" line="227"/>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
         <translation>刚才输入的密码是错误的，请重新输入</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="183"/>
         <source>The profile password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="vanished">配置文件密码失败，请重试</translation>
+        <translation>配置文件密码失败，请重试</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="120"/>
+        <location filename="../src/coreencryption.cpp" line="219"/>
         <source>Encrypted chat history</source>
         <translation>加密聊天记录</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="120"/>
+        <location filename="../src/coreencryption.cpp" line="219"/>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
         <translation>未找到加密的历史记录文件，或者文件已损坏
 历史记录功能已被关闭</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="226"/>
         <source>Please enter the password for the chat history for the %1 profile.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="vanished">请为%1用户配置文件的聊天记录输入密码</translation>
+        <translation>请为%1用户配置文件的聊天记录输入密码</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="127"/>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/core/coreencryption.cpp" line="129"/>
+        <location filename="../src/coreencryption.cpp" line="228"/>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="136"/>
+        <location filename="../src/coreencryption.cpp" line="235"/>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
         <translation>聊天记录密码失败，重试？</translation>
     </message>
     <message>
-        <location filename="../src/core/coreencryption.cpp" line="142"/>
+        <location filename="../src/coreencryption.cpp" line="255"/>
         <source>Disable chat history</source>
         <translation>关闭聊天历史记录</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="306"/>
         <source>Encryption is enabled, but there is no password! Encryption will be disabled.</source>
-        <translation type="vanished">加密已启动，但是并没有设置密码！加密将被禁用</translation>
+        <translation>加密已启动，但是并没有设置密码！加密将被禁用</translation>
     </message>
     <message>
         <source>Tox datafile decryption password</source>
@@ -847,8 +663,9 @@ Empty password.</source>
         <translation type="obsolete">重试</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="193"/>
         <source>Change profile</source>
-        <translation type="vanished">改变用户配置文件</translation>
+        <translation>改变用户配置文件</translation>
     </message>
     <message>
         <source>Reinit current profile</source>
@@ -895,8 +712,9 @@ Do you want to try another password?</source>
         <translation type="obsolete">密码错误，将被限制登录</translation>
     </message>
     <message>
+        <location filename="../src/coreencryption.cpp" line="306"/>
         <source>NO Password</source>
-        <translation type="vanished">无密码</translation>
+        <translation>无密码</translation>
     </message>
     <message>
         <source>Will be saved without encryption!</source>
@@ -958,81 +776,37 @@ Do you want to try another password?</source>
         <translation>预览</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="95"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="83"/>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation>等待发送</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="99"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="86"/>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
         <translation>同意接收此文件</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="142"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="128"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>目录不可写</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="143"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="129"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="311"/>
-        <source>Paused</source>
-        <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="331"/>
-        <source>Resuming...</source>
-        <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="357"/>
-        <source>Open file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="362"/>
-        <source>Open file directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="414"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="445"/>
-        <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="418"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="430"/>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="439"/>
-        <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="426"/>
-        <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="451"/>
-        <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="301"/>
         <source>paused</source>
         <comment>file transfer widget</comment>
-        <translation type="vanished">暂停</translation>
+        <translation>暂停</translation>
     </message>
     <message>
-        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="479"/>
+        <location filename="../src/chatlog/content/filetransferwidget.cpp" line="427"/>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
         <translation>保存文件</translation>
@@ -1041,97 +815,53 @@ Do you want to try another password?</source>
 <context>
     <name>FilesForm</name>
     <message>
+        <location filename="../src/widget/form/filesform.cpp" line="30"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="vanished">已传输的文件</translation>
+        <translation>已传输的文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="103"/>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/filesform.cpp" line="104"/>
+        <location filename="../src/widget/form/filesform.cpp" line="38"/>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="105"/>
+        <location filename="../src/widget/form/filesform.cpp" line="39"/>
         <source>Uploads</source>
         <translation>上传</translation>
     </message>
 </context>
 <context>
-    <name>FriendListWidget</name>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="235"/>
-        <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="239"/>
-        <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="243"/>
-        <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="250"/>
-        <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="283"/>
-        <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendlistwidget.cpp" line="287"/>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FriendRequestDialog</name>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="35"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="31"/>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
         <translation>好友请求</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="37"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="33"/>
         <source>Someone wants to make friends with you</source>
         <translation>有用户想要添加您为好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="38"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="34"/>
         <source>User ID:</source>
         <translation>用户ID:</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="42"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="38"/>
         <source>Friend request message:</source>
         <translation>好友请求信息:</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="49"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="45"/>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
         <translation>同意</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="50"/>
+        <location filename="../src/widget/tool/friendrequestdialog.cpp" line="46"/>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
         <translation>拒绝</translation>
@@ -1140,91 +870,38 @@ Do you want to try another password?</source>
 <context>
     <name>FriendWidget</name>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="84"/>
+        <location filename="../src/widget/friendwidget.cpp" line="56"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>邀请加入群组</translation>
     </message>
     <message>
+        <location filename="../src/widget/friendwidget.cpp" line="57"/>
         <source>Copy friend ID</source>
         <comment>Menu to copy the Tox ID of that friend</comment>
-        <translation type="vanished">复制好友ID</translation>
+        <translation>复制好友ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="78"/>
-        <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="81"/>
-        <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="111"/>
-        <source>Move to circle...</source>
-        <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="113"/>
-        <source>To new circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="116"/>
-        <source>Remove from circle &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="126"/>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="140"/>
+        <location filename="../src/widget/friendwidget.cpp" line="69"/>
         <source>Set alias...</source>
         <translation>添加备注名...</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="143"/>
+        <location filename="../src/widget/friendwidget.cpp" line="72"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
         <translation>自动接收此好友发送的文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="310"/>
-        <source>New message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="312"/>
-        <source>Online</source>
-        <translation type="unfinished">在线</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="314"/>
-        <source>Away</source>
-        <translation type="unfinished">离开</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="316"/>
-        <source>Busy</source>
-        <translation type="unfinished">忙碌</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/friendwidget.cpp" line="318"/>
-        <source>Offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/widget/friendwidget.cpp" line="249"/>
         <source>User alias</source>
-        <translation type="vanished">用户备注名</translation>
+        <translation>用户备注名</translation>
     </message>
     <message>
+        <location filename="../src/widget/friendwidget.cpp" line="249"/>
         <source>You can also set this by clicking the chat form name.
 Alias:</source>
-        <translation type="vanished">你可以设置点击名称开始聊天。
+        <translation>你可以设置点击名称开始聊天。
 备注名:</translation>
     </message>
     <message>
@@ -1247,13 +924,13 @@ Alias:</source>
         <translation type="obsolete">禁止全局默认同意</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="194"/>
+        <location filename="../src/widget/friendwidget.cpp" line="110"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>选择默认接收目录</translation>
     </message>
     <message>
-        <location filename="../src/widget/friendwidget.cpp" line="151"/>
+        <location filename="../src/widget/friendwidget.cpp" line="77"/>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>删除好友</translation>
@@ -1262,17 +939,17 @@ Alias:</source>
 <context>
     <name>GUI</name>
     <message>
-        <location filename="../src/widget/gui.cpp" line="317"/>
+        <location filename="../src/widget/gui.cpp" line="249"/>
         <source>Enter your password</source>
         <translation>输入密码</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="319"/>
+        <location filename="../src/widget/gui.cpp" line="251"/>
         <source>Decrypt</source>
         <translation>解密</translation>
     </message>
     <message>
-        <location filename="../src/widget/gui.cpp" line="361"/>
+        <location filename="../src/widget/gui.cpp" line="293"/>
         <source>You must enter a non-empty password:</source>
         <translation>你必须输入一个非空的密码</translation>
     </message>
@@ -1280,31 +957,30 @@ Alias:</source>
 <context>
     <name>GeneralForm</name>
     <message>
-        <location filename="../src/widget/form/settings/generalform.h" line="37"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="39"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="102"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="107"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="492"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="86"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="92"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="250"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>选择默认接收目录</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="364"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="307"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>通话处于活动状态</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="365"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="308"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>你不能再通话期间关闭连接!</translation>
@@ -1341,96 +1017,36 @@ Alias:</source>
         <translation type="obsolete">开启简洁Tox</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="137"/>
         <source>Start in tray</source>
         <translation>在状态栏启动</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="154"/>
         <source>Close to tray</source>
         <translation>从状态栏关闭</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="171"/>
         <source>Minimize to tray</source>
         <translation>最小化到状态栏</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
-        <source>Start qTox on operating system startup (current profile).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="286"/>
-        <source>Default directory to save files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
-        <source>Play sound</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="345"/>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
-        <source>Open window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="363"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="312"/>
         <source>Show contacts&apos; status changes</source>
         <translation>显示联系人状态变化</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
-        <source>Multiple windows mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
-        <source>Open each chat in an individual window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
-        <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="407"/>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Provided in minutes</source>
         <translation type="obsolete">En minutes</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="284"/>
         <source>Auto away after (0 to disable):</source>
         <translation>自动在多久以后离开 (0为禁用):</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="219"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
         <source>Set to 0 to disable</source>
         <translation>设置0为禁用</translation>
     </message>
@@ -1445,77 +1061,80 @@ will be sent to them when they appear online to you.</source>
         <translation>系统设定</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="118"/>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
         <translation>使用亮色的托盘图标</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="134"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
         <translation>在状态栏启动</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="150"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
         <translation>关闭按钮将隐藏qTox到状态栏</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="169"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="167"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translation>最小化的状态栏</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start qTox on operating system startup (current profile).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在系统启动时启动qTox（使用当前配置文件）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;在系统启动时启动qTox（使用当前配置文件）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="199"/>
         <source>Autostart</source>
         <translation>开机自动启动</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Check for updates on startup</source>
         <translation>在启动时检查更新</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="279"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="220"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="246"/>
         <source>Set where files will be saved.</source>
         <translation>设置文件保存位置</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="223"/>
         <source>Save to:</source>
-        <translation type="vanished">保存到:</translation>
+        <translation>保存到:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="225"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="265"/>
         <source> minutes</source>
         <translation>分钟</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="200"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="278"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
         <translation>你的状态将在设置的分钟无活动后被修改为离开</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
         <source>Chat</source>
         <translation>聊天</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="302"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
         <translation>一直向我提示所有群聊新消息</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="305"/>
         <source>Group chats always notify</source>
         <translation>提醒所有群聊消息</translation>
     </message>
@@ -1525,33 +1144,36 @@ instead of system taskbar.</source>
         <translation>当收到新消息：</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="331"/>
         <source>Show qTox&apos;s window when you receive new message.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="vanished">当收到消息时打开qTox窗口</translation>
+        <translation>当收到消息时打开qTox窗口</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="334"/>
         <source>Show window</source>
-        <translation type="vanished">显示窗口</translation>
+        <translation>显示窗口</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="335"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="341"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
         <translation>当收到消息时将qTox窗口设为活动窗口</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="338"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="344"/>
         <source>Focus window</source>
         <translation>设为活动窗口</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they will appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="vanished">你在好友离线时试图发送的消息将在他们对你显示在线时发送</translation>
+        <translation>你在好友离线时试图发送的消息将在他们对你显示在线时发送</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="418"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="377"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
         <translation>你的联系人列表将以紧缩格式显示</translation>
@@ -1564,38 +1186,33 @@ qTox&apos;s restart needed.</source>
 qTox重启后生效</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="421"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
         <source>Compact contact list</source>
         <translation>紧缩显示联系人列表</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="431"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="396"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="455"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="420"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>表情包:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="472"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="494"/>
         <source>Emoticon size:</source>
         <translation>表情大小</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="555"/>
-        <source>Date format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="713"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="640"/>
         <source>Proxy type:</source>
         <translation>代理服务器类型</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="720"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="647"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>代理服务器地址</translation>
@@ -1621,22 +1238,22 @@ qTox重启后生效</translation>
         <translation type="obsolete">:&apos;(</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="504"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="526"/>
         <source>Style:</source>
         <translation>风格:</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="521"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="543"/>
         <source>Theme color:</source>
         <translation>主题颜色</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="538"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="560"/>
         <source>Timestamp format:</source>
         <translation>时间戳格式</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="672"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>允许 UDP (推荐)</translation>
@@ -1646,28 +1263,28 @@ qTox重启后生效</translation>
         <translation type="obsolete">代理类型</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="744"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="671"/>
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="749"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="676"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="754"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="681"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="779"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="691"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>重新连接</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="582"/>
         <source>Connection Settings</source>
         <translation>连接设置</translation>
     </message>
@@ -1680,12 +1297,12 @@ qTox重启后生效</translation>
         <translation type="obsolete">Intégration avec la barre d&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="129"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="111"/>
         <source>Show system tray icon</source>
         <translation>显示系统托盘图标</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="121"/>
         <source>Light icon</source>
         <translation>使用亮色图标</translation>
     </message>
@@ -1698,7 +1315,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">收到消息时显示qTox提示</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="411"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
         <source>Faux offline messaging</source>
         <translation>伪造离线消息</translation>
     </message>
@@ -1711,13 +1328,13 @@ qTox重启后生效</translation>
         <translation type="obsolete">自动在多久后离开 (0为禁用)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="293"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="230"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>你可以通过右键点击他们来设置。</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="233"/>
         <source>Autoaccept files</source>
         <translation>自动同意接收文件</translation>
     </message>
@@ -1730,7 +1347,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">发送按钮</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="437"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="402"/>
         <source>Use emoticons</source>
         <translation>使用表情</translation>
     </message>
@@ -1752,7 +1369,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">表情大小</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="488"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="510"/>
         <source> px</source>
         <translation>px</translation>
     </message>
@@ -1761,13 +1378,13 @@ qTox重启后生效</translation>
         <translation type="obsolete">时间格式</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="679"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="606"/>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>允许 IPv6 (推荐)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="669"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="596"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
@@ -1792,7 +1409,7 @@ qTox重启后生效</translation>
         <translation type="obsolete">地址</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="730"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="657"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>端口</translation>
@@ -1801,17 +1418,17 @@ qTox重启后生效</translation>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="571"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="73"/>
         <source>Send message</source>
         <translation>发送消息</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="572"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="75"/>
         <source>Smileys</source>
         <translation>表情</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="573"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="79"/>
         <source>Send file(s)</source>
         <translation>发送文件</translation>
     </message>
@@ -1848,138 +1465,79 @@ qTox重启后生效</translation>
         <translation type="obsolete">切换为麦克风</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="82"/>
         <source>Start an audio call</source>
-        <translation type="vanished">开始音频童话</translation>
+        <translation>开始音频童话</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="85"/>
         <source>Start a video call</source>
-        <translation type="vanished">开始视频通话</translation>
+        <translation>开始视频通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="389"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="575"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="165"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="282"/>
         <source>Save chat log</source>
         <translation>保存聊天记录</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="558"/>
-        <source>Start audio call</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="560"/>
-        <source>Accept audio call</source>
-        <translation type="unfinished">接听音频通话</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="562"/>
-        <source>End audio call</source>
-        <translation type="unfinished">结束音频童话</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="565"/>
-        <source>Start video call</source>
-        <translation type="unfinished">开始视频通话</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="567"/>
-        <source>Accept video call</source>
-        <translation type="unfinished">接听视频通话</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="569"/>
-        <source>End video call</source>
-        <translation type="unfinished">结束视频通话</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="574"/>
-        <source>Send a screenshot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="576"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="166"/>
         <source>Clear displayed messages</source>
         <translation>清屏</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="409"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="298"/>
         <source>Not sent</source>
         <translation>未发送</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="447"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="331"/>
         <source>Cleared</source>
         <translation>已清除</translation>
     </message>
 </context>
 <context>
-    <name>GenericNetCamView</name>
-    <message>
-        <location filename="../src/video/genericnetcamview.cpp" line="29"/>
-        <source>Tox video</source>
-        <translation type="unfinished">Tox视频</translation>
-    </message>
-    <message>
-        <location filename="../src/video/genericnetcamview.cpp" line="59"/>
-        <source>Show Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/video/genericnetcamview.cpp" line="66"/>
-        <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="172"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="417"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="57"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 人正在聊天</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="108"/>
         <source>%1 users in chat</source>
-        <translation type="vanished">%1 人正在聊天</translation>
+        <translation>%1 人正在聊天</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="170"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="415"/>
-        <source>1 user in chat</source>
-        <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="287"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="333"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="154"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="200"/>
         <source>Mute microphone</source>
         <translation>静音麦克风</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="293"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="160"/>
         <source>Unmute microphone</source>
         <translation>取消麦克风静音</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="308"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="336"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="175"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="203"/>
         <source>Mute call</source>
         <translation>静音通话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="314"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="181"/>
         <source>Unmute call</source>
         <translation>取消通话静音</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="330"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="197"/>
         <source>End audio call</source>
         <translation>结束音频童话</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="224"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="347"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="213"/>
         <source>Start audio call</source>
         <translation>结束视频通话</translation>
     </message>
@@ -1987,124 +1545,127 @@ qTox重启后生效</translation>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="155"/>
-        <location filename="../src/widget/groupwidget.cpp" line="268"/>
+        <location filename="../src/widget/groupwidget.cpp" line="43"/>
+        <location filename="../src/widget/groupwidget.cpp" line="80"/>
         <source>%1 users in chat</source>
         <translation>%1 人正在聊天</translation>
     </message>
     <message>
-        <source>0 users in chat</source>
-        <translation type="vanished">没有人在聊天</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/groupwidget.cpp" line="79"/>
-        <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/widget/groupwidget.cpp" line="45"/>
         <location filename="../src/widget/groupwidget.cpp" line="82"/>
-        <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <source>0 users in chat</source>
+        <translation>没有人在聊天</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="86"/>
+        <location filename="../src/widget/groupwidget.cpp" line="54"/>
         <source>Set title...</source>
         <translation>设置名称...</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="87"/>
+        <location filename="../src/widget/groupwidget.cpp" line="55"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>退出群组</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="153"/>
-        <location filename="../src/widget/groupwidget.cpp" line="266"/>
-        <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/widget/groupwidget.cpp" line="67"/>
         <source>Group title</source>
-        <translation type="vanished">群组名称</translation>
+        <translation>群组名称</translation>
     </message>
     <message>
+        <location filename="../src/widget/groupwidget.cpp" line="67"/>
         <source>You can also set this by clicking the chat form name.
 Title:</source>
-        <translation type="vanished">你也可以通过点击聊天窗口名称来设置。
+        <translation>你也可以通过点击聊天窗口名称来设置。
 标题:</translation>
     </message>
 </context>
 <context>
     <name>IdentityForm</name>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="35"/>
         <source>Identity</source>
-        <translation type="vanished">身份</translation>
+        <translation>身份</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="136"/>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="vanished">Appel en cours</translation>
+        <translation>Appel en cours</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="137"/>
         <source>You can&apos;t switch profiles while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="vanished">你不能在通话期间更改用户配置文件!</translation>
+        <translation>你不能在通话期间更改用户配置文件!</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="147"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="vanished">重命名 &quot;%1&quot;</translation>
+        <translation>重命名 &quot;%1&quot;</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="155"/>
         <source>Profile already exists</source>
         <comment>rename confirm title</comment>
-        <translation type="vanished">用户配置文件已存在</translation>
+        <translation>用户配置文件已存在</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="156"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>rename confirm text</comment>
-        <translation type="vanished">用户配置文件 &quot;%1&quot; 已存在。 确定要覆盖它吗 ?</translation>
+        <translation>用户配置文件 &quot;%1&quot; 已存在。 确定要覆盖它吗 ?</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="175"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="vanished">导出用户配置文件</translation>
+        <translation>导出用户配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="177"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation type="vanished">Tox文件 (*.tox)</translation>
+        <translation>Tox文件 (*.tox)</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="187"/>
         <source>Failed to remove file</source>
-        <translation type="vanished">删除文件失败</translation>
+        <translation>删除文件失败</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="187"/>
         <source>The file you chose to overwrite could not be removed first.</source>
-        <translation type="vanished">您选择要覆盖的文件不能被删除。</translation>
+        <translation>您选择要覆盖的文件不能被删除。</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="193"/>
         <source>Failed to copy file</source>
-        <translation type="vanished">复制文件失败</translation>
+        <translation>复制文件失败</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="193"/>
         <source>The file you chose could not be written to.</source>
-        <translation type="vanished">您选择的文件不可被写入。</translation>
+        <translation>您选择的文件不可被写入。</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="201"/>
         <source>Profile currently loaded</source>
         <comment>current profile deletion warning title</comment>
-        <translation type="vanished">用户配置文件已载入</translation>
+        <translation>用户配置文件已载入</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="201"/>
         <source>This profile is currently in use. Please load a different profile before deleting this one.</source>
         <comment>current profile deletion warning text</comment>
-        <translation type="vanished">此用户配置文件正被使用。请在删除前载入另一用户配置文件。</translation>
+        <translation>此用户配置文件正被使用。请在删除前载入另一用户配置文件。</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="205"/>
         <source>Deletion imminent!</source>
         <comment>deletion confirmation title</comment>
-        <translation type="vanished">确认删除吗！</translation>
+        <translation>确认删除吗！</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?
@@ -2114,39 +1675,46 @@ Associated friend information and chat logs will be deleted as well.</source>
 相关的好友信息和聊天记录也将被删除。</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="206"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="vanished">你确定要删除这个用户配置文件吗？</translation>
+        <translation>你确定要删除这个用户配置文件吗？</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="225"/>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="vanished">导入用户配置文件</translation>
+        <translation>导入用户配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="227"/>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="vanished">Tox文件 (*.tox)</translation>
+        <translation>Tox文件 (*.tox)</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="237"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="vanished">忽略非Tox文件</translation>
+        <translation>忽略非Tox文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="238"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="vanished">警告: 您当前选择的文件不是Tox文件；忽略。</translation>
+        <translation>警告: 您当前选择的文件不是Tox文件；忽略。</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="244"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="vanished">用户配置文件已存在</translation>
+        <translation>用户配置文件已存在</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identityform.cpp" line="245"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="vanished">用户配置文件 &quot;%1&quot; 已存在. 你确定要覆盖它吗？</translation>
+        <translation>用户配置文件 &quot;%1&quot; 已存在. 你确定要覆盖它吗？</translation>
     </message>
 </context>
 <context>
@@ -2156,35 +1724,27 @@ Associated friend information and chat logs will be deleted as well.</source>
         <translation type="obsolete">qTox</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="53"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="53"/>
         <source>Public Information</source>
         <translation>公开信息</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="59"/>
         <source>Name</source>
-        <translation type="vanished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="69"/>
         <source>Status</source>
-        <translation type="vanished">状态</translation>
+        <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="67"/>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="77"/>
-        <source>Status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="92"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="82"/>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="98"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="85"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
@@ -2192,91 +1752,37 @@ Share it with your friends to communicate.</source>
 将它共享给你的朋友来进行Tox通信</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="102"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="92"/>
         <source>Your Tox ID (click to copy)</source>
         <translation>你的 Tox ID (点击复制)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="125"/>
-        <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="132"/>
-        <source>Save image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="139"/>
-        <source>Copy image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="155"/>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="174"/>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="208"/>
-        <source>Rename profile.</source>
-        <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="218"/>
-        <source>Delete profile.</source>
-        <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="239"/>
-        <source>Go back to the login screen</source>
-        <comment>tooltip for logout button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="242"/>
-        <source>Logout</source>
-        <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="279"/>
-        <source>Remove password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.ui" line="286"/>
-        <source>Change password</source>
-        <translation type="unfinished">更改密码</translation>
-    </message>
-    <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="102"/>
         <source>Profiles</source>
-        <translation type="vanished">用户配置文件</translation>
+        <translation>用户配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="110"/>
         <source>Available profiles:</source>
-        <translation type="vanished">可用用户配置文件:</translation>
+        <translation>可用用户配置文件:</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="117"/>
         <source>Currently selected profile.</source>
         <comment>toolTip for currently set profile</comment>
-        <translation type="vanished">当前选择的配置文件</translation>
+        <translation>当前选择的配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="134"/>
         <source>Load selected profile and switch to it.</source>
         <comment>tooltip for loading profile button</comment>
-        <translation type="vanished">加载选择的配置文件并切换到它</translation>
+        <translation>加载选择的配置文件并切换到它</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="137"/>
         <source>Load</source>
         <comment>load profile button</comment>
-        <translation type="vanished">加载</translation>
+        <translation>加载</translation>
     </message>
     <message>
         <source>Switching profiles is disabled during calls</source>
@@ -2284,24 +1790,25 @@ Share it with your friends to communicate.</source>
         <translation type="obsolete">通话期间不能更改用户配置文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="211"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="144"/>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>重命名</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="147"/>
         <source>Rename selected profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="vanished">重命名选择的配置文件</translation>
+        <translation>重命名选择的配置文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="232"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="154"/>
         <source>Export</source>
         <comment>export profile button</comment>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="228"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="157"/>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
@@ -2309,12 +1816,13 @@ Profile does not contain your history.</source>
 配置文件不包含你的历史记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="165"/>
         <source>Delete selected profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="vanished">删除配置文件</translation>
+        <translation>删除配置文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.ui" line="221"/>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="168"/>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>删除</translation>
@@ -2325,24 +1833,28 @@ Profile does not contain your history.</source>
         <translation type="obsolete">在公用电脑上保证安全</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="179"/>
         <source>Import a profile</source>
         <comment>import profile button</comment>
-        <translation type="vanished">导入用户配置文件</translation>
+        <translation>导入用户配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="182"/>
         <source>Import Tox profile from a .tox file.</source>
         <comment>tooltip for importing profile button</comment>
-        <translation type="vanished">从一个.tox中导入Tox用户配置文件</translation>
+        <translation>从一个.tox中导入Tox用户配置文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="189"/>
         <source>Create new Tox ID and switch to it.</source>
         <comment>tooltip for creating new Tox ID button</comment>
-        <translation type="vanished">创建一个新的Tox ID并切换至它</translation>
+        <translation>创建一个新的Tox ID并切换至它</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/identitysettings.ui" line="192"/>
         <source>New Tox ID</source>
         <comment>new profile button</comment>
-        <translation type="vanished">新 Tox ID</translation>
+        <translation>新 Tox ID</translation>
     </message>
 </context>
 <context>
@@ -2370,164 +1882,43 @@ Profile does not contain your history.</source>
     </message>
 </context>
 <context>
-    <name>LoginScreen</name>
-    <message>
-        <location filename="../src/loginscreen.ui" line="144"/>
-        <source>qTox</source>
-        <translation type="unfinished">qTox</translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="381"/>
-        <location filename="../src/loginscreen.ui" line="754"/>
-        <source>Username:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="398"/>
-        <location filename="../src/loginscreen.ui" line="767"/>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="415"/>
-        <source>Confirm:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="435"/>
-        <source>Password strength: %p%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="644"/>
-        <source>Create Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="784"/>
-        <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="787"/>
-        <source>Load automatically</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="1009"/>
-        <source>Load</source>
-        <translation type="unfinished">加载</translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="1098"/>
-        <source>New Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/loginscreen.ui" line="1124"/>
-        <source>Load Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="129"/>
-        <location filename="../src/widget/loginscreen.cpp" line="135"/>
-        <location filename="../src/widget/loginscreen.cpp" line="141"/>
-        <location filename="../src/widget/loginscreen.cpp" line="147"/>
-        <location filename="../src/widget/loginscreen.cpp" line="155"/>
-        <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="129"/>
-        <source>The username must not be empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="135"/>
-        <source>The password must be at least 6 characters long.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="141"/>
-        <source>The passwords you&apos;ve entered are different.
-Please make sure to enter same password twice.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="147"/>
-        <source>A profile with this name already exists.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="155"/>
-        <source>Unknown error: Couldn&apos;t create a new profile.
-If you encountered this error, please report it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="190"/>
-        <location filename="../src/widget/loginscreen.cpp" line="199"/>
-        <location filename="../src/widget/loginscreen.cpp" line="204"/>
-        <source>Couldn&apos;t load this profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="190"/>
-        <source>This profile is already in use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="199"/>
-        <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/loginscreen.cpp" line="204"/>
-        <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>qTox</source>
         <translation type="obsolete">qTox</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="859"/>
         <source>Your name</source>
-        <translation type="vanished">你的名字</translation>
+        <translation>你的名字</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="941"/>
         <source>Your status</source>
-        <translation type="vanished">你的状态</translation>
+        <translation>你的状态</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1041"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.ui" line="1143"/>
+        <location filename="../src/mainwindow.ui" line="1096"/>
         <source>Add friends</source>
         <translation>添加好友</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1187"/>
+        <location filename="../src/mainwindow.ui" line="1134"/>
         <source>Create a group chat</source>
         <translation>创建聊天群组</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1228"/>
+        <location filename="../src/mainwindow.ui" line="1169"/>
         <source>View completed file transfers</source>
         <translation>查看已完成的文件传输</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1266"/>
+        <location filename="../src/mainwindow.ui" line="1201"/>
         <source>Change your settings</source>
         <translation>更改设置</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1297"/>
+        <location filename="../src/mainwindow.ui" line="1789"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
@@ -2539,146 +1930,120 @@ If you encountered this error, please report it.</source>
 <context>
     <name>NetCamView</name>
     <message>
+        <location filename="../src/widget/netcamview.cpp" line="28"/>
         <source>Tox video</source>
-        <translation type="vanished">Tox视频</translation>
+        <translation>Tox视频</translation>
     </message>
 </context>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="291"/>
+        <location filename="../src/nexus.cpp" line="169"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>图片(%1)</translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="305"/>
-        <source>View</source>
-        <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="306"/>
-        <source>Window</source>
-        <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="307"/>
-        <source>Minimize</source>
-        <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="308"/>
-        <source>Bring All to Front</source>
-        <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="321"/>
-        <source>Exit Fullscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/nexus.cpp" line="323"/>
-        <source>Enter Fullscreen</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>NotificationEdgeWidget</name>
-    <message numerus="yes">
-        <location filename="../src/widget/notificationedgewidget.cpp" line="54"/>
-        <source>Unread message(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
     </message>
 </context>
 <context>
     <name>PrivacyForm</name>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.h" line="35"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="31"/>
         <source>Privacy</source>
         <translation>隐私</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="78"/>
         <source>Please set your new chat history password.</source>
-        <translation type="vanished">请设置你的新聊天记录密码</translation>
+        <translation>请设置你的新聊天记录密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="80"/>
         <source>It appears you have an unused encrypted chat history; if the password matches, it will be added to your current history.</source>
-        <translation type="vanished">看起来你有一个未被使用的加密聊天记录，如果密码正确，它将被导入你现有的历史记录</translation>
+        <translation>看起来你有一个未被使用的加密聊天记录，如果密码正确，它将被导入你现有的历史记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="83"/>
         <source>Use data file password</source>
         <comment>pushbutton text</comment>
-        <translation type="vanished">使用数据文件密码</translation>
+        <translation>使用数据文件密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>Successfully decrypted old chat history</source>
         <comment>popup title</comment>
-        <translation type="vanished">成功解密旧的聊天记录</translation>
+        <translation>成功解密旧的聊天记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="110"/>
         <source>You have succesfully decrypted the old chat history, and it has been added to your current history and re-encrypted.</source>
         <comment>popup text</comment>
-        <translation type="vanished">你成功解密了旧的聊天记录，它已被加入你现有的聊天记录并被重新加密</translation>
+        <translation>你成功解密了旧的聊天记录，它已被加入你现有的聊天记录并被重新加密</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Old encrypted chat history</source>
         <comment>popup title</comment>
-        <translation type="vanished">旧的加密聊天记录</translation>
+        <translation>旧的加密聊天记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="117"/>
         <source>There is currently an unused encrypted chat history, but the password you just entered doesn&apos;t match.
 
 If you don&apos;t care about the old history, you may click Ok to delete it and use the password you just entered.
 Otherwise, hit cancel to try again.</source>
         <comment>This happens when enabling encryption after previously &quot;Disabling History&quot;</comment>
-        <translation type="vanished">现在有一个未被使用的加密聊天记录，但是你输入的密码不正确
+        <translation>现在有一个未被使用的加密聊天记录，但是你输入的密码不正确
 
 如果你不在乎你的旧聊天记录，你可以点Ok来删除它，使用你刚才输入的密码
 否则请点击Cancel以重试</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="118"/>
         <source>Are you absolutely sure you want to lose the unused encrypted chat history?</source>
         <comment>secondary popup</comment>
-        <translation type="vanished">你确定你想失去未使用的加密聊天记录吗？</translation>
+        <translation>你确定你想失去未使用的加密聊天记录吗？</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="147"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="164"/>
         <source>Old encrypted chat history</source>
         <comment>title</comment>
-        <translation type="vanished">旧的加密聊天记录</translation>
+        <translation>旧的加密聊天记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="148"/>
         <source>Would you like to decrypt your chat history?
 Otherwise it will be deleted.</source>
-        <translation type="vanished">你想要解密你的聊天记录吗？
+        <translation>你想要解密你的聊天记录吗？
 否则它将被删除</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="165"/>
         <source>Are you sure you want to lose your entire chat history?</source>
-        <translation type="vanished">你确定你想要失去当前的聊天记录吗？</translation>
+        <translation>你确定你想要失去当前的聊天记录吗？</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="197"/>
         <source>Please set your new data file password.</source>
-        <translation type="vanished">请设置新的数据文件密码</translation>
+        <translation>请设置新的数据文件密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="199"/>
         <source>Use chat history password</source>
         <comment>pushbutton text</comment>
-        <translation type="vanished">使用聊天记录密码</translation>
+        <translation>使用聊天记录密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Decrypt your data file</source>
         <comment>title</comment>
-        <translation type="vanished">解密你的数据文件</translation>
+        <translation>解密你的数据文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="242"/>
         <source>Would you like to decrypt your data file?</source>
-        <translation type="vanished">你想要解密的数据文件吗</translation>
+        <translation>你想要解密的数据文件吗</translation>
     </message>
     <message>
         <source>Encrypted log</source>
@@ -2688,26 +2053,6 @@ Otherwise it will be deleted.</source>
         <source>You already have history log file encrypted with different password
 Do you want to delete old history file?</source>
         <translation type="obsolete">你有一个使用不同密码加密的历史记录文件，你想删除此旧文件吗？</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="63"/>
-        <source>Confirmation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="63"/>
-        <source>Do you want to permanently delete all chat history?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="69"/>
-        <source>Error</source>
-        <translation type="unfinished">错误</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="69"/>
-        <source>Could not delete chat history</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2728,41 +2073,8 @@ Do you want to delete old history file?</source>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="50"/>
-        <source>Send typing notifications</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
-        <source>Keep chat history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
-        <source>NoSpam is part of your Tox ID.
-If you are being spammed with friend requests, you should change your NoSpam.
-People will be unable to add you with your old ID, but you will keep your current friends.</source>
-        <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="73"/>
-        <source>NoSpam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
-        <source>NoSpam is a part of your ID that can be changed at will.
-If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
-        <source>Generate random NoSpam</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Send Typing Notifications</source>
-        <translation type="vanished">发送“正在输入”提示</translation>
+        <translation>发送“正在输入”提示</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="57"/>
@@ -2773,36 +2085,44 @@ Save format changes are possible, which may result in data loss.</source>
 保存格式的更改是有可能的，这意味着数据丢失</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="61"/>
         <source>Keep chat history (mostly stable)</source>
-        <translation type="vanished">保存聊天记录（通常是稳定的）</translation>
+        <translation>保存聊天记录（通常是稳定的）</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="71"/>
         <source>Local file encryption</source>
-        <translation type="vanished">本地文件加密</translation>
+        <translation>本地文件加密</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="77"/>
         <source>All Tox communications over the internet are encrypted, and this cannot be disabled. However, you may optionally password protect your local Tox files.</source>
-        <translation type="vanished">网络上所有的Tox通讯都是加密的，并且这不能被关闭，但是你可以选择是否为本地的Tox文件设置密码</translation>
+        <translation>网络上所有的Tox通讯都是加密的，并且这不能被关闭，但是你可以选择是否为本地的Tox文件设置密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="92"/>
         <source>Encrypt Tox data file</source>
-        <translation type="vanished">加密Tox数据文件</translation>
+        <translation>加密Tox数据文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="123"/>
         <source>Change password</source>
-        <translation type="vanished">更改密码</translation>
+        <translation>更改密码</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="113"/>
         <source>Encrypt chat history</source>
-        <translation type="vanished">加密聊天历史记录</translation>
+        <translation>加密聊天历史记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="138"/>
         <source>Nospam is part of your Tox ID.
 It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
 When you change nospam, your current contacts still can communicate with you,
 but new contacts need to know your new Tox ID to be able to add you.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="vanished">反垃圾是你Tox ID的一部分
+        <translation>反垃圾是你Tox ID的一部分
 这将在你收到大量垃圾好友请求是帮助你更改你的Tox ID
 当你修改了反垃圾之后，你当前的好友依然可以与你通信
 但是新的联系人需要得到你新的Tox ID后才能添加你为好友</translation>
@@ -2824,228 +2144,70 @@ but new contacts need to know your new Tox ID to be able to add you.</source>
         <translation type="obsolete">加密历史记录</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="135"/>
         <source>Nospam</source>
-        <translation type="vanished">反垃圾</translation>
+        <translation>反垃圾</translation>
     </message>
     <message>
         <source>HHHHHHHH</source>
         <translation type="obsolete">HHHHHHHH</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="156"/>
         <source>Generate random nospam</source>
-        <translation type="vanished">生成随机的反垃圾代码</translation>
-    </message>
-</context>
-<context>
-    <name>ProfileForm</name>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="127"/>
-        <source>Current profile: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="223"/>
-        <source>Choose a profile picture</source>
-        <translation type="unfinished">选择头像</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="233"/>
-        <location filename="../src/widget/form/profileform.cpp" line="240"/>
-        <location filename="../src/widget/form/profileform.cpp" line="262"/>
-        <source>Error</source>
-        <translation type="unfinished">错误</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="233"/>
-        <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="240"/>
-        <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="263"/>
-        <source>The supplied image is too large.
-Please use another image.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="274"/>
-        <source>Rename &quot;%1&quot;</source>
-        <comment>renaming a profile</comment>
-        <translation type="unfinished">重命名 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="282"/>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation type="unfinished">用户配置文件已存在</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="283"/>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="285"/>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="286"/>
-        <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="298"/>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation type="unfinished">导出用户配置文件</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="300"/>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation type="unfinished">Tox文件 (*.tox)</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="305"/>
-        <location filename="../src/widget/form/profileform.cpp" line="346"/>
-        <source>Location not writable</source>
-        <comment>Title of permissions popup</comment>
-        <translation type="unfinished">目录不可写</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="305"/>
-        <location filename="../src/widget/form/profileform.cpp" line="346"/>
-        <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
-        <comment>text of permissions popup</comment>
-        <translation type="unfinished">您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="309"/>
-        <location filename="../src/widget/form/profileform.cpp" line="350"/>
-        <source>Failed to copy file</source>
-        <translation type="unfinished">复制文件失败</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="309"/>
-        <location filename="../src/widget/form/profileform.cpp" line="350"/>
-        <source>The file you chose could not be written to.</source>
-        <translation type="unfinished">您选择的文件不可被写入。</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="315"/>
-        <source>Really delete profile?</source>
-        <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="316"/>
-        <source>Are you sure you want to delete this profile?</source>
-        <comment>deletion confirmation text</comment>
-        <translation type="unfinished">你确定要删除这个用户配置文件吗？</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="339"/>
-        <source>Save</source>
-        <comment>save qr image</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="341"/>
-        <source>Save QrCode (*.png)</source>
-        <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="359"/>
-        <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="359"/>
-        <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="363"/>
-        <source>Really delete password?</source>
-        <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="364"/>
-        <source>Are you sure you want to delete your password?</source>
-        <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="372"/>
-        <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="386"/>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished">这组字符告诉其他Tox客户端如何与你联系
-将它共享给你的朋友来进行Tox通信</translation>
+        <translation>生成随机的反垃圾代码</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="57"/>
+        <location filename="../src/widget/toxsave.cpp" line="56"/>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
         <translation>忽略非Tox的文件</translation>
     </message>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="58"/>
+        <location filename="../src/widget/toxsave.cpp" line="57"/>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>注意：你选择了一个不是Tox存储的文件，已被忽略</translation>
     </message>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="64"/>
+        <location filename="../src/widget/toxsave.cpp" line="63"/>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation>用户配置文件已存在</translation>
     </message>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="65"/>
+        <location filename="../src/widget/toxsave.cpp" line="64"/>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="71"/>
+        <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>Profile imported</source>
         <translation>已导入用户配置文件</translation>
     </message>
     <message>
-        <location filename="../src/persistence/toxsave.cpp" line="71"/>
+        <location filename="../src/widget/toxsave.cpp" line="70"/>
         <source>%1.tox was successfully imported</source>
         <translation>%1 已成功导入</translation>
     </message>
     <message>
+        <location filename="../src/widget/toxuri.cpp" line="70"/>
         <source>Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="vanished">想用Tox和我聊天吗？</translation>
+        <translation>想用Tox和我聊天吗？</translation>
     </message>
     <message>
-        <location filename="../src/net/autoupdate.cpp" line="501"/>
+        <location filename="../src/autoupdate.cpp" line="498"/>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>升级</translation>
     </message>
     <message>
-        <location filename="../src/net/autoupdate.cpp" line="502"/>
+        <location filename="../src/autoupdate.cpp" line="499"/>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation>有新的可用升级, 确定要现在下载吗？
@@ -3058,120 +2220,54 @@ It will be installed when qTox restarts.</source>
 这些更新将在qTox下次启动时被安装。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="111"/>
+        <location filename="../src/main.cpp" line="69"/>
         <source>Tox URI to parse</source>
         <translation>Tox URI 解析</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="70"/>
         <source>Starts new instance and loads specified profile.</source>
         <translation>开始一个新的实例并加载指定的配置文件。</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="70"/>
         <source>profile</source>
         <translation>用户配置文件</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="76"/>
+        <location filename="../src/misc/style.cpp" line="69"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="76"/>
+        <location filename="../src/misc/style.cpp" line="69"/>
         <source>Blue</source>
         <translation>蓝色</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="76"/>
+        <location filename="../src/misc/style.cpp" line="69"/>
         <source>Olive</source>
         <translation>橄榄绿</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="76"/>
+        <location filename="../src/misc/style.cpp" line="69"/>
         <source>Red</source>
         <translation>红色</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="76"/>
+        <location filename="../src/misc/style.cpp" line="69"/>
         <source>Violet</source>
         <translation>紫色</translation>
     </message>
     <message>
+        <location filename="../src/chatlog/chatmessage.cpp" line="126"/>
         <source>Busy...</source>
-        <translation type="vanished">忙...</translation>
+        <translation>忙...</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/callconfirmwidget.cpp" line="48"/>
+        <location filename="../src/widget/callconfirmwidget.cpp" line="28"/>
         <source>Incoming call...</source>
         <translation>新来电...</translation>
-    </message>
-    <message>
-        <location filename="../src/chatlog/chatmessage.cpp" line="134"/>
-        <source>Resizing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/net/toxuri.cpp" line="73"/>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/video/cameradevice.cpp" line="253"/>
-        <source>None</source>
-        <comment>No camera device set</comment>
-        <translation type="unfinished">无</translation>
-    </message>
-    <message>
-        <location filename="../src/video/cameradevice.cpp" line="269"/>
-        <location filename="../src/video/cameradevice.cpp" line="271"/>
-        <source>Desktop</source>
-        <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="384"/>
-        <source>User Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RemoveFriendDialog</name>
-    <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="20"/>
-        <source>Remove friend</source>
-        <translation type="unfinished">删除好友</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="26"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/removefrienddialog.ui" line="39"/>
-        <source>Also remove chat history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/tool/removefrienddialog.cpp" line="14"/>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ScreenshotGrabber</name>
-    <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="164"/>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="171"/>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3209,103 +2305,84 @@ It will be installed when qTox restarts.</source>
         <translation>密码强度</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="36"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="33"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="61"/>
         <source>The passwords don&apos;t match.</source>
         <translation>密码不匹配</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="60"/>
-        <source>The password is too short</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="65"/>
-        <source>The password doesn&apos;t match.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
+        <location filename="../src/misc/settings.cpp" line="124"/>
         <source>Choose a profile</source>
-        <translation type="vanished">选择配置文件</translation>
+        <translation>选择配置文件</translation>
     </message>
     <message>
+        <location filename="../src/misc/settings.cpp" line="125"/>
         <source>Please choose which identity to use</source>
-        <translation type="vanished">请选择使用哪个身份</translation>
-    </message>
-    <message>
-        <location filename="../src/persistence/settings.cpp" line="1446"/>
-        <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择使用哪个身份</translation>
     </message>
 </context>
 <context>
     <name>ToxDNS</name>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="72"/>
+        <location filename="../src/toxdns.cpp" line="64"/>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>连接超时</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="80"/>
+        <location filename="../src/toxdns.cpp" line="70"/>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>地址不存在</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="87"/>
+        <location filename="../src/toxdns.cpp" line="75"/>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
         <translation>在查找DNS时发生了错误</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="96"/>
+        <location filename="../src/toxdns.cpp" line="82"/>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
         <translation>未找到TXT记录</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="105"/>
+        <location filename="../src/toxdns.cpp" line="89"/>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>在TXT记录中未获得期望值</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="134"/>
+        <location filename="../src/toxdns.cpp" line="116"/>
         <source>The version of Tox DNS used by this server is not supported</source>
         <comment>Error with the DNS</comment>
         <translation>不支持此服务器所使用的Tox DNS</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="146"/>
+        <location filename="../src/toxdns.cpp" line="126"/>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>DNS查询中没有包含任何Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="155"/>
-        <location filename="../src/net/toxdns.cpp" line="164"/>
+        <location filename="../src/toxdns.cpp" line="133"/>
+        <location filename="../src/toxdns.cpp" line="140"/>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
         <translation>DNS查询中未包含有效Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/net/toxdns.cpp" line="253"/>
-        <location filename="../src/net/toxdns.cpp" line="310"/>
-        <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
-Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
-Should toxdns1 be used anyway?
-If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/toxdns.cpp" line="223"/>
+        <location filename="../src/toxdns.cpp" line="269"/>
         <source>It appears that qTox has to use the old tox1 protocol to access DNS record of your friend&apos;s Tox ID.
 Unfortunately tox1 is not secure, and you are at risk of someone hijacking what is sent between you and ToxDNS service.
 Should tox1 be used anyway?
 If unsure, press âNoâ, so that request to ToxDNS service will not be made using unsecure protocol.</source>
-        <translation type="vanished">看起来Tox不得不使用较老的tox1协议来访问你好友的Tox ID的DNS记录
+        <translation>看起来Tox不得不使用较老的tox1协议来访问你好友的Tox ID的DNS记录
 不幸的是tox1是不安全的，所以你得承受有人监听你和ToxDNS服务器之间通信的风险
 你仍然要坚持使用tox1协议吗
 如果你不确定，按“否”，这样你和ToxDNS服务器之间的通信将不会使用不安全的协议进行</translation>
@@ -3319,7 +2396,7 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
 <context>
     <name>ToxURIDialog</name>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="86"/>
+        <location filename="../src/widget/toxuri.cpp" line="80"/>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
         <translation>添加好友</translation>
@@ -3329,28 +2406,28 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">你想加 %1 为好友吗？</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="88"/>
+        <location filename="../src/widget/toxuri.cpp" line="82"/>
         <source>Do you want to add %1 as a friend?</source>
         <translation>你想加 %1 为好友吗？</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="89"/>
+        <location filename="../src/widget/toxuri.cpp" line="83"/>
         <source>User ID:</source>
         <translation>用户ID：</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="93"/>
+        <location filename="../src/widget/toxuri.cpp" line="87"/>
         <source>Friend request message:</source>
         <translation>好友请求消息：</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="98"/>
+        <location filename="../src/widget/toxuri.cpp" line="92"/>
         <source>Send</source>
         <comment>Send a friend request</comment>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../src/net/toxuri.cpp" line="99"/>
+        <location filename="../src/widget/toxuri.cpp" line="93"/>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>取消</translation>
@@ -3371,9 +2448,8 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">忙碌</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2063"/>
         <source>Online</source>
-        <translation type="unfinished">在线</translation>
+        <translation type="obsolete">在线</translation>
     </message>
     <message>
         <source>Away</source>
@@ -3384,7 +2460,7 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">忙碌</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1689"/>
+        <location filename="../src/widget/widget.cpp" line="121"/>
         <source>&amp;Quit</source>
         <translation>&amp;退出</translation>
     </message>
@@ -3393,19 +2469,19 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">更改状态为:</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2071"/>
+        <location filename="../src/widget/widget.cpp" line="105"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2072"/>
+        <location filename="../src/widget/widget.cpp" line="108"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2073"/>
+        <location filename="../src/widget/widget.cpp" line="111"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>忙碌</translation>
@@ -3419,242 +2495,120 @@ Unfortunately tox1 is not secure. Should it be used anyway?</source>
         <translation type="obsolete">请选择使用哪个身份</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="350"/>
         <source>Choose a profile picture</source>
-        <translation type="vanished">选择头像</translation>
+        <translation>选择头像</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="359"/>
+        <location filename="../src/widget/widget.cpp" line="366"/>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>Error</source>
-        <translation type="vanished">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="359"/>
         <source>Unable to open this file</source>
-        <translation type="vanished">无法打开此文件</translation>
+        <translation>无法打开此文件</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="366"/>
         <source>Unable to read this image</source>
-        <translation type="vanished">无法读取此图片</translation>
+        <translation>无法读取此图片</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="387"/>
         <source>This image is too big</source>
-        <translation type="vanished">这张照片太大了</translation>
+        <translation>这张照片太大了</translation>
     </message>
     <message>
+        <location filename="../src/widget/widget.cpp" line="427"/>
         <source>Toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="vanished">核心组件Toxcore启动失败，qTox将在你关闭此消息框后终止运行</translation>
+        <translation>核心组件Toxcore启动失败，qTox将在你关闭此消息框后终止运行</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="543"/>
+        <location filename="../src/widget/widget.cpp" line="436"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>由于你的代理服务器设置，核心组件Toxcore启动失败，qTox无法运行；请修改你的设置后重启qTox</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1206"/>
+        <location filename="../src/widget/widget.cpp" line="485"/>
         <source>Add friend</source>
         <translation>添加好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1208"/>
+        <location filename="../src/widget/widget.cpp" line="497"/>
         <source>File transfers</source>
         <translation>文件传输</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1210"/>
+        <location filename="../src/widget/widget.cpp" line="542"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="922"/>
+        <location filename="../src/widget/widget.cpp" line="651"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>无法添加为好友</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="320"/>
-        <source>Status</source>
-        <translation type="unfinished">状态</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="533"/>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="694"/>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="694"/>
-        <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="817"/>
-        <location filename="../src/widget/widget.cpp" line="818"/>
-        <source>Your name</source>
-        <translation type="unfinished">你的名字</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="842"/>
-        <location filename="../src/widget/widget.cpp" line="843"/>
-        <source>Your status</source>
-        <translation type="unfinished">你的状态</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="967"/>
+        <location filename="../src/widget/widget.cpp" line="679"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>离开</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="969"/>
+        <location filename="../src/widget/widget.cpp" line="681"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>忙碌</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="971"/>
+        <location filename="../src/widget/widget.cpp" line="683"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>离线</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="975"/>
+        <location filename="../src/widget/widget.cpp" line="687"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>在线</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="978"/>
+        <location filename="../src/widget/widget.cpp" line="690"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 %2 了</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1212"/>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="1447"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>群组邀请</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1447"/>
+        <location filename="../src/widget/widget.cpp" line="866"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1邀请你加入一个群聊，你想加入吗？</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1494"/>
+        <location filename="../src/widget/widget.cpp" line="921"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;未知名称&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1522"/>
+        <location filename="../src/widget/widget.cpp" line="947"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 已将标题设置为 %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1773"/>
+        <location filename="../src/widget/widget.cpp" line="1104"/>
         <source>Message failed to send</source>
         <translation>消息发送失败</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2034"/>
-        <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2060"/>
-        <source>By Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2061"/>
-        <source>By Activity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2062"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2064"/>
-        <source>Offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2065"/>
-        <source>Friends</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2066"/>
-        <source>Groups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2067"/>
-        <location filename="../src/widget/widget.cpp" line="2070"/>
-        <source>Search Contacts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2081"/>
-        <source>Filter...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2083"/>
-        <source>File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2084"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2085"/>
-        <source>Contacts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2086"/>
-        <source>Change Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2087"/>
-        <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2088"/>
-        <source>Log out</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2089"/>
-        <source>Add Contact...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2090"/>
-        <source>Next Conversation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/widget/widget.cpp" line="2091"/>
-        <source>Previous Conversation</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
