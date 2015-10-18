@@ -24,6 +24,7 @@
 #include <QList>
 #include <QDateTime>
 #include <QPixmap>
+#include <QMutex>
 #include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
@@ -33,6 +34,7 @@ class HistoryKeeper
 {
 public:
     enum ChatType {ctSingle = 0, ctGroup};
+    static QMutex historyMutex;
 
     struct HistMessage
     {

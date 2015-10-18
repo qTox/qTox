@@ -36,9 +36,11 @@
 #include "src/persistence/db/encrypteddb.h"
 
 static HistoryKeeper *historyInstance = nullptr;
+QMutex HistoryKeeper::historyMutex;
 
 HistoryKeeper *HistoryKeeper::getInstance()
 {
+    historyMutex.lock();
     if (historyInstance == nullptr)
     {
         QList<QString> initLst;
@@ -67,6 +69,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
         dbIntf = new PlainDb(path, initLst);
         historyInstance = new HistoryKeeper(dbIntf);
     }
+    historyMutex.unlock();
 
     return historyInstance;
 }

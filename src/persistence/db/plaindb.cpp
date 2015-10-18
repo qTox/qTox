@@ -26,12 +26,14 @@ PlainDb::PlainDb(const QString &db_name, QList<QString> initList)
 {
     db = new QSqlDatabase();
     *db = QSqlDatabase::addDatabase("QSQLITE");
+    db->setConnectOptions("QSQLITE_ENABLE_SHARED_CACHE=1");
     db->setDatabaseName(db_name);
 
     if (!db->open())
     {
         qWarning() << QString("Can't open file: %1, history will not be saved!").arg(db_name);
         db->setDatabaseName(":memory:");
+        db->setConnectOptions();
         db->open();
     }
 
