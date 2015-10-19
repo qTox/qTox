@@ -97,8 +97,6 @@ public:
 public slots:
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
-    static void pauseOutput();
-    void PauseOutput();
 
 signals:
     void groupAudioPlayed(int group, int peer, unsigned short volume);

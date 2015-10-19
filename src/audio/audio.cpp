@@ -565,18 +565,6 @@ bool Audio::TryCaptureSamples(uint8_t* buf, int framesize)
     return true;
 }
 
-void Audio::pauseOutput()
-{
-    getInstance().PauseOutput();
-}
-
-void Audio::PauseOutput()
-{
-    qDebug() << "Pause";
-    if (!inputSubscriptions)
-        closeOutput();
-}
-
 #ifdef QTOX_FILTER_AUDIO
 #include "audiofilterer.h"
 
