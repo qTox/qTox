@@ -183,24 +183,31 @@ Open an input device, use before suscribing
 void Audio::openInput(const QString& inDevDescr)
 {
     QMutexLocker lock(&audioInLock);
-    auto* tmp = alInDev;
+
+    if (alInDev) {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        qDebug() << "stopping capture";
+        alcCaptureStop(alInDev);
+#endif
+        alcCaptureCloseDevice(alInDev);
+    }
     alInDev = nullptr;
-    if (tmp)
-        alcCaptureCloseDevice(tmp);
 
     int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    const uint32_t sampleRate = av_DefaultSettings.audio_sample_rate;
+    const uint16_t frameDuration = av_DefaultSettings.audio_frame_duration;
+    const uint32_t chnls = av_DefaultSettings.audio_channels;
+    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
+        alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    if (!alInDev)
-        qWarning() << "Cannot open input audio device " + inDevDescr;
-    else
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
+                                       sampleRate, stereoFlag, bufSize);
+
+    if (alInDev)
         qDebug() << "Opening audio input "<<inDevDescr;
+    else
+        qWarning() << "Cannot open input audio device " + inDevDescr;
 
     Core* core = Core::getInstance();
     if (core)
@@ -214,7 +221,7 @@ void Audio::openInput(const QString& inDevDescr)
     else
     {
 #if (FIX_SND_PCM_PREPARE_BUG)
-    alcCaptureStart(alInDev);
+        alcCaptureStart(alInDev);
 #endif
     }
 }
