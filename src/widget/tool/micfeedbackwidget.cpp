@@ -43,9 +43,9 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
     QRect gradientRect(2, 2, gradientWidth, height() - 4);
 
     QLinearGradient gradient(0, 0, width(), 0);
-    gradient.setColorAt(0, Qt::red);
+    gradient.setColorAt(0, Qt::green);
     gradient.setColorAt(0.5, Qt::yellow);
-    gradient.setColorAt(1, Qt::green);
+    gradient.setColorAt(1, Qt::red);
     painter.fillRect(gradientRect, gradient);
 
     float slice = width() / 5;
