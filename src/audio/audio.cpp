@@ -79,6 +79,9 @@ Audio::~Audio()
         audioThread->terminate();
 }
 
+/**
+Start the audio thread for capture and playback.
+*/
 void Audio::startAudioThread()
 {
     if (!audioThread->isRunning())
@@ -151,7 +154,9 @@ void Audio::suscribeInput()
 }
 
 /**
- Call when you need to capture sound from the open input device.
+@brief Subscribe to capture sound from the opened input device.
+
+If the input device is not open, it will be opened before capturing.
 */
 void Audio::SubscribeInput()
 {
@@ -181,7 +186,9 @@ void Audio::unsuscribeInput()
 }
 
 /**
-Call once you don't need to capture on the open input device anymore.
+@brief Unsubscribe from capturing from an opened input device.
+
+If the input device has no more subscriptions, it will be closed.
 */
 void Audio::UnsubscribeInput()
 {
