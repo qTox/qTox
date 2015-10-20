@@ -231,7 +231,9 @@ Open an output device
 */
 bool Audio::openOutput(const QString &outDevDescr)
 {
+    qDebug() << "Opening audio output " + outDevDescr;
     QMutexLocker lock(&audioOutLock);
+
     auto* tmp = alOutDev;
     alOutDev = nullptr;
     if (outDevDescr.isEmpty())
@@ -239,12 +241,7 @@ bool Audio::openOutput(const QString &outDevDescr)
     else
         alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
-    if (!alOutDev)
-    {
-        qWarning() << "Cannot open output audio device " + outDevDescr;
-        return false;
-    }
-    else
+    if (alOutDev)
     {
         if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
             alcDestroyContext(alContext);
@@ -252,19 +249,22 @@ bool Audio::openOutput(const QString &outDevDescr)
         if (tmp)
             alcCloseDevice(tmp);
 
-        alContext = alcCreateContext(alOutDev,nullptr);
-        if (!alcMakeContextCurrent(alContext))
+        alContext = alcCreateContext(alOutDev, nullptr);
+        if (alcMakeContextCurrent(alContext))
+        {
+            alGenSources(1, &alMainSource);
+        }
+        else
         {
             qWarning() << "Cannot create output audio context";
             alcCloseDevice(alOutDev);
             return false;
         }
-        else
-        {
-            alGenSources(1, &alMainSource);
-        }
-
-        qDebug() << "Opening audio output " + outDevDescr;
+    }
+    else
+    {
+        qWarning() << "Cannot open output audio device " + outDevDescr;
+        return false;
     }
 
     Core* core = Core::getInstance();
@@ -405,7 +405,7 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
     qreal volume = 0.;
     int bufsize = samples * 2 * channels;
     for (int i = 0; i < bufsize; ++i)
-        volume += abs(data[i]);//std::max(volume, data[i]);
+        volume += abs(data[i]);
 
     emit groupAudioPlayed(group, peer, volume / bufsize);
 
