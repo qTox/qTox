@@ -86,6 +86,8 @@ void Audio::startAudioThread()
 {
     if (!audioThread->isRunning())
         audioThread->start();
+    else
+        qWarning("Audio thread already started -> ignored.");
 
     moveToThread(audioThread);
 }
