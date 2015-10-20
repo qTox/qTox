@@ -316,7 +316,6 @@ void AVForm::onInDevChanged(const QString &deviceDescriptor)
     Settings::getInstance().setInDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.openInput(deviceDescriptor);
     audio.unsubscribeInput();
     audio.subscribeInput();
 }
@@ -326,7 +325,6 @@ void AVForm::onOutDevChanged(const QString& deviceDescriptor)
     Settings::getInstance().setOutDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.openOutput(deviceDescriptor);
     audio.unsubscribeInput();
     audio.subscribeInput();
 }
