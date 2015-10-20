@@ -184,18 +184,13 @@ void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
     QPoint pos = profilePicture->mapToGlobal(point);
 
     QMenu contextMenu;
-    QAction *removeAction = contextMenu.addAction(tr("Remove"));
+    QAction *removeAction = contextMenu.addAction(style()->standardIcon(QStyle::SP_DialogCancelButton), tr("Remove"));
     QAction *selectedItem = contextMenu.exec(pos);
 
     if (selectedItem == removeAction)
     {
         QString selfPubKey = Core::getInstance()->getSelfId().publicKey;
-        if (!QFile::remove(Settings::getInstance().getSettingsDirPath()+"avatars/"+selfPubKey.left(64)+".png"))
-        {
-            GUI::showError(tr("Error"), tr("Could not remove avatar."));
-            return;
-        }
-
+        HistoryKeeper::getInstance()->removeAvatar(selfPubKey);
         Core::getInstance()->setAvatar({});
     }
 }

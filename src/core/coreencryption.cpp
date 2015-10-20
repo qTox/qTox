@@ -144,7 +144,6 @@ void Core::checkEncryptedHistory()
         if (pw.isEmpty())
         {
             Settings::getInstance().setEnableLogging(false);
-            HistoryKeeper::resetInstance();
             return;
         }
         else

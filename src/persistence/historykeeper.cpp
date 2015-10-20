@@ -28,6 +28,7 @@
 #include <QDir>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QBuffer>
 #include <QDebug>
 #include <QTemporaryFile>
 
@@ -35,9 +36,11 @@
 #include "src/persistence/db/encrypteddb.h"
 
 static HistoryKeeper *historyInstance = nullptr;
+QMutex HistoryKeeper::historyMutex;
 
 HistoryKeeper *HistoryKeeper::getInstance()
 {
+    historyMutex.lock();
     if (historyInstance == nullptr)
     {
         QList<QString> initLst;
@@ -50,25 +53,23 @@ HistoryKeeper *HistoryKeeper::getInstance()
         QString path(":memory:");
         GenericDdInterface *dbIntf;
 
-        if (Settings::getInstance().getEnableLogging())
+        if (Nexus::getProfile()->isEncrypted())
         {
-            if (Nexus::getProfile()->isEncrypted())
-            {
-                path = getHistoryPath();
-                dbIntf = new EncryptedDb(path, initLst);
+            path = getHistoryPath();
+            dbIntf = new EncryptedDb(path, initLst);
 
-                historyInstance = new HistoryKeeper(dbIntf);
-                return historyInstance;
-            }
-            else
-            {
-                path = getHistoryPath();
-            }
+            historyInstance = new HistoryKeeper(dbIntf);
+            return historyInstance;
+        }
+        else
+        {
+            path = getHistoryPath();
         }
 
         dbIntf = new PlainDb(path, initLst);
         historyInstance = new HistoryKeeper(dbIntf);
     }
+    historyMutex.unlock();
 
     return historyInstance;
 }
@@ -78,7 +79,7 @@ bool HistoryKeeper::checkPassword(const TOX_PASS_KEY &passkey, int encrypted)
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;
 
-    if ((encrypted == 1) || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
+    if ((encrypted == 1) || (encrypted == -1))
         return EncryptedDb::check(passkey, getHistoryPath(Nexus::getProfile()->getName(), encrypted));
 
     return true;
@@ -95,10 +96,12 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
        name    -- chat's name (for user to user conversation it is opposite user public key)
        ctype   -- chat type, reserved for group chats
 
-     alisases:
+     aliases:
       * user_id -> id map
-       id      -- auto-incrementing number
-       name    -- user's public key
+       id       -- auto-incrementing number
+       user_id  -- user's public key
+       av_hash  -- hash of user's avatar
+       avatar   -- user's avatar
 
      history:
        id           -- auto-incrementing number
@@ -126,14 +129,33 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         }
     }
     //check table stuct
-    ans = db->exec("PRAGMA table_info(\"history\")");
+    ans = db->exec("PRAGMA table_info (\"history\")");
     ans.seek(5);
     if (!ans.value(1).toString().contains("alias"))
     {
         //add collum in table
         db->exec("ALTER TABLE history ADD COLUMN alias TEXT");
+        qDebug() << "Struct DB updated: Added column alias in table history.";
     }
 
+    ans.clear();
+    ans = db->exec("PRAGMA table_info('aliases')");
+    ans.seek(2);
+    if (!ans.value(1).toString().contains("av_hash"))
+    {
+        //add collum in table
+        db->exec("ALTER TABLE aliases ADD COLUMN av_hash BLOB");
+        qDebug() << "Struct DB updated: Added column av_hash in table aliases.";
+    }
+
+    ans.seek(3);
+    if (!ans.value(1).toString().contains("avatar"))
+    {
+        //add collum in table
+        needImport = true;
+        db->exec("ALTER TABLE aliases ADD COLUMN avatar BLOB");
+        qDebug() << "Struct DB updated: Added column avatar in table aliases.";
+    }
 
     updateChatsID();
     updateAliases();
@@ -144,6 +166,24 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     QSqlQuery sqlAnswer = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
     if (sqlAnswer.first())
         messageID = sqlAnswer.value(0).toLongLong();
+}
+
+void HistoryKeeper::importAvatarToDatabase(const QString& ownerId)
+{
+    if (needImport)
+    {
+        QString puth (Settings::getInstance().getSettingsDirPath() +
+                      QString("avatars") + QDir::separator() +
+                      ownerId +".png");
+        qDebug() << QString("Try import avatar for: %1.").arg(ownerId);
+        getAliasID(ownerId);
+        if (QFile::exists(puth) && !hasAvatar(ownerId))
+        {
+            QPixmap pic(puth);
+            saveAvatar(pic,ownerId);
+            qDebug() << QString("Import avatar for: %1.").arg(ownerId);
+        }
+    }
 }
 
 HistoryKeeper::~HistoryKeeper()
@@ -455,21 +495,84 @@ bool HistoryKeeper::isFileExist()
     return file.exists();
 }
 
-bool HistoryKeeper::removeHistory(int encrypted)
+void HistoryKeeper::removeHistory()
 {
-    resetInstance();
-
-    QString path = getHistoryPath(QString(), encrypted);
-    QFile DbFile(path);
-    return DbFile.remove();
+    db->exec("BEGIN TRANSACTION;");
+    db->exec("DELETE FROM sent_status;");
+    db->exec("DELETE FROM history;");
+    db->exec("COMMIT TRANSACTION;");
 }
 
-QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile(int encrypted)
+QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
 {
     auto msgs = getInstance()->exportMessages();
     qDebug() << "Messages exported";
-    if (!removeHistory(encrypted))
-        qWarning() << "couldn't delete old log file!";
+    getInstance()->removeHistory();
 
     return msgs;
+}
+
+void HistoryKeeper::removeAvatar(const QString& ownerId)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
+    query.bindValue(":id", ownerId.left(64));
+    query.exec();
+}
+
+bool HistoryKeeper::hasAvatar(const QString& ownerId)
+{
+    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
+    if (sqlAnswer.first() && sqlAnswer.value(0).toByteArray()!=NULL)
+    {
+        return true;
+    }
+    return false;
+}
+
+void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
+{
+    QByteArray bArray;
+    QBuffer buffer(&bArray);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "PNG");
+
+    QSqlQuery query;
+    query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
+    query.bindValue(":image", bArray);
+    query.bindValue(":id", ownerId.left(64));
+    query.exec();
+}
+
+QPixmap HistoryKeeper::getSavedAvatar(const QString &ownerId)
+{
+    QByteArray bArray;
+    QPixmap pixmap = QPixmap();
+    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
+    if (sqlAnswer.first())
+    {
+        bArray = sqlAnswer.value(0).toByteArray();
+        pixmap.loadFromData(bArray);
+    }
+    return pixmap;
+}
+
+void HistoryKeeper::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE aliases SET av_hash=:hash WHERE user_id = (:id)");
+    query.bindValue(":hash", QString(hash.toBase64()));
+    query.bindValue(":id", ownerId.left(64));
+    query.exec();
+}
+
+QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
+{
+    QByteArray bArray;
+    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
+    if (sqlAnswer.first())
+    {
+        bArray = sqlAnswer.value(0).toByteArray();
+    }
+    return bArray;
 }

@@ -23,6 +23,8 @@
 #include <QMap>
 #include <QList>
 #include <QDateTime>
+#include <QPixmap>
+#include <QMutex>
 #include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
@@ -32,6 +34,7 @@ class HistoryKeeper
 {
 public:
     enum ChatType {ctSingle = 0, ctGroup};
+    static QMutex historyMutex;
 
     struct HistMessage
     {
@@ -56,8 +59,8 @@ public:
     static bool checkPassword(const TOX_PASS_KEY& passkey, int encrypted = -1);
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
-    static bool removeHistory(int encrypted = -1);
-    static QList<HistMessage> exportMessagesDeleteFile(int encrypted = -1);
+    void removeHistory();
+    static QList<HistMessage> exportMessagesDeleteFile();
 
     void removeFriendHistory(const QString& chat);
     qint64 addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
@@ -70,6 +73,17 @@ public:
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);
 
     void setSyncType(Db::syncType sType);
+
+    void saveAvatar(QPixmap& pic, const QString& ownerId);
+    QPixmap getSavedAvatar(const QString &ownerId);
+
+    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
+    QByteArray getAvatarHash(const QString& ownerId);
+
+    void removeAvatar(const QString& ownerId);
+    bool hasAvatar(const QString& ownerId);
+
+    void importAvatarToDatabase(const QString& ownerId);        // may be deleted after all move to new db structure
 
 private:
     HistoryKeeper(GenericDdInterface *db_);
@@ -85,7 +99,7 @@ private:
     QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
 
     ChatType convertToChatType(int);
-
+    bool needImport = false;    // must be deleted with "importAvatarToDatabase"
     GenericDdInterface *db;
     QMap<QString, int> aliases;
     QMap<QString, QPair<int, ChatType>> chats;
