@@ -125,8 +125,9 @@ Core::~Core()
     delete[] videobuf;
     videobuf=nullptr;
 
-    Audio::closeInput();
-    Audio::closeOutput();
+    Audio& audio = Audio::getInstance();
+    audio.closeInput();
+    audio.closeOutput();
 }
 
 Core* Core::getInstance()

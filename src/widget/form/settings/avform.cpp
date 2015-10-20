@@ -89,7 +89,7 @@ void AVForm::showEvent(QShowEvent*)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
-    Audio::suscribeInput();
+    Audio::getInstance().subscribeInput();
 }
 
 void AVForm::onVideoModesIndexChanged(int index)
@@ -220,7 +220,7 @@ void AVForm::hideEvent(QHideEvent *)
         killVideoSurface();
     }
     videoDeviceList.clear();
-    Audio::unsuscribeInput();
+    Audio::getInstance().unsubscribeInput();
 }
 
 void AVForm::getVideoDevices()
@@ -314,19 +314,21 @@ void AVForm::getAudioOutDevices()
 void AVForm::onInDevChanged(const QString &deviceDescriptor)
 {
     Settings::getInstance().setInDev(deviceDescriptor);
-    Audio::openInput(deviceDescriptor);
 
-    Audio::unsuscribeInput();
-    Audio::suscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.openInput(deviceDescriptor);
+    audio.unsubscribeInput();
+    audio.subscribeInput();
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
 {
-    Settings::getInstance().setInDev(deviceDescriptor);
-    Audio::openOutput(deviceDescriptor);
+    Settings::getInstance().setOutDev(deviceDescriptor);
 
-    Audio::unsuscribeInput();
-    Audio::suscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.openOutput(deviceDescriptor);
+    audio.unsubscribeInput();
+    audio.subscribeInput();
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
@@ -336,13 +338,13 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
 
 void AVForm::on_playbackSlider_valueChanged(int value)
 {
-    Audio::setOutputVolume(value / 100.0);
+    Audio::getInstance().setOutputVolume(value / 100.0);
     bodyUI->playbackMax->setText(QString::number(value));
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int value)
 {
-    Audio::setInputVolume(value / 100.0);
+    Audio::getInstance().setInputVolume(value / 100.0);
     bodyUI->microphoneMax->setText(QString::number(value));
 }
 

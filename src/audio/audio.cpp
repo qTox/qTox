@@ -92,29 +92,19 @@ void Audio::startAudioThread()
     moveToThread(audioThread);
 }
 
-float Audio::getOutputVolume()
-{
-    return getInstance().GetOutputVolume();
-}
-
 /**
 Returns the current output volume, between 0 and 1
 */
-qreal Audio::GetOutputVolume()
+qreal Audio::getOutputVolume()
 {
     QMutexLocker locker(&audioOutLock);
     return outputVolume;
 }
 
-void Audio::setOutputVolume(float volume)
-{
-    getInstance().SetOutputVolume(volume);
-}
-
 /**
 The volume must be between 0 and 1
 */
-void Audio::SetOutputVolume(qreal volume)
+void Audio::setOutputVolume(qreal volume)
 {
     QMutexLocker locker(&audioOutLock);
     outputVolume = volume;
@@ -139,20 +129,10 @@ void Audio::SetOutputVolume(qreal volume)
 /**
 The volume must be between 0 and 2
 */
-void Audio::setInputVolume(float volume)
-{
-    getInstance().SetInputVolume(volume);
-}
-
-void Audio::SetInputVolume(qreal volume)
+void Audio::setInputVolume(qreal volume)
 {
     QMutexLocker locker(&audioInLock);
     inputVolume = volume;
-}
-
-void Audio::suscribeInput()
-{
-    getInstance().SubscribeInput();
 }
 
 /**
@@ -160,12 +140,13 @@ void Audio::suscribeInput()
 
 If the input device is not open, it will be opened before capturing.
 */
-void Audio::SubscribeInput()
+void Audio::subscribeInput()
 {
     qDebug() << "subscribing input" << inputSubscriptions;
     if (!inputSubscriptions++)
     {
-        OpenInput(Settings::getInstance().getInDev());
+        openInput(Settings::getInstance().getInDev());
+        openOutput(Settings::getInstance().getOutDev());
 
 #if (!FIX_SND_PCM_PREPARE_BUG)
         if (alInDev)
@@ -175,16 +156,6 @@ void Audio::SubscribeInput()
         }
 #endif
     }
-
-    QTimer::singleShot(1, [=]()
-    {
-        OpenOutput(Settings::getInstance().getOutDev());
-    });
-}
-
-void Audio::unsuscribeInput()
-{
-    getInstance().UnsubscribeInput();
 }
 
 /**
@@ -192,7 +163,7 @@ void Audio::unsuscribeInput()
 
 If the input device has no more subscriptions, it will be closed.
 */
-void Audio::UnsubscribeInput()
+void Audio::unsubscribeInput()
 {
     qDebug() << "unsubscribing input" << inputSubscriptions;
     if (inputSubscriptions > 0)
@@ -200,29 +171,16 @@ void Audio::UnsubscribeInput()
     else if(inputSubscriptions < 0)
         inputSubscriptions = 0;
 
-    if (!inputSubscriptions)
-    {
+    if (!inputSubscriptions) {
         closeOutput();
-#if (!FIX_SND_PCM_PREPARE_BUG)
-        if (alInDev)
-        {
-            qDebug() << "stopping capture";
-            alcCaptureStop(alInDev);
-        }
-#endif
         closeInput();
     }
-}
-
-void Audio::openInput(const QString& inDevDescr)
-{
-    getInstance().OpenInput(inDevDescr);
 }
 
 /**
 Open an input device, use before suscribing
 */
-void Audio::OpenInput(const QString& inDevDescr)
+void Audio::openInput(const QString& inDevDescr)
 {
     QMutexLocker lock(&audioInLock);
     auto* tmp = alInDev;
@@ -261,15 +219,10 @@ void Audio::OpenInput(const QString& inDevDescr)
     }
 }
 
-bool Audio::openOutput(const QString& outDevDescr)
-{
-    return getInstance().OpenOutput(outDevDescr);
-}
-
 /**
 Open an output device
 */
-bool Audio::OpenOutput(const QString &outDevDescr)
+bool Audio::openOutput(const QString &outDevDescr)
 {
     QMutexLocker lock(&audioOutLock);
     auto* tmp = alOutDev;
@@ -314,20 +267,20 @@ bool Audio::OpenOutput(const QString &outDevDescr)
     return true;
 }
 
-void Audio::closeInput()
-{
-    getInstance().CloseInput();
-}
-
 /**
 Close an input device, please don't use unless everyone's unsuscribed
 */
-void Audio::CloseInput()
+void Audio::closeInput()
 {
     qDebug() << "Closing input";
     QMutexLocker locker(&audioInLock);
     if (alInDev)
     {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        qDebug() << "stopping capture";
+        alcCaptureStop(alInDev);
+#endif
+
         if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
         {
             alInDev = nullptr;
@@ -340,15 +293,10 @@ void Audio::CloseInput()
     }
 }
 
-void Audio::closeOutput()
-{
-    getInstance().CloseOutput();
-}
-
 /**
 Close an output device
 */
-void Audio::CloseOutput()
+void Audio::closeOutput()
 {
     qDebug() << "Closing output";
     QMutexLocker locker(&audioOutLock);
@@ -371,15 +319,10 @@ void Audio::CloseOutput()
     }
 }
 
-void Audio::playMono16Sound(const QByteArray& data)
-{
-    getInstance().PlayMono16Sound(data);
-}
-
 /**
 Play a 44100Hz mono 16bit PCM sound
 */
-void Audio::PlayMono16Sound(const QByteArray& data)
+void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(&audioOutLock);
 
@@ -430,20 +373,15 @@ void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
     emit static_cast<Core*>(core)->groupPeerAudioPlaying(group, peer);
 }
 
-void Audio::playGroupAudio(int group, int peer, const int16_t* data,
-                           unsigned samples, uint8_t channels, unsigned sample_rate)
-{
-    getInstance().PlayGroupAudio(group, peer, data, samples, channels, sample_rate);
-}
+
 
 /**
 Must be called from the audio thread, plays a group call's received audio
 */
-void Audio::PlayGroupAudio(int group, int peer, const int16_t* data,
+void Audio::playGroupAudio(int group, int peer, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
     assert(QThread::currentThread() == audioThread);
-
     QMutexLocker lock(&audioOutLock);
 
     ToxGroupCall& call = Core::groupCalls[group];
@@ -507,43 +445,28 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
         alSourcePlay(alSource);
 }
 
-bool Audio::isInputReady()
-{
-    return getInstance().IsInputReady();
-}
-
 /**
 Returns true if the input device is open and suscribed to
 */
-bool Audio::IsInputReady()
+bool Audio::isInputReady()
 {
     QMutexLocker locker(&audioInLock);
     return alInDev && inputSubscriptions;
 }
 
-bool Audio::isOutputClosed()
-{
-    return getInstance().IsOutputClosed();
-}
-
 /**
 Returns true if the output device is open
 */
-bool Audio::IsOutputClosed()
+bool Audio::isOutputClosed()
 {
     QMutexLocker locker(&audioOutLock);
     return alOutDev;
 }
 
-bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
-{
-    return getInstance().TryCaptureSamples(buf, framesize);
-}
-
 /**
 Does nothing and return false on failure
 */
-bool Audio::TryCaptureSamples(uint8_t* buf, int framesize)
+bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 {
     QMutexLocker lock(&audioInLock);
 

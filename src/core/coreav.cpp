@@ -70,7 +70,7 @@ void Core::prepareCall(uint32_t friendId, int32_t callId, ToxAv* toxav, bool vid
         qWarning() << QString("Error starting call %1: toxav_prepare_transmission failed with %2").arg(callId).arg(r);
 
     // Audio
-    Audio::suscribeInput();
+    Audio::getInstance().subscribeInput();
 
     // Go
     calls[callId].active = true;
@@ -248,7 +248,7 @@ void Core::cleanupCall(int32_t callId)
         }
     }
 
-    Audio::unsuscribeInput();
+    Audio::getInstance().unsubscribeInput();
     toxav_kill_transmission(Core::getInstance()->toxav, callId);
 
     if (!anyActiveCalls())
@@ -278,7 +278,7 @@ void Core::sendCallAudio(int32_t callId, ToxAv* toxav)
     if (!calls[callId].active)
         return;
 
-    if (calls[callId].muteMic || !Audio::isInputReady())
+    if (calls[callId].muteMic || !Audio::getInstance().isInputReady())
     {
         calls[callId].sendAudioTimer->start();
         return;
@@ -288,7 +288,7 @@ void Core::sendCallAudio(int32_t callId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize];
 
-    if (Audio::tryCaptureSamples(buf, framesize))
+    if (Audio::getInstance().tryCaptureSamples(buf, framesize))
     {
 #ifdef QTOX_FILTER_AUDIO
         if (Settings::getInstance().getFilterAudio())
@@ -602,7 +602,7 @@ void Core::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, un
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    alSourcef(alSource, AL_GAIN, Audio::getOutputVolume());
+    alSourcef(alSource, AL_GAIN, Audio::getInstance().getOutputVolume());
     if (state != AL_PLAYING)
     {
         alSourcePlay(alSource);
@@ -628,7 +628,7 @@ void Core::joinGroupCall(int groupId)
     groupCalls[groupId].codecSettings.max_video_height = TOXAV_MAX_VIDEO_HEIGHT;
 
     // Audio
-    Audio::suscribeInput();
+    Audio::getInstance().subscribeInput();
 
     // Go
     Core* core = Core::getInstance();
@@ -651,7 +651,7 @@ void Core::leaveGroupCall(int groupId)
     for (ALuint source : groupCalls[groupId].alSources)
         alDeleteSources(1, &source);
     groupCalls[groupId].alSources.clear();
-    Audio::unsuscribeInput();
+    Audio::getInstance().unsubscribeInput();
     delete groupCalls[groupId].sendAudioTimer;
 }
 
@@ -660,7 +660,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     if (!groupCalls[groupId].active)
         return;
 
-    if (groupCalls[groupId].muteMic || !Audio::isInputReady())
+    if (groupCalls[groupId].muteMic || !Audio::getInstance().isInputReady())
     {
         groupCalls[groupId].sendAudioTimer->start();
         return;
@@ -670,7 +670,7 @@ void Core::sendGroupCallAudio(int groupId, ToxAv* toxav)
     const int bufsize = framesize * 2 * av_DefaultSettings.audio_channels;
     uint8_t buf[bufsize];
 
-    if (Audio::tryCaptureSamples(buf, framesize))
+    if (Audio::getInstance().tryCaptureSamples(buf, framesize))
     {
         if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, (int16_t*)buf,
                 framesize, av_DefaultSettings.audio_channels, av_DefaultSettings.audio_sample_rate) < 0)

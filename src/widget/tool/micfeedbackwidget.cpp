@@ -65,7 +65,7 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
     uint8_t buff[bufsize];
     memset(buff, 0, bufsize);
 
-    if (Audio::tryCaptureSamples(buff, framesize))
+    if (Audio::getInstance().tryCaptureSamples(buff, framesize))
     {
         double max = 0;
         int16_t* buffReal = reinterpret_cast<int16_t*>(&buff[0]);
@@ -88,13 +88,13 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
 
 void MicFeedbackWidget::showEvent(QShowEvent*)
 {
-    Audio::suscribeInput();
+    Audio::getInstance().subscribeInput();
     timerId = startTimer(60);
 }
 
 void MicFeedbackWidget::hideEvent(QHideEvent*)
 {
-    Audio::unsuscribeInput();
+    Audio::getInstance().unsubscribeInput();
 
     if (timerId != 0)
     {

@@ -1249,7 +1249,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
                 sndFile.close();
             }
 
-            Audio::playMono16Sound(sndData);
+            Audio::getInstance().playMono16Sound(sndData);
         }
     }
 
@@ -1271,7 +1271,7 @@ void Widget::playRingtone()
         sndFile1.close();
     }
 
-    Audio::playMono16Sound(sndData1);
+    Audio::getInstance().playMono16Sound(sndData1);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)

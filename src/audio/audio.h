@@ -52,42 +52,24 @@ public:
 public:
     void startAudioThread();
 
-    static float getOutputVolume();
-    qreal GetOutputVolume();
-    static void setOutputVolume(float volume);
-    void SetOutputVolume(qreal volume);
+    qreal getOutputVolume();
+    void setOutputVolume(qreal volume);
 
-    static void setInputVolume(float volume);
-    void SetInputVolume(qreal volume);
+    void setInputVolume(qreal volume);
 
-    static void suscribeInput();
-    void SubscribeInput();
-    static void unsuscribeInput();
-    void UnsubscribeInput();
+    void subscribeInput();
+    void unsubscribeInput();
+    void openInput(const QString& inDevDescr);
+    bool openOutput(const QString& outDevDescr);
 
-    static void openInput(const QString& inDevDescr);
-    void OpenInput(const QString& inDevDescr);
-    static bool openOutput(const QString& outDevDescr);
-    bool OpenOutput(const QString& outDevDescr);
-    static void closeInput();
-    void CloseInput();
-    static void closeOutput();
-    void CloseOutput();
+    bool isInputReady();
+    bool isOutputClosed();
 
-    static bool isInputReady();
-    bool IsInputReady();
-    static bool isOutputClosed();
-    bool IsOutputClosed();
-
-    static void playMono16Sound(const QByteArray& data);
-    void PlayMono16Sound(const QByteArray& data);
-    static bool tryCaptureSamples(uint8_t* buf, int framesize);
-    bool TryCaptureSamples(uint8_t* buf, int framesize);
+    void playMono16Sound(const QByteArray& data);
+    bool tryCaptureSamples(uint8_t* buf, int framesize);
 
     static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
-    void PlayGroupAudio(int group, int peer, const int16_t* data,
-                        unsigned samples, uint8_t channels, unsigned sample_rate);
 
 #ifdef QTOX_FILTER_AUDIO
     static void getEchoesToFilter(AudioFilterer* filter, int framesize);
@@ -95,6 +77,8 @@ public:
 #endif
 
 public slots:
+    void closeInput();
+    void closeOutput();
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 
