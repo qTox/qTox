@@ -46,3 +46,9 @@ QStackedWidget QPushButton
 #createAccountButton:hover {
   background: #0c530d;
 }
+
+#loginButton:focus,
+#createAccountButton:focus {
+  background: #003300;
+  border: 1px dotted gray;
+}
