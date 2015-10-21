@@ -59,6 +59,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
             dbIntf = new EncryptedDb(path, initLst);
 
             historyInstance = new HistoryKeeper(dbIntf);
+            historyMutex.unlock();
             return historyInstance;
         }
         else
