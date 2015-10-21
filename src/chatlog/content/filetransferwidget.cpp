@@ -428,6 +428,12 @@ void FileTransferWidget::remoteFileTransferResumed(ToxFile file)
     meanIndex = 0;
     for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
         meanData[i] = 0.0;
+
+    if (!isStarted)
+    {
+        setupButtons();
+        isStarted = true;
+    }
 }
 
 QString FileTransferWidget::getHumanReadableSize(qint64 size)
