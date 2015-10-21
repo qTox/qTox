@@ -28,58 +28,85 @@
 
 #include "audio.h"
 #include "src/core/core.h"
+#include "src/persistence/settings.h"
 
 #include <QDebug>
+#include <QTimer>
 #include <QThread>
-#include <QMutexLocker>
 
 #include <cassert>
 
-std::atomic<int> Audio::userCount{0};
 Audio* Audio::instance{nullptr};
-QThread* Audio::audioThread{nullptr};
-QMutex* Audio::audioInLock{nullptr};
-QMutex* Audio::audioOutLock{nullptr};
-ALCdevice* Audio::alInDev{nullptr};
-ALCdevice* Audio::alOutDev{nullptr};
-ALCcontext* Audio::alContext{nullptr};
-ALuint Audio::alMainSource{0};
-float Audio::outputVolume{1.0};
 
+/**
+Returns the singleton's instance. Will construct on first call.
+*/
 Audio& Audio::getInstance()
 {
     if (!instance)
     {
         instance = new Audio();
-        audioThread = new QThread(instance);
-        audioThread->setObjectName("qTox Audio");
-        audioThread->start();
-        audioInLock = new QMutex(QMutex::Recursive);
-        audioOutLock = new QMutex(QMutex::Recursive);
-        instance->moveToThread(audioThread);
+        instance->startAudioThread();
     }
     return *instance;
 }
 
+Audio::Audio()
+    : audioThread(new QThread())
+    , audioInLock(QMutex::Recursive)
+    , audioOutLock(QMutex::Recursive)
+    , inputSubscriptions(0)
+    , alOutDev(nullptr)
+    , alInDev(nullptr)
+    , outputVolume(1.0)
+    , inputVolume(1.0)
+    , alMainSource(0)
+    , alContext(nullptr)
+    , timer(new QTimer(this))
+{
+    timer->setSingleShot(true);
+    connect(timer, &QTimer::timeout, this, &Audio::closeOutput);
+
+    audioThread->setObjectName("qTox Audio");
+    connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
+}
+
 Audio::~Audio()
 {
-    audioThread->exit(0);
+    audioThread->exit();
     audioThread->wait();
     if (audioThread->isRunning())
         audioThread->terminate();
-
-    delete audioThread;
-    delete audioInLock;
-    delete audioOutLock;
 }
 
-float Audio::getOutputVolume()
+/**
+Start the audio thread for capture and playback.
+*/
+void Audio::startAudioThread()
 {
+    if (!audioThread->isRunning())
+        audioThread->start();
+    else
+        qWarning("Audio thread already started -> ignored.");
+
+    moveToThread(audioThread);
+}
+
+/**
+Returns the current output volume, between 0 and 1
+*/
+qreal Audio::getOutputVolume()
+{
+    QMutexLocker locker(&audioOutLock);
     return outputVolume;
 }
 
-void Audio::setOutputVolume(float volume)
+/**
+The volume must be between 0 and 1
+*/
+void Audio::setOutputVolume(qreal volume)
 {
+    QMutexLocker locker(&audioOutLock);
     outputVolume = volume;
     alSourcef(alMainSource, AL_GAIN, outputVolume);
 
@@ -99,87 +126,114 @@ void Audio::setOutputVolume(float volume)
     }
 }
 
-void Audio::suscribeInput()
+/**
+The volume must be between 0 and 2
+*/
+void Audio::setInputVolume(qreal volume)
 {
-    if (!alInDev)
-    {
-        qWarning()<<"input device is closed";
-        return;
-    }
+    QMutexLocker locker(&audioInLock);
+    inputVolume = volume;
+}
 
-    qDebug() << "suscribing input";
-    QMutexLocker lock(audioInLock);
-    if (!userCount++ && alInDev)
+/**
+@brief Subscribe to capture sound from the opened input device.
+
+If the input device is not open, it will be opened before capturing.
+*/
+void Audio::subscribeInput()
+{
+    qDebug() << "subscribing input" << inputSubscriptions;
+    if (!inputSubscriptions++)
     {
+        openInput(Settings::getInstance().getInDev());
+        openOutput(Settings::getInstance().getOutDev());
+
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "starting capture";
-        alcCaptureStart(alInDev);
+        if (alInDev)
+        {
+            qDebug() << "starting capture";
+            alcCaptureStart(alInDev);
+        }
 #endif
     }
 }
 
-void Audio::unsuscribeInput()
-{
-    if (!alInDev)
-    {
-        qWarning()<<"input device is closed";
-        return;
-    }
+/**
+@brief Unsubscribe from capturing from an opened input device.
 
-    qDebug() << "unsuscribing input";
-    QMutexLocker lock(audioInLock);
-    if (!--userCount && alInDev)
-    {
+If the input device has no more subscriptions, it will be closed.
+*/
+void Audio::unsubscribeInput()
+{
+    qDebug() << "unsubscribing input" << inputSubscriptions;
+    if (inputSubscriptions > 0)
+        inputSubscriptions--;
+    else if(inputSubscriptions < 0)
+        inputSubscriptions = 0;
+
+    if (!inputSubscriptions) {
+        closeOutput();
+        closeInput();
+    }
+}
+
+/**
+Open an input device, use before suscribing
+*/
+void Audio::openInput(const QString& inDevDescr)
+{
+    QMutexLocker lock(&audioInLock);
+
+    if (alInDev) {
 #if (!FIX_SND_PCM_PREPARE_BUG)
         qDebug() << "stopping capture";
         alcCaptureStop(alInDev);
 #endif
+        alcCaptureCloseDevice(alInDev);
     }
-}
-
-void Audio::openInput(const QString& inDevDescr)
-{
-    QMutexLocker lock(audioInLock);
-    auto* tmp = alInDev;
     alInDev = nullptr;
-    if (tmp)
-        alcCaptureCloseDevice(tmp);
 
     int stereoFlag = av_DefaultSettings.audio_channels==1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+    const uint32_t sampleRate = av_DefaultSettings.audio_sample_rate;
+    const uint16_t frameDuration = av_DefaultSettings.audio_frame_duration;
+    const uint32_t chnls = av_DefaultSettings.audio_channels;
+    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr,av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
+        alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
     else
-        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),av_DefaultSettings.audio_sample_rate, stereoFlag,
-            (av_DefaultSettings.audio_frame_duration * av_DefaultSettings.audio_sample_rate * 4)
-                                       / 1000 * av_DefaultSettings.audio_channels);
-    if (!alInDev)
-        qWarning() << "Cannot open input audio device " + inDevDescr;
-    else
+        alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
+                                       sampleRate, stereoFlag, bufSize);
+
+    if (alInDev)
         qDebug() << "Opening audio input "<<inDevDescr;
+    else
+        qWarning() << "Cannot open input audio device " + inDevDescr;
 
     Core* core = Core::getInstance();
     if (core)
         core->resetCallSources(); // Force to regen each group call's sources
 
     // Restart the capture if necessary
-    if (userCount.load() != 0 && alInDev)
+    if (alInDev)
     {
         alcCaptureStart(alInDev);
     }
     else
     {
 #if (FIX_SND_PCM_PREPARE_BUG)
-    alcCaptureStart(alInDev);
+        alcCaptureStart(alInDev);
 #endif
     }
-
 }
 
-void Audio::openOutput(const QString& outDevDescr)
+/**
+Open an output device
+*/
+bool Audio::openOutput(const QString &outDevDescr)
 {
-    QMutexLocker lock(audioOutLock);
+    qDebug() << "Opening audio output " + outDevDescr;
+    QMutexLocker lock(&audioOutLock);
+
     auto* tmp = alOutDev;
     alOutDev = nullptr;
     if (outDevDescr.isEmpty())
@@ -187,11 +241,7 @@ void Audio::openOutput(const QString& outDevDescr)
     else
         alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
-    if (!alOutDev)
-    {
-        qWarning() << "Cannot open output audio device " + outDevDescr;
-    }
-    else
+    if (alOutDev)
     {
         if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
             alcDestroyContext(alContext);
@@ -199,36 +249,49 @@ void Audio::openOutput(const QString& outDevDescr)
         if (tmp)
             alcCloseDevice(tmp);
 
-        alContext=alcCreateContext(alOutDev,nullptr);
-        if (!alcMakeContextCurrent(alContext))
-        {
-            qWarning() << "Cannot create output audio context";
-            alcCloseDevice(alOutDev);
-        }
-        else
+        alContext = alcCreateContext(alOutDev, nullptr);
+        if (alcMakeContextCurrent(alContext))
         {
             alGenSources(1, &alMainSource);
         }
-
-
-        qDebug() << "Opening audio output " + outDevDescr;
+        else
+        {
+            qWarning() << "Cannot create output audio context";
+            alcCloseDevice(alOutDev);
+            return false;
+        }
+    }
+    else
+    {
+        qWarning() << "Cannot open output audio device " + outDevDescr;
+        return false;
     }
 
     Core* core = Core::getInstance();
     if (core)
         core->resetCallSources(); // Force to regen each group call's sources
+
+    return true;
 }
 
+/**
+Close an input device, please don't use unless everyone's unsuscribed
+*/
 void Audio::closeInput()
 {
     qDebug() << "Closing input";
-    QMutexLocker lock(audioInLock);
+    QMutexLocker locker(&audioInLock);
     if (alInDev)
     {
+#if (!FIX_SND_PCM_PREPARE_BUG)
+        qDebug() << "stopping capture";
+        alcCaptureStop(alInDev);
+#endif
+
         if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
         {
             alInDev = nullptr;
-            userCount = 0;
+            inputSubscriptions = 0;
         }
         else
         {
@@ -237,12 +300,22 @@ void Audio::closeInput()
     }
 }
 
+/**
+Close an output device
+*/
 void Audio::closeOutput()
 {
     qDebug() << "Closing output";
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker locker(&audioOutLock);
+
+    if (inputSubscriptions > 0)
+        return;
+
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
+    {
         alcDestroyContext(alContext);
+        alContext = nullptr;
+    }
 
     if (alOutDev)
     {
@@ -253,11 +326,18 @@ void Audio::closeOutput()
     }
 }
 
+/**
+Play a 44100Hz mono 16bit PCM sound
+*/
 void Audio::playMono16Sound(const QByteArray& data)
 {
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker lock(&audioOutLock);
+
     if (!alOutDev)
-        return;
+    {
+        if (!openOutput(Settings::getInstance().getOutDev()))
+            return;
+    }
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -265,9 +345,32 @@ void Audio::playMono16Sound(const QByteArray& data)
     alSourcef(alMainSource, AL_GAIN, outputVolume);
     alSourcei(alMainSource, AL_BUFFER, buffer);
     alSourcePlay(alMainSource);
+
+    ALint sizeInBytes;
+    ALint channels;
+    ALint bits;
+
+    alGetBufferi(buffer, AL_SIZE, &sizeInBytes);
+    alGetBufferi(buffer, AL_CHANNELS, &channels);
+    alGetBufferi(buffer, AL_BITS, &bits);
+    int lengthInSamples = sizeInBytes * 8 / (channels * bits);
+
+    ALint frequency;
+    alGetBufferi(buffer, AL_FREQUENCY, &frequency);
+    qreal duration = (lengthInSamples / static_cast<qreal>(frequency)) * 1000;
+    int remaining = timer->interval();
+
+    if (duration > remaining)
+        timer->start(duration);
+
     alDeleteBuffers(1, &buffer);
 }
 
+/**
+@brief May be called from any thread, will always queue a call to playGroupAudio.
+
+The first and last argument are ignored, but allow direct compatibility with toxcore.
+*/
 void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
@@ -277,12 +380,16 @@ void Audio::playGroupAudioQueued(Tox*,int group, int peer, const int16_t* data,
     emit static_cast<Core*>(core)->groupPeerAudioPlaying(group, peer);
 }
 
+
+
+/**
+Must be called from the audio thread, plays a group call's received audio
+*/
 void Audio::playGroupAudio(int group, int peer, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
     assert(QThread::currentThread() == audioThread);
-
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker lock(&audioOutLock);
 
     ToxGroupCall& call = Core::groupCalls[group];
 
@@ -298,7 +405,7 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
     qreal volume = 0.;
     int bufsize = samples * 2 * channels;
     for (int i = 0; i < bufsize; ++i)
-        volume += abs(data[i]);//std::max(volume, data[i]);
+        volume += abs(data[i]);
 
     emit groupAudioPlayed(group, peer, volume / bufsize);
 
@@ -309,7 +416,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 {
     assert(channels == 1 || channels == 2);
 
-    QMutexLocker lock(audioOutLock);
+    QMutexLocker lock(&audioOutLock);
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
@@ -345,19 +452,30 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
         alSourcePlay(alSource);
 }
 
+/**
+Returns true if the input device is open and suscribed to
+*/
 bool Audio::isInputReady()
 {
-    return (alInDev && userCount);
+    QMutexLocker locker(&audioInLock);
+    return alInDev && inputSubscriptions;
 }
 
+/**
+Returns true if the output device is open
+*/
 bool Audio::isOutputClosed()
 {
-    return (alOutDev);
+    QMutexLocker locker(&audioOutLock);
+    return alOutDev;
 }
 
+/**
+Does nothing and return false on failure
+*/
 bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 {
-    QMutexLocker lock(audioInLock);
+    QMutexLocker lock(&audioInLock);
 
     ALint samples=0;
     alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(samples), &samples);
@@ -366,6 +484,23 @@ bool Audio::tryCaptureSamples(uint8_t* buf, int framesize)
 
     memset(buf, 0, framesize * 2 * av_DefaultSettings.audio_channels); // Avoid uninitialized values (Valgrind)
     alcCaptureSamples(Audio::alInDev, buf, framesize);
+
+    if (inputVolume != 1)
+    {
+        int16_t* bufReal = reinterpret_cast<int16_t*>(buf);
+        for (int i = 0; i < framesize; ++i)
+        {
+            int sample = bufReal[i] * pow(inputVolume, 2);
+
+            if (sample < std::numeric_limits<int16_t>::min())
+                sample = std::numeric_limits<int16_t>::min();
+            else if (sample > std::numeric_limits<int16_t>::max())
+                sample = std::numeric_limits<int16_t>::max();
+
+            bufReal[i] = sample;
+        }
+    }
+
     return true;
 }
 

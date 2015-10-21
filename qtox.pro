@@ -494,12 +494,13 @@ SOURCES += \
     src/widget/friendlistlayout.cpp \
     src/widget/genericchatitemlayout.cpp \
     src/widget/categorywidget.cpp \
-    src/widget/tool/removefrienddialog.cpp \
     src/widget/contentlayout.cpp \
     src/widget/contentdialog.cpp \
+    src/video/genericnetcamview.cpp \
     src/widget/tool/activatedialog.cpp \
     src/widget/tool/movablewidget.cpp \
-    src/video/genericnetcamview.cpp \
+    src/widget/tool/micfeedbackwidget.cpp \
+    src/widget/tool/removefrienddialog.cpp \
     src/video/groupnetcamview.cpp
 
 HEADERS += \
@@ -547,6 +548,7 @@ HEADERS += \
     src/widget/contentlayout.h \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \
+    src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/removefrienddialog.h \
     src/widget/tool/movablewidget.h \
     src/video/genericnetcamview.h \
