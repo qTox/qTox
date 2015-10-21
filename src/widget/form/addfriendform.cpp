@@ -24,6 +24,7 @@
 #include <QErrorMessage>
 #include <QApplication>
 #include <QClipboard>
+#include <QRegularExpression>
 #include <tox/tox.h>
 #include "src/nexus.h"
 #include "src/core/core.h"
@@ -41,6 +42,7 @@ AddFriendForm::AddFriendForm()
     QFont bold;
     bold.setBold(true);
     headLabel.setFont(bold);
+    toxIdLabel.setTextFormat(Qt::RichText);
 
     retranslateUi();
 
@@ -54,7 +56,8 @@ AddFriendForm::AddFriendForm()
     head->setLayout(&headLayout);
     headLayout.addWidget(&headLabel);
 
-    connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
+    connect(&toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
+    connect(&toxId, &QLineEdit::textChanged, this, &AddFriendForm::onIdChanged);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
@@ -105,11 +108,7 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (id.isEmpty())
-    {
-        GUI::showWarning(tr("Couldn't add friend"), tr("Please fill in a valid Tox ID","Tox ID of the friend you're sending a friend request to"));
-    }
-    else if (ToxId::isToxId(id))
+    if (ToxId::isToxId(id))
     {
         if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
             GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
@@ -143,6 +142,35 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
     }
 }
 
+void AddFriendForm::onIdChanged(const QString &id)
+{
+    QString tId = id.trimmed();
+    QRegularExpression dnsIdExpression("^\\S+@\\S+$");
+    bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
+
+    QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
+    QString toxIdComment(tr("either 76 hexadecimal characters or name@domain.com", "Tox ID format description"));
+
+    if(isValidId)
+    {
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" (") +
+                           toxIdComment +
+                           QStringLiteral(")"));
+    } else
+    {
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" <font color='red'>(") +
+                           toxIdComment +
+                           QStringLiteral(")</font>"));
+    }
+
+    toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
+    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
+
+    sendButton.setEnabled(isValidId && !tId.isEmpty());
+}
+
 void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
@@ -157,10 +185,11 @@ void AddFriendForm::setIdFromClipboard()
 void AddFriendForm::retranslateUi()
 {
     headLabel.setText(tr("Add Friends"));
-    toxIdLabel.setText(tr("Tox ID","Tox ID of the person you're sending a friend request to"));
     messageLabel.setText(tr("Message","The message you send in friend requests"));
     sendButton.setText(tr("Send friend request"));
     message.setPlaceholderText(tr("%1 here! Tox me maybe?",
                 "Default message in friend requests if the field is left blank. Write something appropriate!")
                 .arg(lastUsername));
+
+    onIdChanged(toxId.text());
 }
