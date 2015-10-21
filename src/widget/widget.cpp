@@ -685,7 +685,7 @@ void Widget::onTransferClicked()
     }
 }
 
-void Widget::confirmExecutableOpen(const QFileInfo file)
+void Widget::confirmExecutableOpen(const QFileInfo &file)
 {
     static const QStringList dangerousExtensions = { "app", "bat", "com", "cpl", "dmg", "exe", "hta", "jar", "js", "jse", "lnk", "msc", "msh", "msh1", "msh1xml", "msh2", "msh2xml", "mshxml", "msi", "msp", "pif", "ps1", "ps1xml", "ps2", "ps2xml", "psc1", "psc2", "py", "reg", "scf", "sh", "src", "vb", "vbe", "vbs", "ws", "wsc", "wsf", "wsh" };
 

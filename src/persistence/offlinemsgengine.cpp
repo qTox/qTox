@@ -81,21 +81,24 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     QMap<int, MsgPtr> msgs = undeliveredMsgs;
     removeAllReciepts();
 
-    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
+    for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)
     {
-        if (iter.value().timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout)
+        auto val = iter.value();
+        auto key = iter.key();
+
+        if (val.timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout)
         {
-            registerReceipt(iter.value().receipt, iter.key(), iter.value().msg, iter.value().timestamp);
+            registerReceipt(val.receipt, key, val.msg, val.timestamp);
             continue;
         }
-        QString messageText = iter.value().msg->toString();
+        QString messageText = val.msg->toString();
         int rec;
-        if (iter.value().msg->isAction())
+        if (val.msg->isAction())
             rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
 
-        registerReceipt(rec, iter.key(), iter.value().msg);
+        registerReceipt(rec, key, val.msg);
     }
 }
 
