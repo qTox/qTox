@@ -22,7 +22,6 @@
 #define AUDIO_H
 
 #include <QObject>
-#include <QHash>
 #include <QMutexLocker>
 #include <atomic>
 #include <cmath>
@@ -36,11 +35,7 @@
  #include <AL/alext.h>
 #endif
 
-class QString;
-class QByteArray;
 class QTimer;
-class QThread;
-class QMutex;
 struct Tox;
 class AudioFilterer;
 
