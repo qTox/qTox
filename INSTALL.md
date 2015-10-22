@@ -11,23 +11,26 @@
     - [Debian](#debian-git)
     - [Fedora](#fedora-git)
     - [openSUSE](#opensuse-git)
+    - [Ubuntu](#ubuntu-git)
   - [Clone qTox](#clone-qtox)
   - [GCC, Qt, FFmpeg, OpanAL Soft and qrencode](#other-deps)
     - [Arch](#arch-other-deps)
-    - [Debian <10 / Ubuntu <15.04](#debian7-other-deps)
-    - [Debian >=10 / Ubuntu >=15.04](#debian8-other-deps)
+    - [Debian](#debian-other-deps)
     - [Fedora](#fedora-other-deps)
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
-  - [FFmpeg (for Debian <10 / Ubuntu <15.04)](#ffmpeg)
+    - [Ubuntu <15.04](#ubuntu14-other-deps)
+    - [Ubuntu >=15.04](#ubuntu-other-deps)
+  - [FFmpeg (Ubuntu <15.04)](#ffmpeg)
   - [filter_audio](#filter_audio)
   - [toxcore dependencies](#toxcore-dependencies)
     - [Arch](#arch-toxcore)
-    - [Debian >=8 / Ubuntu >=15.04](#debian8-toxcore)
+    - [Debian](#debian-toxcore)
     - [Fedora](#fedora-toxcore)
     - [openSUSE](#opensuse-toxcore)
     - [Slackware](#slackware-toxcore)
     - [Ubuntu <15.04](#ubuntu14-toxcore)
+    - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
@@ -120,7 +123,7 @@ sudo pacman -S --needed git
 ```
 
 <a name="debian-git" />
-#### Debian / Ubuntu:
+#### Debian:
 ```bash
 sudo apt-get install git
 ```
@@ -136,6 +139,12 @@ sudo dnf install git
 ### openSUSE:
 ```bash
 sudo zypper install git
+```
+
+<a name="ubuntu-git" />
+#### Ubuntu:
+```bash
+sudo apt-get install git
 ```
 
 
@@ -159,21 +168,13 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
-<a name="debian7-other-deps" />
-#### Debian <8 / Ubuntu <15.04:
-**Note that FFmpeg is not included in those distribution version(!).**
 
-**This means that you have to compile FFmpeg yourself, otherwise compiling qTox will fail.**
+<a name="debian-other-deps" />
+#### Debian:
+**Note that only Debian >=8 stable (jessie) is supported.**
 
-```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
-```
+If you use stable, you have to add backports to your sources.list for FFmpeg and others. Instructions here: http://backports.debian.org/Instructions/
 
-**Go to [FFmpeg](#ffmpeg) section to compile it.**
-
-
-<a name="debian8-other-deps" />
-#### Debian >=8 / Ubuntu >=15.04:
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
 ```
@@ -197,6 +198,26 @@ sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel lib
 #### Slackware:
 
 List of all the ``qTox`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
+
+
+<a name="ubuntu14-other-deps" />
+#### Ubuntu <15.04:
+**Note that FFmpeg is not included in those distribution version(!).**
+
+**This means that you have to compile FFmpeg yourself, otherwise compiling qTox will fail.**
+
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
+```
+
+**Go to [FFmpeg](#ffmpeg) section to compile it.**
+
+
+<a name="ubuntu-other-deps" />
+#### Ubuntu >=15.04:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
+```
 
 
 ### FFmpeg
@@ -291,8 +312,8 @@ Install all of the toxcore dependencies.
 sudo pacman -S --needed opus libvpx libsodium
 ```
 
-<a name="debian8-toxcore" />
-#### Debian >=8 / Ubuntu >=15.04:
+<a name="debian-toxcore" />
+#### Debian:
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev libavdevice-dev
 ```
@@ -332,6 +353,14 @@ sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
 sudo ldconfig
 cd ..
 ```
+
+
+<a name="ubuntu-toxcore" />
+#### Ubuntu >=15.04:
+```bash
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev
+```
+
 
 ### toxcore compiling
 
