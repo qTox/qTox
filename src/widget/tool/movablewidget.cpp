@@ -20,6 +20,7 @@
 #include "movablewidget.h"
 #include <QMouseEvent>
 #include <QGraphicsOpacityEffect>
+#include <cmath>
 
 MovableWidget::MovableWidget(QWidget *parent)
     : QWidget(parent)

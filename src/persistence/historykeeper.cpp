@@ -524,11 +524,7 @@ void HistoryKeeper::removeAvatar(const QString& ownerId)
 bool HistoryKeeper::hasAvatar(const QString& ownerId)
 {
     QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
-    if (sqlAnswer.first() && sqlAnswer.value(0).toByteArray()!=NULL)
-    {
-        return true;
-    }
-    return false;
+    return !sqlAnswer.isNull(0);
 }
 
 void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
