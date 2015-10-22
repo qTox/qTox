@@ -14,8 +14,8 @@
   - [Clone qTox](#clone-qtox)
   - [GCC, Qt, FFmpeg, OpanAL Soft and qrencode](#other-deps)
     - [Arch](#arch-other-deps)
-    - [Debian <10 / Ubuntu <15.04](#debian9-other-deps)
-    - [Debian >=10 / Ubuntu >=15.04](#debian10-other-deps)
+    - [Debian <10 / Ubuntu <15.04](#debian7-other-deps)
+    - [Debian >=10 / Ubuntu >=15.04](#debian8-other-deps)
     - [Fedora](#fedora-other-deps)
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
@@ -159,8 +159,8 @@ The following steps assumes that you cloned the repository at "/home/user/qTox".
 sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
-<a name="debian9-other-deps" />
-#### Debian <10 / Ubuntu <15.04:
+<a name="debian7-other-deps" />
+#### Debian <8 / Ubuntu <15.04:
 **Note that FFmpeg is not included in those distribution version(!).**
 
 **This means that you have to compile FFmpeg yourself, otherwise compiling qTox will fail.**
@@ -172,8 +172,8 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 **Go to [FFmpeg](#ffmpeg) section to compile it.**
 
 
-<a name="debian10-other-deps" />
-#### Debian >=10 / Ubuntu >=15.04:
+<a name="debian8-other-deps" />
+#### Debian >=8 / Ubuntu >=15.04:
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
 ```
@@ -294,7 +294,7 @@ sudo pacman -S --needed opus libvpx libsodium
 <a name="debian8-toxcore" />
 #### Debian >=8 / Ubuntu >=15.04:
 ```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev libavdevice-dev
 ```
 
 <a name="fedora-toxcore" />
