@@ -167,18 +167,24 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
             else
             {
+                void (*callbackFreeImage)(guchar*, gpointer) =
+                    [](guchar*, gpointer image_bytes)
+                {
+                    free(reinterpret_cast<guchar*>(image_bytes));
+                };
                 QImage image = a->icon().pixmap(64, 64).toImage();
                 if (image.format() != QImage::Format_RGBA8888_Premultiplied)
                     image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-                GBytes* image_bytes = g_bytes_new(image.bits(), image.byteCount());
+                guchar* image_bytes = (guchar*)malloc(image.byteCount());
+                memcpy(image_bytes, image.bits(), image.byteCount());
 
-                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_bytes(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
-                                         8, image.width(), image.height(), image.bytesPerLine());
+                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
+                                        8, image.width(), image.height(), image.bytesPerLine(),
+                                        callbackFreeImage, image_bytes);
 
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
-                g_bytes_unref(image_bytes);
                 g_object_unref(pixbuf);
             }
             gtk_menu_shell_append(GTK_MENU_SHELL(snMenu), item);
@@ -211,18 +217,24 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
                 item = gtk_menu_item_new_with_label(aText.toStdString().c_str());
             else
             {
+                void (*callbackFreeImage)(guchar*, gpointer) =
+                    [](guchar*, gpointer image_bytes)
+                {
+                    free(reinterpret_cast<guchar*>(image_bytes));
+                };
                 QImage image = a->icon().pixmap(64, 64).toImage();
                 if (image.format() != QImage::Format_RGBA8888_Premultiplied)
                     image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-                GBytes* image_bytes = g_bytes_new(image.bits(), image.byteCount());
+                guchar* image_bytes = (guchar*)malloc(image.byteCount());
+                memcpy(image_bytes, image.bits(), image.byteCount());
 
-                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_bytes(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
-                                        8, image.width(), image.height(), image.bytesPerLine());
+                GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
+                                        8, image.width(), image.height(), image.bytesPerLine(),
+                                        callbackFreeImage, image_bytes);
 
                 item = gtk_image_menu_item_new_with_label(aText.toStdString().c_str());
                 gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(item), gtk_image_new_from_pixbuf(pixbuf));
                 gtk_image_menu_item_set_always_show_image(GTK_IMAGE_MENU_ITEM(item),TRUE);
-                g_bytes_unref(image_bytes);
                 g_object_unref(pixbuf);
             }
             gtk_menu_shell_append(GTK_MENU_SHELL(gtkMenu), item);
@@ -343,32 +355,44 @@ void SystemTrayIcon::setIcon(QIcon &icon)
     #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (backendType == SystrayBackendType::StatusNotifier)
     {
+        void (*callbackFreeImage)(guchar*, gpointer) =
+            [](guchar*, gpointer image_bytes)
+        {
+            free(reinterpret_cast<guchar*>(image_bytes));
+        };
         QImage image = icon.pixmap(64, 64).toImage();
         if (image.format() != QImage::Format_RGBA8888_Premultiplied)
             image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-        GBytes* image_bytes = g_bytes_new(image.bits(), image.byteCount());
+        guchar* image_bytes = (guchar*)malloc(image.byteCount());
+        memcpy(image_bytes, image.bits(), image.byteCount());
 
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_bytes(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
-                                8, image.width(), image.height(), image.bytesPerLine());
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
+                                8, image.width(), image.height(), image.bytesPerLine(),
+                                callbackFreeImage, image_bytes);
 
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
-        g_bytes_unref(image_bytes);
         g_object_unref(pixbuf);
     }
     #endif
     #ifdef ENABLE_SYSTRAY_GTK_BACKEND
     else if (backendType == SystrayBackendType::GTK)
     {
+        void (*callbackFreeImage)(guchar*, gpointer) =
+            [](guchar*, gpointer image_bytes)
+        {
+            free(reinterpret_cast<guchar*>(image_bytes));
+        };
         QImage image = icon.pixmap(64, 64).toImage();
         if (image.format() != QImage::Format_RGBA8888_Premultiplied)
             image = image.convertToFormat(QImage::Format_RGBA8888_Premultiplied);
-        GBytes* image_bytes = g_bytes_new(image.bits(), image.byteCount());
+        guchar* image_bytes = (guchar*)malloc(image.byteCount());
+        memcpy(image_bytes, image.bits(), image.byteCount());
 
-        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_bytes(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
-                                8, image.width(), image.height(), image.bytesPerLine());
+        GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(image_bytes, GDK_COLORSPACE_RGB, image.hasAlphaChannel(),
+                                8, image.width(), image.height(), image.bytesPerLine(),
+                                callbackFreeImage, image_bytes);
 
         gtk_status_icon_set_from_pixbuf(gtkIcon, pixbuf);
-        g_bytes_unref(image_bytes);
         g_object_unref(pixbuf);
     }
     #endif
