@@ -220,7 +220,7 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 
 ### FFmpeg
 
-If you have installed FFmpeg earlier (i.e. you don't run Debian <10 / Ubuntu <15.04), skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
+If you have installed FFmpeg earlier (i.e. you don't run Ubuntu <15.04), skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
 
 To get ffmpeg compiled and put in directory `libs`, run this script in qTox directory:
 ```bash
