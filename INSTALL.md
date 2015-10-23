@@ -22,7 +22,6 @@
     - [Ubuntu <15.04](#ubuntu14-other-deps)
     - [Ubuntu >=15.04](#ubuntu-other-deps)
   - [FFmpeg (Ubuntu <15.04)](#ffmpeg)
-  - [filter_audio](#filter_audio)
   - [toxcore dependencies](#toxcore-dependencies)
     - [Arch](#arch-toxcore)
     - [Debian](#debian-toxcore)
@@ -31,6 +30,7 @@
     - [Slackware](#slackware-toxcore)
     - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
+  - [filter_audio](#filter_audio)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
@@ -111,7 +111,6 @@ If your distribution is not listed, or you want / need to compile qTox, there ar
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
 
 
-
 ### Install git
 In order to clone the qTox repository you need Git.
 
@@ -136,7 +135,7 @@ sudo dnf install git
 ```
 
 <a name="opensuse-git" />
-### openSUSE:
+#### openSUSE:
 ```bash
 sudo zypper install git
 ```
@@ -146,7 +145,6 @@ sudo zypper install git
 ```bash
 sudo apt-get install git
 ```
-
 
 
 ### Clone qTox
@@ -173,7 +171,7 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 #### Debian:
 **Note that only Debian >=8 stable (jessie) is supported.**
 
-If you use stable, you have to add backports to your sources.list for FFmpeg and others. Instructions here: http://backports.debian.org/Instructions/
+If you use stable, you have to add backports to your `sources.list` for FFmpeg and others. Instructions here: http://backports.debian.org/Instructions/
 
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
@@ -279,29 +277,6 @@ cd ../../
 ```
 
 
-
-### filter_audio
-This step is  best done before compiling `toxcore`.
-
-Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the [`bootstrap.sh`](/bootstrap.sh) script.
-The script will automatically download and install `toxcore` and `libfilteraudio`:
-```bash
-## in qTox directory
-./bootstrap.sh # use -h or --help for more information
-
-```
-If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
-
-
-If you want to compile and install it manually:
-```bash
-git clone https://github.com/irungentoo/filter_audio
-cd filter_audio
-make -j$(nproc)
-sudo make install
-```
-
-
 ### toxcore dependencies
 
 Install all of the toxcore dependencies.
@@ -362,6 +337,28 @@ sudo apt-get install libtool autotools-dev automake checkinstall check libopus-d
 ```
 
 
+### filter_audio
+This step is  best done before compiling `toxcore`.
+
+Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the [`bootstrap.sh`](/bootstrap.sh) script.
+The script will automatically download and install `toxcore` and `libfilteraudio`:
+```bash
+## in qTox directory
+./bootstrap.sh # use -h or --help for more information
+
+```
+If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
+
+
+If you want to compile and install it manually:
+```bash
+git clone https://github.com/irungentoo/filter_audio
+cd filter_audio
+make -j$(nproc)
+sudo make install
+```
+
+
 ### toxcore compiling
 
 Provided that you have all required dependencies installed, you can simply run:
@@ -417,7 +414,7 @@ Start make again. Repeat if nessary until all dependencies are installed.  If yo
 
 ====
 
-###Building packages
+### Building packages
 
 Alternately, qTox now has the experimental and probably-dodgy ability to package itself (in .deb
 form natively, and .rpm form with <a href="http://joeyh.name/code/alien/">alien</a>).
@@ -428,10 +425,10 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 
 <a name="osx" />
-##OS X
+## OS X
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
-###Required Libraries
+### Required Libraries
 
 First, let's install the dependencies available via brew.
 ```bash
@@ -466,7 +463,7 @@ Note that if you use the CLI to build you'll need to add Qt5's bins to your path
 export PATH=$PATH:~/Qt/5.4/clang_64/bin/
 ```
 
-###Fixing things up
+### Fixing things up
 
 The bad news is that Qt breaks our linker paths so we need to fix those. First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
 
@@ -484,7 +481,7 @@ mv qtox_old.app qtox.app
 * run ```bash ~/deploy.qtox.sh```
 
 
-###Running qTox
+### Running qTox
 You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
 ```bash
 qtox.app/Contents/MacOS/qtox
@@ -492,28 +489,28 @@ qtox.app/Contents/MacOS/qtox
 * Enjoy the snazzy CLI output as your friends and family congratulate you on becoming a hacker
 
 <a name="windows" />
-##Windows
+## Windows
 
-###Qt
+### Qt
 
 Download the Qt online installer for Windows from [qt-project.org](http://qt-project.org/downloads).
 While installation you have to assemble your Qt toolchain. Take the most recent version of Qt compiled with MinGW.
 Although the installer provides its own bundled MinGW compiler toolchain its recommend installing it separately because Qt is missing MSYS which is needed to compile and install OpenCV and OpenAL. Thus you can - if needed - deselect the tab "Tools".
 The following steps assume that Qt is installed at "C:\Qt". If you decided to choose another location, replace corresponding parts.
 
-###MinGW
+### MinGW
 
 Download the MinGW installer for Windows from [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/).
 Make sure to install MSYS (a set of Unix tools for Windows).
 The following steps assume that MinGW is installed at "C:\MinGW". If you decided to choose another location, replace corresponding parts.
 Check that the version of MinGW, corresponds to the version of the QT component!
 
-###WGet
+### WGet
 Download the WGet installer for Windows from(
 http://gnuwin32.sourceforge.net/packages/wget.htm).
 Install them. The following steps assume that WGet is installed at "C:\Program Files\GnuWin32\". If you decided to choose another location, replace corresponding parts.
 
-###Setting up Path
+### Setting up Path
 
 Add MinGW/MSYS/CMake binaries to the system path to make them globally accessible. 
 Open Control Panel -> System and Security -> System -> Advanced system settings -> Environment Variables...(or run "sysdm.cpl" select tab "Advanced system settings" -> button "Environment Variables")
@@ -522,7 +519,7 @@ The input box "Variable value:" should already contain some directories. Each di
 Extend the input box by adding ";C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin".
 The very first semicolon must only be added if it is missing. CMake may be added by installer automatically.
 
-###Cloning the Repository
+### Cloning the Repository
 
 Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task (you may need to add the path to the git.exe system variable Path).
 The following steps assume that you cloned the repository at "C:\qTox". If you decided to choose another location, replace corresponding parts.
