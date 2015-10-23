@@ -223,9 +223,10 @@ private:
 
     void checkLastOnline(uint32_t friendId);
 
+    void deadifyTox();
+
 private slots:
     void killTimers(bool onlyStop); ///< Must only be called from the Core thread
-    void deadifyTox(); ///< Will call itself blocking queued on the Core thread
 
 private:
     Tox* tox;
