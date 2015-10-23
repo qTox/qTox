@@ -370,7 +370,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
         dockMenu->insertAction(dockLast, action);
     }
 
-    if (!dockLast->isSeparator())
+    if (dockLast && !dockLast->isSeparator())
         dockMenu->insertSeparator(dockLast);
 }
 
