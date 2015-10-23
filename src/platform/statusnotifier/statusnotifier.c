@@ -1608,7 +1608,7 @@ get_prop (GDBusConnection        *conn,
     else if (!g_strcmp0 (property, "ToolTip"))
     {
         GVariant *variant;
-        GVariantBuilder *builder;
+        GVariant *pixmap;
 
         if (!priv->icon[STATUS_NOTIFIER_TOOLTIP_ICON].has_pixbuf)
         {
@@ -1621,13 +1621,13 @@ get_prop (GDBusConnection        *conn,
             return variant;
         }
 
-        builder = get_icon_pixmap (sn, STATUS_NOTIFIER_TOOLTIP_ICON);
+        pixmap = get_icon_pixmap (sn, STATUS_NOTIFIER_TOOLTIP_ICON);
         variant = g_variant_new ("(sa(iiay)ss)",
                 "",
-                builder,
+                pixmap,
                 (priv->tooltip_title) ? priv->tooltip_title : "",
                 (priv->tooltip_body) ? priv->tooltip_body : "");
-        g_variant_builder_unref (builder);
+        g_variant_unref (pixmap);
 
         return variant;
     }
