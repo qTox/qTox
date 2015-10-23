@@ -501,7 +501,7 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 
     if (inputVolume != 1)
     {
-        for (int i = 0; i < samples; ++i)
+        for (size_t i = 0; i < samples * AUDIO_CHANNELS; ++i)
         {
             int sample = buf[i] * pow(inputVolume, 2);
 
