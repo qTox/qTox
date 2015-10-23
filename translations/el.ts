@@ -6,23 +6,23 @@
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="138"/>
         <source>%1x%2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="140"/>
         <location filename="../src/widget/form/settings/avform.cpp" line="146"/>
         <source>Default resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Προεπιλεγμένη ανάλυση</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.cpp" line="142"/>
         <source> at %1 FPS</source>
-        <translation type="unfinished"></translation>
+        <translation> σε %1 FPS</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avform.h" line="42"/>
         <source>Audio/Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Ήχος/Βίντεο</translation>
     </message>
 </context>
 <context>
@@ -30,75 +30,76 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="41"/>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές Ήχου</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
         <location filename="../src/widget/form/settings/avsettings.ui" line="129"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="54"/>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation type="unfinished"></translation>
+        <translation>Φίλτραρε τον ήχο από το μικρόφωνό σου, έτσι ώστε όσοι σε ακούνε να λαμβάνουν καλύτερο ήχο.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="57"/>
         <source>Filter audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Φίλτραρε τον ήχο</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποίησε την μπάρα για την ένταση των ηχείων σου.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="80"/>
         <source>Microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Μικρόφωνο</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="87"/>
         <location filename="../src/widget/form/settings/avsettings.ui" line="101"/>
         <source>100</source>
-        <translation type="unfinished"></translation>
+        <translation>100</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="94"/>
         <source>Rescan audio devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Ξαναψάξε για συσκευές ήχου</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Χρησιμοποίησε την μπάρα για να ρυθμίσεις την ένταση του μικροφώνου σου.
+ΠΡΟΣΟΧΗ: η μπάρα δεν λειτουργεί ακόμα.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
         <source>Capture device</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευή λήψης</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
         <source>Playback</source>
-        <translation type="unfinished"></translation>
+        <translation>Αναπαραγωγή</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
         <source>Playback device</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευή αναπαραγωγής</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="156"/>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Επιλογές βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
         <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <translation>Συσκευή βίντεο</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="171"/>
@@ -108,12 +109,16 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Όρισε την ανάλυση της κάμεράς σου.
+Όσο υψηλότερη η ανάλυση, τόσο καλύτερη η ποιότητα του βίντεο που θα βλέπουν οι φίλοι σου.
+Έχε υπόψη, όμως, ότι μια καλύτερη ποιότητα βίντεο χρειάζεται καλύτερη σύνδεση στο διαδίκτυο.
+Μερικές φορές η σύνδεσή σου μπορεί να μην επαρκεί για να υποστηρίξει μια υψηλότερη ποιότητα βίντεο,
+κάτι το οποίο μπορεί να οδηγήσει σε προβλήματα με τις βιντεοκλήσεις</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Ανάλυση</translation>
     </message>
 </context>
 <context>
@@ -121,7 +126,7 @@ which may lead to problems with video calls.</source>
     <message>
         <location filename="../src/widget/form/settings/aboutform.h" line="37"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Σχετικά</translation>
     </message>
 </context>
 <context>
@@ -129,32 +134,32 @@ which may lead to problems with video calls.</source>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Αίτηση</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="53"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Έκδοση</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
         <source>You are using a qTox nightly build.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Χρησιμοποιείς την έκδοση wTox nighly build</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="103"/>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="130"/>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">toxcore version: $TOXCOREVERSION</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="149"/>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Άδεια</translation>
     </message>
     <message utf8="true">
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="176"/>
@@ -172,7 +177,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="215"/>
         <source>Authors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δημιουργοί</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="232"/>
@@ -182,7 +187,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="260"/>
         <source>Known Issues</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Γνωστά Προβλήματα</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/aboutsettings.ui" line="277"/>
@@ -197,59 +202,63 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
         <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αδυναμία προσθήκης φίλου/φίλης</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Αυτό είναι το Tox ID του φίλου στον οποίο στέλνεις ένα αίτημα φιλίας</translatorcomment>
+        <translation type="unfinished">Παρακαλώ δώσε ένα έγκυρο Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Δεν μπορείς να προσθέσεις τον εαυτό σου ως φίλο!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="126"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Το qTox χρειάζεται να χρησιμοποιεί το Tox DNS, αλλά δεν μπορεί να το κάνει αυτό μέσω ενός διαμεσολαβητή.
+Να αγνοήσω τον διαμεσολαβητή και να συνδεθώ στο Διαδίκτυο απευθείας;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Αυτή το Tox ID δεν υπάρχει</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="159"/>
         <source>Add Friends</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Πρόσθεσε Φίλους</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="160"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox ID</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="161"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Το μήνυμα που στέλνεις σε αιτήματα φιλίας</translatorcomment>
+        <translation type="unfinished">Μήνυμα</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="162"/>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Στείλε αίτημα φιλίας</translation>
     </message>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="163"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Προεπιλεγμένο μήνυμα σε αιτήματα φιλίας όταν το αντίστοιχο πεδίο είναι κενό. Γράψε κάτι κατάλληλο!</translatorcomment>
+        <translation type="unfinished">%1 εδώ! Θες να μιλήσουμε στο Τοξ;</translation>
     </message>
 </context>
 <context>
@@ -1828,7 +1837,6 @@ If you encountered this error, please report it.</source>
         <location filename="../src/widget/notificationedgewidget.cpp" line="54"/>
         <source>Unread message(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
