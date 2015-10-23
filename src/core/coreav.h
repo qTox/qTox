@@ -98,6 +98,7 @@ private slots:
     static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);
     static void stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void* self);
     static void bitrateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t arate, uint32_t vrate, void* self);
+    void killTimerFromThread(); ///< Calls itself blocking queued on the coreav thread
 
 private:
     void process();

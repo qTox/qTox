@@ -62,7 +62,7 @@ CoreAV::~CoreAV()
 {
     for (const ToxFriendCall& call : calls)
         cancelCall(call.callId);
-    stop();
+    killTimerFromThread();
     toxav_kill(toxav);
 }
 
@@ -85,6 +85,14 @@ void CoreAV::stop()
     if (QThread::currentThread() != coreavThread.get())
         return (void)QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
     iterateTimer->stop();
+}
+
+void CoreAV::killTimerFromThread()
+{
+    // Timers can only be touched from their own thread
+    if (QThread::currentThread() != coreavThread.get())
+        return (void)QMetaObject::invokeMethod(this, "killTimerFromThread", Qt::BlockingQueuedConnection);
+    iterateTimer.release();
 }
 
 void CoreAV::process()
