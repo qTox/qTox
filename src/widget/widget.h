@@ -183,6 +183,9 @@ private slots:
     void friendListContextMenu(const QPoint &pos);
 
 private:
+    int icon_size;
+
+private:
     enum ActiveToolMenuButton {
         AddButton,
         GroupButton,
@@ -225,6 +228,7 @@ private:
     QAction *statusOnline;
     QAction *statusAway;
     QAction *statusBusy;
+    QAction *actionLogout;
     QAction *actionQuit;
 
     QMenu* filterMenu;
