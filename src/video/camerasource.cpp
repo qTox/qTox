@@ -120,10 +120,13 @@ CameraSource::~CameraSource()
     if (cctxOrig)
         avcodec_close(cctxOrig);
 
-    for(int i = 0; i < subscriptions; i++)
-        device->close();
+    if (device)
+    {
+        for(int i = 0; i < subscriptions; i++)
+            device->close();
+        device = nullptr;
+    }
 
-    device = nullptr;
     // Memfence so the stream thread sees a nullptr device
     std::atomic_thread_fence(std::memory_order_release);
     l.unlock();
