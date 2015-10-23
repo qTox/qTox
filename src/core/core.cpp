@@ -77,6 +77,12 @@ Core::Core(QThread *CoreThread, Profile& profile) :
 
 void Core::deadifyTox()
 {
+    if (QThread::currentThread() != coreThread)
+    {
+        QMetaObject::invokeMethod(this, "deadifyTox", Qt::BlockingQueuedConnection);
+        return;
+    }
+
     if (av)
     {
         delete av;
@@ -99,14 +105,15 @@ Core::~Core()
             QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection,
                                       Q_ARG(bool, false));
     }
+
+    deadifyTox();
+
     coreThread->exit(0);
     while (coreThread->isRunning())
     {
         qApp->processEvents();
         coreThread->wait(500);
     }
-
-    deadifyTox();
 
     Audio& audio = Audio::getInstance();
     audio.closeInput();
