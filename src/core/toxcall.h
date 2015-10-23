@@ -60,6 +60,16 @@ struct ToxFriendCall : public ToxCall
     bool videoEnabled; ///< True if our user asked for a video call, sending and recving
     CoreVideoSource* videoSource;
     TOXAV_FRIEND_CALL_STATE state; ///< State of the peer (not ours!)
+
+    void startTimeout();
+    void stopTimeout();
+
+protected:
+    CoreAV* av;
+    QTimer* timeoutTimer;
+
+private:
+    static constexpr int CALL_TIMEOUT = 45000;
 };
 
 struct ToxGroupCall : public ToxCall

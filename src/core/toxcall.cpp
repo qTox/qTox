@@ -93,10 +93,38 @@ const ToxCall& ToxCall::operator=(ToxCall&& other)
     return *this;
 }
 
+void ToxFriendCall::startTimeout()
+{
+    if (!timeoutTimer)
+    {
+        timeoutTimer = new QTimer();
+        // We might move, so we need copies of members. CoreAV won't move while we're alive
+        CoreAV* avCopy = av;
+        auto callIdCopy = callId;
+        QObject::connect(timeoutTimer, &QTimer::timeout, [avCopy, callIdCopy](){
+           avCopy->timeoutCall(callIdCopy);
+        });
+    }
+
+    if (!timeoutTimer->isActive())
+        timeoutTimer->start(CALL_TIMEOUT);
+}
+
+void ToxFriendCall::stopTimeout()
+{
+    if (!timeoutTimer)
+        return;
+
+    timeoutTimer->stop();
+    delete timeoutTimer;
+    timeoutTimer = nullptr;
+}
+
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     : ToxCall(FriendNum),
       videoEnabled{VideoEnabled}, videoSource{nullptr},
-      state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)}
+      state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)},
+      av{&av}, timeoutTimer{nullptr}
 {
     auto audioTimerCopy = sendAudioTimer; // this might change after a move, but not sendAudioTimer
     QObject::connect(sendAudioTimer, &QTimer::timeout, [FriendNum,&av,audioTimerCopy]()
@@ -122,14 +150,18 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
 ToxFriendCall::ToxFriendCall(ToxFriendCall&& other)
     : ToxCall(move(other)),
       videoEnabled{other.videoEnabled}, videoSource{other.videoSource},
-      state{other.state}
+      state{other.state}, av{other.av}, timeoutTimer{other.timeoutTimer}
 {
     other.videoEnabled = false;
     other.videoSource = nullptr;
+    other.timeoutTimer = nullptr;
 }
 
 ToxFriendCall::~ToxFriendCall()
 {
+    if (timeoutTimer)
+        delete timeoutTimer;
+
     if (videoEnabled)
     {
         // This destructor could be running in a toxav callback while holding toxav locks.
@@ -152,6 +184,9 @@ const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other)
     videoSource = other.videoSource;
     other.videoSource = nullptr;
     state = other.state;
+    timeoutTimer = other.timeoutTimer;
+    other.timeoutTimer = nullptr;
+    av = other.av;
 
     return *this;
 }

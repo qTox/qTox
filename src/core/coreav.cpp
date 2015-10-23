@@ -160,7 +160,8 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
         return false;
 
-    calls.insert({friendNum, video, *this});
+    auto call = calls.insert({friendNum, video, *this});
+    call->startTimeout();
     return true;
 }
 
@@ -182,6 +183,23 @@ bool CoreAV::cancelCall(uint32_t friendNum)
     }
     calls.remove(friendNum);
     return true;
+}
+
+void CoreAV::timeoutCall(uint32_t friendNum)
+{
+    if (QThread::currentThread() != coreavThread.get())
+    {
+        (void)QMetaObject::invokeMethod(this, "timeoutCall", Qt::BlockingQueuedConnection,
+                                        Q_ARG(uint32_t, friendNum));
+        return;
+    }
+    if (!cancelCall(friendNum))
+    {
+        qWarning() << QString("Failed to timeout call with %1").arg(friendNum);
+        return;
+    }
+    qDebug() << "Call with friend"<<friendNum<<"timed out";
+    emit avEnd(friendNum);
 }
 
 bool CoreAV::sendCallAudio(uint32_t callId)
@@ -459,6 +477,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         // If our state was null, we started the call and were still ringing
         if (!call.state && state)
         {
+            call.stopTimeout();
             call.inactive = false;
             emit self->avStart(friendNum, call.videoEnabled);
         }

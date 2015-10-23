@@ -84,6 +84,7 @@ public slots:
     bool startCall(uint32_t friendNum, bool video=false);
     bool answerCall(uint32_t friendNum);
     bool cancelCall(uint32_t friendNum);
+    void timeoutCall(uint32_t friendNum);
     /// Starts the CoreAV main loop that calls toxav's main loop
     void start();
     /// Stops the main loop
