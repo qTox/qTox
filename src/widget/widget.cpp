@@ -71,6 +71,7 @@
 #include <QList>
 #include <QDesktopServices>
 #include <QProcess>
+#include <QSvgRenderer>
 #include <QWindow>
 #include <tox/tox.h>
 
@@ -118,15 +119,18 @@ void Widget::init()
     offlineMsgTimer = new QTimer();
     offlineMsgTimer->start(15000);
 
+    icon_size = 15;
     statusOnline = new QAction(this);
-    statusOnline->setIcon(getStatusIcon(Status::Online, 10, 10));
-    connect(statusOnline, SIGNAL(triggered()), this, SLOT(setStatusOnline()));
+    statusOnline->setIcon(getStatusIcon(Status::Online, icon_size, icon_size));
+    connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
+
     statusAway = new QAction(this);
-    statusAway->setIcon(getStatusIcon(Status::Away, 10, 10));
-    connect(statusAway, SIGNAL(triggered()), this, SLOT(setStatusAway()));
+    statusAway->setIcon(getStatusIcon(Status::Away, icon_size, icon_size));
+    connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
+
     statusBusy = new QAction(this);
-    statusBusy->setIcon(getStatusIcon(Status::Busy, 10, 10));
-    connect(statusBusy, SIGNAL(triggered()), this, SLOT(setStatusBusy()));
+    statusBusy->setIcon(getStatusIcon(Status::Busy, icon_size, icon_size));
+    connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     layout()->setContentsMargins(0, 0, 0, 0);
     ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
@@ -408,11 +412,19 @@ void Widget::updateIcons()
             status = "offline";
     }
 
-    QIcon ico = QIcon::fromTheme("qtox-" + status);
+    QIcon ico;
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-        ico = QIcon(":img/taskbar/" + color + "/taskbar_" + status + ".svg");
+        QString path = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
+        QSvgRenderer renderer(path);
+
+        // Prepare a QImage with desired characteritisc
+        QImage image = QImage(250, 250, QImage::Format_ARGB32);
+        image.fill(Qt::transparent);
+        QPainter painter(&image);
+        renderer.render(&painter);
+        ico = QIcon(QPixmap::fromImage(image));
     }
 
     setWindowIcon(ico);
@@ -550,7 +562,7 @@ void Widget::onBadProxyCore()
 void Widget::onStatusSet(Status status)
 {
     ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(getStatusIcon(status, 10, 10));
+    ui->statusButton->setIcon(getStatusIcon(status, icon_size, icon_size));
     updateIcons();
 }
 
@@ -1682,22 +1694,30 @@ void Widget::onTryCreateTrayIcon()
     {
         if (QSystemTrayIcon::isSystemTrayAvailable())
         {
-            icon = new SystemTrayIcon;
+            icon = new SystemTrayIcon();
             updateIcons();
-            trayMenu = new QMenu;
+            trayMenu = new QMenu(this);
 
-            actionQuit = new QAction(tr("&Quit"), this);
-            connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
+            QStyle *style = qApp->style();
+
+            actionLogout = new QAction(tr("&Logout"), this);
+            actionLogout->setIcon(style->standardIcon(QStyle::SP_BrowserStop));
+            connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
+
+            actionQuit = new QAction(tr("&Exit"), this);
+            actionQuit->setMenuRole(QAction::QuitRole);
+            actionQuit->setIcon(style->standardIcon(QStyle::SP_DialogDiscardButton));
+            connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
             trayMenu->addAction(statusOnline);
             trayMenu->addAction(statusAway);
             trayMenu->addAction(statusBusy);
             trayMenu->addSeparator();
+            trayMenu->addAction(actionLogout);
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
 
-            connect(icon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-                    this, SLOT(onIconClick(QSystemTrayIcon::ActivationReason)));
+            connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
 
             if (Settings::getInstance().getShowSystemTray())
             {
@@ -1909,12 +1929,26 @@ QString Widget::getStatusIconPath(Status status)
     }
 }
 
-inline QIcon Widget::getStatusIcon(Status status, uint32_t w/*=0*/, uint32_t h/*=0*/)
+inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
 {
-    if (w > 0 && h > 0)
-        return getStatusIconPixmap(status, w, h);
-    else
-        return QIcon(getStatusIconPath(status));
+#ifdef Q_OS_LINUX
+
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    if (desktop.isEmpty())
+    {
+        desktop = getenv("DESKTOP_SESSION");
+    }
+    desktop = desktop.toLower();
+
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate")
+    {
+        if (w > 0 && h > 0)
+        {
+            return getStatusIconPixmap(status, w, h);
+        }
+    }
+#endif
+    return QIcon(getStatusIconPath(status));
 }
 
 QPixmap Widget::getStatusIconPixmap(Status status, uint32_t w, uint32_t h)
