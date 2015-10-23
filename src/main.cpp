@@ -43,7 +43,8 @@
 #endif
 
 #ifdef LOG_TO_FILE
-static QTextStream* logFile {nullptr};
+static std::unique_ptr<QTextStream> logFileStream {nullptr};
+static std::unique_ptr<QFile> logFileFile {nullptr};
 static QMutex mutex;
 #endif
 
@@ -80,12 +81,12 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     out << LogMsg;
 
 #ifdef LOG_TO_FILE
-    if (!logFile)
+    if (!logFileStream)
         return;
 
     QMutexLocker locker(&mutex);
-    *logFile << LogMsg;
-    logFile->flush();
+    *logFileStream << LogMsg;
+    logFileStream->flush();
 #endif
 }
 
@@ -121,18 +122,17 @@ int main(int argc, char *argv[])
     sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE
-    logFile = new QTextStream;
-    QFile logfile(Settings::getInstance().getSettingsDirPath()+"qtox.log");
-    if (logfile.open(QIODevice::Append))
+    logFileStream.reset(new QTextStream);
+    logFileFile.reset(new QFile(Settings::getInstance().getSettingsDirPath()+"qtox.log"));
+    if (logFileFile->open(QIODevice::Append))
     {
-        logFile->setDevice(&logfile);
-        *logFile << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
+        logFileStream->setDevice(logFileFile.get());
+        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
     }
     else
     {
         qWarning() << "Couldn't open log file!\n";
-        delete logFile;
-        logFile = nullptr;
+        logFileStream.release();
     }
 #endif
 
@@ -260,8 +260,7 @@ int main(int argc, char *argv[])
     int errorcode = a.exec();
 
 #ifdef LOG_TO_FILE
-    delete logFile;
-    logFile = nullptr;
+    logFileStream.release();
 #endif
 
     Nexus::destroyInstance();
