@@ -140,7 +140,9 @@ void Audio::subscribeInput()
     if (!inputSubscriptions++)
     {
         openInput(Settings::getInstance().getInDev());
-        openOutput(Settings::getInstance().getOutDev());
+        if (!alOutDev)
+            openOutput(Settings::getInstance().getOutDev());
+
 
 #if (!FIX_SND_PCM_PREPARE_BUG)
         if (alInDev)
