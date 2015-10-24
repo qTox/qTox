@@ -157,6 +157,8 @@ void VideoSurface::paintEvent(QPaintEvent*)
     if (lastFrame)
     {
         QImage frame = lastFrame->toQImage(rect().size());
+        if (frame.isNull())
+            lastFrame.reset();
         painter.drawImage(boundingRect, frame, frame.rect(), Qt::NoFormatConversion);
     }
     else
