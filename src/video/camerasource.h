@@ -93,6 +93,7 @@ private:
     int videoStreamIndex; ///< A camera can have multiple streams, this is the one we're decoding
     QMutex biglock, freelistLock; ///< True when locked. Faster than mutexes for video decoding.
     std::atomic_bool _isOpen;
+    std::atomic_bool streamBlocker; ///< Holds the streaming thread still when true
     std::atomic_int subscriptions; ///< Remember how many times we subscribed for RAII
 
     static CameraSource* instance;

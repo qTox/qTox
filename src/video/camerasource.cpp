@@ -37,7 +37,7 @@ CameraSource* CameraSource::instance{nullptr};
 CameraSource::CameraSource()
     : deviceName{"none"}, device{nullptr}, mode(VideoMode{0,0,0}),
       cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
-      _isOpen{false}, subscriptions{0}
+      _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
     subscriptions = 0;
     av_register_all();
@@ -72,10 +72,14 @@ void CameraSource::open(const QString deviceName)
 
 void CameraSource::open(const QString DeviceName, VideoMode Mode)
 {
+    streamBlocker = true;
     QMutexLocker l{&biglock};
 
     if (DeviceName == deviceName && Mode == mode)
+    {
+        streamBlocker = false;
         return;
+    }
 
     if (subscriptions)
         closeDevice();
@@ -86,6 +90,8 @@ void CameraSource::open(const QString DeviceName, VideoMode Mode)
 
     if (subscriptions && _isOpen)
         openDevice();
+
+    streamBlocker = false;
 }
 
 void CameraSource::close()
@@ -348,6 +354,8 @@ void CameraSource::stream()
 
         // Give a chance to other functions to pick up the lock if needed
         biglock.unlock();
+        while (streamBlocker)
+            QThread::yieldCurrentThread();
         QThread::yieldCurrentThread();
     }
 }

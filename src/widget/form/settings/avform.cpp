@@ -204,14 +204,13 @@ void AVForm::onVideoDevChanged(int index)
         qWarning() << "Invalid index";
         return;
     }
+
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     camera.open(dev);
-    killVideoSurface();
-    createVideoSurface();
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
 }
