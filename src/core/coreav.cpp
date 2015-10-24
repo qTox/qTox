@@ -39,7 +39,8 @@ IndexedList<ToxGroupCall> CoreAV::groupCalls;
 using namespace std;
 
 CoreAV::CoreAV(Tox *tox)
-    : coreavThread{new QThread}, iterateTimer{new QTimer{this}}
+    : coreavThread{new QThread}, iterateTimer{new QTimer{this}},
+      threadSwitchLock{false}
 {
     coreavThread->setObjectName("qTox CoreAV");
     moveToThread(coreavThread.get());
@@ -116,9 +117,17 @@ bool CoreAV::answerCall(uint32_t friendNum)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
+        if (threadSwitchLock.test_and_set(std::memory_order_acquire))
+        {
+            qDebug() << "CoreAV::answerCall: Backed off of thread-switch lock";
+            return false;
+        }
+
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
                                     Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+
+        threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
@@ -143,9 +152,17 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
+        if (threadSwitchLock.test_and_set(std::memory_order_acquire))
+        {
+            qDebug() << "CoreAV::startCall: Backed off of thread-switch lock";
+            return false;
+        }
         bool ret;
+
         (void)QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
                                     Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
+
+        threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
@@ -169,9 +186,17 @@ bool CoreAV::cancelCall(uint32_t friendNum)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
+        if (threadSwitchLock.test_and_set(std::memory_order_acquire))
+        {
+            qDebug() << "CoreAV::cancelCall: Backed off of thread-switch lock";
+            return false;
+        }
+
         bool ret;
-        (void)QMetaObject::invokeMethod(this, "cancelCall", Qt::BlockingQueuedConnection,
+        QMetaObject::invokeMethod(this, "cancelCall", Qt::BlockingQueuedConnection,
                                     Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+
+        threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
@@ -187,12 +212,15 @@ bool CoreAV::cancelCall(uint32_t friendNum)
 
 void CoreAV::timeoutCall(uint32_t friendNum)
 {
+    // Non-blocking switch to the CoreAV thread, we really don't want to be coming
+    // blocking-queued from the UI thread while we emit blocking-queued to it
     if (QThread::currentThread() != coreavThread.get())
     {
-        (void)QMetaObject::invokeMethod(this, "timeoutCall", Qt::BlockingQueuedConnection,
-                                        Q_ARG(uint32_t, friendNum));
+        QMetaObject::invokeMethod(this, "timeoutCall", Qt::QueuedConnection,
+                                    Q_ARG(uint32_t, friendNum));
         return;
     }
+
     if (!cancelCall(friendNum))
     {
         qWarning() << QString("Failed to timeout call with %1").arg(friendNum);
@@ -431,6 +459,10 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
     if (QThread::currentThread() != self->coreavThread.get())
     {
+        // We assume the original caller doesn't come from the CoreAV thread here
+        while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
+            QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
+
         return (void)QMetaObject::invokeMethod(self, "callCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
                                                 Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, _self));
@@ -457,6 +489,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     callIt->state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
 
     emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
+    self->threadSwitchLock.clear(std::memory_order_release);
 }
 
 void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void *_self)

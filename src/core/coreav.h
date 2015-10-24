@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <memory>
+#include <atomic>
 #include <tox/toxav.h>
 
 #if defined(__APPLE__) && defined(__MACH__)
@@ -120,6 +121,19 @@ private:
     std::unique_ptr<QTimer> iterateTimer;
     static IndexedList<ToxFriendCall> calls;
     static IndexedList<ToxGroupCall> groupCalls; // Maps group IDs to ToxGroupCalls
+    /**
+     * This flag is to be acquired before switching in a blocking way between the UI and CoreAV thread.
+     * The CoreAV thread must have priority for the flag, other threads should back off or release it quickly.
+     *
+     * CoreAV needs to interface with three threads, the toxcore/Core thread that fires non-payload
+     * toxav callbacks, the toxav/CoreAV thread that fires AV payload callbacks and manages
+     * most of CoreAV's members, and the UI thread, which calls our [start/answer/cancel]Call functions
+     * and which we call via signals.
+     * When the UI calls us, we switch from the UI thread to the CoreAV thread to do the processing,
+     * when toxcore fires a non-payload av callback, we do the processing in the CoreAV thread and then
+     * switch to the UI thread to send it a signal. Both switches block both threads, so this would deadlock.
+     */
+    std::atomic_flag threadSwitchLock;
 
     friend class Audio;
 };
