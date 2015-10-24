@@ -504,6 +504,9 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
     if (QThread::currentThread() != self->coreavThread.get())
     {
+        // We assume the original caller doesn't come from the CoreAV thread here
+        while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
+            QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
         return (void)QMetaObject::invokeMethod(self, "stateCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
                                                 Q_ARG(uint32_t, state), Q_ARG(void*, _self));
@@ -512,6 +515,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     if(!self->calls.contains(friendNum))
     {
         qWarning() << QString("stateCallback called, but call %1 is already dead").arg(friendNum);
+        self->threadSwitchLock.clear(std::memory_order_release);
         return;
     }
     ToxFriendCall& call = self->calls[friendNum];
@@ -554,6 +558,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
         call.state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
     }
+    self->threadSwitchLock.clear(std::memory_order_release);
 }
 
 void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, uint32_t vrate, void *_self)
