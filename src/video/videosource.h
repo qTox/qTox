@@ -41,6 +41,9 @@ public:
 
 signals:
     void frameAvailable(std::shared_ptr<VideoFrame> frame);
+    /// Emitted when the source is stopped for an indefinite amount of time,
+    /// but might restart sending frames again later
+    void sourceStopped();
 };
 
 #endif // VIDEOSOURCE_H

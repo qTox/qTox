@@ -260,6 +260,13 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
             || !(call.state & TOXAV_FRIEND_CALL_STATE_ACCEPTING_V))
         return;
 
+    if (call.nullVideoBitrate)
+    {
+        qDebug() << "Restarting video stream to friend"<<callId;
+        toxav_bit_rate_set(toxav, call.callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
+        call.nullVideoBitrate = false;
+    }
+
     // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
     vpx_image* frame = vframe->toVpxImage();
     if (frame->fmt == VPX_IMG_FMT_NONE)
@@ -406,6 +413,17 @@ void CoreAV::resetCallSources()
     }
 }
 
+void CoreAV::sendNoVideo()
+{
+    // We don't change the audio bitrate, but we signal that we're not sending video anymore
+    qDebug() << "CoreAV: Signaling end of video sending";
+    for (ToxFriendCall& call : calls)
+    {
+        toxav_bit_rate_set(toxav, call.callId, -1, 0, nullptr);
+        call.nullVideoBitrate = true;
+    }
+}
+
 void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool video, void *_self)
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
@@ -480,6 +498,20 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             call.stopTimeout();
             call.inactive = false;
             emit self->avStart(friendNum, call.videoEnabled);
+        }
+        else if ((call.state & TOXAV_FRIEND_CALL_STATE_SENDING_V)
+                 && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V))
+        {
+            qDebug() << "Friend"<<friendNum<<"stopped sending video";
+            call.videoSource->stopSource();
+        }
+        else if (!(call.state & TOXAV_FRIEND_CALL_STATE_SENDING_V)
+                 && (state & TOXAV_FRIEND_CALL_STATE_SENDING_V))
+        {
+            // Workaround toxav sometimes firing callbacks for "send last frame" -> "stop sending video"
+            // out of orders (even though they were sent in order by the other end).
+            // We simply stop the videoSource from emitting anything while the other end says it's not sending
+            call.videoSource->restartSource();
         }
 
         call.state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);

@@ -102,6 +102,7 @@ void VideoSurface::subscribe()
     {
         source->subscribe();
         connect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+        connect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
     }
 }
 
@@ -124,6 +125,7 @@ void VideoSurface::unsubscribe()
 
     source->unsubscribe();
     disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+    disconnect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
 }
 
 void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
@@ -145,6 +147,13 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
         emit boundaryChanged();
     }
 
+    update();
+}
+
+void VideoSurface::onSourceStopped()
+{
+    // If the source's stream is on hold, just revert back to the avatar view
+    lastFrame.reset();
     update();
 }
 

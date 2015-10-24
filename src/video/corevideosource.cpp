@@ -26,12 +26,15 @@ extern "C" {
 
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}, deleteOnClose{false},
-      biglock{false}
+      biglock{false}, stopped{false}
 {
 }
 
 void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 {
+    if (stopped)
+        return;
+
     // Fast lock
     {
         bool expected = false;
@@ -125,4 +128,15 @@ void CoreVideoSource::setDeleteOnClose(bool newstate)
     }
     deleteOnClose = newstate;
     biglock = false;
+}
+
+void CoreVideoSource::stopSource()
+{
+    stopped = true;
+    emit sourceStopped();
+}
+
+void CoreVideoSource::restartSource()
+{
+    stopped = false;
 }

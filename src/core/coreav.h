@@ -66,6 +66,7 @@ public:
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
     void resetCallSources(); ///< Forces to regenerate each call's audio sources
+    void sendNoVideo(); ///< Signal to all peers that we're not sending video anymore. The next frame sent cancels this.
 
     void joinGroupCall(int groupNum); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.
     void leaveGroupCall(int groupNum); ///< Will not leave the group, just stop the call. Call from the GUI thread.

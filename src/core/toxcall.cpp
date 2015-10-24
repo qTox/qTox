@@ -117,7 +117,7 @@ void ToxFriendCall::stopTimeout()
 
 ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     : ToxCall(FriendNum),
-      videoEnabled{VideoEnabled}, videoSource{nullptr},
+      videoEnabled{VideoEnabled}, nullVideoBitrate{false}, videoSource{nullptr},
       state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)},
       av{&av}, timeoutTimer{nullptr}
 {
@@ -144,8 +144,9 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
 
 ToxFriendCall::ToxFriendCall(ToxFriendCall&& other)
     : ToxCall(move(other)),
-      videoEnabled{other.videoEnabled}, videoSource{other.videoSource},
-      state{other.state}, av{other.av}, timeoutTimer{other.timeoutTimer}
+      videoEnabled{other.videoEnabled}, nullVideoBitrate{other.nullVideoBitrate},
+      videoSource{other.videoSource}, state{other.state},
+      av{other.av}, timeoutTimer{other.timeoutTimer}
 {
     other.videoEnabled = false;
     other.videoSource = nullptr;
@@ -182,6 +183,7 @@ const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other)
     timeoutTimer = other.timeoutTimer;
     other.timeoutTimer = nullptr;
     av = other.av;
+    nullVideoBitrate = other.nullVideoBitrate;
 
     return *this;
 }

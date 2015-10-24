@@ -58,6 +58,7 @@ struct ToxFriendCall : public ToxCall
     const ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
 
     bool videoEnabled; ///< True if our user asked for a video call, sending and recving
+    bool nullVideoBitrate; ///< True if our video bitrate is zero, i.e. if the device is closed
     CoreVideoSource* videoSource;
     TOXAV_FRIEND_CALL_STATE state; ///< State of the peer (not ours!)
 

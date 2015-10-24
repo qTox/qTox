@@ -44,10 +44,16 @@ private:
     /// If true, self-delete after the last suscriber is gone
     void setDeleteOnClose(bool newstate);
 
+    /// Stopping the source will block any pushFrame calls from doing anything
+    /// See the callers in CoreAV for the rationale
+    void stopSource();
+    void restartSource();
+
 private:
     std::atomic_int subscribers; ///< Number of suscribers
     std::atomic_bool deleteOnClose; ///< If true, self-delete after the last suscriber is gone
     std::atomic_bool biglock; ///< Fast lock
+    std::atomic_bool stopped;
 
 friend class CoreAV;
 friend struct ToxFriendCall;

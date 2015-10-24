@@ -25,6 +25,8 @@
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
 #include "src/widget/translator.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -210,6 +212,8 @@ void AVForm::onVideoDevChanged(int index)
     camera.open(dev);
     killVideoSurface();
     createVideoSurface();
+    if (dev == "none")
+        Core::getInstance()->getAv()->sendNoVideo();
 }
 
 void AVForm::hideEvent(QHideEvent *)
