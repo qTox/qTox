@@ -17,8 +17,6 @@ ToxCall::ToxCall(uint32_t CallId)
     : sendAudioTimer{new QTimer}, callId{CallId},
       inactive{true}, muteMic{false}, muteVol{false}, alSource{0}
 {
-    qCritical() << "CREATED CALL "<<callId;
-
     sendAudioTimer->setInterval(5);
     sendAudioTimer->setSingleShot(true);
 
@@ -54,9 +52,6 @@ ToxCall::ToxCall(ToxCall&& other)
 
 ToxCall::~ToxCall()
 {
-    if (callId != (uint32_t)(int32_t)-1)
-        qCritical() << "DELETED CALL "<<callId;
-
     if (sendAudioTimer)
     {
         QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
