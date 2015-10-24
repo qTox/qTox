@@ -34,6 +34,7 @@
 #include <QSplitter>
 #include <cassert>
 #include "chatform.h"
+#include "src/audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/friend.h"
@@ -289,7 +290,21 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
 
-    Widget::getInstance()->newFriendMessageAlert(FriendId);
+    Widget::getInstance()->newFriendMessageAlert(FriendId, false);
+
+    static QFile sndFile(":audio/ToxicIncomingCall.pcm");
+    static QByteArray sndData;
+
+    if (sndData.isEmpty())
+    {
+        sndFile.open(QIODevice::ReadOnly);
+        sndData = sndFile.readAll();
+        sndFile.close();
+    }
+
+    Audio& audio = Audio::getInstance();
+    audio.startLoop();
+    audio.playMono16Sound(sndData);
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)
@@ -348,6 +363,8 @@ void ChatForm::onAvEnd(uint32_t FriendId)
     delete callConfirm;
     callConfirm = nullptr;
 
+    Audio::getInstance().stopLoop();
+
     enableCallButtons();
     stopCounter();
     hideNetcam();
@@ -393,6 +410,8 @@ void ChatForm::onAnswerCallTriggered()
         callConfirm = nullptr;
     }
 
+    Audio::getInstance().stopLoop();
+
     disableCallButtons();
 
     if (!coreav->answerCall(f->getFriendID()))
@@ -432,6 +451,8 @@ void ChatForm::onRejectCallTriggered()
         delete callConfirm;
         callConfirm = nullptr;
     }
+
+    Audio::getInstance().stopLoop();
 
     audioInputFlag = false;
     audioOutputFlag = false;

@@ -1118,7 +1118,7 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
     connect(groupWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), group->getChatForm(), SLOT(focusInput()));
 }
 
-bool Widget::newFriendMessageAlert(int friendId)
+bool Widget::newFriendMessageAlert(int friendId, bool sound)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1136,7 +1136,7 @@ bool Widget::newFriendMessageAlert(int friendId)
         hasActive = f->getFriendWidget() == activeChatroomWidget;
     }
 
-    if (newMessageAlert(currentWindow, hasActive))
+    if (newMessageAlert(currentWindow, hasActive, sound))
     {
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
@@ -1175,7 +1175,7 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
         hasActive = g->getGroupWidget() == activeChatroomWidget;
     }
 
-    if (newMessageAlert(currentWindow, hasActive, notify))
+    if (newMessageAlert(currentWindow, hasActive, true, notify))
     {
         g->setEventFlag(true);
         g->getGroupWidget()->updateStatusLight();
@@ -1213,7 +1213,7 @@ QString Widget::fromDialogType(DialogType type)
     }
 }
 
-bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
+bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, bool notify)
 {
     bool inactiveWindow = isMinimized() || !currentWindow->isActiveWindow();
 
@@ -1235,7 +1235,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
                 currentWindow->activateWindow();
         }
 
-        if (Settings::getInstance().getNotifySound())
+        if (Settings::getInstance().getNotifySound() && sound)
         {
             static QFile sndFile(":audio/notification.pcm");
             static QByteArray sndData;

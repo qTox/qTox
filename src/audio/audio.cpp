@@ -485,6 +485,17 @@ void Audio::deleteSource(ALuint* source)
         qWarning() << "Trying to delete invalid audio source"<<*source;
 }
 
+void Audio::startLoop()
+{
+    alSourcei(alMainSource, AL_LOOPING, AL_TRUE);
+}
+
+void Audio::stopLoop()
+{
+    alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
+    alSourceStop(alMainSource);
+}
+
 /**
 Does nothing and return false on failure
 */

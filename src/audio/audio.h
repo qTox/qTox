@@ -75,6 +75,8 @@ public:
     static void createSource(ALuint* source);
     static void deleteSource(ALuint* source);
 
+    void startLoop();
+    void stopLoop();
     void playMono16Sound(const QByteArray& data);
     bool tryCaptureSamples(int16_t *buf, int samples);
 

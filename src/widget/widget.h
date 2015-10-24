@@ -67,7 +67,7 @@ public:
     static Widget* getInstance();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
-    bool newFriendMessageAlert(int friendId);
+    bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
@@ -204,7 +204,7 @@ private:
     };
 
 private:
-    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool notify = true);
+    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
