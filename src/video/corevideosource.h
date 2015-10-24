@@ -24,6 +24,7 @@
 #include <vpx/vpx_image.h>
 #include <atomic>
 #include "videosource.h"
+#include <QMutex>
 
 /// A VideoSource that emits frames received by Core
 class CoreVideoSource : public VideoSource
@@ -52,7 +53,7 @@ private:
 private:
     std::atomic_int subscribers; ///< Number of suscribers
     std::atomic_bool deleteOnClose; ///< If true, self-delete after the last suscriber is gone
-    std::atomic_bool biglock; ///< Fast lock
+    QMutex biglock;
     std::atomic_bool stopped;
 
 friend class CoreAV;
