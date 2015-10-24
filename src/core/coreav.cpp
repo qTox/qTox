@@ -325,7 +325,12 @@ void CoreAV::volMuteToggle(uint32_t callId)
 
 VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
 {
-    assert(calls.contains(friendNum));
+    if (!calls.contains(friendNum))
+    {
+        qWarning() << "CoreAV::getVideoSourceFromCall: No such call, did it die before we finished answering?";
+        return nullptr;
+    }
+
     return calls[friendNum].videoSource;
 }
 
