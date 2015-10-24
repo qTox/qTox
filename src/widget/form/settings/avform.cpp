@@ -316,8 +316,8 @@ void AVForm::onInDevChanged(const QString &deviceDescriptor)
     Settings::getInstance().setInDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    if (audio.isInputReady())
+        audio.openInput(deviceDescriptor);
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
@@ -325,8 +325,8 @@ void AVForm::onOutDevChanged(const QString& deviceDescriptor)
     Settings::getInstance().setOutDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    if (audio.isOutputReady())
+        audio.openOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)

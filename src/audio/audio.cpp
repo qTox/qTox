@@ -476,7 +476,7 @@ bool Audio::isInputReady()
 /**
 Returns true if the output device is open
 */
-bool Audio::isOutputClosed()
+bool Audio::isOutputReady()
 {
     QMutexLocker locker(&audioOutLock);
     return alOutDev;

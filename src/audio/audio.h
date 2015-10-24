@@ -70,7 +70,7 @@ public:
     bool openOutput(const QString& outDevDescr);
 
     bool isInputReady();
-    bool isOutputClosed();
+    bool isOutputReady();
 
     static void createSource(ALuint* source);
     static void deleteSource(ALuint* source);
