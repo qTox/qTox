@@ -1236,40 +1236,10 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         }
 
         if (Settings::getInstance().getNotifySound() && sound)
-        {
-            static QFile sndFile(":audio/notification.pcm");
-            static QByteArray sndData;
-
-            if (sndData.isEmpty())
-            {
-                sndFile.open(QIODevice::ReadOnly);
-                sndData = sndFile.readAll();
-                sndFile.close();
-            }
-
-            Audio::getInstance().playMono16Sound(sndData);
-        }
+            Audio::getInstance().playMono16Sound(":audio/notification.pcm");
     }
 
     return true;
-}
-
-void Widget::playRingtone()
-{
-    if (ui->statusButton->property("status").toString() == "busy")
-        return;
-
-    // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
-    static QFile sndFile1(":audio/ToxicIncomingCall.pcm");
-    static QByteArray sndData1;
-    if (sndData1.isEmpty())
-    {
-        sndFile1.open(QIODevice::ReadOnly);
-        sndData1 = sndFile1.readAll();
-        sndFile1.close();
-    }
-
-    Audio::getInstance().playMono16Sound(sndData1);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)

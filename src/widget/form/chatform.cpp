@@ -291,20 +291,9 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
                                                          QDateTime::currentDateTime()));
 
     Widget::getInstance()->newFriendMessageAlert(FriendId, false);
-
-    static QFile sndFile(":audio/ToxicIncomingCall.pcm");
-    static QByteArray sndData;
-
-    if (sndData.isEmpty())
-    {
-        sndFile.open(QIODevice::ReadOnly);
-        sndData = sndFile.readAll();
-        sndFile.close();
-    }
-
     Audio& audio = Audio::getInstance();
     audio.startLoop();
-    audio.playMono16Sound(sndData);
+    audio.playMono16Sound(":audio/ToxicIncomingCall.pcm");
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)

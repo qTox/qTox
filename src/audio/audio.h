@@ -78,6 +78,7 @@ public:
     void startLoop();
     void stopLoop();
     void playMono16Sound(const QByteArray& data);
+    void playMono16Sound(const char* path);
     bool tryCaptureSamples(int16_t *buf, int samples);
 
     static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);

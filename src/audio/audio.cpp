@@ -35,6 +35,7 @@
 #include <QTimer>
 #include <QThread>
 #include <QMutexLocker>
+#include <QFile>
 
 #include <cassert>
 
@@ -362,6 +363,16 @@ void Audio::playMono16Sound(const QByteArray& data)
         timer->start(duration);
 
     alDeleteBuffers(1, &buffer);
+}
+
+/**
+Play a 44100Hz mono 16bit PCM sound from a file
+*/
+void Audio::playMono16Sound(const char *path)
+{
+    QFile sndFile(path);
+    sndFile.open(QIODevice::ReadOnly);
+    playMono16Sound(sndFile.readAll());
 }
 
 /**
