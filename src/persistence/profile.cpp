@@ -429,12 +429,12 @@ void Profile::restartCore()
 
 void Profile::setPassword(QString newPassword)
 {
+    QList<HistoryKeeper::HistAvatars> avatars = HistoryKeeper::getInstance()->exportAvatars();
     QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
-
     password = newPassword;
     passkey = *core->createPasskey(password);
     saveToxSave();
-
     HistoryKeeper::getInstance()->importMessages(oldMessages);
+    HistoryKeeper::getInstance()->importAvatars(avatars);
     Nexus::getDesktopGUI()->reloadHistory();
 }

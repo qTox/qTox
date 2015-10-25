@@ -50,6 +50,14 @@ public:
         QString dispName;
     };
 
+    struct HistAvatars
+    {
+        HistAvatars (QString userID, QByteArray avatar):
+            userID(userID), avatar(avatar) {}
+        QString userID;
+        QByteArray avatar;
+    };
+
     virtual ~HistoryKeeper();
 
     static HistoryKeeper* getInstance();
@@ -60,6 +68,7 @@ public:
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
     void removeHistory();
+    static bool removeHistoryFile();
     static QList<HistMessage> exportMessagesDeleteFile();
 
     void removeFriendHistory(const QString& chat);
@@ -70,7 +79,10 @@ public:
     QDate getLatestDate(const QString& chat);
 
     QList<HistMessage> exportMessages();
+    QList<HistAvatars> exportAvatars();
+
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);
+    void importAvatars(const QList<HistoryKeeper::HistAvatars> &lst);
 
     void setSyncType(Db::syncType sType);
 
