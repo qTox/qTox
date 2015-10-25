@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>842</width>
-    <height>507</height>
+    <height>601</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
         <x>0</x>
         <y>0</y>
         <width>830</width>
-        <height>495</height>
+        <height>589</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -204,6 +204,23 @@ which may lead to problems with video calls.</string>
            </layout>
           </item>
           <item>
+           <widget class="QPushButton" name="enableCameraButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+              <horstretch>1</horstretch>
+              <verstretch>150</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Enable camera</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../res.qrc">
+              <normaloff>:/img/settings/av.png</normaloff>:/img/settings/av.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QFrame" name="camFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -243,6 +260,8 @@ which may lead to problems with video calls.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>
