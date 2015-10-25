@@ -212,7 +212,7 @@ which may lead to problems with video calls.</string>
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Enable camera</string>
+             <string>Enable video preview</string>
             </property>
             <property name="icon">
              <iconset resource="../../../../res.qrc">
