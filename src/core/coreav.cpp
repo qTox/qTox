@@ -28,6 +28,7 @@
 #include <QThread>
 #include <QTimer>
 #include <QDebug>
+#include <QCoreApplication>
 
 #ifdef QTOX_FILTER_AUDIO
 #include "src/audio/audiofilterer.h"
@@ -65,6 +66,12 @@ CoreAV::~CoreAV()
         cancelCall(call.callId);
     killTimerFromThread();
     toxav_kill(toxav);
+    coreavThread->exit(0);
+    while (coreavThread->isRunning())
+    {
+        qApp->processEvents();
+        coreavThread->wait(100);
+    }
 }
 
 const ToxAV *CoreAV::getToxAv() const
