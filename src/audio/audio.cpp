@@ -170,8 +170,7 @@ void Audio::unsubscribeInput()
 
     if (inputSubscriptions > 0)
         inputSubscriptions--;
-    else if(inputSubscriptions < 0)
-        inputSubscriptions = 0;
+    assert(inputSubscriptions >= 0);
 
     if (!inputSubscriptions)
         _cleanupInput();
