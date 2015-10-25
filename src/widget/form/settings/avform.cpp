@@ -50,7 +50,7 @@ AVForm::AVForm() :
 #ifdef QTOX_FILTER_AUDIO
     bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
 #else
-    bodyUI->filterAudio->setDisabled(true);
+    bodyUI->filterAudio->hide();
 #endif
 
     auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
@@ -371,7 +371,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
-    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->CamFrame);
+    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->camFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
     camVideoSurface->setSource(&camera);

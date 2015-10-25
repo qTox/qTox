@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>824</width>
-        <height>489</height>
+        <width>830</width>
+        <height>495</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -204,7 +204,7 @@ which may lead to problems with video calls.</string>
            </layout>
           </item>
           <item>
-           <widget class="QFrame" name="CamFrame">
+           <widget class="QFrame" name="camFrame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
               <horstretch>1</horstretch>
