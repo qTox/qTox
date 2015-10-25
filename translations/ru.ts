@@ -55,12 +55,6 @@
         <translation>100</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.
-WARNING: slider is not supposed to work yet.</source>
-        <translation>Используйте ползунок для установки уровня звука микрофона.
-ВНИМАНИЕ: ползунок ещё не доработан.</translation>
-    </message>
-    <message>
         <source>Playback device</source>
         <translation>Устройство воспроизведения</translation>
     </message>
@@ -95,6 +89,10 @@ which may lead to problems with video calls.</source>
 Заметим, однако, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
 Иногда подключение слишком слабое, что бы передать видео выского качества,
 что может привести к проблемам при видеозвонке.</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your microphone.</source>
+        <translation>Используйте ползунок для регулировки громкости микрофона</translation>
     </message>
 </context>
 <context>
@@ -187,11 +185,6 @@ p, li { white-space: pre-wrap; }
         <translation>Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
-        <source>Please fill in a valid Tox ID</source>
-        <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Пожалуйста, введите корректный Tox ID</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Невозможно добавить друга</translation>
     </message>
@@ -210,6 +203,15 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Такого Tox ID не существует</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@domain.com</source>
+        <comment>Tox ID format description</comment>
+        <translation>или 76 шестнадцатеричные символы или name@domain.com</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID format</source>
+        <translation>Неправильный формат Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1109,7 +1111,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Принять аудиозвонок</translation>
+        <translation>Принять аудиозвонок</translation>
     </message>
     <message>
         <source>End audio call</source>
@@ -1117,15 +1119,15 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Начать видеозвонок</translation>
+        <translation>Начать видеозвонок</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Принять видеозвонок</translation>
+        <translation>Принять видеозвонок</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Завершить видеозвонок</translation>
+        <translation>Завершить видеозвонок</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
@@ -1141,6 +1143,21 @@ will be sent to them when they appear online to you.</source>
     </message>
 </context>
 <context>
+    <name>GenericNetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
+        <source>Show Messages</source>
+        <translation>Показать сообщения</translation>
+    </message>
+    <message>
+        <source>Hide Messages</source>
+        <translation>Скрыть сообщения</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 users in chat</source>
@@ -1150,7 +1167,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>1 пользователь в чате</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1194,7 +1211,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>1 пользователь в чате</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
@@ -1348,15 +1365,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить автоматически</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить профиль</translation>
     </message>
     <message>
         <source>New Profile</source>
@@ -1406,6 +1423,18 @@ If you encountered this error, please report it.</source>
         <source>Wrong password.</source>
         <translation>Неверный пароль.</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t load profile</source>
+        <translation>Невозможно загрузить профиль</translation>
+    </message>
+    <message>
+        <source>There is no selected profile.
+
+You may want to create one.</source>
+        <translation>Нет выбранного профиля.
+
+Вы можете создать новый</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1433,12 +1462,13 @@ If you encountered this error, please report it.</source>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
-</context>
-<context>
-    <name>NetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Видео</translation>
+        <source>Your name</source>
+        <translation type="unfinished">Ваше имя</translation>
+    </message>
+    <message>
+        <source>Your status</source>
+        <translation type="unfinished">Ваш статус</translation>
     </message>
 </context>
 <context>
@@ -1501,14 +1531,6 @@ If you encountered this error, please report it.</source>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
         <translation>Вы хотите навсегда удалить всю историю переписки?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Ошибка</translation>
-    </message>
-    <message>
-        <source>Could not delete chat history</source>
-        <translation>Не удалось удалить историю переписки</translation>
     </message>
 </context>
 <context>
@@ -1583,10 +1605,6 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Remove</source>
         <translation type="unfinished">Удалить</translation>
-    </message>
-    <message>
-        <source>Could not remove avatar.</source>
-        <translation>Не удалось удалить аватар.</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
@@ -1693,6 +1711,10 @@ Share it with your friends to communicate.</source>
         <comment>deletion confirmation text</comment>
         <translation>Вы действительно хотите удалить этот профиль?</translation>
     </message>
+    <message>
+        <source>User Profile</source>
+        <translation type="unfinished">Профиль пользователя</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1782,10 +1804,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Resizing</source>
         <translation>Изменение размера</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Профиль пользователя</translation>
     </message>
     <message>
         <source>None</source>
@@ -1952,10 +1970,6 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     <message>
         <source>Online</source>
         <translation>В сети</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>В&amp;ыход</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2143,6 +2157,14 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     <message>
         <source>Message failed to send</source>
         <translation>Не удалось отправить сообщение</translation>
+    </message>
+    <message>
+        <source>&amp;Logout</source>
+        <translation>Выйти из профиля</translation>
+    </message>
+    <message>
+        <source>&amp;Exit</source>
+        <translation>Выход</translation>
     </message>
 </context>
 </TS>
