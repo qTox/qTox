@@ -468,7 +468,7 @@ void ChatForm::onVideoCallTriggered()
 
     disableCallButtons();
     if (coreav->startCall(f->getFriendID(), true))
-        showOutgoingCall(false);
+        showOutgoingCall(true);
     else
         enableCallButtons();
 }
