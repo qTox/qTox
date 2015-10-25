@@ -26,7 +26,6 @@
 #include <QSqlError>
 #include <QFile>
 #include <QDir>
-#include <QSqlQuery>
 #include <QVariant>
 #include <QBuffer>
 #include <QDebug>
@@ -330,8 +329,10 @@ void HistoryKeeper::importAvatars(const QList<HistoryKeeper::HistAvatars> &lst)
         query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
         query.bindValue(":image", msg.avatar);
         query.bindValue(":id", msg.userID);
-        query.exec();
-        query.clear();
+        if (Nexus::getProfile()->isEncrypted())
+            db->exec(getLastExecutedQuery(query));
+        else
+            query.exec();
     }
 }
 
@@ -553,7 +554,10 @@ void HistoryKeeper::removeAvatar(const QString& ownerId)
     QSqlQuery query;
     query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 bool HistoryKeeper::hasAvatar(const QString& ownerId)
@@ -573,7 +577,10 @@ void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
     query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
     query.bindValue(":image", bArray);
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 QPixmap HistoryKeeper::getSavedAvatar(const QString &ownerId)
@@ -595,7 +602,10 @@ void HistoryKeeper::saveAvatarHash(const QByteArray& hash, const QString& ownerI
     query.prepare("UPDATE aliases SET av_hash=:hash WHERE user_id = (:id)");
     query.bindValue(":hash", QString(hash.toBase64()));
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
@@ -607,4 +617,16 @@ QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
         bArray = sqlAnswer.value(0).toByteArray();
     }
     return bArray;
+}
+
+QString HistoryKeeper::getLastExecutedQuery(const QSqlQuery& query)
+{
+    QString str = query.lastQuery();
+    QMapIterator<QString, QVariant> it(query.boundValues());
+    while (it.hasNext())
+    {
+        it.next();
+        str.replace(it.key(),it.value().toString());
+    }
+    return str;
 }

@@ -25,6 +25,7 @@
 #include <QDateTime>
 #include <QPixmap>
 #include <QMutex>
+#include <QSqlQuery>
 #include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
@@ -111,6 +112,8 @@ private:
     QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
 
     ChatType convertToChatType(int);
+    QString getLastExecutedQuery(const QSqlQuery& query);
+
     bool needImport = false;    // must be deleted with "importAvatarToDatabase"
     GenericDdInterface *db;
     QMap<QString, int> aliases;
