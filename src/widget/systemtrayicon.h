@@ -48,6 +48,7 @@ private:
 private:
     SystrayBackendType backendType;
     QSystemTrayIcon* qtIcon;
+
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     AppIndicator *unityIndicator;
     GtkWidget *unityMenu;

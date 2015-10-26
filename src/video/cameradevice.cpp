@@ -226,8 +226,11 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     {
         av_dict_free(&tmp);
         avformat_free_context(s);
+        return devices;
     }
     avdevice_list_devices(s, &devlist);
+    av_dict_free(&tmp);
+    avformat_free_context(s);
     if (!devlist)
     {
         qWarning() << "avdevice_list_devices failed";
