@@ -207,7 +207,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>either 76 hexadecimal characters or name@domain.com</source>
         <comment>Tox ID format description</comment>
-        <translation>или 76 шестнадцатеричные символы или name@domain.com</translation>
+        <translation>или 76 шестнадцатеричных символов, или name@domain.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
