@@ -55,6 +55,7 @@ protected:
 
 private slots:
     void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);
+    void onSourceStopped();
 
 private:
     void recalulateBounds();

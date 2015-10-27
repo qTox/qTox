@@ -25,6 +25,8 @@
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
 #include "src/widget/translator.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -202,14 +204,15 @@ void AVForm::onVideoDevChanged(int index)
         qWarning() << "Invalid index";
         return;
     }
+
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     camera.open(dev);
-    killVideoSurface();
-    createVideoSurface();
+    if (dev == "none")
+        Core::getInstance()->getAv()->sendNoVideo();
 }
 
 void AVForm::hideEvent(QHideEvent *)
@@ -316,8 +319,8 @@ void AVForm::onInDevChanged(const QString &deviceDescriptor)
     Settings::getInstance().setInDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    if (audio.isInputReady())
+        audio.openInput(deviceDescriptor);
 }
 
 void AVForm::onOutDevChanged(const QString& deviceDescriptor)
@@ -325,8 +328,8 @@ void AVForm::onOutDevChanged(const QString& deviceDescriptor)
     Settings::getInstance().setOutDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    if (audio.isOutputReady())
+        audio.openOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)

@@ -86,7 +86,6 @@ public:
 protected:
     void resizeEvent(QResizeEvent* event) final override
     {
-        qDebug() << "Resize!";
         updateSize();
         QWidget::resizeEvent(event);
     }
@@ -94,13 +93,11 @@ protected:
 private slots:
     void updateSize()
     {
-        qDebug() << videoSurface->isExpanding();
         if (videoSurface->isExpanding())
         {
             int width = videoSurface->height() * videoSurface->getRatio();
             videoSurface->setMinimumWidth(width);
             videoSurface->setMaximumWidth(width);
-            qDebug() << videoSurface->minimumWidth();
         }
     }
 
