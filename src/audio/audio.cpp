@@ -564,19 +564,16 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 
     alcCaptureSamples(Audio::alInDev, buf, samples);
 
-    if (inputVolume != 1)
+    for (size_t i = 0; i < samples * AUDIO_CHANNELS; ++i)
     {
-        for (size_t i = 0; i < samples * AUDIO_CHANNELS; ++i)
-        {
-            int sample = buf[i] * pow(inputVolume, 2);
+        int sample = buf[i] * pow(inputVolume, 2);
 
-            if (sample < std::numeric_limits<int16_t>::min())
-                sample = std::numeric_limits<int16_t>::min();
-            else if (sample > std::numeric_limits<int16_t>::max())
-                sample = std::numeric_limits<int16_t>::max();
+        if (sample < std::numeric_limits<int16_t>::min())
+            sample = std::numeric_limits<int16_t>::min();
+        else if (sample > std::numeric_limits<int16_t>::max())
+            sample = std::numeric_limits<int16_t>::max();
 
-            buf[i] = sample;
-        }
+        buf[i] = sample;
     }
 
     return true;
