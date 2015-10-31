@@ -167,7 +167,7 @@ void Audio::unsubscribeInput()
     if (inputSubscriptions > 0)
         inputSubscriptions--;
 
-    if (!inputSubscriptions) {
+    if (!inputSubscriptions)
         cleanupInput();
 }
 
