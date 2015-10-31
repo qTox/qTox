@@ -166,15 +166,15 @@ If the input device has no more subscriptions, it will be closed.
 void Audio::unsubscribeInput()
 {
     qDebug() << "unsubscribing input" << inputSubscriptions;
+    QMutexLocker locker(&audioInLock);
+
     if (inputSubscriptions > 0)
         inputSubscriptions--;
     else if(inputSubscriptions < 0)
         inputSubscriptions = 0;
 
-    if (!inputSubscriptions) {
-        closeOutput();
-        closeInput();
-    }
+    if (!inputSubscriptions)
+        _cleanupInput();
 }
 
 /**
