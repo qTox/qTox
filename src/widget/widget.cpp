@@ -1701,7 +1701,7 @@ void Widget::onTryCreateTrayIcon()
             QStyle *style = qApp->style();
 
             actionLogout = new QAction(tr("&Logout"), this);
-            actionLogout->setIcon(style->standardIcon(QStyle::SP_BrowserStop));
+            actionLogout->setIcon(style->standardIcon(QStyle::SP_DialogResetButton));
             connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
             actionQuit = new QAction(tr("&Exit"), this);
