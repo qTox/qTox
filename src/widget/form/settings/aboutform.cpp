@@ -46,8 +46,7 @@ void AboutForm::replaceVersions()
                                                        QString::number(TOX_VERSION_MAJOR) + "." +
                                                        QString::number(TOX_VERSION_MINOR) + "." +
                                                        QString::number(TOX_VERSION_PATCH)));
-    bodyUI->qtVersion->setText(
-                bodyUI->qtVersion->text().replace("$QTVERSION", QT_VERSION_STR));
+    bodyUI->qtVersion->setText(tr("Qt version:") + " " + QT_VERSION_STR);
 }
 
 AboutForm::~AboutForm()
