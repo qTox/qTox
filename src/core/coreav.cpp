@@ -583,6 +583,7 @@ void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, u
     }
 
     qDebug() << "Bitrate with"<<friendNum<<" is now "<<arate<<"/"<<vrate;
+    toxav_bit_rate_set(toxav, friendNum, arate, vrate, nullptr);
 }
 
 void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
