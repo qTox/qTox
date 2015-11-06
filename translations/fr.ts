@@ -9,18 +9,18 @@
         <translation>Audio/Vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="133"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="143"/>
         <source>%1x%2</source>
         <translation>%1×%2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="135"/>
-        <location filename="../src/widget/form/settings/avform.cpp" line="141"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="145"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="151"/>
         <source>Default resolution</source>
         <translation>Résolution par défaut</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avform.cpp" line="137"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="147"/>
         <source> at %1 FPS</source>
         <translatorcomment>FPS → IPS ou i/s ?</translatorcomment>
         <translation> à %1 FPS</translation>
@@ -29,17 +29,17 @@
 <context>
     <name>AVSettings</name>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="156"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="158"/>
         <source>Video Settings</source>
         <translation>Options vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="178"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="180"/>
         <source>Resolution</source>
         <translation>Résolution</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="135"/>
         <source>Playback</source>
         <translation>Volume haut-parleurs</translation>
     </message>
@@ -55,7 +55,7 @@
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="47"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="129"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="115"/>
         <source>0</source>
         <translation>0</translation>
     </message>
@@ -71,19 +71,18 @@
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Use slider to set volume of your microphone.
 WARNING: slider is not supposed to work yet.</source>
-        <translation>Utilisez cette barre pour régler le volume de votre microphone.
+        <translation type="vanished">Utilisez cette barre pour régler le volume de votre microphone.
 ATTENTION: la barre n&apos;est pas censée fonctionner pour le moment.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="146"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="145"/>
         <source>Playback device</source>
         <translation>Haut-parleurs</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
         <source>Capture device</source>
         <translation>Microphone</translation>
     </message>
@@ -103,13 +102,18 @@ ATTENTION: la barre n&apos;est pas censée fonctionner pour le moment.</translat
         <translation>Filtrer le son de votre microphone, afin que vos communications soient plus claires.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="164"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="122"/>
+        <source>Use slider to set volume of your microphone.</source>
+        <translation>Utilisez cette barre pour régler le volume de votre microphone.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="166"/>
         <source>Video device</source>
         <translation>Source vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="171"/>
-        <location filename="../src/widget/form/settings/avsettings.ui" line="191"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="173"/>
+        <location filename="../src/widget/form/settings/avsettings.ui" line="193"/>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -129,6 +133,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>About</source>
         <translation>À propos</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutform.cpp" line="49"/>
+        <source>Qt version:</source>
+        <translation>Version de Qt :</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -143,12 +152,12 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="100"/>
         <source>You are using a qTox nightly build.</source>
         <translation>Vous utilisez une construction nocturne de qTox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="103"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Identifiant de changement : &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
@@ -158,12 +167,17 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>Version de toxcore : $TOXCOREVERSION</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="149"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="140"/>
+        <source>Qt version:</source>
+        <translation>Version de Qt :</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="156"/>
         <source>License</source>
         <translation>Licence</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="176"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="183"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -184,22 +198,22 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;Vous devriez avoir reçu une copie de la GNU General Public License avec ce programme. Sinon consultez la page &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="215"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="222"/>
         <source>Authors</source>
         <translation>Auteurs</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="232"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="239"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Auteur original : &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Voir la liste complète des  &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributeurs&lt;/span&gt;&lt;/a&gt; chez Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="260"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="267"/>
         <source>Known Issues</source>
         <translation>Problèmes connus</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="277"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="284"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Une liste de tous les problèmes connus peut être consultée sur notre &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;liste de tickets&lt;/span&gt;&lt;/a&gt; chez Github. Si vous trouvez un bogue ou une faille de sécurité dans qTox, merci de le rapporter en suivant les règles de la page &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Comment écrire un rapport de bogue efficace&lt;/span&gt;&lt;/a&gt; (en anglais).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -207,61 +221,70 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>AddFriendForm</name>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="159"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="187"/>
         <source>Add Friends</source>
         <translation>Ajouter des contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="160"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="151"/>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="161"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="152"/>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <comment>Tox ID format description</comment>
+        <translation>soit 76 caractères hexadécimaux, soit nom@example.com</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/addfriendform.cpp" line="169"/>
+        <source>Invalid Tox ID format</source>
+        <translation>Format Tox ID invalide</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/addfriendform.cpp" line="188"/>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="162"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="189"/>
         <source>Send friend request</source>
         <translation>Envoyer la demande de contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="163"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="190"/>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Salut, c&apos;est %1. On se Toxe ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
         <source>Please fill in a valid Tox ID</source>
         <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Merci d&apos;entrer un Tox ID valide</translation>
+        <translation type="vanished">Merci d&apos;entrer un Tox ID valide</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="110"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
-        <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="114"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="135"/>
         <source>Couldn&apos;t add friend</source>
         <translation>Impossible d&apos;ajouter le contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="115"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="114"/>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Vous ne pouvez pas vous ajouter vous-même !</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="126"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="125"/>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
 Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox as besoin d&apos;utiliser le DNS Tox, mais ne peut pas le faire avec un proxy.
 Ignorer le proxy et se connecter directement à Internet ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/addfriendform.cpp" line="136"/>
+        <location filename="../src/widget/form/addfriendform.cpp" line="135"/>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Ce Tox ID n&apos;existe pas</translation>
@@ -276,16 +299,19 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="98"/>
         <source>Synchronized - safe (recommended)</source>
         <translation>Synchrone – sûr (recommandé)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="99"/>
         <source>Partially async - risky (20% faster)</source>
         <translation>Partiellement asynchrone – risqué (20% plus rapide)</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
+        <location filename="../src/widget/form/settings/advancedform.cpp" line="100"/>
         <source>Asynchronous - dangerous (fastest)</source>
         <translation>Asynchrone – dangereux (le plus rapide)</translation>
     </message>
@@ -385,146 +411,150 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
 <context>
     <name>ChatForm</name>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="166"/>
+        <location filename="../src/widget/form/chatform.cpp" line="175"/>
         <source>Send a file</source>
         <translation>Envoyer un fichier</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="177"/>
-        <location filename="../src/widget/form/chatform.cpp" line="776"/>
+        <location filename="../src/widget/form/chatform.cpp" line="186"/>
+        <location filename="../src/widget/form/chatform.cpp" line="652"/>
         <source>qTox wasn&apos;t able to open %1</source>
         <translation>qTox n&apos;as pas pu ouvrir %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="184"/>
-        <location filename="../src/widget/form/chatform.cpp" line="782"/>
+        <location filename="../src/widget/form/chatform.cpp" line="193"/>
+        <location filename="../src/widget/form/chatform.cpp" line="658"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
         <translation>Vous êtes en train d&apos;essayer d&apos;envoyer un fichier spécial (sequentiel), ça ne fonctionnera pas !</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="1088"/>
+        <location filename="../src/widget/form/chatform.cpp" line="385"/>
+        <source>Calling %1</source>
+        <translation>Appel de %1</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/chatform.cpp" line="964"/>
         <source>Load chat history...</source>
         <translation>Chargement de l&apos;historique...</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="293"/>
+        <location filename="../src/widget/form/chatform.cpp" line="289"/>
         <source>%1 calling</source>
         <translation>%1 appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="176"/>
-        <location filename="../src/widget/form/chatform.cpp" line="776"/>
+        <location filename="../src/widget/form/chatform.cpp" line="185"/>
+        <location filename="../src/widget/form/chatform.cpp" line="652"/>
         <source>Unable to open</source>
         <translation>Ouverture impossible</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="183"/>
-        <location filename="../src/widget/form/chatform.cpp" line="782"/>
+        <location filename="../src/widget/form/chatform.cpp" line="192"/>
+        <location filename="../src/widget/form/chatform.cpp" line="658"/>
         <source>Bad idea</source>
         <translation>Mauvaise idée</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="271"/>
+        <location filename="../src/widget/form/chatform.cpp" line="270"/>
         <source>Accept video call</source>
         <translation>Accepter l&apos;appel vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="284"/>
+        <location filename="../src/widget/form/chatform.cpp" line="278"/>
         <source>Accept audio call</source>
         <translation>Accepter l&apos;appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="318"/>
-        <location filename="../src/widget/form/chatform.cpp" line="444"/>
+        <location filename="../src/widget/form/chatform.cpp" line="313"/>
         <source>End video call</source>
         <translation>Mettre fin à l&apos;appel vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="327"/>
-        <location filename="../src/widget/form/chatform.cpp" line="453"/>
+        <location filename="../src/widget/form/chatform.cpp" line="323"/>
         <source>End audio call</source>
         <translation>Mettre fin à l&apos;appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="338"/>
-        <location filename="../src/widget/form/chatform.cpp" line="702"/>
+        <location filename="../src/widget/form/chatform.cpp" line="332"/>
+        <location filename="../src/widget/form/chatform.cpp" line="570"/>
+        <location filename="../src/widget/form/chatform.cpp" line="972"/>
         <source>Mute microphone</source>
         <translation>Couper le microphone</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="341"/>
-        <location filename="../src/widget/form/chatform.cpp" line="722"/>
+        <location filename="../src/widget/form/chatform.cpp" line="335"/>
+        <location filename="../src/widget/form/chatform.cpp" line="590"/>
+        <location filename="../src/widget/form/chatform.cpp" line="967"/>
         <source>Mute call</source>
         <translation>Couper le son de l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="366"/>
         <source>%1 stopped calling</source>
-        <translation>%1 a arrêté l&apos;appel</translation>
+        <translation type="vanished">%1 a arrêté l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="403"/>
+        <location filename="../src/widget/form/chatform.cpp" line="372"/>
         <source>Cancel video call</source>
         <translation>Annuler l&apos;appel vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="411"/>
+        <location filename="../src/widget/form/chatform.cpp" line="380"/>
         <source>Cancel audio call</source>
         <translation>Annuler l&apos;appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="419"/>
         <source>Calling to %1</source>
-        <translation>Appel de %1 en cours</translation>
+        <translation type="vanished">Appel de %1 en cours</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="523"/>
         <source>Call rejected</source>
-        <translation>Appel rejeté</translation>
+        <translation type="vanished">Appel rejeté</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="679"/>
+        <location filename="../src/widget/form/chatform.cpp" line="547"/>
         <source>Start audio call</source>
         <translation>Démarrer un appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="682"/>
+        <location filename="../src/widget/form/chatform.cpp" line="550"/>
         <source>Start video call</source>
         <translation>Démarrer un appel vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="707"/>
+        <location filename="../src/widget/form/chatform.cpp" line="575"/>
+        <location filename="../src/widget/form/chatform.cpp" line="974"/>
         <source>Unmute microphone</source>
         <translation>Réactiver le microphone</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="727"/>
+        <location filename="../src/widget/form/chatform.cpp" line="595"/>
+        <location filename="../src/widget/form/chatform.cpp" line="969"/>
         <source>Unmute call</source>
         <translation>Réactiver le son de l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="739"/>
+        <location filename="../src/widget/form/chatform.cpp" line="607"/>
         <source>Failed to send file &quot;%1&quot;</source>
         <translation>Impossible d&apos;envoyer « %1 »</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="911"/>
+        <location filename="../src/widget/form/chatform.cpp" line="797"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
         <translation>Échec de l&apos;ouverture du fichier temporaire</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="912"/>
+        <location filename="../src/widget/form/chatform.cpp" line="798"/>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translation>qTox n&apos;a pas pu enregistrer la capture d&apos;écran</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="954"/>
+        <location filename="../src/widget/form/chatform.cpp" line="844"/>
         <source>Call with %1 ended. %2</source>
         <translation>Appel avec %1 terminé. %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="973"/>
+        <location filename="../src/widget/form/chatform.cpp" line="863"/>
         <source>Call duration: </source>
         <translation>Durée de l&apos;appel :</translation>
     </message>
@@ -572,38 +602,38 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/circlewidget.cpp" line="91"/>
         <source>Open all in new window</source>
-        <translation type="unfinished">Tous les ouvrir dans une nouvelle fenêtre</translation>
+        <translation>Tous les ouvrir dans une nouvelle fenêtre</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
-        <location filename="../src/core/core.cpp" line="257"/>
+        <location filename="../src/core/core.cpp" line="240"/>
         <source>Toxing on qTox</source>
         <translation>Je Tox sur qTox</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="598"/>
+        <location filename="../src/core/core.cpp" line="571"/>
         <source>You need to write a message with your request</source>
         <translation>Il faut que vous écriviez un message pour accompagner votre demande</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="602"/>
+        <location filename="../src/core/core.cpp" line="575"/>
         <source>Your message is too long!</source>
         <translation>Votre message est trop long !</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="606"/>
+        <location filename="../src/core/core.cpp" line="579"/>
         <source>Friend is already added</source>
         <translation>Ce contact est déjà dans vos contacts</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="624"/>
+        <location filename="../src/core/core.cpp" line="597"/>
         <source>/me offers friendship.</source>
         <translation>/me souhaiterait vous ajouter dans sa liste d&apos;amis.</translation>
     </message>
     <message>
-        <location filename="../src/core/core.cpp" line="626"/>
+        <location filename="../src/core/core.cpp" line="599"/>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me souhaiterait vous ajouter dans sa liste d&apos;amis, « %1 »</translation>
     </message>
@@ -966,8 +996,9 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Général</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="102"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="107"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="103"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="108"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="492"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
@@ -993,91 +1024,90 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>GeneralSettings</name>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="56"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="47"/>
         <source>General Settings</source>
         <translation>Options générales</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="64"/>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="80"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="55"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="71"/>
         <source>The translation may not load until qTox restarts.</source>
         <translation>La traduction peut ne pas prendre effet immédiatement. Redémarrez qTox si ce n&apos;est pas le cas.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="162"/>
         <source>Start in tray</source>
         <translation>Démarrer dans la barre d&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="196"/>
         <source>Close to tray</source>
         <translation>Fermer dans la barre d&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="179"/>
         <source>Minimize to tray</source>
         <translation>Minimiser dans la barre d&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="249"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="95"/>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Démarrer le profil actuel de qTox lors du démarrage du système.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="286"/>
         <source>Default directory to save files</source>
-        <translation>Répertoire par défaut où enregistrer les fichiers</translation>
+        <translation type="vanished">Répertoire par défaut où enregistrer les fichiers</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="315"/>
         <source>Play a sound when you recieve message.</source>
         <comment>toolTip for Notify sound setting</comment>
         <translation>Jouer un son quand vous recevez un message.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="318"/>
         <source>Play sound</source>
         <translation>Jouer un son</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="345"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="325"/>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
         <translation>Ouvrir la fenêtre de qTox quand vous recevez un nouveau message si aucune fenêtre n&apos;est ouverte.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="348"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="328"/>
         <source>Open window</source>
         <translation>Ouvrir une fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="363"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="356"/>
         <source>Show contacts&apos; status changes</source>
         <translation>Montrer les changements d&apos;état des contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="380"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="406"/>
         <source>Multiple windows mode</source>
         <translation>Mode fenêtres multiples</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="390"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="427"/>
         <source>Open each chat in an individual window</source>
         <translation>Ouvrir chaque discussion dans une fenêtre séparée</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation>Si coché, les groupes de discussion seront positionnés en haut de la liste de contacts, sinon ils se trouveront en dessous des contacts connectés.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="400"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="376"/>
         <source>Place groupchats at top of friend list</source>
         <translation>Groupes de discussion en haut de la liste de contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="407"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="383"/>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
@@ -1085,39 +1115,38 @@ will be sent to them when they appear online to you.</source>
 leurs seront envoyés quand ils se reconnecteront.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="215"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Se rendre absent après (0 pour désactiver) :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="219"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="228"/>
         <source>Set to 0 to disable</source>
         <translation>Mettre à 0 pour désactiver</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="67"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="58"/>
         <source>Language:</source>
         <translation>Langue :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="102"/>
         <source>System tray</source>
-        <translation>Menu système</translation>
+        <translation type="vanished">Menu système</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="153"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
         <translation>Activer l&apos;icone claire.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="159"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
         <translation>qTox démarrera minimisé dans le menu système.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="192"/>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
@@ -1125,7 +1154,7 @@ instead of closing itself.</source>
 au lieu de se fermer.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="169"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="175"/>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
@@ -1133,185 +1162,196 @@ instead of system taskbar.</source>
 au lieu de se fermer.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="98"/>
         <source>Autostart</source>
         <translation>Démarrer avec l&apos;ordinateur</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="259"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="105"/>
         <source>Check for updates on startup</source>
         <translation>Vérifier les mises à jour au lancement</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="279"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="260"/>
         <source>Set where files will be saved.</source>
         <translation>Choisir où les fichiers seront sauvegardés.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="225"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="231"/>
         <source> minutes</source>
         <translation> minutes</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="200"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="209"/>
         <source>Your status is changed to Away after set period of inactivity.</source>
         <translation>Votre état sera modifié en &quot;Absent&quot; après la période d&apos;inactivité que vous avez définit.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="308"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="295"/>
         <source>Chat</source>
         <translation>Chat</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="370"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="363"/>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
         <translation>Toujours m&apos;avertir des nouveaux messages dans les groupes.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="373"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="366"/>
         <source>Group chats always notify</source>
         <translation>Être averti des nouveaux messages dans les groupes</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="319"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="303"/>
         <source>On new message:</source>
         <translation>Lors d&apos;un nouveau message :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="335"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Default directory to save files:</source>
+        <translation>Répertoire par défaut où enregistrer les fichiers :</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="340"/>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
         <translation>Mettre le focus sur qTox quand vous recevez un message.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="338"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="343"/>
         <source>Focus window</source>
         <translation>Donner le focus à la fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="418"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="394"/>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
         <translation>Votre liste de contacts sera affichée en mode compact.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="421"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="397"/>
         <source>Compact contact list</source>
         <translation>Liste de contacts compacte</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="431"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="441"/>
         <source>Theme</source>
         <translation>Thème</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="455"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="465"/>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
         <translation>Pack d&apos;émoticônes :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="472"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="567"/>
         <source>Emoticon size:</source>
         <translation>Taille des émoticônes :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="555"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="650"/>
         <source>Date format:</source>
         <translation>Format de date :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="713"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="700"/>
         <source>Proxy type:</source>
         <translation>Type de proxy :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="720"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="717"/>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Adresse IP :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="504"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="599"/>
         <source>Style:</source>
         <translation>Style :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="521"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="616"/>
         <source>Theme color:</source>
         <translation>Couleur du thème :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="538"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="633"/>
         <source>Timestamp format:</source>
         <translation>Format des horloges :</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="672"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="689"/>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
         <translation>Activer UDP (recommandé)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="744"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="727"/>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation>Port :</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="741"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="749"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="746"/>
         <source>SOCKS5</source>
         <translation>SOCKS5</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="754"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="751"/>
         <source>HTTP</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="779"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="776"/>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Se reconnecter</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="655"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="665"/>
         <source>Connection Settings</source>
         <translation>Options de réseau</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="129"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="141"/>
         <source>Show system tray icon</source>
         <translation>Montrer l&apos;icône de barre d&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="125"/>
         <source>Light icon</source>
         <translation>Icône claire</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="411"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="387"/>
         <source>Faux offline messaging</source>
         <translation>Retransmettre les messages en cas d&apos;échec</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="293"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="280"/>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
         <translation>Vous pouvez regler ceci pour chaque contact avec un clique-droit sur leur nom.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="296"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="283"/>
         <source>Autoaccept files</source>
         <translation>Auto-accepter les fichiers</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="437"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="447"/>
         <source>Use emoticons</source>
         <translation>Utiliser les émoticônes</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="488"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="583"/>
         <source> px</source>
         <translation>px</translation>
     </message>
@@ -1322,110 +1362,162 @@ au lieu de se fermer.</translation>
         <translation>Activer IPv6 (recommandé)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="669"/>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="686"/>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalsettings.ui" line="730"/>
         <source>Port</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port</translation>
+        <translation type="vanished">Port</translation>
     </message>
 </context>
 <context>
     <name>GenericChatForm</name>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="515"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="571"/>
         <source>Send message</source>
         <translation>Envoyer un message</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="516"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="572"/>
         <source>Smileys</source>
         <translation>Émoticônes</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="517"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="573"/>
         <source>Send file(s)</source>
         <translation>Envoyer des fichiers</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="370"/>
-        <location filename="../src/widget/form/genericchatform.cpp" line="521"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="389"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="575"/>
         <source>Save chat log</source>
         <translation>Sauvegarder l&apos;historique de conversation</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="518"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="558"/>
+        <source>Start audio call</source>
+        <translation>Démarrer un appel audio</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="560"/>
+        <source>Accept audio call</source>
+        <translation>Accepter l&apos;appel audio</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="562"/>
+        <source>End audio call</source>
+        <translation>Mettre fin à l&apos;appel audio</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="565"/>
+        <source>Start video call</source>
+        <translation>Démarrer un appel vidéo</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="567"/>
+        <source>Accept video call</source>
+        <translation>Accepter l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="569"/>
+        <source>End video call</source>
+        <translation>Mettre fin à l&apos;appel vidéo</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/genericchatform.cpp" line="574"/>
         <source>Send a screenshot</source>
         <translation>Envoyer une capture d&apos;écran</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="519"/>
         <source>Start an audio call</source>
-        <translation>Démarrer un appel audio</translation>
+        <translation type="vanished">Démarrer un appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="520"/>
         <source>Start a video call</source>
-        <translation>Démarrer un appel vidéo</translation>
+        <translation type="vanished">Démarrer un appel vidéo</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="522"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="576"/>
         <source>Clear displayed messages</source>
         <translation>Effacer les messages affichés</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="390"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="409"/>
         <source>Not sent</source>
         <translation>Envoi échoué</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/genericchatform.cpp" line="428"/>
+        <location filename="../src/widget/form/genericchatform.cpp" line="447"/>
         <source>Cleared</source>
         <translation>Effacé</translation>
     </message>
 </context>
 <context>
+    <name>GenericNetCamView</name>
+    <message>
+        <location filename="../src/video/genericnetcamview.cpp" line="29"/>
+        <source>Tox video</source>
+        <translation>Vidéo Tox</translation>
+    </message>
+    <message>
+        <location filename="../src/video/genericnetcamview.cpp" line="59"/>
+        <source>Show Messages</source>
+        <translation>Montrer les messages</translation>
+    </message>
+    <message>
+        <location filename="../src/video/genericnetcamview.cpp" line="66"/>
+        <source>Hide Messages</source>
+        <translation>Cacher les messages</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="212"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="319"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="171"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="414"/>
+        <source>1 user in chat</source>
+        <comment>Number of users in chat</comment>
+        <translation>1 personne</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/groupchatform.cpp" line="225"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="348"/>
         <source>Start audio call</source>
         <translation>Démarrer un appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="260"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="306"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="288"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="334"/>
         <source>Mute microphone</source>
         <translation>Couper le microphone</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="266"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="294"/>
         <source>Unmute microphone</source>
         <translation>Réactiver le microphone</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="281"/>
         <location filename="../src/widget/form/groupchatform.cpp" line="309"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="337"/>
         <source>Mute call</source>
         <translation>Couper le son de l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="287"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="315"/>
         <source>Unmute call</source>
         <translation>Réactiver le son de l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="303"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="331"/>
         <source>End audio call</source>
         <translation>Mettre fin à l&apos;appel audio</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/groupchatform.cpp" line="167"/>
-        <location filename="../src/widget/form/groupchatform.cpp" line="370"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="173"/>
+        <location filename="../src/widget/form/groupchatform.cpp" line="416"/>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
         <translation>%1 personnes</translation>
@@ -1434,35 +1526,41 @@ au lieu de se fermer.</translation>
 <context>
     <name>GroupWidget</name>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="148"/>
+        <location filename="../src/widget/groupwidget.cpp" line="155"/>
+        <location filename="../src/widget/groupwidget.cpp" line="268"/>
         <source>%1 users in chat</source>
         <translation>%1 personnes</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="150"/>
         <source>0 users in chat</source>
-        <translation>Le groupe est vide</translation>
+        <translation type="vanished">Le groupe est vide</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="84"/>
+        <location filename="../src/widget/groupwidget.cpp" line="86"/>
         <source>Set title...</source>
         <translation>Changer le titre...</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="77"/>
+        <location filename="../src/widget/groupwidget.cpp" line="79"/>
         <source>Open chat in new window</source>
         <translation>Ouvrir la discussion dans une nouvelle fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="80"/>
+        <location filename="../src/widget/groupwidget.cpp" line="82"/>
         <source>Remove chat from this window</source>
         <translation>Retirer la discussion de cette fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/widget/groupwidget.cpp" line="85"/>
+        <location filename="../src/widget/groupwidget.cpp" line="87"/>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
         <translation>Quitter le groupe</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/groupwidget.cpp" line="153"/>
+        <location filename="../src/widget/groupwidget.cpp" line="266"/>
+        <source>1 user in chat</source>
+        <translation>1 personne</translation>
     </message>
 </context>
 <context>
@@ -1603,119 +1701,133 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
 <context>
     <name>LoginScreen</name>
     <message>
-        <location filename="../src/loginscreen.ui" line="144"/>
+        <location filename="../src/loginscreen.ui" line="26"/>
         <source>qTox</source>
         <translation>qTox</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="381"/>
-        <location filename="../src/loginscreen.ui" line="754"/>
+        <location filename="../src/loginscreen.ui" line="108"/>
+        <location filename="../src/loginscreen.ui" line="284"/>
         <source>Username:</source>
         <translation>Utilisateur :</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="398"/>
-        <location filename="../src/loginscreen.ui" line="767"/>
+        <location filename="../src/loginscreen.ui" line="125"/>
+        <location filename="../src/loginscreen.ui" line="297"/>
         <source>Password:</source>
         <translation>Mot de passe :</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="415"/>
+        <location filename="../src/loginscreen.ui" line="142"/>
         <source>Confirm:</source>
         <translation>Confirmation :</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="435"/>
+        <location filename="../src/loginscreen.ui" line="162"/>
         <source>Password strength: %p%</source>
         <translation>Robustesse : %p%</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="644"/>
+        <location filename="../src/loginscreen.ui" line="184"/>
         <source>Create Profile</source>
         <translation>Créer le profil</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="784"/>
+        <location filename="../src/loginscreen.ui" line="314"/>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
         <translation>Si le profil n&apos;a pas de mot de passe, qTox peut passer l&apos;écran de connexion</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="787"/>
+        <location filename="../src/loginscreen.ui" line="317"/>
         <source>Load automatically</source>
         <translation>Charger automatiquement</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="1009"/>
+        <location filename="../src/loginscreen.ui" line="352"/>
         <source>Load</source>
         <translation>Charger</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="1124"/>
+        <location filename="../src/loginscreen.ui" line="404"/>
         <source>Load Profile</source>
         <translation>Charger un profil</translation>
     </message>
     <message>
-        <location filename="../src/loginscreen.ui" line="1098"/>
+        <location filename="../src/loginscreen.ui" line="391"/>
         <source>New Profile</source>
         <translation>Nouveau profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="127"/>
-        <location filename="../src/widget/loginscreen.cpp" line="133"/>
-        <location filename="../src/widget/loginscreen.cpp" line="139"/>
-        <location filename="../src/widget/loginscreen.cpp" line="145"/>
-        <location filename="../src/widget/loginscreen.cpp" line="153"/>
+        <location filename="../src/widget/loginscreen.cpp" line="129"/>
+        <location filename="../src/widget/loginscreen.cpp" line="135"/>
+        <location filename="../src/widget/loginscreen.cpp" line="141"/>
+        <location filename="../src/widget/loginscreen.cpp" line="147"/>
+        <location filename="../src/widget/loginscreen.cpp" line="155"/>
         <source>Couldn&apos;t create a new profile</source>
         <translation>Impossible de créer un nouveau profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="127"/>
+        <location filename="../src/widget/loginscreen.cpp" line="129"/>
         <source>The username must not be empty.</source>
         <translation>Le nom d&apos;utilisateur ne doit pas être vide.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="133"/>
+        <location filename="../src/widget/loginscreen.cpp" line="135"/>
         <source>The password must be at least 6 characters long.</source>
         <translation>Le mot de passe doit avoir au moins 6 caractères.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="139"/>
+        <location filename="../src/widget/loginscreen.cpp" line="141"/>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
         <translation>Les mots de passe que vous avez tapé sont différents.
 Veuillez vous assurer d&apos;entrer deux fois le même mot de passe.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="145"/>
+        <location filename="../src/widget/loginscreen.cpp" line="147"/>
         <source>A profile with this name already exists.</source>
         <translation>Un profil avec ce nom existe déjà.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="153"/>
+        <location filename="../src/widget/loginscreen.cpp" line="155"/>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
         <translation>Erreur inconnue : Impossible de créer un nouveau profil.
 Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="188"/>
-        <location filename="../src/widget/loginscreen.cpp" line="197"/>
-        <location filename="../src/widget/loginscreen.cpp" line="202"/>
+        <location filename="../src/widget/loginscreen.cpp" line="191"/>
+        <source>Couldn&apos;t load profile</source>
+        <translation>Impossible de charger ce profil</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="192"/>
+        <source>There is no selected profile.
+
+You may want to create one.</source>
+        <translation type="unfinished">Aucun profil n&apos;est sélectionné.
+
+Vous souhaiteriez en créer un.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/loginscreen.cpp" line="199"/>
+        <location filename="../src/widget/loginscreen.cpp" line="209"/>
+        <location filename="../src/widget/loginscreen.cpp" line="215"/>
         <source>Couldn&apos;t load this profile</source>
         <translation>Impossible de charger ce profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="188"/>
+        <location filename="../src/widget/loginscreen.cpp" line="200"/>
         <source>This profile is already in use.</source>
         <translation>Ce profil est déjà utilisé.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="197"/>
+        <location filename="../src/widget/loginscreen.cpp" line="210"/>
         <source>Profile already in use. Close other clients.</source>
         <translation>Profil en cours d&apos;utilisation. Fermez les autres clients.</translation>
     </message>
     <message>
-        <location filename="../src/widget/loginscreen.cpp" line="202"/>
+        <location filename="../src/widget/loginscreen.cpp" line="216"/>
         <source>Wrong password.</source>
         <translation>Mot de passe incorrect.</translation>
     </message>
@@ -1723,32 +1835,42 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.ui" line="1035"/>
+        <location filename="../src/mainwindow.ui" line="862"/>
+        <source>Your name</source>
+        <translation>Votre nom</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="947"/>
+        <source>Your status</source>
+        <translation>Votre état</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1050"/>
         <source>...</source>
         <translation>…</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1137"/>
+        <location filename="../src/mainwindow.ui" line="1152"/>
         <source>Add friends</source>
         <translation>Ajouter des contacts</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1181"/>
+        <location filename="../src/mainwindow.ui" line="1196"/>
         <source>Create a group chat</source>
         <translation>Créer un groupe</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1222"/>
+        <location filename="../src/mainwindow.ui" line="1237"/>
         <source>View completed file transfers</source>
         <translation>Voir les transfers de fichiers terminés</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1260"/>
+        <location filename="../src/mainwindow.ui" line="1275"/>
         <source>Change your settings</source>
         <translation>Changer les options</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1291"/>
+        <location filename="../src/mainwindow.ui" line="1306"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -1756,50 +1878,49 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
 <context>
     <name>NetCamView</name>
     <message>
-        <location filename="../src/video/netcamview.cpp" line="31"/>
         <source>Tox video</source>
-        <translation>Vidéo Tox</translation>
+        <translation type="vanished">Vidéo Tox</translation>
     </message>
 </context>
 <context>
     <name>Nexus</name>
     <message>
-        <location filename="../src/nexus.cpp" line="291"/>
+        <location filename="../src/nexus.cpp" line="297"/>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
         <translation>Images (%1)</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="305"/>
+        <location filename="../src/nexus.cpp" line="311"/>
         <source>View</source>
         <comment>OS X Menu bar</comment>
         <translation type="unfinished">Affichage</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="306"/>
+        <location filename="../src/nexus.cpp" line="312"/>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
         <translation type="unfinished">Fenêtre</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="307"/>
+        <location filename="../src/nexus.cpp" line="313"/>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
         <translation type="unfinished">Minimiser</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="308"/>
+        <location filename="../src/nexus.cpp" line="314"/>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
         <translation type="unfinished">Envoyer tout au premier plan</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="321"/>
+        <location filename="../src/nexus.cpp" line="327"/>
         <source>Exit Fullscreen</source>
         <translation type="unfinished">Sortir du plein écran</translation>
     </message>
     <message>
-        <location filename="../src/nexus.cpp" line="323"/>
+        <location filename="../src/nexus.cpp" line="329"/>
         <source>Enter Fullscreen</source>
         <translation type="unfinished">Plein écran</translation>
     </message>
@@ -1823,24 +1944,22 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
         <translation>Vie privée</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="63"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="62"/>
         <source>Confirmation</source>
         <translation>Confirmation</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="63"/>
+        <location filename="../src/widget/form/settings/privacyform.cpp" line="62"/>
         <source>Do you want to permanently delete all chat history?</source>
         <translation>Êtes-vous sûr de vouloir supprimer définitivement l&apos;intégralité de l&apos;historique de discussion ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="69"/>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="vanished">Erreur</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacyform.cpp" line="69"/>
         <source>Could not delete chat history</source>
-        <translation>Impossible de supprimer l&apos;historique de discussion</translation>
+        <translation type="vanished">Impossible de supprimer l&apos;historique de discussion</translation>
     </message>
 </context>
 <context>
@@ -1900,159 +2019,169 @@ Le format de sauvegarde peut changer, ce qui pourrait entrainer des pertes d&apo
 <context>
     <name>ProfileForm</name>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="127"/>
+        <location filename="../src/widget/form/profileform.cpp" line="132"/>
         <source>Current profile: </source>
         <translation>Profil actuel : </translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="221"/>
+        <location filename="../src/widget/form/profileform.cpp" line="187"/>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.cpp" line="255"/>
         <source>Choose a profile picture</source>
         <translation>Choisissez une image de profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="231"/>
-        <location filename="../src/widget/form/profileform.cpp" line="238"/>
-        <location filename="../src/widget/form/profileform.cpp" line="260"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
+        <location filename="../src/widget/form/profileform.cpp" line="272"/>
+        <location filename="../src/widget/form/profileform.cpp" line="295"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="231"/>
+        <location filename="../src/widget/form/profileform.cpp" line="265"/>
         <source>Unable to open this file.</source>
         <translation>Impossible d&apos;ouvrir ce fichier.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="238"/>
+        <location filename="../src/widget/form/profileform.cpp" line="272"/>
         <source>Unable to read this image.</source>
         <translation>Impossible d&apos;ouvrir cette image.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="261"/>
+        <location filename="../src/widget/form/profileform.cpp" line="296"/>
         <source>The supplied image is too large.
 Please use another image.</source>
         <translation>L&apos;image fournie est trop volumineuse.
 Veuillez utiliser une autre image.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="272"/>
+        <location filename="../src/widget/form/profileform.cpp" line="307"/>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
         <translation>Renommer « %1 »</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="280"/>
+        <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
         <translation>Ce profil existe déjà</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="281"/>
+        <location filename="../src/widget/form/profileform.cpp" line="316"/>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
         <translation>Un profil nommé « %1 » existe déjà.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="283"/>
+        <location filename="../src/widget/form/profileform.cpp" line="318"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
         <translation>Échec du renommage</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="284"/>
+        <location filename="../src/widget/form/profileform.cpp" line="319"/>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
         <translation>Impossible de renommer le profil en « %1 »</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="296"/>
+        <location filename="../src/widget/form/profileform.cpp" line="332"/>
         <source>Export profile</source>
         <comment>save dialog title</comment>
         <translation>Exporter le profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="298"/>
+        <location filename="../src/widget/form/profileform.cpp" line="334"/>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
         <translation>Fichier de sauvegarde Tox (*.tox)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="303"/>
-        <location filename="../src/widget/form/profileform.cpp" line="344"/>
+        <location filename="../src/widget/form/profileform.cpp" line="339"/>
+        <location filename="../src/widget/form/profileform.cpp" line="382"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
         <translation>Impossible d&apos;écrire à cet emplacement</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="303"/>
-        <location filename="../src/widget/form/profileform.cpp" line="344"/>
+        <location filename="../src/widget/form/profileform.cpp" line="339"/>
+        <location filename="../src/widget/form/profileform.cpp" line="382"/>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation>Vous n&apos;avez pas la permission d&apos;écrire à cet emplacement. Choisissez un autre endroit, ou annulez.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="307"/>
-        <location filename="../src/widget/form/profileform.cpp" line="348"/>
+        <location filename="../src/widget/form/profileform.cpp" line="343"/>
+        <location filename="../src/widget/form/profileform.cpp" line="386"/>
         <source>Failed to copy file</source>
         <translation>Impossible de copier le fichier</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="307"/>
-        <location filename="../src/widget/form/profileform.cpp" line="348"/>
+        <location filename="../src/widget/form/profileform.cpp" line="343"/>
+        <location filename="../src/widget/form/profileform.cpp" line="386"/>
         <source>The file you chose could not be written to.</source>
         <translation>Le fichier que vous avez choisi n&apos;es pas disponible en écriture.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="313"/>
+        <location filename="../src/widget/form/profileform.cpp" line="350"/>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
         <translation>Suppression du profil ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="314"/>
+        <location filename="../src/widget/form/profileform.cpp" line="351"/>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Êtes-vous sûr de vouloir supprimer ce profil ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="337"/>
+        <location filename="../src/widget/form/profileform.cpp" line="375"/>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="339"/>
+        <location filename="../src/widget/form/profileform.cpp" line="377"/>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation>Enregistrer le QR code (*.png)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="357"/>
+        <location filename="../src/widget/form/profileform.cpp" line="395"/>
         <source>Nothing to remove</source>
         <translation>Rien à supprimer</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="357"/>
+        <location filename="../src/widget/form/profileform.cpp" line="395"/>
         <source>Your profile does not have a password!</source>
         <translation>Votre profil n&apos;a pas de mot de passe !</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="361"/>
+        <location filename="../src/widget/form/profileform.cpp" line="399"/>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
         <translation>Suppression du mot de passe ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="362"/>
+        <location filename="../src/widget/form/profileform.cpp" line="400"/>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
         <translation>Êtes-vous sûr de vouloir supprimer ce mot de passe ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="370"/>
+        <location filename="../src/widget/form/profileform.cpp" line="408"/>
         <source>Please enter a new password.</source>
         <translation>Veuillez entrer un nouveau mot de passe.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="384"/>
+        <location filename="../src/widget/form/profileform.cpp" line="420"/>
+        <source>User Profile</source>
+        <translation>Profil utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/profileform.cpp" line="422"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation>Cette suite de caractères permet à vos amis de vous contacter.
@@ -2109,42 +2238,42 @@ It will be installed when qTox restarts.</source>
 Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="111"/>
+        <location filename="../src/main.cpp" line="114"/>
         <source>Tox URI to parse</source>
         <translation>URL Tox à utiliser</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="115"/>
         <source>Starts new instance and loads specified profile.</source>
         <translation>Démarrer une nouvelle instance et charger le profil spécifié.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="112"/>
+        <location filename="../src/main.cpp" line="115"/>
         <source>profile</source>
         <translation>profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="74"/>
+        <location filename="../src/widget/style.cpp" line="76"/>
         <source>Default</source>
         <translation>Défaut</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="74"/>
+        <location filename="../src/widget/style.cpp" line="76"/>
         <source>Blue</source>
         <translation>Bleu</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="74"/>
+        <location filename="../src/widget/style.cpp" line="76"/>
         <source>Olive</source>
         <translation>Olive</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="74"/>
+        <location filename="../src/widget/style.cpp" line="76"/>
         <source>Red</source>
         <translation>Rouge</translation>
     </message>
     <message>
-        <location filename="../src/widget/style.cpp" line="74"/>
+        <location filename="../src/widget/style.cpp" line="76"/>
         <source>Violet</source>
         <translation>Violet</translation>
     </message>
@@ -2165,19 +2294,18 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>Salut, c&apos;est %1. On se Toxe ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="382"/>
         <source>User Profile</source>
-        <translation>Profil utilisateur</translation>
+        <translation type="vanished">Profil utilisateur</translation>
     </message>
     <message>
-        <location filename="../src/video/cameradevice.cpp" line="253"/>
+        <location filename="../src/video/cameradevice.cpp" line="257"/>
         <source>None</source>
         <comment>No camera device set</comment>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../src/video/cameradevice.cpp" line="269"/>
-        <location filename="../src/video/cameradevice.cpp" line="271"/>
+        <location filename="../src/video/cameradevice.cpp" line="273"/>
+        <location filename="../src/video/cameradevice.cpp" line="275"/>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Bureau</translation>
@@ -2213,13 +2341,13 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="157"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="159"/>
         <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation>Cliquez et tirez pour sélectionner une zone. Appuyez sur &lt;b&gt;Espace&lt;/b&gt; pour masquer/afficher la fenêtre de qTox, ou &lt;b&gt;Echap&lt;/b&gt; pour annuler.</translation>
     </message>
     <message>
-        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="164"/>
+        <location filename="../src/widget/tool/screenshotgrabber.cpp" line="166"/>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Appuyer sur &lt;b&gt;Entrée&lt;/b&gt; pour envoyer une capture de la zone choisie, &lt;b&gt;Espace&lt;/b&gt; pour masquer/afficher la fenêtre de qTox, ou &lt;b&gt;Echap&lt;/b&gt; pour annuler.</translation>
@@ -2234,31 +2362,42 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
-        <source>Repeat password</source>
-        <translation>Confirmation</translation>
+        <source>Confirm:</source>
+        <translation>Confirmation :</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="41"/>
-        <source>Type password</source>
-        <translation>Mot de passe</translation>
+        <source>Password:</source>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="65"/>
+        <source>Password strength: %p%</source>
+        <translation>Robustesse : %p%</translation>
+    </message>
+    <message>
+        <source>Repeat password</source>
+        <translation type="vanished">Confirmation</translation>
+    </message>
+    <message>
+        <source>Type password</source>
+        <translation type="vanished">Mot de passe</translation>
+    </message>
+    <message>
         <source>Password strength</source>
-        <translation>Robustesse</translation>
+        <translation type="vanished">Robustesse</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="36"/>
         <source>The passwords don&apos;t match.</source>
-        <translation>Les mots de passe ne correspondent pas.</translation>
+        <translation type="vanished">Les mots de passe ne correspondent pas.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="60"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="64"/>
         <source>The password is too short</source>
         <translation>Le mot de passe est trop court</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/setpassworddialog.cpp" line="65"/>
+        <location filename="../src/widget/form/setpassworddialog.cpp" line="69"/>
         <source>The password doesn&apos;t match.</source>
         <translation>Le mot de passe ne correspond pas.</translation>
     </message>
@@ -2266,7 +2405,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 <context>
     <name>Settings</name>
     <message>
-        <location filename="../src/persistence/settings.cpp" line="1431"/>
+        <location filename="../src/persistence/settings.cpp" line="1438"/>
         <source>Circle #%1</source>
         <translation>Cercle nᵒ%1</translation>
     </message>
@@ -2374,66 +2513,65 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2043"/>
+        <location filename="../src/widget/widget.cpp" line="2053"/>
         <source>Online</source>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1669"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation type="vanished">&amp;Quitter</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2051"/>
+        <location filename="../src/widget/widget.cpp" line="2061"/>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
         <translation>Connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2052"/>
+        <location filename="../src/widget/widget.cpp" line="2062"/>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
         <translation>Absent</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2053"/>
+        <location filename="../src/widget/widget.cpp" line="2063"/>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
         <translation>Occupé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="524"/>
+        <location filename="../src/widget/widget.cpp" line="556"/>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1187"/>
+        <location filename="../src/widget/widget.cpp" line="1204"/>
         <source>Add friend</source>
         <translation>Ajouter un contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2063"/>
+        <location filename="../src/widget/widget.cpp" line="2073"/>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2067"/>
+        <location filename="../src/widget/widget.cpp" line="2077"/>
         <source>Edit Profile</source>
         <translation>Éditer le profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2066"/>
+        <location filename="../src/widget/widget.cpp" line="2076"/>
         <source>Change Status</source>
         <translation>Modifier l&apos;état</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2068"/>
+        <location filename="../src/widget/widget.cpp" line="2078"/>
         <source>Log out</source>
         <translation>Déconnexion</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2064"/>
+        <location filename="../src/widget/widget.cpp" line="2074"/>
         <source>Edit</source>
         <translation>Édition</translation>
     </message>
@@ -2442,7 +2580,7 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Affichage</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2061"/>
+        <location filename="../src/widget/widget.cpp" line="2071"/>
         <source>Filter...</source>
         <translation>Filtre…</translation>
     </message>
@@ -2451,22 +2589,22 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Plein écran</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2065"/>
+        <location filename="../src/widget/widget.cpp" line="2075"/>
         <source>Contacts</source>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2069"/>
+        <location filename="../src/widget/widget.cpp" line="2079"/>
         <source>Add Contact...</source>
         <translation>Ajouter un contact…</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2070"/>
+        <location filename="../src/widget/widget.cpp" line="2080"/>
         <source>Next Conversation</source>
         <translation>Discussion suivante</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2071"/>
+        <location filename="../src/widget/widget.cpp" line="2081"/>
         <source>Previous Conversation</source>
         <translation>Discussion précédente</translation>
     </message>
@@ -2475,155 +2613,165 @@ Si vous n&apos;êtes pas certain, cliquez sur « Non », ainsi nous ne ferons pa
         <translation type="vanished">Envoyer tout au premier plan</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1189"/>
+        <location filename="../src/widget/widget.cpp" line="1206"/>
         <source>File transfers</source>
         <translation>Transfers de fichiers</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="675"/>
+        <location filename="../src/widget/widget.cpp" line="707"/>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Fichier exécutable</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="675"/>
+        <location filename="../src/widget/widget.cpp" line="707"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain de vouloir ouvrir ce fichier ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1191"/>
+        <location filename="../src/widget/widget.cpp" line="1208"/>
         <source>Settings</source>
         <translation>Options</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1193"/>
+        <location filename="../src/widget/widget.cpp" line="1210"/>
         <source>Profile</source>
         <translation>Profil</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="903"/>
+        <location filename="../src/widget/widget.cpp" line="920"/>
         <source>Couldn&apos;t request friendship</source>
         <translation>Impossible d&apos;envoyer la demande de contact</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="514"/>
+        <location filename="../src/widget/widget.cpp" line="546"/>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
         <translation>toxcore n&apos;a pas réussi à démarrer, l&apos;application s&apos;arrêtera quand vous fermerez ce message.</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="798"/>
-        <location filename="../src/widget/widget.cpp" line="799"/>
+        <location filename="../src/widget/widget.cpp" line="830"/>
+        <location filename="../src/widget/widget.cpp" line="831"/>
         <source>Your name</source>
         <translation>Votre nom</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="823"/>
-        <location filename="../src/widget/widget.cpp" line="824"/>
+        <location filename="../src/widget/widget.cpp" line="855"/>
+        <location filename="../src/widget/widget.cpp" line="856"/>
         <source>Your status</source>
         <translation>Votre état</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="948"/>
+        <location filename="../src/widget/widget.cpp" line="965"/>
         <source>away</source>
         <comment>contact status</comment>
         <translation>absent</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="950"/>
+        <location filename="../src/widget/widget.cpp" line="967"/>
         <source>busy</source>
         <comment>contact status</comment>
         <translation>occupé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="952"/>
+        <location filename="../src/widget/widget.cpp" line="969"/>
         <source>offline</source>
         <comment>contact status</comment>
         <translation>hors ligne</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="956"/>
+        <location filename="../src/widget/widget.cpp" line="973"/>
         <source>online</source>
         <comment>contact status</comment>
         <translation>connecté</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="959"/>
+        <location filename="../src/widget/widget.cpp" line="976"/>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 est maintenant %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1428"/>
+        <location filename="../src/widget/widget.cpp" line="1415"/>
         <source>Group invite</source>
         <comment>popup title</comment>
         <translation>Inviter dans le groupe</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1428"/>
+        <location filename="../src/widget/widget.cpp" line="1415"/>
         <source>%1 has invited you to a groupchat. Would you like to join?</source>
         <comment>popup text</comment>
         <translation>%1 vous a invité dans un groupe de discussion. Voulez-vous le rejoindre ?</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1475"/>
+        <location filename="../src/widget/widget.cpp" line="1462"/>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Inconnu&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1502"/>
+        <location filename="../src/widget/widget.cpp" line="1490"/>
         <source>%1 has set the title to %2</source>
         <translation>%1 a changé le titre en %2</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="320"/>
+        <location filename="../src/widget/widget.cpp" line="325"/>
         <source>Status</source>
         <translation>État</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="1753"/>
+        <location filename="../src/widget/widget.cpp" line="1659"/>
+        <source>&amp;Logout</source>
+        <translation>&amp;Déconnexion</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1663"/>
+        <source>&amp;Exit</source>
+        <translation>&amp;Quitter</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/widget.cpp" line="1749"/>
         <source>Message failed to send</source>
         <translation>Le message n&apos;as pu être envoyé</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2014"/>
+        <location filename="../src/widget/widget.cpp" line="2024"/>
         <source>Add new circle...</source>
         <translation>Ajouter un nouveau cercle…</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2040"/>
+        <location filename="../src/widget/widget.cpp" line="2050"/>
         <source>By Name</source>
         <translation>Par nom</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2041"/>
+        <location filename="../src/widget/widget.cpp" line="2051"/>
         <source>By Activity</source>
         <translation>Par activité</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2042"/>
+        <location filename="../src/widget/widget.cpp" line="2052"/>
         <source>All</source>
         <translation>Tout</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2044"/>
+        <location filename="../src/widget/widget.cpp" line="2054"/>
         <source>Offline</source>
         <translation>Hors ligne</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2045"/>
+        <location filename="../src/widget/widget.cpp" line="2055"/>
         <source>Friends</source>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2046"/>
+        <location filename="../src/widget/widget.cpp" line="2056"/>
         <source>Groups</source>
         <translation>Groupes</translation>
     </message>
     <message>
-        <location filename="../src/widget/widget.cpp" line="2047"/>
-        <location filename="../src/widget/widget.cpp" line="2050"/>
+        <location filename="../src/widget/widget.cpp" line="2057"/>
+        <location filename="../src/widget/widget.cpp" line="2060"/>
         <source>Search Contacts</source>
         <translation>Chercher un contact</translation>
     </message>
