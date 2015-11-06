@@ -22,7 +22,6 @@
 #define AUDIO_H
 
 #include <QObject>
-#include <QHash>
 #include <QMutexLocker>
 #include <atomic>
 #include <cmath>
@@ -35,11 +34,7 @@
  #include <AL/alc.h>
 #endif
 
-class QString;
-class QByteArray;
 class QTimer;
-class QThread;
-class QMutex;
 struct Tox;
 class AudioFilterer;
 
@@ -103,6 +98,9 @@ signals:
 private:
     Audio();
     ~Audio();
+
+    void _cleanupInput();
+    void _cleanupOutput();
 
 private:
     static Audio* instance;
