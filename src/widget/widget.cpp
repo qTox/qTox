@@ -122,15 +122,15 @@ void Widget::init()
 
     icon_size = 15;
     statusOnline = new QAction(this);
-    statusOnline->setIcon(getStatusIcon(Status::Online, icon_size, icon_size));
+    statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
-    statusAway->setIcon(getStatusIcon(Status::Away, icon_size, icon_size));
+    statusAway->setIcon(prepareIcon(getStatusIconPath(Status::Away), icon_size, icon_size));
     connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
 
     statusBusy = new QAction(this);
-    statusBusy->setIcon(getStatusIcon(Status::Busy, icon_size, icon_size));
+    statusBusy->setIcon(prepareIcon(getStatusIconPath(Status::Busy), icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -563,7 +563,7 @@ void Widget::onBadProxyCore()
 void Widget::onStatusSet(Status status)
 {
     ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(getStatusIcon(status, icon_size, icon_size));
+    ui->statusButton->setIcon(prepareIcon(getStatusIconPath(status), icon_size, icon_size));
     updateIcons();
 }
 
@@ -1657,12 +1657,12 @@ void Widget::onTryCreateTrayIcon()
             QStyle *style = qApp->style();
 
             actionLogout = new QAction(tr("&Logout"), this);
-            actionLogout->setIcon(style->standardIcon(QStyle::SP_DialogResetButton));
+            actionLogout->setIcon(prepareIcon("://img/others/logout-icon.svg", icon_size, icon_size));
             connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
             actionQuit = new QAction(tr("&Exit"), this);
             actionQuit->setMenuRole(QAction::QuitRole);
-            actionQuit->setIcon(style->standardIcon(QStyle::SP_DialogDiscardButton));
+            actionQuit->setIcon(prepareIcon("://ui/rejectCall/rejectCall.svg", icon_size, icon_size));
             connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
             trayMenu->addAction(statusOnline);
@@ -1885,7 +1885,7 @@ QString Widget::getStatusIconPath(Status status)
     }
 }
 
-inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
+inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
 {
 #ifdef Q_OS_LINUX
 
@@ -1900,17 +1900,17 @@ inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
     {
         if (w > 0 && h > 0)
         {
-            return getStatusIconPixmap(status, w, h);
+            return getStatusIconPixmap(path, w, h);
         }
     }
 #endif
-    return QIcon(getStatusIconPath(status));
+    return QIcon(path);
 }
 
-QPixmap Widget::getStatusIconPixmap(Status status, uint32_t w, uint32_t h)
+QPixmap Widget::getStatusIconPixmap(QString path, uint32_t w, uint32_t h)
 {
     QPixmap pix(w, h);
-    pix.load(getStatusIconPath(status));
+    pix.load(path);
     return pix;
 }
 
