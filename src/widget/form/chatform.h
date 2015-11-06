@@ -34,6 +34,7 @@ class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
 class OfflineMsgEngine;
+class CoreAV;
 
 class ChatForm : public GenericChatForm
 {
@@ -52,32 +53,14 @@ public:
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
-    void startCall(uint32_t FriendId, bool video);
-    void answerCall(int callId);
-    void hangupCall(int callId);
-    void cancelCall(int callId, uint32_t FriendId);
-    void rejectCall(int callId);
-    void micMuteToggle(int callId);
-    void volMuteToggle(int callId);
     void aliasChanged(const QString& alias);
 
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onAvInvite(uint32_t FriendId, int CallId, bool video);
-    void onAvStart(uint32_t FriendId, int CallId, bool video);
-    void onAvCancel(uint32_t FriendId, int CallId);
-    void onAvEnd(uint32_t FriendId, int CallId);
-    void onAvRinging(uint32_t FriendId, int CallId, bool video);
-    void onAvStarting(uint32_t FriendId, int CallId, bool video);
-    void onAvEnding(uint32_t FriendId, int CallId);
-    void onAvRequestTimeout(uint32_t FriendId, int CallId);
-    void onAvPeerTimeout(uint32_t FriendId, int CallId);
-    void onAvMediaChange(uint32_t FriendId, int CallId, bool video);
-    void onAvCallFailed(uint32_t FriendId);
-    void onAvRejected(uint32_t FriendId, int CallId);
-    void onMicMuteToggle();
-    void onVolMuteToggle();
+    void onAvInvite(uint32_t FriendId, bool video);
+    void onAvStart(uint32_t FriendId, bool video);
+    void onAvEnd(uint32_t FriendId);
     void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
     void onAvatarRemoved(uint32_t FriendId);
 
@@ -91,6 +74,8 @@ private slots:
     void onHangupCallTriggered();
     void onCancelCallTriggered();
     void onRejectCallTriggered();
+    void onMicMuteToggle();
+    void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
     void onLoadHistory();
     void onUpdateTime();
@@ -102,6 +87,7 @@ private slots:
 
 private:
     void retranslateUi();
+    void showOutgoingCall(bool video);
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
@@ -112,9 +98,9 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
+    CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;
-    int callId;
     QLabel *callDuration;
     QTimer *callDurationTimer;
     QTimer typingTimer;
@@ -129,6 +115,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     CallConfirmWidget *callConfirm;
     void enableCallButtons();
+    void disableCallButtons();
     bool isTyping;
     void SendMessageStr(QString msg);
 };

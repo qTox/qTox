@@ -22,6 +22,7 @@
 #define AUDIO_H
 
 #include <QObject>
+#include <QHash>
 #include <QMutexLocker>
 #include <atomic>
 #include <cmath>
@@ -34,9 +35,19 @@
  #include <AL/alc.h>
 #endif
 
+class QString;
+class QByteArray;
 class QTimer;
+class QThread;
+class QMutex;
 struct Tox;
 class AudioFilterer;
+
+// Public default audio settings
+static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
+static constexpr uint32_t AUDIO_FRAME_DURATION = 20; ///< In milliseconds
+static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, but that's a sane default
 
 class Audio : public QObject
 {
@@ -59,12 +70,20 @@ public:
     bool openOutput(const QString& outDevDescr);
 
     bool isInputReady();
-    bool isOutputClosed();
+    bool isOutputReady();
 
+    static void createSource(ALuint* source);
+    static void deleteSource(ALuint* source);
+
+    void startLoop();
+    void stopLoop();
     void playMono16Sound(const QByteArray& data);
-    bool tryCaptureSamples(uint8_t* buf, int framesize);
+    void playMono16Sound(const char* path);
+    bool tryCaptureSamples(int16_t *buf, int samples);
 
-    static void playGroupAudioQueued(Tox*, int group, int peer, const int16_t* data,
+    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
+
+    static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
 #ifdef QTOX_FILTER_AUDIO
@@ -84,8 +103,6 @@ signals:
 private:
     Audio();
     ~Audio();
-
-    void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
 
 private:
     static Audio* instance;

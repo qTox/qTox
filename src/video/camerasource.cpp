@@ -37,8 +37,7 @@ CameraSource* CameraSource::instance{nullptr};
 CameraSource::CameraSource()
     : deviceName{"none"}, device{nullptr}, mode(VideoMode{0,0,0}),
       cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
-      biglock{false}, freelistLock{false},
-      isOpen{false}, subscriptions{0}
+      _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
     subscriptions = 0;
     av_register_all();
@@ -73,15 +72,12 @@ void CameraSource::open(const QString deviceName)
 
 void CameraSource::open(const QString DeviceName, VideoMode Mode)
 {
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    streamBlocker = true;
+    QMutexLocker l{&biglock};
 
     if (DeviceName == deviceName && Mode == mode)
     {
-        biglock = false;
+        streamBlocker = false;
         return;
     }
 
@@ -90,12 +86,12 @@ void CameraSource::open(const QString DeviceName, VideoMode Mode)
 
     deviceName = DeviceName;
     mode = Mode;
-    isOpen = (deviceName != "none");
+    _isOpen = (deviceName != "none");
 
-    if (subscriptions && isOpen)
+    if (subscriptions && _isOpen)
         openDevice();
 
-    biglock = false;
+    streamBlocker = false;
 }
 
 void CameraSource::close()
@@ -103,20 +99,17 @@ void CameraSource::close()
     open("none");
 }
 
+bool CameraSource::isOpen()
+{
+    return _isOpen;
+}
+
 CameraSource::~CameraSource()
 {
-    // Fast lock, in case our stream thread is running
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker l{&biglock};
 
-    if (!isOpen)
-    {
-        biglock = false;
+    if (!_isOpen)
         return;
-    }
 
     // Free all remaining VideoFrame
     // Locking must be done precisely this way to avoid races
@@ -133,13 +126,16 @@ CameraSource::~CameraSource()
     if (cctxOrig)
         avcodec_close(cctxOrig);
 
-    for(int i = 0; i < subscriptions; i++)
-        device->close();
+    if (device)
+    {
+        for(int i = 0; i < subscriptions; i++)
+            device->close();
+        device = nullptr;
+    }
 
-    device = nullptr;
     // Memfence so the stream thread sees a nullptr device
     std::atomic_thread_fence(std::memory_order_release);
-    biglock=false;
+    l.unlock();
 
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
@@ -148,24 +144,17 @@ CameraSource::~CameraSource()
 
 bool CameraSource::subscribe()
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker l{&biglock};
 
-    if (!isOpen)
+    if (!_isOpen)
     {
         ++subscriptions;
-        biglock = false;
         return true;
     }
 
     if (openDevice())
     {
         ++subscriptions;
-        biglock = false;
         return true;
     }
     else
@@ -176,7 +165,6 @@ bool CameraSource::subscribe()
         videoStreamIndex = -1;
         // Memfence so the stream thread sees a nullptr device
         std::atomic_thread_fence(std::memory_order_release);
-        biglock = false;
         return false;
     }
 
@@ -184,31 +172,24 @@ bool CameraSource::subscribe()
 
 void CameraSource::unsubscribe()
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker l{&biglock};
 
-    if (!isOpen)
+    if (!_isOpen)
     {
-        subscriptions--;
-        biglock = false;
+        --subscriptions;
         return;
     }
 
     if (!device)
     {
         qWarning() << "Unsubscribing with zero subscriber";
-        biglock = false;
         return;
     }
 
     if (subscriptions - 1 == 0)
     {
         closeDevice();
-        biglock = false;
+        l.unlock();
 
         // Synchronize with our stream thread
         while (streamFuture.isRunning())
@@ -217,7 +198,6 @@ void CameraSource::unsubscribe()
     else
     {
         device->close();
-        biglock = false;
     }
     subscriptions--;
 
@@ -225,6 +205,8 @@ void CameraSource::unsubscribe()
 
 bool CameraSource::openDevice()
 {
+    qDebug() << "Opening device "<<deviceName;
+
     if (device)
     {
         device->open();
@@ -296,6 +278,8 @@ bool CameraSource::openDevice()
 
 void CameraSource::closeDevice()
 {
+    qDebug() << "Closing device "<<deviceName;
+
     // Free all remaining VideoFrame
     // Locking must be done precisely this way to avoid races
     for (int i = 0; i < freelist.size(); i++)
@@ -341,18 +325,13 @@ void CameraSource::stream()
             if (!frameFinished)
                 return;
 
-            // Broadcast a new VideoFrame, it takes ownership of the AVFrame
-            {
-                bool expected = false;
-                while (!freelistLock.compare_exchange_weak(expected, true))
-                    expected = false;
-            }
+            freelistLock.lock();
 
             int freeFreelistSlot = getFreelistSlotLockless();
             auto frameFreeCb = std::bind(&CameraSource::freelistCallback, this, freeFreelistSlot);
             std::shared_ptr<VideoFrame> vframe = std::make_shared<VideoFrame>(frame, frameFreeCb);
             freelist.append(vframe);
-            freelistLock = false;
+            freelistLock.unlock();
             emit frameAvailable(vframe);
         }
 
@@ -361,39 +340,30 @@ void CameraSource::stream()
     };
 
     forever {
-        // Fast lock
-        {
-            bool expected = false;
-            while (!biglock.compare_exchange_weak(expected, true))
-                expected = false;
-        }
+        biglock.lock();
 
         // When a thread makes device null, it releases it, so we acquire here
         std::atomic_thread_fence(std::memory_order_acquire);
         if (!device)
         {
-            biglock = false;
+            biglock.unlock();
             return;
         }
 
         streamLoop();
 
         // Give a chance to other functions to pick up the lock if needed
-        biglock = false;
+        biglock.unlock();
+        while (streamBlocker)
+            QThread::yieldCurrentThread();
         QThread::yieldCurrentThread();
     }
 }
 
 void CameraSource::freelistCallback(int freelistIndex)
 {
-    // Fast spinlock
-    {
-        bool expected = false;
-        while (!freelistLock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker l{&freelistLock};
     freelist[freelistIndex].reset();
-    freelistLock = false;
 }
 
 int CameraSource::getFreelistSlotLockless()

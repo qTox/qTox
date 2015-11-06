@@ -60,18 +60,15 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
 
 void MicFeedbackWidget::timerEvent(QTimerEvent*)
 {
-    const int framesize = (20 * 48000) / 1000;
-    const int bufsize = framesize * 2;
-    uint8_t buff[bufsize];
-    memset(buff, 0, bufsize);
+    const int framesize = AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS;
+    int16_t buff[framesize] = {0};
 
-    if (Audio::getInstance().tryCaptureSamples(buff, framesize))
+    if (Audio::getInstance().tryCaptureSamples(buff, AUDIO_FRAME_SAMPLE_COUNT))
     {
         double max = 0;
-        int16_t* buffReal = reinterpret_cast<int16_t*>(&buff[0]);
 
-        for (int i = 0; i < bufsize / 2; ++i)
-            max = std::max(max, fabs(buffReal[i] / 32767.0));
+        for (int i = 0; i < framesize; ++i)
+            max = std::max(max, fabs(buff[i] / 32767.0));
 
         if (max > current)
             current = max;
