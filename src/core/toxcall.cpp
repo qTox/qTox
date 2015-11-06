@@ -35,7 +35,7 @@ ToxCall::ToxCall(uint32_t CallId)
 #endif
 }
 
-ToxCall::ToxCall(ToxCall&& other)
+ToxCall::ToxCall(ToxCall&& other) noexcept
     : sendAudioTimer{other.sendAudioTimer}, callId{other.callId},
       inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol},
       alSource{other.alSource}
@@ -68,7 +68,7 @@ ToxCall::~ToxCall()
 #endif
 }
 
-const ToxCall& ToxCall::operator=(ToxCall&& other)
+const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     sendAudioTimer = other.sendAudioTimer;
     other.sendAudioTimer = nullptr;
@@ -142,7 +142,7 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     }
 }
 
-ToxFriendCall::ToxFriendCall(ToxFriendCall&& other)
+ToxFriendCall::ToxFriendCall(ToxFriendCall&& other) noexcept
     : ToxCall(move(other)),
       videoEnabled{other.videoEnabled}, nullVideoBitrate{other.nullVideoBitrate},
       videoSource{other.videoSource}, state{other.state},
@@ -172,7 +172,7 @@ ToxFriendCall::~ToxFriendCall()
     }
 }
 
-const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other)
+const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
 {
     ToxCall::operator =(move(other));
     videoEnabled = other.videoEnabled;
@@ -204,12 +204,12 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV &av)
     sendAudioTimer->start();
 }
 
-ToxGroupCall::ToxGroupCall(ToxGroupCall&& other)
+ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
     : ToxCall(move(other))
 {
 }
 
-const ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other)
+const ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
 {
     ToxCall::operator =(move(other));
 
