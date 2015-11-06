@@ -92,8 +92,8 @@ public:
 
     void reloadTheme();
     static QString getStatusIconPath(Status status);
-    static inline QIcon getStatusIcon(Status status, uint32_t w=0, uint32_t h=0);
-    static QPixmap getStatusIconPixmap(Status status, uint32_t w, uint32_t h);
+    static inline QIcon prepareIcon(QString path, uint32_t w=0, uint32_t h=0);
+    static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
 
