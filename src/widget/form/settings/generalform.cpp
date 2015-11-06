@@ -76,7 +76,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
     bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
-    bodyUI->lightTrayIcon->setEnabled(showSystemTray);
 
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
