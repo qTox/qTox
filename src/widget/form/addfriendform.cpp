@@ -149,7 +149,7 @@ void AddFriendForm::onIdChanged(const QString &id)
     bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
 
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-    QString toxIdComment(tr("either 76 hexadecimal characters or name@domain.com", "Tox ID format description"));
+    QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
 
     if(isValidId)
     {
