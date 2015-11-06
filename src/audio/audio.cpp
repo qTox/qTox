@@ -449,7 +449,6 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
     }
     else
     {
-        qDebug() << "Dropped frame";
         return;
     }
 
