@@ -552,7 +552,8 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
                  && !(state & TOXAV_FRIEND_CALL_STATE_SENDING_V))
         {
             qDebug() << "Friend"<<friendNum<<"stopped sending video";
-            call.videoSource->stopSource();
+            if (call.videoSource)
+                call.videoSource->stopSource();
         }
         else if (!(call.state & TOXAV_FRIEND_CALL_STATE_SENDING_V)
                  && (state & TOXAV_FRIEND_CALL_STATE_SENDING_V))
@@ -560,7 +561,8 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
             // Workaround toxav sometimes firing callbacks for "send last frame" -> "stop sending video"
             // out of orders (even though they were sent in order by the other end).
             // We simply stop the videoSource from emitting anything while the other end says it's not sending
-            call.videoSource->restartSource();
+            if (call.videoSource)
+                call.videoSource->restartSource();
         }
 
         call.state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
@@ -608,6 +610,10 @@ void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_
     if (!calls.contains(friendNum))
         return;
 
+    ToxFriendCall& call = calls[friendNum];
+    if (!call.videoSource)
+        return;
+
     vpx_image frame;
     frame.d_h = h;
     frame.d_w = w;
@@ -618,6 +624,5 @@ void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_
     frame.stride[1] = ustride;
     frame.stride[2] = vstride;
 
-    ToxFriendCall& call = calls[friendNum];
     call.videoSource->pushFrame(&frame);
 }
