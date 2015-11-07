@@ -41,6 +41,7 @@
 #include <QDebug>
 #include <QInputDialog>
 #include <QCollator>
+#include <QClipboard>
 #include <cassert>
 
 FriendWidget::FriendWidget(int FriendId, QString id)
@@ -81,6 +82,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
 
     menu.addSeparator();
+    QAction* copyPublicKey = menu.addAction(tr("Copy public key"));
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
     QMap<QAction*, Group*> groupActions;
 
@@ -206,6 +208,10 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 friendList->addCircleWidget(FriendList::findFriend(friendId)->getFriendWidget());
             else
                 Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+        }
+        else if (selectedItem == copyPublicKey)
+        {
+            emit copyFriendIdToClipboard(friendId);
         }
         else if (groupActions.contains(selectedItem))
         {
