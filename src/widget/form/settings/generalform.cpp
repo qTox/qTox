@@ -38,8 +38,48 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-static QStringList locales = {"bg", "cs", "de", "el", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
-static QStringList langs = {"Български", "Čeština", "Deutsch", "Ελληνικά", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
+static QStringList locales = {"bg",
+                              "cs",
+                              "de",
+                              "el",
+                              "en",
+                              "es",
+                              "fr",
+                              "hr",
+                              "hu",
+                              "it",
+                              "lt",
+                              "nl",
+                              "no_nb",
+                              "pl",
+                              "pt",
+                              "ru",
+                              "sl",
+                              "fi",
+                              "sv",
+                              "uk",
+                              "zh"};
+static QStringList langs = {"Български",
+                            "Čeština",
+                            "Deutsch",
+                            "Ελληνικά",
+                            "English",
+                            "Español",
+                            "Français",
+                            "Hrvatski",
+                            "Magyar",
+                            "Italiano",
+                            "Lietuvių",
+                            "Nederlands",
+                            "Norsk Bokmål",
+                            "Polski",
+                            "Português",
+                            "Русский",
+                            "Slovenščina",
+                            "Suomi",
+                            "Svenska",
+                            "Українська",
+                            "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
