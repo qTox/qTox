@@ -281,7 +281,7 @@ bool Audio::openOutput(const QString &outDevDescr)
     if (core)
         core->getAv()->resetCallSources(); // Force to regen each group call's sources
 
-    return true;
+    return (bool)alOutDev;
 }
 
 /**
