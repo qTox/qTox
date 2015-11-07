@@ -70,6 +70,12 @@ public:
     bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
+
+    inline bool isMainWindow() const
+    {
+        return isWindow() && objectName() == QStringLiteral("MainWindow");
+    }
+
     void updateIcons();
     void clearContactsList();
 
