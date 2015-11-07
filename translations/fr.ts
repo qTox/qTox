@@ -25,6 +25,12 @@
         <translatorcomment>FPS → IPS ou i/s ?</translatorcomment>
         <translation> à %1 FPS</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/avform.cpp" line="253"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="284"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
