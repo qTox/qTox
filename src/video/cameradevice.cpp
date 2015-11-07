@@ -264,6 +264,10 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     else if (iformat->name == QString("dshow"))
         devices += DirectShow::getDeviceList();
 #endif
+#ifdef Q_OS_LINUX
+    else if (iformat->name == QString("video4linux2,v4l2"))
+        devices += v4l2::getDeviceList();
+#endif
     else
         devices += getRawDeviceListGeneric();
 
