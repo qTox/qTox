@@ -243,9 +243,6 @@ void AVForm::getVideoDevices()
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
     bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
-
-    QString devName = videoDeviceList[videoDevIndex].first;
-    camera.open(devName);
 }
 
 void AVForm::getAudioInDevices()

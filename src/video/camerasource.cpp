@@ -172,7 +172,9 @@ bool CameraSource::subscribe()
 
 void CameraSource::unsubscribe()
 {
+    streamBlocker = true;
     QMutexLocker l{&biglock};
+    streamBlocker = false;
 
     if (!_isOpen)
     {
@@ -200,7 +202,6 @@ void CameraSource::unsubscribe()
         device->close();
     }
     subscriptions--;
-
 }
 
 bool CameraSource::openDevice()
