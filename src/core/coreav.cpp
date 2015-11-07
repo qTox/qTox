@@ -29,6 +29,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QCoreApplication>
+#include <QtConcurrent/QtConcurrentRun>
 
 #ifdef QTOX_FILTER_AUDIO
 #include "src/audio/audiofilterer.h"
@@ -468,21 +469,26 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
 
-    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    // Run this slow callback asynchronously on the AV thread to avoid deadlocks with what our caller (toxcore) holds
+    // Also run the code to switch to the CoreAV thread in yet another thread, in case CoreAV
+    // has threadSwitchLock and wants a toxcore lock that our call stack is holding...
     if (QThread::currentThread() != self->coreavThread.get())
     {
-        // We assume the original caller doesn't come from the CoreAV thread here
-        while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
-            QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
+        QtConcurrent::run([=](){
+            // We assume the original caller doesn't come from the CoreAV thread here
+            while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
+                QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
 
-        return (void)QMetaObject::invokeMethod(self, "callCallback", Qt::QueuedConnection,
-                                                Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, _self));
+            QMetaObject::invokeMethod(self, "callCallback", Qt::QueuedConnection,
+                                                    Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                                    Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, _self));
+        });
+        return;
     }
 
     if (self->calls.contains(friendNum))
     {
-        /// NOTE: Hanging up from a callback is supposed to be UB,
+        /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
         /// we'll always reach this point through a non-blocking queud connection, so not in the callback.
         qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
@@ -508,15 +514,21 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 {
     CoreAV* self = static_cast<CoreAV*>(_self);
 
-    // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
+    // Run this slow callback asynchronously on the AV thread to avoid deadlocks with what our caller (toxcore) holds
+    // Also run the code to switch to the CoreAV thread in yet another thread, in case CoreAV
+    // has threadSwitchLock and wants a toxcore lock that our call stack is holding...
     if (QThread::currentThread() != self->coreavThread.get())
     {
-        // We assume the original caller doesn't come from the CoreAV thread here
-        while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
-            QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
-        return (void)QMetaObject::invokeMethod(self, "stateCallback", Qt::QueuedConnection,
+        QtConcurrent::run([=](){
+            // We assume the original caller doesn't come from the CoreAV thread here
+            while (self->threadSwitchLock.test_and_set(std::memory_order_acquire))
+                QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
+
+            QMetaObject::invokeMethod(self, "stateCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
                                                 Q_ARG(uint32_t, state), Q_ARG(void*, _self));
+        });
+        return;
     }
 
     if(!self->calls.contains(friendNum))
