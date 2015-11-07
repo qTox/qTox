@@ -107,6 +107,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
 
 FileTransferWidget::~FileTransferWidget()
 {
+    Translator::unregister(this);
     delete ui;
 }
 
