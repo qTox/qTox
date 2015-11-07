@@ -243,11 +243,13 @@ void Widget::init()
     connect(ui->friendList, &QWidget::customContextMenuRequested, this, &Widget::friendListContextMenu);
 
     // keyboard shortcuts
-    new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+
+    if (!isMainWindow())
+        new QShortcut(Qt::CTRL + Qt::Key_W, this, SLOT(close()));
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
