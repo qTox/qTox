@@ -54,8 +54,8 @@ private:
 private slots:
 
     // audio
-    void onInDevChanged(const QString& deviceDescriptor);
-    void onOutDevChanged(const QString& deviceDescriptor);
+    void onInDevChanged(QString deviceDescriptor);
+    void onOutDevChanged(QString deviceDescriptor);
     void onFilterAudioToggled(bool filterAudio);
     void on_playbackSlider_valueChanged(int value);
     void on_microphoneSlider_valueChanged(int value);

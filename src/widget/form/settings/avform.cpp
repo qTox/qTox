@@ -253,6 +253,7 @@ void AVForm::getAudioInDevices()
     QString settingsInDev = Settings::getInstance().getInDev();
     int inDevIndex = 0;
     bodyUI->inDevCombobox->clear();
+    bodyUI->inDevCombobox->addItem(tr("None"));
     const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
@@ -283,6 +284,7 @@ void AVForm::getAudioOutDevices()
     QString settingsOutDev = Settings::getInstance().getOutDev();
     int outDevIndex = 0;
     bodyUI->outDevCombobox->clear();
+    bodyUI->outDevCombobox->addItem(tr("None"));
     const ALchar *pDeviceList;
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
         pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
@@ -314,22 +316,25 @@ void AVForm::getAudioOutDevices()
     bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
 }
 
-void AVForm::onInDevChanged(const QString &deviceDescriptor)
+void AVForm::onInDevChanged(QString deviceDescriptor)
 {
+    if (!bodyUI->inDevCombobox->currentIndex())
+        deviceDescriptor = "none";
     Settings::getInstance().setInDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    if (audio.isInputReady())
+    if (audio.isInputSubscribed())
         audio.openInput(deviceDescriptor);
 }
 
-void AVForm::onOutDevChanged(const QString& deviceDescriptor)
+void AVForm::onOutDevChanged(QString deviceDescriptor)
 {
+    if (!bodyUI->outDevCombobox->currentIndex())
+        deviceDescriptor = "none";
     Settings::getInstance().setOutDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    if (audio.isOutputReady())
-        audio.openOutput(deviceDescriptor);
+    audio.openOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)

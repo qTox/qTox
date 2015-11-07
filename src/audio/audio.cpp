@@ -191,6 +191,9 @@ void Audio::openInput(const QString& inDevDescr)
     }
     alInDev = nullptr;
 
+    if (inDevDescr == "none")
+        return;
+
     /// TODO: Try to actually detect if our audio source is stereo
     int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
@@ -235,35 +238,43 @@ bool Audio::openOutput(const QString &outDevDescr)
 
     auto* tmp = alOutDev;
     alOutDev = nullptr;
-    if (outDevDescr.isEmpty())
-        alOutDev = alcOpenDevice(nullptr);
-    else
-        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
-    if (alOutDev)
+    if (outDevDescr != "none")
     {
-        if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
-            alcDestroyContext(alContext);
+        if (outDevDescr.isEmpty())
+            alOutDev = alcOpenDevice(nullptr);
+        else
+            alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
-        if (tmp)
-            alcCloseDevice(tmp);
-
-        alContext = alcCreateContext(alOutDev, nullptr);
-        if (alcMakeContextCurrent(alContext))
+        if (alOutDev)
         {
-            alGenSources(1, &alMainSource);
+            if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
+                alcDestroyContext(alContext);
+
+            if (tmp)
+                alcCloseDevice(tmp);
+
+            alContext = alcCreateContext(alOutDev, nullptr);
+            if (alcMakeContextCurrent(alContext))
+            {
+                alGenSources(1, &alMainSource);
+            }
+            else
+            {
+                qWarning() << "Cannot create output audio context";
+                alcCloseDevice(alOutDev);
+                return false;
+            }
         }
         else
         {
-            qWarning() << "Cannot create output audio context";
-            alcCloseDevice(alOutDev);
+            qWarning() << "Cannot open output audio device " + outDevDescr;
             return false;
         }
     }
     else
     {
-        qWarning() << "Cannot open output audio device " + outDevDescr;
-        return false;
+        closeOutput();
     }
 
     Core* core = Core::getInstance();
@@ -306,9 +317,6 @@ void Audio::closeOutput()
 {
     qDebug() << "Closing output";
     QMutexLocker locker(&audioOutLock);
-
-    if (inputSubscriptions > 0)
-        return;
 
     if (alContext && alcMakeContextCurrent(nullptr) == ALC_TRUE)
     {
@@ -470,6 +478,12 @@ bool Audio::isInputReady()
 {
     QMutexLocker locker(&audioInLock);
     return alInDev && inputSubscriptions;
+}
+
+bool Audio::isInputSubscribed()
+{
+    // No lock, inputSubscriptions is atomic!
+    return inputSubscriptions;
 }
 
 /**
