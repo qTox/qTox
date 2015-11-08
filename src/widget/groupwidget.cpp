@@ -60,6 +60,11 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     Translator::registerHandler(std::bind(&GroupWidget::retranslateUi, this), this);
 }
 
+GroupWidget::~GroupWidget()
+{
+    Translator::unregister(this);
+}
+
 void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
 {
     if (!active)
