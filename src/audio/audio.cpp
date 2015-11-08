@@ -136,22 +136,12 @@ If the input device is not open, it will be opened before capturing.
 */
 void Audio::subscribeInput()
 {
-    qDebug() << "subscribing input" << inputSubscriptions;
-
-    if (!alInDev) {
-        openInput(Settings::getInstance().getInDev());
-#if (!FIX_SND_PCM_PREPARE_BUG)
-        if (alInDev) {
-            qDebug() << "starting capture";
-            alcCaptureStart(alInDev);
-        }
-#endif
-    }
-
-    if (!alOutDev)
-        openOutput(Settings::getInstance().getOutDev());
+    QMutexLocker locker(&audioInLock);
+    if (!alInDev)
+        initInput(Settings::getInstance().getInDev());
 
     inputSubscriptions++;
+    qDebug() << "Subscribed to audio input device [" << inputSubscriptions << " subscriptions ]";
 }
 
 /**
@@ -177,11 +167,17 @@ Open an input device, use before suscribing
 void Audio::openInput(const QString& inDevDescr)
 {
     QMutexLocker lock(&audioInLock);
+    initInput(inDevDescr);
+}
 
-    cleanupInput();
+void Audio::initInput(const QString& inDevDescr)
+{
+    qDebug() << "Opening audio input" << inDevDescr;
 
     if (inDevDescr == "none")
         return;
+
+    assert(!alInDev);
 
     /// TODO: Try to actually detect if our audio source is stereo
     int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
@@ -213,9 +209,9 @@ void Audio::openInput(const QString& inDevDescr)
                                        sampleRate, stereoFlag, bufSize);
 
     if (alInDev)
-        qDebug() << "Opening audio input "<<inDevDescr;
+        qDebug() << "Opened audio input" << inDevDescr;
     else
-        qWarning() << "Cannot open input audio device " + inDevDescr;
+        qWarning() << "Cannot open input audio device" << inDevDescr;
 
     Core* core = Core::getInstance();
     if (core)
@@ -239,15 +235,20 @@ Open an output device
 */
 bool Audio::openOutput(const QString &outDevDescr)
 {
-    qDebug() << "Opening audio output " + outDevDescr;
     QMutexLocker lock(&audioOutLock);
+    return initOutput(outDevDescr);
+}
 
-    cleanupOutput();
+bool Audio::initOutput(const QString& outDevDescr)
+{
+    qDebug() << "Opening audio output" << outDevDescr;
 
+    if (outDevDescr == "none")
+        return true;
 
-    if (outDevDescr != "none")
-    {
-        if (outDevDescr.isEmpty())
+    assert(!alOutDev);
+
+    if (outDevDescr.isEmpty())
         {
             // Attempt to default to the first available audio device.
             const ALchar *pDeviceList;
@@ -271,39 +272,34 @@ bool Audio::openOutput(const QString &outDevDescr)
                 alOutDev = alcOpenDevice(nullptr);
             }
         }
-        else
-            alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
+    else
+        alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
-        if (alOutDev)
+    if (alOutDev)
+    {
+        alContext = alcCreateContext(alOutDev, nullptr);
+        if (alcMakeContextCurrent(alContext))
         {
-            alContext = alcCreateContext(alOutDev, nullptr);
-            if (alcMakeContextCurrent(alContext))
-            {
-                alGenSources(1, &alMainSource);
-            }
-            else
-            {
-                qWarning() << "Cannot create output audio context";
-                alcCloseDevice(alOutDev);
-                return false;
-            }
+            alGenSources(1, &alMainSource);
         }
         else
         {
-            qWarning() << "Cannot open output audio device " + outDevDescr;
+            qWarning() << "Cannot create output audio context";
+            alcCloseDevice(alOutDev);
             return false;
         }
     }
     else
     {
-        closeOutput();
+        qWarning() << "Cannot open output audio device" << outDevDescr;
+        return false;
     }
 
     Core* core = Core::getInstance();
     if (core)
         core->getAv()->resetCallSources(); // Force to regen each group call's sources
 
-    return (bool)alOutDev;
+    return alOutDev;
 }
 
 /**
@@ -335,7 +331,7 @@ void Audio::playMono16Sound(const QByteArray& data)
 
     if (!alOutDev)
     {
-        if (!openOutput(Settings::getInstance().getOutDev()))
+        if (!initOutput(Settings::getInstance().getOutDev()))
             return;
     }
 

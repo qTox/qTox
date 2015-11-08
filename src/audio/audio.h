@@ -101,6 +101,8 @@ private:
     Audio();
     ~Audio();
 
+    void initInput(const QString& inDevDescr);
+    bool initOutput(const QString& outDevDescr);
     void cleanupInput();
     void cleanupOutput();
 
