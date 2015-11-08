@@ -335,21 +335,18 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
 {
     if (!bodyUI->inDevCombobox->currentIndex())
         deviceDescriptor = "none";
-    Settings::getInstance().setInDev(deviceDescriptor);
 
-    Audio& audio = Audio::getInstance();
-    if (audio.isInputSubscribed())
-        audio.openInput(deviceDescriptor);
+    Settings::getInstance().setInDev(deviceDescriptor);
+    Audio::getInstance().reinitInput(deviceDescriptor);
 }
 
 void AVForm::onOutDevChanged(QString deviceDescriptor)
 {
     if (!bodyUI->outDevCombobox->currentIndex())
         deviceDescriptor = "none";
-    Settings::getInstance().setOutDev(deviceDescriptor);
 
-    Audio& audio = Audio::getInstance();
-    audio.openOutput(deviceDescriptor);
+    Settings::getInstance().setOutDev(deviceDescriptor);
+    Audio::getInstance().reinitOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)

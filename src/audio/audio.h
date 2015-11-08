@@ -81,7 +81,6 @@ public:
     }
 
     bool isInputReady();
-    bool isInputSubscribed();
     bool isOutputReady();
 
     static void createSource(ALuint* source);

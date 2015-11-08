@@ -527,12 +527,6 @@ bool Audio::isInputReady()
     return alInDev;
 }
 
-bool Audio::isInputSubscribed()
-{
-    // No lock, inputSubscriptions is atomic!
-    return inputSubscriptions;
-}
-
 /**
 Returns true if the output device is open
 */
