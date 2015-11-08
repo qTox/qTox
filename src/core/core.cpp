@@ -106,10 +106,6 @@ Core::~Core()
     }
 
     deadifyTox();
-
-    Audio& audio = Audio::getInstance();
-    audio.closeInput();
-    audio.closeOutput();
 }
 
 Core* Core::getInstance()

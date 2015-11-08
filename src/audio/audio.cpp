@@ -73,6 +73,8 @@ Audio::Audio()
 
 Audio::~Audio()
 {
+    closeInput();
+    closeOutput();
     audioThread->exit();
     audioThread->wait();
     if (audioThread->isRunning())
