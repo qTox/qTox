@@ -504,14 +504,13 @@ void Audio::cleanupOutput()
         alSourceStop(alMainSource);
         alDeleteSources(1, &alMainSource);
 
-        ALCdevice* device = alcGetContextsDevice(alContext);
         if (!alcMakeContextCurrent(nullptr))
             qWarning("Failed to clear current audio context.");
 
         alcDestroyContext(alContext);
         alContext = nullptr;
 
-        if (alcCloseDevice(device))
+        if (alcCloseDevice(alOutDev))
             alOutDev = nullptr;
         else
             qWarning("Failed to close output.");
