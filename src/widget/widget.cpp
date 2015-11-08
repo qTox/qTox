@@ -133,11 +133,20 @@ void Widget::init()
     statusBusy->setIcon(prepareIcon(getStatusIconPath(Status::Busy), icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
-    layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":ui/friendList/friendList.css")));
+    actionLogout = new QAction(this);
+    actionLogout->setIcon(prepareIcon("://img/others/logout-icon.svg", icon_size, icon_size));
+    connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
-    profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
+    actionQuit = new QAction(this);
+    actionQuit->setMenuRole(QAction::QuitRole);
+    actionQuit->setIcon(prepareIcon("://ui/rejectCall/rejectCall.svg", icon_size, icon_size));
+    connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
+
+    layout()->setContentsMargins(0, 0, 0, 0);
+    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet("://ui/friendList/friendList.css")));
+
+    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), "://img/avatar_mask.svg");
+    profilePicture->setPixmap(QPixmap("://img/contact_dark.svg"));
     profilePicture->setClickable(true);
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
@@ -183,7 +192,6 @@ void Widget::init()
 
 #ifndef Q_OS_MAC
     ui->statusHead->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
-    ui->statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
 #endif
 
     contactListWidget = new FriendListWidget(this, Settings::getInstance().getGroupchatPosition());
@@ -1654,17 +1662,6 @@ void Widget::onTryCreateTrayIcon()
             updateIcons();
             trayMenu = new QMenu(this);
 
-            QStyle *style = qApp->style();
-
-            actionLogout = new QAction(tr("&Logout"), this);
-            actionLogout->setIcon(prepareIcon("://img/others/logout-icon.svg", icon_size, icon_size));
-            connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
-
-            actionQuit = new QAction(tr("&Exit"), this);
-            actionQuit->setMenuRole(QAction::QuitRole);
-            actionQuit->setIcon(prepareIcon("://ui/rejectCall/rejectCall.svg", icon_size, icon_size));
-            connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
-
             trayMenu->addAction(statusOnline);
             trayMenu->addAction(statusAway);
             trayMenu->addAction(statusBusy);
@@ -1874,14 +1871,14 @@ QString Widget::getStatusIconPath(Status status)
     switch (status)
     {
     case Status::Online:
-        return ":img/status/dot_online.svg";
+        return "://img/status/dot_online.svg";
     case Status::Away:
-        return ":img/status/dot_away.svg";
+        return "://img/status/dot_away.svg";
     case Status::Busy:
-        return ":img/status/dot_busy.svg";
+        return "://img/status/dot_busy.svg";
     case Status::Offline:
     default:
-        return ":img/status/dot_offline.svg";
+        return "://img/status/dot_offline.svg";
     }
 }
 
@@ -1900,7 +1897,14 @@ inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
     {
         if (w > 0 && h > 0)
         {
-            return getStatusIconPixmap(path, w, h);
+            QSvgRenderer renderer(path);
+
+            QPixmap pm(w, h);
+            pm.fill(Qt::transparent);
+            QPainter painter(&pm);
+            renderer.render(&painter, pm.rect());
+
+            return QIcon(pm);
         }
     }
 #endif
@@ -2061,6 +2065,8 @@ void Widget::retranslateUi()
     statusOnline->setText(tr("Online", "Button to set your status to 'Online'"));
     statusAway->setText(tr("Away", "Button to set your status to 'Away'"));
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
+    actionLogout->setText(tr("Logout", "Tray action menu to logout user"));
+    actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(SettingDialog));
