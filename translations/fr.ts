@@ -25,6 +25,12 @@
         <translatorcomment>FPS → IPS ou i/s ?</translatorcomment>
         <translation> à %1 FPS</translation>
     </message>
+    <message>
+        <location filename="../src/widget/form/settings/avform.cpp" line="253"/>
+        <location filename="../src/widget/form/settings/avform.cpp" line="284"/>
+        <source>None</source>
+        <translation>Aucun</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
@@ -152,22 +158,22 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>Version</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="100"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="131"/>
         <source>You are using a qTox nightly build.</source>
         <translation>Vous utilisez une construction nocturne de qTox.</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="104"/>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Identifiant de changement : &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="130"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="73"/>
         <source>toxcore version: $TOXCOREVERSION</source>
         <translation>Version de toxcore : $TOXCOREVERSION</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/aboutsettings.ui" line="140"/>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="83"/>
         <source>Qt version:</source>
         <translation>Version de Qt :</translation>
     </message>
@@ -430,7 +436,7 @@ Ignorer le proxy et se connecter directement à Internet ?</translation>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="385"/>
         <source>Calling %1</source>
-        <translation>Appel de %1</translation>
+        <translation>Appel de %1 en cours</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="964"/>
@@ -996,26 +1002,26 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Général</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="103"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="108"/>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="492"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="102"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="107"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="491"/>
         <source>None</source>
         <translation>Aucun</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="304"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Choisir un dossier de téléchargement</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="364"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="363"/>
         <source>Call active</source>
         <comment>popup title</comment>
         <translation>Appel en cours</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/generalform.cpp" line="365"/>
+        <location filename="../src/widget/form/settings/generalform.cpp" line="364"/>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Vous ne pouvez pas vous déconnecter avec un appel en cours !</translation>
@@ -1805,7 +1811,7 @@ Si vous obtenez cette erreur merci de la rapporter aux développeurs.</translati
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation type="unfinished">Aucun profil n&apos;est sélectionné.
+        <translation>Aucun profil n&apos;est sélectionné.
 
 Vous souhaiteriez en créer un.</translation>
     </message>
@@ -1894,35 +1900,35 @@ Vous souhaiteriez en créer un.</translation>
         <location filename="../src/nexus.cpp" line="311"/>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished">Affichage</translation>
+        <translation>Affichage</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="312"/>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished">Fenêtre</translation>
+        <translation>Fenêtre</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="313"/>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished">Minimiser</translation>
+        <translation>Minimiser</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="314"/>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished">Envoyer tout au premier plan</translation>
+        <translation>Envoyer tout au premier plan</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="327"/>
         <source>Exit Fullscreen</source>
-        <translation type="unfinished">Sortir du plein écran</translation>
+        <translation>Sortir du plein écran</translation>
     </message>
     <message>
         <location filename="../src/nexus.cpp" line="329"/>
         <source>Enter Fullscreen</source>
-        <translation type="unfinished">Plein écran</translation>
+        <translation>Plein écran</translation>
     </message>
 </context>
 <context>
@@ -2304,8 +2310,8 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>Aucune</translation>
     </message>
     <message>
-        <location filename="../src/video/cameradevice.cpp" line="273"/>
-        <location filename="../src/video/cameradevice.cpp" line="275"/>
+        <location filename="../src/video/cameradevice.cpp" line="277"/>
+        <location filename="../src/video/cameradevice.cpp" line="279"/>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Bureau</translation>
