@@ -106,6 +106,9 @@ private:
     Audio();
     ~Audio();
 
+    void cleanupInput();
+    void cleanupOutput();
+
 private:
     static Audio* instance;
 
