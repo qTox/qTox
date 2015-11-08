@@ -404,4 +404,6 @@ void AVForm::killVideoSurface()
 void AVForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
+    bodyUI->playbackMax->setText(QString::number(bodyUI->playbackSlider->value()));
+    bodyUI->microphoneMax->setText(QString::number(bodyUI->microphoneSlider->value()));
 }
