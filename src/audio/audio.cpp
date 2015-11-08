@@ -313,7 +313,7 @@ bool Audio::initOutput(const QString& outDevDescr)
         else
         {
             qWarning() << "Cannot create output audio context";
-            alcCloseDevice(alOutDev);
+            cleanupOutput();
             return false;
         }
     }
