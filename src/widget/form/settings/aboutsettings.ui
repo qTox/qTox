@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>494</width>
-        <height>554</height>
+        <width>496</width>
+        <height>565</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0,0">
@@ -53,8 +53,8 @@
           <string>Version</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="youareusing">
+          <item row="2" column="0">
+           <widget class="QLabel" name="toxCoreVersion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -66,24 +66,25 @@
               <family>Sans Serif</family>
              </font>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
+            <property name="mouseTracking">
+             <bool>true</bool>
             </property>
             <property name="text">
-             <string>You are using a qTox nightly build.</string>
-            </property>
-            <property name="indent">
-             <number>-1</number>
-            </property>
-            <property name="openExternalLinks">
-             <bool>true</bool>
+             <string>toxcore version: $TOXCOREVERSION</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="1">
+           <widget class="QLabel" name="qtVersion">
+            <property name="text">
+             <string>Qt version:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
            <widget class="QLabel" name="gitVersion">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -110,8 +111,8 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="toxCoreVersion">
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="youareusing">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -123,11 +124,17 @@
               <family>Sans Serif</family>
              </font>
             </property>
-            <property name="mouseTracking">
-             <bool>true</bool>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
             </property>
             <property name="text">
-             <string>toxcore version: $TOXCOREVERSION</string>
+             <string>You are using a qTox nightly build.</string>
+            </property>
+            <property name="indent">
+             <number>-1</number>
+            </property>
+            <property name="openExternalLinks">
+             <bool>true</bool>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>

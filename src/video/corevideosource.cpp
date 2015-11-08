@@ -26,18 +26,16 @@ extern "C" {
 
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}, deleteOnClose{false},
-      biglock{false}
+    stopped{false}
 {
 }
 
 void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    if (stopped)
+        return;
+
+    QMutexLocker locker(&biglock);
 
     std::shared_ptr<VideoFrame> vframe;
     AVFrame* avframe;
@@ -46,11 +44,11 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     int dstStride, srcStride, minStride;
 
     if (subscribers <= 0)
-        goto end;
+        return;
 
     avframe = av_frame_alloc();
     if (!avframe)
-        goto end;
+        return;
     avframe->width = width;
     avframe->height = height;
     avframe->format = AV_PIX_FMT_YUV420P;
@@ -59,7 +57,7 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     if (!buf)
     {
         av_frame_free(&avframe);
-        goto end;
+        return;
     }
     avframe->opaque = buf;
 
@@ -77,52 +75,46 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 
     vframe = std::make_shared<VideoFrame>(avframe);
     emit frameAvailable(vframe);
-
-end:
-    biglock = false;
 }
 
 bool CoreVideoSource::subscribe()
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker locker(&biglock);
     ++subscribers;
-    biglock = false;
     return true;
 }
 
 void CoreVideoSource::unsubscribe()
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    biglock.lock();
     if (--subscribers == 0)
     {
         if (deleteOnClose)
         {
-            biglock = false;
+            biglock.unlock();
+            // DANGEROUS: No member access after this point, that's why we manually unlock
             delete this;
             return;
         }
     }
-    biglock = false;
+    biglock.unlock();
 }
 
 void CoreVideoSource::setDeleteOnClose(bool newstate)
 {
-    // Fast lock
-    {
-        bool expected = false;
-        while (!biglock.compare_exchange_weak(expected, true))
-            expected = false;
-    }
+    QMutexLocker locker(&biglock);
     deleteOnClose = newstate;
-    biglock = false;
+}
+
+void CoreVideoSource::stopSource()
+{
+    QMutexLocker locker(&biglock);
+    stopped = true;
+    emit sourceStopped();
+}
+
+void CoreVideoSource::restartSource()
+{
+    QMutexLocker locker(&biglock);
+    stopped = false;
 }

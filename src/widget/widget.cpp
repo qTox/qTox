@@ -21,6 +21,7 @@
 #include "contentlayout.h"
 #include "ui_mainwindow.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "contentdialog.h"
 #include "src/friend.h"
@@ -121,15 +122,15 @@ void Widget::init()
 
     icon_size = 15;
     statusOnline = new QAction(this);
-    statusOnline->setIcon(getStatusIcon(Status::Online, icon_size, icon_size));
+    statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
-    statusAway->setIcon(getStatusIcon(Status::Away, icon_size, icon_size));
+    statusAway->setIcon(prepareIcon(getStatusIconPath(Status::Away), icon_size, icon_size));
     connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
 
     statusBusy = new QAction(this);
-    statusBusy->setIcon(getStatusIcon(Status::Busy, icon_size, icon_size));
+    statusBusy->setIcon(prepareIcon(getStatusIconPath(Status::Busy), icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -562,7 +563,7 @@ void Widget::onBadProxyCore()
 void Widget::onStatusSet(Status status)
 {
     ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(getStatusIcon(status, icon_size, icon_size));
+    ui->statusButton->setIcon(prepareIcon(getStatusIconPath(status), icon_size, icon_size));
     updateIcons();
 }
 
@@ -881,6 +882,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
+    CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::compactChange);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
@@ -890,27 +892,11 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getChatForm(), &GenericChatForm::sendMessage, core, &Core::sendMessage);
     connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
     connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
-    connect(newfriend->getChatForm(), &ChatForm::answerCall, core, &Core::answerCall);
-    connect(newfriend->getChatForm(), &ChatForm::hangupCall, core, &Core::hangupCall);
-    connect(newfriend->getChatForm(), &ChatForm::rejectCall, core, &Core::rejectCall);
-    connect(newfriend->getChatForm(), &ChatForm::startCall, core, &Core::startCall);
-    connect(newfriend->getChatForm(), &ChatForm::cancelCall, core, &Core::cancelCall);
-    connect(newfriend->getChatForm(), &ChatForm::micMuteToggle, core, &Core::micMuteToggle);
-    connect(newfriend->getChatForm(), &ChatForm::volMuteToggle, core, &Core::volMuteToggle);
     connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
     connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
-    connect(core, &Core::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite);
-    connect(core, &Core::avStart, newfriend->getChatForm(), &ChatForm::onAvStart);
-    connect(core, &Core::avCancel, newfriend->getChatForm(), &ChatForm::onAvCancel);
-    connect(core, &Core::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd);
-    connect(core, &Core::avRinging, newfriend->getChatForm(), &ChatForm::onAvRinging);
-    connect(core, &Core::avStarting, newfriend->getChatForm(), &ChatForm::onAvStarting);
-    connect(core, &Core::avEnding, newfriend->getChatForm(), &ChatForm::onAvEnding);
-    connect(core, &Core::avRequestTimeout, newfriend->getChatForm(), &ChatForm::onAvRequestTimeout);
-    connect(core, &Core::avPeerTimeout, newfriend->getChatForm(), &ChatForm::onAvPeerTimeout);
-    connect(core, &Core::avMediaChange, newfriend->getChatForm(), &ChatForm::onAvMediaChange);
-    connect(core, &Core::avCallFailed, newfriend->getChatForm(), &ChatForm::onAvCallFailed);
-    connect(core, &Core::avRejected, newfriend->getChatForm(), &ChatForm::onAvRejected);
+    connect(coreav, &CoreAV::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avStart, newfriend->getChatForm(), &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
     connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
     connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
     connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
@@ -1132,7 +1118,7 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
     connect(groupWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), group->getChatForm(), SLOT(focusInput()));
 }
 
-bool Widget::newFriendMessageAlert(int friendId)
+bool Widget::newFriendMessageAlert(int friendId, bool sound)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1150,7 +1136,7 @@ bool Widget::newFriendMessageAlert(int friendId)
         hasActive = f->getFriendWidget() == activeChatroomWidget;
     }
 
-    if (newMessageAlert(currentWindow, hasActive))
+    if (newMessageAlert(currentWindow, hasActive, sound))
     {
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
@@ -1189,7 +1175,7 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
         hasActive = g->getGroupWidget() == activeChatroomWidget;
     }
 
-    if (newMessageAlert(currentWindow, hasActive, notify))
+    if (newMessageAlert(currentWindow, hasActive, true, notify))
     {
         g->setEventFlag(true);
         g->getGroupWidget()->updateStatusLight();
@@ -1227,7 +1213,7 @@ QString Widget::fromDialogType(DialogType type)
     }
 }
 
-bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
+bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, bool notify)
 {
     bool inactiveWindow = isMinimized() || !currentWindow->isActiveWindow();
 
@@ -1249,41 +1235,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool notify)
                 currentWindow->activateWindow();
         }
 
-        if (Settings::getInstance().getNotifySound())
-        {
-            static QFile sndFile(":audio/notification.pcm");
-            static QByteArray sndData;
-
-            if (sndData.isEmpty())
-            {
-                sndFile.open(QIODevice::ReadOnly);
-                sndData = sndFile.readAll();
-                sndFile.close();
-            }
-
-            Audio::getInstance().playMono16Sound(sndData);
-        }
+        if (Settings::getInstance().getNotifySound() && sound)
+            Audio::getInstance().playMono16Sound(":audio/notification.pcm");
     }
 
     return true;
-}
-
-void Widget::playRingtone()
-{
-    if (ui->statusButton->property("status").toString() == "busy")
-        return;
-
-    // for whatever reason this plays slower/downshifted from what any other program plays the file as... but whatever
-    static QFile sndFile1(":audio/ToxicIncomingCall.pcm");
-    static QByteArray sndData1;
-    if (sndData1.isEmpty())
-    {
-        sndFile1.open(QIODevice::ReadOnly);
-        sndData1 = sndFile1.readAll();
-        sndFile1.close();
-    }
-
-    Audio::getInstance().playMono16Sound(sndData1);
 }
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
@@ -1588,7 +1544,7 @@ Group *Widget::createGroup(int groupId)
     Core* core = Nexus::getCore();
 
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, core->isGroupAvEnabled(groupId));
+    Group* newgroup = GroupList::addGroup(groupId, groupName, core->getAv()->isGroupAvEnabled(groupId));
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
@@ -1701,12 +1657,12 @@ void Widget::onTryCreateTrayIcon()
             QStyle *style = qApp->style();
 
             actionLogout = new QAction(tr("&Logout"), this);
-            actionLogout->setIcon(style->standardIcon(QStyle::SP_BrowserStop));
+            actionLogout->setIcon(prepareIcon("://img/others/logout-icon.svg", icon_size, icon_size));
             connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
             actionQuit = new QAction(tr("&Exit"), this);
             actionQuit->setMenuRole(QAction::QuitRole);
-            actionQuit->setIcon(style->standardIcon(QStyle::SP_DialogDiscardButton));
+            actionQuit->setIcon(prepareIcon("://ui/rejectCall/rejectCall.svg", icon_size, icon_size));
             connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
             trayMenu->addAction(statusOnline);
@@ -1929,7 +1885,7 @@ QString Widget::getStatusIconPath(Status status)
     }
 }
 
-inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
+inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
 {
 #ifdef Q_OS_LINUX
 
@@ -1944,17 +1900,17 @@ inline QIcon Widget::getStatusIcon(Status status, uint32_t w, uint32_t h)
     {
         if (w > 0 && h > 0)
         {
-            return getStatusIconPixmap(status, w, h);
+            return getStatusIconPixmap(path, w, h);
         }
     }
 #endif
-    return QIcon(getStatusIconPath(status));
+    return QIcon(path);
 }
 
-QPixmap Widget::getStatusIconPixmap(Status status, uint32_t w, uint32_t h)
+QPixmap Widget::getStatusIconPixmap(QString path, uint32_t w, uint32_t h)
 {
     QPixmap pix(w, h);
-    pix.load(getStatusIconPath(status));
+    pix.load(path);
     return pix;
 }
 

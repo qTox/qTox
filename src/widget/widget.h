@@ -67,7 +67,7 @@ public:
     static Widget* getInstance();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
-    bool newFriendMessageAlert(int friendId);
+    bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
@@ -92,8 +92,8 @@ public:
 
     void reloadTheme();
     static QString getStatusIconPath(Status status);
-    static inline QIcon getStatusIcon(Status status, uint32_t w=0, uint32_t h=0);
-    static QPixmap getStatusIconPixmap(Status status, uint32_t w, uint32_t h);
+    static inline QIcon prepareIcon(QString path, uint32_t w=0, uint32_t h=0);
+    static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
 
@@ -134,7 +134,6 @@ public slots:
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void onGroupSendResult(int groupId, const QString& message, int result);
-    void playRingtone();
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
@@ -204,7 +203,7 @@ private:
     };
 
 private:
-    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool notify = true);
+    bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);

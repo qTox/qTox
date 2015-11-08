@@ -31,6 +31,7 @@
 namespace v4l2
 {
     QVector<VideoMode> getDeviceModes(QString devName);
+    QVector<QPair<QString, QString>> getDeviceList();
 }
 
 #endif // V4L2_H

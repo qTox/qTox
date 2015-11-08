@@ -45,6 +45,7 @@
         <file>translations/bg.qm</file>
         <file>translations/cs.qm</file>
         <file>translations/de.qm</file>
+        <file>translations/el.qm</file>
         <file>translations/es.qm</file>
         <file>translations/fi.qm</file>
         <file>translations/fr.qm</file>
@@ -120,5 +121,6 @@
         <file>img/login_logo.svg</file>
         <file>ui/notificationEdge/notificationEdge.css</file>
         <file>ui/loginScreen/loginScreen.css</file>
+        <file>img/others/logout-icon.svg</file>
     </qresource>
 </RCC>

@@ -27,6 +27,7 @@
 #include <errno.h>
 #include <sys/ioctl.h>
 #include <linux/videodev2.h>
+#include <dirent.h>
 
 /**
  * Most of this file is adapted from libavdevice's v4l2.c,
@@ -134,4 +135,34 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
     }
 
     return modes;
+}
+
+QVector<QPair<QString, QString>> v4l2::getDeviceList()
+{
+    QVector<QPair<QString, QString>> devices;
+    QVector<QString> deviceFiles;
+
+    DIR *dir = opendir("/dev");
+    if (!dir)
+        return devices;
+
+    dirent* e;
+    while ((e = readdir(dir)))
+        if (!strncmp(e->d_name, "video", 5) || !strncmp(e->d_name, "vbi", 3))
+            deviceFiles += QString("/dev/") + e->d_name;
+    closedir(dir);
+
+    for (QString file : deviceFiles)
+    {
+        int fd = open(file.toStdString().c_str(), O_RDWR);
+        if (fd < 0)
+            continue;
+
+        v4l2_capability caps;
+        ioctl(fd, VIDIOC_QUERYCAP, &caps);
+        close(fd);
+
+        devices += {file, (const char*)caps.card};
+    }
+    return devices;
 }

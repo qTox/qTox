@@ -24,6 +24,7 @@
 #include <vpx/vpx_image.h>
 #include <atomic>
 #include "videosource.h"
+#include <QMutex>
 
 /// A VideoSource that emits frames received by Core
 class CoreVideoSource : public VideoSource
@@ -35,8 +36,8 @@ public:
     virtual void unsubscribe() override;
 
 private:
-    // Only Core should create a CoreVideoSource since
-    // only Core can push images to it
+    // Only CoreAV should create a CoreVideoSource since
+    // only CoreAV can push images to it
     CoreVideoSource();
 
     /// Makes a copy of the vpx_image_t and emits it as a new VideoFrame
@@ -44,12 +45,19 @@ private:
     /// If true, self-delete after the last suscriber is gone
     void setDeleteOnClose(bool newstate);
 
+    /// Stopping the source will block any pushFrame calls from doing anything
+    /// See the callers in CoreAV for the rationale
+    void stopSource();
+    void restartSource();
+
 private:
     std::atomic_int subscribers; ///< Number of suscribers
     std::atomic_bool deleteOnClose; ///< If true, self-delete after the last suscriber is gone
-    std::atomic_bool biglock; ///< Fast lock
+    QMutex biglock;
+    std::atomic_bool stopped;
 
-friend class Core;
+friend class CoreAV;
+friend struct ToxFriendCall;
 };
 
 #endif // COREVIDEOSOURCE_H

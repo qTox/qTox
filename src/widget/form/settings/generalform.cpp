@@ -24,6 +24,7 @@
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 #include "src/core/core.h"
+#include "src/core/coreav.h"
 #include "src/widget/style.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -37,8 +38,48 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-static QStringList locales = {"bg", "cs", "de", "en", "es", "fr", "hr", "hu", "it", "lt", "nl", "no_nb", "pl", "pt", "ru", "sl", "fi", "sv", "uk", "zh"};
-static QStringList langs = {"Български", "Čeština", "Deutsch", "English", "Español", "Français", "Hrvatski", "Magyar", "Italiano", "Lietuvių", "Nederlands", "Norsk Bokmål", "Polski", "Português", "Русский", "Slovenščina", "Suomi", "Svenska", "Українська", "简体中文"};
+static QStringList locales = {"bg",
+                              "cs",
+                              "de",
+                              "el",
+                              "en",
+                              "es",
+                              "fr",
+                              "hr",
+                              "hu",
+                              "it",
+                              "lt",
+                              "nl",
+                              "no_nb",
+                              "pl",
+                              "pt",
+                              "ru",
+                              "sl",
+                              "fi",
+                              "sv",
+                              "uk",
+                              "zh"};
+static QStringList langs = {"Български",
+                            "Čeština",
+                            "Deutsch",
+                            "Ελληνικά",
+                            "English",
+                            "Español",
+                            "Français",
+                            "Hrvatski",
+                            "Magyar",
+                            "Italiano",
+                            "Lietuvių",
+                            "Nederlands",
+                            "Norsk Bokmål",
+                            "Polski",
+                            "Português",
+                            "Русский",
+                            "Slovenščina",
+                            "Suomi",
+                            "Svenska",
+                            "Українська",
+                            "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
@@ -75,7 +116,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
     bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
-    bodyUI->lightTrayIcon->setEnabled(showSystemTray);
 
     bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
@@ -358,7 +398,7 @@ void GeneralForm::onUseProxyUpdated()
 
 void GeneralForm::onReconnectClicked()
 {
-    if (Core::getInstance()->anyActiveCalls())
+    if (Core::getInstance()->getAv()->anyActiveCalls())
     {
         QMessageBox::warning(this, tr("Call active", "popup title"),
                         tr("You can't disconnect while a call is active!", "popup text"));

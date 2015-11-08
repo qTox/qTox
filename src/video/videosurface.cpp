@@ -102,6 +102,7 @@ void VideoSurface::subscribe()
     {
         source->subscribe();
         connect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+        connect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
     }
 }
 
@@ -124,6 +125,7 @@ void VideoSurface::unsubscribe()
 
     source->unsubscribe();
     disconnect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
+    disconnect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
 }
 
 void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
@@ -148,6 +150,13 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
     update();
 }
 
+void VideoSurface::onSourceStopped()
+{
+    // If the source's stream is on hold, just revert back to the avatar view
+    lastFrame.reset();
+    update();
+}
+
 void VideoSurface::paintEvent(QPaintEvent*)
 {
     lock();
@@ -157,6 +166,8 @@ void VideoSurface::paintEvent(QPaintEvent*)
     if (lastFrame)
     {
         QImage frame = lastFrame->toQImage(rect().size());
+        if (frame.isNull())
+            lastFrame.reset();
         painter.drawImage(boundingRect, frame, frame.rect(), Qt::NoFormatConversion);
     }
     else

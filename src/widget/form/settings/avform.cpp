@@ -25,6 +25,8 @@
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
 #include "src/widget/translator.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
@@ -192,6 +194,11 @@ void AVForm::updateVideoModes(int curIndex)
             bodyUI->videoModescomboBox->setUpdatesEnabled(true);
             bodyUI->videoModescomboBox->setCurrentIndex(0);
         }
+        else
+        {
+            // We don't have any video modes, open it with the default mode
+            camera.open(devName);
+        }
     }
 }
 
@@ -202,14 +209,15 @@ void AVForm::onVideoDevChanged(int index)
         qWarning() << "Invalid index";
         return;
     }
+
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
     camera.open(dev);
-    killVideoSurface();
-    createVideoSurface();
+    if (dev == "none")
+        Core::getInstance()->getAv()->sendNoVideo();
 }
 
 void AVForm::hideEvent(QHideEvent *)
@@ -240,21 +248,19 @@ void AVForm::getVideoDevices()
     bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
     bodyUI->videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
-
-    QString devName = videoDeviceList[videoDevIndex].first;
-    camera.open(devName);
 }
 
 void AVForm::getAudioInDevices()
 {
     QString settingsInDev = Settings::getInstance().getInDev();
     int inDevIndex = 0;
+    bodyUI->inDevCombobox->blockSignals(true);
     bodyUI->inDevCombobox->clear();
+    bodyUI->inDevCombobox->addItem(tr("None"));
     const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items
-        bodyUI->inDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
@@ -270,8 +276,8 @@ void AVForm::getAudioInDevices()
         }
         //addItem changes currentIndex -> reset
         bodyUI->inDevCombobox->setCurrentIndex(-1);
-        bodyUI->inDevCombobox->blockSignals(false);
     }
+    bodyUI->inDevCombobox->blockSignals(false);
     bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
 }
 
@@ -279,7 +285,9 @@ void AVForm::getAudioOutDevices()
 {
     QString settingsOutDev = Settings::getInstance().getOutDev();
     int outDevIndex = 0;
+    bodyUI->outDevCombobox->blockSignals(true);
     bodyUI->outDevCombobox->clear();
+    bodyUI->outDevCombobox->addItem(tr("None"));
     const ALchar *pDeviceList;
     if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
         pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
@@ -288,7 +296,6 @@ void AVForm::getAudioOutDevices()
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items
-        bodyUI->outDevCombobox->blockSignals(true);
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
@@ -306,27 +313,30 @@ void AVForm::getAudioOutDevices()
         }
         //addItem changes currentIndex -> reset
         bodyUI->outDevCombobox->setCurrentIndex(-1);
-        bodyUI->outDevCombobox->blockSignals(false);
     }
+    bodyUI->outDevCombobox->blockSignals(false);
     bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
 }
 
-void AVForm::onInDevChanged(const QString &deviceDescriptor)
+void AVForm::onInDevChanged(QString deviceDescriptor)
 {
+    if (!bodyUI->inDevCombobox->currentIndex())
+        deviceDescriptor = "none";
     Settings::getInstance().setInDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    if (audio.isInputSubscribed())
+        audio.openInput(deviceDescriptor);
 }
 
-void AVForm::onOutDevChanged(const QString& deviceDescriptor)
+void AVForm::onOutDevChanged(QString deviceDescriptor)
 {
+    if (!bodyUI->outDevCombobox->currentIndex())
+        deviceDescriptor = "none";
     Settings::getInstance().setOutDev(deviceDescriptor);
 
     Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput();
-    audio.subscribeInput();
+    audio.openOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
