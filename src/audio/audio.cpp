@@ -137,21 +137,21 @@ If the input device is not open, it will be opened before capturing.
 void Audio::subscribeInput()
 {
     qDebug() << "subscribing input" << inputSubscriptions;
-    if (!inputSubscriptions++)
-    {
+
+    if (!alInDev) {
         openInput(Settings::getInstance().getInDev());
-        if (!alOutDev)
-            openOutput(Settings::getInstance().getOutDev());
-
-
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        if (alInDev)
-        {
+        if (alInDev) {
             qDebug() << "starting capture";
             alcCaptureStart(alInDev);
         }
 #endif
     }
+
+    if (!alOutDev)
+        openOutput(Settings::getInstance().getOutDev());
+
+    inputSubscriptions++;
 }
 
 /**
