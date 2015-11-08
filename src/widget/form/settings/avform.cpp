@@ -194,6 +194,11 @@ void AVForm::updateVideoModes(int curIndex)
             bodyUI->videoModescomboBox->setUpdatesEnabled(true);
             bodyUI->videoModescomboBox->setCurrentIndex(0);
         }
+        else
+        {
+            // We don't have any video modes, open it with the default mode
+            camera.open(devName);
+        }
     }
 }
 
