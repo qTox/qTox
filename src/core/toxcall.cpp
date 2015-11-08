@@ -20,7 +20,9 @@ ToxCall::ToxCall(uint32_t CallId)
     sendAudioTimer->setInterval(5);
     sendAudioTimer->setSingleShot(true);
 
-    Audio::getInstance().subscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audio.subscribeOutput();
 
 #ifdef QTOX_FILTER_AUDIO
     if (Settings::getInstance().getFilterAudio())
@@ -56,7 +58,9 @@ ToxCall::~ToxCall()
     {
         QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
         sendAudioTimer->stop();
-        Audio::getInstance().unsubscribeInput();
+        Audio& audio = Audio::getInstance();
+        audio.unsubscribeInput();
+        audio.unsubscribeOutput();
     }
 
     if (alSource)
