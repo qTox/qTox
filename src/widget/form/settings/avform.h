@@ -73,8 +73,8 @@ protected:
 
 private:
     Ui::AVSettings *bodyUI;
-    VideoSurface* camVideoSurface;
-    CameraSource& camera;
+    VideoSurface *camVideoSurface;
+    CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;
     QVector<VideoMode> videoModes;
 };
