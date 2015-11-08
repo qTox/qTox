@@ -154,11 +154,13 @@ If the input device has no more subscriptions, it will be closed.
 */
 void Audio::unsubscribeInput()
 {
-    qDebug() << "unsubscribing input" << inputSubscriptions;
     QMutexLocker locker(&audioInLock);
 
     if (inputSubscriptions > 0)
+    {
         inputSubscriptions--;
+        qDebug() << "Unsubscribed from audio input device [" << inputSubscriptions << " subscriptions]";
+    }
 
     if (!inputSubscriptions)
         cleanupInput();
@@ -333,7 +335,6 @@ Close an input device, please don't use unless everyone's unsuscribed
 */
 void Audio::closeInput()
 {
-    qDebug() << "Closing input";
     QMutexLocker locker(&audioInLock);
     cleanupInput();
 }
@@ -343,7 +344,6 @@ Close an output device
 */
 void Audio::closeOutput()
 {
-    qDebug() << "Closing output";
     QMutexLocker locker(&audioOutLock);
     cleanupOutput();
 }
@@ -484,28 +484,22 @@ void Audio::cleanupInput()
     if (alInDev)
     {
 #if (!FIX_SND_PCM_PREPARE_BUG)
-        qDebug() << "stopping capture";
+        qDebug() << "stopping audio capture";
         alcCaptureStop(alInDev);
 #endif
 
-        if (alcCaptureCloseDevice(alInDev))
-        {
+        qDebug() << "Closing audio input";
+        if (alcCaptureCloseDevice(alInDev) == ALC_TRUE)
             alInDev = nullptr;
-            inputSubscriptions = 0;
-        }
         else
-        {
             qWarning() << "Failed to close input";
-        }
     }
 }
 
 void Audio::cleanupOutput()
 {
-    if (inputSubscriptions)
-        cleanupInput();
-
     if (alOutDev) {
+        qDebug() << "Closing audio output";
         alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
         alSourceStop(alMainSource);
         alDeleteSources(1, &alMainSource);
@@ -517,7 +511,9 @@ void Audio::cleanupOutput()
         alcDestroyContext(alContext);
         alContext = nullptr;
 
-        if (!alcCloseDevice(device))
+        if (alcCloseDevice(device))
+            alOutDev = nullptr;
+        else
             qWarning("Failed to close output.");
     }
 }
@@ -528,7 +524,7 @@ Returns true if the input device is open and suscribed to
 bool Audio::isInputReady()
 {
     QMutexLocker locker(&audioInLock);
-    return alInDev && inputSubscriptions;
+    return alInDev;
 }
 
 bool Audio::isInputSubscribed()
