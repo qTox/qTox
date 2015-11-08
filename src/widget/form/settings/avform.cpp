@@ -104,7 +104,9 @@ void AVForm::showEvent(QShowEvent*)
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
-    Audio::getInstance().subscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audio.subscribeOutput();
 }
 
 void AVForm::onVideoModesIndexChanged(int index)
@@ -241,7 +243,9 @@ void AVForm::hideEvent(QHideEvent *)
         killVideoSurface();
     }
     videoDeviceList.clear();
-    Audio::getInstance().unsubscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.unsubscribeInput();
+    audio.unsubscribeOutput();
 }
 
 void AVForm::getVideoDevices()

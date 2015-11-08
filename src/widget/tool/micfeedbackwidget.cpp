@@ -85,13 +85,17 @@ void MicFeedbackWidget::timerEvent(QTimerEvent*)
 
 void MicFeedbackWidget::showEvent(QShowEvent*)
 {
-    Audio::getInstance().subscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audio.subscribeOutput();
     timerId = startTimer(60);
 }
 
 void MicFeedbackWidget::hideEvent(QHideEvent*)
 {
-    Audio::getInstance().unsubscribeInput();
+    Audio& audio = Audio::getInstance();
+    audio.unsubscribeInput();
+    audio.unsubscribeOutput();
 
     if (timerId != 0)
     {
