@@ -62,6 +62,8 @@ public:
 
     void subscribeInput();
     void unsubscribeInput();
+    void subscribeOutput();
+    void unsubscribeOutput();
     void openInput(const QString& inDevDescr);
     bool openOutput(const QString& outDevDescr);
 
@@ -114,6 +116,7 @@ private:
     QMutex              audioInLock;
     QMutex              audioOutLock;
     std::atomic<int>    inputSubscriptions;
+    std::atomic<int>    outputSubscriptions;
     ALCdevice*          alOutDev;
     ALCdevice*          alInDev;
     qreal               outputVolume;

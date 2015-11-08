@@ -59,6 +59,7 @@ Audio::Audio()
     , audioInLock(QMutex::Recursive)
     , audioOutLock(QMutex::Recursive)
     , inputSubscriptions(0)
+    , outputSubscriptions(0)
     , alOutDev(nullptr)
     , alInDev(nullptr)
     , outputVolume(1.0)
@@ -159,6 +160,29 @@ void Audio::unsubscribeInput()
 
     if (!inputSubscriptions)
         cleanupInput();
+}
+
+void Audio::subscribeOutput()
+{
+    QMutexLocker locker(&audioOutLock);
+
+    if (!alOutDev)
+        initOutput(Settings::getInstance().getOutDev());
+
+    outputSubscriptions++;
+    qDebug() << "Subscribed to audio output device [" << outputSubscriptions << " subscriptions ]";
+}
+
+void Audio::unsubscribeOutput()
+{
+    if (outputSubscriptions > 0)
+    {
+        outputSubscriptions--;
+        qDebug() << "Unsubscribed from audio output device [" << outputSubscriptions << " subscriptions]";
+    }
+
+    if (!outputSubscriptions)
+        cleanupOutput();
 }
 
 /**
