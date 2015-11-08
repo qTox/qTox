@@ -48,11 +48,12 @@ AVForm::AVForm() :
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
+    bodyUI->camFrame->hide();
 
 #ifdef QTOX_FILTER_AUDIO
     bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
 #else
-    bodyUI->filterAudio->setDisabled(true);
+    bodyUI->filterAudio->hide();
 #endif
 
     auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
@@ -61,6 +62,7 @@ AVForm::AVForm() :
     connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
     connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
     connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
+    connect(bodyUI->enableCameraButton, &QPushButton::clicked, this, &AVForm::onEnableCameraClicked);
 
     connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices();});
@@ -87,10 +89,9 @@ AVForm::~AVForm()
 
 void AVForm::showEvent(QShowEvent*)
 {
+    getVideoDevices();
     getAudioOutDevices();
     getAudioInDevices();
-    createVideoSurface();
-    getVideoDevices();
     Audio::getInstance().subscribeInput();
 }
 
@@ -220,8 +221,19 @@ void AVForm::onVideoDevChanged(int index)
         Core::getInstance()->getAv()->sendNoVideo();
 }
 
+void AVForm::onEnableCameraClicked()
+{
+    bodyUI->enableCameraButton->hide();
+    bodyUI->camFrame->show();
+    createVideoSurface();
+}
+
 void AVForm::hideEvent(QHideEvent *)
 {
+    bodyUI->camFrame->hide();
+
+    bodyUI->enableCameraButton->show();
+
     if (camVideoSurface)
     {
         camVideoSurface->setSource(nullptr);
@@ -381,7 +393,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
-    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->CamFrame);
+    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->camFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
     camVideoSurface->setSource(&camera);

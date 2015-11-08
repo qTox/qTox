@@ -61,6 +61,7 @@ private slots:
     void on_microphoneSlider_valueChanged(int value);
     void onPlaybackSliderReleased();
     void onMicrophoneSliderReleased();
+    void onEnableCameraClicked();
 
     // camera
     void onVideoDevChanged(int index);
