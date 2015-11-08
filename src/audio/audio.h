@@ -67,6 +67,19 @@ public:
     void openInput(const QString& inDevDescr);
     bool openOutput(const QString& outDevDescr);
 
+    inline void reinitInput(const QString& inDevDesc)
+    {
+        QMutexLocker locker(&audioInLock);
+        cleanupInput();
+        initInput(inDevDesc);
+    }
+    inline bool reinitOutput(const QString& outDevDesc)
+    {
+        QMutexLocker locker(&audioOutLock);
+        cleanupOutput();
+        return initOutput(outDevDesc);
+    }
+
     bool isInputReady();
     bool isInputSubscribed();
     bool isOutputReady();
