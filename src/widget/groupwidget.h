@@ -27,6 +27,7 @@ class GroupWidget final : public GenericChatroomWidget
     Q_OBJECT
 public:
     GroupWidget(int GroupId, QString Name);
+    ~GroupWidget();
     virtual void setAsInactiveChatroom() final override;
     virtual void setAsActiveChatroom() final override;
     virtual void updateStatusLight() final override;
