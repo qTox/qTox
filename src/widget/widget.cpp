@@ -134,19 +134,19 @@ void Widget::init()
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     actionLogout = new QAction(this);
-    actionLogout->setIcon(prepareIcon("://img/others/logout-icon.svg", icon_size, icon_size));
+    actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
     actionQuit = new QAction(this);
     actionQuit->setMenuRole(QAction::QuitRole);
-    actionQuit->setIcon(prepareIcon("://ui/rejectCall/rejectCall.svg", icon_size, icon_size));
+    actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
-    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet("://ui/friendList/friendList.css")));
+    ui->friendList->setStyleSheet(Style::resolve(Style::getStylesheet(":/ui/friendList/friendList.css")));
 
-    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), "://img/avatar_mask.svg");
-    profilePicture->setPixmap(QPixmap("://img/contact_dark.svg"));
+    profilePicture = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
+    profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setClickable(true);
     ui->myProfile->insertWidget(0, profilePicture);
     ui->myProfile->insertSpacing(1, 7);
@@ -425,7 +425,7 @@ void Widget::updateIcons()
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
-        QString path = ":img/taskbar/" + color + "/taskbar_" + status + ".svg";
+        QString path = ":/img/taskbar/" + color + "/taskbar_" + status + ".svg";
         QSvgRenderer renderer(path);
 
         // Prepare a QImage with desired characteritisc
@@ -1244,7 +1244,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         }
 
         if (Settings::getInstance().getNotifySound() && sound)
-            Audio::getInstance().playMono16Sound(":audio/notification.pcm");
+            Audio::getInstance().playMono16Sound(":/audio/notification.pcm");
     }
 
     return true;
@@ -1845,8 +1845,8 @@ void Widget::reloadTheme()
     ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
-    ui->friendList->setStyleSheet(Style::getStylesheet(":ui/friendList/friendList.css"));
-    ui->statusButton->setStyleSheet(Style::getStylesheet(":ui/statusButton/statusButton.css"));
+    ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
+    ui->statusButton->setStyleSheet(Style::getStylesheet(":/ui/statusButton/statusButton.css"));
     contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends())
@@ -1871,14 +1871,14 @@ QString Widget::getStatusIconPath(Status status)
     switch (status)
     {
     case Status::Online:
-        return "://img/status/dot_online.svg";
+        return ":/img/status/dot_online.svg";
     case Status::Away:
-        return "://img/status/dot_away.svg";
+        return ":/img/status/dot_away.svg";
     case Status::Busy:
-        return "://img/status/dot_busy.svg";
+        return ":/img/status/dot_busy.svg";
     case Status::Offline:
     default:
-        return "://img/status/dot_offline.svg";
+        return ":/img/status/dot_offline.svg";
     }
 }
 
