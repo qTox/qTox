@@ -1230,9 +1230,6 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
     if (!inactiveWindow && isActive)
         return false;
 
-    if (ui->statusButton->property("status").toString() == "busy")
-        return false;
-
     if (notify)
     {
         QApplication::alert(currentWindow);
