@@ -46,6 +46,7 @@ public:
     bool hasAlias() const;
 
     void setStatusMessage(QString message);
+    QString getStatusMessage();
 
     void setEventFlag(int f);
     int getEventFlag() const;
@@ -64,7 +65,7 @@ signals:
     void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
 
 private:
-    QString userAlias, userName;
+    QString userAlias, userName, statusMessage;
     ToxId userID;
     uint32_t friendId;
     int hasNewEvents;
