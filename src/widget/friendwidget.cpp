@@ -31,6 +31,7 @@
 #include "src/widget/style.h"
 #include "src/persistence/settings.h"
 #include "src/widget/widget.h"
+#include "src/widget/about/aboutuser.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>
@@ -48,8 +49,8 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
-    avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
-    statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
+    avatar->setPixmap(QPixmap(":/img/contact.svg"), Qt::transparent);
+    statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(id);
     nameLabel->setTextFormat(Qt::PlainText);
@@ -150,6 +151,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (contentDialog == nullptr || !contentDialog->hasFriendWidget(friendId, this))
         removeFriendAction = menu.addAction(tr("Remove friend", "Menu to remove the friend from our friendlist"));
 
+    menu.addSeparator();
+    QAction* aboutWindow = menu.addAction(tr("Show details"));
+
     QAction* selectedItem = menu.exec(pos);
 
     removeEventFilter(this);
@@ -196,6 +200,14 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 qDebug() << "setting auto accept dir for" << friendId << "to" << dir;
                 Settings::getInstance().setAutoAcceptDir(id, dir);
             }
+        }
+        else if (selectedItem == aboutWindow) {
+            AboutUser *aboutUser = new AboutUser(this);
+            aboutUser->setFriend(FriendList::findFriend(friendId));
+            aboutUser->setToxId(id);
+            aboutUser->setAvatar(avatar->getPixmap());
+            aboutUser->setStatusMessage(FriendList::findFriend(friendId)->getStatusMessage());
+            aboutUser->show();
         }
         else if (selectedItem == newCircleAction)
         {
@@ -368,9 +380,9 @@ void FriendWidget::onAvatarRemoved(int FriendId)
     isDefaultAvatar = true;
 
     if (isActive())
-        avatar->setPixmap(QPixmap(":img/contact_dark.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
     else
-        avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":/img/contact.svg"), Qt::transparent);
 }
 
 void FriendWidget::mousePressEvent(QMouseEvent *ev)
