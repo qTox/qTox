@@ -78,6 +78,11 @@ AVForm::AVForm() :
         cb->setFocusPolicy(Qt::StrongFocus);
     }
 
+    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
+    {
+        cb->installEventFilter(this);
+    }
+
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
 
@@ -361,17 +366,6 @@ void AVForm::onMicrophoneValueChanged(int value)
     bodyUI->microphoneMax->setText(QString::number(value));
 }
 
-bool AVForm::eventFilter(QObject *o, QEvent *e)
-{
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QSlider*>(o)))
-    {
-        e->ignore();
-        return true;
-    }
-    return QWidget::eventFilter(o, e);
-}
-
 void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
@@ -394,6 +388,17 @@ void AVForm::killVideoSurface()
     camVideoSurface->close();
     delete camVideoSurface;
     camVideoSurface = nullptr;
+}
+
+bool AVForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o) || qobject_cast<QSlider*>(o)))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }
 
 void AVForm::retranslateUi()

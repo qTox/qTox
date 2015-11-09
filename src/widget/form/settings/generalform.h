@@ -81,7 +81,7 @@ private:
     SettingsWidget *parent;
 
 protected:
-    bool eventFilter(QObject *o, QEvent *e) override;
+    bool eventFilter(QObject *o, QEvent *e) final override;
 };
 
 #endif

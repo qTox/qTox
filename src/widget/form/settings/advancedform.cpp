@@ -49,8 +49,13 @@ AdvancedForm::AdvancedForm() :
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
-            cb->installEventFilter(this);
-            cb->setFocusPolicy(Qt::StrongFocus);
+        cb->installEventFilter(this);
+        cb->setFocusPolicy(Qt::StrongFocus);
+    }
+
+    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
+    {
+        cb->installEventFilter(this);
     }
 
     Translator::registerHandler(std::bind(&AdvancedForm::retranslateUi, this), this);
@@ -84,7 +89,7 @@ void AdvancedForm::resetToDefault()
 bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o)))
     {
         e->ignore();
         return true;
