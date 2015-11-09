@@ -69,10 +69,18 @@ AVForm::AVForm() :
     bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
     bodyUI->microphoneSlider->setValue(Settings::getInstance().getInVolume());
 
+    bodyUI->playbackSlider->installEventFilter(this);
+    bodyUI->microphoneSlider->installEventFilter(this);
+
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
+    }
+
+    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
+    {
+        cb->installEventFilter(this);
     }
 
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
@@ -265,9 +273,9 @@ void AVForm::getAudioInDevices()
         {
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN
-            QString inDev = QString::fromUtf8(pDeviceList,len);
+            QString inDev = QString::fromUtf8(pDeviceList, len);
 #else
-            QString inDev = QString::fromLocal8Bit(pDeviceList,len);
+            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
 #endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
@@ -300,9 +308,9 @@ void AVForm::getAudioOutDevices()
         {
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN
-            QString outDev = QString::fromUtf8(pDeviceList,len);
+            QString outDev = QString::fromUtf8(pDeviceList, len);
 #else
-            QString outDev = QString::fromLocal8Bit(pDeviceList,len);
+            QString outDev = QString::fromLocal8Bit(pDeviceList, len);
 #endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
@@ -358,17 +366,6 @@ void AVForm::onMicrophoneValueChanged(int value)
     bodyUI->microphoneMax->setText(QString::number(value));
 }
 
-bool AVForm::eventFilter(QObject *o, QEvent *e)
-{
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ))
-    {
-        e->ignore();
-        return true;
-    }
-    return QWidget::eventFilter(o, e);
-}
-
 void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
@@ -391,6 +388,17 @@ void AVForm::killVideoSurface()
     camVideoSurface->close();
     delete camVideoSurface;
     camVideoSurface = nullptr;
+}
+
+bool AVForm::eventFilter(QObject *o, QEvent *e)
+{
+    if ((e->type() == QEvent::Wheel) &&
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o) || qobject_cast<QSlider*>(o)))
+    {
+        e->ignore();
+        return true;
+    }
+    return QWidget::eventFilter(o, e);
 }
 
 void AVForm::retranslateUi()

@@ -634,7 +634,7 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
         <location filename="../src/widget/circlewidget.cpp" line="86"/>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Pervadinti draugų ratą</translation>
+        <translation>Pašalinti draugų ratą</translation>
     </message>
 </context>
 <context>
