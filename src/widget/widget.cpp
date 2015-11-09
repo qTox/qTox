@@ -135,7 +135,6 @@ void Widget::init()
 
     actionLogout = new QAction(this);
     actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
-    connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
     actionQuit = new QAction(this);
     actionQuit->setMenuRole(QAction::QuitRole);
@@ -226,6 +225,9 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
+
+    //connect logout tray menu action
+    connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
     Core* core = Nexus::getCore();
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
