@@ -17,9 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#define QT_NO_DATASTREAM
-#include <QString>
-#undef QT_NO_DATASTREAM
 #include "settingsserializer.h"
 #include "serialize.h"
 #include "src/nexus.h"
@@ -39,7 +36,12 @@ inline QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer
     return dataStream << static_cast<uint8_t>(tag);
 }
 
-static inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
+inline QDataStream& operator<<(QDataStream& dataStream, const QString& str)
+{
+    return dataStream << str.toUtf8();
+}
+
+inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
 {
     QByteArray size = vuintToData(data.size());
     dataStream.writeRawData(size.data(), size.size());
@@ -47,17 +49,12 @@ static inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray&
     return dataStream;
 }
 
-static inline QDataStream& operator<<(QDataStream& dataStream, const QString& str)
-{
-    return dataStream << str.toUtf8();
-}
-
 QDataStream& operator>>(QDataStream& dataStream, SettingsSerializer::RecordTag& tag)
 {
     return dataStream.operator >>((uint8_t&)tag);
 }
 
-static inline QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
+inline QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
 {
     unsigned char num3;
     size_t num = 0;
