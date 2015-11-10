@@ -19,6 +19,10 @@
         <source> at %1 FPS</source>
         <translation> a %1 FPS</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Ninguno</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
@@ -45,12 +49,6 @@
     <message>
         <source>Use slider to set volume of your speakers.</source>
         <translation>Usa el control deslizante para ajustar el volumen de los altavoces.</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your microphone.
-WARNING: slider is not supposed to work yet.</source>
-        <translation>Usa el control deslizante para ajustar el volumen del micrófono.
-ADVERTENCIA: el control deslizante aún no es funcional.</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -96,12 +94,20 @@ Ten en cuenta que una mejor calidad de vídeo requiere una mejor conexión a Int
 Si tu conexión no es suficiente para soportar una calidad de vídeo alta,
 se pueden producir problemas con las videollamadas.</translation>
     </message>
+    <message>
+        <source>Use slider to set volume of your microphone.</source>
+        <translation>Usa el control deslizante para ajustar el volumen del micrófono.</translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>About</source>
         <translation>Acerca de</translation>
+    </message>
+    <message>
+        <source>Qt version:</source>
+        <translation>Versión de Qt:</translation>
     </message>
 </context>
 <context>
@@ -166,6 +172,10 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Puedes encontrar una lista de problemas conocidos en el &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; en Github. Si encuentras un error o una falla de seguridad en qTox, por favor repórtalo siguiendo las instrucciones de nuestro artículo &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Como Escribir Reportes de Fallos Útiles&lt;/span&gt;&lt;/a&gt; en la wiki.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
+    <message>
+        <source>Qt version:</source>
+        <translation>Versión de Qt:</translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -193,11 +203,6 @@ p, li { white-space: pre-wrap; }
         <translation>¡Hola, soy %1! ¿Quieres agregarme en Tox?</translation>
     </message>
     <message>
-        <source>Please fill in a valid Tox ID</source>
-        <comment>Tox ID of the friend you&apos;re sending a friend request to</comment>
-        <translation>Ingresa una Tox ID válida</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>No se pudo agregar el amigo</translation>
     </message>
@@ -216,6 +221,15 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Tox ID no existe</translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <comment>Tox ID format description</comment>
+        <translation>76 caracteres hexadecimales o nombre@ejemplo.com</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID format</source>
+        <translation>Formato inválido de Tox ID</translation>
     </message>
 </context>
 <context>
@@ -364,24 +378,12 @@ Ignore the proxy and connect to the Internet directly?</source>
         <translation>Silenciar llamada</translation>
     </message>
     <message>
-        <source>%1 stopped calling</source>
-        <translation>%1 dejó de llamar</translation>
-    </message>
-    <message>
         <source>Cancel video call</source>
         <translation>Cancelar la videollamada</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
         <translation>Cancelar la llamada de audio</translation>
-    </message>
-    <message>
-        <source>Calling to %1</source>
-        <translation>Llamando a %1</translation>
-    </message>
-    <message>
-        <source>Call rejected</source>
-        <translation>Llamada rechazada</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -423,6 +425,10 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>Load chat history...</source>
         <translation>Cargar historial de chat...</translation>
+    </message>
+    <message>
+        <source>Calling %1</source>
+        <translation>Llamando a %1</translation>
     </message>
 </context>
 <context>
@@ -852,10 +858,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Idioma:</translation>
     </message>
     <message>
-        <source>System tray</source>
-        <translation>Bandeja del sistema</translation>
-    </message>
-    <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
         <translation>Habilitará un ícono claro en la bandeja.</translation>
@@ -924,10 +926,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
         <translation>qTox se pondrá en foco cuando recibas un mensaje.</translation>
-    </message>
-    <message>
-        <source>Default directory to save files</source>
-        <translation>Directorio predeterminado para guardar archivos</translation>
     </message>
     <message>
         <source>Focus window</source>
@@ -1080,9 +1078,13 @@ se enviarán cuando tú y ellos estén conectados al mismo tiempo.</translation>
 Hazlo sólo en caso de ser necesario.</translation>
     </message>
     <message>
-        <source>Port</source>
+        <source>Default directory to save files:</source>
+        <translation>Directorio predeterminado para guardar archivos:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Puerto</translation>
+        <translation>Puerto:</translation>
     </message>
 </context>
 <context>
@@ -1142,6 +1144,21 @@ Hazlo sólo en caso de ser necesario.</translation>
     <message>
         <source>End video call</source>
         <translation>Terminar la videollamada</translation>
+    </message>
+</context>
+<context>
+    <name>GenericNetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation>Vídeo Tox</translation>
+    </message>
+    <message>
+        <source>Show Messages</source>
+        <translation>Mostrar Mensajes</translation>
+    </message>
+    <message>
+        <source>Hide Messages</source>
+        <translation>Ocultar Mensajes</translation>
     </message>
 </context>
 <context>
@@ -1410,6 +1427,18 @@ Por favor reporta este error.</translation>
         <source>Wrong password.</source>
         <translation>Contraseña incorrecta.</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t load profile</source>
+        <translation>No se pudo cargar el perfil</translation>
+    </message>
+    <message>
+        <source>There is no selected profile.
+
+You may want to create one.</source>
+        <translation>No has seleccionado ningún perfil.
+
+¿Quizás quieres crear uno nuevo?</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1437,12 +1466,13 @@ Por favor reporta este error.</translation>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
-</context>
-<context>
-    <name>NetCamView</name>
     <message>
-        <source>Tox video</source>
-        <translation>Vídeo Tox</translation>
+        <source>Your name</source>
+        <translation>Tu nombre</translation>
+    </message>
+    <message>
+        <source>Your status</source>
+        <translation>Tu estado</translation>
     </message>
 </context>
 <context>
@@ -1504,14 +1534,6 @@ Por favor reporta este error.</translation>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
         <translation>¿Deseas eliminar permanentemente el historial de chat?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Could not delete chat history</source>
-        <translation>No se pudo eliminar el historial de chat.</translation>
     </message>
 </context>
 <context>
@@ -1693,8 +1715,8 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <source>Could not remove avatar.</source>
-        <translation>No se pudo eliminar el avatar.</translation>
+        <source>User Profile</source>
+        <translation>Perfil de Usuario</translation>
     </message>
 </context>
 <context>
@@ -1777,10 +1799,6 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>Resizing</source>
         <translation>Cambiando el tamaño</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Perfil de Usuario</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -1952,10 +1970,6 @@ Selecciona &quot;No&quot; para evitar comunicaciones usando un protocolo no segu
     <message>
         <source>Online</source>
         <translation>Conectados</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation>&amp;Salir</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2142,6 +2156,16 @@ Selecciona &quot;No&quot; para evitar comunicaciones usando un protocolo no segu
     <message>
         <source>Message failed to send</source>
         <translation>Falló el envío del mensaje</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <comment>Tray action menu to logout user</comment>
+        <translation>Cerrar sesión</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit tox</comment>
+        <translation>Salir</translation>
     </message>
 </context>
 </TS>
