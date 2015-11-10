@@ -414,13 +414,13 @@ void Widget::updateIcons()
     QString status;
     if (eventIcon)
     {
-        status = "event";
+        status = QStringLiteral("event");
     }
     else
     {
         status = ui->statusButton->property("status").toString();
         if (!status.length())
-            status = "offline";
+            status = QStringLiteral("offline");
     }
 
     QIcon ico;
@@ -502,6 +502,11 @@ void Widget::closeEvent(QCloseEvent *event)
     }
     else
     {
+        if (autoAwayActive)
+        {
+            emit statusSet(Status::Online);
+            autoAwayActive = false;
+        }
         saveWindowGeometry();
         saveSplitterGeometry();
         qApp->exit(0);
@@ -889,13 +894,13 @@ void Widget::addFriend(int friendId, const QString &userId)
     if (chatDate > activityDate && chatDate.isValid())
         Settings::getInstance().setFriendActivity(newfriend->getToxId(), chatDate);
 
-    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),Status::Offline,Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
+    contactListWidget->addFriendWidget(newfriend->getFriendWidget(), Status::Offline, Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(settingsWidget, &SettingsWidget::compactToggled, newfriend->getFriendWidget(), &GenericChatroomWidget::compactChange);
-    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
+    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->getChatForm(), SLOT(focusInput()));
@@ -1922,25 +1927,25 @@ QString Widget::getStatusTitle(Status status)
     switch (status)
     {
     case Status::Online:
-        return "online";
+        return QStringLiteral("online");
     case Status::Away:
-        return "away";
+        return QStringLiteral("away");
     case Status::Busy:
-        return "busy";
+        return QStringLiteral("busy");
     case Status::Offline:
     default:
-        return "offline";
+        return QStringLiteral("offline");
     }
 }
 
 Status Widget::getStatusFromString(QString status)
 {
-    if (status == "online")
+    if (status == QStringLiteral("online"))
         return Status::Online;
-    else if (status == "busy")
-        return Status::Busy;
-    else if (status == "away")
+    else if (status == QStringLiteral("away"))
         return Status::Away;
+    else if (status == QStringLiteral("busy"))
+        return Status::Busy;
     else
         return Status::Offline;
 }
