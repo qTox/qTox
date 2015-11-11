@@ -228,7 +228,7 @@ instead of closing itself.</string>
                <string>Set to 0 to disable</string>
               </property>
               <property name="suffix">
-               <string> minutes</string>
+               <string notr="true"> min</string>
               </property>
               <property name="minimum">
                <number>0</number>
