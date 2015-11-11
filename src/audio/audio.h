@@ -60,13 +60,6 @@ public:
 
     void setInputVolume(qreal volume);
 
-    void subscribeInput();
-    void unsubscribeInput();
-    void subscribeOutput();
-    void unsubscribeOutput();
-    void openInput(const QString& inDevDescr);
-    bool openOutput(const QString& outDevDescr);
-
     inline void reinitInput(const QString& inDevDesc)
     {
         QMutexLocker locker(&audioInLock);
@@ -103,8 +96,10 @@ public:
 #endif
 
 public slots:
-    void closeInput();
-    void closeOutput();
+    void subscribeInput();
+    void subscribeOutput();
+    void unsubscribeInput();
+    void unsubscribeOutput();
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 
@@ -114,6 +109,8 @@ signals:
 private:
     Audio();
     ~Audio();
+
+    void internalSubscribeOutput();
 
     void initInput(const QString& inDevDescr);
     bool initOutput(const QString& outDevDescr);

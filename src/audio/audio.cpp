@@ -75,12 +75,12 @@ Audio::Audio()
 
 Audio::~Audio()
 {
-    closeInput();
-    closeOutput();
     audioThread->exit();
     audioThread->wait();
     if (audioThread->isRunning())
         audioThread->terminate();
+    cleanupInput();
+    cleanupOutput();
 }
 
 /**
@@ -171,7 +171,11 @@ void Audio::unsubscribeInput()
 void Audio::subscribeOutput()
 {
     QMutexLocker locker(&audioOutLock);
+    internalSubscribeOutput();
+}
 
+void Audio::internalSubscribeOutput()
+{
     if (!alOutDev)
         initOutput(Settings::getInstance().getOutDev());
 
@@ -189,15 +193,6 @@ void Audio::unsubscribeOutput()
 
     if (!outputSubscriptions)
         cleanupOutput();
-}
-
-/**
-Open an input device, use before suscribing
-*/
-void Audio::openInput(const QString& inDevDescr)
-{
-    QMutexLocker lock(&audioInLock);
-    initInput(inDevDescr);
 }
 
 void Audio::initInput(const QString& inDevDescr)
@@ -264,14 +259,10 @@ void Audio::initInput(const QString& inDevDescr)
 }
 
 /**
-Open an output device
-*/
-bool Audio::openOutput(const QString &outDevDescr)
-{
-    QMutexLocker lock(&audioOutLock);
-    return initOutput(outDevDescr);
-}
+@internal
 
+Open an audio output device
+*/
 bool Audio::initOutput(const QString& outDevDescr)
 {
     qDebug() << "Opening audio output" << outDevDescr;
@@ -336,35 +327,13 @@ bool Audio::initOutput(const QString& outDevDescr)
 }
 
 /**
-Close an input device, please don't use unless everyone's unsuscribed
-*/
-void Audio::closeInput()
-{
-    QMutexLocker locker(&audioInLock);
-    cleanupInput();
-}
-
-/**
-Close an output device
-*/
-void Audio::closeOutput()
-{
-    QMutexLocker locker(&audioOutLock);
-    cleanupOutput();
-}
-
-/**
 Play a 44100Hz mono 16bit PCM sound
 */
 void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker lock(&audioOutLock);
 
-    if (!alOutDev)
-    {
-        if (!initOutput(Settings::getInstance().getOutDev()))
-            return;
-    }
+    internalSubscribeOutput();
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -484,6 +453,11 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
         alSourcePlay(alSource);
 }
 
+/**
+@internal
+
+Close active audio input device.
+*/
 void Audio::cleanupInput()
 {
     mInputInitialized = false;
@@ -503,6 +477,11 @@ void Audio::cleanupInput()
     }
 }
 
+/**
+@internal
+
+Close active audio output device
+*/
 void Audio::cleanupOutput()
 {
     mOutputInitialized = false;
