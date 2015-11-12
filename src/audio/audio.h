@@ -131,6 +131,8 @@ private:
     std::atomic<int>    outputSubscriptions;
     ALCdevice*          alOutDev;
     ALCdevice*          alInDev;
+    bool                mInputInitialized;
+    bool                mOutputInitialized;
     qreal               outputVolume;
     qreal               inputVolume;
     ALuint              alMainSource;

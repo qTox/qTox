@@ -62,6 +62,8 @@ Audio::Audio()
     , outputSubscriptions(0)
     , alOutDev(nullptr)
     , alInDev(nullptr)
+    , mInputInitialized(false)
+    , mOutputInitialized(false)
     , outputVolume(1.0)
     , inputVolume(1.0)
     , alMainSource(0)
@@ -202,6 +204,7 @@ void Audio::initInput(const QString& inDevDescr)
 {
     qDebug() << "Opening audio input" << inDevDescr;
 
+    mInputInitialized = false;
     if (inDevDescr == "none")
         return;
 
@@ -256,6 +259,8 @@ void Audio::initInput(const QString& inDevDescr)
         alcCaptureStart(alInDev);
 #endif
     }
+
+    mInputInitialized = true;
 }
 
 /**
@@ -271,6 +276,7 @@ bool Audio::initOutput(const QString& outDevDescr)
 {
     qDebug() << "Opening audio output" << outDevDescr;
 
+    mOutputInitialized = false;
     if (outDevDescr == "none")
         return true;
 
@@ -316,18 +322,17 @@ bool Audio::initOutput(const QString& outDevDescr)
             cleanupOutput();
             return false;
         }
-    }
-    else
-    {
-        qWarning() << "Cannot open output audio device" << outDevDescr;
-        return false;
+
+        Core* core = Core::getInstance();
+        if (core)
+            core->getAv()->resetCallSources(); // Force to regen each group call's sources
+
+        mOutputInitialized = true;
+        return true;
     }
 
-    Core* core = Core::getInstance();
-    if (core)
-        core->getAv()->resetCallSources(); // Force to regen each group call's sources
-
-    return alOutDev;
+    qWarning() << "Cannot open output audio device" << outDevDescr;
+    return false;
 }
 
 /**
@@ -481,6 +486,8 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 
 void Audio::cleanupInput()
 {
+    mInputInitialized = false;
+
     if (alInDev)
     {
 #if (!FIX_SND_PCM_PREPARE_BUG)
@@ -498,6 +505,8 @@ void Audio::cleanupInput()
 
 void Audio::cleanupOutput()
 {
+    mOutputInitialized = false;
+
     if (alOutDev) {
         qDebug() << "Closing audio output";
         alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
@@ -523,7 +532,7 @@ Returns true if the input device is open and suscribed to
 bool Audio::isInputReady()
 {
     QMutexLocker locker(&audioInLock);
-    return alInDev;
+    return alInDev && mInputInitialized;
 }
 
 /**
@@ -532,7 +541,7 @@ Returns true if the output device is open
 bool Audio::isOutputReady()
 {
     QMutexLocker locker(&audioOutLock);
-    return alOutDev;
+    return alOutDev && mOutputInitialized;
 }
 
 void Audio::createSource(ALuint* source)
@@ -567,12 +576,15 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
     QMutexLocker lock(&audioInLock);
 
+    if (!(alInDev && mInputInitialized))
+        return false;
+
     ALint curSamples=0;
-    alcGetIntegerv(Audio::alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
+    alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
     if (curSamples < samples)
         return false;
 
-    alcCaptureSamples(Audio::alInDev, buf, samples);
+    alcCaptureSamples(alInDev, buf, samples);
 
     for (size_t i = 0; i < samples * AUDIO_CHANNELS; ++i)
     {
