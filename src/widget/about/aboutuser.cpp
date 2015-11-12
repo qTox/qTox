@@ -5,13 +5,19 @@
 #include <QDir>
 #include <QFileDialog>
 
-AboutUser::AboutUser(QWidget *parent) :
+AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutUser)
 {
     ui->setupUi(this);
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
+    connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
+
+    this->toxId = toxId;
+    QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
+    ui->autoaccept->setChecked(!dir.isEmpty());
+    ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
 }
 
 void AboutUser::setFriend(Friend *f)
@@ -20,6 +26,7 @@ void AboutUser::setFriend(Friend *f)
     ui->userName->setText(f->getDisplayedName());
     ui->publicKey->setText(QString(f->getToxId().toString()));
     ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
+
     QPixmap avatar = Settings::getInstance().getSavedAvatar(f->getToxId().toString());
     ui->statusMessage->setText(f->getStatusMessage());
     if(!avatar.isNull()) {
@@ -30,19 +37,6 @@ void AboutUser::setFriend(Friend *f)
 
 }
 
-void AboutUser::setToxId(ToxId &id)
-{
-    this->toxId = id;
-    QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
-    ui->autoaccept->setChecked(!dir.isEmpty());
-}
-
-void AboutUser::onAcceptedClicked()
-{
-    Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
-    Settings::getInstance().saveGlobal();
-}
-
 void AboutUser::onAutoAcceptClicked()
 {
     QString dir;
@@ -51,6 +45,7 @@ void AboutUser::onAutoAcceptClicked()
         dir = QDir::homePath();
         ui->autoaccept->setChecked(false);
         Settings::getInstance().setAutoAcceptDir(this->toxId, "");
+        ui->selectSaveDir->setText("Auto accept for this contact is disabled");
     }
     else if (ui->autoaccept->isChecked())
     {
@@ -58,7 +53,29 @@ void AboutUser::onAutoAcceptClicked()
                                                          "popup title"), dir);
         ui->autoaccept->setChecked(true);
         Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
+                ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
     }
+    Settings::getInstance().saveGlobal();
+    ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
+}
+
+void AboutUser::onSelectDirClicked()
+{
+    QString dir;
+    dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
+                                                     "popup title"), dir);
+    ui->autoaccept->setChecked(true);
+    Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
+    Settings::getInstance().saveGlobal();
+}
+
+/**
+ * @brief AboutUser::onAcceptedClicked When users clicks the bottom OK button,
+ *          save all settings
+ */
+void AboutUser::onAcceptedClicked()
+{
+    Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
 }
 

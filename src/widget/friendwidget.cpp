@@ -201,9 +201,8 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             }
         }
         else if (selectedItem == aboutWindow) {
-            AboutUser *aboutUser = new AboutUser(this);
+            AboutUser *aboutUser = new AboutUser(id, this);
             aboutUser->setFriend(FriendList::findFriend(friendId));
-            aboutUser->setToxId(id);
             aboutUser->show();
         }
         else if (selectedItem == newCircleAction)

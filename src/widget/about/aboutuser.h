@@ -14,10 +14,9 @@ class AboutUser : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutUser(QWidget *parent = 0);
+    explicit AboutUser(ToxId &toxID, QWidget *parent = 0);
     ~AboutUser();
     void setFriend(Friend *f);
-    void setToxId(ToxId &id);
 
 private:
     Ui::AboutUser *ui;
@@ -26,6 +25,7 @@ private:
 private slots:
     void onAcceptedClicked();
     void onAutoAcceptClicked();
+    void onSelectDirClicked();
 };
 
 #endif // ABOUTUSER_H
