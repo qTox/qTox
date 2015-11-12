@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="tr_TR">
+<TS version="2.0" language="tr_TR">
 <context>
     <name>AVForm</name>
     <message>
@@ -135,7 +135,7 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
     <message>
         <source>You are using a qTox nightly build.</source>
         <translatorcomment>Değiştirilebilir.</translatorcomment>
-        <translation>qTox nightly build sürümünü kullanmaktasınız.</translation>
+        <translation>qTox&apos;un gecelik derlenen bir sürümünü kullanmaktasınız.</translation>
     </message>
     <message>
         <source>License</source>
@@ -168,7 +168,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bililen sorunların bir listesi Github&apos;da &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;hata takibi  &lt;/span&gt;&lt;/a&gt;kısmından temin edilebilir. Eğer qTox&apos;da bir hata ya da güvenlik zafiyeti tespit ederseniz lütfen &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt; Hata Bildirme Kılavuzu&lt;/span&gt;&lt;/a&gt;&apos;na uygun biçimde durumu bildiriniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bililen sorunların bir listesi Github&apos;da &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;hata takibi  &lt;/span&gt;&lt;/a&gt;kısmından temin edilebilir. Eğer qTox&apos;ta bir hata ya da güvenlik zafiyeti tespit ederseniz lütfen &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt; Hata Bildirme Kılavuzu&lt;/span&gt;&lt;/a&gt;&apos;na uygun biçimde durumu bildiriniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -243,7 +243,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>Advanced</source>
         <translatorcomment>Ya da basitçe gelişmiş, ileri seviye denilebilir, alışılageldiği üzere</translatorcomment>
-        <translation>Daha detaylı ayarlar</translation>
+        <translation>İleri-düzey Ayarlar</translation>
     </message>
 </context>
 <context>
@@ -263,7 +263,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ÖNEMLİ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Eğer, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;gerçekten&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; ne yaptığınızın farkında değilseniz, lütfen burada herhangi bir ayarı &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;değiştirmeyin.&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; Burada yapacağınız herhangi bir değişiklik qTox&apos;un kurulumunuza veya verilerinize zarar verebilir. (örneğin sohbet geçmişi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ÖNEMLİ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Eğer, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;gerçekten&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; ne yaptığınızın farkında değilseniz, lütfen burada herhangi bir ayarı &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;değiştirmeyin.&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; Burada yapacağınız herhangi bir değişiklik qTox kurulumunuza veya verilerinize zarar verebilir. (örneğin sohbet geçmişi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -708,6 +708,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
+        <translatorcomment>Değiştirilebilir</translatorcomment>
         <translation>Çembere taşı...</translation>
     </message>
     <message>
@@ -729,7 +730,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Bu arkadaşın aktarım taleplerini bana sormadan kabul et</translation>
+        <translation>Bu kişiden alınacak dosyalar için onay bekleme</translation>
     </message>
     <message>
         <source>Remove friend</source>
@@ -836,11 +837,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Light icon</source>
-        <translation>Açık icon</translation>
+        <translation>Açık renkli simge</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation>Sistem tepsisinde simgeyi göster</translation>
+        <translation>Simgeyi sistem tepsisinde göster</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
@@ -869,7 +870,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation>Kapatıldığında sistem tepsisine geç</translation>
+        <translation>Sistem tepsisine kapat</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
@@ -877,7 +878,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Uzakta durumu için zaman aşımı (0 devre dışı bırakır):</translation>
+        <translation>Durumu, uzakta olarak atamak için zaman aşımı (0 devre dışı bırakır):</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
@@ -898,7 +899,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation>Dosyaları bana sormadan kabul et</translation>
+        <translation>Alınacak dosyalar için onay bekleme</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -906,7 +907,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>On new message:</source>
-        <translation>Yeni bir ile geldiğinde:</translation>
+        <translation>Yeni bir ileti geldiğinde:</translation>
     </message>
     <message>
         <source>Play a sound when you recieve message.</source>
@@ -920,7 +921,7 @@ instead of closing itself.</source>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Bir ileti alındığında, açık olan hiç qTox penceresi yoksa, bir pencere aç.</translation>
+        <translation>Bir ileti alındığında, açık olan hiç bir qTox penceresi yoksa qTox&apos;un penceresini aç.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -937,7 +938,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Bağlantıların durum değişimi göster</translation>
+        <translation>Kişilerin durum değişimi göster</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
@@ -955,7 +956,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation>Grup sohbetlerini arkadaş listesini başında göster</translation>
+        <translation>Grup sohbetlerini arkadaş listesinin başında göster</translation>
     </message>
     <message>
         <source>Messages you are trying to send to your friends when they are not online
@@ -970,11 +971,11 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Bağlantılarınızın listesi toplanmış halde görünecek.</translation>
+        <translation>Kişileriniz, listede, yüzeysel olarak görünecek.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Toplanmış bağlantı listesi</translation>
+        <translation>Yüzeysel kişi listesi</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
@@ -990,16 +991,16 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation>Emoji kullan</translation>
+        <translation>Yüz ifadelerini kullan</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smiley paketi:</translation>
+        <translation>Yüz ifadesi paketi:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Emoji boyutu:</translation>
+        <translation>Yüz ifadesi boyutu:</translation>
     </message>
     <message>
         <source> px</source>
@@ -1007,7 +1008,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Style:</source>
-        <translation>Stil:</translation>
+        <translation>Biçim:</translation>
     </message>
     <message>
         <source>Theme color:</source>
@@ -1052,7 +1053,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
+        <translation>Bağlantı noktası:</translation>
     </message>
     <message>
         <source>None</source>
@@ -1523,7 +1524,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Yazım bildirimlerini gönder</translation>
+        <translation>Yazıyor bildirimlerini gönder</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1795,7 +1796,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; isimli kullanıcıyı bağlantı listenizden silmek istediğinize emin misiniz?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; isimli kullanıcıyı kişi listenizden silmek istediğinize emin misiniz?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2109,7 +2110,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Contacts</source>
-        <translation>Bağlantılar</translation>
+        <translation>Kişiler</translation>
     </message>
     <message>
         <source>Change Status</source>
@@ -2125,7 +2126,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Bağlantı ekle...</translation>
+        <translation>Kişi ekle...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
