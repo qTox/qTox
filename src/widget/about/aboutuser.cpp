@@ -18,6 +18,9 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
     ui->autoaccept->setChecked(!dir.isEmpty());
     ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
+
+    if(ui->autoaccept->isChecked())
+        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
 }
 
 void AboutUser::setFriend(Friend *f)
@@ -53,7 +56,7 @@ void AboutUser::onAutoAcceptClicked()
                                                          "popup title"), dir);
         ui->autoaccept->setChecked(true);
         Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
-                ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
+        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
     }
     Settings::getInstance().saveGlobal();
     ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
