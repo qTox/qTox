@@ -79,13 +79,16 @@
    </item>
    <item>
     <layout class="QFormLayout" name="formLayout">
+     <property name="labelAlignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
      <item row="0" column="0">
       <widget class="QLabel" name="label_5">
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
-        <string>Public key</string>
+        <string>Public key:</string>
        </property>
       </widget>
      </item>
@@ -111,7 +114,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Used aliases</string>
+        <string>Used aliases:</string>
        </property>
       </widget>
      </item>
@@ -125,28 +128,35 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
+     <item row="2" column="1">
+      <widget class="QPushButton" name="selectSaveDir">
+       <property name="text">
+        <string>SELECT DIR</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Default directory to save files:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
       <widget class="QCheckBox" name="autoaccept">
        <property name="text">
         <string>Auto accept files</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QPushButton" name="removeHistory">
-       <property name="text">
-        <string>Remove history</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="selectSaveDir">
-       <property name="text">
-        <string>Files save directory</string>
-       </property>
-      </widget>
-     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="removeHistory">
+     <property name="text">
+      <string>Remove history (operation can not be undone!)</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">
