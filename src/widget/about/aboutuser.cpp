@@ -28,6 +28,7 @@ void AboutUser::setFriend(Friend *f)
     this->setWindowTitle(f->getDisplayedName());
     ui->userName->setText(f->getDisplayedName());
     ui->publicKey->setText(QString(f->getToxId().toString()));
+    ui->publicKey->setCursorPosition(0); //scroll textline to left
     ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
 
     QPixmap avatar = Settings::getInstance().getSavedAvatar(f->getToxId().toString());
