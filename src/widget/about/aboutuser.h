@@ -25,6 +25,7 @@ private:
 
 private slots:
     void onAcceptedClicked();
+    void onAutoAcceptClicked();
 };
 
 #endif // ABOUTUSER_H

@@ -42,7 +42,7 @@
             <bool>false</bool>
            </property>
            <property name="text">
-            <string/>
+            <string>status message</string>
            </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
