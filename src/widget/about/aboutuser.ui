@@ -28,6 +28,9 @@
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
           </widget>
          </item>
          <item>
@@ -47,6 +50,9 @@
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+           </property>
           </widget>
          </item>
         </layout>
@@ -61,14 +67,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>75</width>
+           <height>75</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>75</width>
+           <height>75</height>
           </size>
          </property>
          <property name="text">
