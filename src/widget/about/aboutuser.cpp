@@ -16,16 +16,13 @@ void AboutUser::setFriend(Friend *f)
     ui->userName->setText(f->getDisplayedName());
     ui->publicKey->setText(QString(f->getToxId().toString()));
     ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
-}
-
-void AboutUser::setAvatar(QPixmap pixmap)
-{
-    ui->avatar->setPixmap(pixmap);
-}
-
-void AboutUser::setStatusMessage(QString statusMessage)
-{
-    ui->statusMessage->setText(statusMessage);
+    QPixmap avatar = Settings::getInstance().getSavedAvatar(f->getToxId().toString());
+    ui->statusMessage->setText(f->getStatusMessage());
+    if(!avatar.isNull()) {
+        ui->avatar->setPixmap(avatar);
+    } else {
+        ui->avatar->setPixmap(QPixmap("://img/contact_dark.svg"));
+    }
 }
 
 void AboutUser::setToxId(ToxId &id)

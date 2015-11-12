@@ -205,8 +205,6 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             AboutUser *aboutUser = new AboutUser(this);
             aboutUser->setFriend(FriendList::findFriend(friendId));
             aboutUser->setToxId(id);
-            aboutUser->setAvatar(avatar->getPixmap());
-            aboutUser->setStatusMessage(FriendList::findFriend(friendId)->getStatusMessage());
             aboutUser->show();
         }
         else if (selectedItem == newCircleAction)

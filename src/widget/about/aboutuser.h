@@ -18,8 +18,6 @@ public:
     ~AboutUser();
     void setFriend(Friend *f);
     void setToxId(ToxId &id);
-    void setAvatar(QPixmap pixmap);
-    void setStatusMessage(QString statusMessage);
 
 private:
     Ui::AboutUser *ui;

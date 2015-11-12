@@ -38,8 +38,11 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
            <property name="text">
-            <string>status message</string>
+            <string/>
            </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
@@ -58,15 +61,24 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>50</width>
-           <height>50</height>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="text">
-          <string>AVATAR</string>
+          <string/>
          </property>
          <property name="textFormat">
           <enum>Qt::PlainText</enum>
+         </property>
+         <property name="pixmap">
+          <pixmap>../../../img/contact_dark.svg</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -102,6 +114,15 @@
        </property>
        <property name="acceptDrops">
         <bool>false</bool>
+       </property>
+       <property name="inputMask">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="cursorPosition">
+        <number>0</number>
        </property>
        <property name="readOnly">
         <bool>true</bool>
@@ -167,7 +188,10 @@
       <item>
        <widget class="QPlainTextEdit" name="note">
         <property name="plainText">
-         <string>PLAIN TEXT EDIT</string>
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>You can save comment about this contact here.</string>
         </property>
        </widget>
       </item>
