@@ -180,7 +180,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Kendinizi arkadaş olarak ekleyemezsiniz!</translation>
+        <translation>Kendinizi, arkadaşınız olarak ekleyemezsiniz!</translation>
     </message>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
@@ -190,18 +190,18 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Bu Tox ID bulunmamaktadır</translation>
+        <translation>Böyle bir Tox kimliği yoktur</translation>
     </message>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
+        <translation>Tox kimliği</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
         <translatorcomment>Değiştirilebilir</translatorcomment>
-        <translation>76 adet on-altılık karakter ya da isim@örnek.com</translation>
+        <translation>76 adet onaltılık karakter ya da isim@örnek.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -218,12 +218,12 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Arkadaşlık talep et</translation>
+        <translation>Arkadaşlık teklif et</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 kişi burada! todo(Tox me maybe?)?</translation>
+        <translation>Selam, ben %1, biraz toxlayalım mı?</translation>
     </message>
 </context>
 <context>
@@ -337,7 +337,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation>Kötü bir fikir</translation>
+        <translation>Kötü fikir</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
@@ -452,12 +452,12 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation>Çemberin ismini değiştir</translation>
+        <translation>Çevrenin ismini değiştir</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation>Çemberi kaldır</translation>
+        <translation>Çevreyi kaldır</translation>
     </message>
     <message>
         <source>Open all in new window</source>
@@ -472,7 +472,7 @@ Ignore the proxy and connect to the Internet directly?</source>
     </message>
     <message>
         <source>You need to write a message with your request</source>
-        <translation>Talebinize bir ileti eklemelisiniz</translation>
+        <translation>Teklifinize bir ileti eklemelisiniz</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -507,18 +507,18 @@ History will be disabled!</source>
     <message>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
-        <translation></translation>
+        <translation>Girdiğiniz parola yanlış, lütfen tekrar deneyin:</translation>
     </message>
     <message>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Sohbet geçmişi kaydı devre dışı bırakılıyor, daha önce kaydedilenler muhafaza edilecek (ama kullanım dışı olarak); eğer daha sonra parolayı hatırlarsanız şifrelemeyi tekrar Gizlilik sekmesinden etkinleştirebilirsiniz.</translation>
+        <translation>Sohbet geçmişi kaydı devre dışı bırakılıyor, daha önce kaydedilenler muhafaza edilecek (ama kullanım dışı olarak); eğer daha sonra parolayı hatırlarsanız, şifrelemeyi, Gizlilik sekmesinden, tekrar etkinleştirebilirsiniz.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Parola yanlış, bir deneme daha?</translation>
+        <translation>Parola yanlış, tekrar dener misiniz?</translation>
     </message>
     <message>
         <source>Disable chat history</source>
@@ -554,7 +554,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation>Göndermeyi bekliyor</translation>
+        <translation>Göndermek için bekliyor...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -665,19 +665,19 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation>Arkadaşlık talebi</translation>
+        <translation>Arkadaşlık teklifi</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Biri sizinle ahbap olmak istiyor</translation>
+        <translation>Biri sizinle arkadaş olmak istiyor</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Kullanıcı ID:</translation>
+        <translation>Kullanıcı Kimliği:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Arkadaşlık talebi iletisi:</translation>
+        <translation>Arkadaşlık teklifi iletisi:</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -709,19 +709,19 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
         <translatorcomment>Değiştirilebilir</translatorcomment>
-        <translation>Çembere taşı...</translation>
+        <translation>Bir çevreye taşı...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Yeni bir çembere</translation>
+        <translation>Yeni bir çevreye</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>%1. çemberden kaldır</translation>
+        <translation>%1 çevresinden kaldır</translation>
     </message>
     <message>
         <source>Move  to circle &quot;%1&quot;</source>
-        <translation>%1. çembere taşı</translation>
+        <translation>%1.çevresine taşı</translation>
     </message>
     <message>
         <source>Set alias...</source>
@@ -730,7 +730,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Bu kişiden alınacak dosyalar için onay bekleme</translation>
+        <translation>Bu arkadaştan alınacak dosyalar için onay bekleme</translation>
     </message>
     <message>
         <source>Remove friend</source>
@@ -895,7 +895,7 @@ instead of closing itself.</source>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Bunu, her bir arkadaşınızın için, üstlerine sağ-tıklayarak atayabilirsiniz.</translation>
+        <translation>Bunu, her bir arkadaş için, üstlerine sağ-tıklayarak atayabilirsiniz.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -952,7 +952,7 @@ instead of closing itself.</source>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>İşaretlendiğinde, grup sohbetleri, arkadaş listesinin başında, işaretlenmediğinde çevrimiçi arkadaşların altına görünecektir.</translation>
+        <translation>İşaretlendiğinde, grup sohbetleri, arkadan listesinin başında, işaretlenmediğinde çevrimiçi kişilerin altında görünecektir.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
@@ -971,11 +971,11 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation>Kişileriniz, listede, yüzeysel olarak görünecek.</translation>
+        <translation>Arkadaşlarınız, listede, yüzeysel olarak görünecek.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation>Yüzeysel kişi listesi</translation>
+        <translation>Yüzeysel arkadaş listesi</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
@@ -1152,12 +1152,12 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>1 kullanıcı sohbette</translation>
+        <translation>1 arkadaş sohbette</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 kullanıcı sohbette</translation>
+        <translation>%1 arkadaş sohbette</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1205,11 +1205,11 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation>1 kullanıcı sohbette</translation>
+        <translation>1 arkadaş sohbette</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
-        <translation>%1 kullanıcı sohbette</translation>
+        <translation>%1 arkadaş sohbette</translation>
     </message>
 </context>
 <context>
@@ -1228,21 +1228,21 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ID</translation>
+        <translation>Tox kimliği</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Bu karakterler sizin benzersiz ID&apos;nizdir. Tox ağındaki diğer kullanıcılar sizi bu şekilde bulur. ID&apos;nizi arkadaşlarınızla paylaşın.</translation>
+        <translation>Bu karakterler sizin benzersiz kimliğinizdir. Tox ağındaki diğer kullanıcılar sizi bu şekilde bulur. Kimliğinizi arkadaşlarınızla paylaşın.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Tox ID&apos;niz (kopyalamak için tıklayın)</translation>
+        <translation>Tox kimliğiniz (kopyalamak için tıklayın)</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Bu QR kod, Tox ID&apos;nizi içerir. Tox ID&apos;niz yerine bunu da arkadaşlarızla paylaşabilirsiniz.</translation>
+        <translation>Bu QR kod, Tox kimliğinizi içerir. Tox kimliğiniz yerine bunu da arkadaşlarızla paylaşabilirsiniz.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1345,7 +1345,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation>Profil yarat</translation>
+        <translation>Profil oluştur</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
@@ -1401,7 +1401,9 @@ If you encountered this error, please report it.</source>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>Seçili bir profil yok. Yeni bir tane yaratmak ister misiniz?</translation>
+        <translation>Seçili bir profil yok. 
+
+Yeni bir tane oluşturmak isteyebilirsiniz.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1520,7 +1522,7 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Arkadaşlarınız, siz bir iletiyi yazarken, yazmakta olduğunuzu görebilir.</translation>
+        <translation>Sohbette iken, bir ileti yazıyor olduğunuz karşı tarafa bildirilir.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
@@ -1541,7 +1543,7 @@ Save format changes are possible, which may result in data loss.</source>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>Tox ID&apos;nizin NoSpam kısmı. Eğer sürekli gelen arkadaşlık istekleriyle rahatsız ediliyorsanız, NoSpam kısmını değiştirmelisiniz, bu sayede insanlar sizi eski ID&apos;niz ile ekleyemez, ama varolan arkadaşlarınız korunur.</translation>
+        <translation>NoSpam, Tox kimliğinizin bir parçasıdır. Eğer sürekli gelen arkadaşlık teklifleriyle rahatsız ediliyorsanız, NoSpam kısmını değiştirmelisiniz, bu sayede insanlar sizi eski kimliğiniz ile ekleyemez, ama halihazırda varolan arkadaş listeniz muhafaza edilir.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -1550,7 +1552,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam ToxID&apos;nizin bir parçasıdır. Bu parçayı istediğiniz zaman değiştirebilirsiniz. Eğer arkadaşlık talepleriyle rahatsız ediliyorsanız, bu kısmı değiştirin.</translation>
+        <translation>NoSpam Tox kimliğinizin bir parçasıdır. Bu parçayı istediğiniz zaman değiştirebilirsiniz. Eğer rehbere ekleme teklifleriyle rahatsız ediliyorsanız, bu kısmı değiştirin.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -1658,7 +1660,7 @@ Please use another image.</source>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation>Qr kodu kaydet (*.png)</translation>
+        <translation>Qr kodunu kaydet (*.png)</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
@@ -1689,7 +1691,7 @@ Please use another image.</source>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Bu karakterler sizin benzersiz ID&apos;nizdir. Tox ağındaki diğer kullanıcılar sizi bu şekilde bulur. ID&apos;nizi arkadaşlarınızla paylaşın.</translation>
+        <translation>Bu karakterler sizin benzersiz kimliğinizdir. Tox ağındaki diğer kişiler sizi bu şekilde bulur. Kimliğinizi arkadaşlarınızla paylaşın.</translation>
     </message>
 </context>
 <context>
@@ -1713,7 +1715,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation>Güncelle</translation>
+        <translation>Güncelleme</translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now?
@@ -1723,7 +1725,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>%1 kişi burada! todo(Tox me maybe?)?</translation>
+        <translation>Selam, ben %1, biraz toxlayalım mı?</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
@@ -1796,7 +1798,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; isimli kullanıcıyı kişi listenizden silmek istediğinize emin misiniz?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; isimli arkadaşınızı listeden kaldırmak istediğinize emin misiniz?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -1851,7 +1853,7 @@ It will be installed when qTox restarts.</source>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation>Çember #%1</translation>
+        <translation>Çevre #%1</translation>
     </message>
 </context>
 <context>
@@ -1889,19 +1891,19 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>The DNS lookup does not contain any Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>DNS sorgusu bir Tox ID içermiyor</translation>
+        <translation>DNS sorgusu bir Tox kimliği içermiyor</translation>
     </message>
     <message>
         <source>The DNS lookup does not contain a valid Tox ID</source>
         <comment>Error with the DNS</comment>
-        <translation>DNS sorgusu geçerli bir Tox ID içermiyor</translation>
+        <translation>DNS sorgusu geçerli bir Tox kimliğini içermiyor</translation>
     </message>
     <message>
         <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
 Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
 Should toxdns1 be used anyway?
 If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation>Görünüşe göre, arkadaşınızın DNS kaydına ulaşabilmek için, qTox&apos;un eski toxdns1 protokolünü kullanması gerekiyor.</translation>
+        <translation>Görünüşe göre, arkadaşlarınıza eklemek istediğiniz kişinin DNS kaydına ulaşabilmek için, qTox&apos;un eski toxdns1 protokolünü kullanması gerekiyor.</translation>
     </message>
 </context>
 <context>
@@ -1909,19 +1911,19 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation>Bir arkadaş ekle</translation>
+        <translation>Arkadaş ekle</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation>%1 isimli kullanıcıyı arkadaş olarak eklemek istiyor musunuz?</translation>
+        <translation>%1&apos;i arkadaş olarak eklemek istiyor musunuz?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Kullanıcı ID:</translation>
+        <translation>Kullanıcı kimliği:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Arkadaşlık talebi iletisi:</translation>
+        <translation>Arkadaşlık teklifi iletiniz:</translation>
     </message>
     <message>
         <source>Send</source>
@@ -1969,7 +1971,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation>Arkadaşlık talep edilemedi</translation>
+        <translation>Arkadaşlık teklif edilemedi</translation>
     </message>
     <message>
         <source>away</source>
@@ -2037,7 +2039,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation>Yeni bir çember ekle...</translation>
+        <translation>Yeni bir çevre ekle...</translation>
     </message>
     <message>
         <source>By Name</source>
@@ -2069,7 +2071,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Search Contacts</source>
-        <translation>Arkadaş ara</translation>
+        <translation>Arkadaşlarda Ara</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2110,7 +2112,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Contacts</source>
-        <translation>Kişiler</translation>
+        <translation>Arkadaşlar</translation>
     </message>
     <message>
         <source>Change Status</source>
@@ -2126,7 +2128,7 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Kişi ekle...</translation>
+        <translation>Arkadaş Ekle...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
