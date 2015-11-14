@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>465</width>
-    <height>394</height>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
            </property>
           </widget>
          </item>
-         <item>
+         <item alignment="Qt::AlignBottom">
           <widget class="QLabel" name="statusMessage">
            <property name="sizePolicy">
             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -162,17 +162,17 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QCheckBox" name="autoaccept">
-       <property name="text">
-        <string>Auto accept files</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="1">
       <widget class="QPushButton" name="selectSaveDir">
        <property name="text">
         <string>Auto accept for this contact is disabled</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <widget class="QCheckBox" name="autoaccept">
+       <property name="text">
+        <string>Auto accept files</string>
        </property>
       </widget>
      </item>
