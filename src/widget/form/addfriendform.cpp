@@ -88,6 +88,7 @@ void AddFriendForm::show(ContentLayout* contentLayout)
     contentLayout->mainHead->layout()->addWidget(head);
     main->show();
     head->show();
+    onIdChanged(toxId.text());
     setIdFromClipboard();
     toxId.setFocus();
 }
@@ -173,12 +174,19 @@ void AddFriendForm::onIdChanged(const QString &id)
 
     if (isValidId)
     {
+        toxId.setToolTip(QStringLiteral(""));
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" (") +
                            toxIdComment +
                            QStringLiteral(")"));
-    } else
+    }
+    else
     {
+        if (Settings::getInstance().getAllowAddingFriendsPK())
+            toxId.setToolTip(tr("Invalid Public Key or Tox ID format"));
+        else
+            toxId.setToolTip(tr("Invalid Tox ID format"));
+
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" <font color='red'>(") +
                            toxIdComment +
@@ -186,7 +194,6 @@ void AddFriendForm::onIdChanged(const QString &id)
     }
 
     toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
-    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId && !tId.isEmpty());
 }
