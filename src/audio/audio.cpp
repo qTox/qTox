@@ -32,7 +32,6 @@
 #include "src/core/coreav.h"
 
 #include <QDebug>
-#include <QTimer>
 #include <QThread>
 #include <QMutexLocker>
 #include <QFile>
@@ -56,8 +55,6 @@ Audio& Audio::getInstance()
 
 Audio::Audio()
     : audioThread(new QThread())
-    , inputSubscriptions(0)
-    , outputSubscriptions(0)
     , alOutDev(nullptr)
     , alInDev(nullptr)
     , mInputInitialized(false)
@@ -138,15 +135,17 @@ void Audio::setInputVolume(qreal volume)
 
 If the input device is not open, it will be opened before capturing.
 */
-void Audio::subscribeInput()
+void Audio::subscribeInput(const void* inListener)
 {
     QMutexLocker locker(&mAudioLock);
 
     if (!alInDev)
         initInput(Settings::getInstance().getInDev());
 
-    inputSubscriptions++;
-    qDebug() << "Subscribed to audio input device [" << inputSubscriptions << " subscriptions ]";
+    if (!inputSubscriptions.contains(inListener)) {
+        inputSubscriptions << inListener;
+        qDebug() << "Subscribed to audio input device [" << inputSubscriptions.size() << "subscriptions ]";
+    }
 }
 
 /**
@@ -154,46 +153,44 @@ void Audio::subscribeInput()
 
 If the input device has no more subscriptions, it will be closed.
 */
-void Audio::unsubscribeInput()
+void Audio::unsubscribeInput(const void* inListener)
 {
     QMutexLocker locker(&mAudioLock);
 
-    if (inputSubscriptions > 0)
+    if (inListener && inputSubscriptions.size())
     {
-        inputSubscriptions--;
-        qDebug() << "Unsubscribed from audio input device [" << inputSubscriptions << " subscriptions]";
+        inputSubscriptions.removeOne(inListener);
+        qDebug() << "Unsubscribed from audio input device [" << inputSubscriptions.size() << "subscriptions left ]";
     }
 
-    if (!inputSubscriptions)
+    if (inputSubscriptions.isEmpty())
         cleanupInput();
 }
 
-void Audio::subscribeOutput()
+void Audio::subscribeOutput(const void* outListener)
 {
     QMutexLocker locker(&mAudioLock);
-    internalSubscribeOutput();
-}
 
-void Audio::internalSubscribeOutput()
-{
     if (!alOutDev)
         initOutput(Settings::getInstance().getOutDev());
 
-    outputSubscriptions++;
-    qDebug() << "Subscribed to audio output device [" << outputSubscriptions << " subscriptions ]";
+    if (!outputSubscriptions.contains(outListener)) {
+        outputSubscriptions << outListener;
+        qDebug() << "Subscribed to audio output device [" << outputSubscriptions.size() << "subscriptions ]";
+    }
 }
 
-void Audio::unsubscribeOutput()
+void Audio::unsubscribeOutput(const void* outListener)
 {
     QMutexLocker locker(&mAudioLock);
 
-    if (outputSubscriptions > 0)
+    if (outListener && outputSubscriptions.size())
     {
-        outputSubscriptions--;
-        qDebug() << "Unsubscribed from audio output device [" << outputSubscriptions << " subscriptions]";
+        outputSubscriptions.removeOne(outListener);
+        qDebug() << "Unsubscribed from audio output device [" << outputSubscriptions.size() << " subscriptions left ]";
     }
 
-    if (!outputSubscriptions)
+    if (outputSubscriptions.isEmpty())
         cleanupOutput();
 }
 
@@ -335,7 +332,8 @@ void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker locker(&mAudioLock);
 
-    internalSubscribeOutput();
+    if (!alOutDev)
+        initOutput(Settings::getInstance().getOutDev());
 
     ALuint buffer;
     alGenBuffers(1, &buffer);
@@ -351,12 +349,14 @@ void Audio::playMono16Sound(const QByteArray& data)
     alGetBufferi(buffer, AL_SIZE, &sizeInBytes);
     alGetBufferi(buffer, AL_CHANNELS, &channels);
     alGetBufferi(buffer, AL_BITS, &bits);
-    int lengthInSamples = sizeInBytes * 8 / (channels * bits);
 
     ALint frequency;
     alGetBufferi(buffer, AL_FREQUENCY, &frequency);
 
     alDeleteBuffers(1, &buffer);
+
+    if (outputSubscriptions.isEmpty())
+        cleanupOutput();
 }
 
 /**

@@ -35,7 +35,6 @@
  #include <AL/alext.h>
 #endif
 
-class QTimer;
 struct Tox;
 class AudioFilterer;
 
@@ -48,6 +47,8 @@ static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, bu
 class Audio : public QObject
 {
     Q_OBJECT
+
+    typedef QList<const void*> PtrList;
 
 public:
     static Audio& getInstance();
@@ -96,10 +97,10 @@ public:
 #endif
 
 public slots:
-    void subscribeInput();
-    void subscribeOutput();
-    void unsubscribeInput();
-    void unsubscribeOutput();
+    void subscribeInput(const void* inListener);
+    void subscribeOutput(const void* outListener);
+    void unsubscribeInput(const void* inListener);
+    void unsubscribeOutput(const void* outListener);
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 
@@ -109,8 +110,6 @@ signals:
 private:
     Audio();
     ~Audio();
-
-    void internalSubscribeOutput();
 
     void initInput(const QString& inDevDescr);
     bool initOutput(const QString& outDevDescr);
@@ -122,9 +121,9 @@ private:
 
 private:
     QThread*            audioThread;
-    std::atomic<int>    inputSubscriptions;
-    std::atomic<int>    outputSubscriptions;
     QMutex              mAudioLock;
+    PtrList             inputSubscriptions;
+    PtrList             outputSubscriptions;
     ALCdevice*          alOutDev;
     ALCdevice*          alInDev;
     bool                mInputInitialized;
@@ -133,7 +132,6 @@ private:
     qreal               inputVolume;
     ALuint              alMainSource;
     ALCcontext*         alContext;
-    QTimer*             timer;
 };
 
 #endif // AUDIO_H
