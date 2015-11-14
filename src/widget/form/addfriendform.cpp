@@ -88,7 +88,6 @@ void AddFriendForm::show(ContentLayout* contentLayout)
     contentLayout->mainHead->layout()->addWidget(head);
     main->show();
     head->show();
-    onIdChanged(toxId.text());
     setIdFromClipboard();
     toxId.setFocus();
 }
@@ -153,8 +152,6 @@ void AddFriendForm::onIdChanged(const QString &id)
     QRegularExpression dnsIdExpression("^\\S+@\\S+$");
     bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(tId));
 
-    QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-
     if (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(tId))
     {
         message.setEnabled(false);
@@ -166,11 +163,18 @@ void AddFriendForm::onIdChanged(const QString &id)
         sendButton.setText(tr("Send friend request"));
     }
 
-    QString toxIdComment;
+    QString toxIdText,
+        toxIdComment;
     if (Settings::getInstance().getAllowAddingFriendsPK())
-        toxIdComment = tr("either 64 or 76 hexadecimal characters or name@example.com", "Public key and Tox ID format description");
+    {
+        toxIdText = tr("Tox ID or Public Key", "Tox ID or Public Key of the person you're sending a friend request to");
+        toxIdComment = tr("either 64, 76 hexadecimal characters or name@example.com", "Public Key and Tox ID format description");
+    }
     else
+    {
+        toxIdText = tr("Tox ID", "Tox ID of the person you're sending a friend request to");
         toxIdComment = tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description");
+    }
 
     if (isValidId)
     {
@@ -202,11 +206,10 @@ void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
-    if (Core::getInstance()->isReady() && !id.isEmpty() && (ToxId::isToxId(id) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(id))))
-    {
-        if ((!ToxId(id).isActiveProfile() && !Settings::getInstance().getAllowAddingFriendsPK()) || (Settings::getInstance().getAllowAddingFriendsPK() && id.toUpper() != Core::getInstance()->getSelfId().toString().left(2*TOX_PUBLIC_KEY_SIZE).toUpper()))
-            toxId.setText(id);
-    }
+    if (Core::getInstance()->isReady() && !id.isEmpty() && (ToxId::isToxId(id) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(id))) && ToxId(id) != Core::getInstance()->getSelfId())
+        toxId.setText(id);
+
+    onIdChanged(toxId.text());
 }
 
 void AddFriendForm::retranslateUi()
