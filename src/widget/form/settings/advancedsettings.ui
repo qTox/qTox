@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>396</width>
-        <height>454</height>
+        <width>398</width>
+        <height>456</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -36,6 +36,16 @@
          </property>
          <property name="text">
           <string>Make Tox portable</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cbAllowAddingFriendsPK">
+         <property name="toolTip">
+          <string>If you don't know what a public key is, left unchecked</string>
+         </property>
+         <property name="text">
+          <string>Enable adding friends using public key</string>
          </property>
         </widget>
        </item>

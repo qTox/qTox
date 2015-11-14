@@ -35,6 +35,7 @@ AdvancedForm::AdvancedForm() :
     bodyUI->dbLabel->setOpenExternalLinks(true);
 
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
+    bodyUI->cbAllowAddingFriendsPK->setChecked(Settings::getInstance().getAllowAddingFriendsPK());
     bodyUI->syncTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     bodyUI->syncTypeComboBox->addItems({tr("Synchronized - safe (recommended)"),
                                         tr("Partially async - risky (20% faster)"),
@@ -44,6 +45,7 @@ AdvancedForm::AdvancedForm() :
     bodyUI->syncTypeComboBox->setCurrentIndex(index);
 
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
+    connect(bodyUI->cbAllowAddingFriendsPK, &QCheckBox::stateChanged, this, &AdvancedForm::onAllowAddingFriendsPK);
     connect(bodyUI->syncTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onDbSyncTypeUpdated()));
     connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
 
@@ -70,6 +72,11 @@ AdvancedForm::~AdvancedForm()
 void AdvancedForm::onMakeToxPortableUpdated()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+}
+
+void AdvancedForm::onAllowAddingFriendsPK()
+{
+    Settings::getInstance().setAllowAddingFriendsPK(bodyUI->cbAllowAddingFriendsPK->isChecked());
 }
 
 void AdvancedForm::onDbSyncTypeUpdated()

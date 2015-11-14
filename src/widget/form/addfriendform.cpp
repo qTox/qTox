@@ -108,15 +108,19 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (ToxId::isToxId(id))
+    if (ToxId::isToxId(id) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(id)))
     {
-        if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
-            GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
+        if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper() || (Settings::getInstance().getAllowAddingFriendsPK() && id.toUpper() == Core::getInstance()->getSelfId().toString().left(2*TOX_PUBLIC_KEY_SIZE).toUpper()))
+            GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!", "When trying to add your own Tox ID as friend"));
+        else if (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(id))
+            emit friendNoRequest(id);
         else
+        {
             emit friendRequested(id, getMessage());
+            this->message.clear();
+        }
 
         this->toxId.clear();
-        this->message.clear();
     }
     else
     {
@@ -132,7 +136,7 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
 
         if (toxId.toString().isEmpty())
         {
-            GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist","DNS error"));
+            GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist", "DNS error"));
             return;
         }
 
@@ -146,19 +150,47 @@ void AddFriendForm::onIdChanged(const QString &id)
 {
     QString tId = id.trimmed();
     QRegularExpression dnsIdExpression("^\\S+@\\S+$");
-    bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
+    bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(tId));
 
-    QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-    QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
-
-    if(isValidId)
+    if (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(tId))
     {
+        message.setEnabled(false);
+        sendButton.setText(tr("Add friend", "Text when public key is used to add someone"));
+    }
+    else
+    {
+        message.setEnabled(true);
+        sendButton.setText(tr("Send friend request"));
+    }
+
+    QString toxIdText,
+        toxIdComment;
+    if (Settings::getInstance().getAllowAddingFriendsPK())
+    {
+        toxIdText = tr("Tox ID or Public Key", "Tox ID or Public Key of the person you're sending a friend request to");
+        toxIdComment = tr("either 64, 76 hexadecimal characters or name@example.com", "Public Key and Tox ID format description");
+    }
+    else
+    {
+        toxIdText = tr("Tox ID", "Tox ID of the person you're sending a friend request to");
+        toxIdComment = tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description");
+    }
+
+    if (isValidId)
+    {
+        toxId.setToolTip(QStringLiteral(""));
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" (") +
                            toxIdComment +
                            QStringLiteral(")"));
-    } else
+    }
+    else
     {
+        if (Settings::getInstance().getAllowAddingFriendsPK())
+            toxId.setToolTip(tr("Invalid Public Key or Tox ID format"));
+        else
+            toxId.setToolTip(tr("Invalid Tox ID format"));
+
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" <font color='red'>(") +
                            toxIdComment +
@@ -166,7 +198,6 @@ void AddFriendForm::onIdChanged(const QString &id)
     }
 
     toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
-    toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId && !tId.isEmpty());
 }
@@ -175,18 +206,22 @@ void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
-    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxId::isToxId(id))
-    {
-        if (!ToxId(id).isActiveProfile())
-            toxId.setText(id);
-    }
+    if (Core::getInstance()->isReady() && !id.isEmpty() && (ToxId::isToxId(id) || (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(id))) && ToxId(id) != Core::getInstance()->getSelfId())
+        toxId.setText(id);
+
+    onIdChanged(toxId.text());
 }
 
 void AddFriendForm::retranslateUi()
 {
     headLabel.setText(tr("Add Friends"));
-    messageLabel.setText(tr("Message","The message you send in friend requests"));
-    sendButton.setText(tr("Send friend request"));
+    messageLabel.setText(tr("Message", "The message you send in friend requests"));
+
+    if (Settings::getInstance().getAllowAddingFriendsPK() && ToxId::isPublicKey(toxId.text()))
+        sendButton.setText(tr("Add friend", "Text when public key is used to add someone"));
+    else
+        sendButton.setText(tr("Send friend request"));
+
     message.setPlaceholderText(tr("%1 here! Tox me maybe?",
                 "Default message in friend requests if the field is left blank. Write something appropriate!")
                 .arg(lastUsername));

@@ -181,6 +181,7 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("Advanced");
+        allowAddingFriendsPK = s.value("allowAddingFriendsPK", false).toBool();
         int sType = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
         setDbSyncType(sType);
     s.endGroup();
@@ -393,6 +394,7 @@ void Settings::saveGlobal()
     s.endGroup();
 
     s.beginGroup("Advanced");
+        s.setValue("allowAddingFriendsPK", allowAddingFriendsPK);
         s.setValue("dbSyncType", static_cast<int>(dbSyncType));
     s.endGroup();
 
@@ -867,6 +869,17 @@ void Settings::setDbSyncType(int newValue)
         dbSyncType = static_cast<Db::syncType>(newValue);
     else
         dbSyncType = Db::syncType::stFull;
+}
+
+bool Settings::getAllowAddingFriendsPK() const
+{
+    QMutexLocker locker{&bigLock};
+    return allowAddingFriendsPK;
+}
+
+void Settings::setAllowAddingFriendsPK(bool newValue)
+{
+    allowAddingFriendsPK = newValue;
 }
 
 int Settings::getAutoAwayTime() const

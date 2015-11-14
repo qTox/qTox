@@ -238,6 +238,7 @@ void Nexus::showMainGUI()
 
     connect(widget, &Widget::statusSet, core, &Core::setStatus);
     connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
+    connect(widget, &Widget::friendNoRequest, core, &Core::addFriendNoRequest);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 #endif
 

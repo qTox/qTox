@@ -562,6 +562,33 @@ void Core::acceptFriendRequest(const QString& userId)
     }
 }
 
+void Core::addFriendNoRequest(const QString& friendPubKey)
+{
+    if (hasFriendWithAddress(friendPubKey))
+    {
+        emit failedToAddFriend(friendPubKey, tr("Friend is already added"));
+    }
+    else
+    {
+        uint32_t friendId = tox_friend_add_norequest(tox, CFriendAddress(friendPubKey).data(), nullptr);
+        if (friendId == std::numeric_limits<uint32_t>::max())
+        {
+            qDebug() << "Failed to add friend";
+            emit failedToAddFriend(friendPubKey);
+        }
+        else
+        {
+            qDebug() << "Added friend of " << friendId;
+            // Update our friendAddresses
+            Settings::getInstance().updateFriendAdress(friendPubKey);
+
+            emit friendAdded(friendId, friendPubKey);
+            emit friendshipChanged(friendId);
+        }
+    }
+    profile.saveToxSave();
+}
+
 void Core::requestFriendship(const QString& friendAddress, const QString& message)
 {
     const QString userId = friendAddress.mid(0, TOX_PUBLIC_KEY_SIZE * 2);
@@ -591,7 +618,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
         }
         else
         {
-            qDebug() << "Requested friendship of "<<friendId;
+            qDebug() << "Requested friendship of " << friendId;
             // Update our friendAddresses
             Settings::getInstance().updateFriendAdress(friendAddress);
             QString inviteStr = tr("/me offers friendship.");
@@ -1060,7 +1087,7 @@ bool Core::isFriendOnline(uint32_t friendId) const
 bool Core::hasFriendWithAddress(const QString &addr) const
 {
     // Valid length check
-    if (addr.length() != (TOX_ADDRESS_SIZE * 2))
+    if (addr.length() != (TOX_ADDRESS_SIZE * 2) || addr.length() != (TOX_PUBLIC_KEY_SIZE * 2))
     {
         return false;
     }
