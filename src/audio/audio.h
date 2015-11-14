@@ -116,6 +116,9 @@ private:
     static Audio* instance;
 
 private:
+    AudioPrivate* d;
+
+private:
     QThread*            audioThread;
     QMutex              mAudioLock;
     PtrList             inputSubscriptions;

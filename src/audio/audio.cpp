@@ -108,12 +108,13 @@ Start the audio thread for capture and playback.
 */
 void Audio::startAudioThread()
 {
+    moveToThread(audioThread);
+
     if (!audioThread->isRunning())
         audioThread->start();
     else
         qWarning("Audio thread already started -> ignored.");
 
-    moveToThread(audioThread);
 }
 
 /**
