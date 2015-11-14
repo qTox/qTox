@@ -49,13 +49,17 @@ void AboutUser::onAutoAcceptClicked()
         dir = QDir::homePath();
         ui->autoaccept->setChecked(false);
         Settings::getInstance().setAutoAcceptDir(this->toxId, "");
-        ui->selectSaveDir->setText("Auto accept for this contact is disabled");
+        ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     }
     else if (ui->autoaccept->isChecked())
     {
         dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
                                                          "popup title"), dir);
-        ui->autoaccept->setChecked(true);
+        if(dir.isEmpty())
+        {
+            ui->autoaccept->setChecked(false);
+            return; // user canellced
+        }
         Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
         ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
     }
