@@ -56,8 +56,6 @@ Audio& Audio::getInstance()
 
 Audio::Audio()
     : audioThread(new QThread())
-    , audioInLock(QMutex::Recursive)
-    , audioOutLock(QMutex::Recursive)
     , inputSubscriptions(0)
     , outputSubscriptions(0)
     , alOutDev(nullptr)
@@ -101,7 +99,7 @@ Returns the current output volume, between 0 and 1
 */
 qreal Audio::getOutputVolume()
 {
-    QMutexLocker locker(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
     return outputVolume;
 }
 
@@ -110,7 +108,8 @@ The volume must be between 0 and 1
 */
 void Audio::setOutputVolume(qreal volume)
 {
-    QMutexLocker locker(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
+
     outputVolume = volume;
     alSourcef(alMainSource, AL_GAIN, outputVolume);
 
@@ -130,7 +129,7 @@ The volume must be between 0 and 2
 */
 void Audio::setInputVolume(qreal volume)
 {
-    QMutexLocker locker(&audioInLock);
+    QMutexLocker locker(&mAudioLock);
     inputVolume = volume;
 }
 
@@ -141,7 +140,8 @@ If the input device is not open, it will be opened before capturing.
 */
 void Audio::subscribeInput()
 {
-    QMutexLocker locker(&audioInLock);
+    QMutexLocker locker(&mAudioLock);
+
     if (!alInDev)
         initInput(Settings::getInstance().getInDev());
 
@@ -156,7 +156,7 @@ If the input device has no more subscriptions, it will be closed.
 */
 void Audio::unsubscribeInput()
 {
-    QMutexLocker locker(&audioInLock);
+    QMutexLocker locker(&mAudioLock);
 
     if (inputSubscriptions > 0)
     {
@@ -170,7 +170,7 @@ void Audio::unsubscribeInput()
 
 void Audio::subscribeOutput()
 {
-    QMutexLocker locker(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
     internalSubscribeOutput();
 }
 
@@ -185,6 +185,8 @@ void Audio::internalSubscribeOutput()
 
 void Audio::unsubscribeOutput()
 {
+    QMutexLocker locker(&mAudioLock);
+
     if (outputSubscriptions > 0)
     {
         outputSubscriptions--;
@@ -331,7 +333,7 @@ Play a 44100Hz mono 16bit PCM sound
 */
 void Audio::playMono16Sound(const QByteArray& data)
 {
-    QMutexLocker lock(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
 
     internalSubscribeOutput();
 
@@ -388,7 +390,7 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
                            unsigned samples, uint8_t channels, unsigned sample_rate)
 {
     assert(QThread::currentThread() == audioThread);
-    QMutexLocker lock(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
 
     if (!CoreAV::groupCalls.contains(group))
         return;
@@ -418,7 +420,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 {
     assert(channels == 1 || channels == 2);
 
-    QMutexLocker lock(&getInstance().audioOutLock);
+    QMutexLocker locker(&getInstance().mAudioLock);
 
     ALuint bufid;
     ALint processed = 0, queued = 16;
@@ -510,7 +512,7 @@ Returns true if the input device is open and suscribed to
 */
 bool Audio::isInputReady()
 {
-    QMutexLocker locker(&audioInLock);
+    QMutexLocker locker(&mAudioLock);
     return alInDev && mInputInitialized;
 }
 
@@ -519,7 +521,7 @@ Returns true if the output device is open
 */
 bool Audio::isOutputReady()
 {
-    QMutexLocker locker(&audioOutLock);
+    QMutexLocker locker(&mAudioLock);
     return alOutDev && mOutputInitialized;
 }
 
@@ -553,7 +555,7 @@ Does nothing and return false on failure
 */
 bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
-    QMutexLocker lock(&audioInLock);
+    QMutexLocker lock(&mAudioLock);
 
     if (!(alInDev && mInputInitialized))
         return false;

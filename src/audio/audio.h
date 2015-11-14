@@ -62,13 +62,13 @@ public:
 
     inline void reinitInput(const QString& inDevDesc)
     {
-        QMutexLocker locker(&audioInLock);
+        QMutexLocker locker(&mAudioLock);
         cleanupInput();
         initInput(inDevDesc);
     }
     inline bool reinitOutput(const QString& outDevDesc)
     {
-        QMutexLocker locker(&audioOutLock);
+        QMutexLocker locker(&mAudioLock);
         cleanupOutput();
         return initOutput(outDevDesc);
     }
@@ -122,10 +122,9 @@ private:
 
 private:
     QThread*            audioThread;
-    QMutex              audioInLock;
-    QMutex              audioOutLock;
     std::atomic<int>    inputSubscriptions;
     std::atomic<int>    outputSubscriptions;
+    QMutex              mAudioLock;
     ALCdevice*          alOutDev;
     ALCdevice*          alInDev;
     bool                mInputInitialized;
