@@ -97,6 +97,7 @@ public slots:
     QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
 
     void acceptFriendRequest(const QString& userId);
+    void addFriendNoRequest(const QString& friendPubKey);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
     void createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);

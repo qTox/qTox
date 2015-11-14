@@ -42,6 +42,7 @@ public:
     QString getMessage() const;
 
 signals:
+    void friendNoRequest(const QString& friendPubKey);
     void friendRequested(const QString& friendAddress, const QString& message);
 
 public slots:

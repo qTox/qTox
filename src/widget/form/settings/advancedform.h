@@ -41,6 +41,7 @@ protected:
 
 private slots:
     void onMakeToxPortableUpdated();
+    void onAllowAddingFriendsPK();
     void onDbSyncTypeUpdated();
     void resetToDefault();
 

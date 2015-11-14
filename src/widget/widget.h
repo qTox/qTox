@@ -58,7 +58,7 @@ class Widget final : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit Widget(QWidget *parent = 0);
+    explicit Widget(QWidget* parent = 0);
     ~Widget();
     void init();
     void setCentralWidget(QWidget *widget, const QString &widgetName);
@@ -141,6 +141,7 @@ public slots:
 signals:
     void friendRequestAccepted(const QString& userId);
     void friendRequested(const QString& friendAddress, const QString& message);
+    void friendNoRequest(const QString& friendPubKey);
     void statusSet(Status status);
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
@@ -152,7 +153,7 @@ signals:
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;
-    virtual bool event(QEvent * e) final override;
+    virtual bool event(QEvent *e) final override;
     virtual void closeEvent(QCloseEvent *event) final override;
     virtual void changeEvent(QEvent *event) final override;
     virtual void resizeEvent(QResizeEvent *event) final override;
@@ -164,7 +165,7 @@ private slots:
     void onTransferClicked();
     void showProfile();
     void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
-    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
+    void onChatroomWidgetClicked(GenericChatroomWidget*, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -179,7 +180,7 @@ private slots:
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
-    void friendListContextMenu(const QPoint &pos);
+    void friendListContextMenu(const QPoint& pos);
 
 private:
     int icon_size;
@@ -222,13 +223,13 @@ private:
     void retranslateUi();
 
 private:
-    SystemTrayIcon *icon;
-    QMenu *trayMenu;
-    QAction *statusOnline;
-    QAction *statusAway;
-    QAction *statusBusy;
-    QAction *actionLogout;
-    QAction *actionQuit;
+    SystemTrayIcon* icon;
+    QMenu* trayMenu;
+    QAction* statusOnline;
+    QAction* statusAway;
+    QAction* statusBusy;
+    QAction* actionLogout;
+    QAction* actionQuit;
 
     QMenu* filterMenu;
 
@@ -243,19 +244,19 @@ private:
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
 
-    Ui::MainWindow *ui;
-    QSplitter *centralLayout;
+    Ui::MainWindow* ui;
+    QSplitter* centralLayout;
     QPoint dragPosition;
     ContentLayout* contentLayout;
-    AddFriendForm *addFriendForm;
-    ProfileForm *profileForm;
-    SettingsWidget *settingsWidget;
-    FilesForm *filesForm;
-    static Widget *instance;
-    GenericChatroomWidget *activeChatroomWidget;
-    FriendListWidget *contactListWidget;
-    MaskablePixmapWidget *profilePicture;
-    bool notify(QObject *receiver, QEvent *event);
+    AddFriendForm* addFriendForm;
+    ProfileForm* profileForm;
+    SettingsWidget* settingsWidget;
+    FilesForm* filesForm;
+    static Widget* instance;
+    GenericChatroomWidget* activeChatroomWidget;
+    FriendListWidget* contactListWidget;
+    MaskablePixmapWidget* profilePicture;
+    bool notify(QObject* receiver, QEvent* event);
     bool autoAwayActive = false;
     QTimer *timer, *offlineMsgTimer;
     QRegExp nameMention, sanitizedNameMention;

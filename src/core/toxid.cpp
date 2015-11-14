@@ -25,7 +25,7 @@
 #include <tox/tox.h>
 #include <qregularexpression.h>
 
-#define TOX_ID_PUBLIC_KEY_LENGTH 64
+#define TOX_ID_PUBLIC_KEY_LENGTH 2*TOX_PUBLIC_KEY_SIZE
 #define TOX_ID_NO_SPAM_LENGTH    8
 #define TOX_ID_CHECKSUM_LENGTH   4
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
@@ -57,7 +57,7 @@ bool ToxId::operator==(const ToxId& other) const
     return publicKey == other.publicKey;
 }
 
-bool ToxId::operator!=(const ToxId &other) const
+bool ToxId::operator!=(const ToxId& other) const
 {
     return publicKey != other.publicKey;
 }
@@ -79,8 +79,14 @@ void ToxId::clear()
     checkSum.clear();
 }
 
-bool ToxId::isToxId(const QString &id)
+bool ToxId::isToxId(const QString& id)
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
     return id.length() == TOX_HEX_ID_LENGTH && id.contains(hexRegExp);
+}
+
+bool ToxId::isPublicKey(const QString& publicKey)
+{
+    const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
+    return publicKey.length() == TOX_ID_PUBLIC_KEY_LENGTH && publicKey.contains(hexRegExp);
 }

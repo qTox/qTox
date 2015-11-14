@@ -44,6 +44,7 @@ public:
     void clear(); ///< Clears all elements of the Tox ID.
 
     static bool isToxId(const QString& id); ///< Returns true if id is a valid Tox ID.
+    static bool isPublicKey(const QString& publicKey); ///< Returns true if publicKey is a valid Public Key
 
 public:
     QString publicKey;

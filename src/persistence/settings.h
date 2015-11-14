@@ -124,6 +124,9 @@ public:
     Db::syncType getDbSyncType() const;
     void setDbSyncType(int newValue);
 
+    bool getAllowAddingFriendsPK() const;
+    void setAllowAddingFriendsPK(bool newValue);
+
     int getAutoAwayTime() const;
     void setAutoAwayTime(int newValue);
 
@@ -376,6 +379,7 @@ private:
     // Privacy
     bool typingNotification;
     Db::syncType dbSyncType;
+    bool allowAddingFriendsPK;
 
     // Audio
     QString inDev;
