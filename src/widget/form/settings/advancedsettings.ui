@@ -42,10 +42,10 @@
        <item>
         <widget class="QCheckBox" name="cbAllowAddingFriendsPK">
          <property name="toolTip">
-          <string>If you don't know what a public key is, left it unchecked</string>
+          <string>If you don't know what a public key is, left unchecked</string>
          </property>
          <property name="text">
-          <string>Allow adding friends using public key</string>
+          <string>Enable adding friends using public key</string>
          </property>
         </widget>
        </item>
