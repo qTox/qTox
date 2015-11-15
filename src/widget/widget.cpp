@@ -1243,7 +1243,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         }
 
         if (Settings::getInstance().getNotifySound() && sound)
-            Audio::getInstance().playMono16Sound(":/audio/notification.pcm");
+            Audio::getInstance().playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
     }
 
     return true;

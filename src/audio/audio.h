@@ -69,7 +69,7 @@ public:
     void startLoop();
     void stopLoop();
     void playMono16Sound(const QByteArray& data);
-    void playMono16Sound(const char* path);
+    void playMono16Sound(const QString& path);
     bool tryCaptureSamples(int16_t *buf, int samples);
 
     void playAudioBuffer(quint32 alSource, const int16_t *data, int samples,

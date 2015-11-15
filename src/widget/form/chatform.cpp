@@ -294,7 +294,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
     Widget::getInstance()->newFriendMessageAlert(FriendId, false);
     Audio& audio = Audio::getInstance();
     audio.startLoop();
-    audio.playMono16Sound(":audio/ToxicIncomingCall.pcm");
+    audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)

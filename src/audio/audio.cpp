@@ -455,11 +455,11 @@ void Audio::playMono16Sound(const QByteArray& data)
 /**
 Play a 44100Hz mono 16bit PCM sound from a file
 */
-void Audio::playMono16Sound(const char *path)
+void Audio::playMono16Sound(const QString& path)
 {
     QFile sndFile(path);
     sndFile.open(QIODevice::ReadOnly);
-    playMono16Sound(sndFile.readAll());
+    playMono16Sound(QByteArray(sndFile.readAll()));
 }
 
 /**
