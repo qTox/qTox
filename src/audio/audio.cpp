@@ -98,46 +98,40 @@ The audio data is played from start to finish (no streaming).
 class AudioPlayer : public QThread
 {
 public:
-    AudioPlayer(AudioPrivate* _q, const QByteArray& data)
-        : q(_q)
+    AudioPlayer(ALuint source, const QByteArray& data)
+        : mSource(source)
     {
-        assert(q);
-        alGenBuffers(1, &buffer);
-        alBufferData(buffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
-        alSourcei(q->alMainSource, AL_BUFFER, buffer);
+        alGenBuffers(1, &mBuffer);
+        alBufferData(mBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
+        alSourcei(mSource, AL_BUFFER, mBuffer);
+
+        connect(this, &AudioPlayer::finished, this, &AudioPlayer::deleteLater);
     }
 
-    ~AudioPlayer()
+private:
+    void run() override final
     {
-        QMutexLocker(&q->audioLock);
-
-        alDeleteBuffers(1, &buffer);
-        if (q->outputSubscriptions.isEmpty())
-            q->cleanupOutput();
-        else
-            qDebug("Audio output not closed -> there are pending subscriptions.");
-    }
-
-    void run()
-    {
-        alSourceRewind(q->alMainSource);
-        alSourcePlay(q->alMainSource);
+        alSourceRewind(mSource);
+        alSourcePlay(mSource);
 
         QMutexLocker locker(&playLock);
         ALint state = AL_PLAYING;
         while (state == AL_PLAYING) {
-            alGetSourcei(q->alMainSource, AL_SOURCE_STATE, &state);
+            alGetSourcei(mSource, AL_SOURCE_STATE, &state);
             waitPlaying.wait(&playLock, 2000);
         }
+
+        alSourceStop(mSource);
+        alDeleteBuffers(1, &mBuffer);
     }
 
 public:
     QMutex playLock;
     QWaitCondition waitPlaying;
-    ALuint buffer;
 
 private:
-    AudioPrivate* q;
+    ALuint      mBuffer;
+    ALuint      mSource;
 };
 
 Audio* Audio::instance{nullptr};
@@ -447,8 +441,16 @@ void Audio::playMono16Sound(const QByteArray& data)
 
     alSourcef(d->alMainSource, AL_GAIN, d->outputVolume);
 
-    AudioPlayer *player = new AudioPlayer(d, data);
-    connect(player, &AudioPlayer::finished, player, &AudioPlayer::deleteLater);
+    AudioPlayer *player = new AudioPlayer(d->alMainSource, data);
+    connect(player, &AudioPlayer::finished, [=]() {
+        QMutexLocker locker(&d->audioLock);
+
+        if (d->outputSubscriptions.isEmpty())
+            d->cleanupOutput();
+        else
+            qDebug("Audio output not closed -> there are pending subscriptions.");
+    });
+
     player->start();
 }
 
