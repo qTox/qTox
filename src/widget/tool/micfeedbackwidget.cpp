@@ -31,30 +31,31 @@ MicFeedbackWidget::MicFeedbackWidget(QWidget *parent)
 
 void MicFeedbackWidget::paintEvent(QPaintEvent*)
 {
+    const int w = width();
+    const int h = height();
     QPainter painter(this);
-    painter.setPen(QPen(Qt::black));
-    painter.drawRect(QRect(0, 0, width() - 1, height() - 1));
+    painter.setPen(QPen(Qt::gray));
+    painter.drawRoundedRect(QRect(0, 0, w - 1, h - 1), 3., 3.);
 
-    int gradientWidth = round(width() * current) - 4;
+    int gradientWidth = qMax(0, qRound(w * current) - 4);
 
-    if (gradientWidth < 0)
-        gradientWidth = 0;
+    QRect gradientRect(2, 2, gradientWidth, h - 4);
 
-    QRect gradientRect(2, 2, gradientWidth, height() - 4);
-
-    QLinearGradient gradient(0, 0, width(), 0);
-    gradient.setColorAt(0, Qt::green);
+    QPainterPath path;
+    QLinearGradient gradient(0, 0, w, 0);
+    gradient.setColorAt(0.0, Qt::green);
     gradient.setColorAt(0.5, Qt::yellow);
-    gradient.setColorAt(1, Qt::red);
-    painter.fillRect(gradientRect, gradient);
+    gradient.setColorAt(1.0, Qt::red);
+    path.addRoundedRect(gradientRect, 2.0, 2.0);
+    painter.fillPath(path, gradient);
 
-    float slice = width() / 5;
+    float slice = w / 5.f;
     int padding = slice / 2;
 
     for (int i = 0; i < 5; ++i)
     {
         float pos = slice * i + padding;
-        painter.drawLine(pos, 2, pos, height() - 4);
+        painter.drawLine(pos, 2, pos, h - 4);
     }
 }
 
