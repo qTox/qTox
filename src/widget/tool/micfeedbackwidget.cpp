@@ -24,7 +24,6 @@
 
 MicFeedbackWidget::MicFeedbackWidget(QWidget *parent)
     : QWidget(parent)
-    , timerId(0)
 {
     setFixedHeight(20);
 }
@@ -59,41 +58,21 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
     }
 }
 
-void MicFeedbackWidget::timerEvent(QTimerEvent*)
-{
-    const int framesize = AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS;
-    int16_t buff[framesize] = {0};
-
-    if (Audio::getInstance().tryCaptureSamples(buff, AUDIO_FRAME_SAMPLE_COUNT))
-    {
-        double max = 0;
-
-        for (int i = 0; i < framesize; ++i)
-            max = std::max(max, fabs(buff[i] / 32767.0));
-
-        if (max > current)
-            current = max;
-        else
-            current -= 0.05;
-
-        update();
-    }
-    else if (current > 0)
-    {
-        current -= 0.01;
-    }
-}
-
 void MicFeedbackWidget::showEvent(QShowEvent*)
 {
-    timerId = startTimer(60);
+    mMeterListener = Audio::getInstance().createAudioMeterListener();
+    connect(mMeterListener, &AudioMeterListener::gainChanged, this, &MicFeedbackWidget::onGainMetered);
+    mMeterListener->start();
 }
 
 void MicFeedbackWidget::hideEvent(QHideEvent*)
 {
-    if (timerId != 0)
-    {
-        killTimer(timerId);
-        timerId = 0;
-    }
+    mMeterListener->stop();
+}
+
+void MicFeedbackWidget::onGainMetered(qreal value)
+{
+    current = value;
+    //qDebug("Gain metered at %.3f", current);
+    update();
 }

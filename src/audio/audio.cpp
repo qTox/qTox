@@ -34,6 +34,7 @@
 #include <QDebug>
 #include <QFile>
 #include <QMutexLocker>
+#include <QPointer>
 #include <QThread>
 #include <QWaitCondition>
 
@@ -46,6 +47,8 @@
  #include <AL/al.h>
  #include <AL/alc.h>
 #endif
+
+Audio* Audio::instance{nullptr};
 
 class AudioPrivate
 {
@@ -86,6 +89,8 @@ public:
     Audio::PtrList      outputSubscriptions;
     bool                inputInitialized;
     bool                outputInitialized;
+
+    QPointer<AudioMeter>    mAudioMeter;
 };
 
 /**
@@ -134,7 +139,115 @@ private:
     ALuint      mSource;
 };
 
-Audio* Audio::instance{nullptr};
+class AudioMeter : public QThread
+{
+public:
+    AudioMeter()
+        : mActive(false)
+    {
+        connect(this, &AudioMeter::finished, this, &AudioMeter::deleteLater);
+    }
+
+    void waitForData(QMutex* condition)
+    {
+        mCheckGainChanged.wait(condition);
+    }
+
+    void monitorFrame()
+    {
+        mDoMonitoring.wakeAll();
+    }
+
+private:
+    void run() override final
+    {
+        static const int framesize = AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS;
+
+        Audio& audio = Audio::getInstance();
+
+        mNewMaxGain = 0.f;
+        mActive = true;
+
+        while (mActive) {
+            int16_t buff[framesize] = {0};
+            if (audio.tryCaptureSamples(buff, AUDIO_FRAME_SAMPLE_COUNT)) {
+                mMeterLock.lock();
+                mNewMaxGain = 0.f;
+                for (int i = 0; i < framesize; ++i) {
+                    mNewMaxGain = qMax(mNewMaxGain, qAbs(buff[i]) / 32767.0);
+                }
+                mMeterLock.unlock();
+            } else if (mNewMaxGain > 0.f) {
+                mNewMaxGain -= 0.01f;
+            }
+
+            mMeterLock.lock();
+            mCheckGainChanged.wakeAll();
+            mDoMonitoring.wait(&mMeterLock);
+            mMeterLock.unlock();
+        }
+    }
+
+public:
+    QMutex          mMeterLock;
+    QWaitCondition  mDoMonitoring;
+    QWaitCondition  mCheckGainChanged;
+    bool            mActive;
+    qreal           mNewMaxGain;
+};
+
+AudioMeterListener::AudioMeterListener(AudioMeter* measureThread)
+    : mActive(false)
+    , mAudioMeter(measureThread)
+{
+    assert(mAudioMeter);
+}
+
+void AudioMeterListener::start()
+{
+    QThread* listener = new QThread;
+    connect(listener, &QThread::started, this, &AudioMeterListener::doListen);
+    connect(listener, &QThread::finished, listener, &QThread::deleteLater);
+    moveToThread(listener);
+
+    listener->start();
+    mAudioMeter->start();
+}
+
+void AudioMeterListener::stop()
+{
+    mActive = false;
+}
+
+void AudioMeterListener::doListen()
+{
+    mMaxGain = 0.f;
+    mActive = true;
+
+    QMutexLocker locker(&mAudioMeter->mMeterLock);
+    while (mActive) {
+        mAudioMeter->waitForData(locker.mutex());
+
+        locker.unlock();
+        //qDebug() << "GAIN:" << mAudioMeter->mNewMaxGain << "/" << mMaxGain;
+        if (mAudioMeter->mNewMaxGain != mMaxGain) {
+            if (mAudioMeter->mNewMaxGain > mMaxGain)
+            {
+                mMaxGain = mAudioMeter->mNewMaxGain;
+                emit gainChanged(mMaxGain);
+            } else if (mMaxGain > 0.02f) {
+                mMaxGain -= 0.0005f;
+                emit gainChanged(mMaxGain);
+            }
+        }
+        locker.relock();
+
+        mAudioMeter->monitorFrame();
+    }
+
+    mAudioMeter->mActive = false;
+}
+
 
 /**
 Returns the singleton's instance. Will construct on first call.
@@ -147,6 +260,14 @@ Audio& Audio::getInstance()
         instance->startAudioThread();
     }
     return *instance;
+}
+
+AudioMeterListener* Audio::createAudioMeterListener() const
+{
+    if (!d->mAudioMeter)
+        d->mAudioMeter = new AudioMeter;
+
+    return new AudioMeterListener(d->mAudioMeter);
 }
 
 Audio::Audio()
