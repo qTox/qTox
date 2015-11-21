@@ -40,6 +40,7 @@ class Audio : public QObject
 {
     Q_OBJECT
 
+public:
     typedef QList<const void*> PtrList;
 
 public:
@@ -54,18 +55,8 @@ public:
     qreal inputVolume();
     void setInputVolume(qreal volume);
 
-    inline void reinitInput(const QString& inDevDesc)
-    {
-        QMutexLocker locker(&mAudioLock);
-        cleanupInput();
-        initInput(inDevDesc);
-    }
-    inline bool reinitOutput(const QString& outDevDesc)
-    {
-        QMutexLocker locker(&mAudioLock);
-        cleanupOutput();
-        return initOutput(outDevDesc);
-    }
+    void reinitInput(const QString& inDevDesc);
+    bool reinitOutput(const QString& outDevDesc);
 
     bool isInputReady();
     bool isOutputReady();
@@ -107,24 +98,11 @@ private:
     Audio();
     ~Audio();
 
-    void initInput(const QString& inDevDescr);
-    bool initOutput(const QString& outDevDescr);
-    void cleanupInput();
-    void cleanupOutput();
-
 private:
     static Audio* instance;
 
 private:
     AudioPrivate* d;
-
-private:
-    QThread*            audioThread;
-    QMutex              mAudioLock;
-    PtrList             inputSubscriptions;
-    PtrList             outputSubscriptions;
-    bool                mInputInitialized;
-    bool                mOutputInitialized;
 };
 
 #endif // AUDIO_H
