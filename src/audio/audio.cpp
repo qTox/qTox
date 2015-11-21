@@ -781,11 +781,13 @@ void Audio::deleteSource(quint32 sid)
 
 void Audio::startLoop()
 {
+    QMutexLocker locker(&d->audioLock);
     alSourcei(d->alMainSource, AL_LOOPING, AL_TRUE);
 }
 
 void Audio::stopLoop()
 {
+    QMutexLocker locker(&d->audioLock);
     alSourcei(d->alMainSource, AL_LOOPING, AL_FALSE);
     alSourceStop(d->alMainSource);
 }
