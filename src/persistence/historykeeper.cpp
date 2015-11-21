@@ -26,7 +26,6 @@
 #include <QSqlError>
 #include <QFile>
 #include <QDir>
-#include <QSqlQuery>
 #include <QVariant>
 #include <QBuffer>
 #include <QDebug>
@@ -46,7 +45,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
         QList<QString> initLst;
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, timestamp INTEGER NOT NULL, ") +
                           QString("chat_id INTEGER NOT NULL, sender INTEGER NOT NULL, message TEXT NOT NULL, alias TEXT);"));
-        initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL);"));
+        initLst.push_back(QString("CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT UNIQUE NOT NULL, av_hash BLOB, avatar BLOB);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS chats (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL, ctype INTEGER NOT NULL);"));
         initLst.push_back(QString("CREATE TABLE IF NOT EXISTS sent_status (id INTEGER PRIMARY KEY AUTOINCREMENT, status INTEGER NOT NULL DEFAULT 0);"));
 
@@ -265,6 +264,21 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::C
     return res;
 }
 
+QList<HistoryKeeper::HistAvatars> HistoryKeeper::exportAvatars()
+{
+    QSqlQuery dbAnswer;
+    QList<HistAvatars> res;
+    dbAnswer = db->exec(QString("SELECT user_id, avatar FROM aliases WHERE avatar IS NOT NULL;"));
+    while (dbAnswer.next())
+    {
+        QString userID = dbAnswer.value(0).toString();
+        QByteArray avatar = dbAnswer.value(1).toByteArray();
+
+        res.push_back(HistAvatars(userID, avatar));
+    }
+    return res;
+}
+
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
 {
     QSqlQuery dbAnswer;
@@ -304,6 +318,22 @@ void HistoryKeeper::importMessages(const QList<HistoryKeeper::HistMessage> &lst)
         messageID++;
     }
     db->exec("COMMIT TRANSACTION;");
+}
+
+void HistoryKeeper::importAvatars(const QList<HistoryKeeper::HistAvatars> &lst)
+{
+    QSqlQuery query;
+    for (const HistAvatars &msg : lst)
+    {
+        getAliasID(msg.userID);
+        query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
+        query.bindValue(":image", msg.avatar);
+        query.bindValue(":id", msg.userID);
+        if (Nexus::getProfile()->isEncrypted())
+            db->exec(getLastExecutedQuery(query));
+        else
+            query.exec();
+    }
 }
 
 QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName)
@@ -504,12 +534,18 @@ void HistoryKeeper::removeHistory()
     db->exec("COMMIT TRANSACTION;");
 }
 
+bool HistoryKeeper::removeHistoryFile()
+{
+    QFile file(getHistoryPath());
+    return file.remove();
+}
+
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
 {
     auto msgs = getInstance()->exportMessages();
+    resetInstance();
+    removeHistoryFile();
     qDebug() << "Messages exported";
-    getInstance()->removeHistory();
-
     return msgs;
 }
 
@@ -518,7 +554,10 @@ void HistoryKeeper::removeAvatar(const QString& ownerId)
     QSqlQuery query;
     query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 bool HistoryKeeper::hasAvatar(const QString& ownerId)
@@ -538,7 +577,10 @@ void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
     query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
     query.bindValue(":image", bArray);
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 QPixmap HistoryKeeper::getSavedAvatar(const QString &ownerId)
@@ -560,7 +602,10 @@ void HistoryKeeper::saveAvatarHash(const QByteArray& hash, const QString& ownerI
     query.prepare("UPDATE aliases SET av_hash=:hash WHERE user_id = (:id)");
     query.bindValue(":hash", QString(hash.toBase64()));
     query.bindValue(":id", ownerId.left(64));
-    query.exec();
+    if (Nexus::getProfile()->isEncrypted())
+        db->exec(getLastExecutedQuery(query));
+    else
+        query.exec();
 }
 
 QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
@@ -572,4 +617,16 @@ QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
         bArray = sqlAnswer.value(0).toByteArray();
     }
     return bArray;
+}
+
+QString HistoryKeeper::getLastExecutedQuery(const QSqlQuery& query)
+{
+    QString str = query.lastQuery();
+    QMapIterator<QString, QVariant> it(query.boundValues());
+    while (it.hasNext())
+    {
+        it.next();
+        str.replace(it.key(),it.value().toString());
+    }
+    return str;
 }

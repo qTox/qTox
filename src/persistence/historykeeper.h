@@ -25,6 +25,7 @@
 #include <QDateTime>
 #include <QPixmap>
 #include <QMutex>
+#include <QSqlQuery>
 #include <tox/toxencryptsave.h>
 
 class GenericDdInterface;
@@ -50,6 +51,14 @@ public:
         QString dispName;
     };
 
+    struct HistAvatars
+    {
+        HistAvatars (QString userID, QByteArray avatar):
+            userID(userID), avatar(avatar) {}
+        QString userID;
+        QByteArray avatar;
+    };
+
     virtual ~HistoryKeeper();
 
     static HistoryKeeper* getInstance();
@@ -60,6 +69,7 @@ public:
     static bool isFileExist();
     static void renameHistory(QString from, QString to);
     void removeHistory();
+    static bool removeHistoryFile();
     static QList<HistMessage> exportMessagesDeleteFile();
 
     void removeFriendHistory(const QString& chat);
@@ -70,7 +80,10 @@ public:
     QDate getLatestDate(const QString& chat);
 
     QList<HistMessage> exportMessages();
+    QList<HistAvatars> exportAvatars();
+
     void importMessages(const QList<HistoryKeeper::HistMessage> &lst);
+    void importAvatars(const QList<HistoryKeeper::HistAvatars> &lst);
 
     void setSyncType(Db::syncType sType);
 
@@ -99,6 +112,8 @@ private:
     QList<QString> generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName);
 
     ChatType convertToChatType(int);
+    QString getLastExecutedQuery(const QSqlQuery& query);
+
     bool needImport = false;    // must be deleted with "importAvatarToDatabase"
     GenericDdInterface *db;
     QMap<QString, int> aliases;
