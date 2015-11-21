@@ -25,7 +25,7 @@ extern "C"{
 #include <filter_audio.h>
 }
 
-void AudioFilterer::startFilter(unsigned int fs)
+void AudioFilterer::startFilter(uint32_t fs)
 {
     closeFilter();
     filter = new_filter_audio(fs);
@@ -38,9 +38,9 @@ void AudioFilterer::closeFilter()
     filter = nullptr;
 }
 
-bool AudioFilterer::filterAudio(int16_t* data, int framesize)
+bool AudioFilterer::filterAudio(int16_t* data, unsigned int samples)
 {
-    return filter && 0 == filter_audio(filter, (int16_t*) data, framesize);
+    return filter && 0 == filter_audio(filter, data, samples);
 }
 
 /* Enable/disable filters. 1 to enable, 0 to disable. */

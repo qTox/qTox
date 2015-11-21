@@ -416,7 +416,7 @@ bool CoreAV::sendGroupCallAudio(int groupId)
             // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
             Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
 
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT);
+            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
         else if (call.filterer)
         {

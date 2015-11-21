@@ -33,13 +33,13 @@ public:
     explicit AudioFilterer(const AudioFilterer&) = delete;
     ~AudioFilterer();
     AudioFilterer operator=(const AudioFilterer) = delete;
-    void startFilter(unsigned int fs);
+    void startFilter(uint32_t fs);
     void closeFilter();
 
     /* Enable/disable filters. 1 to enable, 0 to disable. */
     bool enableDisableFilters(int echo, int noise, int gain, int vad);
 
-    bool filterAudio(int16_t* data, int samples);
+    bool filterAudio(int16_t* data, unsigned int samples);
 
     /* Give the audio output from your software to this function so it knows what echo to cancel from the frame */
     bool passAudioOutput(const int16_t *data, int samples);
