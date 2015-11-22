@@ -738,31 +738,23 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     {
         case QSystemTrayIcon::Trigger:
         {
-            if (isHidden())
+            if (isHidden() || isMinimized())
             {
-                show();
-                activateWindow();
                 if (wasMaximized)
                     showMaximized();
                 else
                     showNormal();
+
+                activateWindow();
             }
-            else if (isMinimized())
+            else if (!isActiveWindow())
             {
-                forceShow();
                 activateWindow();
-                if (wasMaximized)
-                    showMaximized();
-                else
-                    showNormal();
             }
             else
             {
                 wasMaximized = isMaximized();
-                if (Settings::getInstance().getMinimizeToTray())
-                    hide();
-                else
-                    showMinimized();
+                hide();
             }
 
             break;
