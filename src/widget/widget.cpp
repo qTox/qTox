@@ -757,7 +757,8 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     }
     else if (reason == QSystemTrayIcon::Unknown)
     {
-        forceShow();
+        if (isHidden()) 
+            forceShow();
     }
 }
 
