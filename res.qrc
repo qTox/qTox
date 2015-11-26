@@ -60,6 +60,7 @@
         <file>translations/ru.qm</file>
         <file>translations/sl.qm</file>
         <file>translations/sv.qm</file>
+        <file>translations/tr.qm</file>
         <file>translations/uk.qm</file>
         <file>translations/zh.qm</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>

@@ -4,6 +4,7 @@ if which apt-get; then
     sudo apt-get install \
         git build-essential qt5-qmake qt5-default qttools5-dev-tools \
         libqt5opengl5-dev libqt5svg5-dev libopenal-dev libopencv-dev \
+        libavdevice-dev \
         libxss-dev qrencode libqrencode-dev libtool autotools-dev \
         automake checkinstall check libopus-dev libvpx-dev libsodium-dev \
         libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
