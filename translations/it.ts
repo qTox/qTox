@@ -1353,8 +1353,8 @@ Nome gruppo:</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Qesto mucchio di caratteri serve agli altri client Tox per contattarti.
-Condivilo con chi vuoi comunicare.</translation>
+        <translation>Questo mucchio di caratteri serve agli altri client Tox per contattarti.
+Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="102"/>
@@ -1825,8 +1825,8 @@ Per favore scegli un&apos;immagine più piccola.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="355"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Qesto mucchio di caratteri serve agli altri client Tox per contattarti.
-Condivilo con chi vuoi comunicare.</translation>
+        <translation>Questo mucchio di caratteri serve agli altri client Tox per contattarti.
+Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="278"/>
