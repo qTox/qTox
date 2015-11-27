@@ -219,7 +219,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="35"/>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Slava le impostazioni nella directory di lavoro corrente, invece della directory di default</translation>
+        <translation>Salva le impostazioni nella directory di lavoro corrente, invece della directory di default</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="38"/>
