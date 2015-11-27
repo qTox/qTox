@@ -40,7 +40,7 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="136"/>
         <source>Playback</source>
-        <translation>Volume altoparlanti</translation>
+        <translation>Volume autoparlanti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="80"/>
@@ -55,7 +55,7 @@
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="67"/>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
+        <translation>Usa lo slider per impostare il volume degli autoparlanti.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/avsettings.ui" line="108"/>
@@ -299,7 +299,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/android.ui" line="348"/>
         <source>Someone else</source>
-        <translation>Qualcunaltro</translation>
+        <translation>Qualcun altro</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="353"/>
