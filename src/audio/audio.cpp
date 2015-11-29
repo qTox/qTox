@@ -151,19 +151,13 @@ class AudioMeter : public QThread
 {
 public:
     AudioMeter()
-        : mActive(false)
     {
         connect(this, &AudioMeter::finished, this, &AudioMeter::deleteLater);
     }
 
-    void waitForData(QMutex* condition)
+    inline void stop()
     {
-        mCheckGainChanged.wait(condition);
-    }
-
-    void monitorFrame()
-    {
-        mDoMonitoring.wakeAll();
+        requestInterruption();
     }
 
 private:
@@ -174,9 +168,8 @@ private:
         Audio& audio = Audio::getInstance();
 
         mNewMaxGain = 0.f;
-        mActive = true;
 
-        while (mActive) {
+        while (!isInterruptionRequested()) {
             int16_t buff[framesize] = {0};
             if (audio.tryCaptureSamples(buff, AUDIO_FRAME_SAMPLE_COUNT)) {
                 mMeterLock.lock();
@@ -200,7 +193,6 @@ public:
     QMutex          mMeterLock;
     QWaitCondition  mDoMonitoring;
     QWaitCondition  mCheckGainChanged;
-    bool            mActive;
     qreal           mNewMaxGain;
 };
 
@@ -253,7 +245,7 @@ void AudioMeterListener::doListen()
         mAudioMeter->monitorFrame();
     }
 
-    mAudioMeter->mActive = false;
+    mAudioMeter->requestInterruption();
 }
 
 
@@ -285,6 +277,8 @@ Audio::Audio()
 
 Audio::~Audio()
 {
+    if (d->mAudioMeter)
+        d->mAudioMeter->stop();
     d->audioThread->exit();
     d->audioThread->wait();
     d->cleanupInput();
