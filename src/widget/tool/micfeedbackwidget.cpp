@@ -61,7 +61,8 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
 void MicFeedbackWidget::showEvent(QShowEvent*)
 {
     mMeterListener = Audio::getInstance().createAudioMeterListener();
-    connect(mMeterListener, &AudioMeterListener::gainChanged, this, &MicFeedbackWidget::onGainMetered);
+    connect(mMeterListener, &AudioMeterListener::gainChanged,
+            this, &MicFeedbackWidget::onGainMetered);
     mMeterListener->start();
 }
 
@@ -73,6 +74,6 @@ void MicFeedbackWidget::hideEvent(QHideEvent*)
 void MicFeedbackWidget::onGainMetered(qreal value)
 {
     current = value;
-    //qDebug("Gain metered at %.3f", current);
     update();
+    mMeterListener->processed();
 }

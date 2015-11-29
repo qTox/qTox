@@ -25,6 +25,7 @@
 #include <QMutexLocker>
 #include <atomic>
 #include <cmath>
+#include <QWaitCondition>
 
 struct Tox;
 class AudioFilterer;
@@ -117,6 +118,8 @@ public:
     void start();
     void stop();
 
+    void processed();
+
 signals:
     void gainChanged(qreal newMaxGain);
 
@@ -127,6 +130,7 @@ private:
     bool            mActive;
     AudioMeter*     mAudioMeter;
     qreal           mMaxGain;
+    QWaitCondition  mGainProcessed;
 };
 
 #endif // AUDIO_H
