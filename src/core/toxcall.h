@@ -2,7 +2,8 @@
 #define TOXCALL_H
 
 #include <cstdint>
-#include "src/audio/audio.h"
+#include <QtGlobal>
+
 #include "src/core/indexedlist.h"
 
 #include <tox/toxav.h>
