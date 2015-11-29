@@ -63,7 +63,12 @@ AVForm::AVForm() :
     connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
 
     connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
-    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=](){getAudioInDevices(); getAudioOutDevices(); getVideoDevices();});
+    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
+    {
+        getAudioInDevices();
+        getAudioOutDevices();
+        getVideoDevices();
+    });
     connect(bodyUI->playbackSlider, &QSlider::valueChanged, this, &AVForm::onPlaybackValueChanged);
     connect(bodyUI->microphoneSlider, &QSlider::valueChanged, this, &AVForm::onMicrophoneValueChanged);
     bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
