@@ -1897,7 +1897,7 @@ inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
     }
     desktop = desktop.toLower();
 
-    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate")
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate" || desktop == "x-cinnamon")
     {
         if (w > 0 && h > 0)
         {
