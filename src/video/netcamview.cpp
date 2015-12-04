@@ -88,7 +88,6 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     videoMode.height = videoSize.height();
     qDebug() << "SIZER" << videoSize;
     videoMode.FPS = Settings::getInstance().getCamVideoFPS();
-    CameraSource::getInstance().open(Settings::getInstance().getVideoDev(), videoMode);
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)
