@@ -264,9 +264,9 @@ bool CoreAV::sendCallAudio(uint32_t callId)
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
             // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
+            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT);
+            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
         else if (call.filterer)
         {
