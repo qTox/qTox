@@ -111,64 +111,6 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
     return result;
 }
 
-QString ToxDNS::queryTox1(const QString& record, bool silent)
-{
-    QString realRecord = record, toxId;
-    realRecord.replace("@", "._tox.");
-    const QString entry = fetchLastTextRecord(realRecord, silent);
-    if (entry.isEmpty())
-        return toxId;
-
-    // Check toxdns protocol version
-    int verx = entry.indexOf("v=");
-    if (verx)
-    {
-        verx += 2;
-        int verend = entry.indexOf(';', verx);
-        if (verend)
-        {
-            QString ver = entry.mid(verx, verend-verx);
-            if (ver != "tox1")
-            {
-                if (!silent)
-                    showWarning(tr("The version of Tox DNS used by this server is not supported", "Error with the DNS"));
-
-                return toxId;
-            }
-        }
-    }
-
-    // Get the tox id
-    int idx = entry.indexOf("id=");
-    if (idx < 0)
-    {
-        if (!silent)
-            showWarning(tr("The DNS lookup does not contain any Tox ID", "Error with the DNS"));
-
-        return toxId;
-    }
-
-    idx += 3;
-    if (entry.length() < idx + static_cast<int>(TOX_HEX_ID_LENGTH))
-    {
-        if (!silent)
-            showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
-
-        return toxId;
-    }
-
-    toxId = entry.mid(idx, TOX_HEX_ID_LENGTH);
-    if (!ToxId::isToxId(toxId))
-    {
-        if (!silent)
-            showWarning(tr("The DNS lookup does not contain a valid Tox ID", "Error with the DNS"));
-
-        return toxId;
-    }
-
-    return toxId;
-}
-
 QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool silent)
 {
     QByteArray nameData = record.left(record.indexOf('@')).toUtf8(), id, realRecord;
@@ -245,20 +187,6 @@ fallbackOnTox1:
     if (tox_dns3)
         tox_dns3_kill(tox_dns3);
 
-#if TOX1_SILENT_FALLBACK
-    toxIdStr = queryTox1(record, silent);
-#elif TOX1_ASK_FALLBACK
-    QMessageBox::StandardButton btn =
-        QMessageBox::warning(nullptr, "qTox",
-                             tr("It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend's Tox ID.\n"
-                                "Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.\n"
-                                "Should toxdns1 be used anyway?\n"
-                                "If unsure press 'No', so that the request to the ToxDNS service will not be made using an insecure protocol."),
-                                QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
-    if (btn == QMessageBox::Yes)
-        queryTox1(record, silent);
-
-#endif
     return toxIdStr;
 }
 
@@ -299,25 +227,6 @@ ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
             server.name = servnameData.data();
             server.pubkey = (uint8_t*)pubkey.data();
             toxId = ToxId(queryTox3(server, address, silent));
-        }
-        else
-        {
-#if TOX1_SILENT_FALLBACK
-            toxId = ToxId::fromString(queryTox1(address, silent));
-#elif TOX1_ASK_FALLBACK
-            QMessageBox::StandardButton btn =
-                QMessageBox::warning(nullptr, "qTox",
-                                     tr("It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend's Tox ID.\n"
-                                        "Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.\n"
-                                        "Should toxdns1 be used anyway?\n"
-                                        "If unsure press 'No', so that the request to the ToxDNS service will not be made using an insecure protocol."),
-                                     QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
-            if (btn == QMessageBox::Ok)
-                toxId = ToxId(queryTox1(address, silent));
-
-#else
-            return toxId;
-#endif
         }
         return toxId;
     }
