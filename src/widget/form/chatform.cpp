@@ -868,16 +868,15 @@ QString ChatForm::secondsToDHMS(quint32 duration)
     int hours = (int) (duration % 24);
     int days = (int) (duration / 24);
 
-    if (minutes == 0)
-        return cD + res.sprintf("%02ds", seconds);
-
-    if (hours == 0 && days == 0)
-        return cD + res.sprintf("%02dm %02ds", minutes, seconds);
-
-    if (days == 0)
+    // I assume no one will ever have call longer than a month
+    if (days)
+        return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+    else if (hours)
         return cD + res.sprintf("%02dh %02dm %02ds", hours, minutes, seconds);
-    //I assume no one will ever have call longer than ~30days
-    return cD + res.sprintf("%dd%02dh %02dm %02ds", days, hours, minutes, seconds);
+    else if (minutes)
+        return cD + res.sprintf("%02dm %02ds", minutes, seconds);
+    else
+        return cD + res.sprintf("%02ds", seconds);
 }
 
 void ChatForm::setFriendTyping(bool isTyping)
