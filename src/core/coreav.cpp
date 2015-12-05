@@ -275,9 +275,10 @@ bool CoreAV::sendCallAudio(uint32_t callId)
         }
 #endif
 
+        TOXAV_ERR_SEND_FRAME err;
         if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
-                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, nullptr))
-            qDebug() << "toxav_audio_send_frame error";
+                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, &err))
+            qDebug() << "toxav_audio_send_frame error:"<<err;
     }
 
     return true;
