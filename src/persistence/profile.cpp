@@ -519,6 +519,7 @@ void Profile::restartCore()
 void Profile::setPassword(QString newPassword)
 {
     QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
+    QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
 
     password = newPassword;
     passkey = *core->createPasskey(password);
@@ -526,4 +527,5 @@ void Profile::setPassword(QString newPassword)
 
     HistoryKeeper::getInstance()->importMessages(oldMessages);
     Nexus::getDesktopGUI()->reloadHistory();
+    saveAvatar(avatar, core->getSelfId().publicKey);
 }
