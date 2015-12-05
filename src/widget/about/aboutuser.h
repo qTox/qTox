@@ -26,6 +26,7 @@ private slots:
     void onAcceptedClicked();
     void onAutoAcceptClicked();
     void onSelectDirClicked();
+    void onRemoveHistoryClicked();
 };
 
 #endif // ABOUTUSER_H

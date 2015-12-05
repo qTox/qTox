@@ -1,9 +1,11 @@
 #include "aboutuser.h"
 #include "ui_aboutuser.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/historykeeper.h"
 
 #include <QDir>
 #include <QFileDialog>
+#include <QMessageBox>
 
 AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     QDialog(parent),
@@ -13,6 +15,7 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
+    connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
     this->toxId = toxId;
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
@@ -85,6 +88,16 @@ void AboutUser::onAcceptedClicked()
 {
     Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
+}
+
+void AboutUser::onRemoveHistoryClicked()
+{
+    HistoryKeeper::getInstance()->removeFriendHistory(toxId.publicKey);
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::information(this,
+                                     tr("History removed"),
+                                     tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
+                                     QMessageBox::Ok);
 }
 
 AboutUser::~AboutUser()
