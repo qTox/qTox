@@ -201,7 +201,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             }
         }
         else if (selectedItem == aboutWindow) {
-            AboutUser *aboutUser = new AboutUser(id, this);
+            AboutUser *aboutUser = new AboutUser(id, Widget::getInstance());
             aboutUser->setFriend(FriendList::findFriend(friendId));
             aboutUser->show();
         }
