@@ -12,6 +12,9 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     ui(new Ui::AboutUser)
 {
     ui->setupUi(this);
+    ui->label_4->hide();
+    ui->aliases->hide();
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
