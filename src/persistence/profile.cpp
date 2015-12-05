@@ -385,6 +385,7 @@ void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
         pic = core->encryptData(pic, passkey);
 
     QString path = avatarPath(ownerId);
+    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
     QSaveFile file(path);
     if (!file.open(QIODevice::WriteOnly))
     {
