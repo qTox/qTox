@@ -785,13 +785,6 @@ ToxId Core::getSelfId() const
     return ToxId(CFriendAddress::toString(friendAddress));
 }
 
-QString Core::getIDString() const
-{
-    return getSelfId().toString().left(12);
-    // 12 is the smallest multiple of four such that
-    // 16^n > 10^10 (which is roughly the planet's population)
-}
-
 QPair<QByteArray, QByteArray> Core::getKeypair() const
 {
     QPair<QByteArray, QByteArray> keypair;

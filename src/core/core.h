@@ -72,8 +72,6 @@ public:
     int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
     void quitGroupChat(int groupId) const; ///< Quit a groupchat
 
-    QString getIDString() const; ///< Get the 12 first characters of our Tox ID
-
     QString getUsername() const; ///< Returns our username, or an empty string on failure
     Status getStatus() const; ///< Returns our user status
     QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
