@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>None</source>
-        <translation>Kein Aufnahmegerät ausgewählt</translation>
+        <translation>Kein Gerät ausgewählt</translation>
     </message>
 </context>
 <context>
