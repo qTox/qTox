@@ -58,48 +58,6 @@
 
 Audio* Audio::instance{nullptr};
 
-class AudioPrivate
-{
-public:
-    AudioPrivate()
-        : alInDev(nullptr)
-        , alOutDev(nullptr)
-        , alContext(nullptr)
-        , inputVolume(1.f)
-        , outputVolume(1.f)
-        , audioThread(new QThread())
-        , inputInitialized(false)
-        , outputInitialized(false)
-    {
-        audioThread->setObjectName("qTox Audio");
-        QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
-    }
-
-    void initInput(const QString& inDevDescr);
-    bool initOutput(const QString& outDevDescr);
-    void cleanupInput();
-    void cleanupOutput();
-
-public:
-    ALCdevice*      alInDev;
-    ALCdevice*      alOutDev;
-    ALCcontext*     alContext;
-
-    ALuint          alMainSource;
-
-    qreal inputVolume;
-    qreal outputVolume;
-
-    QThread*            audioThread;
-    QMutex              audioLock;
-    Audio::PtrList      inputSubscriptions;
-    Audio::PtrList      outputSubscriptions;
-    bool                inputInitialized;
-    bool                outputInitialized;
-
-    QPointer<AudioMeter>    mAudioMeter;
-};
-
 /**
 @class AudioPlayer
 
@@ -192,6 +150,58 @@ public:
     qreal           mNewMaxGain;
 };
 
+class AudioPrivate
+{
+public:
+    AudioPrivate()
+        : audioThread(new QThread)
+        , alInDev(nullptr)
+        , alOutDev(nullptr)
+        , alContext(nullptr)
+        , inputVolume(1.f)
+        , outputVolume(1.f)
+        , inputInitialized(false)
+        , outputInitialized(false)
+    {
+        audioThread->setObjectName("qTox Audio");
+        QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
+    }
+
+    ~AudioPrivate()
+    {
+        if (audioMeter)
+            audioMeter->stop();
+
+        audioThread->exit();
+        audioThread->wait();
+        cleanupInput();
+        cleanupOutput();
+    }
+
+    void initInput(const QString& inDevDescr);
+    bool initOutput(const QString& outDevDescr);
+    void cleanupInput();
+    void cleanupOutput();
+
+public:
+    QThread*            audioThread;
+    QMutex              audioLock;
+
+    ALCdevice*          alInDev;
+    ALCdevice*          alOutDev;
+    ALCcontext*         alContext;
+    ALuint              alMainSource;
+    qreal               inputVolume;
+    qreal               outputVolume;
+    bool                inputInitialized;
+    bool                outputInitialized;
+
+    Audio::PtrList      inputSubscriptions;
+    Audio::PtrList      outputSubscriptions;
+
+    QPointer<AudioMeter>    audioMeter;
+};
+
 AudioMeterListener::AudioMeterListener(AudioMeter* measureThread)
     : mActive(false)
     , mAudioMeter(measureThread)
@@ -268,10 +278,10 @@ Audio& Audio::getInstance()
 
 AudioMeterListener* Audio::createAudioMeterListener() const
 {
-    if (!d->mAudioMeter)
-        d->mAudioMeter = new AudioMeter;
+    if (!d->audioMeter)
+        d->audioMeter = new AudioMeter;
 
-    return new AudioMeterListener(d->mAudioMeter);
+    return new AudioMeterListener(d->audioMeter);
 }
 
 Audio::Audio()
@@ -281,12 +291,7 @@ Audio::Audio()
 
 Audio::~Audio()
 {
-    if (d->mAudioMeter)
-        d->mAudioMeter->stop();
-    d->audioThread->exit();
-    d->audioThread->wait();
-    d->cleanupInput();
-    d->cleanupOutput();
+    delete d;
 }
 
 /**
