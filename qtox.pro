@@ -162,6 +162,11 @@ win32 {
             LIBS += -llibjpeg -llibwebp -llibpng -llibtiff -llibjasper -lIlmImf
             LIBS += -lopus -lvpx -lsodium -lopenal
         } else {
+            target.path = /usr/bin
+            desktop.path = /usr/share/applications
+            desktop.files += qTox.desktop
+            INSTALLS += target desktop
+
             # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
             contains(STATICPKG, YES) {
                 target.path = /usr/bin
