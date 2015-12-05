@@ -275,10 +275,26 @@ bool CoreAV::sendCallAudio(uint32_t callId)
         }
 #endif
 
+        // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
         TOXAV_ERR_SEND_FRAME err;
-        if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
-                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, &err))
-            qDebug() << "toxav_audio_send_frame error:"<<err;
+        int retries = 0;
+        do {
+            if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
+                                        AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, &err))
+            {
+                if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+                {
+                    retries++;
+                    QThread::usleep(500);
+                }
+                else
+                {
+                    qDebug() << "toxav_audio_send_frame error: "<<err;
+                }
+            }
+        } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
+        if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+            qDebug() << "toxav_audio_send_frame error: Lock busy, dropping frame";
     }
 
     return true;
