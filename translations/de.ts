@@ -19,6 +19,10 @@
         <source> at %1 FPS</source>
         <translation> bei %1.FPS</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Kein Aufnahmegerät ausgewählt</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
@@ -46,10 +50,6 @@
     <message>
         <source>Capture device</source>
         <translation>Aufnahmegerät</translation>
-    </message>
-    <message>
-        <source>Rescan audio devices</source>
-        <translation>Audiogeräte aktualisieren</translation>
     </message>
     <message>
         <source>Filter audio</source>
@@ -86,6 +86,10 @@
         <translation>Kameraauflösung</translation>
     </message>
     <message>
+        <source>Rescan devices</source>
+        <translation>Geräte aktualisieren</translation>
+    </message>
+    <message>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -102,13 +106,13 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>About</source>
         <translation>Über</translation>
     </message>
+    <message>
+        <source>Qt version:</source>
+        <translation>Qt-Version:</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Version</source>
         <translation>Version</translation>
@@ -128,6 +132,10 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
         <translation>Toxcore-Version: $TOXCOREVERSION</translation>
+    </message>
+    <message>
+        <source>Qt version:</source>
+        <translation>Qt-Version:</translation>
     </message>
     <message utf8="true">
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -160,6 +168,70 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AboutUser</name>
+    <message>
+        <source>Dialog</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation>Benutzername:</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation>Status:</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation>Öffentlicher Schlüssel:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation>Verwendete Namen:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation>HISTORIE DER NAMEN</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Standardordner für Dateien:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation>Automatische Annahme von Dateien ist deaktiviert</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation>Dateien automatisch annehmen</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation>Gesprächsverlauf löschen (kann nicht rückgängig gemacht werden!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notizen</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation>Du kannst hier Notizen eingeben.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Speicherort angeben</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation>Gesprächsverlauf gelöscht</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation>Gesprächsverlauf mit %1 wurde gelöscht.</translation>
+    </message>
+</context>
+<context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
@@ -171,7 +243,7 @@ p, li { white-space: pre-wrap; }
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>either 76 hexadecimal characters or name@domain.com</source>
+        <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
         <translation>entweder 76 hexadezimale Zeichen oder name@example.com</translation>
     </message>
@@ -240,11 +312,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
 </context>
 <context>
     <name>AdvancedSettings</name>
-    <message>
-        <source>Form</source>
-        <translatorcomment>Nicht benötigt.</translatorcomment>
-        <translation></translation>
-    </message>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
@@ -385,8 +452,8 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <translation>Ton deaktivieren</translation>
     </message>
     <message>
-        <source>%1 stopped calling</source>
-        <translation>%1 hat aufgelegt</translation>
+        <source>Calling %1</source>
+        <translation>Anruf %1</translation>
     </message>
     <message>
         <source>Cancel video call</source>
@@ -395,14 +462,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>Cancel audio call</source>
         <translation>Anruf abbrechen</translation>
-    </message>
-    <message>
-        <source>Calling to %1</source>
-        <translation>Rufe %1 an</translation>
-    </message>
-    <message>
-        <source>Call rejected</source>
-        <translation>Anruf abgelehnt</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -762,6 +821,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Freund löschen</translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation>Zeige Profil</translation>
+    </message>
+    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Speicherort angeben</translation>
@@ -909,10 +972,6 @@ instead of system taskbar.</source>
     <message>
         <source>Set to 0 to disable</source>
         <translation>&apos;0&apos; deaktiviert die Funktion</translation>
-    </message>
-    <message>
-        <source> minutes</source>
-        <translation> Minuten</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
@@ -1355,11 +1414,6 @@ Profile does not contain your history.</source>
 </context>
 <context>
     <name>LoginScreen</name>
-    <message>
-        <source>qTox</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
     <message>
         <source>Username:</source>
         <translation>Profilname:</translation>
@@ -1932,31 +1986,6 @@ Viele Grüße,
         <comment>Error with the DNS</comment>
         <translation>Unerwartete Anzahl an Einträgen im Texteintrag</translation>
     </message>
-    <message>
-        <source>The version of Tox DNS used by this server is not supported</source>
-        <comment>Error with the DNS</comment>
-        <translation>Die von diesem Server verwendete Version von Tox-DNS wird leider nicht unterstützt</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain any Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>ToxDNS konnte keine Tox ID finden.</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain a valid Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>ToxDNS konnte keine gültige Tox ID finden.</translation>
-    </message>
-    <message>
-        <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
-Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
-Should toxdns1 be used anyway?
-If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation>Es scheint, dass qTox das alte Protokoll toxdns1 verwenden muss, um sich mit deinem Kontakt zu verbinden.
-Leider ist die Alternativmethode nicht sicher und es besteht die Gefahr, dass an ToxDNS gesendete Daten abgefangen werden.
-Soll das Alternativprotokoll toxdns1 dennoch verwendet werden?
-Falls du dir nicht sicher bist, wähle „Nein“ und das unsichere Protokoll wird nicht verwendet.</translation>
-    </message>
 </context>
 <context>
     <name>ToxURIDialog</name>
@@ -2038,6 +2067,16 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Edit</source>
         <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <comment>Tray action menu to logout user</comment>
+        <translation>Ausloggen</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit tox</comment>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>Filter...</source>
@@ -2140,14 +2179,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Your status</source>
         <translation>Dein Status</translation>
-    </message>
-    <message>
-        <source>&amp;Logout</source>
-        <translation>&amp;Logout</translation>
-    </message>
-    <message>
-        <source>&amp;Exit</source>
-        <translation>&amp;Beenden</translation>
     </message>
     <message>
         <source>Message failed to send</source>
