@@ -46,6 +46,12 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
     other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput(this);
+    audio.unsubscribeInput(&other);
+    audio.subscribeOutput(this);
+    audio.unsubscribeOutput(&other);
+
 #ifdef QTOX_FILTER_AUDIO
     filterer = other.filterer;
     other.filterer = nullptr;
@@ -54,17 +60,19 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
 
 ToxCall::~ToxCall()
 {
-    if (alSource)
-        Audio::getInstance().deleteSource(alSource);
+    Audio& audio = Audio::getInstance();
 
     if (sendAudioTimer)
     {
         QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
         sendAudioTimer->stop();
-        Audio& audio = Audio::getInstance();
-        audio.unsubscribeInput(this);
-        audio.unsubscribeOutput(this);
     }
+
+    if (alSource)
+        audio.deleteSource(alSource);
+
+    audio.unsubscribeInput(this);
+    audio.unsubscribeOutput(this);
 
 #ifdef QTOX_FILTER_AUDIO
     if (filterer)
