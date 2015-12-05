@@ -325,6 +325,62 @@ void Profile::saveToxSave(QByteArray data)
     newProfile = false;
 }
 
+QString Profile::avatarPath(const QString &ownerId)
+{
+    return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
+}
+
+QPixmap Profile::loadAvatar()
+{
+    return loadAvatar(core->getSelfId().publicKey);
+}
+
+QPixmap Profile::loadAvatar(const QString &ownerId)
+{
+    QPixmap pic;
+    pic.loadFromData(loadAvatarData(ownerId));
+    return pic;
+}
+
+QByteArray Profile::loadAvatarData(const QString &ownerId)
+{
+    QFile file(avatarPath(ownerId));
+    if (!file.open(QIODevice::ReadOnly))
+        return {};
+    return file.readAll();
+}
+
+void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
+{
+    QString path = avatarPath(ownerId);
+    QSaveFile file(avatarPath(ownerId));
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "Tox avatar " << path << " couldn't be saved";
+        return;
+    }
+    file.write(pic);
+    file.commit();
+}
+
+QByteArray Profile::getAvatarHash(const QString &ownerId)
+{
+    QByteArray pic = loadAvatarData(ownerId);
+    QByteArray avatarHash(TOX_HASH_LENGTH, 0);
+    tox_hash((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
+    return avatarHash;
+}
+
+void Profile::removeAvatar()
+{
+    removeAvatar(core->getSelfId().publicKey);
+}
+
+void Profile::removeAvatar(const QString &ownerId)
+{
+    QFile::remove(avatarPath(ownerId));
+}
+
 bool Profile::exists(QString name)
 {
     QString path = Settings::getInstance().getSettingsDirPath() + name;

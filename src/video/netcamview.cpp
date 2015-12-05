@@ -25,6 +25,8 @@
 #include "src/video/videosurface.h"
 #include "src/widget/tool/movablewidget.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
 #include <QLabel>
 #include <QBoxLayout>
 #include <QFrame>
@@ -35,13 +37,13 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     , friendId{friendId}
 {
     QString id = FriendList::findFriend(friendId)->getToxId().toString();
-    videoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(id), this);
+    videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);
 
     verLayout->insertWidget(0, videoSurface, 1);
 
-    selfVideoSurface = new VideoSurface(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this, true);
+    selfVideoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(), this, true);
     selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     selfVideoSurface->setMouseTracking(true);
     selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

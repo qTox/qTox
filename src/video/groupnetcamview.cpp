@@ -20,9 +20,10 @@
 #include "groupnetcamview.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/video/videosurface.h"
-#include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include <QBoxLayout>
@@ -132,7 +133,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     horLayout = new QHBoxLayout(widget);
     horLayout->addStretch(1);
 
-    selfVideoSurface = new LabeledVideo(Settings::getInstance().getSavedAvatar(Core::getInstance()->getSelfId().toString()), this);
+    selfVideoSurface = new LabeledVideo(Nexus::getProfile()->loadAvatar(), this);
     horLayout->addWidget(selfVideoSurface);
 
     horLayout->addStretch(1);
@@ -171,7 +172,7 @@ void GroupNetCamView::clearPeers()
 
 void GroupNetCamView::addPeer(int peer, const QString& name)
 {
-    QPixmap groupAvatar = Settings::getInstance().getSavedAvatar(Core::getInstance()->getGroupPeerToxId(group, peer).toString());
+    QPixmap groupAvatar = Nexus::getProfile()->loadAvatar(Core::getInstance()->getGroupPeerToxId(group, peer).toString());
     LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, this);
     labeledVideo->setText(name);
     horLayout->insertWidget(horLayout->count() - 1, labeledVideo);

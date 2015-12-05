@@ -24,6 +24,7 @@
 #include <QVector>
 #include <QString>
 #include <QByteArray>
+#include <QPixmap>
 #include <tox/toxencryptsave.h>
 
 class Core;
@@ -58,6 +59,14 @@ public:
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
     void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.
 
+    QPixmap loadAvatar(); ///< Get our avatar from cache
+    QPixmap loadAvatar(const QString& ownerId); ///< Get a contact's avatar from cache
+    QByteArray loadAvatarData(const QString& ownerId); ///< Get a contact's avatar from cache
+    void saveAvatar(QByteArray pic, const QString& ownerId); ///< Save an avatar to cache
+    QByteArray getAvatarHash(const QString& ownerId); ///< Get the tox hash of a cached avatar
+    void removeAvatar(const QString& ownerId); ///< Removes a cached avatar
+    void removeAvatar(); ///< Removes our own avatar
+
     /// Removes the profile permanently
     /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
     /// Updates the profiles vector
@@ -82,6 +91,7 @@ private:
     /// Creates a .ini file for the given .tox profile
     /// Only pass the basename, without extension
     static void importProfile(QString name);
+    QString avatarPath(const QString& ownerId);
 
 private:
     Core* core;

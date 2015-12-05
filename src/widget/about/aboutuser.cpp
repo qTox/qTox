@@ -2,6 +2,8 @@
 #include "ui_aboutuser.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/historykeeper.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
 
 #include <QDir>
 #include <QFileDialog>
@@ -37,7 +39,7 @@ void AboutUser::setFriend(Friend *f)
     ui->publicKey->setCursorPosition(0); //scroll textline to left
     ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
 
-    QPixmap avatar = Settings::getInstance().getSavedAvatar(f->getToxId().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getToxId().toString());
     ui->statusMessage->setText(f->getStatusMessage());
     if(!avatar.isNull()) {
         ui->avatar->setPixmap(avatar);

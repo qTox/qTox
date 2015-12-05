@@ -23,6 +23,7 @@
 #include "corestructs.h"
 #include "src/core/cstring.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
 #include <QDebug>
 #include <QFile>
 #include <QThread>
@@ -278,7 +279,7 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
             static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
             uint8_t avatarHash[TOX_FILE_ID_LENGTH];
             tox_file_get_file_id(core->tox, friendId, fileId, avatarHash, nullptr);
-            if (Settings::getInstance().getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
+            if (core->profile.getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
             {
                 // If it's an avatar but we already have it cached, cancel
                 qDebug() << QString("Received avatar request %1:%2, reject, since we have it in cache.").arg(friendId).arg(fileId);
@@ -402,11 +403,12 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
 }
 
 void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
-                                    const uint8_t *data, size_t length, void *core)
+                                    const uint8_t *data, size_t length, void *_core)
 {
     //qDebug() << QString("Received chunk for %1:%2 pos %3 size %4")
     //                    .arg(friendId).arg(fileId).arg(position).arg(length);
 
+    Core* core = static_cast<Core*>(_core);
     ToxFile* file = findFile(friendId, fileId);
     if (!file)
     {
@@ -420,7 +422,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
         /// TODO: Allow ooo receiving for non-stream transfers, with very careful checking
         qWarning("onFileRecvChunkCallback: Received a chunk out-of-order, aborting transfer");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
-            emit static_cast<Core*>(core)->fileTransferCancelled(*file);
+            emit core->fileTransferCancelled(*file);
         tox_file_control(tox, friendId, fileId, TOX_FILE_CONTROL_CANCEL, nullptr);
         removeFile(friendId, fileId);
         return;
@@ -435,15 +437,14 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
             if (!pic.isNull())
             {
                 qDebug() << "Got"<<file->avatarData.size()<<"bytes of avatar data from" <<friendId;
-                Settings::getInstance().saveAvatar(pic, static_cast<Core*>(core)->getFriendAddress(friendId));
-                Settings::getInstance().saveAvatarHash(file->resumeFileId, static_cast<Core*>(core)->getFriendAddress(friendId));
-                emit static_cast<Core*>(core)->friendAvatarChanged(friendId, pic);
+                core->profile.saveAvatar(file->avatarData, core->getFriendAddress(friendId));
+                emit core->friendAvatarChanged(friendId, pic);
             }
         }
         else
         {
-            emit static_cast<Core*>(core)->fileTransferFinished(*file);
-            emit static_cast<Core*>(core)->fileDownloadFinished(file->filePath);
+            emit core->fileTransferFinished(*file);
+            emit core->fileDownloadFinished(file->filePath);
         }
         removeFile(friendId, fileId);
         return;

@@ -169,24 +169,6 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         messageID = sqlAnswer.value(0).toLongLong();
 }
 
-void HistoryKeeper::importAvatarToDatabase(const QString& ownerId)
-{
-    if (needImport)
-    {
-        QString puth (Settings::getInstance().getSettingsDirPath() +
-                      QString("avatars") + QDir::separator() +
-                      ownerId +".png");
-        qDebug() << QString("Try import avatar for: %1.").arg(ownerId);
-        getAliasID(ownerId);
-        if (QFile::exists(puth) && !hasAvatar(ownerId))
-        {
-            QPixmap pic(puth);
-            saveAvatar(pic,ownerId);
-            qDebug() << QString("Import avatar for: %1.").arg(ownerId);
-        }
-    }
-}
-
 HistoryKeeper::~HistoryKeeper()
 {
     delete db;
@@ -511,65 +493,4 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
     getInstance()->removeHistory();
 
     return msgs;
-}
-
-void HistoryKeeper::removeAvatar(const QString& ownerId)
-{
-    QSqlQuery query;
-    query.prepare("UPDATE aliases SET avatar=NULL, av_hash=NULL WHERE user_id = (:id)");
-    query.bindValue(":id", ownerId.left(64));
-    query.exec();
-}
-
-bool HistoryKeeper::hasAvatar(const QString& ownerId)
-{
-    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
-    return !sqlAnswer.isNull(0);
-}
-
-void HistoryKeeper::saveAvatar(QPixmap& pic, const QString& ownerId)
-{
-    QByteArray bArray;
-    QBuffer buffer(&bArray);
-    buffer.open(QIODevice::WriteOnly);
-    pic.save(&buffer, "PNG");
-
-    QSqlQuery query;
-    query.prepare("UPDATE aliases SET avatar=:image WHERE user_id = (:id)");
-    query.bindValue(":image", bArray);
-    query.bindValue(":id", ownerId.left(64));
-    query.exec();
-}
-
-QPixmap HistoryKeeper::getSavedAvatar(const QString &ownerId)
-{
-    QByteArray bArray;
-    QPixmap pixmap = QPixmap();
-    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
-    if (sqlAnswer.first())
-    {
-        bArray = sqlAnswer.value(0).toByteArray();
-        pixmap.loadFromData(bArray);
-    }
-    return pixmap;
-}
-
-void HistoryKeeper::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
-{
-    QSqlQuery query;
-    query.prepare("UPDATE aliases SET av_hash=:hash WHERE user_id = (:id)");
-    query.bindValue(":hash", QString(hash.toBase64()));
-    query.bindValue(":id", ownerId.left(64));
-    query.exec();
-}
-
-QByteArray HistoryKeeper::getAvatarHash(const QString& ownerId)
-{
-    QByteArray bArray;
-    QSqlQuery sqlAnswer = db->exec(QString("SELECT avatar FROM aliases WHERE user_id= '%1'").arg(ownerId.left(64)));
-    if (sqlAnswer.first())
-    {
-        bArray = sqlAnswer.value(0).toByteArray();
-    }
-    return bArray;
 }

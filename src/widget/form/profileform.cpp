@@ -188,11 +188,7 @@ void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
     QAction *selectedItem = contextMenu.exec(pos);
 
     if (selectedItem == removeAction)
-    {
-        QString selfPubKey = Core::getInstance()->getSelfId().publicKey;
-        HistoryKeeper::getInstance()->removeAvatar(selfPubKey);
-        Core::getInstance()->setAvatar({});
-    }
+        Nexus::getProfile()->removeAvatar();
 }
 
 void ProfileForm::copyIdClicked()

@@ -298,8 +298,7 @@ void Core::start()
     tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback, this);
     tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback, this);
 
-    HistoryKeeper::getInstance()->importAvatarToDatabase(getSelfId().toString().left(64));
-    QPixmap pic = Settings::getInstance().getSavedAvatar(getSelfId().toString());
+    QPixmap pic = profile.loadAvatar();
     if (!pic.isNull() && !pic.size().isEmpty())
     {
         QByteArray data;
@@ -767,7 +766,7 @@ void Core::setAvatar(const QByteArray& data)
     {
         QPixmap pic;
         pic.loadFromData(data);
-        Settings::getInstance().saveAvatar(pic, getSelfId().toString());
+        profile.saveAvatar(data, getSelfId().publicKey);
         emit selfAvatarChanged(pic);
     }
     else

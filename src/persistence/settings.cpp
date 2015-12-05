@@ -539,26 +539,6 @@ QString Settings::getSettingsDirPath()
 #endif
 }
 
-QPixmap Settings::getSavedAvatar(const QString &ownerId)
-{
-    return HistoryKeeper::getInstance()->getSavedAvatar(ownerId);
-}
-
-void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
-{
-    HistoryKeeper::getInstance()->saveAvatar(pic,ownerId);
-}
-
-void Settings::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
-{
-    HistoryKeeper::getInstance()->saveAvatarHash(hash,ownerId);
-}
-
-QByteArray Settings::getAvatarHash(const QString& ownerId)
-{
-    return HistoryKeeper::getInstance()->getAvatarHash(ownerId);
-}
-
 const QList<DhtServer>& Settings::getDhtServerList() const
 {
     QMutexLocker locker{&bigLock};

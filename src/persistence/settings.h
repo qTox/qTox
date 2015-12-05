@@ -142,12 +142,6 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
-    QPixmap getSavedAvatar(const QString& ownerId);
-    void saveAvatar(QPixmap& pic, const QString& ownerId);
-
-    QByteArray getAvatarHash(const QString& ownerId);
-    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
-
     QString getInDev() const;
     void setInDev(const QString& deviceSpecifier);
 

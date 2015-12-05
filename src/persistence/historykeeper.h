@@ -74,17 +74,6 @@ public:
 
     void setSyncType(Db::syncType sType);
 
-    void saveAvatar(QPixmap& pic, const QString& ownerId);
-    QPixmap getSavedAvatar(const QString &ownerId);
-
-    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
-    QByteArray getAvatarHash(const QString& ownerId);
-
-    void removeAvatar(const QString& ownerId);
-    bool hasAvatar(const QString& ownerId);
-
-    void importAvatarToDatabase(const QString& ownerId);        // may be deleted after all move to new db structure
-
 private:
     HistoryKeeper(GenericDdInterface *db_);
     HistoryKeeper(HistoryKeeper &hk) = delete;

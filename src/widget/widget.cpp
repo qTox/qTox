@@ -43,6 +43,7 @@
 #include "src/platform/timer.h"
 #include "systemtrayicon.h"
 #include "src/nexus.h"
+#include "src/persistence/profile.h"
 #include "src/widget/gui.h"
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/translator.h"
@@ -918,7 +919,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Settings::getInstance().getSavedAvatar(userId);
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(userId);
     if (!avatar.isNull())
     {
         newfriend->getChatForm()->onAvatarChange(friendId, avatar);
@@ -1118,7 +1119,7 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
-    QPixmap avatar = Settings::getInstance().getSavedAvatar(frnd->getToxId().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getToxId().toString());
     if (!avatar.isNull())
         friendWidget->onAvatarChange(frnd->getFriendID(), avatar);
 }
