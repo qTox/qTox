@@ -91,7 +91,9 @@ private:
     /// Creates a .ini file for the given .tox profile
     /// Only pass the basename, without extension
     static void importProfile(QString name);
-    QString avatarPath(const QString& ownerId);
+    /// Gets the path of the avatar file cached by this profile and corresponding to this owner ID
+    /// If forceUnencrypted, we return the path to the plaintext file even if we're an encrypted profile
+    QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
 private:
     Core* core;
