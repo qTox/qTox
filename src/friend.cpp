@@ -92,8 +92,14 @@ void Friend::setAlias(QString name)
 
 void Friend::setStatusMessage(QString message)
 {
+    statusMessage = message;
     widget->setStatusMsg(message);
     chatForm->setStatusMessage(message);
+}
+
+QString Friend::getStatusMessage()
+{
+    return statusMessage;
 }
 
 QString Friend::getDisplayedName() const

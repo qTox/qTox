@@ -35,7 +35,8 @@ FORMS    += \
     src/widget/form/settings/avsettings.ui \
     src/widget/form/settings/generalsettings.ui \
     src/widget/form/settings/privacysettings.ui \
-    src/widget/form/removefrienddialog.ui
+    src/widget/form/removefrienddialog.ui \
+    src/widget/about/aboutuser.ui
 
 CONFIG   += c++11
 
@@ -507,7 +508,8 @@ SOURCES += \
     src/widget/tool/micfeedbackwidget.cpp \
     src/widget/tool/removefrienddialog.cpp \
     src/video/groupnetcamview.cpp \
-    src/core/toxcall.cpp
+    src/core/toxcall.cpp \
+    src/widget/about/aboutuser.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -560,4 +562,5 @@ HEADERS += \
     src/video/genericnetcamview.h \
     src/video/groupnetcamview.h \
     src/core/indexedlist.h \
-    src/core/toxcall.h
+    src/core/toxcall.h \
+    src/widget/about/aboutuser.h

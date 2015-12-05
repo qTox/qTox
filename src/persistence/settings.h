@@ -187,8 +187,11 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
+    QString getContactNote(const ToxId& id) const;
+    void setContactNote(const ToxId& id, const QString& note);
+
     QString getAutoAcceptDir(const ToxId& id) const;
-    void setAutoAcceptDir(const ToxId&id, const QString& dir);
+    void setAutoAcceptDir(const ToxId& id, const QString& dir);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -394,6 +397,7 @@ private:
         QString alias;
         QString addr;
         QString autoAcceptDir;
+        QString note;
         int circleID = -1;
         QDate activity = QDate();
     };
