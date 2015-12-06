@@ -142,12 +142,6 @@ public:
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
-    QPixmap getSavedAvatar(const QString& ownerId);
-    void saveAvatar(QPixmap& pic, const QString& ownerId);
-
-    QByteArray getAvatarHash(const QString& ownerId);
-    void saveAvatarHash(const QByteArray& hash, const QString& ownerId);
-
     QString getInDev() const;
     void setInDev(const QString& deviceSpecifier);
 
@@ -187,8 +181,11 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
+    QString getContactNote(const ToxId& id) const;
+    void setContactNote(const ToxId& id, const QString& note);
+
     QString getAutoAcceptDir(const ToxId& id) const;
-    void setAutoAcceptDir(const ToxId&id, const QString& dir);
+    void setAutoAcceptDir(const ToxId& id, const QString& dir);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -394,6 +391,7 @@ private:
         QString alias;
         QString addr;
         QString autoAcceptDir;
+        QString note;
         int circleID = -1;
         QDate activity = QDate();
     };

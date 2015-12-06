@@ -113,7 +113,7 @@ private:
 
 private:
     static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64; ///< In kb/s. More than enough for Opus.
-    static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 3000; ///< Picked at random by fair dice roll.
+    static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 6144; ///< Picked at random by fair dice roll.
 
 private:
     ToxAV* toxav;

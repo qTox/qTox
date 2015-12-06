@@ -299,7 +299,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/android.ui" line="348"/>
         <source>Someone else</source>
-        <translation>Qualcunaltro</translation>
+        <translation>Qualcun altro</translation>
     </message>
     <message>
         <location filename="../src/android.ui" line="353"/>
@@ -451,7 +451,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widget/form/chatform.cpp" line="894"/>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Impossibile creare il file temporaneo</translation>
+        <translation>Impossibile aprire il file temporaneo</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="895"/>
@@ -629,7 +629,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="139"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Errore</translation>
+        <translation>Posizione non scrivibile</translation>
     </message>
     <message>
         <location filename="../src/chatlog/content/filetransferwidget.cpp" line="140"/>
@@ -1353,8 +1353,8 @@ Nome gruppo:</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Qesto mucchio di caratteri serve agli altri client Tox per contattarti.
-Condivilo con chi vuoi comunicare.</translation>
+        <translation>Questo mucchio di caratteri serve agli altri client Tox per contattarti.
+Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="102"/>
@@ -1545,7 +1545,7 @@ password:</translation>
         <location filename="../src/widget/loginscreen.cpp" line="126"/>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Le password che hai inserito sono diverse.
+        <translation>Le passwords che hai inserito sono diverse.
 Assicurati di inserire la stessa password due volte.</translation>
     </message>
     <message>
@@ -1743,7 +1743,7 @@ Per favore scegli un&apos;immagine più piccola.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="257"/>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
-        <translation>Errore</translation>
+        <translation>Impossibile rinominare</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="258"/>
@@ -1767,7 +1767,7 @@ Per favore scegli un&apos;immagine più piccola.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="315"/>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Errore</translation>
+        <translation>Posizione non scrivibile</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="274"/>
@@ -1825,8 +1825,8 @@ Per favore scegli un&apos;immagine più piccola.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="355"/>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Qesto mucchio di caratteri serve agli altri client Tox per contattarti.
-Condivilo con chi vuoi comunicare.</translation>
+        <translation>Questo mucchio di caratteri serve agli altri client Tox per contattarti.
+Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="278"/>

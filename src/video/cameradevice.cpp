@@ -50,6 +50,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     openDeviceLock.lock();
     AVFormatContext* fctx = nullptr;
     CameraDevice* dev = openDevices.value(devName);
+    int aduration;
     if (dev)
         goto out;
 
@@ -72,11 +73,24 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
     if (avformat_open_input(&fctx, devName.toStdString().c_str(), format, options)<0)
         goto out;
 
+    // Fix avformat_find_stream_info hanging on garbage input
+#if FF_API_PROBESIZE_32
+    aduration = fctx->max_analyze_duration2 = 0;
+#else
+    aduration = fctx->max_analyze_duration = 0;
+#endif
+
     if (avformat_find_stream_info(fctx, NULL) < 0)
     {
         avformat_close_input(&fctx);
         goto out;
     }
+
+#if FF_API_PROBESIZE_32
+    fctx->max_analyze_duration2 = aduration;
+#else
+    fctx->max_analyze_duration = aduration;
+#endif
 
     dev = new CameraDevice{devName, fctx};
     openDevices[devName] = dev;

@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>824</width>
-        <height>489</height>
+        <width>830</width>
+        <height>495</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -85,13 +85,6 @@
            <widget class="QLabel" name="microphoneMax">
             <property name="text">
              <string>100</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2">
-           <widget class="QPushButton" name="rescanButton">
-            <property name="text">
-             <string>Rescan audio devices</string>
             </property>
            </widget>
           </item>
@@ -221,6 +214,13 @@ which may lead to problems with video calls.</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="rescanButton">
+         <property name="text">
+          <string>Rescan devices</string>
+         </property>
         </widget>
        </item>
       </layout>

@@ -264,9 +264,9 @@ bool CoreAV::sendCallAudio(uint32_t callId)
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
             // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
+            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT);
+            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
         else if (call.filterer)
         {
@@ -275,9 +275,26 @@ bool CoreAV::sendCallAudio(uint32_t callId)
         }
 #endif
 
-        if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
-                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, nullptr))
-            qDebug() << "toxav_audio_send_frame error";
+        // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
+        TOXAV_ERR_SEND_FRAME err;
+        int retries = 0;
+        do {
+            if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
+                                        AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, &err))
+            {
+                if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+                {
+                    retries++;
+                    QThread::usleep(500);
+                }
+                else
+                {
+                    qDebug() << "toxav_audio_send_frame error: "<<err;
+                }
+            }
+        } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
+        if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+            qDebug() << "toxav_audio_send_frame error: Lock busy, dropping frame";
     }
 
     return true;
@@ -312,9 +329,27 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
         return;
     }
 
-    if (!toxav_video_send_frame(toxav, callId, frame->d_w, frame->d_h,
-                                frame->planes[0], frame->planes[1], frame->planes[2], nullptr))
-        qDebug() << "toxav_video_send_frame error";
+    // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
+    // We don't want to be dropping iframes because of some lock held by toxav_iterate
+    TOXAV_ERR_SEND_FRAME err;
+    int retries = 0;
+    do {
+        if (!toxav_video_send_frame(toxav, callId, frame->d_w, frame->d_h,
+                                    frame->planes[0], frame->planes[1], frame->planes[2], &err))
+        {
+            if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+            {
+                retries++;
+                QThread::usleep(500);
+            }
+            else
+            {
+                qDebug() << "toxav_video_send_frame error: "<<err;
+            }
+        }
+    } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
+    if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+        qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
 
     delete frame;
 }

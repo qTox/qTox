@@ -40,7 +40,6 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 
     widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
-    HistoryKeeper::getInstance()->importAvatarToDatabase(UserId.publicKey);
 }
 
 Friend::~Friend()
@@ -92,8 +91,14 @@ void Friend::setAlias(QString name)
 
 void Friend::setStatusMessage(QString message)
 {
+    statusMessage = message;
     widget->setStatusMsg(message);
     chatForm->setStatusMessage(message);
+}
+
+QString Friend::getStatusMessage()
+{
+    return statusMessage;
 }
 
 QString Friend::getDisplayedName() const

@@ -304,6 +304,7 @@ void Settings::loadPersonnal(Profile* profile)
             friendProp fp;
             fp.addr = ps.value("addr").toString();
             fp.alias = ps.value("alias").toString();
+            fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
             fp.circleID = ps.value("circle", -1).toInt();
 
@@ -478,6 +479,7 @@ void Settings::savePersonal(QString profileName, QString password)
             ps.setArrayIndex(index);
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
+            ps.setValue("note", frnd.note);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
             ps.setValue("circle", frnd.circleID);
 
@@ -535,26 +537,6 @@ QString Settings::getSettingsDirPath()
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                            + QDir::separator() + "tox")+QDir::separator();
 #endif
-}
-
-QPixmap Settings::getSavedAvatar(const QString &ownerId)
-{
-    return HistoryKeeper::getInstance()->getSavedAvatar(ownerId);
-}
-
-void Settings::saveAvatar(QPixmap& pic, const QString& ownerId)
-{
-    HistoryKeeper::getInstance()->saveAvatar(pic,ownerId);
-}
-
-void Settings::saveAvatarHash(const QByteArray& hash, const QString& ownerId)
-{
-    HistoryKeeper::getInstance()->saveAvatarHash(hash,ownerId);
-}
-
-QByteArray Settings::getAvatarHash(const QString& ownerId)
-{
-    return HistoryKeeper::getInstance()->getAvatarHash(ownerId);
 }
 
 const QList<DhtServer>& Settings::getDhtServerList() const
@@ -913,6 +895,34 @@ void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
     }
 }
 
+QString Settings::getContactNote(const ToxId &id) const
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.publicKey);
+    if (it != friendLst.end())
+        return it->note;
+
+    return QString();
+}
+
+void Settings::setContactNote(const ToxId &id, const QString& note)
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.publicKey);
+    if (it != friendLst.end())
+    {
+        qDebug() << note;
+        it->note = note;
+    }
+    else
+    {
+        updateFriendAdress(id.toString());
+        setContactNote(id, note);
+    }
+}
+
 QString Settings::getGlobalAutoAcceptDir() const
 {
     QMutexLocker locker{&bigLock};
@@ -1252,6 +1262,7 @@ void Settings::updateFriendAdress(const QString &newAddr)
         friendProp fp;
         fp.addr = newAddr;
         fp.alias = "";
+        fp.note = "";
         fp.autoAcceptDir = "";
         friendLst[newAddr] = fp;
     }
@@ -1282,6 +1293,7 @@ void Settings::setFriendAlias(const ToxId &id, const QString &alias)
         friendProp fp;
         fp.addr = key;
         fp.alias = alias;
+        fp.note = "";
         fp.autoAcceptDir = "";
         friendLst[key] = fp;
     }
@@ -1310,6 +1322,7 @@ void Settings::setFriendCircleID(const ToxId &id, int circleID)
         friendProp fp;
         fp.addr = key;
         fp.alias = "";
+        fp.note = "";
         fp.autoAcceptDir = "";
         fp.circleID = circleID;
         friendLst[key] = fp;
@@ -1339,6 +1352,7 @@ void Settings::setFriendActivity(const ToxId &id, const QDate &activity)
         friendProp fp;
         fp.addr = key;
         fp.alias = "";
+        fp.note = "";
         fp.autoAcceptDir = "";
         fp.circleID = -1;
         fp.activity = activity;

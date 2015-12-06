@@ -33,6 +33,7 @@
 #include <QThread>
 #include <QObject>
 #include <QDebug>
+#include <sodium.h>
 
 QVector<QString> Profile::profiles;
 
@@ -325,6 +326,94 @@ void Profile::saveToxSave(QByteArray data)
     newProfile = false;
 }
 
+QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
+{
+    if (password.isEmpty() || forceUnencrypted)
+        return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
+
+    QByteArray idData = ownerId.toUtf8();
+    constexpr int hashSize = TOX_PUBLIC_KEY_SIZE; // As long as an unencrypted hash
+    static_assert(hashSize >= crypto_generichash_BYTES_MIN
+                  && hashSize <= crypto_generichash_BYTES_MAX, "Hash size not supported by libsodium");
+    QByteArray hash(hashSize, 0);
+    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), nullptr, 0);
+    return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
+}
+
+QPixmap Profile::loadAvatar()
+{
+    return loadAvatar(core->getSelfId().publicKey);
+}
+
+QPixmap Profile::loadAvatar(const QString &ownerId)
+{
+    QPixmap pic;
+    pic.loadFromData(loadAvatarData(ownerId));
+    return pic;
+}
+
+QByteArray Profile::loadAvatarData(const QString &ownerId)
+{
+    QString path = avatarPath(ownerId);
+    bool encrypted = !password.isEmpty();
+
+    // If the encrypted avatar isn't found, try loading the unencrypted one for the same ID
+    if (!password.isEmpty() && !QFile::exists(path))
+    {
+        encrypted = false;
+        path = avatarPath(ownerId, true);
+    }
+
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
+        return {};
+
+    QByteArray pic = file.readAll();
+    if (encrypted)
+    {
+        uint8_t salt[TOX_PASS_SALT_LENGTH];
+        tox_get_salt(reinterpret_cast<uint8_t *>(pic.data()), salt);
+        auto passkey = core->createPasskey(password, salt);
+        pic = core->decryptData(pic, *passkey);
+    }
+    return pic;
+}
+
+void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
+{
+    if (!password.isEmpty())
+        pic = core->encryptData(pic, passkey);
+
+    QString path = avatarPath(ownerId);
+    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
+    QSaveFile file(path);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        qWarning() << "Tox avatar " << path << " couldn't be saved";
+        return;
+    }
+    file.write(pic);
+    file.commit();
+}
+
+QByteArray Profile::getAvatarHash(const QString &ownerId)
+{
+    QByteArray pic = loadAvatarData(ownerId);
+    QByteArray avatarHash(TOX_HASH_LENGTH, 0);
+    tox_hash((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
+    return avatarHash;
+}
+
+void Profile::removeAvatar()
+{
+    removeAvatar(core->getSelfId().publicKey);
+}
+
+void Profile::removeAvatar(const QString &ownerId)
+{
+    QFile::remove(avatarPath(ownerId));
+}
+
 bool Profile::exists(QString name)
 {
     QString path = Settings::getInstance().getSettingsDirPath() + name;
@@ -430,6 +519,7 @@ void Profile::restartCore()
 void Profile::setPassword(QString newPassword)
 {
     QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
+    QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
 
     password = newPassword;
     passkey = *core->createPasskey(password);
@@ -437,4 +527,5 @@ void Profile::setPassword(QString newPassword)
 
     HistoryKeeper::getInstance()->importMessages(oldMessages);
     Nexus::getDesktopGUI()->reloadHistory();
+    saveAvatar(avatar, core->getSelfId().publicKey);
 }
