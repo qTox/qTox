@@ -6,6 +6,7 @@
     - [Arch](#arch-easy)
     - [Gentoo](#gentoo-easy)
     - [Slackware](#slackware-easy)
+    - [FreeBSD](#freebsd-easy)
   - [Install git](#install-git)
     - [Arch](#arch-git)
     - [Debian](#debian-git)
@@ -37,7 +38,7 @@
 - [Windows](#windows)
 
 <a name="dependencies" />
-##Dependencies
+## Dependencies
 
 | Name         | Version     | Modules                                           |
 |--------------|-------------|-------------------------------------------------- |
@@ -53,8 +54,8 @@
 
 
 <a name="linux" />
-##Linux
-###Simple install
+## Linux
+### Simple install
 Easy qTox install is provided for variety of distributions:
 
 * [Generic](#generic)
@@ -101,6 +102,16 @@ emerge qtox
 
 qTox SlackBuild and all of its dependencies can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
+<a name="freebsd-easy" />
+#### FreeBSD
+
+A qTox port is available at ``net-im/qTox``. To build and install qTox:
+
+```bash
+cd /usr/ports/net-im/qTox/
+make install
+```
+
 ----
 
 If your distribution is not listed, or you want / need to compile qTox, there are provided instructions.
@@ -109,7 +120,6 @@ If your distribution is not listed, or you want / need to compile qTox, there ar
 ----
 
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
-
 
 ### Install git
 In order to clone the qTox repository you need Git.
@@ -512,7 +522,7 @@ Install them. The following steps assume that WGet is installed at "C:\Program F
 
 ### Setting up Path
 
-Add MinGW/MSYS/CMake binaries to the system path to make them globally accessible. 
+Add MinGW/MSYS/CMake binaries to the system path to make them globally accessible.
 Open Control Panel -> System and Security -> System -> Advanced system settings -> Environment Variables...(or run "sysdm.cpl" select tab "Advanced system settings" -> button "Environment Variables")
 In the second box search for the PATH variable and press Edit...
 The input box "Variable value:" should already contain some directories. Each directory is separated with a semicolon.
