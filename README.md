@@ -18,6 +18,8 @@ qTox [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.or
   - [**Gentoo overlay**](https://github.com/zetok/gentoo-overlay-tox)
 * **Mac**:
   - [**Experimental download**](https://github.com/RowenStipe/qTox-OSX/releases)
+* **FreeBSD**:
+  - [**Port**](/INSTALL.md#freebsd-easy)
 <br/>
 
 Nighly builds do not update automatically at this stage of development, so make sure you get back to this site and regularly download the latest version of qTox.
