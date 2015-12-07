@@ -242,7 +242,29 @@ bool Audio::openOutput(const QString &outDevDescr)
     if (outDevDescr != "none")
     {
         if (outDevDescr.isEmpty())
-            alOutDev = alcOpenDevice(nullptr);
+        {
+            // Attempt to default to the first available audio device.
+            const ALchar *pDeviceList;
+            if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+                pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
+            else
+                pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+            if (pDeviceList)
+            {
+                alOutDev = alcOpenDevice(pDeviceList);
+                int len = strlen(pDeviceList);
+  #ifdef Q_OS_WIN
+                QString outDev = QString::fromUtf8(pDeviceList, len);
+  #else
+                QString outDev = QString::fromLocal8Bit(pDeviceList, len);
+  #endif
+                Settings::getInstance().setOutDev(outDev);
+            }
+            else
+            {
+                alOutDev = alcOpenDevice(nullptr);
+            }
+        }
         else
             alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
