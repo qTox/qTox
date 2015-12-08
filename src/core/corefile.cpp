@@ -264,14 +264,13 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
 
     if (kind == TOX_FILE_KIND_AVATAR)
     {
-        QString friendAddr = core->getFriendAddress(friendId);
+        QString friendAddr = core->getFriendPublicKey(friendId);
         if (!filesize)
         {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
             emit core->friendAvatarRemoved(friendId);
-            QFile::remove(Settings::getInstance().getSettingsDirPath()+"avatars/"+friendAddr.left(64)+".png");
-            QFile::remove(Settings::getInstance().getSettingsDirPath()+"avatars/"+friendAddr.left(64)+".hash");
+            core->profile.removeAvatar(friendAddr);
             return;
         }
         else
@@ -334,7 +333,10 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
     }
     else if (control == TOX_FILE_CONTROL_RESUME)
     {
-        qDebug() << "onFileControlCallback: Received resume for file "<<friendId<<":"<<fileId;
+        if (file->direction == ToxFile::SENDING && file->fileKind == TOX_FILE_KIND_AVATAR)
+            qDebug() << "Avatar transfer"<<fileId<<"to friend"<<friendId<<"accepted";
+        else
+            qDebug() << "onFileControlCallback: Received resume for file "<<friendId<<":"<<fileId;
         file->status = ToxFile::TRANSMITTING;
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
     }
@@ -437,7 +439,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
             if (!pic.isNull())
             {
                 qDebug() << "Got"<<file->avatarData.size()<<"bytes of avatar data from" <<friendId;
-                core->profile.saveAvatar(file->avatarData, core->getFriendAddress(friendId));
+                core->profile.saveAvatar(file->avatarData, core->getFriendPublicKey(friendId));
                 emit core->friendAvatarChanged(friendId, pic);
             }
         }
