@@ -48,6 +48,15 @@
  #include <AL/alc.h>
 #endif
 
+#ifndef ALC_ALL_DEVICES_SPECIFIER
+// compatibility with older versions of OpenAL
+#include <AL/alext.h>
+#endif
+
+#ifdef QTOX_FILTER_AUDIO
+#include "audiofilterer.h"
+#endif
+
 Audio* Audio::instance{nullptr};
 
 class AudioPrivate
@@ -77,7 +86,6 @@ public:
     ALCdevice*      alOutDev;
     ALCcontext*     alContext;
 
-    // predefined sources
     ALuint          alMainSource;
 
     qreal inputVolume;
@@ -792,7 +800,7 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
     if (!(d->alInDev && d->inputInitialized))
         return false;
 
-    ALint curSamples=0;
+    ALint curSamples = 0;
     alcGetIntegerv(d->alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
     if (curSamples < samples)
         return false;
@@ -814,29 +822,19 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
     return true;
 }
 
-#ifdef QTOX_FILTER_AUDIO
-#include "audiofilterer.h"
-
-/* include for compatibility with older versions of OpenAL */
-#ifndef ALC_ALL_DEVICES_SPECIFIER
-#include <AL/alext.h>
-#endif
-
-void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
+#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
+void Audio::getEchoesToFilter(AudioFilterer* filterer, int samples)
 {
-#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+    QMutexLocker locker(&d->audioLock);
+
     ALint samples;
-    alcGetIntegerv(Audio::getInstance().alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples >= framesize)
+    alcGetIntegerv(&d->alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    if (samples >= samples)
     {
-        int16_t buf[framesize];
-        alcCaptureSamplesLoopback(Audio::getInstance().alOutDev, buf, framesize);
-        filterer->passAudioOutput(buf, framesize);
+        int16_t buf[samples];
+        alcCaptureSamplesLoopback(&d->alOutDev, buf, samples);
+        filterer->passAudioOutput(buf, samples);
         filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
     }
-#else
-    Q_UNUSED(filterer);
-    Q_UNUSED(framesize);
-#endif
 }
 #endif

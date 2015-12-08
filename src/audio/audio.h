@@ -82,9 +82,8 @@ public:
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                                      unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
-#ifdef QTOX_FILTER_AUDIO
-    static void getEchoesToFilter(AudioFilterer* filter, int framesize);
-    // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
+#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
+    void getEchoesToFilter(AudioFilterer* filter, int samples);
 #endif
 
 public slots:

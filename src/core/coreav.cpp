@@ -263,9 +263,11 @@ bool CoreAV::sendCallAudio(uint32_t callId)
                 call.filterer = new AudioFilterer();
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
-            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+            // compatibility with older versions of OpenAL
+            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+#endif
             call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
         else if (call.filterer)
@@ -413,10 +415,10 @@ bool CoreAV::sendGroupCallAudio(int groupId)
                 call.filterer = new AudioFilterer();
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
-            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
 
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
+#endif
         }
         else if (call.filterer)
         {
