@@ -51,10 +51,6 @@
         <translation>Įrašymo įrenginys</translation>
     </message>
     <message>
-        <source>Rescan audio devices</source>
-        <translation>Aptikti garso įrenginius iš naujo</translation>
-    </message>
-    <message>
         <source>Filter audio</source>
         <translation>Filtruoti garso signalą</translation>
     </message>
@@ -88,6 +84,10 @@
         <translation>Raiška</translation>
     </message>
     <message>
+        <source>Rescan devices</source>
+        <translation>Aptikti įrenginius iš naujo</translation>
+    </message>
+    <message>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
@@ -112,10 +112,6 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
 </context>
 <context>
     <name>AboutSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
     <message>
         <source>Version</source>
         <translation>Versija</translation>
@@ -175,6 +171,70 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Žinomų klaidų sąrašą rasite mūsų &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;klaidų pranešimų skiltyje&lt;/span&gt;&lt;/a&gt; Github portale. Jei radote qTox klaidą ar saugumo spragą, prašome apie ją pranešti pagal mūsų klaidų pranešimų nuostatas. Žr. viki straipsnį &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>AboutUser</name>
+    <message>
+        <source>Dialog</source>
+        <translation>Dialogas</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation>Naudotojo vardas</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation>Būsena</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation>Viešasis tox raktas:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation>Naudoti slapyvardžiai:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation>SLAPYVARDŽIŲ ISTORIJA</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Numatytas katalogas failams išsaugoti:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation>Iš šio kontakto failai automatiškai nepriimami</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation>Automatiškai priimti failus</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation>Išvalyti pokalbių žurnalą (operacija neatšaukiama!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Užrašai</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation>Čia galite išsaugoti komentarus apie šį kontaktą.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Pasirinkite priimamų failų katalogą</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation>Pokalbių žurnalas išvalytas</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation>Pokalbių su %1 žurnalas išvalytas!</translation>
     </message>
 </context>
 <context>
@@ -253,10 +313,6 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
 </context>
 <context>
     <name>AdvancedSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
@@ -679,7 +735,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>User ID:</source>
-        <translation>Naudojo ID:</translation>
+        <translation>Naudotojo ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -741,6 +797,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Pašalinti kontaktą</translation>
+    </message>
+    <message>
+        <source>Show details</source>
+        <translation>Rodyti profilį</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1334,10 +1394,6 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
 <context>
     <name>LoginScreen</name>
     <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
         <source>Username:</source>
         <translation>Slapyvardis:</translation>
     </message>
@@ -1906,31 +1962,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Netinkamas DNS įrašas</translation>
-    </message>
-    <message>
-        <source>The version of Tox DNS used by this server is not supported</source>
-        <comment>Error with the DNS</comment>
-        <translation>Šio serverio Tox DNS versija nepalaikoma</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain any Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS atsake nėra Tox ID</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain a valid Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS atsake nėra tinkamo Tox ID</translation>
-    </message>
-    <message>
-        <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
-Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
-Should toxdns1 be used anyway?
-If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation>qTox turi naudoti senąją tox protokolo versiją (toxdns1), kad surastų šį kontaktą.
-Toxdns1 protokolas turi saugumo spragų, todėl yra rizika, kad Jūsų ryšys su ToxDNS serveriu bus nulaužtas.
-Ar naudoti toxdns1 protokolą?
-Jei nežinote, spustelėkite „Ne“. Nesaugus ryšys su ToxDNS serveriu nebus užmegztas.</translation>
     </message>
 </context>
 <context>
