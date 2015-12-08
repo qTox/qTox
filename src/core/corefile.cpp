@@ -334,7 +334,7 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
     }
     else if (control == TOX_FILE_CONTROL_RESUME)
     {
-        qDebug() << "onFileControlCallback: Received pause for file "<<friendId<<":"<<fileId;
+        qDebug() << "onFileControlCallback: Received resume for file "<<friendId<<":"<<fileId;
         file->status = ToxFile::TRANSMITTING;
         emit static_cast<Core*>(core)->fileTransferRemotePausedUnpaused(*file, false);
     }
