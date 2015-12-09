@@ -81,7 +81,6 @@ int main(int argc, char* argv[])
         return 1;
     }
     QByteArray skeyData = skeyFile.readAll();
-    skeyData = QByteArray::fromHex(skeyData);
     skeyFile.close();
 
     QString target(argv[1]);
