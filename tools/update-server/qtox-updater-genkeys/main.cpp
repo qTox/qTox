@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     (void) a;
 
-    QByteArray skey(crypto_box_SECRETKEYBYTES, 0);
+    QByteArray skey(crypto_sign_SECRETKEYBYTES, 0);
     QFile skeyFile("qtox-updater-skey");
     if (!skeyFile.open(QIODevice::WriteOnly))
     {
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    QByteArray pkey(crypto_box_PUBLICKEYBYTES, 0);
+    QByteArray pkey(crypto_sign_PUBLICKEYBYTES, 0);
     QFile pkeyFile("qtox-updater-pkey");
     if (!pkeyFile.open(QIODevice::WriteOnly))
     {
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    crypto_box_keypair((uint8_t*)pkey.data(), (uint8_t*)skey.data());
+    crypto_sign_keypair((uint8_t*)pkey.data(), (uint8_t*)skey.data());
     skeyFile.write(skey);
     pkeyFile.write(pkey);
 

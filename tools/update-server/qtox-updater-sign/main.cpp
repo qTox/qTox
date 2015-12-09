@@ -28,7 +28,6 @@ int main(int argc, char* argv[])
         return 1;
     }
     QByteArray skeyData = skeyFile.readAll();
-    skeyData = QByteArray::fromHex(skeyData);
     skeyFile.close();
 
     unsigned char sig[crypto_sign_BYTES];
