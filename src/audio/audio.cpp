@@ -586,11 +586,11 @@ void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
 {
 #ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
     ALint samples;
-    alcGetIntegerv(Audio::alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    alcGetIntegerv(Audio::getInstance().alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if (samples >= framesize)
     {
         int16_t buf[framesize];
-        alcCaptureSamplesLoopback(Audio::alOutDev, buf, framesize);
+        alcCaptureSamplesLoopback(Audio::getInstance().alOutDev, buf, framesize);
         filterer->passAudioOutput(buf, framesize);
         filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
     }
