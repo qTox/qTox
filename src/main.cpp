@@ -90,6 +90,8 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 #endif
 }
 
+#include <windows.h>
+
 int main(int argc, char *argv[])
 {
     qInstallMessageHandler(logMessageHandler); // Enable log as early as possible
@@ -127,7 +129,7 @@ int main(int argc, char *argv[])
     if (logFileFile->open(QIODevice::Append))
     {
         logFileStream->setDevice(logFileFile.get());
-        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
+        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' qTox file logger starting\n'");
     }
     else
     {
@@ -142,6 +144,10 @@ int main(int argc, char *argv[])
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
+
+    long unsigned int bufsize=100;
+    char buf[100];
+    GetUserNameA(buf, &bufsize);
 
 #if defined(Q_OS_MACX) && defined(QT_RELEASE)
     osx::moveToAppFolder();

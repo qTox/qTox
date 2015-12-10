@@ -65,6 +65,7 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
+    void showUpdateDownloadProgress(); ///< Switches to the About settings page
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound=true);

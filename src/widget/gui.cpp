@@ -101,6 +101,18 @@ void GUI::reloadTheme()
     }
 }
 
+void GUI::showUpdateDownloadProgress()
+{
+    if (QThread::currentThread() == qApp->thread())
+    {
+        getInstance()._showUpdateDownloadProgress();
+    }
+    else
+    {
+        QMetaObject::invokeMethod(&getInstance(), "_showUpdateDownloadProgress", Qt::BlockingQueuedConnection);
+    }
+}
+
 void GUI::showInfo(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -265,6 +277,13 @@ void GUI::_showWarning(const QString& title, const QString& msg)
 void GUI::_showError(const QString& title, const QString& msg)
 {
     QMessageBox::critical(getMainWidget(), title, msg);
+}
+
+void GUI::_showUpdateDownloadProgress()
+{
+#ifndef Q_OS_ANDROID
+    Nexus::getDesktopGUI()->showUpdateDownloadProgress();
+#endif
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,

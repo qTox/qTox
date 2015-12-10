@@ -23,8 +23,10 @@
 
 #include <QString>
 #include <QList>
+#include <QMutex>
 #include <sodium.h>
 #include <atomic>
+#include <functional>
 
 /// For now we only support auto updates on Windows and OS X, although extending it is not a technical issue.
 /// Linux users are expected to use their package managers or update manually through official channels.
@@ -94,6 +96,9 @@ public:
     /// Aborting will make some functions try to return early
     /// Call before qTox exits to avoid the updater running in the background
     static void abortUpdates();
+    /// Functions giving info on the progress of update downloads
+    static QString getProgressVersion();
+    static int getProgressValue();
 
 protected:
     /// Parses and validates a flist file. Returns an empty list on error
@@ -108,10 +113,12 @@ protected:
     /// Tries to fetch the file from the update server. Returns a file with a null QByteArray on error.
     /// Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
     /// Will try to follow qTox's proxy settings, may block and processEvents
-    static UpdateFile getUpdateFile(UpdateFileMeta fileMeta);
+    static UpdateFile getUpdateFile(UpdateFileMeta fileMeta, std::function<void(int,int)> progressCallback);
     /// Does the actual work for checkUpdatesAsyncInteractive
     /// Blocking, but otherwise has the same properties than checkUpdatesAsyncInteractive
     static void checkUpdatesAsyncInteractiveWorker();
+    /// Thread safe setter
+    static void setProgressVersion(QString version);
 
 private:
     AutoUpdater() = delete;
@@ -125,8 +132,11 @@ private:
     static const QString filesURI; ///< URI of the actual files of the latest version
     static const QString updaterBin; ///< Path to the qtox-updater binary
     static unsigned char key[];
-    static bool abortFlag; ///< If true, try to abort everything.
+    static std::atomic_bool abortFlag; ///< If true, try to abort everything.
     static std::atomic_bool isDownloadingUpdate; ///< We'll pretend there's no new update available if we're already updating
+    static std::atomic<float> progressValue;
+    static QString progressVersion;
+    static QMutex progressVersionMutex; ///< No, we can't just make the QString atomic
 };
 
 #endif // AUTOUPDATE_H
