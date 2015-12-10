@@ -101,10 +101,10 @@ protected:
     /// Gets the update server's flist. Returns an empty array on error
     /// Will try to follow qTox's proxy settings, may block and processEvents
     static QByteArray getUpdateFlist();
-    /// Gets the local flist. Returns an empty array on error
-    static QByteArray getLocalFlist();
     /// Generates a list of files we need to update
     static QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist);
+    /// Checks if we have an up to date version of this file locally installed
+    static bool isUpToDate(UpdateFileMeta file);
     /// Tries to fetch the file from the update server. Returns a file with a null QByteArray on error.
     /// Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
     /// Will try to follow qTox's proxy settings, may block and processEvents

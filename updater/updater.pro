@@ -13,6 +13,8 @@ TEMPLATE = app
 
 CONFIG += c++11
 
+QMAKE_CXXFLAGS += -fno-exceptions
+
 SOURCES += main.cpp\
         widget.cpp \
     settingsDir.cpp \

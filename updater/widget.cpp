@@ -115,6 +115,7 @@ void Widget::update()
     setProgress(1);
 
     QList<UpdateFileMeta> updateFlist = parseFlist(updateFlistData);
+
     setProgress(2);
     QList<UpdateFileMeta> diff = genUpdateDiff(updateFlist);
     setProgress(4);

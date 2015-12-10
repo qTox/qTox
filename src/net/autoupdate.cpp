@@ -44,7 +44,7 @@ const QString AutoUpdater::platform = "win64";
 const QString AutoUpdater::platform = "win32";
 #endif
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
-const QString AutoUpdater::updateServer = "https://qtox-win.pkg.tox.chat";
+const QString AutoUpdater::updateServer = "http://45.79.166.124";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
@@ -80,12 +80,9 @@ bool AutoUpdater::isUpdateAvailable()
     if (isDownloadingUpdate)
         return false;
 
-    VersionInfo newVersion = getUpdateVersion();
-    if (newVersion.timestamp <= TIMESTAMP
-            || newVersion.versionString.isEmpty() || newVersion.versionString == GIT_VERSION)
-        return false;
-    else
-        return true;
+    QByteArray updateFlist = getUpdateFlist();
+    QList<UpdateFileMeta> diff = genUpdateDiff(parseFlist(updateFlist));
+    return !diff.isEmpty();
 }
 
 AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
@@ -227,33 +224,32 @@ QByteArray AutoUpdater::getUpdateFlist()
     return flist;
 }
 
-QByteArray AutoUpdater::getLocalFlist()
-{
-    QByteArray flist;
-
-    QFile flistFile("flist");
-    if (!flistFile.open(QIODevice::ReadOnly))
-    {
-        qWarning() << "getLocalFlist: Can't open local flist";
-        return flist;
-    }
-
-    flist = flistFile.readAll();
-    flistFile.close();
-
-    return flist;
-}
-
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::genUpdateDiff(QList<UpdateFileMeta> updateFlist)
 {
     QList<UpdateFileMeta> diff;
-    QList<UpdateFileMeta> localFlist = parseFlist(getLocalFlist());
 
     for (UpdateFileMeta file : updateFlist)
-        if (!localFlist.contains(file))
+        if (!isUpToDate(file))
             diff += file;
 
     return diff;
+}
+
+bool AutoUpdater::isUpToDate(AutoUpdater::UpdateFileMeta fileMeta)
+{
+    QString appDir = qApp->applicationDirPath();
+    qDebug() << "App path:"<<appDir;
+
+    QFile file(appDir+QDir::separator()+fileMeta.installpath);
+    if (!file.open(QIODevice::ReadOnly))
+        return false;
+
+    // If the data we have is corrupted or old, mark it for update
+    QByteArray data = file.readAll();
+    if (crypto_sign_verify_detached(fileMeta.sig, (unsigned char*)data.data(), data.size(), key) != 0)
+        return false;
+
+    return true;
 }
 
 AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta)
@@ -307,7 +303,7 @@ bool AutoUpdater::downloadUpdate()
         return false;
     }
 
-    qDebug() << "Need to update " << diff.size() << " files";
+    qDebug() << "Need to update" << diff.size() << "files";
 
     // Create an empty directory to download updates into
     QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
@@ -497,9 +493,25 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
     QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
     QDir updateDir(updateDirStr);
 
-    if ((updateDir.exists() && QFile(updateDirStr+"flist").exists())
-            || GUI::askQuestion(QObject::tr("Update", "The title of a message box"),
-        QObject::tr("An update is available, do you want to download it now?\nIt will be installed when qTox restarts."), true, false))
+
+
+    if (updateDir.exists() && QFile(updateDirStr+"flist").exists())
+    {
+        downloadUpdate();
+        return;
+    }
+
+    VersionInfo newVersion = getUpdateVersion();
+    QString contentText = QObject::tr("An update is available, do you want to download it now?\n"
+                                      "It will be installed when qTox restarts.");
+    if (!newVersion.versionString.isEmpty())
+        contentText += "\n\n" + QObject::tr("Version %1, %2").arg(newVersion.versionString,
+                                QDateTime::fromMSecsSinceEpoch(newVersion.timestamp*1000).toString());
+
+
+
+    if (GUI::askQuestion(QObject::tr("Update", "The title of a message box"),
+                              contentText, true, false))
     {
         downloadUpdate();
     }
