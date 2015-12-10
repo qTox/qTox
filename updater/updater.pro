@@ -17,12 +17,10 @@ QMAKE_CXXFLAGS += -fno-exceptions
 
 SOURCES += main.cpp\
         widget.cpp \
-    settingsDir.cpp \
     update.cpp \
     serialize.cpp
 
 HEADERS  += widget.h \
-    settingsDir.h \
     update.h \
     serialize.h
 
@@ -36,3 +34,7 @@ INCLUDEPATH += libs/include
 RC_FILE = windows/updater.rc
 
 LIBS += -L$$PWD/libs/lib/ -lsodium
+
+win32 {
+    LIBS += -lshell32 -luuid
+}
