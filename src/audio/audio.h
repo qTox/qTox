@@ -21,10 +21,10 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QObject>
-#include <QMutexLocker>
 #include <atomic>
 #include <cmath>
+
+#include <QObject>
 #include <QWaitCondition>
 
 struct Tox;
@@ -44,7 +44,7 @@ class Audio : public QObject
     Q_OBJECT
 
 public:
-    typedef QList<const void*> PtrList;
+    typedef quint32 SID;
 
 public:
     static Audio& getInstance();
@@ -68,8 +68,8 @@ public:
 
     static const char* outDeviceNames();
     static const char* inDeviceNames();
-    void createSource(quint32* sid);
-    void deleteSource(quint32 sid);
+    void subscribeOutput(SID& sid);
+    void unsubscribeOutput(SID& sid);
 
     void startLoop();
     void stopLoop();
@@ -88,10 +88,8 @@ public:
 #endif
 
 public slots:
-    void subscribeInput(const void* inListener);
-    void subscribeOutput(const void* outListener);
-    void unsubscribeInput(const void* inListener);
-    void unsubscribeOutput(const void* outListener);
+    void subscribeInput();
+    void unsubscribeInput();
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 

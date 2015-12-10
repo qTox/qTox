@@ -21,8 +21,8 @@ ToxCall::ToxCall(uint32_t CallId)
     sendAudioTimer->setSingleShot(true);
 
     Audio& audio = Audio::getInstance();
-    audio.subscribeInput(this);
-    audio.subscribeOutput(this);
+    audio.subscribeInput();
+    audio.subscribeOutput(alSource);
 
 #ifdef QTOX_FILTER_AUDIO
     if (Settings::getInstance().getFilterAudio())
@@ -46,11 +46,10 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
     other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
+    // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
-    audio.subscribeInput(this);
-    audio.unsubscribeInput(&other);
-    audio.subscribeOutput(this);
-    audio.unsubscribeOutput(&other);
+    audio.subscribeInput();
+    audio.subscribeOutput(alSource);
 
 #ifdef QTOX_FILTER_AUDIO
     filterer = other.filterer;
@@ -68,11 +67,8 @@ ToxCall::~ToxCall()
         sendAudioTimer->stop();
     }
 
-    if (alSource)
-        audio.deleteSource(alSource);
-
-    audio.unsubscribeInput(this);
-    audio.unsubscribeOutput(this);
+    audio.unsubscribeInput();
+    audio.unsubscribeOutput(alSource);
 
 #ifdef QTOX_FILTER_AUDIO
     if (filterer)
@@ -91,6 +87,10 @@ const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     muteVol = other.muteVol;
     alSource = other.alSource;
     other.alSource = 0;
+
+    // required -> ownership of audio input is moved to new instance
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
 
     #ifdef QTOX_FILTER_AUDIO
         filterer = other.filterer;

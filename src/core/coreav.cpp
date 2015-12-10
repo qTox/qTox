@@ -470,24 +470,16 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
 }
 
-void CoreAV::resetCallSources()
+void CoreAV::invalidateCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        if (call.alSource)
-        {
-            Audio::getInstance().deleteSource(call.alSource);
-            Audio::getInstance().createSource(&call.alSource);
-        }
+        call.alSource = 0;
     }
 
     for (ToxFriendCall& call : calls)
     {
-        if (call.alSource)
-        {
-            Audio::getInstance().deleteSource(call.alSource);
-            Audio::getInstance().createSource(&call.alSource);
-        }
+        call.alSource = 0;
     }
 }
 
@@ -646,10 +638,11 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
     if (call.muteVol)
         return;
 
+    Audio& audio = Audio::getInstance();
     if (!call.alSource)
-        Audio::getInstance().createSource(&call.alSource);
+        audio.subscribeOutput(call.alSource);
 
-    Audio::getInstance().playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,

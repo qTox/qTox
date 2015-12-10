@@ -29,14 +29,17 @@
 #include "src/core/coreav.h"
 
 #include <QDebug>
+#include <QShowEvent>
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
 AVForm::AVForm() :
-    GenericForm(QPixmap(":/img/settings/av.png")),
-    camVideoSurface{nullptr}, camera(CameraSource::getInstance())
+    GenericForm(QPixmap(":/img/settings/av.png"))
+    , subscribedToAudioIn{false}
+    , camVideoSurface{nullptr}
+    , camera(CameraSource::getInstance())
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
@@ -90,15 +93,38 @@ AVForm::~AVForm()
     delete bodyUI;
 }
 
-void AVForm::showEvent(QShowEvent*)
+void AVForm::hideEvent(QHideEvent* event)
+{
+    if (subscribedToAudioIn) {
+        // TODO: this should not be done in show/hide events
+        Audio::getInstance().unsubscribeInput();
+        subscribedToAudioIn = false;
+    }
+
+    if (camVideoSurface)
+    {
+        camVideoSurface->setSource(nullptr);
+        killVideoSurface();
+    }
+    videoDeviceList.clear();
+
+    GenericForm::hideEvent(event);
+}
+
+void AVForm::showEvent(QShowEvent* event)
 {
     getAudioOutDevices();
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput(this);
-    audio.subscribeOutput(this);
+
+    if (!subscribedToAudioIn) {
+        // TODO: this should not be done in show/hide events
+        Audio::getInstance().subscribeInput();
+        subscribedToAudioIn = true;
+    }
+
+    GenericForm::showEvent(event);
 }
 
 void AVForm::onVideoModesIndexChanged(int index)
@@ -225,19 +251,6 @@ void AVForm::onVideoDevChanged(int index)
     camera.open(dev);
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
-}
-
-void AVForm::hideEvent(QHideEvent *)
-{
-    if (camVideoSurface)
-    {
-        camVideoSurface->setSource(nullptr);
-        killVideoSurface();
-    }
-    videoDeviceList.clear();
-    Audio& audio = Audio::getInstance();
-    audio.unsubscribeInput(this);
-    audio.unsubscribeOutput(this);
 }
 
 void AVForm::getVideoDevices()
