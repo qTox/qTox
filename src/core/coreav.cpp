@@ -474,8 +474,8 @@ void CoreAV::resetCallSources()
     {
         if (call.alSource)
         {
-            Audio::deleteSource(&call.alSource);
-            Audio::createSource(&call.alSource);
+            Audio::getInstance().deleteSource(call.alSource);
+            Audio::getInstance().createSource(&call.alSource);
         }
     }
 
@@ -483,8 +483,8 @@ void CoreAV::resetCallSources()
     {
         if (call.alSource)
         {
-            Audio::deleteSource(&call.alSource);
-            Audio::createSource(&call.alSource);
+            Audio::getInstance().deleteSource(call.alSource);
+            Audio::getInstance().createSource(&call.alSource);
         }
     }
 }
@@ -645,9 +645,9 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
         return;
 
     if (!call.alSource)
-        alGenSources(1, &call.alSource);
+        Audio::getInstance().createSource(&call.alSource);
 
-    Audio::playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    Audio::getInstance().playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,

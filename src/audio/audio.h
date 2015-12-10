@@ -26,17 +26,9 @@
 #include <atomic>
 #include <cmath>
 
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
- #include <AL/alext.h>
-#endif
-
 struct Tox;
 class AudioFilterer;
+class AudioPrivate;
 
 // Public default audio settings
 static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
@@ -56,9 +48,10 @@ public:
 public:
     void startAudioThread();
 
-    qreal getOutputVolume();
+    qreal outputVolume();
     void setOutputVolume(qreal volume);
 
+    qreal inputVolume();
     void setInputVolume(qreal volume);
 
     inline void reinitInput(const QString& inDevDesc)
@@ -77,8 +70,10 @@ public:
     bool isInputReady();
     bool isOutputReady();
 
-    static void createSource(ALuint* source);
-    static void deleteSource(ALuint* source);
+    static const char* outDeviceNames();
+    static const char* inDeviceNames();
+    void createSource(quint32* sid);
+    void deleteSource(quint32 sid);
 
     void startLoop();
     void stopLoop();
@@ -86,10 +81,11 @@ public:
     void playMono16Sound(const char* path);
     bool tryCaptureSamples(int16_t *buf, int samples);
 
-    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
+    void playAudioBuffer(quint32 alSource, const int16_t *data, int samples,
+                         unsigned channels, int sampleRate);
 
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
-                        unsigned samples, uint8_t channels, unsigned sample_rate, void*);
+                                     unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
 #ifdef QTOX_FILTER_AUDIO
     static void getEchoesToFilter(AudioFilterer* filter, int framesize);
@@ -124,14 +120,8 @@ private:
     QMutex              mAudioLock;
     PtrList             inputSubscriptions;
     PtrList             outputSubscriptions;
-    ALCdevice*          alOutDev;
-    ALCdevice*          alInDev;
     bool                mInputInitialized;
     bool                mOutputInitialized;
-    qreal               outputVolume;
-    qreal               inputVolume;
-    ALuint              alMainSource;
-    ALCcontext*         alContext;
 };
 
 #endif // AUDIO_H

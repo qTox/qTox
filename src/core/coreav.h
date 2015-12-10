@@ -24,17 +24,8 @@
 #include <QObject>
 #include <memory>
 #include <atomic>
-#include <tox/toxav.h>
-
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
-#endif
-
 #include "src/core/toxcall.h"
+#include <tox/toxav.h>
 
 #ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;

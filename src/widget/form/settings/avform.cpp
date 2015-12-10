@@ -19,22 +19,14 @@
 
 #include "avform.h"
 #include "ui_avsettings.h"
-#include "src/persistence/settings.h"
 #include "src/audio/audio.h"
+#include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
 #include "src/widget/translator.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/alc.h>
- #include <AL/al.h>
-#endif
 
 #include <QDebug>
 
@@ -274,7 +266,7 @@ void AVForm::getAudioInDevices()
     bodyUI->inDevCombobox->blockSignals(true);
     bodyUI->inDevCombobox->clear();
     bodyUI->inDevCombobox->addItem(tr("None"));
-    const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    const char* pDeviceList = Audio::inDeviceNames();
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items
@@ -305,11 +297,7 @@ void AVForm::getAudioOutDevices()
     bodyUI->outDevCombobox->blockSignals(true);
     bodyUI->outDevCombobox->clear();
     bodyUI->outDevCombobox->addItem(tr("None"));
-    const ALchar *pDeviceList;
-    if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-        pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
-    else
-        pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    const char* pDeviceList = Audio::outDeviceNames();
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items

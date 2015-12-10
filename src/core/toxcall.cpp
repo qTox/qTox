@@ -54,6 +54,9 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
 
 ToxCall::~ToxCall()
 {
+    if (alSource)
+        Audio::getInstance().deleteSource(alSource);
+
     if (sendAudioTimer)
     {
         QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
@@ -62,9 +65,6 @@ ToxCall::~ToxCall()
         audio.unsubscribeInput(this);
         audio.unsubscribeOutput(this);
     }
-
-    if (alSource)
-        Audio::deleteSource(&alSource);
 
 #ifdef QTOX_FILTER_AUDIO
     if (filterer)

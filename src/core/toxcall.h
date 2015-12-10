@@ -2,15 +2,8 @@
 #define TOXCALL_H
 
 #include <cstdint>
+#include "src/audio/audio.h"
 #include "src/core/indexedlist.h"
-
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
-#endif
 
 #include <tox/toxav.h>
 
@@ -41,7 +34,7 @@ public:
     bool inactive; ///< True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
     bool muteMic;
     bool muteVol;
-    ALuint alSource;
+    quint32 alSource;
 
 #ifdef QTOX_FILTER_AUDIO
     AudioFilterer* filterer;
