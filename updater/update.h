@@ -25,6 +25,8 @@
 #include <QString>
 #include <sodium.h>
 
+class Widget;
+
 struct UpdateFileMeta
 {
     unsigned char sig[crypto_sign_BYTES]; ///< Signature of the file (ed25519)
@@ -51,7 +53,7 @@ QByteArray getLocalFlist();
 /// Parses and validates a flist file. Returns an empty list on error
 QList<UpdateFileMeta> parseFlist(QByteArray flistData);
 /// Generates a list of files we need to update
-QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist);
+QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist, Widget *w);
 
 extern unsigned char key[crypto_sign_PUBLICKEYBYTES];
 

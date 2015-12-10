@@ -45,6 +45,8 @@ public:
     static void setWindowTitle(const QString& title);
     /// Reloads the application theme and redraw the window
     static void reloadTheme();
+    /// Optionally switches to a view of the qTox update being downloaded
+    static void showUpdateDownloadProgress();
     /// Show some text to the user, for example in a message box
     static void showInfo(const QString& title, const QString& msg);
     /// Show a warning to the user, for example in a message box
@@ -93,6 +95,7 @@ private slots:
     void _showInfo(const QString& title, const QString& msg);
     void _showWarning(const QString& title, const QString& msg);
     void _showError(const QString& title, const QString& msg);
+    void _showUpdateDownloadProgress();
     bool _askQuestion(const QString& title, const QString& msg,
                       bool defaultAns = false, bool warning = true,
                       bool yesno = true);

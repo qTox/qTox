@@ -23,6 +23,7 @@
 #include "genericsettings.h"
 
 class Core;
+class QTimer;
 
 namespace Ui {
 class AboutSettings;
@@ -39,6 +40,9 @@ public:
 protected:
 
 private slots:
+    void showUpdateProgress();
+    virtual void hideEvent(QHideEvent*) final override;
+    virtual void showEvent(QShowEvent*) final override;
 
 private:
     void retranslateUi();
@@ -46,6 +50,7 @@ private:
 
 private:
     Ui::AboutSettings* bodyUI;
+    QTimer* progressTimer;
 };
 
 #endif // ABOUTFORM_H

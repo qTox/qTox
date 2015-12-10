@@ -20,13 +20,17 @@
 
 #include "update.h"
 #include "serialize.h"
+#include "widget.h"
 #include <QFile>
 #include <QDebug>
+#include <QMessageBox>
+#include <QDir>
+#include <QCoreApplication>
 
 unsigned char key[crypto_sign_PUBLICKEYBYTES] =
 {
-    0xa5, 0x80, 0xf3, 0xb7, 0xd0, 0x10, 0xc0, 0xf9, 0xd6, 0xcf, 0x48, 0x15, 0x99, 0x70, 0x92, 0x49,
-    0xf6, 0xe8, 0xe5, 0xe2, 0x6c, 0x73, 0x8c, 0x48, 0x25, 0xed, 0x01, 0x72, 0xf7, 0x6c, 0x17, 0x28
+    0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8, 0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9, 0xc4, 0x92, 0xd9, 0xa2,
+    0x17, 0x83, 0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd, 0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed, 0x00, 0x13
 };
 
 QByteArray getLocalFlist()
@@ -46,14 +50,35 @@ QByteArray getLocalFlist()
     return flist;
 }
 
-QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist)
+bool isUpToDate(UpdateFileMeta fileMeta)
+{
+    QString appDir = qApp->applicationDirPath();
+    QFile file(appDir+QDir::separator()+fileMeta.installpath);
+    if (!file.open(QIODevice::ReadOnly))
+        return false;
+
+    // If the data we have is corrupted or old, mark it for update
+    QByteArray data = file.readAll();
+    if (crypto_sign_verify_detached(fileMeta.sig, (unsigned char*)data.data(), data.size(), key) != 0)
+        return false;
+
+    return true;
+}
+
+QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist, Widget* w)
 {
     QList<UpdateFileMeta> diff;
-    QList<UpdateFileMeta> localFlist = parseFlist(getLocalFlist());
+
+    float progressDiff = 45;
+    float progress = 5;
 
     for (UpdateFileMeta file : updateFlist)
-        if (!localFlist.contains(file))
+    {
+        if (!isUpToDate(file))
             diff += file;
+        progress += progressDiff / updateFlist.size();
+        w->setProgress(progress);
+    }
 
     return diff;
 }

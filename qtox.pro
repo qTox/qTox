@@ -47,8 +47,14 @@ include(translations/i18n.pri)
 # Build all the qm files now, to make RCC happy
 system($$fromfile(translations/i18n.pri, updateallqm))
 
-GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
+isEmpty(GIT_VERSION) {
+    GIT_VERSION = $$system(git rev-parse HEAD 2> /dev/null || echo "built without git")
+}
 DEFINES += GIT_VERSION=\"\\\"$$quote($$GIT_VERSION)\\\"\"
+isEmpty(GIT_DESCRIBE) {
+    GIT_DESCRIBE = $$system(git describe --tags 2> /dev/null || echo "Nightly")
+}
+DEFINES += GIT_DESCRIBE=\"\\\"$$quote($$GIT_DESCRIBE)\\\"\"
 # date works on linux/mac, but it would hangs qmake on windows
 # This hack returns 0 on batch (windows), but executes "date +%s" or return 0 if it fails on bash (linux/mac)
 TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sorry

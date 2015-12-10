@@ -484,6 +484,12 @@ Widget* Widget::getInstance()
     return instance;
 }
 
+void Widget::showUpdateDownloadProgress()
+{
+    settingsWidget->showAbout();
+    onSettingsClicked();
+}
+
 void Widget::moveEvent(QMoveEvent *event)
 {
     if (event->type() == QEvent::Move)
