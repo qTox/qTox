@@ -86,6 +86,9 @@ bool AutoUpdater::isUpdateAvailable()
     if (isDownloadingUpdate)
         return false;
 
+    if (!QFile::exists(updaterBin))
+        return false;
+
     QByteArray updateFlist = getUpdateFlist();
     QList<UpdateFileMeta> diff = genUpdateDiff(parseFlist(updateFlist));
     return !diff.isEmpty();
