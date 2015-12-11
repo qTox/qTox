@@ -47,7 +47,7 @@ const QString AutoUpdater::platform = "win64";
 const QString AutoUpdater::platform = "win32";
 #endif
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
-const QString AutoUpdater::updateServer = "http://45.79.166.124";
+const QString AutoUpdater::updateServer = "https://qtox-win.pkg.tox.chat";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
