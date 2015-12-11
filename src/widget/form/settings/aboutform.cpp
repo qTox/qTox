@@ -22,6 +22,9 @@
 #include "aboutform.h"
 #include "src/widget/translator.h"
 #include "tox/tox.h"
+#include "src/net/autoupdate.h"
+#include <QTimer>
+#include <QDebug>
 
 AboutForm::AboutForm() :
     GenericForm(QPixmap(":/img/settings/general.png"))
@@ -33,6 +36,12 @@ AboutForm::AboutForm() :
     if (QString(GIT_VERSION).indexOf(" ") > -1)
         bodyUI->gitVersion->setOpenExternalLinks(false);
 
+    showUpdateProgress();
+    progressTimer = new QTimer();
+    progressTimer->setInterval(500);
+    progressTimer->setSingleShot(false);
+    connect(progressTimer, &QTimer::timeout, this, &AboutForm::showUpdateProgress);
+
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
 }
 
@@ -40,6 +49,7 @@ AboutForm::AboutForm() :
 //nightly builds from stable releases.
 void AboutForm::replaceVersions()
 {
+    bodyUI->youareusing->setText(bodyUI->youareusing->text().replace("$GIT_DESCRIBE", QString(GIT_DESCRIBE)));
     bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
     bodyUI->toxCoreVersion->setText(
                 bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION",
@@ -52,11 +62,46 @@ void AboutForm::replaceVersions()
 AboutForm::~AboutForm()
 {
     Translator::unregister(this);
+    delete progressTimer;
     delete bodyUI;
+}
+
+void AboutForm::showUpdateProgress()
+{
+    QString version = AutoUpdater::getProgressVersion();
+    int value = AutoUpdater::getProgressValue();
+
+    if (version.isEmpty())
+    {
+        bodyUI->updateProgress->setVisible(value != 0);
+        bodyUI->updateText->setVisible(value != 0);
+    }
+    else
+    {
+        if (value == 100)
+            bodyUI->updateText->setText(tr("Restart qTox to install version %1").arg(version));
+        else
+            bodyUI->updateText->setText(tr("qTox is downloading update %1", "%1 is the version of the update").arg(version));
+        bodyUI->updateProgress->setValue(value);
+
+        bodyUI->updateProgress->setVisible(value != 0 && value != 100);
+        bodyUI->updateText->setVisible(value != 0);
+    }
+}
+
+void AboutForm::hideEvent(QHideEvent *)
+{
+    progressTimer->stop();
+}
+
+void AboutForm::showEvent(QShowEvent *)
+{
+    progressTimer->start();
 }
 
 void AboutForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
     replaceVersions();
+    showUpdateProgress();
 }

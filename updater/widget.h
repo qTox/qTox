@@ -23,6 +23,10 @@
 
 #include <QWidget>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 namespace Ui {
 class Widget;
 }
@@ -39,6 +43,8 @@ public:
     void deleteBackups();
     void restoreBackups();
     void setProgress(int value);
+    QString getSettingsDirPath();
+    bool isToxPortableEnabled();
 
     // Noreturn
     void fatalError(QString message); ///< Calls deleteUpdate and startQToxAndExit
@@ -52,6 +58,10 @@ public slots:
 private:
     Ui::Widget *ui;
     QStringList backups;
+
+#ifdef Q_OS_WIN
+    HANDLE hPrimaryToken;
+#endif
 };
 
 #endif // WIDGET_H

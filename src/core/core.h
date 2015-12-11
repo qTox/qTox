@@ -64,8 +64,9 @@ public:
     QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
     ToxId getGroupPeerToxId(int groupId, int peerId) const; ///< Get the public key of a peer of a group
     QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
-    QString getFriendAddress(uint32_t friendId) const; ///< Get the full address if known, or public key of a friend
-    QString getFriendUsername(uint32_t friendId) const; ///< Get the username of a friend
+    QString getFriendAddress(uint32_t friendNumber) const; ///< Get the full address if known, or public key of a friend
+    QString getFriendPublicKey(uint32_t friendNumber) const; ///< Get the public key part of the ToxID only
+    QString getFriendUsername(uint32_t friendNumber) const; ///< Get the username of a friend
     bool isFriendOnline(uint32_t friendId) const; ///< Check if a friend is online. Unknown friends are considered offline.
     bool hasFriendWithAddress(const QString &addr) const; ///< Check if we have a friend by address
     bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key

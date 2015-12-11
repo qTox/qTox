@@ -24,7 +24,6 @@
 #include <QDebug>
 
 QByteArray AvatarBroadcaster::avatarData;
-QMap<uint32_t, bool> AvatarBroadcaster::friendsSentTo;
 
 static QMetaObject::Connection autoBroadcastConn;
 static auto autoBroadcast = [](uint32_t friendId, Status)
@@ -35,7 +34,6 @@ static auto autoBroadcast = [](uint32_t friendId, Status)
 void AvatarBroadcaster::setAvatar(QByteArray data)
 {
     avatarData = data;
-    friendsSentTo.clear();
 
     QVector<uint32_t> friends = Core::getInstance()->getFriendList();
     for (uint32_t friendId : friends)
@@ -44,12 +42,9 @@ void AvatarBroadcaster::setAvatar(QByteArray data)
 
 void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
 {
-    if (friendsSentTo.contains(friendId) && friendsSentTo[friendId])
-        return;
     if (!Core::getInstance()->isFriendOnline(friendId))
         return;
     Core::getInstance()->sendAvatarFile(friendId, avatarData);
-    friendsSentTo[friendId] = true;
 }
 
 void AvatarBroadcaster::enableAutoBroadcast(bool state)

@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
     if (logFileFile->open(QIODevice::Append))
     {
         logFileStream->setDevice(logFileFile.get());
-        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' file logger starting\n'");
+        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' qTox file logger starting\n'");
     }
     else
     {

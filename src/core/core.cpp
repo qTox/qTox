@@ -1094,19 +1094,24 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 
 QString Core::getFriendAddress(uint32_t friendNumber) const
 {
-    // If we don't know the full address of the client, return just the id, otherwise get the full address
-    uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
-    if (!tox_friend_get_public_key(tox, friendNumber, rawid, nullptr))
-    {
-        qWarning() << "getFriendAddress: Getting public key failed";
-        return QString();
-    }
-    QByteArray data((char*)rawid,TOX_PUBLIC_KEY_SIZE);
-    QString id = data.toHex().toUpper();
-
+    QString id = getFriendPublicKey(friendNumber);
     QString addr = Settings::getInstance().getFriendAdress(id);
     if (addr.size() > id.size())
         return addr;
+
+    return id;
+}
+
+QString Core::getFriendPublicKey(uint32_t friendNumber) const
+{
+    uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
+    if (!tox_friend_get_public_key(tox, friendNumber, rawid, nullptr))
+    {
+        qWarning() << "getFriendPublicKey: Getting public key failed";
+        return QString();
+    }
+    QByteArray data((char*)rawid, TOX_PUBLIC_KEY_SIZE);
+    QString id = data.toHex().toUpper();
 
     return id;
 }

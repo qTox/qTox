@@ -59,10 +59,6 @@
         <translation>Dispositivo de captura</translation>
     </message>
     <message>
-        <source>Rescan audio devices</source>
-        <translation>Detectar dispositivos de audio</translation>
-    </message>
-    <message>
         <source>Filter audio</source>
         <translation>Filtrar audio</translation>
     </message>
@@ -95,6 +91,10 @@ Si tu conexión no es suficiente para soportar una calidad de vídeo alta,
 se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
+        <source>Rescan devices</source>
+        <translation>Volver a detectar dispositivos</translation>
+    </message>
+    <message>
         <source>Use slider to set volume of your microphone.</source>
         <translation>Usa el control deslizante para ajustar el volumen del micrófono.</translation>
     </message>
@@ -112,10 +112,6 @@ se pueden producir problemas con las videollamadas.</translation>
 </context>
 <context>
     <name>AboutSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
     <message>
         <source>Version</source>
         <translation>Versión</translation>
@@ -175,6 +171,70 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Qt version:</source>
         <translation>Versión de Qt:</translation>
+    </message>
+</context>
+<context>
+    <name>AboutUser</name>
+    <message>
+        <source>Dialog</source>
+        <translation>Diálogo</translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation>nombre de usuario</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation>mensaje de estado</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation>Clave pública:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation>Alias usados:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation>HISTORIAL DE ALIAS</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Directorio predeterminado para guardar archivos:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation>Recepción automática deshabilitada para este contacto</translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation>Aceptar archivos automáticamente</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation>Eliminar historial (¡no se puede deshacer!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notas</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation>Puedes guardar comentarios acerca de este contacto aquí.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>Elige un directorio para descargas automáticas</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation>Historial eliminado</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation>¡El historial de chat con %1 fue eliminado!</translation>
     </message>
 </context>
 <context>
@@ -253,10 +313,6 @@ Ignore the proxy and connect to the Internet directly?</source>
 </context>
 <context>
     <name>AdvancedSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
@@ -731,6 +787,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Aceptar archivos de este amigo automáticamente</translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation>Mostrar detalles</translation>
+    </message>
+    <message>
         <source>New message</source>
         <translation>Nuevo mensaje</translation>
     </message>
@@ -896,10 +956,6 @@ en lugar de la barra de tareas del sistema.</translation>
     <message>
         <source>Set where files will be saved.</source>
         <translation>Establece dónde se guardarán los archivos.</translation>
-    </message>
-    <message>
-        <source> minutes</source>
-        <translation> minutos</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
@@ -1339,10 +1395,6 @@ El perfil no contiene tu historial.</translation>
 </context>
 <context>
     <name>LoginScreen</name>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
     <message>
         <source>Username:</source>
         <translation>Usuario:</translation>
@@ -1908,31 +1960,6 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Número de entradas inesperado en registro</translation>
-    </message>
-    <message>
-        <source>The version of Tox DNS used by this server is not supported</source>
-        <comment>Error with the DNS</comment>
-        <translation>La versión de DNS Tox usada por este servidor no es compatible</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain any Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>La respuesta DNS no contiene ninguna Tox ID</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain a valid Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>La respuesta DNS no contiene una Tox ID válida</translation>
-    </message>
-    <message>
-        <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
-Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
-Should toxdns1 be used anyway?
-If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation>Parece que qTox tiene que usar el antiguo protocolo toxdns1 para acceder al registro DNS de la Tox ID de tu amigo.
-Desgraciadamente, toxdns1 no es seguro y tu comunicación con el ToxDNS estaría en riesgo de ser interceptada.
-¿Deseas usar toxdns1 de todos modos?
-Selecciona &quot;No&quot; para evitar comunicaciones usando un protocolo no seguro.</translation>
     </message>
 </context>
 <context>

@@ -242,7 +242,29 @@ bool Audio::openOutput(const QString &outDevDescr)
     if (outDevDescr != "none")
     {
         if (outDevDescr.isEmpty())
-            alOutDev = alcOpenDevice(nullptr);
+        {
+            // Attempt to default to the first available audio device.
+            const ALchar *pDeviceList;
+            if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+                pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
+            else
+                pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+            if (pDeviceList)
+            {
+                alOutDev = alcOpenDevice(pDeviceList);
+                int len = strlen(pDeviceList);
+  #ifdef Q_OS_WIN
+                QString outDev = QString::fromUtf8(pDeviceList, len);
+  #else
+                QString outDev = QString::fromLocal8Bit(pDeviceList, len);
+  #endif
+                Settings::getInstance().setOutDev(outDev);
+            }
+            else
+            {
+                alOutDev = alcOpenDevice(nullptr);
+            }
+        }
         else
             alOutDev = alcOpenDevice(outDevDescr.toStdString().c_str());
 
@@ -564,11 +586,11 @@ void Audio::getEchoesToFilter(AudioFilterer* filterer, int framesize)
 {
 #ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
     ALint samples;
-    alcGetIntegerv(Audio::alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
+    alcGetIntegerv(Audio::getInstance().alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
     if (samples >= framesize)
     {
         int16_t buf[framesize];
-        alcCaptureSamplesLoopback(Audio::alOutDev, buf, framesize);
+        alcCaptureSamplesLoopback(Audio::getInstance().alOutDev, buf, framesize);
         filterer->passAudioOutput(buf, framesize);
         filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
     }
