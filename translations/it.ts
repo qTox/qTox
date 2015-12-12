@@ -120,6 +120,10 @@ NOTA: più alta è la qualità video, più veloce deve essere la connessione ad 
 Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
 qualità video elevate, questo può causare problemi con le chiamate video.</translation>
     </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation>Scansiona i dispositivi</translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -172,15 +176,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox è un'interfaccia grafica per Tox basata su Qt.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è software libero: è possibile ridistribuirlo o modificarlo secondo i termini della GNU General Public License come pubblicata dalla Free Software Foundation, o la versione 3 della licenza o (a tua scelta) qualsiasi versione successiva.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è distribuito nella speranza che sia utile, ma senza alcuna garanzia; senza neppure la garanzia implicita di commerciabilità o idoneità per uno scopo particolare. Vedi la GNU General Public License per maggiori dettagli. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;Dovresti aver ricevuto una copia della GNU General Public License insieme a questo programma. In caso contrario, vedere &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Authors</source>
@@ -203,7 +199,7 @@ p, li { white-space: pre-wrap; }
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogo</translation>
     </message>
     <message>
         <source>username</source>
@@ -231,7 +227,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>I file scaricati automaticamente da questo contatto sono disabilitati</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -252,7 +248,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Scegliere una cartella dove accettare automaticamente i file</translation>
+        <translation>Scegliere una cartella per i file scaricati automaticamente</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -326,6 +322,11 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <comment>DNS error</comment>
         <translation>Questo Tox ID non esiste</translation>
     </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <comment>Tox ID format description</comment>
+        <translation>76 caratteri esadecimali oppure nome@esempio.com</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -335,16 +336,16 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Avanzate</translation>
     </message>
     <message>
-        <source>FULL - very safe, slowest (recommended)</source>
-        <translation>COMPLETO - molto sicuro, più lento (consigliato)</translation>
+        <source>Synchronized - safe (recommended)</source>
+        <translation>Sincronizzato - sicuro (consigliato)</translation>
     </message>
     <message>
-        <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
-        <translation>NORMALE - quasi sicuro come COMPLETO, ma circa 20% più veloce</translation>
+        <source>Partially async - risky (20% faster)</source>
+        <translation>Parzialmente sincronizzato - richioso (20% più veloce)</translation>
     </message>
     <message>
-        <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi, più veloce (non consigliato)</translation>
+        <source>Asynchronous - dangerous (fastest)</source>
+        <translation>Asincrono - pericoloso (più veloce)</translation>
     </message>
 </context>
 <context>
@@ -382,8 +383,8 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scrittura sincrona sul DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scrittura nel DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="107"/>
@@ -984,6 +985,10 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <translation>Offline</translation>
     </message>
     <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
+    </message>
+    <message>
         <location filename="../src/widget/friendwidget.cpp" line="266"/>
         <source>User alias</source>
         <translation>Rinomina contatto</translation>
@@ -1139,7 +1144,7 @@ nella traybar invece che nella taskbar.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
-        <source>Default directory to save file:</source>
+        <source>Default directory to save files:</source>
         <translation>Cartella predefinita per salvare i file:</translation>
     </message>
     <message>
@@ -1212,6 +1217,18 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Dimensione:</translation>
     </message>
     <message>
+        <source>Open window</source>
+        <translation>Apri finestra</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation>Modalità finestre multiple</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation>Apri ogni chat in una finestra singola</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="473"/>
         <source>Style:</source>
         <translation>Stile:</translation>
@@ -1247,6 +1264,11 @@ nella traybar invece che nella taskbar.</translation>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
         <translation>Indirizzo:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation>Porta:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
@@ -1509,10 +1531,6 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/groupwidget.cpp" line="59"/>
         <source>Set title...</source>
         <translation>Imposta nome gruppo...</translation>
-    </message>
-    <message>
-        <source>Open chat in new window</source>
-        <translation>Apri la chat in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="74"/>
@@ -1862,8 +1880,12 @@ Se incontri questo errore, riportalo agli sviluppatori.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="80"/>
-        <source>The NoSpam is part of your Tox ID, if you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Il valore nospam è parte del tuo Tox ID. Se ricevi molte richieste d&apos;amicizia indesiderate, cambia questo valore.</translation>
+        <source>NoSpam is part of your Tox ID.
+If you are being spammed with friend requests, you should change your NoSpam.
+People will be unable to add you with your old ID, but you will keep your current friends.</source>
+        <comment>toolTip for nospam</comment>
+        <translation>Il valore nospam è parte del tuo Tox ID. Se ricevi molte richieste d&apos;amicizia indesiderate, cambia questo valore. Le persone non saranno
+        più in grado di aggiungerti con il tuo vecchio ID, ma manterrai i contatti attuali.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
@@ -2356,12 +2378,16 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
+        <source>Add new circle...</source>
+        <translation>Aggiungi un nuovo circolo...</translation>
+    </message>
+    <message>
         <source>By Name</source>
-        <translation>Per nome</translation>
+        <translation>Per Nome</translation>
     </message>
     <message>
         <source>By Activity</source>
-        <translation>Per attività</translation>
+        <translation>Per Attività</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="1473"/>
