@@ -103,6 +103,9 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     if (platform.isEmpty())
         return versionInfo;
 
+    if (abortFlag)
+        return versionInfo;
+
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
     while (!reply->isFinished())
@@ -534,6 +537,8 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
                                 QDateTime::fromMSecsSinceEpoch(newVersion.timestamp*1000).toString());
 
 
+    if (abortFlag)
+        return;
 
     if (GUI::askQuestion(QObject::tr("Update", "The title of a message box"),
                               contentText, true, false))
