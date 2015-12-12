@@ -142,8 +142,8 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 win32 {
     RC_FILE = windows/qtox.rc
     LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
-    LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
-    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lz -luuid
+    LIBS += -L$$PWD/libs/lib -lavdevice -lavformat -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
+    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
     LIBS += -lqrencode
     LIBS += -lstrmiids # For DirectShow
     contains(DEFINES, QTOX_FILTER_AUDIO) {
