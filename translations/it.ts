@@ -1098,6 +1098,16 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="283"/>
+        <source>Autoaccept files</source>
+        <translation>Accetta automaticamente i file</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Default directory to save files:</source>
+        <translation>Cartella predefinita per salvare i file:</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="294"/>
         <source>Chat</source>
         <translation>Chat</translation>
