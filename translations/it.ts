@@ -837,17 +837,17 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/form/filesform.cpp" line="91"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Files Trasferiti</translation>
+        <translation>File Trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="92"/>
         <source>Downloads</source>
-        <translation>Files Ricevuti</translation>
+        <translation>File Ricevuti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="93"/>
         <source>Uploads</source>
-        <translation>Files Inviati</translation>
+        <translation>File Inviati</translation>
     </message>
 </context>
 <context>
@@ -898,7 +898,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Accetta automaticamente i files inviati da questo contatto</translation>
+        <translation>Accetta automaticamente i file inviati da questo contatto</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="60"/>
@@ -921,7 +921,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/friendwidget.cpp" line="111"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="175"/>
@@ -996,7 +996,7 @@ Soprannome:</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="361"/>
@@ -1080,7 +1080,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="282"/>
         <source>Set where files will be saved.</source>
-        <translation>Scegli dove salvare i files ricevuti.</translation>
+        <translation>Scegli dove salvare i file ricevuti.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
@@ -1104,7 +1104,7 @@ nella traybar invece che nella taskbar.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
-        <source>Default directory to save files:</source>
+        <source>Default directory to save file:</source>
         <translation>Cartella predefinita per salvare i file:</translation>
     </message>
     <message>
@@ -1147,7 +1147,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="269"/>
         <source>Autoaccept and save files:</source>
-        <translation>Accetta automaticamente e salva i files in:</translation>
+        <translation>Accetta automaticamente e salva i file in:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="311"/>
@@ -2349,7 +2349,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
     <message>
         <location filename="../src/widget/widget.cpp" line="433"/>
         <source>File transfers</source>
-        <translation>Files trasferiti</translation>
+        <translation>File trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="444"/>
@@ -2361,7 +2361,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <location filename="../src/widget/widget.cpp" line="444"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
+        <translation>Hai chiesto a qTox di aprire un file eseguibile. I file eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="512"/>
