@@ -38,7 +38,7 @@ SystemTrayIcon::SystemTrayIcon()
     {
         qDebug() << "Using Unity backend";
         gtk_init(nullptr, nullptr);
-        QString settingsDir = Settings::getSettingsDirPath();
+        QString settingsDir = Settings::getInstance().getSettingsDirPath();
         QFile iconFile(settingsDir+"/icon.png");
         if (iconFile.open(QIODevice::Truncate | QIODevice::WriteOnly))
         {
@@ -108,7 +108,7 @@ QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
     (void) icon;
     (void) name;
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    iconPath = Settings::getSettingsDirPath()+"/"+name+".png";
+    iconPath = Settings::getInstance().getSettingsDirPath()+"/"+name+".png";
     QSize iconSize = icon.actualSize(QSize{64,64});
     icon.pixmap(iconSize).save(iconPath);
 #endif

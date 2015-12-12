@@ -741,52 +741,31 @@ void Widget::confirmExecutableOpen(const QFileInfo &file)
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 {
-    switch (reason)
+    if (reason == QSystemTrayIcon::Trigger)
     {
-        case QSystemTrayIcon::Trigger:
+        if (isHidden() || isMinimized())
         {
-            if (isHidden())
-            {
-                show();
-                activateWindow();
-                if (wasMaximized)
-                    showMaximized();
-                else
-                    showNormal();
-            }
-            else if (isMinimized())
-            {
-                forceShow();
-                activateWindow();
-                if (wasMaximized)
-                    showMaximized();
-                else
-                    showNormal();
-            }
+            if (wasMaximized)
+                showMaximized();
             else
-            {
-                wasMaximized = isMaximized();
-                if (Settings::getInstance().getMinimizeToTray())
-                    hide();
-                else
-                    showMinimized();
-            }
+                showNormal();
 
-            break;
+            activateWindow();
         }
-        case QSystemTrayIcon::MiddleClick:
+        else if (!isActiveWindow())
+        {
+            activateWindow();
+        }
+        else
+        {
             wasMaximized = isMaximized();
-            if (Settings::getInstance().getMinimizeToTray())
-                hide();
-            else
-                showMinimized();
-            break;
-        case QSystemTrayIcon::Unknown:
-            if (isHidden())
-                forceShow();
-            break;
-        default:
-            break;
+            hide();
+        }
+    }
+    else if (reason == QSystemTrayIcon::Unknown)
+    {
+        if (isHidden()) 
+            forceShow();
     }
 }
 

@@ -47,7 +47,7 @@ const QString AutoUpdater::platform = "win64";
 const QString AutoUpdater::platform = "win32";
 #endif
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
-const QString AutoUpdater::updateServer = "http://45.79.166.124";
+const QString AutoUpdater::updateServer = "https://qtox-win.pkg.tox.chat";
 
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
 {
@@ -86,6 +86,9 @@ bool AutoUpdater::isUpdateAvailable()
     if (isDownloadingUpdate)
         return false;
 
+    if (!QFile::exists(updaterBin))
+        return false;
+
     QByteArray updateFlist = getUpdateFlist();
     QList<UpdateFileMeta> diff = genUpdateDiff(parseFlist(updateFlist));
     return !diff.isEmpty();
@@ -98,6 +101,9 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 
     // Updates only for supported platforms
     if (platform.isEmpty())
+        return versionInfo;
+
+    if (abortFlag)
         return versionInfo;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
@@ -531,6 +537,8 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
                                 QDateTime::fromMSecsSinceEpoch(newVersion.timestamp*1000).toString());
 
 
+    if (abortFlag)
+        return;
 
     if (GUI::askQuestion(QObject::tr("Update", "The title of a message box"),
                               contentText, true, false))

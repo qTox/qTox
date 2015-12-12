@@ -165,7 +165,7 @@ void Settings::loadGlobal()
             currentProfileId = makeProfileId(currentProfile);
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
-        checkUpdates = s.value("checkUpdates", false).toBool();
+        checkUpdates = s.value("checkUpdates", true).toBool();
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
