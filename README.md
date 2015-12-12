@@ -8,8 +8,8 @@ qTox [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.or
 ----
 
 * **Windows**:
-  - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip)
-  - [**32 bit download** (for older hardware)](https://build.tox.chat/view/Clients/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip)
+  - [**64 bit download**](https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe)
+  - [**32 bit download**](https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe)
 * **Linux**:
   - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86-64_release.tar.xz)
   - [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
