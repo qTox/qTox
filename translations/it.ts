@@ -936,7 +936,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
     </message>
     <message>
         <source>Move to circle &quot;%1&quot;</source>
-        <translation> Muovi nel circolo &quot;%1&quot;</translation>
+        <translation>Sposta nel circolo &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="73"/>
