@@ -177,8 +177,8 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox è un'interfaccia grafica per Tox basato su Qt.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è un software libero: è possibile ridistribuirlo o modificarlo secondo i termini della GNU General Public License come pubblicata dalla Free Software Foundation, o la versione 3 della licenza o (a tua scelta) qualsiasi versione successiva.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox è un'interfaccia grafica per Tox basata su Qt.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è software libero: è possibile ridistribuirlo o modificarlo secondo i termini della GNU General Public License come pubblicata dalla Free Software Foundation, o la versione 3 della licenza o (a tua scelta) qualsiasi versione successiva.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è distribuito nella speranza che sia utile, ma senza alcuna garanzia; senza neppure la garanzia implicita di commerciabilità o idoneità per uno scopo particolare. Vedi la GNU General Public License per maggiori dettagli. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;Dovresti aver ricevuto una copia della GNU General Public License insieme a questo programma. In caso contrario, vedere &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -188,7 +188,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autore originale : &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Guarda la lista completa degli  &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;sviluppatori&lt;/span&gt;&lt;/a&gt; su Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autore originale: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Guarda la lista completa degli  &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;sviluppatori&lt;/span&gt;&lt;/a&gt; su Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -196,7 +196,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida nel nostro &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; articolo di wiki.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida nel nostro &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -335,19 +335,16 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Avanzate</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
         <source>FULL - very safe, slowest (recommended)</source>
-        <translation>COMPLETO - molto sicuro; lento (consigliato)</translation>
+        <translation>COMPLETO - molto sicuro, più lento (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
         <translation>NORMALE - quasi sicuro come COMPLETO, ma circa 20% più veloce</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi; veloce (non consigliato)</translation>
+        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi, più veloce (non consigliato)</translation>
     </message>
 </context>
 <context>
@@ -386,7 +383,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scritture sincrone sul DB</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scrittura sincrona sul DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="107"/>
@@ -648,6 +645,23 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>CircleWidget</name>
+    <message>
+        <source>Rename circle</source>
+        <comment>Menu for renaming a circle</comment>
+        <translation>Rinomina circolo</translation>
+    </message>
+    <message>
+        <source>Remove circle</source>
+        <comment>Menu for removing a circle</comment>
+        <translation>Elimina circolo</translation>
+    </message>
+    <message>
+        <source>Open all in new window</source>
+        <translation>Apri tutto in una nuova finestra</translation>
+    </message>
+</context>
+<context>
     <name>Core</name>
     <message>
         <location filename="../src/core/core.cpp" line="263"/>
@@ -837,17 +851,17 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/form/filesform.cpp" line="91"/>
         <source>Transfered Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Files Trasferiti</translation>
+        <translation>File Trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="92"/>
         <source>Downloads</source>
-        <translation>Files Ricevuti</translation>
+        <translation>File Ricevuti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="93"/>
         <source>Uploads</source>
-        <translation>Files Inviati</translation>
+        <translation>File Inviati</translation>
     </message>
 </context>
 <context>
@@ -898,13 +912,30 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Accetta automaticamente i files inviati da questo contatto</translation>
+        <translation>Accetta automaticamente i file inviati da questo contatto</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="60"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Invita nel gruppo</translation>
+    </message>
+    <message>
+        <source>Move to circle...</source>
+        <comment>Menu to move a friend into a different circle</comment>
+        <translation>Sposta nel circolo...</translation>
+    </message>
+    <message>
+        <source>To new circle</source>
+        <translation>In un nuovo circolo</translation>
+    </message>
+    <message>
+        <source>Remove from circle &apos;%1&apos;</source>
+        <translation>Rimuovi dal circolo &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation>Sposta nel circolo &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="73"/>
@@ -918,10 +949,14 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <translation>Rimuovi contatto</translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation>Mostra dettagli</translation>
+    </message>
+    <message>
         <location filename="../src/widget/friendwidget.cpp" line="111"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="175"/>
@@ -996,7 +1031,7 @@ Soprannome:</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="361"/>
@@ -1080,7 +1115,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="282"/>
         <source>Set where files will be saved.</source>
-        <translation>Scegli dove salvare i files ricevuti.</translation>
+        <translation>Scegli dove salvare i file ricevuti.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
@@ -1096,6 +1131,16 @@ nella traybar invece che nella taskbar.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="283"/>
+        <source>Autoaccept files</source>
+        <translation>Accetta automaticamente i file</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Default directory to save file:</source>
+        <translation>Cartella predefinita per salvare i file:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="294"/>
@@ -1137,7 +1182,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="269"/>
         <source>Autoaccept and save files:</source>
-        <translation>Accetta automaticamente e salva i files in:</translation>
+        <translation>Accetta automaticamente e salva i file in:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="311"/>
@@ -1464,6 +1509,10 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/groupwidget.cpp" line="59"/>
         <source>Set title...</source>
         <translation>Imposta nome gruppo...</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="74"/>
@@ -2307,6 +2356,14 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
+        <source>By Name</source>
+        <translation>Per nome</translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation>Per attività</translation>
+    </message>
+    <message>
         <location filename="../src/widget/widget.cpp" line="1473"/>
         <source>All</source>
         <translation>Tutti</translation>
@@ -2339,7 +2396,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
     <message>
         <location filename="../src/widget/widget.cpp" line="433"/>
         <source>File transfers</source>
-        <translation>Files trasferiti</translation>
+        <translation>File trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="444"/>
@@ -2351,7 +2408,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <location filename="../src/widget/widget.cpp" line="444"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
+        <translation>Hai chiesto a qTox di aprire un file eseguibile. I file eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="512"/>
