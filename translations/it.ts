@@ -200,6 +200,70 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AboutUser</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation>Nome profilo</translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation>messagggio di stato</translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation>Chiave pubblica:</translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation>Soprannomi usati:</translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation>Cronologia dei soprannomi</translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation>Cartella predefinita per salvare i file:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation>Accetta automaticamente i file</translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation>Rimuovi la cronologia (questa operazione non può essere cancellata!)</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Note</translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation>È possibile salvare un commento su questo contatto qui.</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Scegliere una cartella dove accettare automaticamente i file</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation>Cronologia rimossa</translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation>Cronologia chat con %1 rimossa!</translation>
+    </message>
+</context>
+<context>
     <name>AddFriendForm</name>
     <message>
         <location filename="../src/widget/form/addfriendform.cpp" line="146"/>
