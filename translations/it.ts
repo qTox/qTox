@@ -2359,6 +2359,14 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
+        <source>By Name</source>
+        <translation>Per nome</translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation>Per attività</translation>
+    </message>
+    <message>
         <location filename="../src/widget/widget.cpp" line="1473"/>
         <source>All</source>
         <translation>Tutti</translation>
