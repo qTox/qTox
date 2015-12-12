@@ -648,6 +648,23 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>CircleWidget</name>
+    <message>
+        <source>Rename circle</source>
+        <comment>Menu for renaming a circle</comment>
+        <translation>Rinomina circolo</translation>
+    </message>
+    <message>
+        <source>Remove circle</source>
+        <comment>Menu for removing a circle</comment>
+        <translation>Elimina circolo</translation>
+    </message>
+    <message>
+        <source>Open all in new window</source>
+        <translation>Apri tutto in una nuova finestra</translation>
+    </message>
+</context>
+<context>
     <name>Core</name>
     <message>
         <location filename="../src/core/core.cpp" line="263"/>
@@ -905,6 +922,23 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Invita nel gruppo</translation>
+    </message>
+    <message>
+        <source>Move to circle...</source>
+        <comment>Menu to move a friend into a different circle</comment>
+        <translation>Sposta nel circolo...</translation>
+    </message>
+    <message>
+        <source>To new circle</source>
+        <translation>In un nuovo circolo</translation>
+    </message>
+    <message>
+        <source>Remove from circle &apos;%1&apos;</source>
+        <translation>Rimuovi dal circolo &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation>Sposta nel circolo &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="73"/>
