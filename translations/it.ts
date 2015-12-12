@@ -918,6 +918,10 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <translation>Rimuovi contatto</translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation>Mostra dettagli</translation>
+    </message>
+    <message>
         <location filename="../src/widget/friendwidget.cpp" line="111"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
@@ -1474,6 +1478,10 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/groupwidget.cpp" line="59"/>
         <source>Set title...</source>
         <translation>Imposta nome gruppo...</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../src/widget/groupwidget.cpp" line="74"/>
