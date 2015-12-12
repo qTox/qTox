@@ -335,19 +335,16 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Avanzate</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
         <source>FULL - very safe, slowest (recommended)</source>
-        <translation>COMPLETO - molto sicuro; lento (consigliato)</translation>
+        <translation>COMPLETO - molto sicuro, più lento (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
         <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
         <translation>NORMALE - quasi sicuro come COMPLETO, ma circa 20% più veloce</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
         <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi; veloce (non consigliato)</translation>
+        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi, più veloce (non consigliato)</translation>
     </message>
 </context>
 <context>
@@ -386,7 +383,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scritture sincrone sul DB</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scrittura sincrona sul DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="107"/>
