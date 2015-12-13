@@ -1909,7 +1909,8 @@ Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).
         <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiato a piacimento. Se ricevi richiedi di amicizia indesiderate cambia questo valore.</translation>
+        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiato a piacimento.
+Se ricevi richiedi di amicizia indesiderate cambia questo valore.</translation>
     </message>
 </context>
 <context>
