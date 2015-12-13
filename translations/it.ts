@@ -341,7 +341,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <source>Partially async - risky (20% faster)</source>
-        <translation>Parzialmente sincronizzato - richioso (20% più veloce)</translation>
+        <translation>Parzialmente sincronizzato - rischioso (20% più veloce)</translation>
     </message>
     <message>
         <source>Asynchronous - dangerous (fastest)</source>
@@ -1219,7 +1219,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Apri la finestra di qTox quando si riceve un nuovo messaggio e nessuna finestra è ancora aperta.</translation>
+        <translation>Apri la finestra di qTox quando si riceve un nuovo messaggio.</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1918,7 +1918,7 @@ Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).
         <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiato a piacimento.
+        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiata a piacimento.
 Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</translation>
     </message>
 </context>
@@ -2208,10 +2208,6 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Remove</source>
         <translation>Rimuovi</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annulla</translation>
     </message>
 </context>
 <context>
