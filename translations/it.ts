@@ -122,7 +122,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Scansiona i dispositivi</translation>
+        <translation>Scansiona dispositivi</translation>
     </message>
 </context>
 <context>
@@ -192,7 +192,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida nel nostro &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida del nostro articolo wiki &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1217,6 +1217,15 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Dimensione:</translation>
     </message>
     <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation>Apri la finestra di qTox quando si riceve un nuovo messaggio e nessuna finestra è ancora aperta.</translation>
+    </message>
+    <message>
+        <source>Start qTox on operating system startup (current profile).</source>
+        <translation>Apri qTox all'avvio del sistema operativo (profilo corrente).</translation>
+    </message>
+    <message>
         <source>Open window</source>
         <translation>Apri finestra</translation>
     </message>
@@ -1910,7 +1919,7 @@ Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiato a piacimento.
-Se ricevi richiedi di amicizia indesiderate cambia questo valore.</translation>
+Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</translation>
     </message>
 </context>
 <context>
@@ -2180,6 +2189,29 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <location filename="../src/widget/form/profileform.cpp" line="353"/>
         <source>User Profile</source>
         <translation>Profilo Utente</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveFriendDialog</name>
+    <message>
+        <source>Remove friend</source>
+        <translation>Rimuovi contatto</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; dalla tua lista contatti?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation>Rimuovi anche la cronologia chat</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Rimuovi</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
