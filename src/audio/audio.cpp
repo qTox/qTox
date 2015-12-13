@@ -181,7 +181,7 @@ public:
         cleanupOutput();
     }
 
-    void initInput(const QString& inDevDescr);
+    bool initInput(const QString& inDevDescr);
     bool initOutput(const QString& outDevDescr);
     void cleanupInput();
     void cleanupOutput();
@@ -377,8 +377,12 @@ void Audio::subscribeInput()
 {
     QMutexLocker locker(&d->audioLock);
 
-    if (!d->alInDev)
-        d->initInput(Settings::getInstance().getInDev());
+    if (!d->alInDev) {
+        if (!d->initInput(Settings::getInstance().getInDev())) {
+            qWarning("Failed to subscribe to audio input device.");
+            return;
+        }
+    }
 
     d->inSubscriptions++;
     qDebug() << "Subscribed to audio input device [" << d->inSubscriptions << "subscriptions ]";
@@ -402,13 +406,13 @@ void Audio::unsubscribeInput()
         d->cleanupInput();
 }
 
-void AudioPrivate::initInput(const QString& inDevDescr)
+bool AudioPrivate::initInput(const QString& inDevDescr)
 {
     qDebug() << "Opening audio input" << inDevDescr;
 
     inputInitialized = false;
     if (inDevDescr == "none")
-        return;
+        return true;
 
     assert(!alInDev);
 
@@ -447,18 +451,15 @@ void AudioPrivate::initInput(const QString& inDevDescr)
         qWarning() << "Cannot open input audio device" << inDevDescr;
 
     // Restart the capture if necessary
-    if (alInDev)
-    {
+    if (alInDev) {
         alcCaptureStart(alInDev);
-    }
-    else
-    {
-#if (FIX_SND_PCM_PREPARE_BUG)
-        alcCaptureStart(alInDev);
-#endif
+    } else {
+        qCritical() << "Failed to initialize audio input device:" << inDevDescr;
+        return false;
     }
 
     inputInitialized = true;
+    return true;
 }
 
 /**
@@ -744,8 +745,12 @@ void Audio::subscribeOutput(SID& sid)
 {
     QMutexLocker locker(&d->audioLock);
 
-    if (!d->alOutDev)
-        d->initOutput(Settings::getInstance().getOutDev());
+    if (!d->alOutDev) {
+        if (!d->initOutput(Settings::getInstance().getOutDev())) {
+            qWarning("Failed to subscribe to audio input device.");
+            return;
+        }
+    }
 
     alGenSources(1, &sid);
     assert(sid);
