@@ -341,7 +341,7 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <source>Partially async - risky (20% faster)</source>
-        <translation>Parzialmente sincronizzato - richioso (20% più veloce)</translation>
+        <translation>Parzialmente sincronizzato - rischioso (20% più veloce)</translation>
     </message>
     <message>
         <source>Asynchronous - dangerous (fastest)</source>
