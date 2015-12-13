@@ -1544,6 +1544,10 @@ Title:</source>
         <translation>Per impostare un nome puoi anche cliccare sul gruppo direttamente dalla chat.
 Nome gruppo:</translation>
     </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
+    </message>
 </context>
 <context>
     <name>IdentitySettings</name>
