@@ -2192,6 +2192,29 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
 </context>
 <context>
+    <name>RemoveFriendDialog</name>
+    <message>
+        <source>Remove friend</source>
+        <translation>Rimuovi contatto</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; dalla tua lista contatti?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation>Rimuovi anche la cronologia chat</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Rimuovi</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+</context>
+<context>
     <name>ScreenshotGrabber</name>
     <message>
         <location filename="../src/widget/tool/screenshotgrabber.cpp" line="132"/>
