@@ -935,7 +935,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <translation>Rimuovi dal circolo &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Move to circle &quot;%1&quot;</source>
+        <source>Move  to circle &quot;%1&quot;</source>
         <translation>Sposta nel circolo &quot;%1&quot;</translation>
     </message>
     <message>
@@ -1879,13 +1879,14 @@ Se incontri questo errore, riportalo agli sviluppatori.</translation>
         <translation>NoSpam</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="80"/>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>Il valore nospam è parte del tuo Tox ID. Se ricevi molte richieste d&apos;amicizia indesiderate, cambia questo valore. Le persone non saranno
-        più in grado di aggiungerti con il tuo vecchio ID, ma manterrai i contatti attuali.</translation>
+        <translation>Il valore NoSpam è parte del tuo ID Tox.
+Se ricevi molte richieste di amicizia indesiderate, cambia questo valore.
+Le persone non saranno più in grado di aggiungerti con il tuo vecchio Tox ID, ma manterrai i contatti attuali.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
@@ -1901,16 +1902,10 @@ Save format changes are possible, which may result in data loss.</source>
 Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
-        <source>Nospam is part of your Tox ID.
-It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
-When you change nospam, your current contacts still can communicate with you,
-but new contacts need to know your new Tox ID to be able to add you.</source>
-        <comment>toolTip for nospam</comment>
-        <translation>Il valore &quot;nospam&quot; fa parte del tuo Tox ID.
-Lo si deve modificare quando si ritiene che si stanno ricevendo troppe richiste d&apos;amicizia da persone sconosciute.
-Quando modifichi il valore &quot;nospam&quot;, i contatti che hai già aggiunto potranno continuare a comunicare con te,
-ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
+        <source>NoSpam is a part of your ID that can be changed at will.
+If you are getting spammed with friend requests, change the NoSpam.</source>
+        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiato a piacimento. Se ricevi richiedi di amicizia indesiderate cambia questo valore.</translation>
     </message>
 </context>
 <context>
