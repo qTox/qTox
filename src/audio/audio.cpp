@@ -201,7 +201,24 @@ void Audio::openInput(const QString& inDevDescr)
     const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
+    {
+        const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+        if (pDeviceList)
+        {
+            alInDev = alcCaptureOpenDevice(pDeviceList, sampleRate, stereoFlag, bufSize);
+            int len = strlen(pDeviceList);
+#ifdef Q_OS_WIN
+            QString inDev = QString::fromUtf8(pDeviceList, len);
+#else
+            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
+#endif
+            Settings::getInstance().setInDev(inDev);
+        }
+        else
+        {
+            alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
+        }
+    }
     else
         alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
                                        sampleRate, stereoFlag, bufSize);
