@@ -369,7 +369,7 @@ QByteArray Profile::loadAvatarData(const QString &ownerId)
         return {};
 
     QByteArray pic = file.readAll();
-    if (encrypted)
+    if (encrypted && !pic.isEmpty())
     {
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(pic.data()), salt);

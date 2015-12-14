@@ -75,6 +75,11 @@ QByteArray Core::decryptData(const QByteArray &data)
 
 QByteArray Core::decryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
 {
+    if (data.size() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH)
+    {
+        qWarning() << "Not enough data:"<<data.size();
+        return QByteArray();
+    }
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
