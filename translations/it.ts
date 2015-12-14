@@ -1718,8 +1718,7 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/loginscreen.ui" line="388"/>
         <source>Confirm:</source>
-        <translation>Conferma
-password:</translation>
+        <translation>Conferma:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="408"/>
@@ -1730,6 +1729,18 @@ password:</translation>
         <location filename="../src/loginscreen.ui" line="617"/>
         <source>Create Account</source>
         <translation>Crea Profilo</translation>
+    </message>
+    <message>
+        <source>Load automatically</source>
+        <translation>Accedi automaticamente</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Accedi</translation>
+    </message>
+    <message>
+        <source>Load Profile</source>
+        <translation>Accedi al profilo</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="757"/>
@@ -1751,6 +1762,10 @@ password:</translation>
         <location filename="../src/loginscreen.ui" line="1071"/>
         <source>New Profile</source>
         <translation>Nuovo Profilo</translation>
+    </message>
+     <message>
+        <source>Create Profile</source>
+        <translation>Crea Profilo</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="114"/>
