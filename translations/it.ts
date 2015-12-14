@@ -239,7 +239,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Notes</source>
-        <translation>Note</translation>
+        <translation>Appunti</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -1605,6 +1605,10 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
         <translation>Profilo</translation>
     </message>
     <message>
+        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Posizione del profilo corrente:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.ui" line="176"/>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
@@ -1929,6 +1933,10 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
     </message>
+     <message>
+        <source>Current profile: </source>
+        <translation>Profilo attuale: </translation>
+    </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="205"/>
         <location filename="../src/widget/form/profileform.cpp" line="212"/>
@@ -2231,6 +2239,14 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
         <source>Set your password</source>
         <translation>Imposta password</translation>
+    </message>
+    <message>
+        <source>Confirm:</source>
+        <translation>Conferma:</translation>
+    </message>
+    <message>
+        <source>Password strength: %p%</source>
+        <translation>Robustezza password: %p%</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
