@@ -116,6 +116,10 @@ void Widget::init()
 {
     ui->setupUi(this);
 
+    QIcon themeIcon = QIcon::fromTheme("qtox");
+    if (!themeIcon.isNull())
+        setWindowIcon(themeIcon);
+
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
@@ -424,7 +428,7 @@ void Widget::updateIcons()
             status = QStringLiteral("offline");
     }
 
-    QIcon ico;
+    QIcon ico = QIcon::fromTheme("qtox-" + status);
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
