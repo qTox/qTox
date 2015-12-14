@@ -24,6 +24,10 @@
         <source>Default resolution</source>
         <translation>Risoluzione di default</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
