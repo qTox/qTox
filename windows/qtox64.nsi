@@ -9,7 +9,6 @@
 !define COPYRIGHT "The Tox Project"
 !define INSTALLER_NAME "setup-qtox.exe"
 !define MAIN_APP_EXE "bin\qtox.exe"
-!define INSTALL_TYPE "SetShellVarContext current"
 !define REG_ROOT "HKLM"
 !define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\qtox.exe"
 !define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -249,6 +248,7 @@ FunctionEnd
 #INSTALL
 #################
 Section "Install"
+        SetShellVarContext all
 	# Install files
 	${SetOutPath} "$INSTDIR"
 	${WriteUninstaller} "uninstall.exe"
@@ -304,6 +304,7 @@ SectionEnd
 #UNINSTALL
 ################
 Section Uninstall
+  SetShellVarContext all
   ;If there's no uninstall log, we'll try anyway to clean what we can
   IfFileExists "$INSTDIR\${UninstLog}" +3
     Goto noLog
