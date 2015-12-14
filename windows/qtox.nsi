@@ -247,8 +247,8 @@ FunctionEnd
 #################
 #INSTALL
 #################
-SetShellVarContext all
 Section "Install"
+	SetShellVarContext all
 	# Install files
 	${SetOutPath} "$INSTDIR"
 	${WriteUninstaller} "uninstall.exe"
