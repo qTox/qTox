@@ -151,6 +151,11 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>Stai utilizzando la versione nightly build di qTox.</translation>
     </message>
     <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="131"/>
+        <source>You are using qTox version $GIT_DESCRIBE.</source>
+        <translation>Stai utilizzando la versione $GIT_DESCRIBE.</translation>
+    </message>
+    <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
@@ -2191,6 +2196,11 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <location filename="../src/chatlog/chatmessage.cpp" line="134"/>
         <source>Resizing</source>
         <translation>Ridimensiona</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>No camera device set</comment>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="353"/>
