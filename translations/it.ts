@@ -849,8 +849,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
 <context>
     <name>FilesForm</name>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="91"/>
-        <source>Transfered Files</source>
+        <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
         <translation>File Trasferiti</translation>
     </message>
