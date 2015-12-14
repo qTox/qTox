@@ -1697,7 +1697,7 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
         <source>Load history from:</source>
-        <translation>Carica cronologia char del giorno:</translation>
+        <translation>Carica cronologia chat del giorno:</translation>
     </message>
 </context>
 <context>
