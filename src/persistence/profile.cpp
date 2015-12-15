@@ -410,6 +410,7 @@ void Profile::removeAvatar()
 void Profile::removeAvatar(const QString &ownerId)
 {
     QFile::remove(avatarPath(ownerId));
+    core->setAvatar({});
 }
 
 bool Profile::exists(QString name)
