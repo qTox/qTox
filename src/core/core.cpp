@@ -129,6 +129,9 @@ void Core::makeTox(QByteArray savedata)
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
     bool forceTCP = Settings::getInstance().getForceTCP();
     ProxyType proxyType = Settings::getInstance().getProxyType();
+    int proxyPort = Settings::getInstance().getProxyPort();
+    QString proxyAddr = Settings::getInstance().getProxyAddr();
+    QByteArray proxyAddrData = proxyAddr.toUtf8();
 
     if (enableIPv6)
         qDebug() << "Core starting with IPv6 enabled";
@@ -152,9 +155,6 @@ void Core::makeTox(QByteArray savedata)
 
     if (proxyType != ProxyType::ptNone)
     {
-        QString proxyAddr = Settings::getInstance().getProxyAddr();
-        int proxyPort = Settings::getInstance().getProxyPort();
-
         if (proxyAddr.length() > 255)
         {
             qWarning() << "proxy address" << proxyAddr << "is too long";
@@ -168,11 +168,7 @@ void Core::makeTox(QByteArray savedata)
             else if (proxyType == ProxyType::ptHTTP)
                 toxOptions.proxy_type = TOX_PROXY_TYPE_HTTP;
 
-            QByteArray proxyAddrData = proxyAddr.toUtf8();
-            /// TODO: We're leaking a tiny amount of memory there, go fix that later
-            char* proxyAddrCopy = new char[proxyAddrData.size()+1];
-            memcpy(proxyAddrCopy, proxyAddrData.data(), proxyAddrData.size()+1);
-            toxOptions.proxy_host = proxyAddrCopy;
+            toxOptions.proxy_host = proxyAddrData.data();
             toxOptions.proxy_port = proxyPort;
         }
     }
