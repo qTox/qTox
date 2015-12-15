@@ -69,7 +69,7 @@ IPC::IPC()
         return; // We won't be able to do any IPC without being attached, let's get outta here
     }
 
-    timer.start();
+    processEvents();
 }
 
 IPC::~IPC()
