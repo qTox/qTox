@@ -229,8 +229,6 @@ bool Profile::isNewProfile()
 QByteArray Profile::loadToxSave()
 {
     assert(!isRemoved);
-
-    /// TODO: Cache the data, invalidate it only when we save
     QByteArray data;
 
     QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
