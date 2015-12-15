@@ -133,7 +133,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Informazioni su qTox</translation>
     </message>
     <message>
         <source>Qt version:</source>
@@ -240,7 +240,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation>Accetta automaticamente i file</translation>
+        <translation>Accetta automaticamente i file inviati da questo contatto</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
