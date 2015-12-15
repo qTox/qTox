@@ -56,16 +56,16 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     frameLayout->setMargin(0);
 
     updateRatio();
-    connect(selfVideoSurface, &VideoSurface::ratioChanged, this, &NetCamView::updateRatio);
+    connections += connect(selfVideoSurface, &VideoSurface::ratioChanged, this, &NetCamView::updateRatio);
 
-    connect(videoSurface, &VideoSurface::boundaryChanged, [this]()
+    connections += connect(videoSurface, &VideoSurface::boundaryChanged, [this]()
     {
         QRect boundingRect = videoSurface->getBoundingRect();
         updateFrameSize(boundingRect.size());
         selfFrame->setBoundary(boundingRect);
     });
 
-    connect(videoSurface, &VideoSurface::ratioChanged, [this]()
+    connections += connect(videoSurface, &VideoSurface::ratioChanged, [this]()
     {
         selfFrame->setMinimumWidth(selfFrame->minimumHeight() * selfVideoSurface->getRatio());
         QRect boundingRect = videoSurface->getBoundingRect();
@@ -73,12 +73,12 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
         selfFrame->resetBoundary(boundingRect);
     });
 
-    connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap)
+    connections += connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap)
     {
         selfVideoSurface->setAvatar(pixmap);
     });
 
-    connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
+    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
     {
         if (this->friendId == FriendId)
             videoSurface->setAvatar(pixmap);
@@ -90,6 +90,12 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     videoMode.height = videoSize.height();
     qDebug() << "SIZER" << videoSize;
     videoMode.FPS = Settings::getInstance().getCamVideoFPS();
+}
+
+NetCamView::~NetCamView()
+{
+    for (QMetaObject::Connection conn : connections)
+        disconnect(conn);
 }
 
 void NetCamView::show(VideoSource *source, const QString &title)
