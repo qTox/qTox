@@ -91,8 +91,11 @@
 
 bool toxActivateEventHandler(const QByteArray&)
 {
-    if (!Widget::getInstance()->isActiveWindow())
-        Widget::getInstance()->forceShow();
+    Widget* widget = Nexus::getDesktopGUI();
+    if (!widget)
+        return true;
+    if (!widget->isActiveWindow())
+        widget->forceShow();
 
     return true;
 }
