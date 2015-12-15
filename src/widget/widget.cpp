@@ -1226,8 +1226,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
     if (notify)
     {
-        QApplication::alert(currentWindow);
-        eventFlag = true;
+        if (inactiveWindow)
+        {
+            QApplication::alert(currentWindow);
+            eventFlag = true;
+        }
 
         if (Settings::getInstance().getShowWindow())
         {
@@ -1577,6 +1580,10 @@ bool Widget::event(QEvent * e)
 {
     switch (e->type())
     {
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonDblClick:
+            focusChatInput();
+            break;
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
             {
@@ -1584,6 +1591,7 @@ bool Widget::event(QEvent * e)
                 activeChatroomWidget->updateStatusLight();
                 setWindowTitle(activeChatroomWidget->getTitle());
             }
+
             if (eventFlag)
             {
                 eventFlag = false;
@@ -1591,13 +1599,15 @@ bool Widget::event(QEvent * e)
                 updateIcons();
             }
 
+            focusChatInput();
+
 #ifdef Q_OS_MAC
             emit windowStateChanged(windowState());
 
         case QEvent::WindowStateChange:
             Nexus::getInstance().updateWindowsStates();
 #endif
-
+            break;
         default:
             break;
     }
@@ -2079,4 +2089,15 @@ void Widget::retranslateUi()
     nextConversationAction->setText(tr("Next Conversation"));
     previousConversationAction->setText(tr("Previous Conversation"));
 #endif
+}
+
+void Widget::focusChatInput()
+{
+    if (activeChatroomWidget)
+    {
+        if (Friend* f = activeChatroomWidget->getFriend())
+            f->getChatForm()->focusInput();
+        else if (Group* g = activeChatroomWidget->getGroup())
+            g->getChatForm()->focusInput();
+    }
 }
