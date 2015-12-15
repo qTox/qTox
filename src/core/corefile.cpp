@@ -421,7 +421,6 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
 
     if (file->bytesSent != position)
     {
-        /// TODO: Allow ooo receiving for non-stream transfers, with very careful checking
         qWarning("onFileRecvChunkCallback: Received a chunk out-of-order, aborting transfer");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
             emit core->fileTransferCancelled(*file);
