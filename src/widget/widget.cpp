@@ -1223,8 +1223,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
     if (notify)
     {
-        QApplication::alert(currentWindow);
-        eventFlag = true;
+        if (inactiveWindow)
+        {
+            QApplication::alert(currentWindow);
+            eventFlag = true;
+        }
 
         if (Settings::getInstance().getShowWindow())
         {
