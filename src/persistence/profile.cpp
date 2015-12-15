@@ -364,6 +364,11 @@ QPixmap Profile::loadAvatar(const QString &ownerId)
 
 QByteArray Profile::loadAvatarData(const QString &ownerId)
 {
+  return loadAvatarData(ownerId, password);
+}
+
+QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &password)
+{
     QString path = avatarPath(ownerId);
     bool encrypted = !password.isEmpty();
 
@@ -554,7 +559,7 @@ void Profile::restartCore()
 void Profile::setPassword(QString newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
-
+    QString oldPassword = password;
     password = newPassword;
     passkey = *core->createPasskey(password);
     saveToxSave();
@@ -565,4 +570,12 @@ void Profile::setPassword(QString newPassword)
         Nexus::getDesktopGUI()->reloadHistory();
     }
     saveAvatar(avatar, core->getSelfId().publicKey);
+
+    QVector<uint32_t> friendList = core->getFriendList();
+    QVectorIterator<uint32_t> i(friendList);
+    while (i.hasNext())
+    {
+        QString friendPublicKey = core->getFriendPublicKey(i.next());
+        saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
+    }
 }

@@ -64,6 +64,7 @@ public:
     QPixmap loadAvatar(); ///< Get our avatar from cache
     QPixmap loadAvatar(const QString& ownerId); ///< Get a contact's avatar from cache
     QByteArray loadAvatarData(const QString& ownerId); ///< Get a contact's avatar from cache
+    QByteArray loadAvatarData(const QString& ownerId, const QString& password); ///< Get a contact's avatar from cache, with a specified profile password.
     void saveAvatar(QByteArray pic, const QString& ownerId); ///< Save an avatar to cache
     QByteArray getAvatarHash(const QString& ownerId); ///< Get the tox hash of a cached avatar
     void removeAvatar(const QString& ownerId); ///< Removes a cached avatar
