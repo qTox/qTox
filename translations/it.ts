@@ -559,12 +559,12 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="393"/>
         <source>Cancel video call</source>
-        <translation>Rifiuta videochiamata</translation>
+        <translation>Annulla videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="401"/>
         <source>Cancel audio call</source>
-        <translation>Rifiuta chiamata</translation>
+        <translation>Annulla chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="409"/>
@@ -572,12 +572,10 @@ p, li { white-space: pre-wrap; }
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="663"/>
         <source>Start audio call</source>
         <translation>Avvia chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="666"/>
         <source>Start video call</source>
         <translation>Avvia videochiamata</translation>
     </message>
