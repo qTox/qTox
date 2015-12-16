@@ -559,25 +559,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="393"/>
         <source>Cancel video call</source>
-        <translation>Rifiuta videochiamata</translation>
+        <translation>Annulla videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="401"/>
         <source>Cancel audio call</source>
-        <translation>Rifiuta chiamata</translation>
+        <translation>Annulla chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="409"/>
-        <source>Calling to %1</source>
+        <source>Calling %1</source>
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="663"/>
         <source>Start audio call</source>
         <translation>Avvia chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="666"/>
         <source>Start video call</source>
         <translation>Avvia videochiamata</translation>
     </message>
@@ -1438,7 +1436,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="494"/>
         <source>Send file(s)</source>
-        <translation>Invia file(s)</translation>
+        <translation>Invia file</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="495"/>
@@ -1475,6 +1473,21 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/genericchatform.cpp" line="405"/>
         <source>Cleared</source>
         <translation>Pulito</translation>
+    </message>
+</context>
+<context>
+    <name>GenericNetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation>Video Tox</translation>
+    </message>
+    <message>
+        <source>Show Messages</source>
+        <translation>Mostra messaggi</translation>
+    </message>
+    <message>
+        <source>Hide Messages</source>
+        <translation>Nascondi messaggi</translation>
     </message>
 </context>
 <context>
