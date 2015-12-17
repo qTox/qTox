@@ -1081,7 +1081,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxId(), message, isAction, timestamp, true);
 
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
+    HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, isAction ? "/me " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
