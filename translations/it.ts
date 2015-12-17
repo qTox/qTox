@@ -1083,7 +1083,7 @@ Soprannome:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="129"/>
         <source>Show system tray icon</source>
-        <translation>Mostra icona nella traybar</translation>
+        <translation>Mostra icona nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
@@ -1100,7 +1100,7 @@ Soprannome:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox sarà avviato minimizzato nella traybar.</translation>
+        <translation>qTox sarà avviato minimizzato nella barra di sistema.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
@@ -1108,7 +1108,7 @@ Soprannome:</translation>
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
         <translation>Premendo l&apos;icona &quot;chiudi&quot; (X) qTox sarà minimizzato
-nella traybar invece che essere chiuso.</translation>
+nella barra di sistema invece che essere chiuso.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="169"/>
@@ -1116,7 +1116,7 @@ nella traybar invece che essere chiuso.</translation>
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translation>Premendo l&apos;icona &quot;minimizza&quot; (_) qTox sarà minimizzato
-nella traybar invece che nella taskbar.</translation>
+nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
@@ -1288,17 +1288,17 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
         <source>Start in tray</source>
-        <translation>Avvia nella traybar</translation>
+        <translation>Avvia nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
         <source>Close to tray</source>
-        <translation>Chiudi nella traybar</translation>
+        <translation>Chiudi nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
         <source>Minimize to tray</source>
-        <translation>Minimizza nella traybar</translation>
+        <translation>Minimizza nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="349"/>
@@ -1965,6 +1965,10 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
 <context>
     <name>ProfileForm</name>
     <message>
+        <source>User Profile</source>
+        <translation>Profilo Utente</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.cpp" line="195"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
@@ -2233,11 +2237,6 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <source>None</source>
         <comment>No camera device set</comment>
         <translation>Nessuno</translation>
-    </message>
-    <message>
-        <location filename="../src/widget/form/profileform.cpp" line="353"/>
-        <source>User Profile</source>
-        <translation>Profilo Utente</translation>
     </message>
 </context>
 <context>
