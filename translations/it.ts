@@ -1627,7 +1627,7 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Posizione del profilo corrente:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Posizione del profilo attuale:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="176"/>
@@ -1651,7 +1651,7 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
         <location filename="../src/widget/form/profileform.ui" line="210"/>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation>Logout</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="247"/>
