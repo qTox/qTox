@@ -1445,13 +1445,13 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="496"/>
-        <source>Start an audio call</source>
-        <translation>Inizia una chiamata</translation>
+        <source>Start audio call</source>
+        <translation>Avvia chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="497"/>
-        <source>Start a video call</source>
-        <translation>Inizia una videochiamata</translation>
+        <source>Start video call</source>
+        <translation>Avvia videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="351"/>
