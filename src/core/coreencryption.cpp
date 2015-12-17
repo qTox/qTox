@@ -25,9 +25,9 @@
 #include "src/widget/gui.h"
 #include "src/persistence/settings.h"
 #include "src/core/cstring.h"
-#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/historykeeper.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>
@@ -118,6 +118,8 @@ void Core::checkEncryptedHistory()
 {
     QString path = HistoryKeeper::getHistoryPath();
     bool exists = QFile::exists(path) && QFile(path).size()>0;
+    if (!exists)
+        return;
 
     QByteArray salt = getSaltFromFile(path);
     if (exists && salt.size() == 0)

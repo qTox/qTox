@@ -37,7 +37,6 @@
 #include "friendlistwidget.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
-#include "src/persistence/historykeeper.h"
 #include "src/net/autoupdate.h"
 #include "src/audio/audio.h"
 #include "src/platform/timer.h"
@@ -1081,7 +1080,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxId(), message, isAction, timestamp, true);
 
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
+    Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
@@ -1281,7 +1280,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         if (!ask.accepted())
                return;
         else if (ask.removeHistory())
-            HistoryKeeper::getInstance()->removeFriendHistory(f->getToxId().publicKey);
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
     }
 
     f->getFriendWidget()->setAsInactiveChatroom();
@@ -1444,7 +1443,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
-    bool targeted = !author.isActiveProfile() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else

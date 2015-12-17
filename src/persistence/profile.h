@@ -26,6 +26,8 @@
 #include <QByteArray>
 #include <QPixmap>
 #include <tox/toxencryptsave.h>
+#include <memory>
+#include "src/persistence/history.h"
 
 class Core;
 class QThread;
@@ -44,16 +46,16 @@ public:
     ~Profile();
 
     Core* getCore();
-    QString getName();
+    QString getName() const;
 
     void startCore(); ///< Starts the Core thread
     void restartCore(); ///< Delete core and restart a new one
     bool isNewProfile();
-    bool isEncrypted(); ///< Returns true if we have a password set (doesn't check the actual file on disk)
+    bool isEncrypted() const; ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
-    QString getPassword();
+    QString getPassword() const;
     void setPassword(QString newPassword); ///< Changes the encryption password and re-saves everything with it
-    const TOX_PASS_KEY& getPasskey();
+    const TOX_PASS_KEY& getPasskey() const;
 
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
@@ -66,6 +68,11 @@ public:
     QByteArray getAvatarHash(const QString& ownerId); ///< Get the tox hash of a cached avatar
     void removeAvatar(const QString& ownerId); ///< Removes a cached avatar
     void removeAvatar(); ///< Removes our own avatar
+
+    /// Returns true if the history is enabled in the settings, and loaded successfully for this profile
+    bool isHistoryEnabled();
+    /// May return a nullptr if the history failed to load
+    History* getHistory();
 
     /// Removes the profile permanently
     /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
@@ -100,6 +107,7 @@ private:
     QThread* coreThread;
     QString name, password;
     TOX_PASS_KEY passkey;
+    std::unique_ptr<History> history;
     bool newProfile; ///< True if this is a newly created profile, with no .tox save file yet.
     bool isRemoved; ///< True if the profile has been removed by remove()
     static QVector<QString> profiles;

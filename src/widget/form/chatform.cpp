@@ -38,7 +38,6 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/friend.h"
-#include "src/persistence/historykeeper.h"
 #include "src/widget/style.h"
 #include "src/persistence/settings.h"
 #include "src/core/cstring.h"
@@ -61,6 +60,8 @@
 #include "src/widget/translator.h"
 #include "src/video/videosource.h"
 #include "src/video/camerasource.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -208,7 +209,7 @@ void ChatForm::startFileSend(ToxFile file)
         return;
 
     QString name;
-    if (!previousId.isActiveProfile())
+    if (!previousId.isSelf())
     {
         Core* core = Core::getInstance();
         name = core->getUsername();
@@ -694,7 +695,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
     }
 
-    auto msgs = HistoryKeeper::getInstance()->getChatHistory(HistoryKeeper::ctSingle, f->getToxId().publicKey, since, now);
+    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().publicKey, since, now);
 
     ToxId storedPrevId = previousId;
     ToxId prevId;
@@ -716,13 +717,13 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         // Show each messages
         ToxId authorId = ToxId(it.sender);
-        QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isActiveProfile() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
+        QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isSelf() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
-                                                              isAction ? it.message.right(it.message.length() - 4) : it.message,
+                                                              isAction ? it.message.mid(4) : it.message,
                                                               isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
-                                                              authorId.isActiveProfile(),
+                                                              authorId.isSelf(),
                                                               QDateTime());
 
         if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
@@ -731,7 +732,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         prevId = authorId;
         prevMsgDateTime = msgDateTime;
 
-        if (it.isSent || !authorId.isActiveProfile())
+        if (it.isSent || !authorId.isSelf())
         {
             msg->markAsSent(msgDateTime);
         }
@@ -810,6 +811,9 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 
 void ChatForm::onLoadHistory()
 {
+    if (!Nexus::getProfile()->isHistoryEnabled())
+        return;
+
     LoadHistoryDialog dlg;
 
     if (dlg.exec())
@@ -937,9 +941,6 @@ void ChatForm::SendMessageStr(QString msg)
 
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
-        int id = HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, qt_msg_hist,
-                                                            Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername());
-
         ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
 
         int rec;
@@ -948,7 +949,13 @@ void ChatForm::SendMessageStr(QString msg)
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-        getOfflineMsgEngine()->registerReceipt(rec, id, ma);
+        auto* offMsgEngine = getOfflineMsgEngine();
+        Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
+                    Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
+                                    [offMsgEngine,rec,ma](int64_t id)
+        {
+            offMsgEngine->registerReceipt(rec, id, ma);
+        });
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
 

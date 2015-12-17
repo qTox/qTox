@@ -86,7 +86,7 @@ void Group::regeneratePeerList()
     for (int i = 0; i < nPeers; i++)
     {
         ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
-        if (id.isActiveProfile())
+        if (id.isSelf())
             selfPeerNum = i;
 
         QString toxid = id.publicKey;

@@ -1,7 +1,6 @@
 #include "aboutuser.h"
 #include "ui_aboutuser.h"
 #include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
 
@@ -97,7 +96,9 @@ void AboutUser::onAcceptedClicked()
 
 void AboutUser::onRemoveHistoryClicked()
 {
-    HistoryKeeper::getInstance()->removeFriendHistory(toxId.publicKey);
+    History* history = Nexus::getProfile()->getHistory();
+    if (history)
+        history->removeFriendHistory(toxId.publicKey);
     QMessageBox::StandardButton reply;
     reply = QMessageBox::information(this,
                                      tr("History removed"),
