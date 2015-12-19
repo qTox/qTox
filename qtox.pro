@@ -143,8 +143,8 @@ win32 {
     RC_FILE = windows/qtox.rc
     LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lavdevice -lavformat -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
+    LIBS += -lqrencode -lsqlcipher -lcrypto
     LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
-    LIBS += -lqrencode -lsqlcipher
     LIBS += -lstrmiids # For DirectShow
     contains(DEFINES, QTOX_FILTER_AUDIO) {
         contains(STATICPKG, YES) {
