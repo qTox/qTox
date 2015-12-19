@@ -219,7 +219,7 @@ void History::import(const HistoryKeeper &oldHistory)
     for (const HistoryKeeper::HistMessage& msg : oldMessages)
     {
         queries += generateNewMessageQueries(msg.chat, msg.message, msg.sender, msg.timestamp, true, msg.dispName);
-        if (queries.size() == batchSize)
+        if (queries.size() >= batchSize)
         {
             db.execLater(queries);
             queries.clear();
