@@ -396,14 +396,21 @@ void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
 
     QString path = avatarPath(ownerId);
     QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
-    QSaveFile file(path);
-    if (!file.open(QIODevice::WriteOnly))
+    if (pic.isEmpty())
     {
-        qWarning() << "Tox avatar " << path << " couldn't be saved";
-        return;
+        QFile::remove(path);
     }
-    file.write(pic);
-    file.commit();
+    else
+    {
+        QSaveFile file(path);
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            qWarning() << "Tox avatar " << path << " couldn't be saved";
+            return;
+        }
+        file.write(pic);
+        file.commit();
+    }
 }
 
 QByteArray Profile::getAvatarHash(const QString &ownerId)
