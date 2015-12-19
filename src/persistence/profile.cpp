@@ -432,7 +432,8 @@ History *Profile::getHistory()
 void Profile::removeAvatar(const QString &ownerId)
 {
     QFile::remove(avatarPath(ownerId));
-    core->setAvatar({});
+    if (ownerId == core->getSelfId().publicKey)
+        core->setAvatar({});
 }
 
 bool Profile::exists(QString name)

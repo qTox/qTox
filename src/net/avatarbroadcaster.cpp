@@ -34,6 +34,8 @@ static auto autoBroadcast = [](uint32_t friendId, Status)
 
 void AvatarBroadcaster::setAvatar(QByteArray data)
 {
+    if (avatarData == data)
+        return;
     avatarData = data;
     friendsSentTo.clear();
 
