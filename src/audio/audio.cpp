@@ -65,11 +65,7 @@ Audio::Audio()
     , inputVolume(1.0)
     , alMainSource(0)
     , alContext(nullptr)
-    , timer(new QTimer(this))
 {
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, this, &Audio::closeOutput);
-
     audioThread->setObjectName("qTox Audio");
     connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 }
@@ -403,11 +399,6 @@ void Audio::playMono16Sound(const QByteArray& data)
 
     ALint frequency;
     alGetBufferi(buffer, AL_FREQUENCY, &frequency);
-    qreal duration = (lengthInSamples / static_cast<qreal>(frequency)) * 1000;
-    int remaining = timer->interval();
-
-    if (duration > remaining)
-        timer->start(duration);
 
     alDeleteBuffers(1, &buffer);
 }
