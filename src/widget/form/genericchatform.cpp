@@ -312,7 +312,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    bool authorIsActiveProfile = author.isActiveProfile();
+    bool authorIsActiveProfile = author.isSelf();
     QString authorStr = authorIsActiveProfile ? Core::getInstance()->getUsername() : resolveToxId(author);
 
     ChatMessage::Ptr msg;
@@ -347,7 +347,7 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
 void GenericChatForm::addAlertMessage(const ToxId &author, QString message, QDateTime datetime)
 {
     QString authorStr = resolveToxId(author);
-    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isActiveProfile(), datetime);
+    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isSelf(), datetime);
     insertChatMessage(msg);
 
     if ((author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter))

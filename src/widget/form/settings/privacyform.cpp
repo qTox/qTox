@@ -21,12 +21,14 @@
 #include "ui_privacysettings.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
 #include "src/core/core.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/history.h"
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
@@ -63,7 +65,7 @@ void PrivacyForm::onEnableLoggingUpdated()
                                       QMessageBox::Yes|QMessageBox::No);
         if (dialogDelHistory == QMessageBox::Yes)
         {
-          HistoryKeeper::getInstance()->removeHistory();
+            Nexus::getProfile()->getHistory()->eraseHistory();
         }
     }
 }

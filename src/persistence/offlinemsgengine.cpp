@@ -19,9 +19,10 @@
 
 #include "offlinemsgengine.h"
 #include "src/friend.h"
-#include "src/persistence/historykeeper.h"
 #include "src/persistence/settings.h"
 #include "src/core/core.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 #include <QMutexLocker>
 #include <QTimer>
 
@@ -42,6 +43,7 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
 {
     QMutexLocker ml(&mutex);
 
+    Profile* profile = Nexus::getProfile();
     auto it = receipts.find(receipt);
     if (it != receipts.end())
     {
@@ -49,7 +51,8 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
         auto msgIt = undeliveredMsgs.find(mID);
         if (msgIt != undeliveredMsgs.end())
         {
-            HistoryKeeper::getInstance()->markAsSent(mID);
+            if (profile->isHistoryEnabled())
+                profile->getHistory()->markAsSent(mID);
             msgIt.value().msg->markAsSent(QDateTime::currentDateTime());
             undeliveredMsgs.erase(msgIt);
         }
@@ -57,7 +60,7 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
     }
 }
 
-void OfflineMsgEngine::registerReceipt(int receipt, int messageID, ChatMessage::Ptr msg, const QDateTime &timestamp)
+void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg, const QDateTime &timestamp)
 {
     QMutexLocker ml(&mutex);
 
@@ -78,7 +81,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     if (undeliveredMsgs.size() == 0)
         return;
 
-    QMap<int, MsgPtr> msgs = undeliveredMsgs;
+    QMap<int64_t, MsgPtr> msgs = undeliveredMsgs;
     removeAllReciepts();
 
     for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)

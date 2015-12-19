@@ -25,7 +25,6 @@
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/persistence/historykeeper.h"
 #include "src/audio/audio.h"
 #include "src/persistence/profilelocker.h"
 #include "src/net/avatarbroadcaster.h"
@@ -270,7 +269,8 @@ void Core::start()
     if (!id.isEmpty())
         emit idSet(id);
 
-    // tox core is already decrypted
+    /// TODO: NOTE: This is a backwards compatibility check,
+    /// once most people have been upgraded away from the old HistoryKeeper, remove this
     if (Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
 
@@ -593,7 +593,9 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
-            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
+            Profile* profile = Nexus::getProfile();
+            if (profile->isHistoryEnabled())
+                profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);
             emit friendshipChanged(friendId);
         }
