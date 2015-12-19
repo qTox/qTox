@@ -291,6 +291,26 @@ bool RawDatabase::rename(const QString &newPath)
     return open(path, currentHexKey);
 }
 
+bool RawDatabase::remove()
+{
+    if (!sqlite)
+    {
+        qWarning() << "Trying to remove the database, but it is not open";
+        return false;
+    }
+
+    if (QThread::currentThread() != workerThread.get())
+    {
+        bool ret;
+        QMetaObject::invokeMethod(this, "remove", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret));
+        return ret;
+    }
+
+    qDebug() << "Removing database "<<path;
+    close();
+    return QFile::remove(path);
+}
+
 
 QString RawDatabase::deriveKey(QString password)
 {

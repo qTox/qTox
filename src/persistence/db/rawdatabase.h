@@ -71,8 +71,11 @@ public slots:
     /// Will process all transactions before changing the password
     bool setPassword(const QString& password);
     /// Moves the database file on disk to match the new path
-    /// /// Will process all transactions before renaming
+    /// Will process all transactions before renaming
     bool rename(const QString& newPath);
+    /// Deletes the on disk database file after closing it
+    /// Will process all transactions before deletings
+    bool remove();
 
 protected slots:
     /// Tries to open the database with the given (possibly empty) key

@@ -42,6 +42,11 @@ void History::rename(const QString &newName)
     db.rename(getDbPath(newName));
 }
 
+void History::remove()
+{
+    db.remove();
+}
+
 void History::eraseHistory()
 {
     db.execNow("DELETE FROM faux_offline_pending;"

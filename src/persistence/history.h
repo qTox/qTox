@@ -46,6 +46,8 @@ public:
     void setPassword(const QString& password);
     /// Moves the database file on disk to match the new name
     void rename(const QString& newName);
+    /// Deletes the on-disk database file
+    void remove();
 
     /// Erases all the chat history from the database
     void eraseHistory();

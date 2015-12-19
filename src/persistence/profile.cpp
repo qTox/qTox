@@ -496,6 +496,11 @@ void Profile::remove()
 
     QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
     QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
+    if (history)
+    {
+        history->remove();
+        history.release();
+    }
 }
 
 bool Profile::rename(QString newName)
