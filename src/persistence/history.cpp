@@ -195,9 +195,9 @@ void History::init()
                  "CREATE TABLE IF NOT EXISTS faux_offline_pending (id INTEGER PRIMARY KEY);");
 
     // Cache our current peers
-    db.execLater(RawDatabase::Query{"SELECT id, public_key FROM peers;", [this](const QVector<QVariant>& row)
+    db.execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;", [this](const QVector<QVariant>& row)
     {
-        peers[row[1].toString()] = row[0].toInt();
+        peers[row[0].toString()] = row[1].toInt();
     }});
 }
 
