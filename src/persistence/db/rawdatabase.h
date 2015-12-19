@@ -83,12 +83,12 @@ protected slots:
     /// Unqueues, compiles, binds and executes queries, then notifies of results
     /// MUST only be called from the worker thread
     void process();
-    /// Extracts a variant from one column of a result row depending on the column type
-    QVariant extractData(sqlite3_stmt* stmt, int col);
 
 protected:
     /// Derives a 256bit key from the password and returns it hex-encoded
     static QString deriveKey(QString password);
+    /// Extracts a variant from one column of a result row depending on the column type
+    static QVariant extractData(sqlite3_stmt* stmt, int col);
 
 private:
     /// SQL transactions to be processed
