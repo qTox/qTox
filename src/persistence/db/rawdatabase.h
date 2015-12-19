@@ -75,9 +75,9 @@ public slots:
     bool rename(const QString& newPath);
 
 protected slots:
-    /// Should only be called from the constructor, runs on the caller's thread
+    /// Tries to open the database with the given (possibly empty) key
     bool open(const QString& path, const QString& hexKey = {});
-    /// Should only be called from the destructor, runs on the caller's thread
+    /// Closes the database and free its associated resources
     void close();
     /// Implements the actual processing of pending transactions
     /// Unqueues, compiles, binds and executes queries, then notifies of results
