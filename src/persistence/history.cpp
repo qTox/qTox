@@ -146,13 +146,14 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
 
     auto rowCallback = [&messages](const QVector<QVariant>& row)
     {
+        // dispName and message could have null bytes, QString::fromUtf8 truncates on null bytes so we strip them
         messages += {row[0].toLongLong(),
                     row[1].isNull(),
                     QDateTime::fromMSecsSinceEpoch(row[2].toLongLong()),
                     row[3].toString(),
-                    row[4].toString(),
+                    QString::fromUtf8(row[4].toByteArray().replace('\0',"")),
                     row[5].toString(),
-                    row[6].toString()};
+                    QString::fromUtf8(row[6].toByteArray().replace('\0',""))};
     };
 
     // Don't forget to update the rowCallback if you change the selected columns!
