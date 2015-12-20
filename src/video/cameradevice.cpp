@@ -34,6 +34,9 @@ extern "C" {
 #ifdef Q_OS_LINUX
 #include "src/platform/camera/v4l2.h"
 #endif
+#ifdef Q_OS_OSX
+#include "src/platform/camera/avfoundation.h"
+#endif
 
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
@@ -281,6 +284,10 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 #ifdef Q_OS_LINUX
     else if (iformat->name == QString("video4linux2,v4l2"))
         devices += v4l2::getDeviceList();
+#endif
+#ifdef Q_OS_OSX
+    else if (iformat->name == QString("avfoundation"))
+        devices += avfoundation::getDeviceList();
 #endif
     else
         devices += getRawDeviceListGeneric();

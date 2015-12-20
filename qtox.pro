@@ -159,7 +159,7 @@ win32 {
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -framework AVFoundation -framework Foundation -mmacosx-version-min=10.7
         LIBS += -lqrencode -lsqlcipher
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
@@ -462,7 +462,11 @@ macx {
         src/platform/install_osx.cpp
 
     HEADERS += \
-        src/platform/install_osx.h
+        src/platform/install_osx.h \
+        src/platform/camera/avfoundation.h
+
+    OBJECTIVE_SOURCES += \
+        src/platform/camera/avfoundation.mm
 }
 
 SOURCES += \
