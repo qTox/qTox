@@ -3,17 +3,17 @@
 
   <!-- first emoticons (9/13/14) -->
   <emoticon file="angel.png">
-    <string>😇</string>
     <string>:angel:</string>
     <string>0:)</string>
     <string>O:)</string>
     <string>0:-)</string>
     <string>O:-)</string>
+    <string>😇</string>
   </emoticon>
 
   <emoticon file="beer.png">
-    <string>🍺</string>
     <string>:beer:</string>
+    <string>🍺</string>
   </emoticon>
 
   <emoticon file="bored.png">
@@ -29,14 +29,13 @@
   </emoticon>
 
   <emoticon file="crying.png">
-    <string>😢</string>
     <string>:cry:</string>
     <string>:'(</string>
     <string>:,(</string>
+    <string>😢</string>
   </emoticon>
 
   <emoticon file="devil.png">
-    <string>😈</string>
     <string>:devil:</string>
     <string>:666:</string>
     <string>}:-)</string>
@@ -44,6 +43,7 @@
     <string>]:-)</string>
     <string>]:-></string>
     <string>>:-></string>
+    <string>😈</string>
   </emoticon>
 
   <emoticon file="dho.png">
@@ -75,15 +75,15 @@
   </emoticon>
 
   <emoticon file="heart.png">
-    <string>❤</string>
     <string>&lt;3</string>
     <string>:heart:</string>
     <string>:love:</string>
+    <string>❤</string>
   </emoticon>
 
   <emoticon file="hi.png">
-    <string>🙋</string>
     <string>:hi:</string>
+    <string>🙋</string>
   </emoticon>
 
   <emoticon file="highfive.png">
@@ -99,31 +99,31 @@
   </emoticon>
 
   <emoticon file="tongue.png">
-    <string>😛</string>
     <string>:impertinent:</string>
     <string>:-P</string>
     <string>:-p</string>
     <string>:P</string>
     <string>:p</string>
+    <string>😛</string>
   </emoticon>
 
   <emoticon file="inlove.png">
-    <string>😍</string>
     <string>:inlove:</string>
+    <string>😍</string>
   </emoticon>
 
   <emoticon file="kiss.png">
-    <string>😙</string>
     <string>:kiss:</string>
     <string>:*</string>
     <string>:-*</string>
+    <string>😙</string>
   </emoticon>
 
   <emoticon file="lol.png">
-    <string>😄</string>
     <string>:lol:</string>
     <string>:D</string>
     <string>:-D</string>
+    <string>😄</string>
   </emoticon>
 
   <emoticon file="moustache.png">
@@ -151,12 +151,12 @@
   </emoticon>
 
   <emoticon file="nospeak.png">
-    <string>🙊</string>
     <string>:silence:</string>
     <string>:-x</string>
     <string>:-X</string>
     <string>:x</string>
     <string>:X</string>
+    <string>🙊</string>
   </emoticon>
 
   <emoticon file="oops.png">
@@ -180,8 +180,8 @@
   </emoticon>
 
   <emoticon file="rain.png">
-    <string>🌧</string>
     <string>:rain:</string>
+    <string>🌧</string>
   </emoticon>
 
   <emoticon file="rocknroll.png">
@@ -192,10 +192,10 @@
   </emoticon>
 
   <emoticon file="sad.png">
-    <string>😞</string>
     <string>:sad:</string>
     <string>:(</string>
     <string>:-(</string>
+    <string>😞</string>
   </emoticon>
 
   <emoticon file="shy.png">
@@ -205,17 +205,17 @@
   </emoticon>
 
   <emoticon file="sleeping.png">
-    <string>😴</string>
     <string>:sleeping:</string>
     <string>|-)</string>
     <string>#)</string>
+    <string>😴</string>
   </emoticon>
 
   <emoticon file="smile.png">
-    <string>☺</string>
     <string>:smile:</string>
     <string>:-)</string>
     <string>:)</string>
+    <string>☺</string>
   </emoticon>
 
   <emoticon file="sniggering.png">
@@ -240,10 +240,10 @@
   </emoticon>
 
   <emoticon file="wink.png">
-    <string>😉</string>
     <string>:wink:</string>
    <string>;-)</string>
    <string>;)</string>
+   <string>😉</string>
   </emoticon>
 
   <emoticon file="wondering.png">
@@ -256,16 +256,16 @@
   </emoticon>
 
   <emoticon file="XD.png">
-    <string>😆</string>
     <string>XD</string>
     <string>xD</string>
+    <string>😆</string>
   </emoticon>
 
   <emoticon file="XP.png">
-    <string>😝</string>
     <string>:emoticonmashup:</string>
     <string>XP</string>
     <string>xP</string>
+    <string>😝</string>
   </emoticon>
 
   <emoticon file="yawn.png">
@@ -274,23 +274,23 @@
 
   <!-- new emoticons (10/26/14) -->
   <emoticon file="bomb.png">
-    <string>💣</string>
     <string>:bomb:</string>
+    <string>💣</string>
   </emoticon>
 
   <emoticon file="cookie.png">
-    <string>🍪</string>
     <string>:cookie:</string>
+    <string>🍪</string>
   </emoticon>
 
   <emoticon file="diamond.png">
-    <string>🔷</string>
     <string>:diamond:</string>
+    <string>🔷</string>
   </emoticon>
 
   <emoticon file="eye.png">
-    <string>👁</string>
     <string>:eye:</string>
+    <string>👁</string>
   </emoticon>
 
   <emoticon file="hacker_terminal.png">
@@ -299,9 +299,9 @@
   </emoticon>
 
   <emoticon file="syringe.png">
-    <string>💉</string>
     <string>:syringe:</string>
     <string>:injection:</string>
+    <string>💉</string>
   </emoticon>
 
   <emoticon file="toxlocker.png">
@@ -328,17 +328,17 @@
   </emoticon>
 
   <emoticon file="cool.png">
-    <string>😎</string>
     <string>:cool:</string>
     <string>8)</string>
     <string>8-)</string>
+    <string>😎</string>
   </emoticon>
 
   <emoticon file="angry.png">
-    <string>😠</string>
     <string>:angry:</string>
     <string>>:-(</string>
     <string>>:(</string>
+    <string>😠</string>
   </emoticon>
 
 </messaging-emoticon-map>
