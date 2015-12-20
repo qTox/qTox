@@ -181,8 +181,8 @@ public:
         cleanupOutput();
     }
 
-    bool initInput(const QString& inDevDescr);
-    bool initOutput(const QString& outDevDescr);
+    bool initInput(QString inDevDescr);
+    bool initOutput(QString outDevDescr);
     void cleanupInput();
     void cleanupOutput();
 
@@ -406,7 +406,7 @@ void Audio::unsubscribeInput()
         d->cleanupInput();
 }
 
-bool AudioPrivate::initInput(const QString& inDevDescr)
+bool AudioPrivate::initInput(QString inDevDescr)
 {
     qDebug() << "Opening audio input" << inDevDescr;
 
@@ -430,11 +430,11 @@ bool AudioPrivate::initInput(const QString& inDevDescr)
             alInDev = alcCaptureOpenDevice(pDeviceList, sampleRate, stereoFlag, bufSize);
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN
-            QString inDev = QString::fromUtf8(pDeviceList, len);
+            inDevDescr = QString::fromUtf8(pDeviceList, len);
 #else
-            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
+            inDevDescr = QString::fromLocal8Bit(pDeviceList, len);
 #endif
-            Settings::getInstance().setInDev(inDev);
+            Settings::getInstance().setInDev(inDevDescr);
         }
         else
         {
@@ -445,13 +445,9 @@ bool AudioPrivate::initInput(const QString& inDevDescr)
         alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
                                        sampleRate, stereoFlag, bufSize);
 
-    if (alInDev)
-        qDebug() << "Opened audio input" << inDevDescr;
-    else
-        qWarning() << "Cannot open input audio device" << inDevDescr;
-
     // Restart the capture if necessary
     if (alInDev) {
+        qDebug() << "Opened audio input" << inDevDescr;
         alcCaptureStart(alInDev);
     } else {
         qCritical() << "Failed to initialize audio input device:" << inDevDescr;
@@ -467,7 +463,7 @@ bool AudioPrivate::initInput(const QString& inDevDescr)
 
 Open an audio output device
 */
-bool AudioPrivate::initOutput(const QString& outDevDescr)
+bool AudioPrivate::initOutput(QString outDevDescr)
 {
     qDebug() << "Opening audio output" << outDevDescr;
     outSources.clear();
@@ -491,11 +487,11 @@ bool AudioPrivate::initOutput(const QString& outDevDescr)
             alOutDev = alcOpenDevice(pDeviceList);
             int len = strlen(pDeviceList);
 #ifdef Q_OS_WIN
-            QString outDev = QString::fromUtf8(pDeviceList, len);
+            outDevDescr = QString::fromUtf8(pDeviceList, len);
 #else
-            QString outDev = QString::fromLocal8Bit(pDeviceList, len);
+            outDevDescr = QString::fromLocal8Bit(pDeviceList, len);
 #endif
-            Settings::getInstance().setOutDev(outDev);
+            Settings::getInstance().setOutDev(outDevDescr);
         }
         else
         {
@@ -747,7 +743,7 @@ void Audio::subscribeOutput(SID& sid)
 
     if (!d->alOutDev) {
         if (!d->initOutput(Settings::getInstance().getOutDev())) {
-            qWarning("Failed to subscribe to audio input device.");
+            qWarning("Failed to subscribe to audio output device.");
             return;
         }
     }
