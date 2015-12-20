@@ -445,13 +445,9 @@ bool AudioPrivate::initInput(QString inDevDescr)
         alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
                                        sampleRate, stereoFlag, bufSize);
 
-    if (alInDev)
-        qDebug() << "Opened audio input" << inDevDescr;
-    else
-        qWarning() << "Cannot open input audio device" << inDevDescr;
-
     // Restart the capture if necessary
     if (alInDev) {
+        qDebug() << "Opened audio input" << inDevDescr;
         alcCaptureStart(alInDev);
     } else {
         qCritical() << "Failed to initialize audio input device:" << inDevDescr;
@@ -747,7 +743,7 @@ void Audio::subscribeOutput(SID& sid)
 
     if (!d->alOutDev) {
         if (!d->initOutput(Settings::getInstance().getOutDev())) {
-            qWarning("Failed to subscribe to audio input device.");
+            qWarning("Failed to subscribe to audio output device.");
             return;
         }
     }
