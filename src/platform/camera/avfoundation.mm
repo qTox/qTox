@@ -28,7 +28,7 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
 
     NSArray* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
     for (AVCaptureDevice* device in devices) {
-        result.append({ QString::number([devices indexOfObject:device]), [[device localizedName] UTF8String] });
+        result.append({ QString::fromUtf8([[device uniqueID] UTF8String]), QString::fromUtf8([[device localizedName] UTF8String]) });
     }
 
     return result;
@@ -37,6 +37,34 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
 QVector<VideoMode> avfoundation::getDeviceModes(QString devName)
 {
     QVector<VideoMode> result;
+
+    NSArray* devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    AVCaptureDevice* device = nil;
+
+    for (AVCaptureDevice* dev in devices) {
+        if (devName == QString::fromUtf8([[dev uniqueID] UTF8String])) {
+            device = dev;
+            break;
+        }
+    }
+    if (device == nil) {
+        return result;
+    }
+
+    for (AVCaptureDeviceFormat* format in [device formats]) {
+        CMFormatDescriptionRef formatDescription;
+        CMVideoDimensions dimensions;
+        formatDescription = (CMFormatDescriptionRef)[format performSelector:@selector(formatDescription)];
+        dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+
+        for (AVFrameRateRange* range in format.videoSupportedFrameRateRanges) {
+            VideoMode mode;
+            mode.width = dimensions.width;
+            mode.height = dimensions.height;
+            mode.FPS = range.maxFrameRate;
+            result.append(mode);
+        }
+    }
 
     return result;
 }
