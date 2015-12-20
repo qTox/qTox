@@ -81,8 +81,4 @@
     <string>XD</string>
     <string>😆</string>
   </emoticon>
-  
-  <emoticon file="Kappa.png">
-    <string>:Kappa:</string>
-  </emoticon>
 </messaging-emoticon-map>

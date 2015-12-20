@@ -46,15 +46,13 @@
     <string>😈</string>
   </emoticon>
 
-  <emoticon file="dho.png">
+  <emoticon file="doh.png">
     <string>X.</string>
     <string>X°</string>
     <string>Xo</string>
     <string>>:.</string>
     <string>>:°</string>
     <string>>:o</string>
-    <string>:dho:</string>
-    <string>:d'ho:</string>
   </emoticon>
 
   <emoticon file="evil.png">
@@ -262,7 +260,6 @@
   </emoticon>
 
   <emoticon file="XP.png">
-    <string>:emoticonmashup:</string>
     <string>XP</string>
     <string>xP</string>
     <string>😝</string>
