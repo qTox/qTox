@@ -49,7 +49,6 @@ ToxCall::ToxCall(ToxCall&& other) noexcept
     // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
     audio.subscribeInput();
-    audio.subscribeOutput(alSource);
 
 #ifdef QTOX_FILTER_AUDIO
     filterer = other.filterer;
