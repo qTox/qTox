@@ -16,30 +16,22 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef AVFOUNDATION_H
+#define AVFOUNDATION_H
 
+#include <QString>
+#include <QVector>
+#include <QPair>
+#include "src/video/videomode.h"
 
-#ifndef VIDEOMODE_H
-#define VIDEOMODE_H
+#ifndef Q_OS_MACX
+#error "This file is only meant to be compiled for Mac OS X targets"
+#endif
 
-/// Describes a video mode supported by a device
-struct VideoMode
+namespace avfoundation
 {
-    unsigned short width, height; ///< Displayed video resolution (NOT frame resolution)
-    float FPS; ///< Max frames per second supported by the device at this resolution
+    QVector<VideoMode> getDeviceModes(QString devName);
+    QVector<QPair<QString, QString>> getDeviceList();
+}
 
-    /// All zeros means a default/unspecified mode
-    operator bool() const
-    {
-        return width || height || FPS;
-    }
-
-    bool operator==(const VideoMode& other) const
-    {
-        return width == other.width
-                && height == other.height
-                && FPS == other.FPS;
-    }
-};
-
-#endif // VIDEOMODE_H
-
+#endif // AVFOUNDATION_H
