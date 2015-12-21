@@ -41,7 +41,6 @@ protected:
 
 private slots:
     void onMakeToxPortableUpdated();
-    void onDbSyncTypeUpdated();
     void resetToDefault();
 
 private:

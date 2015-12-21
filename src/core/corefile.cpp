@@ -68,12 +68,13 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     uint8_t avatarHash[TOX_HASH_LENGTH];
     tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
     uint64_t filesize = data.size();
+    TOX_ERR_FILE_SEND err;
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
-                                         avatarHash, avatarHash, TOX_HASH_LENGTH, nullptr);
+                                         avatarHash, avatarHash, TOX_HASH_LENGTH, &err);
 
     if (fileNum == std::numeric_limits<uint32_t>::max())
     {
-        qWarning() << "sendAvatarFile: Can't create the Tox file sender";
+        qWarning() << "sendAvatarFile: Can't create the Tox file sender, error"<<err;
         return;
     }
     //qDebug() << QString("sendAvatarFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
@@ -421,7 +422,6 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
 
     if (file->bytesSent != position)
     {
-        /// TODO: Allow ooo receiving for non-stream transfers, with very careful checking
         qWarning("onFileRecvChunkCallback: Received a chunk out-of-order, aborting transfer");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
             emit core->fileTransferCancelled(*file);

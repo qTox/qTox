@@ -19,8 +19,8 @@
 
 #include "avform.h"
 #include "ui_avsettings.h"
-#include "src/persistence/settings.h"
 #include "src/audio/audio.h"
+#include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
@@ -28,23 +28,18 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/alc.h>
- #include <AL/al.h>
-#endif
-
 #include <QDebug>
+#include <QShowEvent>
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
 AVForm::AVForm() :
-    GenericForm(QPixmap(":/img/settings/av.png")),
-    camVideoSurface{nullptr}, camera(CameraSource::getInstance())
+    GenericForm(QPixmap(":/img/settings/av.png"))
+    , subscribedToAudioIn{false}
+    , camVideoSurface{nullptr}
+    , camera(CameraSource::getInstance())
 {
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
@@ -98,13 +93,38 @@ AVForm::~AVForm()
     delete bodyUI;
 }
 
-void AVForm::showEvent(QShowEvent*)
+void AVForm::hideEvent(QHideEvent* event)
+{
+    if (subscribedToAudioIn) {
+        // TODO: this should not be done in show/hide events
+        Audio::getInstance().unsubscribeInput();
+        subscribedToAudioIn = false;
+    }
+
+    if (camVideoSurface)
+    {
+        camVideoSurface->setSource(nullptr);
+        killVideoSurface();
+    }
+    videoDeviceList.clear();
+
+    GenericForm::hideEvent(event);
+}
+
+void AVForm::showEvent(QShowEvent* event)
 {
     getAudioOutDevices();
     getAudioInDevices();
     createVideoSurface();
     getVideoDevices();
-    Audio::getInstance().subscribeInput();
+
+    if (!subscribedToAudioIn) {
+        // TODO: this should not be done in show/hide events
+        Audio::getInstance().subscribeInput();
+        subscribedToAudioIn = true;
+    }
+
+    GenericForm::showEvent(event);
 }
 
 void AVForm::onVideoModesIndexChanged(int index)
@@ -233,17 +253,6 @@ void AVForm::onVideoDevChanged(int index)
         Core::getInstance()->getAv()->sendNoVideo();
 }
 
-void AVForm::hideEvent(QHideEvent *)
-{
-    if (camVideoSurface)
-    {
-        camVideoSurface->setSource(nullptr);
-        killVideoSurface();
-    }
-    videoDeviceList.clear();
-    Audio::getInstance().unsubscribeInput();
-}
-
 void AVForm::getVideoDevices()
 {
     QString settingsInDev = Settings::getInstance().getVideoDev();
@@ -270,7 +279,7 @@ void AVForm::getAudioInDevices()
     bodyUI->inDevCombobox->blockSignals(true);
     bodyUI->inDevCombobox->clear();
     bodyUI->inDevCombobox->addItem(tr("None"));
-    const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    const char* pDeviceList = Audio::inDeviceNames();
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items
@@ -301,11 +310,7 @@ void AVForm::getAudioOutDevices()
     bodyUI->outDevCombobox->blockSignals(true);
     bodyUI->outDevCombobox->clear();
     bodyUI->outDevCombobox->addItem(tr("None"));
-    const ALchar *pDeviceList;
-    if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-        pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
-    else
-        pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    const char* pDeviceList = Audio::outDeviceNames();
     if (pDeviceList)
     {
         //prevent currentIndexChanged to be fired while adding items
@@ -335,21 +340,18 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
 {
     if (!bodyUI->inDevCombobox->currentIndex())
         deviceDescriptor = "none";
-    Settings::getInstance().setInDev(deviceDescriptor);
 
-    Audio& audio = Audio::getInstance();
-    if (audio.isInputSubscribed())
-        audio.openInput(deviceDescriptor);
+    Settings::getInstance().setInDev(deviceDescriptor);
+    Audio::getInstance().reinitInput(deviceDescriptor);
 }
 
 void AVForm::onOutDevChanged(QString deviceDescriptor)
 {
     if (!bodyUI->outDevCombobox->currentIndex())
         deviceDescriptor = "none";
-    Settings::getInstance().setOutDev(deviceDescriptor);
 
-    Audio& audio = Audio::getInstance();
-    audio.openOutput(deviceDescriptor);
+    Settings::getInstance().setOutDev(deviceDescriptor);
+    Audio::getInstance().reinitOutput(deviceDescriptor);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)

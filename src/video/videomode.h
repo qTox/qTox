@@ -25,7 +25,7 @@
 struct VideoMode
 {
     unsigned short width, height; ///< Displayed video resolution (NOT frame resolution)
-    unsigned short FPS; ///< Max frames per second supported by the device at this resolution
+    float FPS; ///< Max frames per second supported by the device at this resolution
 
     /// All zeros means a default/unspecified mode
     operator bool() const

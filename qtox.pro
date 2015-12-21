@@ -142,9 +142,9 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 win32 {
     RC_FILE = windows/qtox.rc
     LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
-    LIBS += -L$$PWD/libs/lib -lavformat -lavdevice -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
-    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lz -luuid
-    LIBS += -lqrencode
+    LIBS += -L$$PWD/libs/lib -lavdevice -lavformat -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
+    LIBS += -lqrencode -lsqlcipher -lcrypto
+    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
     LIBS += -lstrmiids # For DirectShow
     contains(DEFINES, QTOX_FILTER_AUDIO) {
         contains(STATICPKG, YES) {
@@ -160,7 +160,8 @@ win32 {
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
-        LIBS += -lqrencode
+        LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia
+        LIBS += -lqrencode -lsqlcipher
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
     } else {
@@ -181,10 +182,10 @@ win32 {
                 LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
                 LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
                 LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
-                LIBS += -lqrencode
+                LIBS += -lqrencode -lsqlcipher
             } else {
                 LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
-                LIBS += -lqrencode
+                LIBS += -lqrencode -lsqlcipher
             }
 
             contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -462,7 +463,11 @@ macx {
         src/platform/install_osx.cpp
 
     HEADERS += \
-        src/platform/install_osx.h
+        src/platform/install_osx.h \
+        src/platform/camera/avfoundation.h
+
+    OBJECTIVE_SOURCES += \
+        src/platform/camera/avfoundation.mm
 }
 
 SOURCES += \
@@ -515,7 +520,9 @@ SOURCES += \
     src/widget/tool/removefrienddialog.cpp \
     src/video/groupnetcamview.cpp \
     src/core/toxcall.cpp \
-    src/widget/about/aboutuser.cpp
+    src/widget/about/aboutuser.cpp \
+    src/persistence/db/rawdatabase.cpp \
+    src/persistence/history.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -569,4 +576,6 @@ HEADERS += \
     src/video/groupnetcamview.h \
     src/core/indexedlist.h \
     src/core/toxcall.h \
-    src/widget/about/aboutuser.h
+    src/widget/about/aboutuser.h \
+    src/persistence/db/rawdatabase.h \
+    src/persistence/history.h

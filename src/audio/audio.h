@@ -21,28 +21,17 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QObject>
-#include <QHash>
-#include <QMutexLocker>
 #include <atomic>
 #include <cmath>
 
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
- #include <AL/alext.h>
-#endif
+#include <QObject>
+#include <QWaitCondition>
 
-class QString;
-class QByteArray;
-class QTimer;
-class QThread;
-class QMutex;
 struct Tox;
 class AudioFilterer;
+class AudioMeter;
+class AudioMeterListener;
+class AudioPrivate;
 
 // Public default audio settings
 static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
@@ -55,47 +44,52 @@ class Audio : public QObject
     Q_OBJECT
 
 public:
+    typedef quint32 SID;
+
+public:
     static Audio& getInstance();
 
 public:
     void startAudioThread();
 
-    qreal getOutputVolume();
+    AudioMeterListener* createAudioMeterListener() const;
+
+    qreal outputVolume();
     void setOutputVolume(qreal volume);
 
+    qreal inputVolume();
     void setInputVolume(qreal volume);
 
-    void subscribeInput();
-    void unsubscribeInput();
-    void openInput(const QString& inDevDescr);
-    bool openOutput(const QString& outDevDescr);
+    void reinitInput(const QString& inDevDesc);
+    bool reinitOutput(const QString& outDevDesc);
 
     bool isInputReady();
-    bool isInputSubscribed();
     bool isOutputReady();
 
-    static void createSource(ALuint* source);
-    static void deleteSource(ALuint* source);
+    static const char* outDeviceNames();
+    static const char* inDeviceNames();
+    void subscribeOutput(SID& sid);
+    void unsubscribeOutput(SID& sid);
 
     void startLoop();
     void stopLoop();
     void playMono16Sound(const QByteArray& data);
-    void playMono16Sound(const char* path);
+    void playMono16Sound(const QString& path);
     bool tryCaptureSamples(int16_t *buf, int samples);
 
-    static void playAudioBuffer(ALuint alSource, const int16_t *data, int samples, unsigned channels, int sampleRate);
+    void playAudioBuffer(quint32 alSource, const int16_t *data, int samples,
+                         unsigned channels, int sampleRate);
 
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
-                        unsigned samples, uint8_t channels, unsigned sample_rate, void*);
+                                     unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
-#ifdef QTOX_FILTER_AUDIO
-    static void getEchoesToFilter(AudioFilterer* filter, int framesize);
-    // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
+#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
+    void getEchoesToFilter(AudioFilterer* filter, int samples);
 #endif
 
 public slots:
-    void closeInput();
-    void closeOutput();
+    void subscribeInput();
+    void unsubscribeInput();
     void playGroupAudio(int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate);
 
@@ -110,17 +104,31 @@ private:
     static Audio* instance;
 
 private:
-    QThread*            audioThread;
-    QMutex              audioInLock;
-    QMutex              audioOutLock;
-    std::atomic<int>    inputSubscriptions;
-    ALCdevice*          alOutDev;
-    ALCdevice*          alInDev;
-    qreal               outputVolume;
-    qreal               inputVolume;
-    ALuint              alMainSource;
-    ALCcontext*         alContext;
-    QTimer*             timer;
+    AudioPrivate* d;
+};
+
+class AudioMeterListener : public QObject
+{
+    Q_OBJECT
+public:
+    explicit AudioMeterListener(AudioMeter* measureThread);
+
+    void start();
+    void stop();
+
+    void processed();
+
+signals:
+    void gainChanged(qreal newMaxGain);
+
+private slots:
+    void doListen();
+
+private:
+    bool            mActive;
+    AudioMeter*     mAudioMeter;
+    qreal           mMaxGain;
+    QWaitCondition  mGainProcessed;
 };
 
 #endif // AUDIO_H

@@ -27,7 +27,6 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/widget/style.h"
-#include "src/persistence/historykeeper.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/translator.h"
 #include "src/video/groupnetcamview.h"

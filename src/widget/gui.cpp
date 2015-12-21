@@ -143,7 +143,12 @@ void GUI::showError(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
     {
-        getInstance()._showError(title, msg);
+        // If the GUI hasn't started yet and we're on the main thread,
+        // we still want to be able to show error messages
+        if (!Nexus::getDesktopGUI())
+            QMessageBox::critical(nullptr, title, msg);
+        else
+            getInstance()._showError(title, msg);
     }
     else
     {

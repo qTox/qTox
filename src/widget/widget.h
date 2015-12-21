@@ -221,6 +221,7 @@ private:
     static bool filterOnline(int index);
     static bool filterOffline(int index);
     void retranslateUi();
+    void focusChatInput();
 
 private:
     SystemTrayIcon *icon;

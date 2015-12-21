@@ -263,9 +263,11 @@ bool CoreAV::sendCallAudio(uint32_t callId)
                 call.filterer = new AudioFilterer();
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
-            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+            // compatibility with older versions of OpenAL
+            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+#endif
             call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
         else if (call.filterer)
@@ -413,10 +415,10 @@ bool CoreAV::sendGroupCallAudio(int groupId)
                 call.filterer = new AudioFilterer();
                 call.filterer->startFilter(AUDIO_SAMPLE_RATE);
             }
-            // is a null op #ifndef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
 
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT);
+#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
+            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
+#endif
         }
         else if (call.filterer)
         {
@@ -468,24 +470,16 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
 }
 
-void CoreAV::resetCallSources()
+void CoreAV::invalidateCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        if (call.alSource)
-        {
-            Audio::deleteSource(&call.alSource);
-            Audio::createSource(&call.alSource);
-        }
+        call.alSource = 0;
     }
 
     for (ToxFriendCall& call : calls)
     {
-        if (call.alSource)
-        {
-            Audio::deleteSource(&call.alSource);
-            Audio::createSource(&call.alSource);
-        }
+        call.alSource = 0;
     }
 }
 
@@ -644,10 +638,11 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
     if (call.muteVol)
         return;
 
+    Audio& audio = Audio::getInstance();
     if (!call.alSource)
-        alGenSources(1, &call.alSource);
+        audio.subscribeOutput(call.alSource);
 
-    Audio::playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,

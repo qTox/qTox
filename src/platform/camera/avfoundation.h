@@ -16,31 +16,22 @@
     You should have received a copy of the GNU General Public License
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef AVFOUNDATION_H
+#define AVFOUNDATION_H
 
-#ifndef MICFEEDBACKWIDGET_H
-#define MICFEEDBACKWIDGET_H
+#include <QString>
+#include <QVector>
+#include <QPair>
+#include "src/video/videomode.h"
 
-#include <QWidget>
+#ifndef Q_OS_MACX
+#error "This file is only meant to be compiled for Mac OS X targets"
+#endif
 
-class AudioMeterListener;
-
-class MicFeedbackWidget : public QWidget
+namespace avfoundation
 {
-    Q_OBJECT
-public:
-    explicit MicFeedbackWidget(QWidget *parent = 0);
+    QVector<VideoMode> getDeviceModes(QString devName);
+    QVector<QPair<QString, QString>> getDeviceList();
+}
 
-protected:
-    void paintEvent(QPaintEvent* event) override;
-    void showEvent(QShowEvent* event) override;
-    void hideEvent(QHideEvent* event) override;
-
-private slots:
-    void onGainMetered(qreal value);
-
-private:
-    qreal current;
-    AudioMeterListener* mMeterListener;
-};
-
-#endif // MICFEEDBACKWIDGET_H
+#endif // AVFOUNDATION_H

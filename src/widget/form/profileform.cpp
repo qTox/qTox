@@ -30,7 +30,6 @@
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
-#include "src/persistence/historykeeper.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/profile.h"
 #include "src/widget/translator.h"

@@ -26,7 +26,6 @@
 #include "src/widget/gui.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
-#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
@@ -165,7 +164,7 @@ void Settings::loadGlobal()
             currentProfileId = makeProfileId(currentProfile);
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
-        checkUpdates = s.value("checkUpdates", false).toBool();
+        checkUpdates = s.value("checkUpdates", true).toBool();
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();

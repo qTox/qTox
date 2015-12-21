@@ -25,7 +25,8 @@
 #include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)},
@@ -50,7 +51,7 @@ Friend::~Friend()
 
 void Friend::loadHistory()
 {
-    if (Settings::getInstance().getEnableLogging())
+    if (Nexus::getProfile()->isHistoryEnabled())
     {
         chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
         widget->historyLoaded = true;
