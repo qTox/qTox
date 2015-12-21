@@ -760,6 +760,8 @@ void Audio::unsubscribeOutput(SID& sid)
 {
     QMutexLocker locker(&d->audioLock);
 
+    d->outSources.removeAll(sid);
+
     if (sid) {
         if (alIsSource(sid)) {
             alDeleteSources(1, &sid);
@@ -771,8 +773,6 @@ void Audio::unsubscribeOutput(SID& sid)
 
         sid = 0;
     }
-
-    d->outSources.removeAll(sid);
 
     if (d->outSources.isEmpty())
         d->cleanupOutput();
