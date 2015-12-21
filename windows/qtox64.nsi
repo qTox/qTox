@@ -9,7 +9,6 @@
 !define COPYRIGHT "The Tox Project"
 !define INSTALLER_NAME "setup-qtox.exe"
 !define MAIN_APP_EXE "bin\qtox.exe"
-!define INSTALL_TYPE "SetShellVarContext current"
 !define REG_ROOT "HKLM"
 !define REG_APP_PATH "Software\Microsoft\Windows\CurrentVersion\App Paths\qtox.exe"
 !define UNINSTALL_PATH "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
@@ -225,10 +224,16 @@ FunctionEnd
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "Create Desktop Shortcut"
 !define MUI_FINISHPAGE_SHOWREADME_FUNCTION finishpageaction
 
-!define MUI_FINISHPAGE_RUN "$INSTDIR\${MAIN_APP_EXE}"
+!define MUI_FINISHPAGE_RUN_FUNCTION Launch_qTox_without_Admin
+!define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_LINK "Find qTox on GitHub"
 !define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/tux3/qTox"
 !insertmacro MUI_PAGE_FINISH
+
+Function Launch_qTox_without_Admin
+   SetOutPath $INSTDIR
+   ShellExecAsUser::ShellExecAsUser "" "$INSTDIR\${MAIN_APP_EXE}" ""
+FunctionEnd
 
 !define MUI_UNABORTWARNING
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
@@ -243,25 +248,26 @@ FunctionEnd
 #INSTALL
 #################
 Section "Install"
+        SetShellVarContext all
 	# Install files
 	${SetOutPath} "$INSTDIR"
 	${WriteUninstaller} "uninstall.exe"
 	
-	${CreateDirectory} "bin"
+	${CreateDirectory} "$INSTDIR\bin"
 	${SetOutPath} "$INSTDIR\bin"
 	${File} "qtox\*.*"
 	
-	${CreateDirectory} "imageformats"
+	${CreateDirectory} "$INSTDIR\bin\imageformats"
 	${SetOutPath} "$INSTDIR\bin\imageformats"
 	File /nonfatal "qtox\imageformats\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 	
-	${CreateDirectory} "platforms"
+	${CreateDirectory} "$INSTDIR\bin\platforms"
 	${SetOutPath} "$INSTDIR\bin\platforms"
 	File /nonfatal "qtox\platforms\*.*"
 	${SetOutPath} "$INSTDIR\bin"
 	
-	${CreateDirectory} "sqldrivers"
+	${CreateDirectory} "$INSTDIR\bin\sqldrivers"
 	${SetOutPath} "$INSTDIR\bin\sqldrivers"
 	File /nonfatal "qtox\sqldrivers\*.*"
 	${SetOutPath} "$INSTDIR\bin"
@@ -298,6 +304,7 @@ SectionEnd
 #UNINSTALL
 ################
 Section Uninstall
+  SetShellVarContext all
   ;If there's no uninstall log, we'll try anyway to clean what we can
   IfFileExists "$INSTDIR\${UninstLog}" +3
     Goto noLog

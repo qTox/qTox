@@ -24,7 +24,9 @@
 #include <QByteArray>
 #include <QMap>
 
-/// Takes care of broadcasting avatar changes to our friends
+/// Takes care of broadcasting avatar changes to our friends in a smart way
+/// Cache a copy of our current avatar and friends who have received it
+/// so we don't spam avatar transfers to a friend who already has it.
 class AvatarBroadcaster
 {
 private:
@@ -40,6 +42,7 @@ public:
 
 private:
     static QByteArray avatarData;
+    static QMap<uint32_t, bool> friendsSentTo;
 };
 
 #endif // AVATARBROADCASTER_H

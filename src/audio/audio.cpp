@@ -65,11 +65,7 @@ Audio::Audio()
     , inputVolume(1.0)
     , alMainSource(0)
     , alContext(nullptr)
-    , timer(new QTimer(this))
 {
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, this, &Audio::closeOutput);
-
     audioThread->setObjectName("qTox Audio");
     connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 }
@@ -201,7 +197,24 @@ void Audio::openInput(const QString& inDevDescr)
     const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
+    {
+        const ALchar *pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+        if (pDeviceList)
+        {
+            alInDev = alcCaptureOpenDevice(pDeviceList, sampleRate, stereoFlag, bufSize);
+            int len = strlen(pDeviceList);
+#ifdef Q_OS_WIN
+            QString inDev = QString::fromUtf8(pDeviceList, len);
+#else
+            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
+#endif
+            Settings::getInstance().setInDev(inDev);
+        }
+        else
+        {
+            alInDev = alcCaptureOpenDevice(nullptr, sampleRate, stereoFlag, bufSize);
+        }
+    }
     else
         alInDev = alcCaptureOpenDevice(inDevDescr.toStdString().c_str(),
                                        sampleRate, stereoFlag, bufSize);
@@ -386,11 +399,6 @@ void Audio::playMono16Sound(const QByteArray& data)
 
     ALint frequency;
     alGetBufferi(buffer, AL_FREQUENCY, &frequency);
-    qreal duration = (lengthInSamples / static_cast<qreal>(frequency)) * 1000;
-    int remaining = timer->interval();
-
-    if (duration > remaining)
-        timer->start(duration);
 
     alDeleteBuffers(1, &buffer);
 }

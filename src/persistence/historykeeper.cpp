@@ -38,7 +38,7 @@
 static HistoryKeeper *historyInstance = nullptr;
 QMutex HistoryKeeper::historyMutex;
 
-HistoryKeeper *HistoryKeeper::getInstance()
+HistoryKeeper *HistoryKeeper::getInstance(const Profile& profile)
 {
     historyMutex.lock();
     if (historyInstance == nullptr)
@@ -53,9 +53,9 @@ HistoryKeeper *HistoryKeeper::getInstance()
         QString path(":memory:");
         GenericDdInterface *dbIntf;
 
-        if (Nexus::getProfile()->isEncrypted())
+        if (profile.isEncrypted())
         {
-            path = getHistoryPath();
+            path = getHistoryPath({}, 1);
             dbIntf = new EncryptedDb(path, initLst);
 
             historyInstance = new HistoryKeeper(dbIntf);
@@ -64,7 +64,7 @@ HistoryKeeper *HistoryKeeper::getInstance()
         }
         else
         {
-            path = getHistoryPath();
+            path = getHistoryPath({}, 0);
         }
 
         dbIntf = new PlainDb(path, initLst);
@@ -87,7 +87,7 @@ bool HistoryKeeper::checkPassword(const TOX_PASS_KEY &passkey, int encrypted)
 }
 
 HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
-    db(db_)
+    oldDb(db_)
 {
     /*
      DB format
@@ -114,11 +114,11 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
     */
 
     // for old tables:
-    QSqlQuery ans = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
+    QSqlQuery ans = oldDb->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
     if (ans.first())
     {
         int idMax = ans.value(0).toInt();
-        QSqlQuery ret = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"sent_status\";");
+        QSqlQuery ret = oldDb->exec("SELECT seq FROM sqlite_sequence WHERE name=\"sent_status\";");
         int idCur = 0;
         if (ret.first())
             idCur = ret.value(0).toInt();
@@ -126,131 +126,29 @@ HistoryKeeper::HistoryKeeper(GenericDdInterface *db_) :
         if (idCur != idMax)
         {
             QString cmd = QString("INSERT INTO sent_status (id, status) VALUES (%1, 1);").arg(idMax);
-            db->exec(cmd);
+            oldDb->exec(cmd);
         }
     }
     //check table stuct
-    ans = db->exec("PRAGMA table_info (\"history\")");
+    ans = oldDb->exec("PRAGMA table_info (\"history\")");
     ans.seek(5);
     if (!ans.value(1).toString().contains("alias"))
     {
         //add collum in table
-        db->exec("ALTER TABLE history ADD COLUMN alias TEXT");
+        oldDb->exec("ALTER TABLE history ADD COLUMN alias TEXT");
         qDebug() << "Struct DB updated: Added column alias in table history.";
     }
-
-    ans.clear();
-    ans = db->exec("PRAGMA table_info('aliases')");
-    ans.seek(2);
-    if (!ans.value(1).toString().contains("av_hash"))
-    {
-        //add collum in table
-        db->exec("ALTER TABLE aliases ADD COLUMN av_hash BLOB");
-        qDebug() << "Struct DB updated: Added column av_hash in table aliases.";
-    }
-
-    ans.seek(3);
-    if (!ans.value(1).toString().contains("avatar"))
-    {
-        //add collum in table
-        needImport = true;
-        db->exec("ALTER TABLE aliases ADD COLUMN avatar BLOB");
-        qDebug() << "Struct DB updated: Added column avatar in table aliases.";
-    }
-
-    updateChatsID();
-    updateAliases();
-
-    setSyncType(Settings::getInstance().getDbSyncType());
-
-    messageID = 0;
-    QSqlQuery sqlAnswer = db->exec("SELECT seq FROM sqlite_sequence WHERE name=\"history\";");
-    if (sqlAnswer.first())
-        messageID = sqlAnswer.value(0).toLongLong();
 }
 
 HistoryKeeper::~HistoryKeeper()
 {
-    delete db;
-}
-
-void HistoryKeeper::removeFriendHistory(const QString& chat)
-{
-    int chat_id = getChatID(chat, ctSingle).first;
-
-    db->exec("BEGIN TRANSACTION;");
-
-    QString cmd = QString("DELETE FROM chats WHERE name = '%1';").arg(chat);
-    db->exec(cmd);
-    cmd = QString("DELETE FROM aliases WHERE user_id = '%1';").arg(chat);
-    db->exec(cmd);
-    cmd = QString("DELETE FROM sent_status WHERE id IN (SELECT id FROM history WHERE chat_id = '%1');").arg(chat_id);
-    db->exec(cmd);
-    cmd = QString("DELETE FROM history WHERE chat_id = '%1';").arg(chat_id);
-    db->exec(cmd);
-
-    db->exec("COMMIT TRANSACTION;");
-}
-
-qint64 HistoryKeeper::addChatEntry(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName)
-{
-    QList<QString> cmds = generateAddChatEntryCmd(chat, message, sender, dt, isSent, dispName);
-
-    db->exec("BEGIN TRANSACTION;");
-    for (auto &it : cmds)
-        db->exec(it);
-
-    db->exec("COMMIT TRANSACTION;");
-
-    messageID++;
-    return messageID;
-}
-
-QList<HistoryKeeper::HistMessage> HistoryKeeper::getChatHistory(HistoryKeeper::ChatType ct, const QString &chat,
-                                                                const QDateTime &time_from, const QDateTime &time_to)
-{
-    QList<HistMessage> res;
-
-    qint64 time64_from = time_from.toMSecsSinceEpoch();
-    qint64 time64_to = time_to.toMSecsSinceEpoch();
-
-    int chat_id = getChatID(chat, ct).first;
-
-    QSqlQuery dbAnswer;
-    if (ct == ctSingle)
-    {
-        dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, alias FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
-                            QString("INNER JOIN aliases ON history.sender = aliases.id AND timestamp BETWEEN %1 AND %2 AND chat_id = %3;")
-                            .arg(time64_from).arg(time64_to).arg(chat_id));
-    }
-    else
-    {
-        // no groupchats yet
-    }
-
-    while (dbAnswer.next())
-    {
-        qint64 id = dbAnswer.value(0).toLongLong();
-        qint64 timeInt = dbAnswer.value(1).toLongLong();
-        QString sender = dbAnswer.value(2).toString();
-        QString senderName = dbAnswer.value(5).toString();
-        QString message = unWrapMessage(dbAnswer.value(3).toString());
-        bool isSent = true;
-        if (!dbAnswer.value(4).isNull())
-            isSent = dbAnswer.value(4).toBool();
-
-        QDateTime time = QDateTime::fromMSecsSinceEpoch(timeInt);
-
-        res.push_back(HistMessage(id, "", sender, message, time, isSent, senderName));
-    }
-
-    return res;
+    delete oldDb;
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
 {
     QSqlQuery dbAnswer;
-    dbAnswer = db->exec(QString("SELECT history.id, timestamp, user_id, message, status, name, alias FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
+    dbAnswer = oldDb->exec(QString("SELECT history.id, timestamp, user_id, message, status, name, alias FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
                         QString("INNER JOIN aliases ON history.sender = aliases.id INNER JOIN chats ON history.chat_id = chats.id;"));
 
     QList<HistMessage> res;
@@ -274,99 +172,11 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
     return res;
 }
 
-void HistoryKeeper::importMessages(const QList<HistoryKeeper::HistMessage> &lst)
-{
-    db->exec("BEGIN TRANSACTION;");
-    for (const HistMessage &msg : lst)
-    {
-        QList<QString> cmds = generateAddChatEntryCmd(msg.chat, msg.message, msg.sender, msg.timestamp, msg.isSent, QString()); //!!!
-        for (auto &it : cmds)
-            db->exec(it);
-
-        messageID++;
-    }
-    db->exec("COMMIT TRANSACTION;");
-}
-
-QList<QString> HistoryKeeper::generateAddChatEntryCmd(const QString& chat, const QString& message, const QString& sender, const QDateTime &dt, bool isSent, QString dispName)
-{
-    QList<QString> cmds;
-
-    int chat_id = getChatID(chat, ctSingle).first;
-    int sender_id = getAliasID(sender);
-
-    cmds.push_back(QString("INSERT INTO history (timestamp, chat_id, sender, message, alias) VALUES (%1, %2, %3, '%4', '%5');")
-                   .arg(dt.toMSecsSinceEpoch()).arg(chat_id).arg(sender_id).arg(wrapMessage(message.toUtf8())).arg(QString(dispName.toUtf8())));
-    cmds.push_back(QString("INSERT INTO sent_status (status) VALUES (%1);").arg(isSent));
-
-    return cmds;
-}
-
-QString HistoryKeeper::wrapMessage(const QString &str)
-{
-    QString wrappedMessage(str);
-    wrappedMessage.replace("'", "''");
-    return wrappedMessage;
-}
-
 QString HistoryKeeper::unWrapMessage(const QString &str)
 {
     QString unWrappedMessage(str);
     unWrappedMessage.replace("''", "'");
     return unWrappedMessage;
-}
-
-void HistoryKeeper::updateChatsID()
-{
-    auto dbAnswer = db->exec(QString("SELECT * FROM chats;"));
-
-    chats.clear();
-    while (dbAnswer.next())
-    {
-        QString name = dbAnswer.value(1).toString();
-        int id = dbAnswer.value(0).toInt();
-        ChatType ctype = convertToChatType(dbAnswer.value(2).toInt());
-
-        chats[name] = {id, ctype};
-    }
-}
-
-void HistoryKeeper::updateAliases()
-{
-    auto dbAnswer = db->exec(QString("SELECT * FROM aliases;"));
-
-    aliases.clear();
-    while (dbAnswer.next())
-    {
-        QString user_id = dbAnswer.value(1).toString();
-        int id = dbAnswer.value(0).toInt();
-
-        aliases[user_id] = id;
-    }
-}
-
-QPair<int, HistoryKeeper::ChatType> HistoryKeeper::getChatID(const QString &id_str, ChatType ct)
-{
-    auto it = chats.find(id_str);
-    if (it != chats.end())
-        return it.value();
-
-    db->exec(QString("INSERT INTO chats (name, ctype) VALUES ('%1', '%2');").arg(id_str).arg(ct));
-    updateChatsID();
-
-    return getChatID(id_str, ct);
-}
-
-int HistoryKeeper::getAliasID(const QString &id_str)
-{
-    auto it = aliases.find(id_str);
-    if (it != aliases.end())
-        return it.value();
-
-    db->exec(QString("INSERT INTO aliases (user_id) VALUES ('%1');").arg(id_str));
-    updateAliases();
-
-    return getAliasID(id_str);
 }
 
 void HistoryKeeper::resetInstance()
@@ -376,25 +186,6 @@ void HistoryKeeper::resetInstance()
 
     delete historyInstance;
     historyInstance = nullptr;
-}
-
-qint64 HistoryKeeper::addGroupChatEntry(const QString &chat, const QString &message, const QString &sender, const QDateTime &dt)
-{
-    Q_UNUSED(chat)
-    Q_UNUSED(message)
-    Q_UNUSED(sender)
-    Q_UNUSED(dt)
-    // no groupchats yet
-
-    return -1;
-}
-
-HistoryKeeper::ChatType HistoryKeeper::convertToChatType(int ct)
-{
-    if (ct < 0 || ct > 1)
-        return ctSingle;
-
-    return static_cast<ChatType>(ct);
 }
 
 QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
@@ -409,70 +200,9 @@ QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
         return baseDir.filePath(currentProfile + ".qtox_history");
 }
 
-void HistoryKeeper::renameHistory(QString from, QString to)
+bool HistoryKeeper::isFileExist(bool encrypted)
 {
-    resetInstance();
-
-    QFile fileEnc(QDir(Settings::getInstance().getSettingsDirPath()).filePath(from + ".qtox_history.encrypted"));
-    if (fileEnc.exists())
-        fileEnc.rename(QDir(Settings::getInstance().getSettingsDirPath()).filePath(to + ".qtox_history.encrypted"));
-
-    QFile filePlain(QDir(Settings::getInstance().getSettingsDirPath()).filePath(from + ".qtox_history"));
-    if (filePlain.exists())
-        filePlain.rename(QDir(Settings::getInstance().getSettingsDirPath()).filePath(to + ".qtox_history"));
-}
-
-void HistoryKeeper::markAsSent(int m_id)
-{
-    db->exec(QString("UPDATE sent_status SET status = 1 WHERE id = %1;").arg(m_id));
-}
-
-QDate HistoryKeeper::getLatestDate(const QString &chat)
-{
-    int chat_id = getChatID(chat, ctSingle).first;
-
-    QSqlQuery dbAnswer;
-    dbAnswer = db->exec(QString("SELECT MAX(timestamp) FROM history LEFT JOIN sent_status ON history.id = sent_status.id ") +
-                        QString("INNER JOIN aliases ON history.sender = aliases.id AND chat_id = %3;")
-                        .arg(chat_id));
-
-    if (dbAnswer.first())
-    {
-        qint64 timeInt = dbAnswer.value(0).toLongLong();
-
-        if (timeInt != 0)
-            return QDateTime::fromMSecsSinceEpoch(timeInt).date();
-    }
-
-    return QDate();
-}
-
-void HistoryKeeper::setSyncType(Db::syncType sType)
-{
-    QString syncCmd;
-
-    switch (sType)
-    {
-    case Db::syncType::stFull:
-        syncCmd = "FULL";
-        break;
-    case Db::syncType::stNormal:
-        syncCmd = "NORMAL";
-        break;
-    case Db::syncType::stOff:
-        syncCmd = "OFF";
-        break;
-    default:
-        syncCmd = "FULL";
-        break;
-    }
-
-    db->exec(QString("PRAGMA synchronous=%1;").arg(syncCmd));
-}
-
-bool HistoryKeeper::isFileExist()
-{
-    QString path = getHistoryPath();
+    QString path = getHistoryPath({}, encrypted ? 1 : 0);
     QFile file(path);
 
     return file.exists();
@@ -480,17 +210,16 @@ bool HistoryKeeper::isFileExist()
 
 void HistoryKeeper::removeHistory()
 {
-    db->exec("BEGIN TRANSACTION;");
-    db->exec("DELETE FROM sent_status;");
-    db->exec("DELETE FROM history;");
-    db->exec("COMMIT TRANSACTION;");
+    resetInstance();
+    QFile::remove(getHistoryPath({}, 0));
+    QFile::remove(getHistoryPath({}, 1));
 }
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
 {
-    auto msgs = getInstance()->exportMessages();
+    auto msgs = getInstance(*Nexus::getProfile())->exportMessages();
     qDebug() << "Messages exported";
-    getInstance()->removeHistory();
+    getInstance(*Nexus::getProfile())->removeHistory();
 
     return msgs;
 }

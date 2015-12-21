@@ -375,6 +375,7 @@ bool AutoUpdater::downloadUpdate()
         {
             qDebug() << "Skipping already downloaded file   '" + fileMeta.installpath+ "'";
             fileFile.close();
+            progressValue = initialProgress + step;
             continue;
         }
 

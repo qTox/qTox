@@ -26,7 +26,6 @@
 #include "groupwidget.h"
 #include "circlewidget.h"
 #include "widget.h"
-#include "src/persistence/historykeeper.h"
 #include <QGridLayout>
 #include <QMimeData>
 #include <QDragEnterEvent>

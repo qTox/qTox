@@ -24,6 +24,10 @@
         <source>Default resolution</source>
         <translation>Risoluzione di default</translation>
     </message>
+    <message>
+        <source>None</source>
+        <translation>Nessuno</translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
@@ -120,12 +124,16 @@ NOTA: più alta è la qualità video, più veloce deve essere la connessione ad 
 Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
 qualità video elevate, questo può causare problemi con le chiamate video.</translation>
     </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation>Scansiona dispositivi</translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation>Informazioni su qTox</translation>
     </message>
     <message>
         <source>Qt version:</source>
@@ -145,6 +153,11 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>You are using a qTox nightly build.</source>
         <translation>Stai utilizzando la versione nightly build di qTox.</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/aboutsettings.ui" line="131"/>
+        <source>You are using qTox version $GIT_DESCRIBE.</source>
+        <translation>Stai utilizzando la versione $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -172,15 +185,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox è un'interfaccia grafica per Tox basato su Qt.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è un software libero: è possibile ridistribuirlo o modificarlo secondo i termini della GNU General Public License come pubblicata dalla Free Software Foundation, o la versione 3 della licenza o (a tua scelta) qualsiasi versione successiva.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox è distribuito nella speranza che sia utile, ma senza alcuna garanzia; senza neppure la garanzia implicita di commerciabilità o idoneità per uno scopo particolare. Vedi la GNU General Public License per maggiori dettagli. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;Dovresti aver ricevuto una copia della GNU General Public License insieme a questo programma. In caso contrario, vedere &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Authors</source>
@@ -188,7 +193,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autore originale : &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Guarda la lista completa degli  &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;sviluppatori&lt;/span&gt;&lt;/a&gt; su Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Autore originale: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Guarda la lista completa degli  &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;sviluppatori&lt;/span&gt;&lt;/a&gt; su Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -196,14 +201,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida nel nostro &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; articolo di wiki.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Un elenco di tutti i problemi noti può essere trovato presso il nostro &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; su Github. Se si trova un bug o una vulnerabilità all'interno di qTox, si prega di segnalarlo secondo le linee guida del nostro articolo wiki &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogo</translation>
     </message>
     <message>
         <source>username</source>
@@ -231,11 +236,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>I file scaricati automaticamente da questo contatto sono disabilitati</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation>Accetta automaticamente i file</translation>
+        <translation>Accetta automaticamente i file inviati da questo contatto</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -243,7 +248,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Notes</source>
-        <translation>Note</translation>
+        <translation>Appunti</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -252,7 +257,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Scegliere una cartella dove accettare automaticamente i file</translation>
+        <translation>Scegliere una cartella per i file scaricati automaticamente</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -326,6 +331,11 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <comment>DNS error</comment>
         <translation>Questo Tox ID non esiste</translation>
     </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <comment>Tox ID format description</comment>
+        <translation>76 caratteri esadecimali oppure nome@esempio.com</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -335,19 +345,16 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
         <translation>Avanzate</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="39"/>
-        <source>FULL - very safe, slowest (recommended)</source>
-        <translation>COMPLETO - molto sicuro; lento (consigliato)</translation>
+        <source>Synchronized - safe (recommended)</source>
+        <translation>Sincronizzato - sicuro (consigliato)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="40"/>
-        <source>NORMAL - almost as safe as FULL, about 20% faster than FULL</source>
-        <translation>NORMALE - quasi sicuro come COMPLETO, ma circa 20% più veloce</translation>
+        <source>Partially async - risky (20% faster)</source>
+        <translation>Parzialmente sincronizzato - rischioso (20% più veloce)</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/advancedform.cpp" line="41"/>
-        <source>OFF - disables all safety, when something goes wrong your history may be lost, fastest (not recommended)</source>
-        <translation>DISABILITATO - disabilita tutta la sicurezza, quando qualcosa va male i log possono essere persi; veloce (non consigliato)</translation>
+        <source>Asynchronous - dangerous (fastest)</source>
+        <translation>Asincrono - pericoloso (più veloce)</translation>
     </message>
 </context>
 <context>
@@ -385,8 +392,8 @@ Ignorare le impostazioni del proxy e connettersi direttamente alla rete Tox?</tr
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="76"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Synchronous writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scritture sincrone sul DB</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Scrittura nel DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/advancedsettings.ui" line="107"/>
@@ -552,25 +559,23 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="393"/>
         <source>Cancel video call</source>
-        <translation>Rifiuta videochiamata</translation>
+        <translation>Annulla videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="401"/>
         <source>Cancel audio call</source>
-        <translation>Rifiuta chiamata</translation>
+        <translation>Annulla chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="409"/>
-        <source>Calling to %1</source>
+        <source>Calling %1</source>
         <translation>Stai chiamando %1</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="663"/>
         <source>Start audio call</source>
         <translation>Avvia chiamata</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/chatform.cpp" line="666"/>
         <source>Start video call</source>
         <translation>Avvia videochiamata</translation>
     </message>
@@ -645,6 +650,23 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widget/tool/chattextedit.cpp" line="70"/>
         <source>Type your message here...</source>
         <translation>Scrivi il tuo messaggio qui...</translation>
+    </message>
+</context>
+<context>
+    <name>CircleWidget</name>
+    <message>
+        <source>Rename circle</source>
+        <comment>Menu for renaming a circle</comment>
+        <translation>Rinomina circolo</translation>
+    </message>
+    <message>
+        <source>Remove circle</source>
+        <comment>Menu for removing a circle</comment>
+        <translation>Elimina circolo</translation>
+    </message>
+    <message>
+        <source>Open all in new window</source>
+        <translation>Apri tutto in una nuova finestra</translation>
     </message>
 </context>
 <context>
@@ -834,20 +856,19 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
 <context>
     <name>FilesForm</name>
     <message>
-        <location filename="../src/widget/form/filesform.cpp" line="91"/>
-        <source>Transfered Files</source>
+        <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Files Trasferiti</translation>
+        <translation>File Trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="92"/>
         <source>Downloads</source>
-        <translation>Files Ricevuti</translation>
+        <translation>File Ricevuti</translation>
     </message>
     <message>
         <location filename="../src/widget/form/filesform.cpp" line="93"/>
         <source>Uploads</source>
-        <translation>Files Inviati</translation>
+        <translation>File Inviati</translation>
     </message>
 </context>
 <context>
@@ -898,13 +919,30 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/friendwidget.cpp" line="76"/>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Accetta automaticamente i files inviati da questo contatto</translation>
+        <translation>Accetta automaticamente i file inviati da questo contatto</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="60"/>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Invita nel gruppo</translation>
+    </message>
+    <message>
+        <source>Move to circle...</source>
+        <comment>Menu to move a friend into a different circle</comment>
+        <translation>Sposta nel circolo...</translation>
+    </message>
+    <message>
+        <source>To new circle</source>
+        <translation>In un nuovo circolo</translation>
+    </message>
+    <message>
+        <source>Remove from circle &apos;%1&apos;</source>
+        <translation>Rimuovi dal circolo &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Move  to circle &quot;%1&quot;</source>
+        <translation>Sposta nel circolo &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="73"/>
@@ -918,10 +956,14 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <translation>Rimuovi contatto</translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation>Mostra dettagli</translation>
+    </message>
+    <message>
         <location filename="../src/widget/friendwidget.cpp" line="111"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="175"/>
@@ -947,6 +989,10 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
         <location filename="../src/widget/friendwidget.cpp" line="183"/>
         <source>Offline</source>
         <translation>Offline</translation>
+    </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
     </message>
     <message>
         <location filename="../src/widget/friendwidget.cpp" line="266"/>
@@ -996,7 +1042,7 @@ Soprannome:</translation>
         <location filename="../src/widget/form/settings/generalform.cpp" line="305"/>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Scegli dove salvare i files accettati automaticamente</translation>
+        <translation>Scegli dove salvare i file accettati automaticamente</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalform.cpp" line="361"/>
@@ -1037,7 +1083,7 @@ Soprannome:</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="129"/>
         <source>Show system tray icon</source>
-        <translation>Mostra icona nella traybar</translation>
+        <translation>Mostra icona nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="156"/>
@@ -1054,7 +1100,7 @@ Soprannome:</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="119"/>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation>qTox sarà avviato minimizzato nella traybar.</translation>
+        <translation>qTox sarà avviato minimizzato nella barra di sistema.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="142"/>
@@ -1062,7 +1108,7 @@ Soprannome:</translation>
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
         <translation>Premendo l&apos;icona &quot;chiudi&quot; (X) qTox sarà minimizzato
-nella traybar invece che essere chiuso.</translation>
+nella barra di sistema invece che essere chiuso.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="169"/>
@@ -1070,7 +1116,7 @@ nella traybar invece che essere chiuso.</translation>
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translation>Premendo l&apos;icona &quot;minimizza&quot; (_) qTox sarà minimizzato
-nella traybar invece che nella taskbar.</translation>
+nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="252"/>
@@ -1080,7 +1126,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="282"/>
         <source>Set where files will be saved.</source>
-        <translation>Scegli dove salvare i files ricevuti.</translation>
+        <translation>Scegli dove salvare i file ricevuti.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="242"/>
@@ -1096,6 +1142,16 @@ nella traybar invece che nella taskbar.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="206"/>
         <source>Auto away after (0 to disable):</source>
         <translation>Mostra come assente dopo (0 per disabilitare):</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="283"/>
+        <source>Autoaccept files</source>
+        <translation>Accetta automaticamente i file</translation>
+    </message>
+    <message>
+        <location filename="../src/widget/form/settings/generalsettings.ui" line="267"/>
+        <source>Default directory to save files:</source>
+        <translation>Cartella predefinita per salvare i file:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="294"/>
@@ -1137,7 +1193,7 @@ nella traybar invece che nella taskbar.</translation>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="269"/>
         <source>Autoaccept and save files:</source>
-        <translation>Accetta automaticamente e salva i files in:</translation>
+        <translation>Accetta automaticamente e salva i file in:</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="311"/>
@@ -1165,6 +1221,27 @@ nella traybar invece che nella taskbar.</translation>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="441"/>
         <source>Emoticon size:</source>
         <translation>Dimensione:</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation>Apri la finestra di qTox quando si riceve un nuovo messaggio.</translation>
+    </message>
+    <message>
+        <source>Start qTox on operating system startup (current profile).</source>
+        <translation>Apri qTox all'avvio del sistema operativo (profilo corrente).</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation>Apri finestra</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation>Modalità finestre multiple</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation>Apri ogni chat in una finestra singola</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="473"/>
@@ -1204,19 +1281,24 @@ nella traybar invece che nella taskbar.</translation>
         <translation>Indirizzo:</translation>
     </message>
     <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation>Porta:</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="122"/>
         <source>Start in tray</source>
-        <translation>Avvia nella traybar</translation>
+        <translation>Avvia nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="146"/>
         <source>Close to tray</source>
-        <translation>Chiudi nella traybar</translation>
+        <translation>Chiudi nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="173"/>
         <source>Minimize to tray</source>
-        <translation>Minimizza nella traybar</translation>
+        <translation>Minimizza nella barra di sistema</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/generalsettings.ui" line="349"/>
@@ -1354,7 +1436,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="494"/>
         <source>Send file(s)</source>
-        <translation>Invia file(s)</translation>
+        <translation>Invia file</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="495"/>
@@ -1363,13 +1445,13 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="496"/>
-        <source>Start an audio call</source>
-        <translation>Inizia una chiamata</translation>
+        <source>Start audio call</source>
+        <translation>Avvia chiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="497"/>
-        <source>Start a video call</source>
-        <translation>Inizia una videochiamata</translation>
+        <source>Start video call</source>
+        <translation>Avvia videochiamata</translation>
     </message>
     <message>
         <location filename="../src/widget/form/genericchatform.cpp" line="351"/>
@@ -1391,6 +1473,21 @@ will be sent to them when they appear online to you.</source>
         <location filename="../src/widget/form/genericchatform.cpp" line="405"/>
         <source>Cleared</source>
         <translation>Pulito</translation>
+    </message>
+</context>
+<context>
+    <name>GenericNetCamView</name>
+    <message>
+        <source>Tox video</source>
+        <translation>Video Tox</translation>
+    </message>
+    <message>
+        <source>Show Messages</source>
+        <translation>Mostra messaggi</translation>
+    </message>
+    <message>
+        <source>Hide Messages</source>
+        <translation>Nascondi messaggi</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1574,10 @@ Title:</source>
         <translation>Per impostare un nome puoi anche cliccare sul gruppo direttamente dalla chat.
 Nome gruppo:</translation>
     </message>
+    <message>
+        <source>Open chat in new window</source>
+        <translation>Apri la chat in una nuova finestra</translation>
+    </message>
 </context>
 <context>
     <name>IdentitySettings</name>
@@ -1525,6 +1626,10 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
         <translation>Profilo</translation>
     </message>
     <message>
+        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Posizione del profilo attuale:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.ui" line="176"/>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
@@ -1546,7 +1651,7 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
         <location filename="../src/widget/form/profileform.ui" line="210"/>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation>Logout</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.ui" line="247"/>
@@ -1600,12 +1705,12 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="14"/>
         <source>Load History Dialog</source>
-        <translation>Carica log</translation>
+        <translation>Carica cronologia chat</translation>
     </message>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
         <source>Load history from:</source>
-        <translation>Carica log dal giorno:</translation>
+        <translation>Carica cronologia chat del giorno:</translation>
     </message>
 </context>
 <context>
@@ -1630,8 +1735,7 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/loginscreen.ui" line="388"/>
         <source>Confirm:</source>
-        <translation>Conferma
-password:</translation>
+        <translation>Conferma:</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="408"/>
@@ -1642,6 +1746,18 @@ password:</translation>
         <location filename="../src/loginscreen.ui" line="617"/>
         <source>Create Account</source>
         <translation>Crea Profilo</translation>
+    </message>
+    <message>
+        <source>Load automatically</source>
+        <translation>Accedi automaticamente</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Accedi</translation>
+    </message>
+    <message>
+        <source>Load Profile</source>
+        <translation>Accedi al profilo</translation>
     </message>
     <message>
         <location filename="../src/loginscreen.ui" line="757"/>
@@ -1663,6 +1779,10 @@ password:</translation>
         <location filename="../src/loginscreen.ui" line="1071"/>
         <source>New Profile</source>
         <translation>Nuovo Profilo</translation>
+    </message>
+     <message>
+        <source>Create Profile</source>
+        <translation>Crea Profilo</translation>
     </message>
     <message>
         <location filename="../src/widget/loginscreen.cpp" line="114"/>
@@ -1812,9 +1932,14 @@ Se incontri questo errore, riportalo agli sviluppatori.</translation>
         <translation>NoSpam</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="80"/>
-        <source>The NoSpam is part of your Tox ID, if you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Il valore nospam è parte del tuo Tox ID. Se ricevi molte richieste d&apos;amicizia indesiderate, cambia questo valore.</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
+        <source>NoSpam is part of your Tox ID.
+If you are being spammed with friend requests, you should change your NoSpam.
+People will be unable to add you with your old ID, but you will keep your current friends.</source>
+        <comment>toolTip for nospam</comment>
+        <translation>Il valore NoSpam è parte del tuo ID Tox.
+Se ricevi molte richieste di amicizia indesiderate, cambia questo valore.
+Le persone non saranno più in grado di aggiungerti con il tuo vecchio Tox ID, ma manterrai i contatti attuali.</translation>
     </message>
     <message>
         <location filename="../src/widget/form/settings/privacysettings.ui" line="99"/>
@@ -1830,24 +1955,27 @@ Save format changes are possible, which may result in data loss.</source>
 Il formato del file potrebbe cambiare (questo potrebbe causare perdita di dati).</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/settings/privacysettings.ui" line="68"/>
-        <source>Nospam is part of your Tox ID.
-It is there to help you change your Tox ID when you feel like you are getting too much spam friend requests.
-When you change nospam, your current contacts still can communicate with you,
-but new contacts need to know your new Tox ID to be able to add you.</source>
-        <comment>toolTip for nospam</comment>
-        <translation>Il valore &quot;nospam&quot; fa parte del tuo Tox ID.
-Lo si deve modificare quando si ritiene che si stanno ricevendo troppe richiste d&apos;amicizia da persone sconosciute.
-Quando modifichi il valore &quot;nospam&quot;, i contatti che hai già aggiunto potranno continuare a comunicare con te,
-ma i nuovi contatti dovranno conoscere il tuo nuovo Tox ID per aggiungerti.</translation>
+        <location filename="../src/widget/form/settings/privacysettings.ui" line="79"/>
+        <source>NoSpam is a part of your ID that can be changed at will.
+If you are getting spammed with friend requests, change the NoSpam.</source>
+        <translation>Il valore NoSpam è parte del tuo Tox ID che può essere cambiata a piacimento.
+Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
+        <source>User Profile</source>
+        <translation>Profilo Utente</translation>
+    </message>
+    <message>
         <location filename="../src/widget/form/profileform.cpp" line="195"/>
         <source>Choose a profile picture</source>
         <translation>Scegli un&apos;immagine per il profilo</translation>
+    </message>
+     <message>
+        <source>Current profile: </source>
+        <translation>Profilo attuale: </translation>
     </message>
     <message>
         <location filename="../src/widget/form/profileform.cpp" line="205"/>
@@ -2106,9 +2234,28 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <translation>Ridimensiona</translation>
     </message>
     <message>
-        <location filename="../src/widget/form/profileform.cpp" line="353"/>
-        <source>User Profile</source>
-        <translation>Profilo Utente</translation>
+        <source>None</source>
+        <comment>No camera device set</comment>
+        <translation>Nessuno</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveFriendDialog</name>
+    <message>
+        <source>Remove friend</source>
+        <translation>Rimuovi contatto</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; dalla tua lista contatti?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Also remove chat history</source>
+        <translation>Rimuovi anche la cronologia chat</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Rimuovi</translation>
     </message>
 </context>
 <context>
@@ -2132,6 +2279,14 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <location filename="../src/widget/form/setpassworddialog.ui" line="14"/>
         <source>Set your password</source>
         <translation>Imposta password</translation>
+    </message>
+    <message>
+        <source>Confirm:</source>
+        <translation>Conferma:</translation>
+    </message>
+    <message>
+        <source>Password strength: %p%</source>
+        <translation>Robustezza password: %p%</translation>
     </message>
     <message>
         <location filename="../src/widget/form/setpassworddialog.ui" line="31"/>
@@ -2307,6 +2462,18 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <translation>Aggiungi contatto</translation>
     </message>
     <message>
+        <source>Add new circle...</source>
+        <translation>Aggiungi un nuovo circolo...</translation>
+    </message>
+    <message>
+        <source>By Name</source>
+        <translation>Per Nome</translation>
+    </message>
+    <message>
+        <source>By Activity</source>
+        <translation>Per Attività</translation>
+    </message>
+    <message>
         <location filename="../src/widget/widget.cpp" line="1473"/>
         <source>All</source>
         <translation>Tutti</translation>
@@ -2339,7 +2506,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
     <message>
         <location filename="../src/widget/widget.cpp" line="433"/>
         <source>File transfers</source>
-        <translation>Files trasferiti</translation>
+        <translation>File trasferiti</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="444"/>
@@ -2351,7 +2518,7 @@ Se non sei sicuro, scegli &quot;No&quot;, così le informazioni inviate al serve
         <location filename="../src/widget/widget.cpp" line="444"/>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Hai chiesto a qTox di aprire un file eseguibile. I files eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
+        <translation>Hai chiesto a qTox di aprire un file eseguibile. I file eseguibili possono danneggiare il tuo computer. Sei sicuro di voler aprire questo file?</translation>
     </message>
     <message>
         <location filename="../src/widget/widget.cpp" line="512"/>

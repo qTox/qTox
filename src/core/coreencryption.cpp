@@ -25,9 +25,9 @@
 #include "src/widget/gui.h"
 #include "src/persistence/settings.h"
 #include "src/core/cstring.h"
-#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/historykeeper.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>
@@ -75,6 +75,11 @@ QByteArray Core::decryptData(const QByteArray &data)
 
 QByteArray Core::decryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
 {
+    if (data.size() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH)
+    {
+        qWarning() << "Not enough data:"<<data.size();
+        return QByteArray();
+    }
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
     if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
@@ -113,6 +118,8 @@ void Core::checkEncryptedHistory()
 {
     QString path = HistoryKeeper::getHistoryPath();
     bool exists = QFile::exists(path) && QFile(path).size()>0;
+    if (!exists)
+        return;
 
     QByteArray salt = getSaltFromFile(path);
     if (exists && salt.size() == 0)

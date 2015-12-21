@@ -26,7 +26,6 @@
 #include "src/widget/gui.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
-#include "src/persistence/historykeeper.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT

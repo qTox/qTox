@@ -21,8 +21,8 @@
 #include "profile.h"
 #include "profilelocker.h"
 #include "src/persistence/settings.h"
-#include "src/core/core.h"
 #include "src/persistence/historykeeper.h"
+#include "src/core/core.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
 #include "src/nexus.h"
@@ -47,7 +47,16 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
-    HistoryKeeper::resetInstance();
+
+    // At this point it's too early to load the personnal settings (Nexus will do it), so we always load
+    // the history, and if it fails we can't change the setting now, but we keep a nullptr
+    history.reset(new History{name, password});
+    if (!history->isValid())
+    {
+        qWarning() << "Failed to open history for profile"<<name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+        history.release();
+    }
 
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
@@ -127,7 +136,10 @@ Profile* Profile::loadProfile(QString name, QString password)
         }
     }
 
-    return new Profile(name, password, false);
+    Profile* p = new Profile(name, password, false);
+    if (p->history && HistoryKeeper::isFileExist(!password.isEmpty()))
+        p->history->import(*HistoryKeeper::getInstance(*p));
+    return p;
 }
 
 Profile* Profile::createProfile(QString name, QString password)
@@ -211,7 +223,7 @@ Core* Profile::getCore()
     return core;
 }
 
-QString Profile::getName()
+QString Profile::getName() const
 {
     return name;
 }
@@ -229,8 +241,6 @@ bool Profile::isNewProfile()
 QByteArray Profile::loadToxSave()
 {
     assert(!isRemoved);
-
-    /// TODO: Cache the data, invalidate it only when we save
     QByteArray data;
 
     QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
@@ -369,7 +379,7 @@ QByteArray Profile::loadAvatarData(const QString &ownerId)
         return {};
 
     QByteArray pic = file.readAll();
-    if (encrypted)
+    if (encrypted && !pic.isEmpty())
     {
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(pic.data()), salt);
@@ -381,19 +391,26 @@ QByteArray Profile::loadAvatarData(const QString &ownerId)
 
 void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
 {
-    if (!password.isEmpty())
+    if (!password.isEmpty() && !pic.isEmpty())
         pic = core->encryptData(pic, passkey);
 
     QString path = avatarPath(ownerId);
     QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
-    QSaveFile file(path);
-    if (!file.open(QIODevice::WriteOnly))
+    if (pic.isEmpty())
     {
-        qWarning() << "Tox avatar " << path << " couldn't be saved";
-        return;
+        QFile::remove(path);
     }
-    file.write(pic);
-    file.commit();
+    else
+    {
+        QSaveFile file(path);
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            qWarning() << "Tox avatar " << path << " couldn't be saved";
+            return;
+        }
+        file.write(pic);
+        file.commit();
+    }
 }
 
 QByteArray Profile::getAvatarHash(const QString &ownerId)
@@ -409,9 +426,21 @@ void Profile::removeAvatar()
     removeAvatar(core->getSelfId().publicKey);
 }
 
+bool Profile::isHistoryEnabled()
+{
+    return Settings::getInstance().getEnableLogging() && history;
+}
+
+History *Profile::getHistory()
+{
+    return history.get();
+}
+
 void Profile::removeAvatar(const QString &ownerId)
 {
     QFile::remove(avatarPath(ownerId));
+    if (ownerId == core->getSelfId().publicKey)
+        core->setAvatar({});
 }
 
 bool Profile::exists(QString name)
@@ -420,7 +449,7 @@ bool Profile::exists(QString name)
     return QFile::exists(path+".tox") && QFile::exists(path+".ini");
 }
 
-bool Profile::isEncrypted()
+bool Profile::isEncrypted() const
 {
     return !password.isEmpty();
 }
@@ -467,6 +496,11 @@ void Profile::remove()
 
     QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
     QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
+    if (history)
+    {
+        history->remove();
+        history.release();
+    }
 }
 
 bool Profile::rename(QString newName)
@@ -479,7 +513,8 @@ bool Profile::rename(QString newName)
 
     QFile::rename(path+".tox", newPath+".tox");
     QFile::rename(path+".ini", newPath+".ini");
-    HistoryKeeper::renameHistory(name, newName);
+    if (history)
+        history->rename(newName);
     bool resetAutorun = Settings::getInstance().getAutorun();
     Settings::getInstance().setAutorun(false);
     Settings::getInstance().setCurrentProfile(newName);
@@ -498,12 +533,12 @@ bool Profile::checkPassword()
     return !loadToxSave().isEmpty();
 }
 
-QString Profile::getPassword()
+QString Profile::getPassword() const
 {
     return password;
 }
 
-const TOX_PASS_KEY& Profile::getPasskey()
+const TOX_PASS_KEY& Profile::getPasskey() const
 {
     return passkey;
 }
@@ -518,14 +553,16 @@ void Profile::restartCore()
 
 void Profile::setPassword(QString newPassword)
 {
-    QList<HistoryKeeper::HistMessage> oldMessages = HistoryKeeper::exportMessagesDeleteFile();
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
 
     password = newPassword;
     passkey = *core->createPasskey(password);
     saveToxSave();
 
-    HistoryKeeper::getInstance()->importMessages(oldMessages);
-    Nexus::getDesktopGUI()->reloadHistory();
+    if (history)
+    {
+        history->setPassword(newPassword);
+        Nexus::getDesktopGUI()->reloadHistory();
+    }
     saveAvatar(avatar, core->getSelfId().publicKey);
 }

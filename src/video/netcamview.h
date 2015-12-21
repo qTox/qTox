@@ -21,6 +21,7 @@
 #define NETCAMVIEW_H
 
 #include "genericnetcamview.h"
+#include <QVector>
 
 class QHBoxLayout;
 struct vpx_image;
@@ -34,6 +35,7 @@ class NetCamView : public GenericNetCamView
 
 public:
     NetCamView(int friendId, QWidget *parent=0);
+    ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);
     virtual void hide();
@@ -54,6 +56,7 @@ private:
     MovableWidget* selfFrame;
     int friendId;
     bool e = false;
+    QVector<QMetaObject::Connection> connections;
 };
 
 #endif // NETCAMVIEW_H

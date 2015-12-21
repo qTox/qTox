@@ -37,7 +37,6 @@
 #include "friendlistwidget.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
-#include "src/persistence/historykeeper.h"
 #include "src/net/autoupdate.h"
 #include "src/audio/audio.h"
 #include "src/platform/timer.h"
@@ -91,8 +90,11 @@
 
 bool toxActivateEventHandler(const QByteArray&)
 {
-    if (!Widget::getInstance()->isActiveWindow())
-        Widget::getInstance()->forceShow();
+    Widget* widget = Nexus::getDesktopGUI();
+    if (!widget)
+        return true;
+    if (!widget->isActiveWindow())
+        widget->forceShow();
 
     return true;
 }
@@ -115,6 +117,10 @@ Widget::Widget(QWidget *parent)
 void Widget::init()
 {
     ui->setupUi(this);
+
+    QIcon themeIcon = QIcon::fromTheme("qtox");
+    if (!themeIcon.isNull())
+        setWindowIcon(themeIcon);
 
     timer = new QTimer();
     timer->start(1000);
@@ -424,7 +430,7 @@ void Widget::updateIcons()
             status = QStringLiteral("offline");
     }
 
-    QIcon ico;
+    QIcon ico = QIcon::fromTheme("qtox-" + status);
     if (ico.isNull())
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
@@ -1074,7 +1080,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxId(), message, isAction, timestamp, true);
 
-    HistoryKeeper::getInstance()->addChatEntry(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
+    Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
@@ -1223,8 +1229,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
     if (notify)
     {
-        QApplication::alert(currentWindow);
-        eventFlag = true;
+        if (inactiveWindow)
+        {
+            QApplication::alert(currentWindow);
+            eventFlag = true;
+        }
 
         if (Settings::getInstance().getShowWindow())
         {
@@ -1271,7 +1280,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         if (!ask.accepted())
                return;
         else if (ask.removeHistory())
-            HistoryKeeper::getInstance()->removeFriendHistory(f->getToxId().publicKey);
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
     }
 
     f->getFriendWidget()->setAsInactiveChatroom();
@@ -1434,7 +1443,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
-    bool targeted = !author.isActiveProfile() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     else
@@ -1574,6 +1583,10 @@ bool Widget::event(QEvent * e)
 {
     switch (e->type())
     {
+        case QEvent::MouseButtonPress:
+        case QEvent::MouseButtonDblClick:
+            focusChatInput();
+            break;
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
             {
@@ -1581,6 +1594,7 @@ bool Widget::event(QEvent * e)
                 activeChatroomWidget->updateStatusLight();
                 setWindowTitle(activeChatroomWidget->getTitle());
             }
+
             if (eventFlag)
             {
                 eventFlag = false;
@@ -1588,13 +1602,15 @@ bool Widget::event(QEvent * e)
                 updateIcons();
             }
 
+            focusChatInput();
+
 #ifdef Q_OS_MAC
             emit windowStateChanged(windowState());
 
         case QEvent::WindowStateChange:
             Nexus::getInstance().updateWindowsStates();
 #endif
-
+            break;
         default:
             break;
     }
@@ -2076,4 +2092,15 @@ void Widget::retranslateUi()
     nextConversationAction->setText(tr("Next Conversation"));
     previousConversationAction->setText(tr("Previous Conversation"));
 #endif
+}
+
+void Widget::focusChatInput()
+{
+    if (activeChatroomWidget)
+    {
+        if (Friend* f = activeChatroomWidget->getFriend())
+            f->getChatForm()->focusInput();
+        else if (Group* g = activeChatroomWidget->getGroup())
+            g->getChatForm()->focusInput();
+    }
 }

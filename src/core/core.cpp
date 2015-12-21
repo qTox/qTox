@@ -25,7 +25,6 @@
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/persistence/historykeeper.h"
 #include "src/audio/audio.h"
 #include "src/persistence/profilelocker.h"
 #include "src/net/avatarbroadcaster.h"
@@ -129,6 +128,9 @@ void Core::makeTox(QByteArray savedata)
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
     bool forceTCP = Settings::getInstance().getForceTCP();
     ProxyType proxyType = Settings::getInstance().getProxyType();
+    int proxyPort = Settings::getInstance().getProxyPort();
+    QString proxyAddr = Settings::getInstance().getProxyAddr();
+    QByteArray proxyAddrData = proxyAddr.toUtf8();
 
     if (enableIPv6)
         qDebug() << "Core starting with IPv6 enabled";
@@ -152,9 +154,6 @@ void Core::makeTox(QByteArray savedata)
 
     if (proxyType != ProxyType::ptNone)
     {
-        QString proxyAddr = Settings::getInstance().getProxyAddr();
-        int proxyPort = Settings::getInstance().getProxyPort();
-
         if (proxyAddr.length() > 255)
         {
             qWarning() << "proxy address" << proxyAddr << "is too long";
@@ -168,11 +167,7 @@ void Core::makeTox(QByteArray savedata)
             else if (proxyType == ProxyType::ptHTTP)
                 toxOptions.proxy_type = TOX_PROXY_TYPE_HTTP;
 
-            QByteArray proxyAddrData = proxyAddr.toUtf8();
-            /// TODO: We're leaking a tiny amount of memory there, go fix that later
-            char* proxyAddrCopy = new char[proxyAddrData.size()+1];
-            memcpy(proxyAddrCopy, proxyAddrData.data(), proxyAddrData.size()+1);
-            toxOptions.proxy_host = proxyAddrCopy;
+            toxOptions.proxy_host = proxyAddrData.data();
             toxOptions.proxy_port = proxyPort;
         }
     }
@@ -274,7 +269,8 @@ void Core::start()
     if (!id.isEmpty())
         emit idSet(id);
 
-    // tox core is already decrypted
+    /// TODO: NOTE: This is a backwards compatibility check,
+    /// once most people have been upgraded away from the old HistoryKeeper, remove this
     if (Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
 
@@ -597,7 +593,9 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
-            HistoryKeeper::getInstance()->addChatEntry(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
+            Profile* profile = Nexus::getProfile();
+            if (profile->isHistoryEnabled())
+                profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);
             emit friendshipChanged(friendId);
         }

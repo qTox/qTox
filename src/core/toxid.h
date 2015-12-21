@@ -38,7 +38,7 @@ public:
 
     bool operator==(const ToxId& other) const; ///< Compares only publicKey.
     bool operator!=(const ToxId& other) const; ///< Compares only publicKey.
-    bool isActiveProfile() const; ///< Returns true if this Tox ID is equals to
+    bool isSelf() const; ///< Returns true if this Tox ID is equals to
                                   /// the Tox ID of the currently active profile.
     QString toString() const; ///< Returns the Tox ID as QString.
     void clear(); ///< Clears all elements of the Tox ID.

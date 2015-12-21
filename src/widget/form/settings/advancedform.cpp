@@ -20,7 +20,6 @@
 #include "ui_advancedsettings.h"
 
 #include "advancedform.h"
-#include "src/persistence/historykeeper.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/db/plaindb.h"
 #include "src/widget/translator.h"
@@ -31,27 +30,10 @@ AdvancedForm::AdvancedForm() :
     bodyUI = new Ui::AdvancedSettings;
     bodyUI->setupUi(this);
 
-    bodyUI->dbLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
-    bodyUI->dbLabel->setOpenExternalLinks(true);
-
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
-    bodyUI->syncTypeComboBox->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
-    bodyUI->syncTypeComboBox->addItems({tr("Synchronized - safe (recommended)"),
-                                        tr("Partially async - risky (20% faster)"),
-                                        tr("Asynchronous - dangerous (fastest)")
-                                       });
-    int index = 2 - static_cast<int>(Settings::getInstance().getDbSyncType());
-    bodyUI->syncTypeComboBox->setCurrentIndex(index);
 
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
-    connect(bodyUI->syncTypeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onDbSyncTypeUpdated()));
     connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
-
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-        cb->installEventFilter(this);
-        cb->setFocusPolicy(Qt::StrongFocus);
-    }
 
     for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
     {
@@ -72,24 +54,14 @@ void AdvancedForm::onMakeToxPortableUpdated()
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
-void AdvancedForm::onDbSyncTypeUpdated()
-{
-    int index = 2 - bodyUI->syncTypeComboBox->currentIndex();
-    Settings::getInstance().setDbSyncType(index);
-    HistoryKeeper::getInstance()->setSyncType(Settings::getInstance().getDbSyncType());
-}
-
 void AdvancedForm::resetToDefault()
 {
-    int index = 2 - static_cast<int>(Db::syncType::stFull);
-    bodyUI->syncTypeComboBox->setCurrentIndex(index);
-    onDbSyncTypeUpdated();
 }
 
 bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o)))
+         (qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o)))
     {
         e->ignore();
         return true;
@@ -100,7 +72,4 @@ bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
 void AdvancedForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    bodyUI->syncTypeComboBox->setItemText(0, tr("Synchronized - safe (recommended)"));
-    bodyUI->syncTypeComboBox->setItemText(1, tr("Partially async - risky (20% faster)"));
-    bodyUI->syncTypeComboBox->setItemText(2, tr("Asynchronous - dangerous (fastest)"));
 }
