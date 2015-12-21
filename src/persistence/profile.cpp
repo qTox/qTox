@@ -342,11 +342,14 @@ QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
 
     QByteArray idData = ownerId.toUtf8();
-    constexpr int hashSize = TOX_PUBLIC_KEY_SIZE; // As long as an unencrypted hash
+    QByteArray pubkeyData = core->getSelfId().publicKey.toUtf8();
+    constexpr int hashSize = TOX_PUBLIC_KEY_SIZE;
     static_assert(hashSize >= crypto_generichash_BYTES_MIN
                   && hashSize <= crypto_generichash_BYTES_MAX, "Hash size not supported by libsodium");
+    static_assert(hashSize >= crypto_generichash_KEYBYTES_MIN
+                  && hashSize <= crypto_generichash_KEYBYTES_MAX, "Key size not supported by libsodium");
     QByteArray hash(hashSize, 0);
-    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), nullptr, 0);
+    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), (uint8_t*)pubkeyData.data(), pubkeyData.size());
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
