@@ -496,7 +496,8 @@ void FileTransferWidget::handleButton(QPushButton *btn)
 
 void FileTransferWidget::showPreview(const QString &filename)
 {
-    static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif", "PNG", "JPEG", "JPG", "GIF" };
+    static const QStringList previewExtensions = { "png", "jpeg", "jpg", "gif", "svg",
+                                                   "PNG", "JPEG", "JPG", "GIF", "SVG" };
 
     if (previewExtensions.contains(QFileInfo(filename).suffix()))
     {
