@@ -294,12 +294,13 @@ public:
         setWidgetData(widget->objectName() + "State", widget->saveState());
     }
 
+    static uint32_t makeProfileId(const QString& profile);
+
 private:
     Settings();
     ~Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
-    static uint32_t makeProfileId(const QString& profile);
 
 private slots:
     void savePersonal(QString profileName, QString password);
