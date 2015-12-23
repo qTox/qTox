@@ -19,6 +19,7 @@
  */
 
 #include "avfoundation.h"
+#include <QObject>
 
 #import <AVFoundation/AVFoundation.h>
 
@@ -31,6 +32,16 @@ QVector<QPair<QString, QString> > avfoundation::getDeviceList()
         result.append({ QString::fromNSString([device uniqueID]), QString::fromNSString([device localizedName]) });
     }
 
+    uint32_t numScreens = 0;
+    CGGetActiveDisplayList(0, NULL, &numScreens);
+    if (numScreens > 0) {
+        CGDirectDisplayID screens[numScreens];
+        CGGetActiveDisplayList(numScreens, screens, &numScreens);
+        for (uint32_t i = 0; i < numScreens; i++) {
+            result.append({ QString("%1 %2").arg(CAPTURE_SCREEN).arg(i), QObject::tr("Capture screen %1").arg(i) });
+        }
+    }
+
     return result;
 }
 
@@ -38,25 +49,30 @@ QVector<VideoMode> avfoundation::getDeviceModes(QString devName)
 {
     QVector<VideoMode> result;
 
-    NSString* deviceName = [NSString stringWithCString:devName.toUtf8() encoding:NSUTF8StringEncoding];
-    AVCaptureDevice* device = [AVCaptureDevice deviceWithUniqueID:deviceName];
-
-    if (device == nil) {
+    if (devName.startsWith(CAPTURE_SCREEN)) {
         return result;
     }
+    else {
+        NSString* deviceName = [NSString stringWithCString:devName.toUtf8() encoding:NSUTF8StringEncoding];
+        AVCaptureDevice* device = [AVCaptureDevice deviceWithUniqueID:deviceName];
 
-    for (AVCaptureDeviceFormat* format in [device formats]) {
-        CMFormatDescriptionRef formatDescription;
-        CMVideoDimensions dimensions;
-        formatDescription = (CMFormatDescriptionRef)[format performSelector:@selector(formatDescription)];
-        dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+        if (device == nil) {
+            return result;
+        }
 
-        for (AVFrameRateRange* range in format.videoSupportedFrameRateRanges) {
-            VideoMode mode;
-            mode.width = dimensions.width;
-            mode.height = dimensions.height;
-            mode.FPS = range.maxFrameRate;
-            result.append(mode);
+        for (AVCaptureDeviceFormat* format in [device formats]) {
+            CMFormatDescriptionRef formatDescription;
+            CMVideoDimensions dimensions;
+            formatDescription = (CMFormatDescriptionRef)[format performSelector:@selector(formatDescription)];
+            dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription);
+
+            for (AVFrameRateRange* range in format.videoSupportedFrameRateRanges) {
+                VideoMode mode;
+                mode.width = dimensions.width;
+                mode.height = dimensions.height;
+                mode.FPS = range.maxFrameRate;
+                result.append(mode);
+            }
         }
     }
 
