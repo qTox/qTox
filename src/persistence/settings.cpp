@@ -192,7 +192,7 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("GUI");
-        smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
+        smileyPack = s.value("smileyPack", ":/smileys/Universe/emoticons.xml").toString();
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
