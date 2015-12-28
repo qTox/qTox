@@ -8,6 +8,8 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#include "../qrwidget.h"
+
 AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutUser)
@@ -20,6 +22,7 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
+    connect(ui->showQRCode, &QPushButton::clicked, this, &AboutUser::onShowQRCodeClicked);
 
     this->toxId = toxId;
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
@@ -104,6 +107,22 @@ void AboutUser::onRemoveHistoryClicked()
                                      tr("History removed"),
                                      tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
                                      QMessageBox::Ok);
+}
+
+void AboutUser::onShowQRCodeClicked()
+{
+  QMessageBox about;
+
+  about.setStandardButtons(QMessageBox::Ok);
+
+  QRWidget qrw;
+  qrw.setQRData(this->toxId.toString().toStdString().c_str());
+  QImage *i = qrw.getImage();
+  QPixmap pm = QPixmap::fromImage(*i, Qt::ImageConversionFlag::AlphaDither_Mask);
+  about.setIconPixmap(pm);
+  about.setDefaultButton(QMessageBox::Ok);
+  about.show();
+  about.exec();
 }
 
 AboutUser::~AboutUser()
