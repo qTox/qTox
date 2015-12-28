@@ -19,9 +19,9 @@
 
 #include "chatline.h"
 #include "chatlinecontent.h"
+#include "src/persistence/settings.h"
 
 #include <QGraphicsScene>
-#include "src/persistence/settings.h"
 
 ChatLine::ChatLine()
 {
