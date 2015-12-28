@@ -36,31 +36,31 @@ public:
 
     void setText(const QString& txt);
 
-    virtual void setWidth(qreal width) final;
+    void setWidth(qreal width) final override;
 
-    virtual void selectionMouseMove(QPointF scenePos) final;
-    virtual void selectionStarted(QPointF scenePos) final;
-    virtual void selectionCleared() final;
-    virtual void selectionDoubleClick(QPointF scenePos) final;
-    virtual void selectionFocusChanged(bool focusIn) final;
-    virtual bool isOverSelection(QPointF scenePos) const final;
-    virtual QString getSelectedText() const final;
-    virtual bool hasSelection() const override final;
-    virtual bool selectNext(const QString& search, Qt::CaseSensitivity sensitivity) override final;
-    virtual bool selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity) override final;
-    virtual int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity) override final;
+    void selectionMouseMove(QPointF scenePos) final override;
+    void selectionStarted(QPointF scenePos) final override;
+    void selectionCleared() final override;
+    void selectionDoubleClick(QPointF scenePos) final override;
+    void selectionFocusChanged(bool focusIn) final override;
+    bool isOverSelection(QPointF scenePos) const final override;
+    QString getSelectedText() const final override;
+    bool hasSelection() const final override;
+    bool selectNext(const QString& search, Qt::CaseSensitivity sensitivity) final override;
+    bool selectPrevious(const QString& search, Qt::CaseSensitivity sensitivity) final override;
+    int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity) final override;
 
-    virtual QRectF boundingRect() const final;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
+    QRectF boundingRect() const final override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final override;
 
-    virtual void visibilityChanged(bool keepInMemory) final;
+    void visibilityChanged(bool keepInMemory) final override;
 
-    virtual qreal getAscent() const final;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
-    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
+    qreal getAscent() const final override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
-    virtual QString getText() const final;
+    QString getText() const final override;
 
 protected:
     // dynamic resource management

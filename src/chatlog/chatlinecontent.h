@@ -32,11 +32,14 @@ public:
         ChatLineContentType = QGraphicsItem::UserType + 1,
     };
 
+public:
     int getColumn() const;
     int getRow() const;
 
+    int type() const final override;
+
+public:
     virtual void setWidth(qreal width) = 0;
-    virtual int type() const final;
 
     virtual void selectionMouseMove(QPointF scenePos);
     virtual void selectionStarted(QPointF scenePos);
@@ -51,11 +54,7 @@ public:
     virtual int setHighlight(const QString& highlight, Qt::CaseSensitivity sensitivity);
 
     virtual QString getText() const;
-
     virtual qreal getAscent() const;
-
-    virtual QRectF boundingRect() const = 0;
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) = 0;
 
     virtual void visibilityChanged(bool visible);
 
