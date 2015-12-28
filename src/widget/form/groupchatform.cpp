@@ -167,13 +167,12 @@ void GroupChatForm::onUserListChanged()
     int peersCount = group->getPeersCount();
     if (peersCount == 1)
         nusersLabel->setText(tr("1 user in chat", "Number of users in chat"));
+    else
+        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 
     retranslateUi(); // To update the text.
 
     QStringList names = group->getPeerList();
-    else
-        nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
-
     if (!Settings::getInstance().getGroupPeerListSide())
     {
         if (namesListLayout)
@@ -327,14 +326,6 @@ void GroupChatForm::resetLayout()
         mainSplitter->restoreState(Settings::getInstance().getGroupSplitterState());
         connect(mainSplitter, &QSplitter::splitterMoved, this, &GroupChatForm::onSplitterMoved);
     }
-}
-
-void GroupChatForm::show(Ui::MainWindow &ui)
-{
-    ui.mainContent->layout()->addWidget(this);
-    ui.mainHead->layout()->addWidget(headWidget);
-    headWidget->show();
-    QWidget::show();
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)

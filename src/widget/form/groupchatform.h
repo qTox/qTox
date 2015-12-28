@@ -43,8 +43,6 @@ public:
     void peerAudioPlaying(int peer);
     void resetLayout();
 
-    virtual void show(Ui::MainWindow &ui);
-
 signals:
     void groupTitleChanged(int groupnum, const QString& name);
 

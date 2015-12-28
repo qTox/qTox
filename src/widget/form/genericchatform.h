@@ -56,7 +56,6 @@ public:
     ~GenericChatForm();
 
     void setName(const QString &newName);
-    virtual void show() final{}
     virtual void show(ContentLayout* contentLayout);
 
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
