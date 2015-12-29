@@ -1278,7 +1278,6 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 {
     if (notification && Settings::getInstance().getNotifyOnFriendRequest())
     {
-        Friend* f = FriendList::findFriend(userId);
         notification->notify(NotificationBackend::FriendRequest, nullptr, tr("Friend Request from %1 Recieved").arg(userId), message, QPixmap());
     }
 
@@ -2092,7 +2091,7 @@ void Widget::onDesktopNotificationsToggled(NotificationBackend* notificationBack
     notification = notificationBackend;
 
     if (notification)
-        connect(notification, &NotificationBackend::activated, this, &Widget::onChatroomWidgetClicked);
+        connect(notification, SIGNAL(activated(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
 }
 
 void Widget::notifyAvInvite(int friendId)

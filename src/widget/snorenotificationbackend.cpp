@@ -30,7 +30,7 @@
 SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
     : NotificationBackend(parent)
 {
-    Snore::Icon icon(QIcon("://img/icons/qtox.svg").pixmap(48, 48).toImage());
+    Snore::Icon icon(QIcon("://img/icons/qtox.svg").pixmap(48, 48));
     snoreApp = Snore::Application(QApplication::applicationName(), icon);
     snoreApp.addAlert(Snore::Alert(typeToString(NewMessage), icon));
     snoreApp.addAlert(Snore::Alert(typeToString(Highlighted), icon));
@@ -65,7 +65,7 @@ SnoreNotificationBackend::~SnoreNotificationBackend()
 
 void SnoreNotificationBackend::notify(Type type, GenericChatroomWidget *chat, const QString &title, const QString &message, const QPixmap &icon)
 {
-    Snore::Icon snoreIcon(icon.toImage());
+    Snore::Icon snoreIcon(icon);
     Snore::Notification notification(snoreApp, snoreApp.alerts()[typeToString(type)], title, message, snoreIcon);
     connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::actionInvoked, this, &SnoreNotificationBackend::notificationInvoked);
     connect(&Snore::SnoreCore::instance(), &Snore::SnoreCore::notificationClosed, this, &SnoreNotificationBackend::notificationClose);
