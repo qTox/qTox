@@ -74,9 +74,16 @@ signals:
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void messageInserted();
+    void findMatchesChanged(int index, int total);
 
 public slots:
     void focusInput();
+    void toggleFindWidget();
+    void showFindWidget();
+    void removeFindWidget();
+    void findText(const QString& text, Qt::CaseSensitivity sensitivity);
+    void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -93,6 +100,7 @@ protected slots:
     void onSplitterMoved(int pos, int index);
 
 private:
+    bool hasFindWidget() const;
     void retranslateUi();
 
 protected:
@@ -129,7 +137,11 @@ protected:
     bool audioInputFlag;
     bool audioOutputFlag;
     QSplitter* bodySplitter;
+    QHash<int, ChatLine::Ptr> foundText;
     GenericNetCamView* netcam;
+
+private:
+    QVBoxLayout* mainLayout;
 };
 
 #endif // GENERICCHATFORM_H
