@@ -1,14 +1,18 @@
-div.msg {
+p {
+  white-space: pre-wrap;
+}
+
+p.msg {
   color: @black;
   font: @big;
 }
 
-div.action {
+p.action {
   color: #1818FF;
   font: @big;
 }
 
-div.typing {
+p.typing {
   color: @mediumGreyLight;
   font: @big;
 }
@@ -17,7 +21,7 @@ span.quote {
   color: #279419;
 }
 
-div.alert {
+p.alert {
   margin-left: 0px;
   margin-right: 0px;
   color: @black;
@@ -25,7 +29,7 @@ div.alert {
   font: @big;
 }
 
-div.alert_name {
+p.alert_name {
   color: @black;
   background-color: @orange;
   font: @bigBold;

@@ -56,7 +56,6 @@ public:
     ~GenericChatForm();
 
     void setName(const QString &newName);
-    virtual void show() final{}
     virtual void show(ContentLayout* contentLayout);
 
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
@@ -68,15 +67,24 @@ public:
 
     ChatLog* getChatLog() const;
     QDate getLatestDate() const;
+    QDateTime getEarliestDate() const;
 
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
     void chatAreaCleared();
     void messageInserted();
+    void findMatchesChanged(int index, int total);
+    void findIndexChanged(int index);
 
 public slots:
     void focusInput();
+    void toggleFindWidget();
+    void showFindWidget();
+    void removeFindWidget(const QString& text);
+    void findText(const QString& text, Qt::CaseSensitivity sensitivity);
+    void findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    void findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -93,6 +101,7 @@ protected slots:
     void onSplitterMoved(int pos, int index);
 
 private:
+    bool hasFindWidget() const;
     void retranslateUi();
 
 protected:
@@ -100,7 +109,7 @@ protected:
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
     QString resolveToxId(const ToxId &id);
-    void insertChatMessage(ChatMessage::Ptr msg);
+    void insertChatMessage(ChatMessage::Ptr msg, bool notify = false);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;
     virtual void showEvent(QShowEvent *) override;
@@ -130,6 +139,9 @@ protected:
     bool audioOutputFlag;
     QSplitter* bodySplitter;
     GenericNetCamView* netcam;
+
+private:
+    QVBoxLayout* mainLayout;
 };
 
 #endif // GENERICCHATFORM_H

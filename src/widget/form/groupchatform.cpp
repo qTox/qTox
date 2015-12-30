@@ -29,12 +29,25 @@
 #include "src/widget/style.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/translator.h"
+#include "src/persistence/settings.h"
 #include "src/video/groupnetcamview.h"
 #include <QDebug>
 #include <QTimer>
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include <QSplitter>
+#include <QListView>
+#include <QStringListModel>
+#include <QSortFilterProxyModel>
+
+#include "ui_mainwindow.h"
+#include "src/chatlog/chatlog.h"
+
+class ClickLabel : public QLabel
+{
+
+};
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -66,25 +79,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
 
     msgEdit->setObjectName("group");
-
-    namesListLayout = new FlowLayout(0,5,0);
-    QStringList names(group->getPeerList());
-
-    for (QString& name : names)
-    {
-        QLabel *l = new QLabel();
-        QString tooltip = correctNames(name);
-        if (tooltip.isNull())
-        {
-            l->setToolTip(tooltip);
-        }
-        l->setText(name);
-        l->setTextFormat(Qt::PlainText);
-        namesListLayout->addWidget(l);
-    }
-
     headTextLayout->addWidget(nusersLabel);
-    headTextLayout->addLayout(namesListLayout);
+
     headTextLayout->addStretch();
 
     nameLabel->setMinimumHeight(12);
@@ -108,6 +104,9 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     setAcceptDrops(true);
     Translator::registerHandler(std::bind(&GroupChatForm::retranslateUi, this), this);
+
+    connect(&Settings::getInstance(), &Settings::groupPeerListSideChanged, this, &GroupChatForm::resetLayout);
+    resetLayout();
 }
 
 // Correct names with "\n" in NamesListLayout widget
@@ -171,48 +170,63 @@ void GroupChatForm::onUserListChanged()
     else
         nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 
-    QLayoutItem *child;
-    while ((child = namesListLayout->takeAt(0)))
-    {
-        child->widget()->hide();
-        delete child->widget();
-        delete child;
-    }
-    peerLabels.clear();
+    retranslateUi(); // To update the text.
 
-    // the list needs peers in peernumber order, nameLayout needs alphabetical
-    QMap<QString, QLabel*> orderizer;
-
-    // first traverse in peer number order, storing the QLabels as necessary
     QStringList names = group->getPeerList();
-    unsigned nNames = names.size();
-    for (unsigned i=0; i<nNames; ++i)
+    if (!Settings::getInstance().getGroupPeerListSide())
     {
-        QString tooltip = correctNames(names[i]);
-        peerLabels.append(new QLabel(names[i]));
-        if (!tooltip.isEmpty())
-            peerLabels[i]->setToolTip(tooltip);
-        peerLabels[i]->setTextFormat(Qt::PlainText);
-        orderizer[names[i]] = peerLabels[i];
-        if (group->isSelfPeerNumber(i))
-            peerLabels[i]->setStyleSheet("QLabel {color : green;}");
+        if (namesListLayout)
+        {
+            QLayoutItem *child;
+
+            while ((child = namesListLayout->takeAt(0)))
+            {
+                child->widget()->hide();
+                delete child->widget();
+                delete child;
+            }
+
+            peerLabels.clear();
+        }
+
+        // the list needs peers in peernumber order, nameLayout needs alphabetical
+        QMap<QString, QLabel*> orderizer;
+
+        // first traverse in peer number order, storing the QLabels as necessary
+        unsigned nNames = names.size();
+        for (unsigned i=0; i<nNames; ++i)
+        {
+            QString tooltip = correctNames(names[i]);
+            peerLabels.append(new QLabel(names[i]));
+            if (!tooltip.isEmpty())
+                peerLabels[i]->setToolTip(tooltip);
+            peerLabels[i]->setTextFormat(Qt::PlainText);
+            orderizer[names[i]] = peerLabels[i];
+            if (group->isSelfPeerNumber(i))
+                peerLabels[i]->setStyleSheet("QLabel {color : green;}");
 
         if (netcam && !group->isSelfPeerNumber(i))
             static_cast<GroupNetCamView*>(netcam)->addPeer(i, names[i]);
-    }
+        }
 
     if (netcam)
         static_cast<GroupNetCamView*>(netcam)->clearPeers();
 
-    // now alphabetize and add to layout
-    names.sort(Qt::CaseInsensitive);
-    for (unsigned i=0; i<nNames; ++i)
-    {
-        QLabel* label = orderizer[names[i]];
-        if (i != nNames - 1)
-            label->setText(label->text() + ", ");
+        // now alphabetize and add to layout
+        names.sort(Qt::CaseInsensitive);
+        for (unsigned i=0; i<nNames; ++i)
+        {
+            QLabel* label = orderizer[names[i]];
+            if (i != nNames - 1)
+                label->setText(label->text() + ", ");
 
-        namesListLayout->addWidget(label);
+            namesListLayout->addWidget(label);
+        }
+    }
+    else
+    {
+        names.sort(Qt::CaseInsensitive);
+        stringListModel->setStringList(names);
     }
 
     // Enable or disable call button
@@ -259,6 +273,59 @@ void GroupChatForm::peerAudioPlaying(int peer)
         }
     }
     peerAudioTimers[peer]->start(500);
+}
+
+void GroupChatForm::resetLayout()
+{
+    if (!Settings::getInstance().getGroupPeerListSide())
+    {
+        if (mainSplitter)
+            layout()->replaceWidget(mainSplitter, chatWidget);
+
+        delete mainSplitter;
+        delete stringListModel;
+
+        namesListLayout = new FlowLayout(0,5,0);
+        headTextLayout->addLayout(namesListLayout);
+        onUserListChanged();
+    }
+    else
+    {
+        if (namesListLayout)
+        {
+            QLayoutItem *child;
+
+            while ((child = namesListLayout->takeAt(0)))
+            {
+                child->widget()->hide();
+                delete child->widget();
+                delete child;
+            }
+
+            peerLabels.clear();
+        }
+
+        delete namesListLayout;
+
+        QListView* listView = new QListView(this);
+        listView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        listView->setStyleSheet("QListView {background-color: white; border:none} QListView::item:selected {background-color:#6fc062;}");
+        listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+        listView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+        stringListModel = new QStringListModel(group->getPeerList());
+        listView->setModel(stringListModel);
+
+        mainSplitter = new QSplitter(this);
+        mainSplitter->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        layout()->replaceWidget(chatWidget, mainSplitter);
+        mainSplitter->setHandleWidth(6);
+        mainSplitter->addWidget(chatWidget);
+        mainSplitter->addWidget(listView);
+        mainSplitter->setStyleSheet("QSplitter::handle:horizontal {border-right: 1px solid #c1c1c1;}");
+        mainSplitter->setStretchFactor(0, 4);
+        mainSplitter->restoreState(Settings::getInstance().getGroupSplitterState());
+        connect(mainSplitter, &QSplitter::splitterMoved, this, &GroupChatForm::onSplitterMoved);
+    }
 }
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
@@ -368,6 +435,11 @@ GenericNetCamView *GroupChatForm::createNetcam()
     }
 
     return view;
+}
+
+void GroupChatForm::onSplitterMoved()
+{
+    Settings::getInstance().setGroupSplitterState(mainSplitter->saveState());
 }
 
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)

@@ -399,6 +399,13 @@ will be sent to them when they appear online to you.</string>
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="cbGroupPeerListSide">
+            <property name="text">
+             <string>Show group peer list on the side.</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_11">
             <item>
              <widget class="QCheckBox" name="cbSeparateWindow">

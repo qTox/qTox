@@ -17,16 +17,30 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "timestamp.h"
-#include <QCursor>
-Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &font)
-    : Text(time.toString(format), font, true, time.toString(format))
-{
-    this->time = time;
-    setCursor(Qt::ForbiddenCursor);
-}
+#ifndef DYNAMICSCROLLBAR_H
+#define DYNAMICSCROLLBAR_H
 
-QDateTime Timestamp::getTime()
+#include <QScrollBar>
+
+class DynamicScrollBar : public QScrollBar
 {
-    return time;
-}
+    Q_OBJECT
+public:
+    DynamicScrollBar(QWidget *parent = 0);
+    DynamicScrollBar(Qt::Orientation orientation, QWidget *parent = 0);
+
+signals:
+    void dynamicRequest();
+
+private slots:
+    void onSliderMoved(int position);
+    void onSliderReleased();
+
+private:
+    void init();
+
+    bool ready;
+    int lastValue;
+};
+
+#endif // DYNAMICSCROLLBAR_H

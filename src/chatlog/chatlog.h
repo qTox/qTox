@@ -33,6 +33,7 @@ class QMouseEvent;
 class QTimer;
 class ChatLineContent;
 struct ToxFile;
+class NotificationEdgeWidget;
 
 class ChatLog : public QGraphicsView
 {
@@ -41,9 +42,11 @@ public:
     explicit ChatLog(QWidget* parent = 0);
     virtual ~ChatLog();
 
+    void setVerticalScrollBar(QScrollBar* scrollbar);
     void insertChatlineAtBottom(ChatLine::Ptr l);
     void insertChatlineOnTop(ChatLine::Ptr l);
     void insertChatlineOnTop(const QList<ChatLine::Ptr>& newLines);
+    void showNotification(ChatLine::Ptr l);
     void clearSelection();
     void clear();
     void copySelectedText(bool toSelectionBuffer = false) const;
@@ -55,13 +58,19 @@ public:
     void forceRelayout();
 
     QString getSelectedText() const;
+    int findText(const QString &text, Qt::CaseSensitivity sensitivity, int &index);
+    int findNext(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    int findPrevious(const QString& text, int to, int total, Qt::CaseSensitivity sensitivity);
+    const QHash<int, ChatLine::Ptr>& getFoundLines() const;
 
     bool isEmpty() const;
     bool hasTextToBeCopied() const;
+    void addDateMessage(QDate date, ChatMessage::Ptr message);
 
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
     ChatLine::Ptr getLatestLine() const;
+    QDate getLatestDate() const;
     // repetition interval sender name (sec)
     const uint repNameAfter = 5*60;
 
@@ -104,15 +113,25 @@ protected:
 private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
+    void onScrollBarChanged(int value);
+    void focusNotifiedWidget();
+    void removeNotificationWidget();
 
 private:
     void retranslateUi();
 
 private:
+    void updateLayout(int currentWidth, int previousWidth);
+    void recalculateNotificationEdge();
+
     enum SelectionMode {
-        None,
-        Precise,
-        Multi,
+        None          = 0x00,
+        Precise       = 0x01,
+        Multi         = 0x02,
+        Selected      = Precise | Multi,
+        SplitterLeft  = 0x04,
+        SplitterRight = 0x08,
+        Splitter      = SplitterLeft | SplitterRight,
     };
 
     enum AutoScrollDirection {
@@ -142,6 +161,7 @@ private:
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
+    int splitterVal;
 
     //worker vars
     int workerLastIndex = 0;
@@ -149,8 +169,21 @@ private:
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMargins margins = QMargins(10,10,10,10);
+    QMargins margins = QMargins(0,10,0,10);
     qreal lineSpacing = 5.0f;
+
+    // find
+    QHash<int, ChatLine::Ptr> foundText;
+
+    // global date
+    ChatMessage::Ptr globalDateMessage;
+    QGraphicsRectItem* globalDateRect;
+    QVector<QPair<QDate, ChatMessage::Ptr>> dateMessages;
+    int globalDateIndex;
+
+    // notification
+    NotificationEdgeWidget* edgeWidget = nullptr;
+    ChatLine::Ptr edgeMessage;
 };
 
 #endif // CHATLOG_H

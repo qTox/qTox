@@ -500,6 +500,7 @@ SOURCES += \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
+    src/video/genericnetcamview.cpp \
     src/core/toxid.cpp \
     src/persistence/profile.cpp \
     src/widget/translator.cpp \
@@ -513,8 +514,11 @@ SOURCES += \
     src/widget/categorywidget.cpp \
     src/widget/contentlayout.cpp \
     src/widget/contentdialog.cpp \
-    src/video/genericnetcamview.cpp \
     src/widget/tool/activatedialog.cpp \
+    src/widget/tool/dynamicscrollbar.cpp \
+    src/widget/tool/findwidget.cpp \
+    src/widget/tool/indicatorscrollbar.cpp \
+    src/widget/tool/labeledlineedit.cpp \
     src/widget/tool/movablewidget.cpp \
     src/widget/tool/micfeedbackwidget.cpp \
     src/widget/tool/removefrienddialog.cpp \
@@ -569,6 +573,10 @@ HEADERS += \
     src/widget/contentlayout.h \
     src/widget/contentdialog.h \
     src/widget/tool/activatedialog.h \
+    src/widget/tool/dynamicscrollbar.h \
+    src/widget/tool/findwidget.h \
+    src/widget/tool/indicatorscrollbar.h \
+    src/widget/tool/labeledlineedit.h \
     src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/removefrienddialog.h \
     src/widget/tool/movablewidget.h \

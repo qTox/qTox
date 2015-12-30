@@ -60,6 +60,7 @@ signals:
     void dhtServerListChanged();
     void smileyPackChanged();
     void emojiFontChanged();
+    void groupPeerListSideChanged();
 
 public:
     // Getter/setters
@@ -191,11 +192,11 @@ public:
     void setGlobalAutoAcceptDir(const QString& dir);
 
     // ChatView
-    int getFirstColumnHandlePos() const;
-    void setFirstColumnHandlePos(const int pos);
+    int getColumnRightWidth() const;
+    void setColumnRightWidth(int width);
 
-    int getSecondColumnHandlePosFromRight() const;
-    void setSecondColumnHandlePosFromRight(const int pos);
+    int getColumnLeftWidth() const;
+    void setColumnLeftWidth(int pos);
 
     const QString& getTimestampFormat() const;
     void setTimestampFormat(const QString& format);
@@ -226,6 +227,9 @@ public:
     QByteArray getDialogGeometry() const;
     void setDialogGeometry(const QByteArray& value);
 
+    QByteArray getGroupSplitterState() const;
+    void setGroupSplitterState(const QByteArray &value);
+
     QByteArray getDialogSplitterState() const;
     void setDialogSplitterState(const QByteArray &value);
 
@@ -251,6 +255,9 @@ public:
 
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
+
+    bool getGroupPeerListSide() const;
+    void setGroupPeerListSide(bool side);
 
     bool getSeparateWindow() const;
     void setSeparateWindow(bool value);
@@ -315,6 +322,7 @@ private:
     bool autoLogin;
     bool fauxOfflineMessaging;
     bool compactLayout;
+    bool groupPeerListSide;
     bool groupchatPosition;
     bool separateWindow;
     bool dontGroupWindows;
@@ -358,14 +366,15 @@ private:
     QByteArray windowState;
     QByteArray splitterState;
     QByteArray dialogGeometry;
+    QByteArray groupSplitterState;
     QByteArray dialogSplitterState;
     QByteArray dialogSettingsGeometry;
     QString style;
     bool showSystemTray;
 
     // ChatView
-    int firstColumnHandlePos;
-    int secondColumnHandlePosFromRight;
+    int columnRightWidth;
+    int columnLeftWidth;
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;

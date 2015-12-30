@@ -50,6 +50,7 @@ public:
 signals:
     void setShowSystemTray(bool newValue);
     void compactToggled(bool compact);
+    void groupPeerListToggled(bool side);
     void separateWindowToggled(bool separateWindow);
     void groupchatPositionToggled(bool groupchatPosition);
 

@@ -17,16 +17,27 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "timestamp.h"
-#include <QCursor>
-Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &font)
-    : Text(time.toString(format), font, true, time.toString(format))
-{
-    this->time = time;
-    setCursor(Qt::ForbiddenCursor);
-}
+#ifndef LABELEDLINEEDIT_H
+#define LABELEDLINEEDIT_H
 
-QDateTime Timestamp::getTime()
+#include <QLineEdit>
+
+class QLabel;
+
+class LabeledLineEdit : public QLineEdit
 {
-    return time;
-}
+public:
+    LabeledLineEdit(QWidget* parent = 0);
+    void setLabelText(const QString& text);
+
+protected:
+    void resizeEvent(QResizeEvent* event) final override;
+    void moveEvent(QMoveEvent* event) final override;
+
+private:
+    void setLabelGeometry();
+
+    QLabel* label;
+};
+
+#endif // LABELEDLINEEDIT_H
