@@ -25,7 +25,7 @@
 #include <QBoxLayout>
 #include <QPointer>
 #include <QSystemTrayIcon>
-#include <libsnore/settingsdialog.h>
+#include <libsnore/settings/settingsdialog.h>
 
 SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
     : NotificationBackend(parent)
@@ -52,7 +52,7 @@ SnoreNotificationBackend::SnoreNotificationBackend(QObject *parent)
     }
 
     if (Snore::SnoreCore::instance().pluginNames().isEmpty())
-        Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::BACKEND);
+        Snore::SnoreCore::instance().loadPlugins(Snore::SnorePlugin::Backend);
 
     Snore::SnoreCore::instance().registerApplication(snoreApp);
     Snore::SnoreCore::instance().setDefaultApplication(snoreApp);

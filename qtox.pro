@@ -328,11 +328,11 @@ contains(ENABLE_NOTIFICATION_SNORE_BACKEND, YES) {
             INCLUDEPATH += "/usr/local/lib/i386-linux-gnu/libsnore-qt5/include"
         }
 
-        LIBS += -L/usr/local/lib64/ -lsnore-qt5
+        LIBS += -L/usr/local/lib64/ -lsnore-qt5 -lsnoresettings-qt5
     }
 
     win32 {
-        LIBS += -lsnore-qt5
+        LIBS += -lsnore-qt5 -lsnoresettings-qt5
     }
 
     SOURCES += src/widget/snorenotificationbackend.cpp
