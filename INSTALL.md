@@ -332,7 +332,7 @@ You will need to install manually `libsodium`:
 ```
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.3
+git checkout tags/1.0.7
 ./autogen.sh
 ./configure && make check
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
@@ -368,7 +368,16 @@ cd filter_audio
 make -j$(nproc)
 sudo make install
 ```
-
+### Sqlcipher compiling, For Fedora users and possibly others.
+```bash
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlcipher
+autoreconf -if
+./configure
+make -j$(nproc)
+sudo make install
+cd ..
+````
 
 ### toxcore compiling
 
