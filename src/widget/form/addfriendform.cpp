@@ -18,7 +18,6 @@
 */
 
 #include "addfriendform.h"
-
 #include <QFont>
 #include <QMessageBox>
 #include <QErrorMessage>
@@ -32,6 +31,7 @@
 #include "src/core/core.h"
 #include "src/core/cdata.h"
 #include "src/net/toxdns.h"
+#include "src/net/toxme.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"

@@ -339,34 +339,34 @@ QString Toxme::getErrorMessage(int errorCode)
 {
     switch (errorCode) {
     case -1:
-        return "You must send POST requests to /api";
+        return QObject::tr("You must send POST requests to /api");
     case -2:
-        return "Please try again using a HTTPS connection";
+        return QObject::tr("Please try again using a HTTPS connection");
     case -3:
-        return "I was unable to read your encrypted payload";
+        return QObject::tr("I was unable to read your encrypted payload");
     case -4:
-        return "You're making too many requests. Wait an hour and try again";
+        return QObject::tr("You're making too many requests. Wait an hour and try again");
     case -25:
-        return "This name is already in use";
+        return QObject::tr("This name is already in use");
     case -26:
-        return "This Tox ID is already registered under another name";
+        return QObject::tr("This Tox ID is already registered under another name");
     case -27:
-        return "Please don't use a space in your name";
+        return QObject::tr("Please don't use a space in your name");
     case -28:
-        return "Password incorrect";
+        return QObject::tr("Password incorrect");
     case -29:
-        return "You can't use this name";
+        return QObject::tr("You can't use this name");
     case -30:
-        return "Name not found";
+        return QObject::tr("Name not found");
     case -31:
-        return "Tox ID not sent";
+        return QObject::tr("Tox ID not sent");
     case -41:
-        return "Lookup failed because the other server replied with invalid data";
+        return QObject::tr("Lookup failed because the other server replied with invalid data");
     case -42:
-        return "That user does not exist";
+        return QObject::tr("That user does not exist");
     case -43:
-        return "Internal lookup error. Please file a bug";
+        return QObject::tr("Internal lookup error. Please file a bug");
     default:
-        return "Unknow error" + errorCode;
+        return QObject::tr("Unknow error") + errorCode;
     }
 }
