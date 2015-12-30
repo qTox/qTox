@@ -129,14 +129,16 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
                 return;
         }
 
-        ToxId toxId = ToxDNS::resolveToxAddress(id, true);
-
-        if (toxId.toString().isEmpty())
+        ToxId toxId = Toxme::lookup(id); // Try Toxme
+        if (toxId.toString().isEmpty())  // If it isn't supported
         {
-            GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist","DNS error"));
-            return;
+            toxId = ToxDNS::resolveToxAddress(id, true); // Use ToxDNS
+            if (toxId.toString().isEmpty())
+            {
+                GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist","DNS error"));
+                return;
+            }
         }
-
         emit friendRequested(toxId.toString(), getMessage());
         this->toxId.clear();
         this->message.clear();
