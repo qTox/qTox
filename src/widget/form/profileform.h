@@ -80,7 +80,6 @@ private slots:
     void onChangePassClicked();
     void onAvatarClicked();
     void showProfilePictureContextMenu(const QPoint &point);
-
     void onRegisterButtonClicked();
 
 private:

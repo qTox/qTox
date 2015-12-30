@@ -458,7 +458,6 @@ void ProfileForm::onRegisterButtonClicked()
         QString errorMessage = Toxme::getErrorMessage(code);
         QMessageBox::warning(this, tr("Toxme error"),  errorMessage, "Ok");
     }
-
     bodyUI->toxmeRegisterButton->setEnabled(true);
     bodyUI->toxmeUpdateButton->setEnabled(true);
     bodyUI->toxmeRegisterButton->setText(tr("Register"));

@@ -367,6 +367,6 @@ QString Toxme::getErrorMessage(int errorCode)
     case -43:
         return QObject::tr("Internal lookup error. Please file a bug");
     default:
-        return QObject::tr("Unknow error") + errorCode;
+        return QObject::tr("Unknown error (%1)").arg(errorCode);
     }
 }
