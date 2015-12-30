@@ -220,10 +220,10 @@ void Text::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
     QString anchor = doc->documentLayout()->anchorAt(event->pos());
 
-    if (!anchor.isEmpty())
-        setCursor(QCursor(Qt::PointingHandCursor));
+    if (anchor.isEmpty())
+        setCursor(Qt::IBeamCursor);
     else
-        setCursor(QCursor());
+        setCursor(Qt::PointingHandCursor);
 
     // tooltip
     setToolTip(extractImgTooltip(cursorFromPos(event->scenePos(), false)));
