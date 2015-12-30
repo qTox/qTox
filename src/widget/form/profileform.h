@@ -81,6 +81,8 @@ private slots:
     void onAvatarClicked();
     void showProfilePictureContextMenu(const QPoint &point);
 
+    void onRegisterButtonClicked();
+
 private:
     void retranslateUi();
     void prFileLabelUpdate();

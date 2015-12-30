@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
+    <width>584</width>
     <height>659</height>
    </rect>
   </property>
@@ -39,11 +39,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>585</width>
-        <height>625</height>
+        <width>542</width>
+        <height>792</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
        <property name="spacing">
         <number>9</number>
        </property>
@@ -86,6 +86,90 @@
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="title">
+          <string>Toxme register</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="2" column="0">
+             <widget class="QLabel" name="bioLabel">
+              <property name="text">
+               <string>Biography</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="bio"/>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="dnsUsername"/>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="password">
+              <property name="frame">
+               <bool>false</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="passwordLabel">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Your password</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="privacy">
+              <property name="text">
+               <string>Hide my name from the public list</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QPushButton" name="registerButton">
+              <property name="text">
+               <string>Register</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="dnsUsernameLabel">
+              <property name="text">
+               <string>Username</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="serversList">
+              <property name="currentIndex">
+               <number>-1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="serverLabel">
+              <property name="text">
+               <string>Server</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="toxGroup">
          <property name="title">
@@ -104,7 +188,11 @@ Share it with your friends to communicate.</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="toxId"/>
+           <widget class="QLineEdit" name="toxId">
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QFrame" name="verticalFrame">

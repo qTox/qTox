@@ -46,6 +46,7 @@
 #include <QWindow>
 #include <QMenu>
 #include <QMouseEvent>
+#include <src/net/toxme.h>
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}
@@ -80,6 +81,9 @@ ProfileForm::ProfileForm(QWidget *parent) :
     QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
     delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId);     // Original toxId is in heap, delete it
     bodyUI->toxId->hide();
+    bodyUI->password->hide();
+    bodyUI->passwordLabel->hide();
+    bodyUI->serversList->addItem("toxme.io");
 
     bodyUI->qrLabel->setWordWrap(true);
 
@@ -111,6 +115,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
+    connect(bodyUI->registerButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -415,4 +420,47 @@ void ProfileForm::retranslateUi()
     nameLabel->setText(tr("User Profile"));
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
+}
+
+void ProfileForm::onRegisterButtonClicked()
+{
+    QString name =  bodyUI->toxmeUsername->text();
+    if (name.isEmpty())
+        return;
+
+    bodyUI->toxmeRegisterButton->setEnabled(false);
+    bodyUI->toxmeUpdateButton->setEnabled(false);
+    bodyUI->toxmeRegisterButton->setText(tr("Register (processing)"));
+    bodyUI->toxmeUpdateButton->setText(tr("Update (processing)"));
+
+    QString id = toxId->text();
+    QString bio = bodyUI->toxmeBio->text();
+    QString server = bodyUI->toxmeServersList->currentText();
+    bool privacy = bodyUI->toxmePrivacy->isChecked();
+    if (name.isEmpty())
+        return;
+
+    Toxme::ExecCode code = Toxme::ExecCode::Ok;
+    QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
+
+    switch (code) {
+    case Toxme::Updated:
+        QMessageBox::information(this, tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server), "Ok");
+        Settings::getInstance().setToxme(name, server, bio, privacy);
+        showExistenToxme();
+        break;
+    case Toxme::Ok:
+        QMessageBox::information(this, tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server), "Ok");
+        Settings::getInstance().setToxme(name, server, bio, privacy, response);
+        showExistenToxme();
+        break;
+    default:
+        QString errorMessage = Toxme::getErrorMessage(code);
+        QMessageBox::warning(this, tr("Toxme error"),  errorMessage, "Ok");
+    }
+
+    bodyUI->toxmeRegisterButton->setEnabled(true);
+    bodyUI->toxmeUpdateButton->setEnabled(true);
+    bodyUI->toxmeRegisterButton->setText(tr("Register"));
+    bodyUI->toxmeUpdateButton->setText(tr("Update"));
 }
