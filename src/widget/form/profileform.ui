@@ -40,7 +40,7 @@
         <x>0</x>
         <y>0</y>
         <width>542</width>
-        <height>792</height>
+        <height>802</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -101,12 +101,6 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="bio"/>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="dnsUsername"/>
-            </item>
             <item row="6" column="1">
              <widget class="QLineEdit" name="password">
               <property name="frame">
@@ -164,6 +158,16 @@
                <string>Server</string>
               </property>
              </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="dnsUsername">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="bio"/>
             </item>
            </layout>
           </item>
@@ -406,6 +410,26 @@ Profile does not contain your history.</string>
    <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>userName</tabstop>
+  <tabstop>statusMessage</tabstop>
+  <tabstop>dnsUsername</tabstop>
+  <tabstop>bio</tabstop>
+  <tabstop>serversList</tabstop>
+  <tabstop>privacy</tabstop>
+  <tabstop>registerButton</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>toxId</tabstop>
+  <tabstop>saveQr</tabstop>
+  <tabstop>copyQr</tabstop>
+  <tabstop>renameButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+  <tabstop>logoutButton</tabstop>
+  <tabstop>exportButton</tabstop>
+  <tabstop>deletePassButton</tabstop>
+  <tabstop>changePassButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
