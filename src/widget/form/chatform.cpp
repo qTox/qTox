@@ -949,13 +949,23 @@ void ChatForm::SendMessageStr(QString msg)
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-        auto* offMsgEngine = getOfflineMsgEngine();
-        Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                    Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
-                                    [offMsgEngine,rec,ma](int64_t id)
+
+        Profile* profile = Nexus::getProfile();
+        if (profile->isHistoryEnabled())
         {
-            offMsgEngine->registerReceipt(rec, id, ma);
-        });
+            auto* offMsgEngine = getOfflineMsgEngine();
+            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
+                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
+                                        [offMsgEngine,rec,ma](int64_t id)
+            {
+                offMsgEngine->registerReceipt(rec, id, ma);
+            });
+        }
+        else
+        {
+            /// TODO: Make faux-offline messaging work partially with the history disabled
+            ma->markAsSent(QDateTime::currentDateTime());
+        }
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
 
