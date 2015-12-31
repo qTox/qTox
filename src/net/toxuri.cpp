@@ -20,6 +20,7 @@
 
 #include "src/net/toxuri.h"
 #include "src/net/toxdns.h"
+#include "src/net/toxme.h"
 #include "src/widget/tool/friendrequestdialog.h"
 #include "src/nexus.h"
 #include "src/core/core.h"
@@ -62,20 +63,22 @@ bool handleToxURI(const QString &toxURI)
     else
         toxaddr = toxURI.mid(4);
 
-    QString toxid = ToxDNS::resolveToxAddress(toxaddr, true).toString();
+    QString toxId = Toxme::lookup(toxaddr).toString();
+    if (toxId.isEmpty())
+    {
+        toxId = ToxDNS::resolveToxAddress(toxaddr, true).toString();
+        if (toxId.isEmpty())
+        {
+            QMessageBox::warning(0, "qTox", toxaddr + " is not a valid Tox address.");
+            return false;
+        }
+    }
 
-    if (toxid.isEmpty())
-    {
-        QMessageBox::warning(0, "qTox", toxaddr + " is not a valid Tox address.");
-    }
-    else
-    {
-        ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
-                                                    "Default message in Tox URI friend requests. Write something appropriate!")
-                            .arg(Nexus::getCore()->getUsername()));
-        if (dialog.exec() == QDialog::Accepted)
-            Core::getInstance()->requestFriendship(toxid, dialog.getRequestMessage());
-    }
+    ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
+                                                "Default message in Tox URI friend requests. Write something appropriate!")
+                        .arg(Nexus::getCore()->getUsername()));
+    if (dialog.exec() == QDialog::Accepted)
+        Core::getInstance()->requestFriendship(toxId, dialog.getRequestMessage());
     return true;
 }
 
