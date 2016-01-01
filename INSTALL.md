@@ -32,6 +32,7 @@
     - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [filter_audio](#filter_audio)
+  - [sqlcipher (Fedora)](#sqlcipher)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
@@ -368,7 +369,8 @@ cd filter_audio
 make -j$(nproc)
 sudo make install
 ```
-### Sqlcipher compiling, For Fedora users and possibly others.
+
+### Sqlcipher compiling (Fedora)
 ```bash
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
