@@ -22,7 +22,7 @@
     <ul>
     <h3><li>General</li></h3>
         <ul>
-            <h4>General Settings</h5>
+            <h4>General Settings</h4>
             <li><p><b>Language:</b> Changes which language the qTox interface uses.</p></li>
             <li><p><b>Autostart:</b> If set, qTox will start when you login on your computer.</p></li>
             <li><p><b>Light icon:</b> If set, qTox will use a different icon, which is easier to read on black backgrounds.</p></li>
@@ -35,7 +35,78 @@
             <li><p><b>Auto away after (0 to disable):</b> After the specified amount of time, qTox will set your Status to away. A setting of 0 will never set your status.</p></li>
             <li><p><b>Default directory to save files:</b> You can set the directory where qTox puts files you recieved here.</p></li>
             <li><p><b>Autoaccept files:</b> If set, qTox will automatically accept filetransfers and put them in the directory specified above.</p></li>
-            <h4>General Settings</h5>
+            
+            <h4>Chat</h4>
+            <li><p><b>Play sound:</b> If checked, qTox will play a sound when you get a new message.</p></li>
+            <li><p><b>Open window:</b> If checked, the qTox window will be opened.</p></li> <!-- TODO: Will a NEW window be opened? What happens in Multi Window mode? -->
+            <ul>
+                    <li><p><b>Focus window:</b> If checked, the qTox window will additionally be focused.</p></li>
+            </ul>
+            <li><p><b>Show contacts' status changes:</b> ???</p></li><!-- TODO: what does this even do?-->
+            <li><p><b>Group chats always notify:</b> ???</p></li><!-- TODO: what does this even do?-->
+            <li><p><b>Place groupchats at top of friend list:</b> If checked, your groupchats will be at the top of the contacts list.</p></li> <!-- TODO: else what?-->
+            <li><p><b>Faux offline messaging:</b> If enabled, qTox will attempt to send messages when a currently offline contact comes online again.</p></li><!-- TODO:Is this even correct?-->
+            <li><p><b>Compact contact list:</b> If set, qTox will use a contact list layout which takes up less screen space.</p></li>
+            <li><p><b>Multiple windows mode:</b> If enabled, the qTox user interface will be split into multiple independent windows. For details see TODO.</p></li><!-- TODO:write detailed explainaiton of multi window mode-->
+            <ul>
+                    <li><p><b>Open each chat in an individual window:</b> If checked, a new window will be opened for every chat you open.</p></li>
+            </ul>
+            
+            <h4>Theme</h4>
+            <li><p><b>Use emoticons:</b> If enabled, qTox will replace simleys ( e.g. :-) )  with Unicode emoticons.</p></li>
+            <li><p><b>Smiley Pack:</b> You can choose from different sets of shiped emoticon styles. You can also install your own, see ??? for details</p></li><!-- TODO: add instructions for adding own smiley packs-->
+            <li><p><b>Emoticon size:</b> You can change the size of the emoticons here.</p></li>
+            <li><p><b>Style:</b> Changes the appearance of qTox.</p></li><!-- TODO: possible to add own styles? -->
+            <li><p><b>Theme color:</b> Changes the colors qTox uses.</p></li><!-- TODO: possible to add own color schemes? -->
+            <li><p><b>Timestamp format:</b> Change the format in which qTox displays message timestamps.</p></li>
+            <li><p><b>Date format:</b> Same as above for the date.</p></li>
+            
+            <h4>Connection Settings</h4>
+            <li><p><b>Enable IPv6 (recommended):</b> If enabled, qTox will use IPv4 and IPv6 protocols, whichever is available. If disabled, qTox will only use IPv4.</p></li>
+            <li><p><b>Enable UDP (recommended):</b> If enabled, qTox will use TCP and UDP protocols. If disabled, qTox will only use TCP.</p></li><!-- TODO: correct? what advantages/disadvantages does this have? -->
+            <li><p><b>Proxy type:</b> If you want to use a proxy, set the type here. "None" disables the proxy.</p></li>
+            <li><p><b>Address:</b> If you use a proxy, enter the address here.</p></li>
+            <li><p><b>Port:</b> If you use a proxy, enter the port here.</p></li>
+            <li><p><b>Reconnect:</b> Reconnect to the tox network, e.g. if you changed the proxy settings.</p></li>
+        </ul>
+        <h3><li>Privacy</li></h3>
+        <ul>
+            <li><p><b>Send typing notifications:</b> If enabled, notify your chat partner when you are currently typing.</p></li>
+            <li><p><b>Keep chat history:</b> If enabled, qTox will save your sent and recieved messages. Encrypt your profile, if you want to encrypt the chat history.</p></li>
+            
+            <li><h4>NoSpam</h4></li>
+            
+            NoSpam is a feature of Tox to prevent someone spamming you with friend requests. If you get spammed, enter or generate a new NoSpam value, this will alter your Tox ID. You don't need to tell your existing contacts your new Tox ID, but you have to tell new contacts your new Tox ID. Your Tox ID can be found ??? <!-- TODO: link to page describing your profile-->
+            
+        </ul>
+        <h3><li>Audio/Video</li></h3>
+        <ul>
+            <h4>Audio Settings</h4>
+            <li><p><b>Playback device:</b> Select the device qTox should use for all audio output (notifications, calls,..).</p></li>
+            <li><p><b>Playback:</b> Here you can adjust the playback volume to your needs.</p></li>
+            <li><p><b>Capture device:</b> Select the device qTox should use for audio input in calls.</p></li>
+            <li><p><b>Microphone:</b> Set the input volume of your microphone with this slider. When you are talking normaly, the the display should be in the green range.</p></li><!-- TODO: better wording-->
+            <li><p><b>Filter audio</b> If enabled, qTox will try to remove noise and echo from your audio input.</p></li>
+            
+            <h4>Video Settings</h4>
+            <li><p><b>Video device:</b> Select the video device qTox should use for video calls. "None" will show a dummy picture to your chat partner. "Desktop" will stream the content of your screen.</p></li>
+            <li><p><b>Resolution:</b> You can select from the available resolutions and framerates here. Higher resolutions provide more quality, but if the bandwidth of your connection is low, the video may get choppy.</p></li>
+            
+            If you set up everything correctly, you should see the preview of your video device in the box.
+            
+            <li><p><b>Rescan devices</b> Use this button to search for newly attached devices, e.g. you plugged in a webcam.</p></li>
+        </ul>
+        <h3><li>Advanced</li></h3>
+        <ul>
+            <li><p><b>Make Tox portable:</b> ???</p></li><!-- TODO: What does this do exactly?-->
+            <li><p><b>Reset to default settings</b> Use this button to delete any changes you made to the qTox settings.</p></li>
+        </ul>
+        <h3><li>About</li></h3>
+        <ul>
+            <li><p><b>Version</b> The version of qTox and the libraries it depends on. Please append this information to every bugreport.</p></li>
+            <li><p><b>License</b> The license under which the code of qTox is available.</p></li>
+            <li><p><b>Authors</b> The people who developed this shiny piece of software.</p></li>
+            <li><p><b>Known Issues</b> Links to our list of known issues and improvements.</p></li>
         </ul>
     </ul>
 </ol>
