@@ -370,7 +370,10 @@ make -j$(nproc)
 sudo make install
 ```
 
-### Sqlcipher compiling (Fedora)
+### sqlcipher
+
+If you are not using Fedora, skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
+
 ```bash
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
