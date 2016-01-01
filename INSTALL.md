@@ -32,7 +32,7 @@
     - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [filter_audio](#filter_audio)
-  - [sqlcipher (Fedora)](#sqlcipher)
+  - [sqlcipher](#sqlcipher)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
