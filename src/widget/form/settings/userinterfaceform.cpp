@@ -132,11 +132,12 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
 
     QStringList dateFormats;
     dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
-
                 // format strings from system locale
                 << ql.dateFormat(QLocale::LongFormat)
                 << ql.dateFormat(QLocale::ShortFormat)
-                << ql.dateFormat(QLocale::NarrowFormat);
+                << ql.dateFormat(QLocale::NarrowFormat)
+                << "dd-MM-yyyy" << "d-MM-yyyy" << "dddd dd-MM-yyyy" << "dddd d-MM";
+
     dateFormats.removeDuplicates();
 
     for (QString format : dateFormats)
