@@ -147,7 +147,6 @@ void Widget::init()
 #ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
 #endif
-    actionQuit->setShortcut(QKeySequence::Quit);
     actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
@@ -773,7 +772,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     }
     else if (reason == QSystemTrayIcon::Unknown)
     {
-        if (isHidden()) 
+        if (isHidden())
             forceShow();
     }
 }
