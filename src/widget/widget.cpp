@@ -144,7 +144,10 @@ void Widget::init()
     actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
 
     actionQuit = new QAction(this);
+#ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
+#endif
+    actionQuit->setShortcut(QKeySequence::Quit);
     actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
