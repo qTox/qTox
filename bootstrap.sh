@@ -208,9 +208,9 @@ if [[ $INSTALL_SNORENOTIFY = "true" ]]; then
     pushd ${BASE_DIR}/${SNORENOTIFY_DIR}
     
     if [[ $SYSTEM_WIDE = "false" ]]; then
-    	PREFIX=${BASE_DIR} cmake -qt5 .
-        PREFIX=${BASE_DIR} make -j2
-        PREFIX=${BASE_DIR} make install
+        cmake -qt5 -DCMAKE_INSTALL_PREFIX="${BASE_DIR}" .
+        make -j2
+        make install
     else
     	cmake -qt5 .
         make -j2
