@@ -15,7 +15,7 @@ before_install:
 
 install:
 # install needed Qt stuff
- - sudo apt-get install -y build-essential qt54base qt54script qt54svg qt54tools qt54xmlpatterns libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libtool autotools-dev automake checkinstall check libvpx-dev libsqlcipher-dev
+ - sudo apt-get install -y build-essential qt54base qt54script qt54svg qt54tools qt54xmlpatterns libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libtool autotools-dev automake checkinstall check libvpx-dev libsqlcipher0
 # install needed GCC version and set VM to use
  - if [ "$CC" == "gcc" ]; then sudo apt-get install -qq gcc-4.9; fi
  - if [ "$CC" == "gcc" ]; then export CC="gcc-4.9"; fi
