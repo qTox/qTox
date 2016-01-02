@@ -14,7 +14,16 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
     <number>9</number>
    </property>
    <item>
@@ -29,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>631</width>
-        <height>1141</height>
+        <y>-301</y>
+        <width>637</width>
+        <height>1379</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -227,6 +236,9 @@ instead of closing itself.</string>
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
               <property name="suffix">
                <string notr="true"> min</string>
               </property>
@@ -235,9 +247,6 @@ instead of closing itself.</string>
               </property>
               <property name="maximum">
                <number>2147483647</number>
-              </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -641,6 +650,12 @@ will be sent to them when they appear online to you.</string>
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <property name="insertPolicy">
+               <enum>QComboBox::NoInsert</enum>
               </property>
              </widget>
             </item>
