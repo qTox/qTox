@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>584</width>
+    <width>574</width>
     <height>659</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>542</width>
+        <width>536</width>
         <height>802</height>
        </rect>
       </property>
@@ -136,6 +136,15 @@
               <property name="text">
                <string>Register</string>
               </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default">
+               <bool>false</bool>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="0">
@@ -147,6 +156,12 @@
             </item>
             <item row="3" column="1">
              <widget class="QComboBox" name="serversList">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
               <property name="currentIndex">
                <number>-1</number>
               </property>
