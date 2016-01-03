@@ -2091,7 +2091,13 @@ void Widget::onDesktopNotificationsToggled(NotificationBackend* notificationBack
     notification = notificationBackend;
 
     if (notification)
-        connect(notification, SIGNAL(activated(GenericChatroomWidget*)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*)));
+    {
+        connect(notification, &NotificationBackend::activated,
+                this, [this](GenericChatroomWidget* chatRoom)
+                        {
+                            this->onChatroomWidgetClicked(chatRoom, false);
+                        });
+    }
 }
 
 void Widget::notifyAvInvite(int friendId)
