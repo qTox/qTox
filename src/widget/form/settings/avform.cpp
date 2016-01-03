@@ -363,14 +363,12 @@ void AVForm::onPlaybackValueChanged(int value)
 {
     Audio::getInstance().setOutputVolume(value / 100.0);
     Settings::getInstance().setOutVolume(bodyUI->playbackSlider->value());
-    bodyUI->playbackMax->setText(QString::number(value));
 }
 
 void AVForm::onMicrophoneValueChanged(int value)
 {
     Audio::getInstance().setInputVolume(value / 100.0);
     Settings::getInstance().setInVolume(bodyUI->microphoneSlider->value());
-    bodyUI->microphoneMax->setText(QString::number(value));
 }
 
 void AVForm::createVideoSurface()
@@ -411,6 +409,4 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 void AVForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    bodyUI->playbackMax->setText(QString::number(bodyUI->playbackSlider->value()));
-    bodyUI->microphoneMax->setText(QString::number(bodyUI->microphoneSlider->value()));
 }
