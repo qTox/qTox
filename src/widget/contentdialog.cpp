@@ -120,7 +120,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
-    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleUsername);
+    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleAndStatusIcon);
 
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
 }
@@ -425,10 +425,29 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
     return getDialog(groupId, groupList);
 }
 
-void ContentDialog::updateTitleUsername(const QString& username)
+void ContentDialog::updateTitleAndStatusIcon(const QString& username)
 {
     if (displayWidget != nullptr)
+    {
+
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
+
+        if(displayWidget->getFriend() == nullptr)  // it's null when it's a groupchat
+        {
+            setWindowIcon(QIcon(":/img/group.svg"));
+            return;
+        }
+
+        Status currentStatus = displayWidget->getFriend()->getStatus();
+        if (currentStatus == Status::Online)
+            setWindowIcon(QIcon(":/img/status/dot_online.svg"));
+        else if (currentStatus == Status::Away)
+            setWindowIcon(QIcon(":/img/status/dot_away.svg"));
+        else if (currentStatus == Status::Busy)
+            setWindowIcon(QIcon(":/img/status/dot_busy.svg"));
+        else if (currentStatus == Status::Offline)
+            setWindowIcon(QIcon(":/img/status/dot_offline.svg"));
+    }
     else
         setWindowTitle(username);
 }
@@ -436,7 +455,7 @@ void ContentDialog::updateTitleUsername(const QString& username)
 void ContentDialog::updateTitle(GenericChatroomWidget* chatroomWidget)
 {
     displayWidget = chatroomWidget;
-    updateTitleUsername(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::previousContact()
@@ -606,7 +625,9 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     updateTitle(widget);
 
     if (widget->getFriend())
+    {
         widget->getFriend()->getFriendWidget()->updateStatusLight();
+    }
     else
         widget->getGroup()->getGroupWidget()->updateStatusLight();
 }
@@ -636,7 +657,7 @@ void ContentDialog::onGroupchatPositionChanged(bool top)
 
 void ContentDialog::retranslateUi()
 {
-    updateTitleUsername(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::saveDialogGeometry()
