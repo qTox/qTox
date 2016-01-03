@@ -710,7 +710,7 @@ void Audio::subscribeOutput(SID& sid)
 
     alGenSources(1, &sid);
     assert(sid);
-    alSourcef(sid, AL_GAIN, 1.f);
+    alSourcef(sid, AL_GAIN, d->outputVolume);
     d->outSources << sid;
     qDebug() << "Audio source" << sid << "created. Sources active:"
              << d->outSources.size();
