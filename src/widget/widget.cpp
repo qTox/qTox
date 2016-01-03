@@ -682,7 +682,7 @@ void Widget::setWindowTitle(const QString& title)
 
 void Widget::forceShow()
 {
-    hide();                     // Workaround to force minimized window to be restored
+    hide(); // Workaround to force minimized window to be restored
     show();
     activateWindow();
 }
@@ -785,6 +785,7 @@ void Widget::onSettingsClicked()
             settingsWidget->show(createContentDialog(SettingDialog));
 
         setActiveToolMenuButton(Widget::None);
+        settingsWidget->setWindowIcon(QIcon(":/img/settings.svg"));
     }
     else
     {
@@ -803,6 +804,7 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
             profileForm->show(createContentDialog(ProfileDialog));
 
         setActiveToolMenuButton(Widget::None);
+        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
@@ -1368,6 +1370,7 @@ ContentLayout* Widget::createContentDialog(DialogType type)
         void retranslateUi()
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
+            setWindowIcon(QIcon(":/img/settings.svg"));
         }
 
     protected:
