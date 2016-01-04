@@ -120,7 +120,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
 
-    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleUsername);
+    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleAndStatusIcon);
 
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
 }
@@ -214,11 +214,9 @@ void ContentDialog::removeFriend(int friendId)
     FriendWidget* chatroomWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
     disconnect(chatroomWidget->getFriend(), &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
 
+    // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
-    {
-        // Need to find replacement to show here instead.
         cycleContacts(true, false);
-    }
 
     friendLayout->removeFriendWidget(chatroomWidget, Status::Offline);
     friendLayout->removeFriendWidget(chatroomWidget, Status::Online);
@@ -255,11 +253,9 @@ void ContentDialog::removeGroup(int groupId)
 
     GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
 
+    // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
-    {
-        // Need to find replacement to show here instead.
         cycleContacts(true, false);
-    }
 
     groupLayout.removeSortedWidget(chatroomWidget);
     chatroomWidget->deleteLater();
@@ -425,10 +421,37 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
     return getDialog(groupId, groupList);
 }
 
-void ContentDialog::updateTitleUsername(const QString& username)
+void ContentDialog::updateTitleAndStatusIcon(const QString& username)
 {
     if (displayWidget != nullptr)
+    {
+
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
+
+        // it's null when it's a groupchat
+        if(displayWidget->getFriend() == nullptr)
+        {
+            setWindowIcon(QIcon(":/img/group.svg"));
+            return;
+        }
+
+        Status currentStatus = displayWidget->getFriend()->getStatus();
+
+        switch(currentStatus) {
+            case Status::Online:
+                setWindowIcon(QIcon(":/img/status/dot_online.svg"));
+                break;
+            case Status::Away:
+                setWindowIcon(QIcon(":/img/status/dot_away.svg"));
+                break;
+            case Status::Busy:
+                setWindowIcon(QIcon(":/img/status/dot_busy.svg"));
+                break;
+            case Status::Offline:
+                setWindowIcon(QIcon(":/img/status/dot_offline.svg"));
+                break;
+        }
+    }
     else
         setWindowTitle(username);
 }
@@ -436,7 +459,7 @@ void ContentDialog::updateTitleUsername(const QString& username)
 void ContentDialog::updateTitle(GenericChatroomWidget* chatroomWidget)
 {
     displayWidget = chatroomWidget;
-    updateTitleUsername(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::previousContact()
@@ -636,7 +659,7 @@ void ContentDialog::onGroupchatPositionChanged(bool top)
 
 void ContentDialog::retranslateUi()
 {
-    updateTitleUsername(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::saveDialogGeometry()

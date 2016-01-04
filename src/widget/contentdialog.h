@@ -72,7 +72,7 @@ signals:
 #endif
 
 public slots:
-    void updateTitleUsername(const QString& username);
+    void updateTitleAndStatusIcon(const QString& username);
     void updateTitle(GenericChatroomWidget* chatroomWidget);
     void previousContact();
     void nextContact();
