@@ -214,11 +214,9 @@ void ContentDialog::removeFriend(int friendId)
     FriendWidget* chatroomWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
     disconnect(chatroomWidget->getFriend(), &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
 
+    // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
-    {
-        // Need to find replacement to show here instead.
         cycleContacts(true, false);
-    }
 
     friendLayout->removeFriendWidget(chatroomWidget, Status::Offline);
     friendLayout->removeFriendWidget(chatroomWidget, Status::Online);
@@ -255,11 +253,9 @@ void ContentDialog::removeGroup(int groupId)
 
     GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
 
+    // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
-    {
-        // Need to find replacement to show here instead.
         cycleContacts(true, false);
-    }
 
     groupLayout.removeSortedWidget(chatroomWidget);
     chatroomWidget->deleteLater();
@@ -432,21 +428,29 @@ void ContentDialog::updateTitleAndStatusIcon(const QString& username)
 
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
 
-        if(displayWidget->getFriend() == nullptr)  // it's null when it's a groupchat
+        // it's null when it's a groupchat
+        if(displayWidget->getFriend() == nullptr)
         {
             setWindowIcon(QIcon(":/img/group.svg"));
             return;
         }
 
         Status currentStatus = displayWidget->getFriend()->getStatus();
-        if (currentStatus == Status::Online)
-            setWindowIcon(QIcon(":/img/status/dot_online.svg"));
-        else if (currentStatus == Status::Away)
-            setWindowIcon(QIcon(":/img/status/dot_away.svg"));
-        else if (currentStatus == Status::Busy)
-            setWindowIcon(QIcon(":/img/status/dot_busy.svg"));
-        else if (currentStatus == Status::Offline)
-            setWindowIcon(QIcon(":/img/status/dot_offline.svg"));
+
+        switch(currentStatus) {
+            case Status::Online:
+                setWindowIcon(QIcon(":/img/status/dot_online.svg"));
+                break;
+            case Status::Away:
+                setWindowIcon(QIcon(":/img/status/dot_away.svg"));
+                break;
+            case Status::Busy:
+                setWindowIcon(QIcon(":/img/status/dot_busy.svg"));
+                break;
+            case Status::Offline:
+                setWindowIcon(QIcon(":/img/status/dot_offline.svg"));
+                break;
+        }
     }
     else
         setWindowTitle(username);
@@ -625,9 +629,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     updateTitle(widget);
 
     if (widget->getFriend())
-    {
         widget->getFriend()->getFriendWidget()->updateStatusLight();
-    }
     else
         widget->getGroup()->getGroupWidget()->updateStatusLight();
 }
