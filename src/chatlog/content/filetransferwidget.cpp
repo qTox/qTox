@@ -22,6 +22,7 @@
 
 #include "src/nexus.h"
 #include "src/core/core.h"
+#include "src/widget/gui.h"
 #include "src/widget/style.h"
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
@@ -138,9 +139,8 @@ void FileTransferWidget::acceptTransfer(const QString &filepath)
     //test if writable
     if (!Nexus::tryRemoveFile(filepath))
     {
-        QMessageBox::warning(this,
-                             tr("Location not writable", "Title of permissions popup"),
-                             tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+        GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
+                         tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
         return;
     }
 
