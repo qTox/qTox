@@ -192,7 +192,12 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("GUI");
-        smileyPack = s.value("smileyPack", ":/smileys/Universe/emoticons.xml").toString();
+        static const QString DEFAULT_SMILEYS = ":/smileys/Universe/emoticons.xml";
+        smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
+        if (!SmileyPack::isValid(smileyPack))
+        {
+            smileyPack = DEFAULT_SMILEYS;
+        }
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
