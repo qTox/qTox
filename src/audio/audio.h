@@ -50,8 +50,6 @@ public:
     static Audio& getInstance();
 
 public:
-    void startAudioThread();
-
     AudioMeterListener* createAudioMeterListener() const;
 
     qreal outputVolume();
@@ -99,9 +97,6 @@ signals:
 private:
     Audio();
     ~Audio();
-
-private:
-    static Audio* instance;
 
 private:
     AudioPrivate* d;

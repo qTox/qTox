@@ -56,8 +56,6 @@
 #include "audiofilterer.h"
 #endif
 
-Audio* Audio::instance{nullptr};
-
 /**
 @class AudioPlayer
 
@@ -267,16 +265,12 @@ void AudioMeterListener::doListen()
 }
 
 /**
-Returns the singleton's instance. Will construct on first call.
+Returns the singleton instance.
 */
 Audio& Audio::getInstance()
 {
-    if (!instance)
-    {
-        instance = new Audio();
-        instance->startAudioThread();
-    }
-    return *instance;
+    static Audio instance;
+    return instance;
 }
 
 AudioMeterListener* Audio::createAudioMeterListener() const
@@ -290,25 +284,17 @@ AudioMeterListener* Audio::createAudioMeterListener() const
 Audio::Audio()
     : d(new AudioPrivate)
 {
-}
-
-Audio::~Audio()
-{
-    delete d;
-}
-
-/**
-Start the audio thread for capture and playback.
-*/
-void Audio::startAudioThread()
-{
     moveToThread(d->audioThread);
 
     if (!d->audioThread->isRunning())
         d->audioThread->start();
     else
         qWarning("Audio thread already started -> ignored.");
+}
 
+Audio::~Audio()
+{
+    delete d;
 }
 
 /**
@@ -541,7 +527,7 @@ The first and last argument are ignored, but allow direct compatibility with tox
 void Audio::playGroupAudioQueued(void*,int group, int peer, const int16_t* data,
                         unsigned samples, uint8_t channels, unsigned sample_rate, void* core)
 {
-    QMetaObject::invokeMethod(instance, "playGroupAudio", Qt::BlockingQueuedConnection,
+    QMetaObject::invokeMethod(&Audio::getInstance(), "playGroupAudio", Qt::BlockingQueuedConnection,
                               Q_ARG(int,group), Q_ARG(int,peer), Q_ARG(const int16_t*,data),
                               Q_ARG(unsigned,samples), Q_ARG(uint8_t,channels), Q_ARG(unsigned,sample_rate));
     emit static_cast<Core*>(core)->groupPeerAudioPlaying(group, peer);
