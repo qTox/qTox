@@ -396,9 +396,10 @@ bool AudioPrivate::initInput(QString inDevDescr)
 {
     qDebug() << "Opening audio input" << inDevDescr;
 
-    inputInitialized = false;
-    if (inDevDescr == "none")
-        return true;
+    if (inDevDescr == "none") {
+        qWarning("No audio input device selected.");
+        return false;
+    }
 
     assert(!alInDev);
 
@@ -441,9 +442,10 @@ bool AudioPrivate::initOutput(QString outDevDescr)
     qDebug() << "Opening audio output" << outDevDescr;
     outSources.clear();
 
-    outputInitialized = false;
-    if (outDevDescr == "none")
-        return true;
+    if (outDevDescr == "none") {
+        qWarning("No audio output device selected.");
+        return false;
+    }
 
     assert(!alOutDev);
 
