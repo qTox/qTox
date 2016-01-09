@@ -157,104 +157,84 @@ int main(int argc, char *argv[])
 #endif
 
 
+    QString profileName;
+    bool autoLogin = Settings::getInstance().getAutoLogin();
 #ifndef Q_OS_ANDROID
     // Inter-process communication
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
     ipc.registerEventHandler("activate", &toxActivateEventHandler);
 
+    uint32_t ipcDest = 0;
+    QString eventType, firstParam;
     if (parser.isSet("p"))
     {
-        QString profileName = parser.value("p");
-        if (Profile::exists(profileName))
-        {
-            qDebug() << "Setting profile to" << profileName;
-            if (Profile::isEncrypted(profileName))
-            {
-                Settings::getInstance().setCurrentProfile(profileName);
-            }
-            else
-            {
-                Profile* profile = Profile::loadProfile(profileName);
-                if (!profile)
-                {
-                    qCritical() << "-p profile" << profileName + ".tox" << " couldn't be loaded";
-                    return EXIT_FAILURE;
-                }
-                Nexus::getInstance().setProfile(profile);
-            }
-        }
-        else
+        profileName = parser.value("p");
+        if (!Profile::exists(profileName))
         {
             qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
             return EXIT_FAILURE;
         }
+        ipcDest = Settings::makeProfileId(profileName);
+        autoLogin = true;
     }
+    else
+        profileName = Settings::getInstance().getCurrentProfile();
 
-    if (parser.positionalArguments().size() > 0)
+    if (parser.positionalArguments().size() == 0)
+        eventType = "activate";
+    else
     {
-        QString firstParam(parser.positionalArguments()[0]);
+        firstParam = parser.positionalArguments()[0];
         // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI and we exit
         // Otherwise we start a new qTox instance and process it ourselves
         if (firstParam.startsWith("tox:"))
-        {
-            if (ipc.isCurrentOwner()) // Don't bother sending an event if we're going to process it ourselves
-            {
-                handleToxURI(firstParam.toUtf8());
-            }
-            else
-            {
-                time_t event = ipc.postEvent("uri", firstParam.toUtf8());
-                ipc.waitUntilAccepted(event);
-                // If someone else processed it, we're done here, no need to actually start qTox
-                if (!ipc.isCurrentOwner())
-                    return EXIT_SUCCESS;
-            }
-        }
+            eventType = "uri";
         else if (firstParam.endsWith(".tox"))
-        {
-            if (ipc.isCurrentOwner()) // Don't bother sending an event if we're going to process it ourselves
-            {
-                handleToxSave(firstParam.toUtf8());
-            }
-            else
-            {
-                time_t event = ipc.postEvent("save", firstParam.toUtf8());
-                ipc.waitUntilAccepted(event);
-                // If someone else processed it, we're done here, no need to actually start qTox
-                if (!ipc.isCurrentOwner())
-                    return EXIT_SUCCESS;
-            }
-        }
+            eventType = "save";
         else
         {
-            fprintf(stderr, "Invalid argument\n");
+            qCritical() << "Invalid argument";
             return EXIT_FAILURE;
         }
     }
-    else if (!ipc.isCurrentOwner() && !parser.isSet("p"))
+
+    if (!ipc.isCurrentOwner())
     {
-        time_t event = ipc.postEvent("activate");
-        if (!ipc.waitUntilAccepted(event, 2))
+        time_t event = ipc.postEvent(eventType, firstParam.toUtf8(), ipcDest);
+        // If someone else processed it, we're done here, no need to actually start qTox
+        if (ipc.waitUntilAccepted(event, 2))
         {
+            qDebug() << "Event" << eventType << "was handled by other client.";
             return EXIT_SUCCESS;
         }
     }
 #endif
 
     // Autologin
-    if (Settings::getInstance().getAutoLogin())
+    if (autoLogin)
     {
-        QString profileName = Settings::getInstance().getCurrentProfile();
-        if (Profile::exists(profileName) && !Profile::isEncrypted(profileName))
+        if (Profile::exists(profileName))
         {
-            Profile* profile = Profile::loadProfile(profileName);
-            if (profile)
-                Nexus::getInstance().setProfile(profile);
+            if (!Profile::isEncrypted(profileName))
+            {
+                Profile* profile = Profile::loadProfile(profileName);
+                if (profile)
+                    Nexus::getInstance().setProfile(profile);
+            }
+            Settings::getInstance().setCurrentProfile(profileName);
         }
     }
 
     Nexus::getInstance().start();
+
+#ifndef Q_OS_ANDROID
+    // Event was not handled by already running instance therefore we handle it ourselves
+    if (eventType == "uri")
+        handleToxURI(firstParam.toUtf8());
+    else if (eventType == "save")
+        handleToxSave(firstParam.toUtf8());
+#endif
 
     // Run
     int errorcode = a.exec();

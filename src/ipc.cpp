@@ -186,7 +186,8 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
 {
     bool result = false;
     time_t start = time(0);
-    forever {
+    forever
+    {
         result = isEventAccepted(postTime);
         if (result || (timeout > 0 && difftime(time(0), start) >= timeout))
             break;
