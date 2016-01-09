@@ -3,8 +3,8 @@
 
 * [Settings](#Settings)
 * [Groupchats](#Groupchats)
-* Multi Window Mode
-* Keyboard Shortcuts
+* [Multi Window Mode](#multi-window-mode)
+* [Keyboard Shortcuts](#keyboard-shortcuts)
 
 ## Settings
 ### General
@@ -88,6 +88,10 @@ NoSpam is a feature of Tox to prevent someone spamming you with friend requests.
 ## Groupchats
 
 Groupchats are a way to talk with multiple friends at the same time, like when you are standing together in a group. To create a groupchat click the groupchat icon <!-- TODO: add icon here --> and set a name. Now you can invite people by right clicking on the contact and selecting "Invite to group". Currently, if the last person leaves the chat, it is closed and you have to create a new one. <!-- TODO: add doc about audio/video/filetransfer support-->
+
+## Multi Window Mode
+
+If you activated this mode in the [settings](#Settings), qTox will seperata its main window into a contact list and chat windows, which allows you to have multiple conversations on your screen on the same time.
 
 ## Keyboard Shortcuts
 
