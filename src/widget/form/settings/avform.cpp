@@ -286,11 +286,7 @@ void AVForm::getAudioInDevices()
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-#ifdef Q_OS_WIN
             QString inDev = QString::fromUtf8(pDeviceList, len);
-#else
-            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
-#endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
                 inDevIndex = bodyUI->inDevCombobox->count()-1;
@@ -317,11 +313,7 @@ void AVForm::getAudioOutDevices()
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-#ifdef Q_OS_WIN
             QString outDev = QString::fromUtf8(pDeviceList, len);
-#else
-            QString outDev = QString::fromLocal8Bit(pDeviceList, len);
-#endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
             {
