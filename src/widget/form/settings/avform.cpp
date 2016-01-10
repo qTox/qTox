@@ -64,10 +64,10 @@ AVForm::AVForm() :
         getAudioOutDevices();
         getVideoDevices();
     });
-    connect(bodyUI->playbackSlider, &QSlider::valueChanged, this, &AVForm::onPlaybackValueChanged);
-    connect(bodyUI->microphoneSlider, &QSlider::valueChanged, this, &AVForm::onMicrophoneValueChanged);
     bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
     bodyUI->microphoneSlider->setValue(Settings::getInstance().getInVolume());
+    connect(bodyUI->playbackSlider, &QSlider::valueChanged, this, &AVForm::onPlaybackValueChanged);
+    connect(bodyUI->microphoneSlider, &QSlider::valueChanged, this, &AVForm::onMicrophoneValueChanged);
 
     bodyUI->playbackSlider->installEventFilter(this);
     bodyUI->microphoneSlider->installEventFilter(this);
