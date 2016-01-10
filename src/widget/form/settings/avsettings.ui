@@ -90,7 +90,7 @@
              <string>Use slider to set volume of your microphone.</string>
             </property>
             <property name="maximum">
-             <number>400</number>
+             <number>100</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
