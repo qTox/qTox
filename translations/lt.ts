@@ -311,18 +311,6 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
         <source>Advanced</source>
         <translation>Kita</translation>
     </message>
-    <message>
-        <source>Synchronized - safe (recommended)</source>
-        <translation>Sinchronizuotas – saugu (rekomenduojama)</translation>
-    </message>
-    <message>
-        <source>Partially async - risky (20% faster)</source>
-        <translation>Iš dalies sinchronizuotas – rizikinga (20 % greičiau)</translation>
-    </message>
-    <message>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation>Nesinchronizuotas – pavojinga (greičiausia)</translation>
-    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -342,14 +330,6 @@ Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translat
     <message>
         <source>Reset to default settings</source>
         <translation>Atstatyti pradinius nustatymus</translation>
-    </message>
-    <message>
-        <source>Chat history</source>
-        <translation>Pokalbių žurnalas</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Duomenų bazės pildymas&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1885,6 +1865,14 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Darbalaukio transliacija</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Klaida</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation>qTox nepavyko atidaryti pokalbių žurnalo, todėl jis buvo išjungtas.</translation>
     </message>
 </context>
 <context>
