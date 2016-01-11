@@ -1,8 +1,8 @@
 # qTox User Manual
 ## Index
 
-* [Settings](#Settings)
-* [Groupchats](#Groupchats)
+* [Settings](#settings)
+* [Groupchats](#groupchats)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 
@@ -66,7 +66,7 @@ NoSpam is a feature of Tox to prevent someone spamming you with friend requests.
 * _Playback device:_ Select the device qTox should use for all audio output (notifications, calls,..).
 * _Playback:_ Here you can adjust the playback volume to your needs.
 * _Capture device:_ Select the device qTox should use for audio input in calls.
-* _Microphone:_ Set the input volume of your microphone with this slider. When you are talking normaly, the the display should be in the green range.<!-- TODO: better wording-->
+* _Microphone:_ Set the input volume of your microphone with this slider. When you are talking normaly, the display should be in the green range.
 * _Filter audio_ If enabled, qTox will try to remove noise and echo from your audio input.
 
 #### Video Settings
@@ -93,7 +93,7 @@ Groupchats are a way to talk with multiple friends at the same time, like when y
 
 ## Multi Window Mode
 
-If you activated this mode in the [settings](#Settings), qTox will seperata its main window into a contact list and chat windows, which allows you to have multiple conversations on your screen on the same time.
+If you activated this mode in the [settings](#settings), qTox will seperata its main window into a contact list and chat windows, which allows you to have multiple conversations on your screen on the same time. Additionally you can manually group chats into a window by dragging and dropping them onto eachother.
 
 ## Keyboard Shortcuts
 
