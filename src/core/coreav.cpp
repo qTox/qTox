@@ -253,7 +253,8 @@ bool CoreAV::sendCallAudio(uint32_t callId)
     }
 
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
-    if (Audio::getInstance().tryCaptureSamples(buf, AUDIO_FRAME_SAMPLE_COUNT))
+    Audio& audio = Audio::getInstance();
+    if (audio.isInputReady() && audio.tryCaptureSamples(buf, AUDIO_FRAME_SAMPLE_COUNT))
     {
 #ifdef QTOX_FILTER_AUDIO
         if (Settings::getInstance().getFilterAudio())
@@ -266,7 +267,7 @@ bool CoreAV::sendCallAudio(uint32_t callId)
 
 #ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
             // compatibility with older versions of OpenAL
-            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+            audio.getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 #endif
             call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
         }
@@ -642,7 +643,8 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
     if (!call.alSource)
         audio.subscribeOutput(call.alSource);
 
-    audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    if (call.alSource)
+        audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,
