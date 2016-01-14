@@ -23,9 +23,18 @@
 
 #include <QString>
 
-/*!
- * \brief This class represents a Tox ID as specified at:
- *        https://libtoxcore.so/core_concepts.html
+/*
+ * This class represents a Tox ID.
+ *  An ID is composed of 32 bytes long public key, 4 bytes long NoSpam
+ *  and 2 bytes long checksum.
+ *
+ *  e.g.
+ *
+ *  | C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30 | C8BA3AB9 | BEB9
+ *  |                                                                 /           |
+ *  |                                                                /    NoSpam  | Checksum
+ *  |           Public Key (PK), 32 bytes, 64 characters            /    4 bytes  |  2 bytes
+ *  |                                                              |  8 characters|  4 characters
  */
 class ToxId
 {
