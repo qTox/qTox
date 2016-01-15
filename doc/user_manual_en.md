@@ -28,7 +28,7 @@ qTox allows you to use multiple Tox IDs with different profiles, which each can 
 + _Current profile:_ Shows the filename which stores your information.
 + _Current profile locatation:_ Shows the path to the profile file.
 + _Rename_ This button allows you to rename your profile. Your nickname and profile name don't have to be the same.
-+ _Delete_ This button deletes your profile.
++ _Delete_ This button deletes your profile and the corresponding chat history.
 + _Export_ Allows you to export your profile in a format compatible with other Tox clients. You can also manually backup your *.tox files.
 + _Logout_ Close your current profile and show the login window.
 + _Remove password_ If you set a password for your profile, you can remove it with this button.
@@ -63,7 +63,7 @@ qTox allows you to use multiple Tox IDs with different profiles, which each can 
 
 #### Theme
 * _Use emoticons:_ If enabled, qTox will replace simleys ( e.g. :-) )  with Unicode emoticons.
-* _Smiley Pack:_ You can choose from different sets of shiped emoticon styles. You can also install your own, see ??? for details<!-- TODO: add instructions for adding own smiley packs-->
+* _Smiley Pack:_ You can choose from different sets of shiped emoticon styles.
 * _Emoticon size:_ You can change the size of the emoticons here.
 * _Style:_ Changes the appearance of qTox.
 * _Theme color:_ Changes the colors qTox uses.
@@ -87,7 +87,7 @@ Most users will want the two settings enabled, but if qTox crashes your router, 
 
 #### NoSpam
 
-NoSpam is a feature of Tox to prevent someone spamming you with friend requests. If you get spammed, enter or generate a new NoSpam value, this will alter your Tox ID. You don't need to tell your existing contacts your new Tox ID, but you have to tell new contacts your new Tox ID. Your Tox ID can be found ??? <!-- TODO: link to page describing your profile-->
+NoSpam is a feature of Tox to prevent someone spamming you with friend requests. If you get spammed, enter or generate a new NoSpam value, this will alter your Tox ID. You don't need to tell your existing contacts your new Tox ID, but you have to tell new contacts your new Tox ID. Your Tox ID can be found in your [User Profile](#user-profile)
 
 ### Audio/Video
 #### Audio Settings
@@ -117,7 +117,7 @@ NoSpam is a feature of Tox to prevent someone spamming you with friend requests.
 
 ## Groupchats
 
-Groupchats are a way to talk with multiple friends at the same time, like when you are standing together in a group. To create a groupchat click the groupchat icon <!-- TODO: add icon here --> and set a name. Now you can invite people by right clicking on the contact and selecting "Invite to group". Currently, if the last person leaves the chat, it is closed and you have to create a new one. <!-- TODO: add doc about audio/video/filetransfer support-->
+Groupchats are a way to talk with multiple friends at the same time, like when you are standing together in a group. To create a groupchat click the groupchat icon and set a name. Now you can invite people by right clicking on the contact and selecting "Invite to group". Currently, if the last person leaves the chat, it is closed and you have to create a new one. Sending files and videochats are currently unsupported in groupchats.
 
 ## Multi Window Mode
 
