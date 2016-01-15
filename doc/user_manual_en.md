@@ -73,6 +73,7 @@ qTox allows you to use multiple Tox IDs with different profiles, which each can 
 #### Connection Settings
 * _Enable IPv6 (recommended):_ If enabled, qTox will use IPv4 and IPv6 protocols, whichever is available. If disabled, qTox will only use IPv4.
 * _Enable UDP (recommended):_ If enabled, qTox will use TCP and UDP protocols. If disabled, qTox will only use TCP, which is supposed to lower the amount of traffic, but is also slower and puts more load on other network participants.
+
 Most users will want the two settings enabled, but if qTox crashes your router, you can try to disable them. 
 
 * _Proxy type:_ If you want to use a proxy, set the type here. "None" disables the proxy.
@@ -110,7 +111,7 @@ NoSpam is a feature of Tox to prevent someone spamming you with friend requests.
 * _Reset to default settings_ Use this button to delete any changes you made to the qTox settings.
 
 ### About
-* _Version_ The version of qTox and the libraries it depends on. Please append this information to every bugreport.
+* _Version_ The version of qTox and the libraries it depends on. Please append this information to every bug report.
 * _License_ The license under which the code of qTox is available.
 * _Authors_ The people who developed this shiny piece of software.
 * _Known Issues_ Links to our list of known issues and improvements.
@@ -129,7 +130,7 @@ The following shortcuts are currently supported:
 
 | Shortcut | Action |
 |----------|--------|
-| ``Arrow up`` | Paste last message |
+| ``Arrow up`` | Paste last sent message |
 | ``CTRL`` + ``SHIFT`` + ``L`` | Clear chat |
 | ``CTRL`` + ``q`` | Quit qTox |
 | `CTRL` + `Page Down` | Switch to the next contact |
