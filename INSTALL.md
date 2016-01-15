@@ -32,6 +32,7 @@
     - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [filter_audio](#filter_audio)
+  - [sqlcipher](#sqlcipher)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
@@ -332,7 +333,7 @@ You will need to install manually `libsodium`:
 ```
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.3
+git checkout tags/1.0.7
 ./autogen.sh
 ./configure && make check
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
@@ -369,6 +370,19 @@ make -j$(nproc)
 sudo make install
 ```
 
+### sqlcipher
+
+If you are not using Fedora, skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
+
+```bash
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlcipher
+autoreconf -if
+./configure
+make -j$(nproc)
+sudo make install
+cd ..
+````
 
 ### toxcore compiling
 
