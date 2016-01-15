@@ -192,10 +192,15 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 
 <a name="fedora-other-deps" />
 #### Fedora:
+**Note that sqlcipher is not included in Fedora(!).**
+
+**This means that you have to compile sqlcipher yourself, otherwise compiling qTox will fail.**
 ```bash
 sudo dnf group install "Development Tools"
 sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel qtsingleapplication qt5-linguist gtk2-devel
 ```
+
+**Go to [sqlcipher](#sqlcipher) section to compile it.**
 
 <a name="opensuse-other-deps" />
 #### openSUSE:
@@ -372,7 +377,7 @@ sudo make install
 
 ### sqlcipher
 
-If you are not using Fedora, skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
+If you are not using Fedora, skip this section, and go directly to compiling [**toxcore**](#toxcore-compiling).
 
 ```bash
 git clone https://github.com/sqlcipher/sqlcipher
