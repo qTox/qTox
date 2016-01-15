@@ -1,10 +1,38 @@
 # qTox User Manual
 ## Index
 
+* [User Profile](#user-profile)
 * [Settings](#settings)
 * [Groupchats](#groupchats)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
+
+## User Profile
+Your User Profile contains everything you share with other people on Tox. You can open it by clicking the picture on the top right corner. It contains the following settings:
+
+### Public Information
+* _Name:_ This is your nickname which everyone who has your Tox ID can see.
+* _Status:_ You can post a status message here, which again everyone on who has your ToxID can see.
+
+### Tox ID
+
+The long code in hexadecimal format is your Tox ID, share this with everyone you want to talk to. Click it to copy it to your clipboard.
+Your Tox ID is also shown as QR-Code to easily share it with friends over a smartphone.
+
+The "Save image" button saves the QR-Code into a image file, while the "Copy image" button copies into your clipboard.
+
+### Profile
+
+qTox allows you to use multiple Tox IDs with different profiles, which each can have different nicknames, status messages and friends.
+
++ _Current profile:_ Shows the filename which stores your information.
++ _Current profile locatation:_ Shows the path to the profile file.
++ _Rename_ This button allows you to rename your profile. Your nickname and profile name don't have to be the same.
++ _Delete_ This button deletes your profile.
++ _Export_ Allows you to export your profile in a format compatible with other Tox clients. You can also manually backup your *.tox files.
++ _Logout_ Close your current profile and show the login window.
++ _Remove password_ If you set a password for your profile, you can remove it with this button.
++ _Change password_ If you set a password for your profile, you can change the password with this button. You can also set a password for unencrypted profiles here.
 
 ## Settings
 ### General
