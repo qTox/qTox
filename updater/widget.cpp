@@ -154,14 +154,29 @@ void Widget::startQToxAndExit()
     SecureZeroMemory(&pi, sizeof(pi));
     si.cb = sizeof(si);
 
-    if (!CreateProcessWithTokenW(hPrimaryToken, 0, QTOX_PATH.toStdWString().c_str(), 0, 0, 0, 0, &si, &pi))
+    bool unelevateOk = true;
+
+    auto advapi32H = LoadLibrary(TEXT("advapi32.dll"));
+    if ((unelevateOk = (advapi32H != nullptr)))
+    {
+        auto CreateProcessWithTokenWH = (decltype(&CreateProcessWithTokenW))
+                                        GetProcAddress(advapi32H, "CreateProcessWithTokenW");
+        if ((unelevateOk = (CreateProcessWithTokenWH != nullptr)))
+        {
+            if (!CreateProcessWithTokenWH(hPrimaryToken, 0, QTOX_PATH.toStdWString().c_str(), 0, 0, 0, 0, &si, &pi))
+                unelevateOk = false;
+        }
+    }
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    if (!unelevateOk)
     {
         qWarning() << "Failed to start unelevated qTox";
         QProcess::startDetached(QTOX_PATH);
     }
 
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
 #else
     QProcess::startDetached(QTOX_PATH);
 #endif
@@ -187,8 +202,24 @@ QString Widget::getSettingsDirPath()
 
 #ifdef Q_OS_WIN
     wchar_t* path;
-    SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, hPrimaryToken, &path);
-    QString pathStr = QString::fromStdWString(path);
+    wchar_t pathOld[MAX_PATH];
+    bool isOld = false; // If true, we have to use pathOld and older Windows API.
+
+    auto shell32H = LoadLibrary(TEXT("shell32.dll"));
+    if (!(isOld = (shell32H == nullptr)))
+    {
+        auto SHGetKnownFolderPathH = (decltype(&SHGetKnownFolderPath))
+                                        GetProcAddress(shell32H, "SHGetKnownFolderPath");
+        if (!(isOld = (SHGetKnownFolderPathH == nullptr)))
+            SHGetKnownFolderPathH(FOLDERID_RoamingAppData, 0, hPrimaryToken, &path);
+    }
+    if (isOld)
+    {
+        qDebug() << "Falling back to legacy APIs...";
+        SHGetFolderPathW(nullptr, CSIDL_APPDATA, nullptr, 0, pathOld);
+    }
+
+    QString pathStr = QString::fromStdWString(isOld ? pathOld : path);
     pathStr.replace("\\", "/");
     return pathStr + "/tox";
 #else
