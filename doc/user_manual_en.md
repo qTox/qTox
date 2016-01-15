@@ -47,13 +47,13 @@ qTox allows you to use multiple Tox IDs with different profiles, which each can 
 
 * _Auto away after (0 to disable):_ After the specified amount of time, qTox will set your Status to "Away". A setting of 0 will never change your status.
 * _Default directory to save files:_ You can set the directory where qTox puts files you recieved here.
-* _Autoaccept files:_ If set, qTox will automatically accept filetransfers and put them in the directory specified above.
+* _Autoaccept files:_ If set, qTox will automatically accept file transfers and put them in the directory specified above.
 
 #### Chat
 * _Play sound:_ If checked, qTox will play a sound when you get a new message.
 * _Open window:_ If checked, the qTox window will be opened. If you use the multiple windows mode, see [Multi Window Mode](#multi-window-mode) for details.
     * _Focus window:_ If checked, the qTox window will additionally be focused.
-* _Show contacts' status changes:_ If set, qTox will show contact status changes in your chat history.
+* _Show contacts' status changes:_ If set, qTox will show contact status changes in your chat window.
 * _Group chats always notify:_ If set, qTox will notify you on every new message in a groupchat.
 * _Place groupchats at top of friend list:_ If checked, your groupchats will be at the top of the contacts list, else they will be sorted with your other contacts.
 * _Faux offline messaging:_ If enabled, qTox will attempt to send messages when a currently offline contact comes online again.
