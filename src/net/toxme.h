@@ -22,7 +22,9 @@
 #define TOXME_H
 
 #include <QString>
+#include <QMap>
 #include <QMutex>
+#include <QNetworkReply>
 #include <memory>
 #include "src/core/toxid.h"
 
@@ -34,25 +36,39 @@ class QNetworkAccessManager;
 class Toxme
 {
 public:
+    enum ExecCode {
+        ExecError = -50,
+        Registered = 0,
+        Updated = 1,
+        ServerError = 2,
+        IncorrectResponce = 3,
+        NoPassword = 4
+    };
+
     /// Converts a toxme.se address to a Tox ID, returns an empty ID on error
     static ToxId lookup(QString address);
     /// Creates a new toxme.se address associated with a Tox ID.
     /// If keepPrivate, the address will not be published on toxme.se
     /// The bio is a short optional description of yourself if you want to publish your address.
-    static bool createAddress(ToxId id, QString address,
+    /// If it passed without error, return password, else return errorCode in QString
+    static QString createAddress(ExecCode &code, QString server, ToxId id, QString address,
                               bool keepPrivate=true, QString bio=QString());
     /// Deletes the address associated with your current Tox ID
-    static bool deleteAddress(ToxId id);
+    static int deleteAddress(QString server, ToxId id);
+    /// Return string of the corresponding error code
+    static QString getErrorMessage(int errorCode);
 
 private:
     Toxme()=delete;
-    static QByteArray makeJsonRequest(QString json);
-    static QByteArray prepareEncryptedJson(int action, QString payload);
-    static int extractError(QString json);
+    static QByteArray makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error);
+    static QByteArray prepareEncryptedJson(QString url, int action, QString payload);
+    static QByteArray getServerPubkey(QString url, QNetworkReply::NetworkError &error);
+    static QString getPass(QString json, ExecCode &code);
+    static ExecCode extractError(QString json);
 
 private:
-    static const QString apiUrl;
-    static const unsigned char pinnedPk[];
+    static const QMap<QString, QString> pubkeyUrls;
+    static const QMap<QString, QString> apiUrls;
 };
 
 #endif // TOXME_H

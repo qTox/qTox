@@ -34,6 +34,7 @@
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
+#include "src/net/toxme.h"
 #include <QWindow>
 
 AddFriendForm::AddFriendForm()
