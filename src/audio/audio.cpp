@@ -307,7 +307,9 @@ qreal Audio::outputVolume()
 }
 
 /**
-The volume must be between 0 and 1
+Set the master output volume.
+
+@param[in] volume   the master volume (between 0 and 1)
 */
 void Audio::setOutputVolume(qreal volume)
 {
