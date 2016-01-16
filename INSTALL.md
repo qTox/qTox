@@ -338,7 +338,7 @@ You will need to install manually `libsodium`:
 ```
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.7
+git checkout tags/1.0.8
 ./autogen.sh
 ./configure && make check
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
