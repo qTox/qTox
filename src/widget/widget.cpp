@@ -785,7 +785,7 @@ void Widget::onSettingsClicked()
             settingsWidget->show(createContentDialog(SettingDialog));
 
         setActiveToolMenuButton(Widget::None);
-        settingsWidget->setWindowIcon(QIcon(":/img/settings.svg"));
+        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
@@ -1370,7 +1370,7 @@ ContentLayout* Widget::createContentDialog(DialogType type)
         void retranslateUi()
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
-            setWindowIcon(QIcon(":/img/settings.svg"));
+            setWindowIcon(QIcon(":/img/icons/qtox.svg"));
         }
 
     protected:
