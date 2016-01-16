@@ -282,7 +282,6 @@ void AVForm::getAudioInDevices()
     const char* pDeviceList = Audio::inDeviceNames();
     if (pDeviceList)
     {
-        //prevent currentIndexChanged to be fired while adding items
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
@@ -292,8 +291,6 @@ void AVForm::getAudioInDevices()
                 inDevIndex = bodyUI->inDevCombobox->count()-1;
             pDeviceList += len+1;
         }
-        //addItem changes currentIndex -> reset
-        bodyUI->inDevCombobox->setCurrentIndex(-1);
     }
     bodyUI->inDevCombobox->blockSignals(false);
     bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
@@ -309,7 +306,6 @@ void AVForm::getAudioOutDevices()
     const char* pDeviceList = Audio::outDeviceNames();
     if (pDeviceList)
     {
-        //prevent currentIndexChanged to be fired while adding items
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
@@ -321,8 +317,6 @@ void AVForm::getAudioOutDevices()
             }
             pDeviceList += len+1;
         }
-        //addItem changes currentIndex -> reset
-        bodyUI->outDevCombobox->setCurrentIndex(-1);
     }
     bodyUI->outDevCombobox->blockSignals(false);
     bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
