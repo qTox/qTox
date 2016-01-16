@@ -64,13 +64,19 @@ AVForm::AVForm() :
         getAudioOutDevices();
         getVideoDevices();
     });
-    bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
-    bodyUI->microphoneSlider->setValue(Settings::getInstance().getInVolume());
-    connect(bodyUI->playbackSlider, &QSlider::valueChanged, this, &AVForm::onPlaybackValueChanged);
-    connect(bodyUI->microphoneSlider, &QSlider::valueChanged, this, &AVForm::onMicrophoneValueChanged);
 
+    bodyUI->playbackSlider->setTracking(false);
     bodyUI->playbackSlider->installEventFilter(this);
+    connect(bodyUI->playbackSlider, &QSlider::sliderMoved,
+            this, &AVForm::onPlaybackSliderMoved);
+    connect(bodyUI->playbackSlider, &QSlider::valueChanged,
+            this, &AVForm::onPlaybackValueChanged);
+    bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
+    connect(bodyUI->microphoneSlider, &QSlider::sliderMoved,
+            this, &AVForm::onMicrophoneSliderMoved);
+    connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
+            this, &AVForm::onMicrophoneValueChanged);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -328,7 +334,9 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
         deviceDescriptor = "none";
 
     Settings::getInstance().setInDev(deviceDescriptor);
-    Audio::getInstance().reinitInput(deviceDescriptor);
+    Audio& audio = Audio::getInstance();
+    audio.reinitInput(deviceDescriptor);
+    bodyUI->microphoneSlider->setSliderPosition(audio.inputVolume() * 100.f);
 }
 
 void AVForm::onOutDevChanged(QString deviceDescriptor)
@@ -337,7 +345,9 @@ void AVForm::onOutDevChanged(QString deviceDescriptor)
         deviceDescriptor = "none";
 
     Settings::getInstance().setOutDev(deviceDescriptor);
-    Audio::getInstance().reinitOutput(deviceDescriptor);
+    Audio& audio = Audio::getInstance();
+    audio.reinitOutput(deviceDescriptor);
+    bodyUI->playbackSlider->setSliderPosition(audio.outputVolume() * 100.f);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
@@ -345,16 +355,29 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
     Settings::getInstance().setFilterAudio(filterAudio);
 }
 
+void AVForm::onPlaybackSliderMoved(int value)
+{
+    Audio& audio = Audio::getInstance();
+    if (audio.isOutputReady()) {
+        const qreal percentage = value / 100.0;
+        audio.setOutputVolume(percentage);
+    }
+}
+
 void AVForm::onPlaybackValueChanged(int value)
 {
-    Audio::getInstance().setOutputVolume(value / 100.0);
-    Settings::getInstance().setOutVolume(bodyUI->playbackSlider->value());
+    Settings::getInstance().setOutVolume(value);
+}
+
+void AVForm::onMicrophoneSliderMoved(int value)
+{
+    const qreal percentage = value / 100.0;
+    Audio::getInstance().setInputVolume(percentage);
 }
 
 void AVForm::onMicrophoneValueChanged(int value)
 {
-    Audio::getInstance().setInputVolume(value / 100.0);
-    Settings::getInstance().setInVolume(bodyUI->microphoneSlider->value());
+    Settings::getInstance().setInVolume(value);
 }
 
 void AVForm::createVideoSurface()
