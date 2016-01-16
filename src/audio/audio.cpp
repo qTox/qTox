@@ -327,7 +327,7 @@ qreal Audio::outputVolume()
     }
 
     ALfloat volume;
-    alGetSourcef(d->alMainSource, AL_GAIN, &volume);
+    alGetListenerf(AL_GAIN, &volume);
 
     return volume;
 }
