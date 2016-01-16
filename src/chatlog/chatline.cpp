@@ -20,8 +20,8 @@
 #include "chatline.h"
 #include "chatlinecontent.h"
 
-#include <QDebug>
 #include <QGraphicsScene>
+#include "src/persistence/settings.h"
 
 ChatLine::ChatLine()
 {
@@ -116,6 +116,21 @@ void ChatLine::selectionFocusChanged(bool focusIn)
 {
     for (ChatLineContent* c : content)
         c->selectionFocusChanged(focusIn);
+}
+
+bool ChatLine::selectNext(const QString&, Qt::CaseSensitivity)
+{
+    return false;
+}
+
+bool ChatLine::selectPrevious(const QString&, Qt::CaseSensitivity)
+{
+    return false;
+}
+
+int ChatLine::setHighlight(const QString&, Qt::CaseSensitivity)
+{
+    return 0;
 }
 
 int ChatLine::getColumnCount()

@@ -38,6 +38,76 @@ ChatMessage::ChatMessage()
 
 }
 
+bool ChatMessage::selectNext(const QString& text, Qt::CaseSensitivity sensitivity)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 0; i < 2; ++i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectNext(text, sensitivity))
+                return true;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (getContent(i)->selectNext(text, sensitivity))
+                return true;
+        }
+    }
+
+    // Text not found for selection.
+    return false;
+}
+
+bool ChatMessage::selectPrevious(const QString& text, Qt::CaseSensitivity sensitivity)
+{
+    bool done = false;
+
+    // First, check if a selection has been made. If it has, then move to next one.
+    for (int i = 1; i >= 0; --i)
+    {
+        if (getContent(i)->hasSelection() || done)
+        {
+            done = true;
+
+            if (getContent(i)->selectPrevious(text, sensitivity))
+                return true;
+            else
+                getContent(i)->selectionCleared();
+        }
+    }
+
+    // If not, then find the next one starting from the beginning.
+    if (!done)
+    {
+        for (int i = 1; i >= 0; --i)
+        {
+            if (getContent(i)->selectPrevious(text, sensitivity))
+                return true;
+        }
+    }
+
+    // Text not found for selection.
+    return false;
+}
+
+int ChatMessage::setHighlight(const QString &text, Qt::CaseSensitivity sensitivity)
+{
+    int total = getContent(0)->setHighlight(text, sensitivity);
+    return total + getContent(1)->setHighlight(text, sensitivity);
+}
+
 ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
