@@ -122,6 +122,9 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
             case V4L2_FRMSIZE_TYPE_STEPWISE:
                 mode.width = vfse.stepwise.max_width;
                 mode.height = vfse.stepwise.max_height;
+            break;
+            default:
+                continue;
             }
             QVector<unsigned short> rates = getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
             for (unsigned short rate : rates)

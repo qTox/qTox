@@ -99,8 +99,7 @@ void AboutUser::onRemoveHistoryClicked()
     History* history = Nexus::getProfile()->getHistory();
     if (history)
         history->removeFriendHistory(toxId.publicKey);
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::information(this,
+    QMessageBox::information(this,
                                      tr("History removed"),
                                      tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
                                      QMessageBox::Ok);

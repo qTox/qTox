@@ -83,7 +83,7 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     if (contentDialog == nullptr || notAlone)
         openChatWindow = menu.addAction(tr("Open chat in new window"));
 
-    if (contentDialog->hasGroupWidget(groupId, this))
+    if (contentDialog && contentDialog->hasGroupWidget(groupId, this))
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
 
     menu.addSeparator();

@@ -973,20 +973,20 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
     int nPeers = getGroupNumberPeers(groupId);
-    if (nPeers == -1)
+    if (nPeers < 0)
     {
         qWarning() << "getGroupPeerNames: Unable to get number of peers";
         return names;
     }
-    uint8_t namesArray[nPeers][TOX_MAX_NAME_LENGTH];
-    uint16_t* lengths = new uint16_t[nPeers];
-    int result = tox_group_get_names(tox, groupId, namesArray, lengths, nPeers);
+    std::unique_ptr<uint8_t[][TOX_MAX_NAME_LENGTH]> namesArray{new uint8_t[nPeers][TOX_MAX_NAME_LENGTH]};
+    std::unique_ptr<uint16_t[]> lengths{new uint16_t[nPeers]};
+    int result = tox_group_get_names(tox, groupId, namesArray.get(), lengths.get(), nPeers);
     if (result != nPeers)
     {
         qWarning() << "getGroupPeerNames: Unexpected result";
         return names;
     }
-    for (int i=0; i<nPeers; i++)
+    for (size_t i=0; i<nPeers; i++)
        names.push_back(CString::toString(namesArray[i], lengths[i]));
 
     return names;
