@@ -373,7 +373,7 @@ void SettingsSerializer::readSerialized()
             stream >> sizeData;
             if (sizeData.isEmpty())
             {
-                qWarning("The personnal save file is corrupted!");
+                qWarning("The personal save file is corrupted!");
                 return;
             }
             quint64 size = dataToVUint(sizeData);
@@ -386,7 +386,7 @@ void SettingsSerializer::readSerialized()
             stream >> indexData;
             if (indexData.isEmpty())
             {
-                qWarning("The personnal save file is corrupted!");
+                qWarning("The personal save file is corrupted!");
                 return;
             }
             quint64 index = dataToVUint(indexData);

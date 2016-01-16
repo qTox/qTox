@@ -43,14 +43,14 @@ public:
     QString getSettingsDirPath(); ///< The returned path ends with a directory separator
 
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
-    void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
+    void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
 
     void savePersonal(); ///< Asynchronous, saves the current profile
     void savePersonal(Profile *profile); ///< Asynchronous
 
     void loadGlobal();
-    void loadPersonnal();
-    void loadPersonnal(Profile *profile);
+    void loadpersonal();
+    void loadpersonal(Profile *profile);
 
 public slots:
     void saveGlobal(); ///< Asynchronous

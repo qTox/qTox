@@ -265,18 +265,18 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
-void Settings::loadPersonnal()
+void Settings::loadpersonal()
 {
     Profile* profile = Nexus::getProfile();
     if (!profile)
     {
-        qCritical() << "No active profile, couldn't load personnal settings";
+        qCritical() << "No active profile, couldn't load personal settings";
         return;
     }
-    loadPersonnal(profile);
+    loadpersonal(profile);
 }
 
-void Settings::loadPersonnal(Profile* profile)
+void Settings::loadpersonal(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
 
@@ -288,7 +288,7 @@ void Settings::loadPersonnal(Profile* profile)
     if (QFile(tmp).exists()) // otherwise, filePath remains the global file
         filePath = tmp;
 
-    qDebug()<<"Loading personnal settings from"<<filePath;
+    qDebug()<<"Loading personal settings from"<<filePath;
 
     SettingsSerializer ps(filePath, profile->getPassword());
     ps.load();

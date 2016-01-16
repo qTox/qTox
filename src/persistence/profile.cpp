@@ -48,7 +48,7 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personnal settings (Nexus will do it), so we always load
+    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
     // the history, and if it fails we can't change the setting now, but we keep a nullptr
     history.reset(new History{name, password});
     if (!history->isValid())
