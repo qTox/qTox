@@ -66,6 +66,8 @@ private slots:
     void onVideoDevChanged(int index);
     void onVideoModesIndexChanged(int index);
 
+    void on_btnPlayTestSound_clicked(bool checked);
+
 protected:
     void updateVideoModes(int curIndex);
 
@@ -78,6 +80,7 @@ private:
 private:
     Ui::AVSettings *bodyUI;
     bool subscribedToAudioIn;
+    bool mPlayTestSound;
     VideoSurface *camVideoSurface;
     CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;
