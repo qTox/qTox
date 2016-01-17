@@ -44,6 +44,9 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+    bodyUI->btnPlayTestSound->setToolTip(
+                tr("Play a test sound while changing the output volume."));
+
 #ifdef QTOX_FILTER_AUDIO
     bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
 #else
@@ -361,6 +364,9 @@ void AVForm::onPlaybackSliderMoved(int value)
     if (audio.isOutputReady()) {
         const qreal percentage = value / 100.0;
         audio.setOutputVolume(percentage);
+
+        if (mPlayTestSound)
+            audio.playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
     }
 }
 
@@ -418,4 +424,9 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 void AVForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
+}
+
+void AVForm::on_btnPlayTestSound_clicked(bool checked)
+{
+    mPlayTestSound = checked;
 }
