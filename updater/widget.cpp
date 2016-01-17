@@ -28,6 +28,7 @@
 #include <QMetaObject>
 #include <QDebug>
 #include <QSettings>
+#include <QStandardPaths>
 
 #include "update.h"
 
@@ -202,8 +203,7 @@ QString Widget::getSettingsDirPath()
 
 #ifdef Q_OS_WIN
     wchar_t* path;
-    wchar_t pathOld[MAX_PATH];
-    bool isOld = false; // If true, we have to use pathOld and older Windows API.
+    bool isOld = false; // If true, we can't unelevate and just return the path for our current home
 
     auto shell32H = LoadLibrary(TEXT("shell32.dll"));
     if (!(isOld = (shell32H == nullptr)))
@@ -213,15 +213,18 @@ QString Widget::getSettingsDirPath()
         if (!(isOld = (SHGetKnownFolderPathH == nullptr)))
             SHGetKnownFolderPathH(FOLDERID_RoamingAppData, 0, hPrimaryToken, &path);
     }
+
     if (isOld)
     {
-        qDebug() << "Falling back to legacy APIs...";
-        SHGetFolderPathW(nullptr, CSIDL_APPDATA, nullptr, 0, pathOld);
+        return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                                      + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox" + QDir::separator());
     }
-
-    QString pathStr = QString::fromStdWString(isOld ? pathOld : path);
-    pathStr.replace("\\", "/");
-    return pathStr + "/tox";
+    else
+    {
+        QString pathStr = QString::fromStdWString(path);
+        pathStr.replace("\\", "/");
+        return pathStr + "/tox";
+    }
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
 #endif
