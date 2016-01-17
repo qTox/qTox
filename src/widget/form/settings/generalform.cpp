@@ -83,7 +83,7 @@ static QStringList langs = {"Български",
                             "Українська",
                             "简体中文"};
 
-static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
+static QStringList timeFormats = {"hh:mm AP", "hh:mm:ss AP", "hh:mm:ss"};
 
 GeneralForm::GeneralForm(SettingsWidget *myParent) :
     GenericForm(QPixmap(":/img/settings/general.png"))
