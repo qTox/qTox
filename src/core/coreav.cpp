@@ -640,11 +640,13 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
         return;
 
     Audio& audio = Audio::getInstance();
-    if (!call.alSource)
-        audio.subscribeOutput(call.alSource);
+    if (audio.isOutputReady()) {
+        if (!call.alSource)
+            audio.subscribeOutput(call.alSource);
 
-    if (call.alSource)
-        audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+        if (call.alSource)
+            audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    }
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,
