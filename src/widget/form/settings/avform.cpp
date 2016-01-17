@@ -339,6 +339,7 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
     Settings::getInstance().setInDev(deviceDescriptor);
     Audio& audio = Audio::getInstance();
     audio.reinitInput(deviceDescriptor);
+    bodyUI->microphoneSlider->setEnabled(audio.isInputReady());
     bodyUI->microphoneSlider->setSliderPosition(audio.inputVolume() * 100.f);
 }
 
@@ -350,6 +351,7 @@ void AVForm::onOutDevChanged(QString deviceDescriptor)
     Settings::getInstance().setOutDev(deviceDescriptor);
     Audio& audio = Audio::getInstance();
     audio.reinitOutput(deviceDescriptor);
+    bodyUI->playbackSlider->setEnabled(audio.isOutputReady());
     bodyUI->playbackSlider->setSliderPosition(audio.outputVolume() * 100.f);
 }
 
