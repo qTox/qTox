@@ -50,8 +50,6 @@
  * It also contains the smiley configuration.
  */
 
-static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
-
 /**
  * @brief Constructor of UserInterfaceForm.
  * @param myParent Setting widget which will contain this form as tab.
@@ -119,8 +117,10 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->emoticonSize->setValue(s.getEmojiFontPointSize());
 
     QLocale ql;
+    QStringList timeFormats;
     timeFormats << ql.timeFormat(QLocale::ShortFormat)
-                << ql.timeFormat(QLocale::LongFormat);
+                << ql.timeFormat(QLocale::LongFormat)
+                << "hh:mm AP" << "hh:mm:ss AP" << "hh:mm:ss";
     timeFormats.removeDuplicates();
 
     for (QString format : timeFormats)
