@@ -48,7 +48,7 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="filterAudio">
             <property name="toolTip">
              <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
@@ -109,6 +109,9 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
           <item row="5" column="2">
            <widget class="QSlider" name="microphoneSlider">
             <property name="toolTip">
@@ -129,18 +132,12 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="outDevLabel">
             <property name="text">
              <string>Playback device</string>
             </property>
            </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="MicFeedbackWidget" name="microphoneFeedback" native="true"/>
           </item>
          </layout>
         </widget>
@@ -234,12 +231,6 @@ which may lead to problems with video calls.</string>
    <class>VerticalOnlyScroller</class>
    <extends>QScrollArea</extends>
    <header>src/widget/form/settings/verticalonlyscroller.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MicFeedbackWidget</class>
-   <extends>QWidget</extends>
-   <header>src/widget/tool/micfeedbackwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
