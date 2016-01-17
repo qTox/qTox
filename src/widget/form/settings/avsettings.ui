@@ -41,20 +41,24 @@
           <string>Audio Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="filterAudio">
-            <property name="toolTip">
-             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
-            </property>
+          <item row="0" column="0">
+           <widget class="QLabel" name="outDevLabel">
             <property name="text">
-             <string>Filter audio</string>
+             <string>Playback device</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="outDevCombobox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="playbackLabel">
+            <property name="text">
+             <string>Volume</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="outDevCombobox"/>
-          </item>
-          <item row="2" column="1">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
@@ -67,24 +71,38 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="microphoneLabel">
+          <item row="1" column="2">
+           <widget class="QToolButton" name="btnPlayTestSound">
             <property name="text">
-             <string>Gain</string>
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../res.qrc">
+              <normaloff>:/ui/volButton/volButton.png</normaloff>:/ui/volButton/volButton.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="inDevLabel">
             <property name="text">
              <string>Capture device</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="2" column="1" colspan="2">
            <widget class="QComboBox" name="inDevCombobox"/>
           </item>
-          <item row="5" column="2">
+          <item row="3" column="0">
+           <widget class="QLabel" name="microphoneLabel">
+            <property name="text">
+             <string>Gain</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
            <widget class="QSlider" name="microphoneSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your microphone.</string>
@@ -97,17 +115,13 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="playbackLabel">
-            <property name="text">
-             <string>Volume</string>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="filterAudio">
+            <property name="toolTip">
+             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="outDevLabel">
             <property name="text">
-             <string>Playback device</string>
+             <string>Filter audio</string>
             </property>
            </widget>
           </item>
@@ -206,6 +220,8 @@ which may lead to problems with video calls.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>
