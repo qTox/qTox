@@ -321,13 +321,12 @@ qreal Audio::outputVolume()
 {
     QMutexLocker locker(&d->audioLock);
 
-    if (!d->alMainSource) {
-        qWarning("Audio output source not initialized.");
-        return 0.0;
-    }
+    ALfloat volume = 0.0;
 
-    ALfloat volume;
-    alGetListenerf(AL_GAIN, &volume);
+    if (d->alOutDev) {
+        alGetListenerf(AL_GAIN, &volume);
+        CHECK_AL_ERROR;
+    }
 
     return volume;
 }
