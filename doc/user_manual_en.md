@@ -74,7 +74,7 @@ qTox allows you to use multiple Tox IDs with different profiles, which each can 
 * _Enable IPv6 (recommended):_ If enabled, qTox will use IPv4 and IPv6 protocols, whichever is available. If disabled, qTox will only use IPv4.
 * _Enable UDP (recommended):_ If enabled, qTox will use TCP and UDP protocols. If disabled, qTox will only use TCP, which is supposed to lower the amount of traffic, but is also slower and puts more load on other network participants.
 
-Most users will want the two settings enabled, but if qTox crashes your router, you can try to disable them. 
+Most users will want the two settings enabled, but if qTox crashes your router, you can try to disable them.
 
 * _Proxy type:_ If you want to use a proxy, set the type here. "None" disables the proxy.
 * _Address:_ If you use a proxy, enter the address here.
