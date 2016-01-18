@@ -54,6 +54,8 @@ protected slots:
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
+    void remoteFileTransferPaused(ToxFile file);
+    void remoteFileTransferResumed(ToxFile file);
     QString getHumanReadableSize(qint64 size);
     void hideWidgets();
     void setupButtons();
@@ -72,6 +74,8 @@ private slots:
     void onBottomButtonClicked();
 
 private:
+    void retranslateUi();
+
     Ui::FileTransferWidget *ui;
     ToxFile fileInfo;
     QTime lastTick;
@@ -80,6 +84,8 @@ private:
     QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;
     QColor buttonColor;
+    bool isRemotePaused = false;
+    bool isStarted = false;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;
