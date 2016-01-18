@@ -44,6 +44,7 @@
 #include <QCryptographicHash>
 #include <QMutexLocker>
 #include <QThread>
+#include <QNetworkProxy>
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
@@ -768,6 +769,29 @@ void Settings::setForceTCP(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     forceTCP = newValue;
+}
+
+QNetworkProxy Settings::getProxy() const
+{
+    QNetworkProxy proxy;
+    switch(Settings::getProxyType())
+    {
+        case ProxyType::ptNone:
+            proxy.setType(QNetworkProxy::NoProxy);
+            break;
+        case ProxyType::ptSOCKS5:
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+            break;
+        case ProxyType::ptHTTP:
+            proxy.setType(QNetworkProxy::HttpProxy);
+            break;
+        default:
+            proxy.setType(QNetworkProxy::NoProxy);
+            qWarning() << "Invalid Proxy type, setting to NoProxy";
+    }
+    proxy.setHostName(Settings::getProxyAddr());
+    proxy.setPort(Settings::getProxyPort());
+    return proxy;
 }
 
 ProxyType Settings::getProxyType() const

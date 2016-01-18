@@ -108,6 +108,7 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
+    manager->setProxy(Settings::getInstance().getProxy());
     while (!reply->isFinished())
     {
         if (abortFlag)
@@ -222,6 +223,7 @@ QByteArray AutoUpdater::getUpdateFlist()
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(flistURI)));
+    manager->setProxy(Settings::getInstance().getProxy());
     while (!reply->isFinished())
     {
         if (abortFlag)
@@ -277,6 +279,7 @@ AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta,
     file.metadata = fileMeta;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
+    manager->setProxy(Settings::getInstance().getProxy());
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(filesURI+fileMeta.id)));
     QObject::connect(reply, &QNetworkReply::downloadProgress, progressCallback);
     while (!reply->isFinished())

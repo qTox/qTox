@@ -19,6 +19,7 @@
 
 #include "toxme.h"
 #include "src/core/core.h"
+#include <src/persistence/settings.h>
 #include <QtDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
@@ -34,6 +35,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         return QByteArray();
 
     QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.post(request,json.toUtf8());
@@ -57,6 +59,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
 
     // Get key
     QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.get(request);

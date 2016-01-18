@@ -26,6 +26,7 @@
 #include <QPixmap>
 #include <QMutex>
 #include <QDate>
+#include <QNetworkProxy>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -108,6 +109,8 @@ public:
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
+
+    QNetworkProxy getProxy() const;
 
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
