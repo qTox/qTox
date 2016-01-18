@@ -121,7 +121,7 @@ Groupchats are a way to talk with multiple friends at the same time, like when y
 
 ## Multi Window Mode
 
-In this mode, qTox will seperate its main window into a single contact list and one or multiple chat windows, which allows you to have multiple conversations on your screen on the same time. Additionally you can manually group chats into a window by dragging and dropping them onto eachother. This mode can be activated and configured in [settings](#settings).
+In this mode, qTox will separate its main window into a single contact list and one or multiple chat windows, which allows you to have multiple conversations on your screen at the same time. Additionally you can manually group chats into a window by dragging and dropping them onto eachother. This mode can be activated and configured in [settings](#settings).
 
 ## Keyboard Shortcuts
 
