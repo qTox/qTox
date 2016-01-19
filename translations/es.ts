@@ -109,6 +109,15 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Qt version:</source>
         <translation>Versión de Qt:</translation>
     </message>
+    <message>
+        <source>Restart qTox to install version %1</source>
+        <translation>Reinicia qTox para instalar la version %1</translation>
+    </message>
+    <message>
+        <source>qTox is downloading update %1</source>
+        <comment>%1 is the version of the update</comment>
+        <translation>qTox está descargando la actualización %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -117,26 +126,22 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Versión</translation>
     </message>
     <message>
+        <source>You are using qTox version $GIT_DESCRIBE.</source>
+        <translation>Estás usando qTox versión $GIT_DESCRIBE.</translation>
+    </message>
+    <message>
+        <source>Downloading update: %p%</source>
+        <translation>Descargando actualización: %p%</translation>
+    </message>
+    <message>
         <source>License</source>
         <translation>Licencia</translation>
-    </message>
-    <message>
-        <source>You are using a qTox nightly build.</source>
-        <translation>Estás usando una nightly build de qTox.</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Versión de toxcore: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
@@ -145,12 +150,20 @@ p, li { white-space: pre-wrap; }
         <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>toxcore version: $TOXCOREVERSION</source>
+        <translation>Versión de toxcore: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>Authors</source>
@@ -298,18 +311,6 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>Advanced</source>
         <translation>Avanzado</translation>
     </message>
-    <message>
-        <source>Synchronized - safe (recommended)</source>
-        <translation>Sincronizada - seguro (recomendado)</translation>
-    </message>
-    <message>
-        <source>Partially async - risky (20% faster)</source>
-        <translation>Parcialmente asíncrona - riesgoso (20% más rápido)</translation>
-    </message>
-    <message>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation>Asíncrona - peligroso (lo más rápido)</translation>
-    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -330,14 +331,6 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>Reset to default settings</source>
         <translation>Restablecer configuración por defecto</translation>
-    </message>
-    <message>
-        <source>Chat history</source>
-        <translation>Historial de Chat</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Escritura a la BD&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1802,6 +1795,10 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>%1.tox ha sido importado exitosamente</translation>
     </message>
     <message>
+        <source>Version %1, %2</source>
+        <translation>Versión %1, %2</translation>
+    </message>
+    <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
         <translation>Actualización</translation>
@@ -1866,6 +1863,86 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Pantalla</translation>
+    </message>
+    <message>
+        <source>Incorrect responce</source>
+        <translation>Respuesta erronea</translation>
+    </message>
+    <message>
+        <source>No password in response</source>
+        <translation>Respuesta sin contraseña</translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation>El servidor no soporta Toxme</translation>
+    </message>
+    <message>
+        <source>You must send POST requests to /api</source>
+        <translation>Tienes que mandar una petición POST a /api</translation>
+    </message>
+    <message>
+        <source>Please try again using a HTTPS connection</source>
+        <translation>Inténtalo de nuevo usando una conexión HTTPS</translation>
+    </message>
+    <message>
+        <source>I was unable to read your encrypted payload</source>
+        <translation>No fue posible leer tu payload cifrado</translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation>Estás haciendo demasiadas peticiones. Inténtalo de nuevo en una hora</translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation>Ese nombre ya está en uso</translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation>Esta Tox ID ya fue registrada bajo otro nombre</translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation>Espacios en el nombre no están permitidos</translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation>Contraseña incorrecta</translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation>No puedes usar ese nombre</translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation>Nombre no encontrado</translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation>No se envió la Tox ID</translation>
+    </message>
+    <message>
+        <source>Lookup failed because the other server replied with invalid data</source>
+        <translation>La consulta falló debido a datos invalidos enviados por otro servidor</translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation>Ese usuario no existe</translation>
+    </message>
+    <message>
+        <source>Internal lookup error. Please file a bug</source>
+        <translation>Fallo interno en la consulta. Por favor reporta este error</translation>
+    </message>
+    <message>
+        <source>Unknown error (%1)</source>
+        <translation>Error desconocido (%1)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation>qTox no pudo abrir tus historiales de chat, serán deshabilitados.</translation>
     </message>
 </context>
 <context>
