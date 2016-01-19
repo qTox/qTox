@@ -24,6 +24,8 @@
 #include <QDebug>
 #include <QProcess>
 #include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
 
 #include <unistd.h>
 
@@ -80,5 +82,29 @@ void osx::moveToAppFolder()
 
             exit(0); //Actually kills it
         }
+    }
+}
+
+void osx::migrateProfiles()
+{
+    QString oldPath = QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator() +
+                                      "Library" + QDir::separator() + "Preferences" + QDir::separator() + "tox");
+    QFileInfo checkDir(oldPath);
+
+    QString newPath = QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                                      + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox");
+    QDir dir;
+
+    if (checkDir.exists() && checkDir.isDir())
+    {
+        qDebug() << "OS X: Old settings directory detected migrating to default";
+        if( !dir.rename(oldPath, newPath) )
+        {
+            qDebug() << "OS X: Profile migration failed. ~/Library/Application Support/Tox already exists.";
+        }
+    }
+    else
+    {
+        qDebug() << "OS X: Old settings directory not detected";
     }
 }

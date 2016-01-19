@@ -21,7 +21,7 @@
 
 #include <QtCore/qsystemdetection.h>
 
-#ifndef Q_OS_MACX
+#ifndef Q_OS_OSX
 #error "This file is only meant to be compiled for Mac OSX targets"
 #endif
 
@@ -31,6 +31,7 @@ namespace osx
     static constexpr int EXIT_UPDATE_MACX_FAIL = 216;
 
     void moveToAppFolder();
+    void migrateProfiles();
 }
 
 #endif // INSTALLOSX_H

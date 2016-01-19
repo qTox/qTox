@@ -38,7 +38,7 @@
 
 #include <sodium.h>
 
-#if defined(Q_OS_MACX) && defined(QT_RELEASE)
+#if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
 #endif
 
@@ -98,6 +98,11 @@ int main(int argc, char *argv[])
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
+#if defined(Q_OS_OSX)
+    //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
+    osx::migrateProfiles();
+#endif
+
 #ifdef HIGH_DPI
     a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
@@ -142,10 +147,6 @@ int main(int argc, char *argv[])
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
-
-#if defined(Q_OS_MACX) && defined(QT_RELEASE)
-    osx::moveToAppFolder();
-#endif
 
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
