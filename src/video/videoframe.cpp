@@ -32,6 +32,22 @@ VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void
       frameOther{nullptr}, frameYUV420{nullptr}, frameRGB24{nullptr},
       width{w}, height{h}, pixFmt{fmt}
 {
+    // Silences pointless swscale warning spam
+    // See libswscale/utils.c:1153 @ 74f0bd3
+    frame->color_range = AVCOL_RANGE_MPEG;
+    if (pixFmt == AV_PIX_FMT_YUVJ420P)
+        pixFmt = AV_PIX_FMT_YUV420P;
+    else if (pixFmt == AV_PIX_FMT_YUVJ411P)
+        pixFmt = AV_PIX_FMT_YUV411P;
+    else if (pixFmt == AV_PIX_FMT_YUVJ422P)
+        pixFmt = AV_PIX_FMT_YUV422P;
+    else if (pixFmt == AV_PIX_FMT_YUVJ444P)
+        pixFmt = AV_PIX_FMT_YUV444P;
+    else if (pixFmt == AV_PIX_FMT_YUVJ440P)
+        pixFmt = AV_PIX_FMT_YUV440P;
+    else
+        frame->color_range = AVCOL_RANGE_UNSPECIFIED;
+
     if (pixFmt == AV_PIX_FMT_YUV420P)
         frameYUV420 = frame;
     else if (pixFmt == AV_PIX_FMT_RGB24)
