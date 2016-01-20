@@ -111,7 +111,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Reinicia qTox para instalar la version %1</translation>
+        <translation>Reinicia qTox para instalar la versión %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
@@ -1922,7 +1922,7 @@ Será instalada cuando reinicies qTox.</translation>
     </message>
     <message>
         <source>Lookup failed because the other server replied with invalid data</source>
-        <translation>La consulta falló debido a datos invalidos enviados por otro servidor</translation>
+        <translation>La consulta falló debido a datos inválidos enviados por el servidor</translation>
     </message>
     <message>
         <source>That user does not exist</source>
