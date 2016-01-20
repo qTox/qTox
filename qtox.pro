@@ -165,7 +165,8 @@ win32 {
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
         #Files to be includes into the qTox.app/Contents/Resources folder
-        APP_RESOURCE.files = img/icons/qtox_profile.icns
+        #OSX-Migrater.sh part of migrateProfiles() compatabilty code
+        APP_RESOURCE.files = img/icons/qtox_profile.icns OSX-Migrater.sh
         APP_RESOURCE.path = Contents/Resources
         QMAKE_BUNDLE_DATA += APP_RESOURCE
         #Dynamic versioning for Info.plist
