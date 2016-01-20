@@ -82,7 +82,8 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         return;
 
     QMap<int64_t, MsgPtr> msgs = undeliveredMsgs;
-    removeAllReciepts();
+    removeAllReceipts();
+    undeliveredMsgs.clear();
 
     for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)
     {
@@ -105,10 +106,9 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     }
 }
 
-void OfflineMsgEngine::removeAllReciepts()
+void OfflineMsgEngine::removeAllReceipts()
 {
     QMutexLocker ml(&mutex);
 
     receipts.clear();
-    undeliveredMsgs.clear();
 }

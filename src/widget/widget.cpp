@@ -1848,7 +1848,7 @@ void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend *f : frnds)
-        f->getChatForm()->getOfflineMsgEngine()->removeAllReciepts();
+        f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
 }
 
 void Widget::reloadTheme()
