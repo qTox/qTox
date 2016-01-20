@@ -47,6 +47,10 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         qApp->processEvents();
     }
 
+    error = reply->error();
+    if (error)
+        qWarning() << "makeJsonRequest: A network error occured:" << error.errorString();
+
     return reply->readAll();
 }
 
@@ -69,6 +73,10 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
         reply->waitForReadyRead(100);
         qApp->processEvents();
     }
+
+    error = reply->error();
+    if (error)
+        qWarning() << "getServerPubkey: A network error occured:" << error.errorString();
 
     // Extract key
     static const QByteArray pattern{"key\":\""};
@@ -277,8 +285,6 @@ int Toxme::deleteAddress(QString server, ToxId id)
     QString apiUrl = server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
     QByteArray response = makeJsonRequest(apiUrl, prepareEncryptedJson(pubkeyUrl, 2, payload), error);
-    if (error != QNetworkReply::NoError)
-        return error;
 
     return extractError(response);
 }
