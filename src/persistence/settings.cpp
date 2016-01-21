@@ -538,6 +538,9 @@ QString Settings::getSettingsDirPath()
 #ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
                            + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                            + QDir::separator() + "tox")+QDir::separator();

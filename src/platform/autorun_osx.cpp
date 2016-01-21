@@ -19,16 +19,38 @@
 
 #if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/autorun.h"
+#include <QSettings>
+#include <QDir>
+#include <QFile>
+#include <QStandardPaths>
+#include <QCoreApplication>
 
+int state ;
 
 bool Platform::setAutorun(bool on)
 {
-    return false;
+    QString qtoxPlist = QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator() +
+                                        "Library" + QDir::separator() + "LaunchAgents" + QDir::separator() + "chat.tox.qtox.autorun.plist");
+    QString qtoxDir = QDir::cleanPath(QCoreApplication::applicationDirPath() + QDir::separator() + "qtox");
+    QSettings autoRun(qtoxPlist, QSettings::NativeFormat);
+    autoRun.setValue("Label","chat.tox.qtox.autorun");
+    autoRun.setValue("Program", qtoxDir);
+
+    if (on)
+    {
+        autoRun.setValue("RunAtLoad",true);
+        state = true;
+    }
+    else
+    {
+        autoRun.setValue("RunAtLoad",false);
+        state = false;
+    }
 }
 
 bool Platform::getAutorun()
 {
-    return false;
+    return state;
 }
 
 #endif  // defined(__APPLE__) && defined(__MACH__)

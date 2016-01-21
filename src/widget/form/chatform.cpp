@@ -110,7 +110,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
-    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReciepts);
+    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(&typingTimer, &QTimer::timeout, this, [=]{
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;

@@ -164,6 +164,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        av_dict_set(&options, "pixel_format", "mjpeg", 0);
     }
 #endif
 #ifdef Q_OS_OSX

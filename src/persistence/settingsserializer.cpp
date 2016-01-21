@@ -31,17 +31,12 @@ using namespace std;
 
 const char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
 
-inline QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
+QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
 {
     return dataStream << static_cast<uint8_t>(tag);
 }
 
-inline QDataStream& operator<<(QDataStream& dataStream, const QString& str)
-{
-    return dataStream << str.toUtf8();
-}
-
-inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
+QDataStream& writeStream(QDataStream& dataStream, const QByteArray& data)
 {
     QByteArray size = vuintToData(data.size());
     dataStream.writeRawData(size.data(), size.size());
@@ -49,12 +44,18 @@ inline QDataStream& operator<<(QDataStream& dataStream, const QByteArray& data)
     return dataStream;
 }
 
-QDataStream& operator>>(QDataStream& dataStream, SettingsSerializer::RecordTag& tag)
+QDataStream& writeStream(QDataStream& dataStream, const QString& str)
+{
+    return writeStream(dataStream, str.toUtf8());
+}
+
+QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& tag)
 {
     return dataStream.operator >>((uint8_t&)tag);
 }
 
-inline QDataStream& operator>>(QDataStream& dataStream, QByteArray& data)
+
+QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
 {
     unsigned char num3;
     size_t num = 0;
@@ -214,16 +215,6 @@ void SettingsSerializer::load()
         readSerialized();
     else
         readIni();
-
-    /* Dump state for debugging
-    qDebug() << "SettingsSerializer data:";
-    for (int i=0; i<groups.size(); i++)
-        qDebug()<<"Group"<<i<<"is"<<groups[i];
-    for (int i=0; i<arrays.size(); i++)
-        qDebug()<<"Array"<<i<<"size"<<arrays[i].size<<arrays[i].values.size()<<"of group"<<arrays[i].group<<"is"<<arrays[i].name;
-    for (int i=0; i<values.size(); i++)
-        qDebug()<<"Value"<<i<<"of group"<<values[i].group<<"array"<<values[i].array<<values[i].arrayIndex<<"key"<<values[i].key;
-    */
 }
 
 void SettingsSerializer::save()
@@ -244,9 +235,8 @@ void SettingsSerializer::save()
         // Save the group name, if any
         if (g!=-1)
         {
-            stream << RecordTag::GroupStart;
-            stream << groups[g].toUtf8();
-            //qDebug()<<"#Group"<<groups[g];
+            writeStream(stream, RecordTag::GroupStart);
+            writeStream(stream, groups[g].toUtf8());
         }
 
         // Save all the arrays of this group
@@ -256,19 +246,18 @@ void SettingsSerializer::save()
                 continue;
             if (a.size <= 0)
                 continue;
-            stream << RecordTag::ArrayStart;
-            stream << a.name.toUtf8();
-            stream << vuintToData(a.size);
-            //qDebug()<<"#array start"<<a.name<<a.size;
+            writeStream(stream, RecordTag::ArrayStart);
+            writeStream(stream, a.name.toUtf8());
+            writeStream(stream, vuintToData(a.size));
+
             for (uint64_t vi : a.values)
             {
-                stream << RecordTag::ArrayValue;
-                stream << vuintToData(values[vi].arrayIndex);
-                stream << values[vi].key.toUtf8();
+                writeStream(stream, RecordTag::ArrayValue);
+                writeStream(stream, vuintToData(values[vi].arrayIndex));
+                writeStream(stream, values[vi].key.toUtf8());
                 writePackedVariant(stream, values[vi].value);
-                //qDebug()<<"#key (in array)"<<values[vi].key;
             }
-            stream << RecordTag::ArrayEnd;
+            writeStream(stream, RecordTag::ArrayEnd);
         }
 
         // Save all the values of this group that aren't in an array
@@ -276,10 +265,9 @@ void SettingsSerializer::save()
         {
             if (v.group != g || v.array != -1)
                 continue;
-            stream << RecordTag::Value;
-            stream << v.key.toUtf8();
+            writeStream(stream, RecordTag::Value);
+            writeStream(stream, v.key.toUtf8());
             writePackedVariant(stream, v.value);
-            //qDebug()<<"#key (standalone)"<<v.key;
         }
     }
 
@@ -347,30 +335,28 @@ void SettingsSerializer::readSerialized()
     while (!stream.atEnd())
     {
         RecordTag tag;
-        stream >> tag;
+        readStream(stream, tag);
         if (tag == RecordTag::Value)
         {
             QByteArray key;
             QByteArray value;
-            stream >> key;
-            stream >> value;
+            readStream(stream, key);
+            readStream(stream, value);
             setValue(QString::fromUtf8(key), QVariant(QString::fromUtf8(value)));
-            //qDebug() << "!Got key"<<key;
         }
         else if (tag == RecordTag::GroupStart)
         {
             QByteArray prefix;
-            stream >> prefix;
+            readStream(stream, prefix);
             beginGroup(QString::fromUtf8(prefix));
-            //qDebug()<<"!Group start"<<prefix;
         }
         else if (tag == RecordTag::ArrayStart)
         {
             QByteArray prefix;
-            stream >> prefix;
+            readStream(stream, prefix);
             beginReadArray(QString::fromUtf8(prefix));
             QByteArray sizeData;
-            stream >> sizeData;
+            readStream(stream, sizeData);
             if (sizeData.isEmpty())
             {
                 qWarning("The personal save file is corrupted!");
@@ -378,12 +364,11 @@ void SettingsSerializer::readSerialized()
             }
             quint64 size = dataToVUint(sizeData);
             arrays[array].size = max(size, arrays[array].size);
-            //qDebug()<<"!Array start"<<prefix;
         }
         else if (tag == RecordTag::ArrayValue)
         {
             QByteArray indexData;
-            stream >> indexData;
+            readStream(stream, indexData);
             if (indexData.isEmpty())
             {
                 qWarning("The personal save file is corrupted!");
@@ -393,15 +378,13 @@ void SettingsSerializer::readSerialized()
             setArrayIndex(index);
             QByteArray key;
             QByteArray value;
-            stream >> key;
-            stream >> value;
+            readStream(stream, key);
+            readStream(stream, value);
             setValue(QString::fromUtf8(key), QVariant(QString::fromUtf8(value)));
-            //qDebug() << "!Got array key"<<key<<"index"<<index;
         }
         else if (tag == RecordTag::ArrayEnd)
         {
             endArray();
-            //qDebug() <<"!Array end";
         }
     }
 
@@ -577,9 +560,9 @@ void SettingsSerializer::writePackedVariant(QDataStream& stream, const QVariant&
     assert(v.canConvert(QVariant::String));
     QString str = v.toString();
     if (str == "true")
-        stream << QString("1");
+        writeStream(stream, QString("1"));
     else if (str == "false")
-        stream << QString("0");
+        writeStream(stream, QString("0"));
     else
-        stream << str.toUtf8();
+        writeStream(stream, str.toUtf8());
 }

@@ -43,7 +43,7 @@ public:
 
 public slots:
     void deliverOfflineMsgs();
-    void removeAllReciepts();
+    void removeAllReceipts();
 
 private:
     struct MsgPtr {
