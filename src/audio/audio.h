@@ -99,6 +99,9 @@ private:
     Audio();
     ~Audio();
 
+    static void checkAlError() noexcept;
+    static void checkAlcError(ALCdevice *device) noexcept;
+
     bool autoInitInput();
     bool autoInitOutput();
     bool initInput(QString inDevDescr);

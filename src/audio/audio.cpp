@@ -35,22 +35,6 @@
 #include "audiofilterer.h"
 #endif
 
-#ifndef CHECK_AL_ERROR
-#define CHECK_AL_ERROR \
-    do { \
-    const ALenum al_err = alGetError(); \
-    if (al_err) { qWarning("OpenAL error: %d", al_err); } \
-    } while (0)
-#endif
-
-#ifndef CHECK_ALC_ERROR
-#define CHECK_ALC_ERROR(device) \
-    do { \
-    const ALCenum alc_err = alcGetError(device); \
-    if (alc_err) { qWarning("OpenAL error: %d", alc_err); } \
-    } while (0)
-#endif
-
 /**
 Returns the singleton instance.
 */
@@ -99,6 +83,20 @@ Audio::~Audio()
     filterer.closeFilter();
 }
 
+void Audio::checkAlError()
+{
+    const ALenum al_err = alGetError();
+    if (al_err != AL_NO_ERROR)
+        qWarning("OpenAL error: %d", al_err);
+}
+
+void Audio::checkAlcError(ALCdevice *device)
+{
+    const ALCenum alc_err = alcGetError(device);
+    if (alc_err)
+        qWarning("OpenAL error: %d", alc_err);
+}
+
 /**
 Returns the current output volume (between 0 and 1)
 */
@@ -110,7 +108,7 @@ ALfloat Audio::outputVolume()
 
     if (alOutDev) {
         alGetListenerf(AL_GAIN, &volume);
-        CHECK_AL_ERROR;
+        checkAlError();
     }
 
     return volume;
@@ -128,7 +126,7 @@ void Audio::setOutputVolume(ALfloat volume)
     volume = std::max(0.f, std::min(volume, 1.f));
 
     alListenerf(AL_GAIN, volume);
-    CHECK_AL_ERROR;
+    checkAlError();
 }
 
 ALfloat Audio::inputVolume()
@@ -287,22 +285,22 @@ bool Audio::initOutput(QString outDevDescr)
 
     qDebug() << "Opened audio output" << outDevDescr;
     alOutContext = alcCreateContext(alOutDev, nullptr);
-    CHECK_ALC_ERROR(alOutDev);
+    checkAlcError(alOutDev);
 
     if (!alcMakeContextCurrent(alOutContext)) {
         qWarning() << "Cannot create output audio context";
         return false;
     }
 
-    alGenSources(1, &alMainSource); CHECK_AL_ERROR;
-    alSourcef(alMainSource, AL_GAIN, 1.f); CHECK_AL_ERROR;
-    alSourcef(alMainSource, AL_PITCH, 1.f); CHECK_AL_ERROR;
-    alSource3f(alMainSource, AL_VELOCITY, 0.f, 0.f, 0.f); CHECK_AL_ERROR;
-    alSource3f(alMainSource, AL_POSITION, 0.f, 0.f, 0.f); CHECK_AL_ERROR;
+    alGenSources(1, &alMainSource); checkAlError();
+    alSourcef(alMainSource, AL_GAIN, 1.f); checkAlError();
+    alSourcef(alMainSource, AL_PITCH, 1.f); checkAlError();
+    alSource3f(alMainSource, AL_VELOCITY, 0.f, 0.f, 0.f); checkAlError();
+    alSource3f(alMainSource, AL_POSITION, 0.f, 0.f, 0.f); checkAlError();
 
     // init master volume
     alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
-    CHECK_AL_ERROR;
+    checkAlError();
 
     Core* core = Core::getInstance();
     if (core) {
@@ -556,10 +554,10 @@ void Audio::subscribeOutput(ALuint& sid)
     outSources << sid;
 
     // initialize source
-    alSourcef(sid, AL_GAIN, 1.f); CHECK_AL_ERROR;
-    alSourcef(sid, AL_PITCH, 1.f); CHECK_AL_ERROR;
-    alSource3f(sid, AL_VELOCITY, 0.f, 0.f, 0.f); CHECK_AL_ERROR;
-    alSource3f(sid, AL_POSITION, 0.f, 0.f, 0.f); CHECK_AL_ERROR;
+    alSourcef(sid, AL_GAIN, 1.f); checkAlError();
+    alSourcef(sid, AL_PITCH, 1.f); checkAlError();
+    alSource3f(sid, AL_VELOCITY, 0.f, 0.f, 0.f); checkAlError();
+    alSource3f(sid, AL_POSITION, 0.f, 0.f, 0.f); checkAlError();
 
     qDebug() << "Audio source" << sid << "created. Sources active:"
              << outSources.size();
