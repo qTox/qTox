@@ -46,3 +46,7 @@ QStackedWidget QPushButton
 #createAccountButton:hover {
   background: #0c530d;
 }
+
+QLabel {
+  color: black;
+}
