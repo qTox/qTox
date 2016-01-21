@@ -216,7 +216,7 @@ void GroupChatForm::onUserListChanged()
     }
 
     // Enable or disable call button
-    if (peersCount != 1)
+    if (peersCount != 1 && !callButton->isEnabled())
     {
         callButton->setEnabled(true);
         callButton->setObjectName("green");
