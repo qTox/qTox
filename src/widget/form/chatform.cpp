@@ -719,12 +719,13 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         ToxId authorId = ToxId(it.sender);
         QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isSelf() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
+        bool needSending = !it.isSent && authorId.isSelf();
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
                                                               isAction ? it.message.mid(4) : it.message,
                                                               isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
                                                               authorId.isSelf(),
-                                                              QDateTime());
+                                                              needSending ? QDateTime() : msgDateTime);
 
         if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
             msg->hideSender();
@@ -732,11 +733,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         prevId = authorId;
         prevMsgDateTime = msgDateTime;
 
-        if (it.isSent || !authorId.isSelf())
-        {
-            msg->markAsSent(msgDateTime);
-        }
-        else
+        if (needSending)
         {
             if (processUndelivered)
             {
