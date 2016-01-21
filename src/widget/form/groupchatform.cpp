@@ -63,7 +63,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nusersLabel->setObjectName("statusLabel");
     retranslateUi();
 
-    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()));
 
     msgEdit->setObjectName("group");
 

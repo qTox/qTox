@@ -39,7 +39,7 @@
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
 {
-    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
     statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(Name);
@@ -164,13 +164,13 @@ void GroupWidget::onUserListChanged()
 void GroupWidget::setAsActiveChatroom()
 {
     setActive(true);
-    avatar->setPixmap(Style::scaleSvgImage(":img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":img/group_dark.svg", avatar->width(), avatar->height()));
 }
 
 void GroupWidget::setAsInactiveChatroom()
 {
     setActive(false);
-    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
 }
 
 void GroupWidget::updateStatusLight()

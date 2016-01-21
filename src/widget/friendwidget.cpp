@@ -49,7 +49,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
-    avatar->setPixmap(QPixmap(":/img/contact.svg"), Qt::transparent);
+    avatar->setPixmap(QPixmap(":/img/contact.svg"));
     statusPic.setPixmap(QPixmap(":/img/status/dot_offline.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(id);
@@ -261,7 +261,7 @@ void FriendWidget::setAsActiveChatroom()
     setActive(true);
 
     if (isDefaultAvatar)
-        avatar->setPixmap(QPixmap(":img/contact_dark.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact_dark.svg"));
 }
 
 void FriendWidget::setAsInactiveChatroom()
@@ -269,7 +269,7 @@ void FriendWidget::setAsInactiveChatroom()
     setActive(false);
 
     if (isDefaultAvatar)
-        avatar->setPixmap(QPixmap(":img/contact.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":img/contact.svg"));
 }
 
 void FriendWidget::updateStatusLight()
@@ -365,7 +365,6 @@ void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
 
     isDefaultAvatar = false;
     avatar->setPixmap(pic);
-    avatar->autopickBackground();
 }
 
 void FriendWidget::onAvatarRemoved(int FriendId)
@@ -376,9 +375,9 @@ void FriendWidget::onAvatarRemoved(int FriendId)
     isDefaultAvatar = true;
 
     if (isActive())
-        avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
     else
-        avatar->setPixmap(QPixmap(":/img/contact.svg"), Qt::transparent);
+        avatar->setPixmap(QPixmap(":/img/contact.svg"));
 }
 
 void FriendWidget::mousePressEvent(QMouseEvent *ev)

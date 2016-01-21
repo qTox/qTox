@@ -72,7 +72,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     nameLabel->setText(f->getDisplayedName());
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
+    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 
     statusMessageLabel = new CroppingLabel();
     statusMessageLabel->setObjectName("statusLabel");
@@ -673,7 +673,7 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     if (FriendId != f->getFriendID())
         return;
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
+    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 }
 
 void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
