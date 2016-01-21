@@ -87,10 +87,7 @@ Audio::Audio()
     connect(&playMono16Timer, &QTimer::timeout, this, &Audio::playMono16SoundCleanup);
     playMono16Timer.setSingleShot(true);
 
-    if (!audioThread->isRunning())
-        audioThread->start();
-    else
-        qWarning("Audio thread already started -> ignored.");
+    audioThread->start();
 }
 
 Audio::~Audio()
