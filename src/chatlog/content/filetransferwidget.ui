@@ -116,7 +116,7 @@
            <number>6</number>
           </property>
           <property name="verticalSpacing">
-           <number>3</number>
+           <number>2</number>
           </property>
           <item row="1" column="0">
            <widget class="QWidget" name="statusWidget" native="true">

@@ -100,7 +100,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
         ui->progressLabel->setText(tr("Accept to receive this file", "file transfer widget"));
     }
 
-    setFixedHeight(78);
+    setFixedHeight(64);
 }
 
 FileTransferWidget::~FileTransferWidget()
