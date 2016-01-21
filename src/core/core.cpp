@@ -978,21 +978,23 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
-    int nPeers = getGroupNumberPeers(groupId);
-    if (nPeers < 0)
+    int result = getGroupNumberPeers(groupId);
+    if (result < 0)
     {
         qWarning() << "getGroupPeerNames: Unable to get number of peers";
         return names;
     }
+    uint16_t nPeers = static_cast<uint16_t>(result);
+
     std::unique_ptr<uint8_t[][TOX_MAX_NAME_LENGTH]> namesArray{new uint8_t[nPeers][TOX_MAX_NAME_LENGTH]};
     std::unique_ptr<uint16_t[]> lengths{new uint16_t[nPeers]};
-    int result = tox_group_get_names(tox, groupId, namesArray.get(), lengths.get(), nPeers);
+    result = tox_group_get_names(tox, groupId, namesArray.get(), lengths.get(), nPeers);
     if (result != nPeers)
     {
-        qWarning() << "getGroupPeerNames: Unexpected result";
+        qWarning() << "getGroupPeerNames: Unexpected tox_group_get_names result";
         return names;
     }
-    for (size_t i=0; i<nPeers; i++)
+    for (uint16_t i=0; i<nPeers; i++)
        names.push_back(CString::toString(namesArray[i], lengths[i]));
 
     return names;
