@@ -105,6 +105,8 @@ private:
     bool initOutput(QString outDevDescr);
     void cleanupInput();
     void cleanupOutput();
+    /// Called after a mono16 sound stopped playing
+    void playMono16SoundCleanup();
     /// Called on the captureTimer events to capture audio
     void doCapture();
 #if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
@@ -118,11 +120,12 @@ private:
     ALCdevice*          alInDev;
     ALfloat             inGain;
     quint32             inSubscriptions;
-    QTimer              captureTimer;
+    QTimer              captureTimer, playMono16Timer;
 
     ALCdevice*          alOutDev;
     ALCcontext*         alOutContext;
     ALuint              alMainSource;
+    ALuint              alMainBuffer;
     bool                outputInitialized;
 
     QList<ALuint>       outSources;

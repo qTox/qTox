@@ -52,52 +52,6 @@
 #endif
 
 /**
-@class AudioPlayer
-
-@brief Non-blocking audio player.
-
-The audio data is played from start to finish (no streaming).
-*/
-class AudioPlayer : public QThread
-{
-public:
-    AudioPlayer(ALuint source, const QByteArray& data)
-        : mSource(source)
-    {
-        alGenBuffers(1, &mBuffer);
-        alBufferData(mBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
-        alSourcei(mSource, AL_BUFFER, mBuffer);
-
-        connect(this, &AudioPlayer::finished, this, &AudioPlayer::deleteLater);
-    }
-
-private:
-    void run() override final
-    {
-        alSourceRewind(mSource);
-        alSourcePlay(mSource);
-
-        QMutexLocker locker(&playLock);
-        ALint state = AL_PLAYING;
-        while (state == AL_PLAYING) {
-            alGetSourcei(mSource, AL_SOURCE_STATE, &state);
-            waitPlaying.wait(&playLock, 2000);
-        }
-
-        alSourceStop(mSource);
-        alDeleteBuffers(1, &mBuffer);
-    }
-
-public:
-    QMutex playLock;
-    QWaitCondition waitPlaying;
-
-private:
-    ALuint      mBuffer;
-    ALuint      mSource;
-};
-
-/**
 Returns the singleton instance.
 */
 Audio& Audio::getInstance()
@@ -114,6 +68,7 @@ Audio::Audio()
     , alOutDev(nullptr)
     , alOutContext(nullptr)
     , alMainSource(0)
+    , alMainBuffer(0)
     , outputInitialized(false)
 {
     audioThread->setObjectName("qTox Audio");
@@ -129,6 +84,8 @@ Audio::Audio()
     captureTimer.setInterval(AUDIO_FRAME_DURATION/2);
     captureTimer.setSingleShot(false);
     captureTimer.start();
+    connect(&playMono16Timer, &QTimer::timeout, this, &Audio::playMono16SoundCleanup);
+    playMono16Timer.setSingleShot(true);
 
     if (!audioThread->isRunning())
         audioThread->start();
@@ -361,6 +318,16 @@ bool Audio::initOutput(QString outDevDescr)
 }
 
 /**
+Play a 44100Hz mono 16bit PCM sound from a file
+*/
+void Audio::playMono16Sound(const QString& path)
+{
+    QFile sndFile(path);
+    sndFile.open(QIODevice::ReadOnly);
+    playMono16Sound(QByteArray(sndFile.readAll()));
+}
+
+/**
 Play a 44100Hz mono 16bit PCM sound
 */
 void Audio::playMono16Sound(const QByteArray& data)
@@ -370,27 +337,23 @@ void Audio::playMono16Sound(const QByteArray& data)
     if (!autoInitOutput())
         return;
 
-    AudioPlayer *player = new AudioPlayer(alMainSource, data);
-    connect(player, &AudioPlayer::finished, [=]() {
-        QMutexLocker locker(&audioLock);
+    if (!alMainBuffer)
+        alGenBuffers(1, &alMainBuffer);
 
-        if (outSources.isEmpty())
-            cleanupOutput();
-        else
-            qDebug("Audio output not closed -> there are pending subscriptions.");
-    });
+    ALint state;
+    alGetSourcei(alMainSource, AL_SOURCE_STATE, &state);
+    if (state == AL_PLAYING)
+    {
+        alSourceStop(alMainSource);
+        alSourcei(alMainSource, AL_BUFFER, AL_NONE);
+    }
 
-    player->start();
-}
+    alBufferData(alMainBuffer, AL_FORMAT_MONO16, data.constData(), data.size(), 44100);
+    alSourcei(alMainSource, AL_BUFFER, static_cast<ALint>(alMainBuffer));
+    alSourcePlay(alMainSource);
 
-/**
-Play a 44100Hz mono 16bit PCM sound from a file
-*/
-void Audio::playMono16Sound(const QString& path)
-{
-    QFile sndFile(path);
-    sndFile.open(QIODevice::ReadOnly);
-    playMono16Sound(QByteArray(sndFile.readAll()));
+    int durationMs = data.size() * 1000 / 2 / 44100;
+    playMono16Timer.start(durationMs + 50);
 }
 
 /**
@@ -479,6 +442,12 @@ void Audio::cleanupOutput()
         alSourceStop(alMainSource);
         alDeleteSources(1, &alMainSource);
 
+        if (alMainBuffer)
+        {
+            alDeleteBuffers(1, &alMainBuffer);
+            alMainBuffer = 0;
+        }
+
         if (!alcMakeContextCurrent(nullptr))
             qWarning("Failed to clear audio context.");
 
@@ -490,6 +459,20 @@ void Audio::cleanupOutput()
             alOutDev = nullptr;
         else
             qWarning("Failed to close output.");
+    }
+}
+
+void Audio::playMono16SoundCleanup()
+{
+    QMutexLocker locker(&audioLock);
+
+    ALint state;
+    alGetSourcei(alMainSource, AL_SOURCE_STATE, &state);
+    if (state == AL_STOPPED)
+    {
+        alSourcei(alMainSource, AL_BUFFER, AL_NONE);
+        alDeleteBuffers(1, &alMainBuffer);
+        alMainBuffer = 0;
     }
 }
 
