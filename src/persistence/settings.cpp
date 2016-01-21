@@ -265,7 +265,7 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
-void Settings::loadpersonal()
+void Settings::loadPersonal()
 {
     Profile* profile = Nexus::getProfile();
     if (!profile)
@@ -273,10 +273,10 @@ void Settings::loadpersonal()
         qCritical() << "No active profile, couldn't load personal settings";
         return;
     }
-    loadpersonal(profile);
+    loadPersonal(profile);
 }
 
-void Settings::loadpersonal(Profile* profile)
+void Settings::loadPersonal(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
 

@@ -275,7 +275,7 @@ void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
     if (profile)
-        Settings::getInstance().loadpersonal(profile);
+        Settings::getInstance().loadPersonal(profile);
 }
 
 AndroidGUI* Nexus::getAndroidGUI()

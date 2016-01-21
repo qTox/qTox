@@ -49,8 +49,8 @@ public:
     void savePersonal(Profile *profile); ///< Asynchronous
 
     void loadGlobal();
-    void loadpersonal();
-    void loadpersonal(Profile *profile);
+    void loadPersonal();
+    void loadPersonal(Profile *profile);
 
 public slots:
     void saveGlobal(); ///< Asynchronous
