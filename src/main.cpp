@@ -139,11 +139,12 @@ int main(int argc, char *argv[])
         QDir dir (logFileDir);
 		
         // Check if log.1 already exists, and if so, delete it
-        if (dir.exists(logFileDir + "qtox.log.1")) {
-            dir.remove("qtox.log.1");
-        }
+        if (dir.remove(logFileDir + "qtox.log.1"))
+            qDebug() << "Removed log successfully";
+        else
+            qDebug() << "Unable to remove old log file";
 
-        dir.rename("qtox.log", "qtox.log.1");
+        dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1");
 
         // Return to original log file path
         logFileFile->setFileName(logFileDir + "qtox.log");

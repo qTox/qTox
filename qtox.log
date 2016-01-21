@@ -1,0 +1,45 @@
+
+2016-01-20 17:15:57 qTox file logger starting
+[17:15:57.226] src/main.cpp:169 : Debug: built on:  17:14:24 Jan 20 2016 ( 1453338437 )
+[17:15:57.226] src/main.cpp:170 : Debug: commit:  93991368c6202fc9dfe474ad1e9ba5668c8a1e7b 
+
+[17:15:57.226] src/persistence/profile.cpp:86 : Debug: Loading tox save  "/home/anoa/.config/tox/testing.tox"
+[17:15:57.226] src/persistence/settings.cpp:350 : Debug: "Saving global settings at /home/anoa/.config/tox/qtox.ini"
+[17:15:57.232] src/persistence/settings.cpp:291 : Debug: Loading personal settings from "/home/anoa/.config/tox/testing.ini"
+[17:15:57.233] src/nexus.cpp:82 : Debug: Starting up
+[17:15:58.140] src/core/core.cpp:236 : Debug: Loading user profile
+[17:15:58.140] src/persistence/profile.cpp:249 : Debug: Loading tox save  "/home/anoa/.config/tox/testing.tox"
+[17:15:58.141] src/core/core.cpp:132 : Debug: Core starting with IPv6 enabled
+[17:15:58.142] src/core/core.cpp:305 : Debug: Self avatar not found, will broadcast empty avatar to friends
+[17:15:58.377] src/widget/systemtrayicon.cpp:65 : Debug: Using GTK backend
+[17:15:59.637] src/core/core.cpp:407 : Debug: "Connecting to 198.46.138.44:33445 (nurupo)"
+[17:15:59.637] src/core/core.cpp:407 : Debug: "Connecting to 178.62.250.138:33445 (Impyy)"
+[17:16:04.138] src/core/core.cpp:407 : Debug: "Connecting to 130.133.110.14:33445 (Manolis)"
+[17:16:04.139] src/core/core.cpp:407 : Debug: "Connecting to 104.167.101.29:33445 (noisykeyboard)"
+[17:16:08.637] src/core/core.cpp:407 : Debug: "Connecting to 205.185.116.116:33445 (Busindre)"
+[17:16:08.637] src/core/core.cpp:407 : Debug: "Connecting to 198.98.51.198:443 (Busindre)"
+[17:16:10.387] src/core/core.cpp:374 : Debug: Connected to the DHT
+[17:16:10.387] src/persistence/profile.cpp:314 : Debug: Saving tox save to  "/home/anoa/.config/tox/testing.tox"
+[17:16:30.904] src/core/core.cpp:585 : Debug: Requested friendship of  0
+[17:16:30.904] src/persistence/profile.cpp:314 : Debug: Saving tox save to  "/home/anoa/.config/tox/testing.tox"
+[17:17:04.033] src/persistence/profile.cpp:314 : Debug: Saving tox save to  "/home/anoa/.config/tox/testing.tox"
+
+2016-01-20 17:17:47 qTox file logger starting
+[17:17:47.795] src/main.cpp:169 : Debug: built on:  17:14:24 Jan 20 2016 ( 1453338437 )
+[17:17:47.795] src/main.cpp:170 : Debug: commit:  93991368c6202fc9dfe474ad1e9ba5668c8a1e7b 
+
+[17:17:47.796] src/persistence/profile.cpp:86 : Debug: Loading tox save  "/home/anoa/.config/tox/testing.tox"
+[17:17:47.796] src/persistence/settings.cpp:350 : Debug: "Saving global settings at /home/anoa/.config/tox/qtox.ini"
+[17:17:47.800] src/persistence/settings.cpp:291 : Debug: Loading personal settings from "/home/anoa/.config/tox/testing.ini"
+[17:17:47.800] src/nexus.cpp:82 : Debug: Starting up
+[17:17:48.818] src/core/core.cpp:236 : Debug: Loading user profile
+[17:17:48.819] src/persistence/profile.cpp:249 : Debug: Loading tox save  "/home/anoa/.config/tox/testing.tox"
+[17:17:48.819] src/core/core.cpp:132 : Debug: Core starting with IPv6 enabled
+[17:17:48.819] src/core/core.cpp:305 : Debug: Self avatar not found, will broadcast empty avatar to friends
+[17:17:48.937] src/widget/systemtrayicon.cpp:65 : Debug: Using GTK backend
+[17:17:50.287] src/core/core.cpp:407 : Debug: "Connecting to 205.185.116.116:33445 (Busindre)"
+[17:17:50.288] src/core/core.cpp:407 : Debug: "Connecting to 198.98.51.198:443 (Busindre)"
+[17:17:54.786] src/core/core.cpp:407 : Debug: "Connecting to 194.249.212.109:33445 (fluke571)"
+[17:17:54.787] src/core/core.cpp:407 : Debug: "Connecting to 185.25.116.107:33445 (MAH69K)"
+[17:17:58.437] src/core/core.cpp:374 : Debug: Connected to the DHT
+[17:17:58.437] src/persistence/profile.cpp:314 : Debug: Saving tox save to  "/home/anoa/.config/tox/testing.tox"
