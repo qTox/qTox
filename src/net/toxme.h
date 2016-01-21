@@ -41,7 +41,7 @@ public:
         Registered = 0,
         Updated = 1,
         ServerError = 2,
-        IncorrectResponce = 3,
+        IncorrectResponse = 3,
         NoPassword = 4
     };
 

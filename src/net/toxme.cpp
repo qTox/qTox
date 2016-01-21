@@ -193,14 +193,14 @@ Toxme::ExecCode Toxme::extractError(QString json)
     {
         end = json.indexOf("}");
         if (end == -1)
-            return IncorrectResponce;
+            return IncorrectResponse;
     }
 
     json.truncate(end);
     bool ok;
     int r = json.toInt(&ok);
     if (!ok)
-        return IncorrectResponce;
+        return IncorrectResponse;
 
     return ExecCode(r);
 }
@@ -264,7 +264,7 @@ QString Toxme::getPass(QString json, ExecCode &code) {
     int end = json.indexOf("\"");
     if (end == -1)
     {
-        code = IncorrectResponce;
+        code = IncorrectResponse;
         return QString();
     }
 
@@ -293,8 +293,8 @@ int Toxme::deleteAddress(QString server, ToxId id)
 QString Toxme::getErrorMessage(int errorCode)
 {
     switch (errorCode) {
-    case IncorrectResponce:
-        return QObject::tr("Incorrect responce");
+    case IncorrectResponse:
+        return QObject::tr("Incorrect response");
     case NoPassword:
         return QObject::tr("No password in response");
     case ServerError:
@@ -322,7 +322,7 @@ QString Toxme::getErrorMessage(int errorCode)
     case -31:
         return QObject::tr("Tox ID not sent");
     case -41:
-        return QObject::tr("Lookup failed because the other server replied with invalid data");
+        return QObject::tr("Lookup failed because the server replied with invalid data");
     case -42:
         return QObject::tr("That user does not exist");
     case -43:
