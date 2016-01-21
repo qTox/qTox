@@ -25,11 +25,23 @@
 #include <cmath>
 
 #include <QObject>
-#include <QWaitCondition>
+#include <QMutex>
 
-struct Tox;
+#if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenAL/al.h>
+ #include <OpenAL/alc.h>
+#else
+ #include <AL/al.h>
+ #include <AL/alc.h>
+#endif
+
+
+#ifndef ALC_ALL_DEVICES_SPECIFIER
+// compatibility with older versions of OpenAL
+#include <AL/alext.h>
+#endif
+
 class AudioFilterer;
-class AudioPrivate;
 
 // Public default audio settings
 static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
@@ -39,10 +51,9 @@ static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, bu
 
 class Audio : public QObject
 {
-    Q_OBJECT
+    using SID = unsigned int;
 
-public:
-    typedef quint32 SID;
+    Q_OBJECT
 
 public:
     static Audio& getInstance();
@@ -62,8 +73,8 @@ public:
 
     static const char* outDeviceNames();
     static const char* inDeviceNames();
-    void subscribeOutput(SID& sid);
-    void unsubscribeOutput(SID& sid);
+    void subscribeOutput(ALuint& sid);
+    void unsubscribeOutput(ALuint& sid);
 
     void startLoop();
     void stopLoop();
@@ -94,8 +105,28 @@ private:
     Audio();
     ~Audio();
 
+    bool autoInitInput();
+    bool autoInitOutput();
+    bool initInput(QString inDevDescr);
+    bool initOutput(QString outDevDescr);
+    void cleanupInput();
+    void cleanupOutput();
+
 private:
-    AudioPrivate* d;
+    QThread*            audioThread;
+    QMutex              audioLock;
+
+    ALCdevice*          alInDev;
+    ALfloat             gain;
+    bool                inputInitialized;
+    quint32             inSubscriptions;
+
+    ALCdevice*          alOutDev;
+    ALCcontext*         alOutContext;
+    ALuint              alMainSource;
+    bool                outputInitialized;
+
+    QList<ALuint>           outSources;
 };
 
 #endif // AUDIO_H
