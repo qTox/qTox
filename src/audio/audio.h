@@ -29,8 +29,6 @@
 
 struct Tox;
 class AudioFilterer;
-class AudioMeter;
-class AudioMeterListener;
 class AudioPrivate;
 
 // Public default audio settings
@@ -50,8 +48,6 @@ public:
     static Audio& getInstance();
 
 public:
-    AudioMeterListener* createAudioMeterListener() const;
-
     qreal outputVolume();
     void setOutputVolume(qreal volume);
 
@@ -100,30 +96,6 @@ private:
 
 private:
     AudioPrivate* d;
-};
-
-class AudioMeterListener : public QObject
-{
-    Q_OBJECT
-public:
-    explicit AudioMeterListener(AudioMeter* measureThread);
-
-    void start();
-    void stop();
-
-    void processed();
-
-signals:
-    void gainChanged(qreal newMaxGain);
-
-private slots:
-    void doListen();
-
-private:
-    bool            mActive;
-    AudioMeter*     mAudioMeter;
-    qreal           mMaxGain;
-    QWaitCondition  mGainProcessed;
 };
 
 #endif // AUDIO_H
