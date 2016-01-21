@@ -21,8 +21,7 @@
 #define CONTENTLAYOUT_H
 
 #include <QBoxLayout>
-
-class QFrame;
+#include <QFrame>
 
 class ContentLayout : public QVBoxLayout
 {
@@ -33,8 +32,9 @@ public:
 
     void clear();
 
+    QFrame mainHLine;
+    QHBoxLayout mainHLineLayout;
     QWidget* mainContent;
-    QFrame* mainHLine;
     QWidget* mainHead;
 
 private:

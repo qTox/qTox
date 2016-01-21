@@ -96,13 +96,12 @@ void ContentLayout::init()
     mainHead->layout()->setSpacing(0);
     mainHead->setMouseTracking(true);
 
-    mainHLine = new QFrame();
-    mainHLine->setFrameShape(QFrame::HLine);
-    mainHLine->setFrameShadow(QFrame::Plain);
-    QPalette palette = mainHLine->palette();
+    mainHLine.setFrameShape(QFrame::HLine);
+    mainHLine.setFrameShadow(QFrame::Plain);
+    QPalette palette = mainHLine.palette();
     palette.setBrush(QPalette::WindowText, QBrush(QColor(193, 193, 193)));
     palette.setBrush(QPalette::WindowText, QBrush(QColor(193, 193, 193)));
-    mainHLine->setPalette(palette);
+    mainHLine.setPalette(palette);
 
     mainContent = new QWidget();
     mainContent->setLayout(new QVBoxLayout);
@@ -120,7 +119,10 @@ void ContentLayout::init()
     mainContent->setStyleSheet(Style::getStylesheet(":ui/settings/mainContent.css"));
 #endif
 
+    mainHLineLayout.addWidget(&mainHLine);
+    mainHLineLayout.addSpacing(5);
+
     addWidget(mainHead);
-    addWidget(mainHLine);
+    addLayout(&mainHLineLayout);
     addWidget(mainContent);
 }
