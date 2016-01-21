@@ -160,8 +160,6 @@ public:
         , alContext(nullptr)
         , inputVolume(1.f)
         , outputVolume(1.f)
-        , inputInitialized(false)
-        , outputInitialized(false)
         , inSubscriptions(0)
     {
         audioThread->setObjectName("qTox Audio");
@@ -194,8 +192,6 @@ public:
     ALuint              alMainSource;
     qreal               inputVolume;
     qreal               outputVolume;
-    bool                inputInitialized;
-    bool                outputInitialized;
 
     quint32             inSubscriptions;
     ALSources           outSources;
@@ -396,9 +392,10 @@ bool AudioPrivate::initInput(QString inDevDescr)
 {
     qDebug() << "Opening audio input" << inDevDescr;
 
-    inputInitialized = false;
-    if (inDevDescr == "none")
-        return true;
+    if (inDevDescr == "none") {
+        qWarning("No audio input device selected.");
+        return false;
+    }
 
     assert(!alInDev);
 
@@ -427,7 +424,6 @@ bool AudioPrivate::initInput(QString inDevDescr)
         return false;
     }
 
-    inputInitialized = true;
     return true;
 }
 
@@ -441,9 +437,10 @@ bool AudioPrivate::initOutput(QString outDevDescr)
     qDebug() << "Opening audio output" << outDevDescr;
     outSources.clear();
 
-    outputInitialized = false;
-    if (outDevDescr == "none")
-        return true;
+    if (outDevDescr == "none") {
+        qWarning("No audio output device selected.");
+        return false;
+    }
 
     assert(!alOutDev);
 
@@ -476,7 +473,6 @@ bool AudioPrivate::initOutput(QString outDevDescr)
         if (core)
             core->getAv()->invalidateCallSources(); // Force to regen each group call's sources
 
-        outputInitialized = true;
         return true;
     }
 
@@ -573,7 +569,7 @@ void Audio::playAudioBuffer(quint32 alSource, const int16_t *data, int samples, 
     assert(channels == 1 || channels == 2);
     QMutexLocker locker(&d->audioLock);
 
-    if (!(d->alOutDev && d->outputInitialized))
+    if (!d->alOutDev)
         return;
 
     ALuint bufid;
@@ -616,8 +612,6 @@ Close active audio input device.
 */
 void AudioPrivate::cleanupInput()
 {
-    inputInitialized = false;
-
     if (alInDev)
     {
 #if (!FIX_SND_PCM_PREPARE_BUG)
@@ -640,8 +634,6 @@ Close active audio output device
 */
 void AudioPrivate::cleanupOutput()
 {
-    outputInitialized = false;
-
     if (alOutDev) {
         qDebug() << "Closing audio output";
         alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
@@ -667,7 +659,7 @@ Returns true if the input device is open and suscribed to
 bool Audio::isInputReady()
 {
     QMutexLocker locker(&d->audioLock);
-    return d->alInDev && d->inputInitialized;
+    return d->alInDev;
 }
 
 /**
@@ -676,7 +668,7 @@ Returns true if the output device is open
 bool Audio::isOutputReady()
 {
     QMutexLocker locker(&d->audioLock);
-    return d->alOutDev && d->outputInitialized;
+    return d->alOutDev;
 }
 
 const char* Audio::outDeviceNames()
@@ -756,7 +748,7 @@ bool Audio::tryCaptureSamples(int16_t* buf, int samples)
 {
     QMutexLocker lock(&d->audioLock);
 
-    if (!(d->alInDev && d->inputInitialized))
+    if (!d->alInDev)
         return false;
 
     ALint curSamples = 0;
