@@ -563,6 +563,8 @@ void Audio::playGroupAudio(int group, int peer, const int16_t* data,
 
     emit groupAudioPlayed(group, peer, volume / bufsize);
 
+    locker.unlock();
+
     playAudioBuffer(call.alSource, data, samples, channels, sample_rate);
 }
 
