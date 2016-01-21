@@ -54,6 +54,9 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     //quotes (green text)
     text = detectQuotes(detectAnchors(text), type);
 
+    //markdown
+    text = detectMarkdown(text);
+
     switch(type)
     {
     case ACTION:
@@ -173,6 +176,58 @@ void ChatMessage::hideDate()
     ChatLineContent* c = getContent(2);
     if (c)
         c->hide();
+}
+
+QString ChatMessage::detectMarkdown(const QString &str)
+{
+    QString out;
+
+    // Create regex for certain markdown syntax
+    QRegExp exp("(\\*\\*)([^\\*\\*]*)(\\*\\*)"   // Bold    **text**
+                "|(\\*)([^\\*]*)(\\*)"           // Italics *text*
+                "|(\\_)([^\\_]*)(\\_)"           // Italics _text_
+                "|(\\_\\_)([^\\_\\_]*)(\\_\\_)"  // Italics __text__
+                "|(\\-)([^\\-]*)(\\-)"           // Underline  -text-
+                "|(\\~)([^\\~]*)(\\~)"           // Strike  ~text~
+                "|(\\~~)([^\\~\\~]*)(\\~~)"      // Strike  ~~text~~
+                );
+
+    // Support for multi-line text
+    QStringList messageLines = str.split("\n");
+    QStringList outLines;
+    for (int i = 0; i < messageLines.size(); ++i)
+    {
+        out = messageLines.at(i);
+        int offset = 0;
+        while ((offset = exp.indexIn(out, offset)) != -1)
+        {
+            QString snippet = exp.cap();
+
+            QString htmledSnippet;
+
+            // Match captured string to corresponding md format
+            if (exp.cap(1) == "**") // Bold **text**
+                htmledSnippet = QString("<b>%1</b>").arg(snippet.mid(2,snippet.length()-4));
+            else if (exp.cap(4) == "*" && snippet.length() > 2) // Italics *text*
+                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(1,snippet.length()-2));
+            else if (exp.cap(7) == "_" && snippet.length() > 2) // Italics _text_
+                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(1,snippet.length()-2));
+            else if (exp.cap(10) == "__"&& snippet.length() > 4) // Italics __text__
+                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(2,snippet.length()-4));
+            else if (exp.cap(13) == "-" && snippet.length() > 2) // Underline -text-
+                htmledSnippet = QString("<u>%1</u>").arg(snippet.mid(1,snippet.length()-2));
+            else if (exp.cap(16) == "~" && snippet.length() > 2) // Strikethrough ~text~
+                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(1,snippet.length()-2));
+            else if (exp.cap(19) == "~~" && snippet.length() > 4) // Strikethrough ~~text~~
+                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(2,snippet.length()-4));
+            else
+                htmledSnippet = snippet;
+            out.replace(offset, exp.cap().length(), htmledSnippet);
+            offset += htmledSnippet.length();
+        }
+        outLines.push_back(out);
+    }
+    return outLines.join("\n");
 }
 
 QString ChatMessage::detectAnchors(const QString &str)
