@@ -25,6 +25,7 @@
 #include <QString>
 #include <QStringList>
 #include <QIcon>
+#include <QMutex>
 
 #define SMILEYPACK_SEARCH_PATHS                                                                                             \
     {                                                                                                                       \
@@ -40,7 +41,6 @@ public:
     static QList<QPair<QString, QString> > listSmileyPacks(const QStringList& paths = SMILEYPACK_SEARCH_PATHS);
     static bool isValid(const QString& filename);
 
-    bool load(const QString& filename);
     QString smileyfied(QString msg);
     QList<QStringList> getEmoticons() const;
     QString getAsRichText(const QString& key);
@@ -54,6 +54,7 @@ private:
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
 
+    bool load(const QString& filename); ///< The caller must lock loadingMutex and should run it in a thread
     void cacheSmiley(const QString& name);
     QIcon getCachedSmiley(const QString& key);
 
@@ -61,6 +62,7 @@ private:
     QHash<QString, QIcon> iconCache; // representation of a smiley ie. "happy.png" -> data
     QList<QStringList> emoticons; // {{ ":)", ":-)" }, {":(", ...}, ... }
     QString path; // directory containing the cfg and image files
+    mutable QMutex loadingMutex;
 };
 
 #endif // SMILEYPACK_H
