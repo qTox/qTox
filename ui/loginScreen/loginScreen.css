@@ -47,6 +47,6 @@ QStackedWidget QPushButton
   background: #0c530d;
 }
 
-QLabel {
+QLabel, QCheckBox {
   color: black;
 }
