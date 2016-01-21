@@ -246,23 +246,18 @@ void Text::regenerate()
     {
         doc->setDefaultFont(defFont);
 
-        // wrap mode
-        if (elide)
-        {
-            QTextOption opt;
-            opt.setWrapMode(QTextOption::NoWrap);
-            doc->setDefaultTextOption(opt);
-        }
-
-        // width
-        if (width != 0)
-            doc->setTextWidth(width);
-
         if (!elide)
             doc->setHtml(text);
         else
             doc->setPlainText(elidedText);
 
+        // wrap mode
+        QTextOption opt;
+        opt.setWrapMode(elide ? QTextOption::NoWrap : QTextOption::WrapAtWordBoundaryOrAnywhere);
+        doc->setDefaultTextOption(opt);
+
+        // width
+        doc->setTextWidth(width);
         doc->documentLayout()->update();
 
         // update ascent
