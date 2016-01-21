@@ -23,6 +23,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QCoreApplication>
+#include <QThread>
 #include <sodium/crypto_box.h>
 #include <sodium/randombytes.h>
 #include <string>
@@ -40,6 +41,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
 
     while (!reply->isFinished())
     {
+        QThread::msleep(1);
         qApp->processEvents();
     }
 
@@ -66,6 +68,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
 
     while (!reply->isFinished())
     {
+        QThread::msleep(1);
         qApp->processEvents();
     }
 
