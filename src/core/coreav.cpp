@@ -238,7 +238,7 @@ void CoreAV::timeoutCall(uint32_t friendNum)
     emit avEnd(friendNum);
 }
 
-bool CoreAV::sendCallAudio(uint32_t callId)
+bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
 {
     if (!calls.contains(callId))
         return false;
@@ -246,58 +246,54 @@ bool CoreAV::sendCallAudio(uint32_t callId)
     ToxFriendCall& call = calls[callId];
 
     if (call.muteMic || call.inactive
-            || !(call.state & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A)
-            || !Audio::getInstance().isInputReady())
+            || !(call.state & TOXAV_FRIEND_CALL_STATE_ACCEPTING_A))
     {
         return true;
     }
 
-    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
-    if (Audio::getInstance().tryCaptureSamples(buf, AUDIO_FRAME_SAMPLE_COUNT))
-    {
+#if 0
 #ifdef QTOX_FILTER_AUDIO
-        if (Settings::getInstance().getFilterAudio())
+    if (Settings::getInstance().getFilterAudio())
+    {
+        if (!call.filterer)
         {
-            if (!call.filterer)
-            {
-                call.filterer = new AudioFilterer();
-                call.filterer->startFilter(AUDIO_SAMPLE_RATE);
-            }
+            call.filterer = new AudioFilterer();
+            call.filterer->startFilter(AUDIO_SAMPLE_RATE);
+        }
 
 #ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
-            // compatibility with older versions of OpenAL
-            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+        // compatibility with older versions of OpenAL
+        Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 #endif
-            call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-        }
-        else if (call.filterer)
-        {
-            delete call.filterer;
-            call.filterer = nullptr;
-        }
+        call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
+    }
+    else if (call.filterer)
+    {
+        delete call.filterer;
+        call.filterer = nullptr;
+    }
+#endif
 #endif
 
-        // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
-        TOXAV_ERR_SEND_FRAME err;
-        int retries = 0;
-        do {
-            if (!toxav_audio_send_frame(toxav, callId, buf, AUDIO_FRAME_SAMPLE_COUNT,
-                                        AUDIO_CHANNELS, AUDIO_SAMPLE_RATE, &err))
+    // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
+    TOXAV_ERR_SEND_FRAME err;
+    int retries = 0;
+    do {
+        if (!toxav_audio_send_frame(toxav, callId, pcm, samples, chans, rate, &err))
+        {
+            if (err == TOXAV_ERR_SEND_FRAME_SYNC)
             {
-                if (err == TOXAV_ERR_SEND_FRAME_SYNC)
-                {
-                    retries++;
-                    QThread::usleep(500);
-                }
-                else
-                {
-                    qDebug() << "toxav_audio_send_frame error: "<<err;
-                }
+                retries++;
+                QThread::usleep(500);
             }
-        } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
-        if (err == TOXAV_ERR_SEND_FRAME_SYNC)
-            qDebug() << "toxav_audio_send_frame error: Lock busy, dropping frame";
-    }
+            else
+            {
+                qDebug() << "toxav_audio_send_frame error: "<<err;
+            }
+        }
+    } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
+    if (err == TOXAV_ERR_SEND_FRAME_SYNC)
+        qDebug() << "toxav_audio_send_frame error: Lock busy, dropping frame";
 
     return true;
 }
@@ -394,7 +390,7 @@ void CoreAV::leaveGroupCall(int groupId)
     groupCalls.remove(groupId);
 }
 
-bool CoreAV::sendGroupCallAudio(int groupId)
+bool CoreAV::sendGroupCallAudio(int groupId, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
 {
     if (!groupCalls.contains(groupId))
         return false;
@@ -404,33 +400,9 @@ bool CoreAV::sendGroupCallAudio(int groupId)
     if (call.inactive || call.muteMic || !Audio::getInstance().isInputReady())
         return true;
 
-    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
-    if (Audio::getInstance().tryCaptureSamples(buf, AUDIO_FRAME_SAMPLE_COUNT))
-    {
-#ifdef QTOX_FILTER_AUDIO
-        if (Settings::getInstance().getFilterAudio())
-        {
-            if (!call.filterer)
-            {
-                call.filterer = new AudioFilterer();
-                call.filterer->startFilter(AUDIO_SAMPLE_RATE);
-            }
 
-#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
-            Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT);
-#endif
-        }
-        else if (call.filterer)
-        {
-            delete call.filterer;
-            call.filterer = nullptr;
-        }
-#endif
-
-        if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, buf, AUDIO_FRAME_SAMPLE_COUNT,
-                                    AUDIO_CHANNELS, AUDIO_SAMPLE_RATE) != 0)
-            qDebug() << "toxav_group_send_audio error";
-    }
+    if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, pcm, samples, chans, rate) != 0)
+        qDebug() << "toxav_group_send_audio error";
 
     return true;
 }

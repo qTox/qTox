@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <QtGlobal>
+#include <QMetaObject>
 
 #include "src/core/indexedlist.h"
 
@@ -28,18 +29,14 @@ public:
      const ToxCall& operator=(ToxCall&& other) noexcept;
 
 protected:
-     QTimer* sendAudioTimer;
+     QMetaObject::Connection audioInConn;
 
 public:
-    uint32_t callId; ///< Could be a friendNum or groupNum, must uniquely identify the call
+    uint32_t callId; ///< Could be a friendNum or groupNum, must uniquely identify the call. Do not modify!
+    quint32 alSource;
     bool inactive; ///< True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
     bool muteMic;
     bool muteVol;
-    quint32 alSource;
-
-#ifdef QTOX_FILTER_AUDIO
-    AudioFilterer* filterer;
-#endif
 };
 
 struct ToxFriendCall : public ToxCall
