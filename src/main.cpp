@@ -32,6 +32,7 @@
 #include <QCommandLineParser>
 #include <QDateTime>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QFontDatabase>
 #include <QMutexLocker>
@@ -127,8 +128,27 @@ int main(int argc, char *argv[])
     sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE
+    QString logFileDir = Settings::getInstance().getSettingsDirPath();
     logFileStream.reset(new QTextStream);
-    logFileFile.reset(new QFile(Settings::getInstance().getSettingsDirPath()+"qtox.log"));
+    logFileFile.reset(new QFile(logFileDir + "qtox.log"));
+
+    // Trim log file if over 1MB
+    if (logFileFile->size() > 1000000) {
+        qDebug() << "Log file over 1MB, rotating...";
+		
+        QDir dir (logFileDir);
+		
+        // Check if log.1 already exists, and if so, delete it
+        if (dir.exists(logFileDir + "qtox.log.1")) {
+            dir.remove("qtox.log.1");
+        }
+
+        dir.rename("qtox.log", "qtox.log.1");
+
+        // Return to original log file path
+        logFileFile->setFileName(logFileDir + "qtox.log");
+    }
+
     if (logFileFile->open(QIODevice::Append))
     {
         logFileStream->setDevice(logFileFile.get());
@@ -247,6 +267,6 @@ int main(int argc, char *argv[])
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
     Settings::destroyInstance();
-    qDebug() << "Clean exit with status"<<errorcode;
+    qDebug() << "Clean exit with status" << errorcode;
     return errorcode;
 }
