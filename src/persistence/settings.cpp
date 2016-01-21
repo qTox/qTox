@@ -97,6 +97,7 @@ void Settings::loadGlobal()
     if (QFile(globalSettingsFile).exists())
     {
         QSettings ps(globalSettingsFile, QSettings::IniFormat);
+        ps.setIniCodec("UTF-8");
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
@@ -119,6 +120,7 @@ void Settings::loadGlobal()
     qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
+    s.setIniCodec("UTF-8");
     s.beginGroup("Login");
         autoLogin = s.value("autoLogin", false).toBool();
     s.endGroup();
@@ -246,6 +248,7 @@ void Settings::loadGlobal()
     if (dhtServerList.isEmpty())
     {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
+        rcs.setIniCodec("UTF-8");
         rcs.beginGroup("DHT Server");
             int serverListSize = rcs.beginReadArray("dhtServerList");
             for (int i = 0; i < serverListSize; i ++)
@@ -350,6 +353,7 @@ void Settings::saveGlobal()
     qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
+    s.setIniCodec("UTF-8");
 
     s.clear();
 
@@ -1515,6 +1519,7 @@ void Settings::createPersonal(QString basename)
     qDebug() << "Creating new profile settings in " << path;
 
     QSettings ps(path, QSettings::IniFormat);
+    ps.setIniCodec("UTF-8");
     ps.beginGroup("Friends");
         ps.beginWriteArray("Friend", 0);
         ps.endArray();
