@@ -81,23 +81,12 @@ void AndroidGUI::onDisconnected()
     emit statusSet(Status::Offline);
 }
 
-void AndroidGUI::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
-{
-    setUsername(oldUsername);               // restore old username until Core tells us to set it
-    Nexus::getCore()->setUsername(newUsername);
-}
-
 void AndroidGUI::setUsername(const QString& username)
 {
     QString sanename = username;
     sanename.remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
              nameMention = QRegExp("\\b" + QRegExp::escape(username) + "\\b", Qt::CaseInsensitive);
     sanitizedNameMention = QRegExp("\\b" + QRegExp::escape(sanename) + "\\b", Qt::CaseInsensitive);
-}
-
-void AndroidGUI::onStatusMessageChanged(const QString& newStatusMessage, const QString& oldStatusMessage)
-{
-    Nexus::getCore()->setStatusMessage(newStatusMessage);
 }
 
 void AndroidGUI::setStatusMessage(const QString &statusMessage)

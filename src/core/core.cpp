@@ -740,6 +740,9 @@ QString Core::getUsername() const
 
 void Core::setUsername(const QString& username)
 {
+    if (username == getUsername())
+        return;
+
     CString cUsername(username);
 
     if (tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr) == false)
@@ -813,6 +816,9 @@ Status Core::getStatus() const
 
 void Core::setStatusMessage(const QString& message)
 {
+    if (message == getStatusMessage())
+        return;
+
     CString cMessage(message);
 
     if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false)

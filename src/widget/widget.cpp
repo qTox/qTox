@@ -828,12 +828,6 @@ void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
     activeChatroomWidget = chatroomWidget;
 }
 
-void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
-{
-    setUsername(oldUsername);               // restore old username until Core tells us to set it
-    Nexus::getCore()->setUsername(newUsername);
-}
-
 void Widget::setUsername(const QString& username)
 {
     if (username.isEmpty())
