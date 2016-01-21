@@ -93,11 +93,12 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 int main(int argc, char *argv[])
 {
-    qInstallMessageHandler(logMessageHandler); // Enable log as early as possible
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+
+    qInstallMessageHandler(logMessageHandler); // Enable log as early as possible (but not earlier!)
 
 #if defined(Q_OS_OSX)
     //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
