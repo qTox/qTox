@@ -86,7 +86,8 @@ bool AutoUpdater::isUpdateAvailable()
     if (isDownloadingUpdate)
         return false;
 
-    if (!QFile::exists(updaterBin))
+    QString updaterPath = updaterBin.startsWith('/') ? updaterBin : qApp->applicationDirPath()+'/'+updaterBin;
+    if (!QFile::exists(updaterPath))
         return false;
 
     QByteArray updateFlist = getUpdateFlist();
