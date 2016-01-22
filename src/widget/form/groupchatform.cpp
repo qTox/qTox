@@ -35,6 +35,7 @@
 #include <QPushButton>
 #include <QMimeData>
 #include <QDragEnterEvent>
+#include <QtAlgorithms>
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
@@ -181,7 +182,7 @@ void GroupChatForm::onUserListChanged()
     peerLabels.clear();
 
     // the list needs peers in peernumber order, nameLayout needs alphabetical
-    QMap<QString, QLabel*> orderizer;
+    QList<QLabel*> nickLabelList;
 
     // first traverse in peer number order, storing the QLabels as necessary
     QStringList names = group->getPeerList();
@@ -193,7 +194,7 @@ void GroupChatForm::onUserListChanged()
         if (!tooltip.isEmpty())
             peerLabels[i]->setToolTip(tooltip);
         peerLabels[i]->setTextFormat(Qt::PlainText);
-        orderizer[names[i]] = peerLabels[i];
+        nickLabelList.append(peerLabels[i]);
         if (group->isSelfPeerNumber(i))
             peerLabels[i]->setStyleSheet("QLabel {color : green;}");
 
@@ -205,10 +206,10 @@ void GroupChatForm::onUserListChanged()
         static_cast<GroupNetCamView*>(netcam)->clearPeers();
 
     // now alphabetize and add to layout
-    names.sort(Qt::CaseInsensitive);
+    qSort(nickLabelList.begin(), nickLabelList.end(), [](QLabel *a, QLabel *b){return a->text().toLower() < b->text().toLower();});
     for (unsigned i=0; i<nNames; ++i)
     {
-        QLabel* label = orderizer[names[i]];
+        QLabel *label = nickLabelList.at(i);
         if (i != nNames - 1)
             label->setText(label->text() + ", ");
 
