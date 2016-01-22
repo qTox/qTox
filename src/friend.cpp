@@ -27,6 +27,8 @@
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
+#include "src/grouplist.h"
+#include "src/group.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)},
@@ -88,6 +90,11 @@ void Friend::setAlias(QString name)
             GUI::setWindowTitle(dispName);
 
     emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
+
+    for (Group *g : GroupList::getAllGroups())
+    {
+        g->regeneratePeerList();
+    }
 }
 
 void Friend::setStatusMessage(QString message)
