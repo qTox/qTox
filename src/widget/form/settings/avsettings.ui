@@ -41,27 +41,24 @@
           <string>Audio Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="2" column="1">
-           <widget class="QLabel" name="playbackMin">
+          <item row="0" column="0">
+           <widget class="QLabel" name="outDevLabel">
             <property name="text">
-             <string>0</string>
+             <string>Playback device</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="filterAudio">
-            <property name="toolTip">
-             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
-            </property>
-            <property name="text">
-             <string>Filter audio</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
+          <item row="0" column="1" colspan="2">
            <widget class="QComboBox" name="outDevCombobox"/>
           </item>
-          <item row="2" column="2">
+          <item row="1" column="0">
+           <widget class="QLabel" name="playbackLabel">
+            <property name="text">
+             <string>Volume</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
@@ -74,68 +71,57 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="microphoneLabel">
+          <item row="1" column="2">
+           <widget class="QToolButton" name="btnPlayTestSound">
             <property name="text">
-             <string>Microphone</string>
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../res.qrc">
+              <normaloff>:/ui/volButton/volButton.png</normaloff>:/ui/volButton/volButton.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="5" column="3">
-           <widget class="QLabel" name="microphoneMax">
-            <property name="text">
-             <string>100</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="playbackMax">
-            <property name="text">
-             <string>100</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="inDevLabel">
             <property name="text">
              <string>Capture device</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="microphoneMin">
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="microphoneLabel">
             <property name="text">
-             <string>0</string>
+             <string>Gain</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
-          <item row="5" column="2">
+          <item row="3" column="1" colspan="2">
            <widget class="QSlider" name="microphoneSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your microphone.</string>
             </property>
             <property name="maximum">
-             <number>400</number>
+             <number>100</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="playbackLabel">
-            <property name="text">
-             <string>Playback</string>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="filterAudio">
+            <property name="toolTip">
+             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="outDevLabel">
             <property name="text">
-             <string>Playback device</string>
+             <string>Filter audio</string>
             </property>
            </widget>
           </item>
@@ -234,6 +220,8 @@ which may lead to problems with video calls.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>
