@@ -175,6 +175,9 @@ public:
     int getThemeColor() const;
     void setThemeColor(const int& value);
 
+    int getMarkdownPreference() const;
+    void setMarkdownPreference(int newValue);
+
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
 
@@ -367,6 +370,7 @@ private:
     // ChatView
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
+    int markdownPreference;
     QString timestampFormat;
     QString dateFormat;
     bool statusChangeNotificationEnabled;

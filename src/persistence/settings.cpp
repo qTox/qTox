@@ -177,6 +177,7 @@ void Settings::loadGlobal()
         separateWindow = s.value("separateWindow", false).toBool();
         dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
+        markdownPreference = s.value("markdownPreference", 1).toInt();
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -242,7 +243,7 @@ void Settings::loadGlobal()
         camVideoFPS = s.value("camVideoFPS", 0).toUInt();
     s.endGroup();
 
-    // Read the embedded DHT bootsrap nodes list if needed
+    // Read the embedded DHT bootstrap nodes list if needed
     if (dhtServerList.isEmpty())
     {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
@@ -395,6 +396,7 @@ void Settings::saveGlobal()
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
+        s.setValue("markdownPreference", markdownPreference);
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -1026,6 +1028,23 @@ void Settings::setDateFormat(const QString &format)
 {
     QMutexLocker locker{&bigLock};
     dateFormat = format;
+}
+
+int Settings::getMarkdownPreference() const
+{
+    QMutexLocker locker{&bigLock};
+    return markdownPreference;
+}
+
+void Settings::setMarkdownPreference(int newValue)
+{
+    QMutexLocker locker{&bigLock};
+    if (newValue < 0)
+        newValue = 1;
+    else if (newValue > 2)
+        newValue = 2;
+
+    markdownPreference = newValue;
 }
 
 QByteArray Settings::getWindowGeometry() const
