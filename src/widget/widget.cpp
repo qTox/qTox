@@ -1480,6 +1480,9 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
     {
         QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
+        if (name.isEmpty())
+            name = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+
         g->updatePeer(peernumber, name);
     }
 }
