@@ -93,6 +93,8 @@ void Group::regeneratePeerList()
 
         QString toxid = id.publicKey;
         toxids[toxid] = peers[i];
+        if (toxids[toxid].isEmpty())
+            toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         Friend *f = FriendList::findFriend(id);
         if (f != nullptr && f->hasAlias())
