@@ -50,3 +50,7 @@ QStackedWidget QPushButton
 QLabel, QCheckBox, QProgressBar {
   color: black;
 }
+
+QCheckBox::disabled {
+  color: gray;
+}
