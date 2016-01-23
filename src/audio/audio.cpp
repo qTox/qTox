@@ -55,6 +55,10 @@ Audio::Audio()
     , alMainBuffer(0)
     , outputInitialized(false)
 {
+    // initialize OpenAL error stack
+    alGetError();
+    alcGetError(nullptr);
+
     audioThread->setObjectName("qTox Audio");
     QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 
