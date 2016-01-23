@@ -25,18 +25,31 @@
 #include <cmath>
 
 #include <QObject>
-#include <QWaitCondition>
+#include <QMutex>
+#include <QTimer>
 
-struct Tox;
-class AudioFilterer;
-class AudioMeter;
-class AudioMeterListener;
-class AudioPrivate;
+#if defined(__APPLE__) && defined(__MACH__)
+ #include <OpenAL/al.h>
+ #include <OpenAL/alc.h>
+#else
+ #include <AL/al.h>
+ #include <AL/alc.h>
+#endif
+
+
+#ifndef ALC_ALL_DEVICES_SPECIFIER
+// compatibility with older versions of OpenAL
+#include <AL/alext.h>
+#endif
+
+#ifdef QTOX_FILTER_AUDIO
+#include "audiofilterer.h"
+#endif
 
 // Public default audio settings
 static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
 static constexpr uint32_t AUDIO_FRAME_DURATION = 20; ///< In milliseconds
-static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
 static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, but that's a sane default
 
 class Audio : public QObject
@@ -44,19 +57,13 @@ class Audio : public QObject
     Q_OBJECT
 
 public:
-    typedef quint32 SID;
-
-public:
     static Audio& getInstance();
 
-public:
-    AudioMeterListener* createAudioMeterListener() const;
+    ALfloat outputVolume();
+    void setOutputVolume(ALfloat volume);
 
-    qreal outputVolume();
-    void setOutputVolume(qreal volume);
-
-    qreal inputVolume();
-    void setInputVolume(qreal volume);
+    ALfloat inputVolume();
+    void setInputVolume(ALfloat volume);
 
     void reinitInput(const QString& inDevDesc);
     bool reinitOutput(const QString& outDevDesc);
@@ -66,64 +73,68 @@ public:
 
     static const char* outDeviceNames();
     static const char* inDeviceNames();
-    void subscribeOutput(SID& sid);
-    void unsubscribeOutput(SID& sid);
+    void subscribeOutput(ALuint& sid);
+    void unsubscribeOutput(ALuint& sid);
+    void subscribeInput();
+    void unsubscribeInput();
 
     void startLoop();
     void stopLoop();
     void playMono16Sound(const QByteArray& data);
     void playMono16Sound(const QString& path);
-    bool tryCaptureSamples(int16_t *buf, int samples);
 
-    void playAudioBuffer(quint32 alSource, const int16_t *data, int samples,
+    void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                          unsigned channels, int sampleRate);
 
     static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
                                      unsigned samples, uint8_t channels, unsigned sample_rate, void*);
 
-#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
-    void getEchoesToFilter(AudioFilterer* filter, int samples);
-#endif
-
-public slots:
-    void subscribeInput();
-    void unsubscribeInput();
-    void playGroupAudio(int group, int peer, const int16_t* data,
-                        unsigned samples, uint8_t channels, unsigned sample_rate);
-
 signals:
     void groupAudioPlayed(int group, int peer, unsigned short volume);
+    /// When there are input subscribers, we regularly emit captured audio frames with this signal
+    /// Always connect with a blocking queued connection or a lambda, or the behavior is undefined
+    void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
 
 private:
     Audio();
     ~Audio();
 
-private:
-    AudioPrivate* d;
-};
+    static void checkAlError() noexcept;
+    static void checkAlcError(ALCdevice *device) noexcept;
 
-class AudioMeterListener : public QObject
-{
-    Q_OBJECT
-public:
-    explicit AudioMeterListener(AudioMeter* measureThread);
-
-    void start();
-    void stop();
-
-    void processed();
-
-signals:
-    void gainChanged(qreal newMaxGain);
-
-private slots:
-    void doListen();
+    bool autoInitInput();
+    bool autoInitOutput();
+    bool initInput(QString inDevDescr);
+    bool initOutput(QString outDevDescr);
+    void cleanupInput();
+    void cleanupOutput();
+    /// Called after a mono16 sound stopped playing
+    void playMono16SoundCleanup();
+    /// Called on the captureTimer events to capture audio
+    void doCapture();
+#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
+    void getEchoesToFilter(AudioFilterer* filter, int samples);
+#endif
 
 private:
-    bool            mActive;
-    AudioMeter*     mAudioMeter;
-    qreal           mMaxGain;
-    QWaitCondition  mGainProcessed;
+    QThread*            audioThread;
+    QMutex              audioLock;
+
+    ALCdevice*          alInDev;
+    ALfloat             inGain;
+    quint32             inSubscriptions;
+    QTimer              captureTimer, playMono16Timer;
+
+    ALCdevice*          alOutDev;
+    ALCcontext*         alOutContext;
+    ALuint              alMainSource;
+    ALuint              alMainBuffer;
+    bool                outputInitialized;
+
+    QList<ALuint>       outSources;
+#ifdef QTOX_FILTER_AUDIO
+    AudioFilterer filterer;
+#endif
 };
 
 #endif // AUDIO_H

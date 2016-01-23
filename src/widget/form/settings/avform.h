@@ -57,12 +57,16 @@ private slots:
     void onInDevChanged(QString deviceDescriptor);
     void onOutDevChanged(QString deviceDescriptor);
     void onFilterAudioToggled(bool filterAudio);
+    void onPlaybackSliderMoved(int value);
     void onPlaybackValueChanged(int value);
+    void onMicrophoneSliderMoved(int value);
     void onMicrophoneValueChanged(int value);
 
     // camera
     void onVideoDevChanged(int index);
     void onVideoModesIndexChanged(int index);
+
+    void on_btnPlayTestSound_clicked(bool checked);
 
 protected:
     void updateVideoModes(int curIndex);
@@ -76,6 +80,7 @@ private:
 private:
     Ui::AVSettings *bodyUI;
     bool subscribedToAudioIn;
+    bool mPlayTestSound;
     VideoSurface *camVideoSurface;
     CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;

@@ -44,6 +44,9 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+    bodyUI->btnPlayTestSound->setToolTip(
+                tr("Play a test sound while changing the output volume."));
+
 #ifdef QTOX_FILTER_AUDIO
     bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
 #else
@@ -64,13 +67,19 @@ AVForm::AVForm() :
         getAudioOutDevices();
         getVideoDevices();
     });
-    connect(bodyUI->playbackSlider, &QSlider::valueChanged, this, &AVForm::onPlaybackValueChanged);
-    connect(bodyUI->microphoneSlider, &QSlider::valueChanged, this, &AVForm::onMicrophoneValueChanged);
-    bodyUI->playbackSlider->setValue(Settings::getInstance().getOutVolume());
-    bodyUI->microphoneSlider->setValue(Settings::getInstance().getInVolume());
 
+    bodyUI->playbackSlider->setTracking(false);
     bodyUI->playbackSlider->installEventFilter(this);
+    connect(bodyUI->playbackSlider, &QSlider::sliderMoved,
+            this, &AVForm::onPlaybackSliderMoved);
+    connect(bodyUI->playbackSlider, &QSlider::valueChanged,
+            this, &AVForm::onPlaybackValueChanged);
+    bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
+    connect(bodyUI->microphoneSlider, &QSlider::sliderMoved,
+            this, &AVForm::onMicrophoneSliderMoved);
+    connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
+            this, &AVForm::onMicrophoneValueChanged);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -282,22 +291,15 @@ void AVForm::getAudioInDevices()
     const char* pDeviceList = Audio::inDeviceNames();
     if (pDeviceList)
     {
-        //prevent currentIndexChanged to be fired while adding items
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-#ifdef Q_OS_WIN
             QString inDev = QString::fromUtf8(pDeviceList, len);
-#else
-            QString inDev = QString::fromLocal8Bit(pDeviceList, len);
-#endif
             bodyUI->inDevCombobox->addItem(inDev);
             if (settingsInDev == inDev)
                 inDevIndex = bodyUI->inDevCombobox->count()-1;
             pDeviceList += len+1;
         }
-        //addItem changes currentIndex -> reset
-        bodyUI->inDevCombobox->setCurrentIndex(-1);
     }
     bodyUI->inDevCombobox->blockSignals(false);
     bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
@@ -313,15 +315,10 @@ void AVForm::getAudioOutDevices()
     const char* pDeviceList = Audio::outDeviceNames();
     if (pDeviceList)
     {
-        //prevent currentIndexChanged to be fired while adding items
         while (*pDeviceList)
         {
             int len = strlen(pDeviceList);
-#ifdef Q_OS_WIN
             QString outDev = QString::fromUtf8(pDeviceList, len);
-#else
-            QString outDev = QString::fromLocal8Bit(pDeviceList, len);
-#endif
             bodyUI->outDevCombobox->addItem(outDev);
             if (settingsOutDev == outDev)
             {
@@ -329,8 +326,6 @@ void AVForm::getAudioOutDevices()
             }
             pDeviceList += len+1;
         }
-        //addItem changes currentIndex -> reset
-        bodyUI->outDevCombobox->setCurrentIndex(-1);
     }
     bodyUI->outDevCombobox->blockSignals(false);
     bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
@@ -342,7 +337,10 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
         deviceDescriptor = "none";
 
     Settings::getInstance().setInDev(deviceDescriptor);
-    Audio::getInstance().reinitInput(deviceDescriptor);
+    Audio& audio = Audio::getInstance();
+    audio.reinitInput(deviceDescriptor);
+    bodyUI->microphoneSlider->setEnabled(bodyUI->inDevCombobox->currentIndex() != 0);
+    bodyUI->microphoneSlider->setSliderPosition(audio.inputVolume() * 100.f);
 }
 
 void AVForm::onOutDevChanged(QString deviceDescriptor)
@@ -351,7 +349,10 @@ void AVForm::onOutDevChanged(QString deviceDescriptor)
         deviceDescriptor = "none";
 
     Settings::getInstance().setOutDev(deviceDescriptor);
-    Audio::getInstance().reinitOutput(deviceDescriptor);
+    Audio& audio = Audio::getInstance();
+    audio.reinitOutput(deviceDescriptor);
+    bodyUI->playbackSlider->setEnabled(audio.isOutputReady());
+    bodyUI->playbackSlider->setSliderPosition(audio.outputVolume() * 100.f);
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
@@ -359,18 +360,32 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
     Settings::getInstance().setFilterAudio(filterAudio);
 }
 
+void AVForm::onPlaybackSliderMoved(int value)
+{
+    Audio& audio = Audio::getInstance();
+    if (audio.isOutputReady()) {
+        const qreal percentage = value / 100.0;
+        audio.setOutputVolume(percentage);
+
+        if (mPlayTestSound)
+            audio.playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
+    }
+}
+
 void AVForm::onPlaybackValueChanged(int value)
 {
-    Audio::getInstance().setOutputVolume(value / 100.0);
-    Settings::getInstance().setOutVolume(bodyUI->playbackSlider->value());
-    bodyUI->playbackMax->setText(QString::number(value));
+    Settings::getInstance().setOutVolume(value);
+}
+
+void AVForm::onMicrophoneSliderMoved(int value)
+{
+    const qreal percentage = value / 100.0;
+    Audio::getInstance().setInputVolume(percentage);
 }
 
 void AVForm::onMicrophoneValueChanged(int value)
 {
-    Audio::getInstance().setInputVolume(value / 100.0);
-    Settings::getInstance().setInVolume(bodyUI->microphoneSlider->value());
-    bodyUI->microphoneMax->setText(QString::number(value));
+    Settings::getInstance().setInVolume(value);
 }
 
 void AVForm::createVideoSurface()
@@ -411,6 +426,9 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 void AVForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    bodyUI->playbackMax->setText(QString::number(bodyUI->playbackSlider->value()));
-    bodyUI->microphoneMax->setText(QString::number(bodyUI->microphoneSlider->value()));
+}
+
+void AVForm::on_btnPlayTestSound_clicked(bool checked)
+{
+    mPlayTestSound = checked;
 }
