@@ -55,6 +55,10 @@ Audio::Audio()
     , alMainBuffer(0)
     , outputInitialized(false)
 {
+    // initialize OpenAL error stack
+    alGetError();
+    alcGetError(nullptr);
+
     audioThread->setObjectName("qTox Audio");
     QObject::connect(audioThread, &QThread::finished, audioThread, &QThread::deleteLater);
 
@@ -293,10 +297,6 @@ bool Audio::initOutput(QString outDevDescr)
     }
 
     alGenSources(1, &alMainSource); checkAlError();
-    alSourcef(alMainSource, AL_GAIN, 1.f); checkAlError();
-    alSourcef(alMainSource, AL_PITCH, 1.f); checkAlError();
-    alSource3f(alMainSource, AL_VELOCITY, 0.f, 0.f, 0.f); checkAlError();
-    alSource3f(alMainSource, AL_POSITION, 0.f, 0.f, 0.f); checkAlError();
 
     // init master volume
     alListenerf(AL_GAIN, Settings::getInstance().getOutVolume() * 0.01f);
@@ -552,12 +552,6 @@ void Audio::subscribeOutput(ALuint& sid)
     alGenSources(1, &sid);
     assert(sid);
     outSources << sid;
-
-    // initialize source
-    alSourcef(sid, AL_GAIN, 1.f); checkAlError();
-    alSourcef(sid, AL_PITCH, 1.f); checkAlError();
-    alSource3f(sid, AL_VELOCITY, 0.f, 0.f, 0.f); checkAlError();
-    alSource3f(sid, AL_POSITION, 0.f, 0.f, 0.f); checkAlError();
 
     qDebug() << "Audio source" << sid << "created. Sources active:"
              << outSources.size();
