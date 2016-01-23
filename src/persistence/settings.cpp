@@ -359,6 +359,13 @@ void Settings::loadPersonal(Profile* profile)
         }
         ps.endArray();
     ps.endGroup();
+
+    ps.beginGroup("Toxme");
+        toxmeInfo = ps.value("info", "").toString();
+        toxmeBio  = ps.value("bio", "").toString();
+        toxmePriv = ps.value("priv", false).toBool();
+        toxmePass = ps.value("pass", "").toString();
+    ps.endGroup();
 }
 
 void Settings::saveGlobal()
@@ -553,6 +560,13 @@ void Settings::savePersonal(QString profileName, QString password)
     ps.beginGroup("Privacy");
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
+    ps.endGroup();
+
+    ps.beginGroup("Toxme");
+        ps.setValue("info", toxmeInfo);
+        ps.setValue("bio", toxmeBio);
+        ps.setValue("priv", toxmePriv);
+        ps.setValue("pass", toxmePass);
     ps.endGroup();
 
     ps.save();
@@ -836,6 +850,72 @@ void Settings::setTranslation(QString newValue)
 {
     QMutexLocker locker{&bigLock};
     translation = newValue;
+}
+
+void Settings::deleteToxme()
+{
+    setToxmeInfo("");
+    setToxmeBio("");
+    setToxmePriv("");
+    setToxmePass("");
+}
+
+void Settings::setToxme(QString name, QString server, QString bio, bool priv, QString pass)
+{
+    setToxmeInfo(name + "@" + server);
+    setToxmeBio(bio);
+    setToxmePriv(priv);
+    if (!pass.isEmpty())
+        setToxmePass(pass);
+}
+
+QString Settings::getToxmeInfo() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmeInfo;
+}
+
+void Settings::setToxmeInfo(QString info)
+{
+    QMutexLocker locker{&bigLock};
+    if (info.split("@").size() == 2)
+        toxmeInfo = info;
+}
+
+QString Settings::getToxmeBio() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmeBio;
+}
+
+void Settings::setToxmeBio(QString bio)
+{
+    QMutexLocker locker{&bigLock};
+    toxmeBio = bio;
+}
+
+bool Settings::getToxmePriv() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmePriv;
+}
+
+void Settings::setToxmePriv(bool priv)
+{
+    QMutexLocker locker{&bigLock};
+    toxmePriv = priv;
+}
+
+QString Settings::getToxmePass() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmePass;
+}
+
+void Settings::setToxmePass(QString pass)
+{
+    QMutexLocker locker{&bigLock};
+    toxmePass = pass;
 }
 
 bool Settings::getForceTCP() const

@@ -108,6 +108,21 @@ public:
     QString getTranslation() const;
     void setTranslation(QString newValue);
 
+    // Toxme
+    void deleteToxme();
+    void setToxme(QString name, QString server, QString bio, bool priv, QString pass = "");
+    QString getToxmeInfo() const;
+    void setToxmeInfo(QString info);
+
+    QString getToxmeBio() const;
+    void setToxmeBio(QString bio);
+    
+    bool getToxmePriv() const;
+    void setToxmePriv(bool priv);
+    
+    QString getToxmePass() const;
+    void setToxmePass(QString pass);
+    
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
@@ -358,6 +373,12 @@ private:
 
     QString currentProfile;
     uint32_t currentProfileId;
+
+    // Toxme Info
+    QString toxmeInfo; // name@server
+    QString toxmeBio;
+    bool toxmePriv;
+    QString toxmePass;
 
     bool enableLogging;
 

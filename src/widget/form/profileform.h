@@ -83,6 +83,7 @@ private slots:
     void onRegisterButtonClicked();
 
 private:
+    void showExistenToxme();
     void retranslateUi();
     void prFileLabelUpdate();
 
@@ -98,6 +99,7 @@ private:
     bool hasCheck = false;
     QRWidget *qr;
     ClickableTE* toxId;
+    void showRegisterToxme();
 };
 
 #endif

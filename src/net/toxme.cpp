@@ -39,7 +39,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
     netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkReply* reply = netman.post(request,json.toUtf8());
+    QNetworkReply* reply = netman.post(request, json.toUtf8());
 
     while (!reply->isFinished())
     {
@@ -239,7 +239,7 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
     qDebug() << response;
 
     code = extractError(response);
-    if ((code != Registered && code != Updated) || error != QNetworkReply::NoError)
+    if ((code != Ok && code != Updated) || error != QNetworkReply::NoError)
         return QString();
 
     return getPass(response, code);
@@ -276,7 +276,7 @@ QString Toxme::getPass(QString json, ExecCode &code) {
     return json;
 }
 
-int Toxme::deleteAddress(QString server, ToxId id)
+Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
 {
     const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};
@@ -285,6 +285,7 @@ int Toxme::deleteAddress(QString server, ToxId id)
     if (!server.contains("://"))
         server = "https://" + server;
 
+    qDebug() << payload;
     QString pubkeyUrl = server + "/pk";
     QString apiUrl = server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
