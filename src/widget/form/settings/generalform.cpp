@@ -82,9 +82,9 @@ static QStringList langs = {"Български",
                             "Türkçe",
                             "Українська",
                             "简体中文"};
-static QStringList mdPrefs = {"None",
-                              "Show Characters",
-                              "No Characters"};
+static QStringList mdPrefs = {"Plaintext",
+                              "Show Formatting Characters",
+                              "Don't Show Formatting Characters"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
