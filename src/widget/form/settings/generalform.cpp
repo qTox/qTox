@@ -59,6 +59,7 @@ static QStringList locales = {"bg",
                               "sv",
                               "tr",
                               "uk",
+                              "ar",
                               "zh"};
 static QStringList langs = {"Български",
                             "Čeština",
@@ -81,6 +82,7 @@ static QStringList langs = {"Български",
                             "Svenska",
                             "Türkçe",
                             "Українська",
+                            "Arabic",
                             "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
