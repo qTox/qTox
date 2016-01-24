@@ -46,3 +46,11 @@ QStackedWidget QPushButton
 #createAccountButton:hover {
   background: #0c530d;
 }
+
+QLabel, QCheckBox, QProgressBar {
+  color: black;
+}
+
+QCheckBox::disabled {
+  color: gray;
+}
