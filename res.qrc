@@ -62,6 +62,7 @@
         <file>translations/sv.qm</file>
         <file>translations/tr.qm</file>
         <file>translations/uk.qm</file>
+        <file>translations/ar.qm</file>
         <file>translations/zh.qm</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>
         <file>ui/callButton/callButton.css</file>
