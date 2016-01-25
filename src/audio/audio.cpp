@@ -84,7 +84,9 @@ Audio::~Audio()
     audioThread->wait();
     cleanupInput();
     cleanupOutput();
+#ifdef QTOX_FILTER_AUDIO
     filterer.closeFilter();
+#endif
 }
 
 void Audio::checkAlError() noexcept
@@ -487,6 +489,7 @@ void Audio::doCapture()
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
+#ifdef QTOX_FILTER_AUDIO
     if (Settings::getInstance().getFilterAudio())
     {
 #ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
@@ -495,6 +498,7 @@ void Audio::doCapture()
 #endif
         filterer.filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
     }
+#endif
 
     for (size_t i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i)
         buf[i] *= inGain;
