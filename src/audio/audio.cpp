@@ -87,14 +87,14 @@ Audio::~Audio()
     filterer.closeFilter();
 }
 
-void Audio::checkAlError()
+void Audio::checkAlError() noexcept
 {
     const ALenum al_err = alGetError();
     if (al_err != AL_NO_ERROR)
         qWarning("OpenAL error: %d", al_err);
 }
 
-void Audio::checkAlcError(ALCdevice *device)
+void Audio::checkAlcError(ALCdevice *device) noexcept
 {
     const ALCenum alc_err = alcGetError(device);
     if (alc_err)
