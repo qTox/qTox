@@ -187,6 +187,8 @@ void AVForm::updateVideoModes(int curIndex)
             str += tr("Default resolution");
         if (mode.FPS)
             str += tr(" at %1 FPS").arg(mode.FPS);
+        if (mode.pixel_format)
+            str += tr(" using %1").arg(CameraDevice::getPixelFormatString(mode.pixel_format));
         bodyUI->videoModescomboBox->addItem(str);
     }
     if (videoModes.isEmpty())

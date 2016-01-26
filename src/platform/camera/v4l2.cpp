@@ -113,6 +113,7 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 
         while(!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse)) {
             VideoMode mode;
+            mode.pixel_format = vfse.pixel_format;
             switch (vfse.type) {
             case V4L2_FRMSIZE_TYPE_DISCRETE:
                 mode.width = vfse.discrete.width;
@@ -169,3 +170,23 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
     }
     return devices;
 }
+
+QString v4l2::getPixelFormatString(uint32_t pixel_format)
+{
+    if (pixel_format == V4L2_PIX_FMT_H264)
+    {
+        return QString("h264");
+    }
+    if (pixel_format == V4L2_PIX_FMT_MJPEG)
+    {
+        return QString("mjpeg");
+    }
+    else if (pixel_format == V4L2_PIX_FMT_YUYV)
+    {
+        return QString("yuyv422");
+    }
+    else {
+        return QString("unknown");
+    }
+}
+

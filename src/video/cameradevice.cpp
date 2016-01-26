@@ -17,7 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -105,7 +104,7 @@ out:
 
 CameraDevice* CameraDevice::open(QString devName)
 {
-    VideoMode mode{0,0,0};
+    VideoMode mode{0,0,0,0};
     return open(devName, mode);
 }
 
@@ -164,7 +163,11 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
-        av_dict_set(&options, "pixel_format", "mjpeg", 0);
+        const char *pixel_format = v4l2::getPixelFormatString(mode.pixel_format).toStdString().c_str();
+        if (strncmp(pixel_format, "unknown", 7) != 0)
+        {
+		    av_dict_set(&options, "pixel_format", pixel_format, 0);
+        }
     }
 #endif
 #ifdef Q_OS_OSX
@@ -358,6 +361,15 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 
     (void)devName;
     return {};
+}
+
+QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
+{
+#ifdef Q_OS_LINUX
+    return v4l2::getPixelFormatString(pixel_format);
+#else
+    return QString("unknown");
+#endif
 }
 
 bool CameraDevice::getDefaultInputFormat()
