@@ -48,7 +48,7 @@ function fcho() {
 	printf "\n$msg\n" "$@"
 }
 
-function build-toxcore {
+function build-toxcore() {
 	echo "Starting Toxcore build and install"
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
@@ -75,7 +75,7 @@ function build-toxcore {
 	sudo make install
 }
 
-function install {
+function install() {
 	fcho "=============================="
 	fcho "This script will install the nessicarry applications and libraries needed to compile qTox properly."
 	fcho "Note that this is not a 100 percent automated install it just helps simplfiy the process for less experianced or lazy users."
@@ -145,7 +145,7 @@ function install {
 	fi
 }
 
-function update {
+function update() {
 	fcho "------------------------------"
 	fcho "Starting update process ..."	
 	#First update Toxcore from git
@@ -175,7 +175,7 @@ function update {
 	fi
 }
 
-function build {
+function build() {
 	fcho "------------------------------"
 	fcho "Starting build process ..."
 	rm -r $BUILD_DIR
@@ -188,7 +188,7 @@ function build {
 	make
 }
 
-function deploy {
+function deploy() {
 	fcho "------------------------------"
 	fcho "starting deployment process ..."
 	cd $BUILD_DIR
