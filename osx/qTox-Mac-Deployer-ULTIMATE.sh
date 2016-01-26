@@ -1,11 +1,25 @@
 #!/usr/bin/env bash
 
-# qTox OSX auto BASH builder script by RowenStipe
+#
+#    Copyright © 2015 by RowenStipe
+#    Copyright © 2016 by The qTox Project
+#
+#    This program is libre software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 # This uses the same process as doing it manually but with a few varients
 
-# Use:./qTox-Mac-Deployer-ULTIMATE.sh [Processes/Install]
-# Process: -u to update -b to build -d to make the aplication productionr eady or -ubd to run all at once
-# Install: use -i to start install functionality
+# Use: ./qTox-Mac-Deployer-ULTIMATE.sh -h
 
 # Your home DIR really (Most of this happens in it) {DONT USE: ~ }
 if [[ $TRAVIS = true ]]; then #travis check
