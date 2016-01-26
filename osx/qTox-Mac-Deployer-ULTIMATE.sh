@@ -100,7 +100,10 @@ function install() {
 	brew update
 	fcho "Getting home brew formulas ..."
 	sleep 3
-	brew install git ffmpeg qrencode wget libtool automake autoconf libsodium check qt5
+	if [[ $TRAVIS != true ]]; then #travis check
+		brew install wget libtool automake
+	fi
+	brew install git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
 	
 	fcho "Installing x-code Comand line tools ..."
 	xcode-select --install
