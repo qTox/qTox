@@ -48,7 +48,7 @@ function fcho() {
 	printf "\n$msg\n" "$@"
 }
 
-function build-toxcore() {
+function build_toxcore() {
 	echo "Starting Toxcore build and install"
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
@@ -133,12 +133,12 @@ function install() {
 		sudo make install
 	fi
 	if [[ $TRAVIS = true ]]; then #travis check
-		build-toxcore
+		build_toxcore
 	else
 		fcho "If all went well you should now have all the tools needed to compile qTox!"
 		read -r -p "Would you like to install toxcore now? [y/N] " response
 		if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-			build-toxcore	
+			build_toxcore	
 		else
 		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
@@ -155,7 +155,7 @@ function update() {
 	git pull
 	read -r -p "Did Toxcore update from git? [y/N] " response
 	if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-		build-toxcore	
+		build_toxcore	
 	else
 	    fcho "Moving on!"
 	fi
