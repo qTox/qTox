@@ -32,7 +32,7 @@ VER="${QT_DIR}/5.5.1_2" # Potential future proffing for version testing
 QMAKE="${VER}/bin/qmake" # Don't change
 MACDEPLOYQT="${VER}/bin/macdeployqt" # Don't change
 
-if [ $TRAVIS = true ]]; then #travis check
+if [[ $TRAVIS = true ]]; then #travis check
 	QTOX_DIR="${MAIN_DIR}"
 else
 	QTOX_DIR="${MAIN_DIR}/qTox" # Change to Git location
@@ -41,7 +41,7 @@ fi
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
 FA_DIR="${MAIN_DIR}/filter_audio"
-FA_INSTALL_PREFIX="${QTOX_DIR}/libs"
+LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
 BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build" # Change if needed
 
@@ -71,7 +71,7 @@ function build-toxcore() {
 	autoreconf -i 
 	
 	#Make sure the correct version of libsodium is used
-	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.8/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.8/lib/
+	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.8/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.8/lib/ --prefix="${LIB_INSTALL_PREFIX}"
 	
 	sudo make clean
 	make	
@@ -134,11 +134,11 @@ function install() {
 		git clone https://github.com/irungentoo/filter_audio.git
 		cd $FA_DIR
 	fi
-	if [ ! -e "$FA_INSTALL_PREFIX" ]; then
-		mkdir "$FA_INSTALL_PREFIX"
+	if [ ! -e "$LIB_INSTALL_PREFIX" ]; then
+		mkdir "$LIB_INSTALL_PREFIX"
 	fi
 	fcho "Please enter your password to install Filter_Audio:"
-	make install PREFIX="${FA_INSTALL_PREFIX}"
+	make install PREFIX="${LIB_INSTALL_PREFIX}"
 	# toxcore
 	if [[ $TRAVIS = true ]]; then #travis check
 		build-toxcore
