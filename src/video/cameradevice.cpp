@@ -166,7 +166,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         const char *pixel_format = v4l2::getPixelFormatString(mode.pixel_format).toStdString().c_str();
         if (strncmp(pixel_format, "unknown", 7) != 0)
         {
-		    av_dict_set(&options, "pixel_format", pixel_format, 0);
+            av_dict_set(&options, "pixel_format", pixel_format, 0);
         }
     }
 #endif
