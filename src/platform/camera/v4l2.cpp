@@ -177,7 +177,7 @@ QString v4l2::getPixelFormatString(uint32_t pixel_format)
     {
         return QString("h264");
     }
-    if (pixel_format == V4L2_PIX_FMT_MJPEG)
+    else if (pixel_format == V4L2_PIX_FMT_MJPEG)
     {
         return QString("mjpeg");
     }
