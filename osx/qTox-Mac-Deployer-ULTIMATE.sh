@@ -32,7 +32,11 @@ VER="${QT_DIR}/5.5.1_2" # Potential future proffing for version testing
 QMAKE="${VER}/bin/qmake" # Don't change
 MACDEPLOYQT="${VER}/bin/macdeployqt" # Don't change
 
-QTOX_DIR="${MAIN_DIR}/qTox" # Change to Git location
+if [ $TRAVIS = true ]]; then #travis check
+	QTOX_DIR="${MAIN_DIR}"
+else
+	QTOX_DIR="${MAIN_DIR}/qTox" # Change to Git location
+fi
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
@@ -55,7 +59,7 @@ function build-toxcore() {
 	echo "Now working in: ${PWD}"
 	
 	#Check if libsodium is correct version
-	if [ -e /usr/local/opt/libsodium/lib/libsodium.18.dylib ]; then
+	if [[ -e /usr/local/opt/libsodium/lib/libsodium.18.dylib ]]; then
 	   	fcho " Beginnning Toxcore compile "
   	else
 		echo "Error: libsodium.18.dylib not found! Unable to build!"
@@ -86,7 +90,7 @@ function install() {
 	read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
 	fi
 		
-	if [ -e /usr/local/bin/brew ]; then
+	if [[ -e /usr/local/bin/brew ]]; then
 		fcho "Homebrew already installed!"
 	else
 		fcho "Installing homebrew ..."
@@ -104,7 +108,7 @@ function install() {
 	fcho "Starting git repo checks ..."
 	
 	cd $MAIN_DIR # just in case
-	if [ -e $TOX_DIR/.git/index ]; then # Check if this exists
+	if [[ -e $TOX_DIR/.git/index ]]; then # Check if this exists
 		fcho "Toxcore git repo already inplace !"
 		cd $TOX_DIR
 		git pull
@@ -112,7 +116,7 @@ function install() {
 		fcho "Cloning Toxcore git ... "
 		git clone https://github.com/irungentoo/toxcore.git
 	fi
-	if [ -e $QTOX_DIR/.git/index ]; then # Check if this exists
+	if [[ -e $QTOX_DIR/.git/index ]]; then # Check if this exists
 		fcho "qTox git repo already inplace !"
 		cd $QTOX_DIR
 		git pull
@@ -121,7 +125,7 @@ function install() {
 		git clone https://github.com/tux3/qTox.git
 	fi
 	# filter_audio
-	if [ -e $FA_DIR/.git/index ]; then # Check if this exists
+	if [[ -e $FA_DIR/.git/index ]]; then # Check if this exists
 		fcho "Filter_Audio git repo already inplace !"
 		cd $FA_DIR
 		git pull
@@ -142,7 +146,8 @@ function install() {
 		fcho "If all went well you should now have all the tools needed to compile qTox!"
 		read -r -p "Would you like to install toxcore now? [y/N] " response
 		if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-			build-toxcore	
+			build_toxcore
+			
 		else
 		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
@@ -209,34 +214,34 @@ function deploy() {
 }
 
 # The commands
-if [ "$1" == "-i" ]; then
+if [[ "$1" == "-i" ]]; then
 	install
-	exit 0
+	exit
 fi
 	
-if [ "$1" == "-u" ]; then
+if [[ "$1" == "-u" ]]; then
 	update
-	exit 0
+	exit
 fi
 
-if [ "$1" == "-b" ]; then
+if [[ "$1" == "-b" ]]; then
 	build
-	exit 0
+	exit
 fi
 
-if [ "$1" == "-d" ]; then
+if [[ "$1" == "-d" ]]; then
 	deploy
-	exit 0
+	exit
 fi
 
-if [ "$1" == "-ubd" ]; then
+if [[ "$1" == "-ubd" ]]; then
 	update
 	build
 	deploy
-	exit 0
+	exit
 fi
 
-if [ "$1" == "-h" ]; then
+if [[ "$1" == "-h" ]]; then
 	echo "This script was created to help ease the process of compiling and creating a distribuable qTox package for OSX systems."
 	echo "The avilable commands are:"
 	echo "-h -- This help text."
