@@ -37,6 +37,7 @@ QTOX_DIR="${MAIN_DIR}/qTox" # Change to Git location
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
 FA_DIR="${MAIN_DIR}/filter_audio"
+FA_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
 BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build" # Change if needed
 
@@ -119,19 +120,22 @@ function install() {
 		fcho "Cloning qTox git ... "
 		git clone https://github.com/tux3/qTox.git
 	fi
+	# filter_audio
 	if [ -e $FA_DIR/.git/index ]; then # Check if this exists
 		fcho "Filter_Audio git repo already inplace !"
 		cd $FA_DIR
 		git pull
-		fcho "Please enter your password to install Filter_Audio:"
-		sudo make install
 	else
 		fcho "Cloning Filter_Audio git ... "
 		git clone https://github.com/irungentoo/filter_audio.git
 		cd $FA_DIR
-		fcho "Please enter your password to install Filter_Audio:"
-		sudo make install
 	fi
+	if [ ! -e "$FA_INSTALL_PREFIX" ]; then
+		mkdir "$FA_INSTALL_PREFIX"
+	fi
+	fcho "Please enter your password to install Filter_Audio:"
+	make install PREFIX="${FA_INSTALL_PREFIX}"
+	# toxcore
 	if [[ $TRAVIS = true ]]; then #travis check
 		build-toxcore
 	else
@@ -143,6 +147,7 @@ function install() {
 		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
 	fi
+	$QTOX_DIR/bootstrap-osx.sh
 }
 
 function update() {
