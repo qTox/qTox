@@ -54,10 +54,10 @@ function build-toxcore() {
 	echo "Now working in: ${PWD}"
 	
 	#Check if libsodium is correct version
-	if [ -e /usr/local/opt/libsodium/lib/libsodium.17.dylib ]; then
+	if [ -e /usr/local/opt/libsodium/lib/libsodium.18.dylib ]; then
 	   	fcho " Beginnning Toxcore compile "
   	else
-		echo "Error: libsodium.17.dylib not found! Unable to build!"
+		echo "Error: libsodium.18.dylib not found! Unable to build!"
 		echo "Please make sure your Homebrew packages are up to date before retrying."
 		exit 1
 	fi
@@ -66,7 +66,7 @@ function build-toxcore() {
 	autoreconf -i 
 	
 	#Make sure the correct version of libsodium is used
-	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.6/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.6/lib/
+	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.8/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.8/lib/
 	
 	sudo make clean
 	make	
