@@ -1,0 +1,13 @@
+sudo: required
+dist: trusty
+
+language: cpp
+
+os:
+ - linux
+ - osx
+
+script:
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./.travis/build-ubuntu_14_04.sh; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b ; fi

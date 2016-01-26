@@ -51,3 +51,5 @@ Note: The screenshots may not always be up to date, but they should give a good 
 - Emoticons
 - Auto-updates on Windows and Mac, packages on Linux
 - And many more options!
+
+[![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.org/tux3/qTox)

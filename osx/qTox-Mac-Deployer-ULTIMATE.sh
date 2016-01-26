@@ -23,7 +23,7 @@
 
 # Your home DIR really (Most of this happens in it) {DONT USE: ~ }
 if [[ $TRAVIS = true ]]; then #travis check
-	MAIN_DIR="/Users/${USER}/${TRAVIS_BUILD_DIR}"
+	MAIN_DIR="${TRAVIS_BUILD_DIR}"
 else
 	MAIN_DIR="/Users/${USER}"
 fi
