@@ -43,6 +43,10 @@ TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 FA_DIR="${MAIN_DIR}/filter_audio"
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
+if [[ ! -e "${LIB_INSTALL_PREFIX}" ]]; then
+	mkdir -p "${LIB_INSTALL_PREFIX}"
+fi
+
 BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build" # Change if needed
 
 DEPLOY_DIR="${MAIN_DIR}/qTox-Mac_Deployed"
@@ -68,16 +72,16 @@ function build-toxcore() {
 	fi
 	sleep 3
 	
-	autoreconf -i 
+	autoreconf -if
 	
 	#Make sure the correct version of libsodium is used
 	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.8/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.8/lib/ --prefix="${LIB_INSTALL_PREFIX}"
 	
-	sudo make clean
-	make	
-	echo "------------------------------"
-	echo "Sudo required, please enter your password:"
-	sudo make install
+	make clean &> /dev/null
+	fcho "Compiling toxcore."
+	make > /dev/null || exit 1
+	fcho "Installing toxcore."
+	make install > /dev/null || exit 1
 }
 
 function install() {
@@ -137,10 +141,7 @@ function install() {
 		git clone https://github.com/irungentoo/filter_audio.git
 		cd $FA_DIR
 	fi
-	if [ ! -e "$LIB_INSTALL_PREFIX" ]; then
-		mkdir "$LIB_INSTALL_PREFIX"
-	fi
-	fcho "Please enter your password to install Filter_Audio:"
+	fcho "Installing filter_audio."
 	make install PREFIX="${LIB_INSTALL_PREFIX}"
 	# toxcore
 	if [[ $TRAVIS = true ]]; then #travis check
@@ -155,7 +156,9 @@ function install() {
 		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
 	fi
-	$QTOX_DIR/bootstrap-osx.sh
+	# put required by qTox libs/headers in `libs/`
+	cd "${QTOX_DIR}"
+	./bootstrap-osx.sh
 }
 
 function update() {
@@ -181,8 +184,7 @@ function update() {
 	read -r -p "Did qTox update from git? [y/N] " response
 	if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 		fcho "Starting OSX bootstrap ..."
-		fcho "Sudo required:"
-		sudo bash ./bootstrap-osx.sh
+		./bootstrap-osx.sh
 	else
 	    fcho "Moving on!"
 	fi
