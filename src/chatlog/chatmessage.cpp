@@ -187,7 +187,7 @@ QString ChatMessage::detectMarkdown(const QString &str)
 
     // Create regex for certain markdown syntax
     QRegExp exp("(\\*\\*)([^\\*\\*]{2,})(\\*\\*)"   // Bold    **text**
-                "|(\\*)([^\\*]{2,})(\\*)"           // Italics *text*
+                "|(\\*)([^\\*]{2,})(\\*)"           // Bold *text*
                 "|(\\_)([^\\_]{2,})(\\_)"           // Italics _text_
                 "|(\\_\\_)([^\\_\\_]{2,})(\\_\\_)"  // Italics __text__
                 "|(\\-)([^\\-]{2,})(\\-)"           // Underline  -text-
@@ -230,8 +230,8 @@ QString ChatMessage::detectMarkdown(const QString &str)
             // Match captured string to corresponding md format
             if (exp.cap(1) == "**") // Bold **text**
                 htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(4) == "*" && snippet.length() > 2) // Italics *text*
-                htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(4) == "*" && snippet.length() > 2) // Bold *text*
+                htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul/2,snippet.length()-mul));
             else if (exp.cap(7) == "_" && snippet.length() > 2) // Italics _text_
                 htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
             else if (exp.cap(10) == "__"&& snippet.length() > 4) // Italics __text__

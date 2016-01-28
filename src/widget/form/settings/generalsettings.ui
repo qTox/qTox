@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1280</width>
-        <height>2394</height>
+        <width>1277</width>
+        <height>1272</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -480,13 +480,6 @@ will be sent to them when they appear online to you.</string>
              </layout>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox">
-            <property name="title">
-             <string/>
-            </property>
-           </widget>
           </item>
          </layout>
         </widget>
