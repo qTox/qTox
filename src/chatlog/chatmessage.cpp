@@ -222,11 +222,6 @@ QString ChatMessage::detectMarkdown(const QString &str)
             if (Settings::getInstance().getMarkdownPreference() == 2)
                 mul = 2;
 
-            if (snippet.length() > 0)
-            {
-                qDebug() << "Offset: " << offset << " Grabbed snippet: " << snippet << " exp.cap(7): " << exp.cap(7);
-            }
-
             // Match captured string to corresponding md format
             if (exp.cap(1) == "**") // Bold **text**
                 htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
