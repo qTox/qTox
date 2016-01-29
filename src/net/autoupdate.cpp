@@ -107,8 +107,8 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
         return versionInfo;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
-    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
     manager->setProxy(Settings::getInstance().getProxy());
+    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
     while (!reply->isFinished())
     {
         if (abortFlag)
@@ -222,8 +222,8 @@ QByteArray AutoUpdater::getUpdateFlist()
     QByteArray flist;
 
     QNetworkAccessManager *manager = new QNetworkAccessManager;
-    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(flistURI)));
     manager->setProxy(Settings::getInstance().getProxy());
+    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(flistURI)));
     while (!reply->isFinished())
     {
         if (abortFlag)
