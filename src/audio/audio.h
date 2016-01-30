@@ -129,7 +129,6 @@ private:
     ALCcontext*         alOutContext;
     ALuint              alMainSource;
     ALuint              alMainBuffer;
-    bool                outputInitialized;
 
     QList<ALuint>       outSources;
 #ifdef QTOX_FILTER_AUDIO

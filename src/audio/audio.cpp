@@ -53,7 +53,6 @@ Audio::Audio()
     , alOutContext(nullptr)
     , alMainSource(0)
     , alMainBuffer(0)
-    , outputInitialized(false)
 {
     // initialize OpenAL error stack
     alGetError();
@@ -225,7 +224,7 @@ bool Audio::initInput(QString inDevDescr)
     qDebug() << "Opening audio input" << inDevDescr;
 
     if (inDevDescr == "none")
-        return true;
+        return false;
 
     assert(!alInDev);
 
@@ -267,7 +266,6 @@ bool Audio::initOutput(QString outDevDescr)
     qDebug() << "Opening audio output" << outDevDescr;
     outSources.clear();
 
-    outputInitialized = false;
     if (outDevDescr == "none")
         return false;
 
@@ -311,7 +309,6 @@ bool Audio::initOutput(QString outDevDescr)
         core->getAv()->invalidateCallSources();
     }
 
-    outputInitialized = true;
     return true;
 }
 
@@ -373,7 +370,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
     assert(channels == 1 || channels == 2);
     QMutexLocker locker(&audioLock);
 
-    if (!(alOutDev && outputInitialized))
+    if (!alOutDev)
         return;
 
     ALuint bufid;
@@ -433,8 +430,6 @@ Close active audio output device
 */
 void Audio::cleanupOutput()
 {
-    outputInitialized = false;
-
     if (alOutDev) {
         alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
         alSourceStop(alMainSource);
@@ -521,7 +516,7 @@ Returns true if the output device is open
 bool Audio::isOutputReady()
 {
     QMutexLocker locker(&audioLock);
-    return alOutDev && outputInitialized;
+    return alOutDev;
 }
 
 const char* Audio::outDeviceNames()
