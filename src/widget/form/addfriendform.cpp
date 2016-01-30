@@ -109,29 +109,19 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (ToxId::isToxId(id))
+    if (!ToxId::isToxId(id))
     {
-        if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
-            GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
-        else
-            emit friendRequested(id, getMessage());
-
-        this->toxId.clear();
-        this->message.clear();
-    }
-    else
-    {
-        if (Settings::getInstance().getProxyType() != ProxyType::ptNone)
-        {
-            QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
-Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
-            if (btn != QMessageBox::Yes)
-                return;
-        }
-
         ToxId toxId = Toxme::lookup(id); // Try Toxme
         if (toxId.toString().isEmpty())  // If it isn't supported
         {
+            qDebug() << "Toxme didn't return a ToxID, trying ToxDNS";
+            if (Settings::getInstance().getProxyType() != ProxyType::ptNone)
+            {
+                QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
+    Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
+                if (btn != QMessageBox::Yes)
+                    return;
+            }
             toxId = ToxDNS::resolveToxAddress(id, true); // Use ToxDNS
             if (toxId.toString().isEmpty())
             {
@@ -139,10 +129,16 @@ Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMess
                 return;
             }
         }
-        emit friendRequested(toxId.toString(), getMessage());
-        this->toxId.clear();
-        this->message.clear();
+        id = toxId.toString();
     }
+
+    if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
+        GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
+    else
+        emit friendRequested(id, getMessage());
+
+    this->toxId.clear();
+    this->message.clear();
 }
 
 void AddFriendForm::onIdChanged(const QString &id)
