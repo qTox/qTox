@@ -460,12 +460,14 @@ packages necessary for building .debs, so be prepared to type your password for 
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
 ### Automated Script
-You can now set up your OS X system to compile qTox automatically thanks to the script:
-`./osx/qTox-Mac-Deployer-ULTIMATE.sh`
+You can now set up your OS X system to compile qTox automatically thanks to the script in:
+`.dir/git/qTox/osx/qTox-Mac-Deployer-ULTIMATE.sh`
 
 This script can be run independently of the qTox repo and is all that's needed to build from scratch on OS X.
 
 To use this script you must launch terminal which can be found: `Applications > Utilities > Terminal.app`
+
+If you wish to lean more you can run `./qTox-Mac-Deployer-ULTIMATE.sh -h`
 
 #### First Run / Install
 If you are running the script for the first time you will want to makesure your system is ready.
