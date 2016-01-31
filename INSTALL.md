@@ -78,10 +78,10 @@ There are available generic binaries for Linux:
 <a name="arch-easy" />
 #### Arch
 
-**Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
-
-That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
-
+PKGBUILD is available in the `community` repo, to install:
+```bash
+pacman -S qtox
+```
 
 <a name="gentoo-easy" />
 #### Gentoo
