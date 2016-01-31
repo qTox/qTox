@@ -456,13 +456,53 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ## OS X
+
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
-### Required Libraries
+### Automated Script
+You can now set up your OS X system to compile qTox automatically thanks to the script in:
+`./osx/qTox-Mac-Deployer-ULTIMATE.sh`
+
+This script can be run independently of the qTox repo and is all that's needed to build from scratch on OS X.
+
+To use this script you must launch terminal which can be found: `Applications > Utilities > Terminal.app`
+
+If you wish to lean more you can run `./qTox-Mac-Deployer-ULTIMATE.sh -h`
+
+#### First Run / Install
+If you are running the script for the first time you will want to makesure your system is ready.
+To do this simply run `./qTox-Mac-Deployer-ULTIMATE.sh -i` to run you through the automated install set up.
+
+After running the installation setup you are now ready to build qTox from source, to do this simply run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -b`
+
+If there aren't any errors then you'll find a locally working qTox application in your home folder under 
+`~/qTox-Mac_Build`
+
+#### Updating
+If you want to update your application for testing purposes or you want to run a nightly build setup then run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -u` and follow the prompts. 
+(NOTE: If you know you updated the repos before running this hit Y)
+followed by
+`./qTox-Mac-Deployer-ULTIMATE.sh -b`
+to build the application once more. (NOTE: This will delete your previous build.)
+
+#### Deploying
+OS X requires an extra step to make the `qTox.app` file shareable on a system that doesn't have the required libraries installed already.
+
+If you want to share the build you've made with your other friends who use OS X then simply run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -d`
+
+### Manual Compiling
+#### Required Libraries
+Install homebrew if you don't have it:
+```bash
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 First, let's install the dependencies available via brew.
 ```bash
-brew install git ffmpeg qrencode
+brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx opus sqlcipher libsodium
 ```
 
 Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
@@ -473,6 +513,8 @@ sudo make install
 cd ../
 ```
 
+Next, install [Toxcore](https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#osx)
+
 Then, clone qTox:
 ```bash
 git clone https://github.com/tux3/qTox``
@@ -480,38 +522,36 @@ git clone https://github.com/tux3/qTox``
 
 Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following commands:
 ```bash
-cd qTox
+cd ./git/qTox
 sudo bash bootstrap-osx.sh
 ```
 
-###Compiling
+#### Compiling
+You can build qTox with Qt Creator [seperate download](http://www.qt.io/download-open-source/#section-6) or you can hunt down the version of home brew qt5 your using in the `/usr/local/Cellar/qt5/` directory.
+e.g. `/usr/local/Cellar/qt5/5.5.1_2/bin/qmake` with `5.5.1_2` being the version of Qt5 that's been installed.
 
-Either open Qt creator and hit build or run ```qmake && make``` in your qTox folder and it'll just work™.
-
-Note that if you use the CLI to build you'll need to add Qt5's bins to your path.
+With that; in your terminal you can compile qTox in the git dir:
 ```bash
-export PATH=$PATH:~/Qt/5.4/clang_64/bin/
+/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ./qtox.pro
 ```
 
-### Fixing things up
-
-The bad news is that Qt breaks our linker paths so we need to fix those. First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
-
-Install qTox so we can copy its libraries and shove the following in a script somewhere:
-
+Or a cleaner method would be to:
 ```bash
-~macdeployqt qtox.app
-cp -r /Applications/qtox.app qtox_old.app
-cp qtox.app/Contents/MacOS/qtox qtox_old.app/Contents/MacOS/qtox
-rm -rf qtox.app
-mv qtox_old.app qtox.app
+cd ./git/dir/qTox
+mkdir ./build
+cd build
+/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ../qtox.pro
 ```
-* Give it a name like ~/deploy.qtox.sh
-* cd in to the folder with qtox.app
-* run ```bash ~/deploy.qtox.sh```
 
+#### Deploying
+If you compiled qTox properly you can now deploy the `qTox.app` that's created where you built qTox so you can distribute the package.
 
-### Running qTox
+Using your qt5 homebrew installation from the build directory:
+```bash
+/usr/local/Cellar/qt5/5.5.1_2/bin/macdeployqt ./qTox.app
+```
+
+#### Running qTox
 You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
 ```bash
 qtox.app/Contents/MacOS/qtox
