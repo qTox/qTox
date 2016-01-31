@@ -371,7 +371,7 @@ void GeneralForm::onUseEmoticonsChange()
 
 void GeneralForm::onMarkdownUpdated()
 {
-    Settings::getInstance().setMarkdownPreference(bodyUI->markdownComboBox->currentIndex());
+    Settings::getInstance().setMarkdownPreference(static_cast<MarkdownType>(bodyUI->markdownComboBox->currentIndex()));
 }
 
 void GeneralForm::onSetStatusChange()

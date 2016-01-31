@@ -57,7 +57,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //markdown
-    if (Settings::getInstance().getMarkdownPreference() != 0)
+    if (Settings::getInstance().getMarkdownPreference() != MarkdownType::NONE)
         text = detectMarkdown(text);
 
     switch(type)
@@ -187,7 +187,7 @@ QString ChatMessage::detectMarkdown(const QString &str)
 
     // Create regex for certain markdown syntax
     QRegExp exp("(\\*\\*)([^\\*\\*]{2,})(\\*\\*)"   // Bold    **text**
-                "|(\\*)([^\\*]{2,})(\\*)"           // Bold *text*
+                "|(\\*)([^\\*]{2,})(\\*)"           // Bold    *text*
                 "|(\\_)([^\\_]{2,})(\\_)"           // Italics _text_
                 "|(\\_\\_)([^\\_\\_]{2,})(\\_\\_)"  // Italics __text__
                 "|(\\-)([^\\-]{2,})(\\-)"           // Underline  -text-
