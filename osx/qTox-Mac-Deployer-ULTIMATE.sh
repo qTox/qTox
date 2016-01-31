@@ -57,7 +57,7 @@ function fcho() {
 	printf "\n$msg\n" "$@"
 }
 
-function build-toxcore() {
+function build_toxcore() {
 	echo "Starting Toxcore build and install"
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
@@ -81,13 +81,13 @@ function build-toxcore() {
 	fcho "Compiling toxcore."
 	make > /dev/null || exit 1
 	fcho "Installing toxcore."
-	make install > /dev/null || exit 1
+	sudo make install > /dev/null || exit 1
 }
 
 function install() {
 	fcho "=============================="
-	fcho "This script will install the nessicarry applications and libraries needed to compile qTox properly."
-	fcho "Note that this is not a 100 percent automated install it just helps simplfiy the process for less experianced or lazy users."
+	fcho "This script will install the necessary applications and libraries needed to compile qTox properly."
+	fcho "Note that this is not a 100 percent automated install it just helps simplify the process for less experienced or lazy users."
 	if [[ $TRAVIS = true ]]; then #travis check
 		echo "Oh... It's just Travis...."
 	else
@@ -109,22 +109,24 @@ function install() {
 	fi
 	brew install git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
 	
-	fcho "Installing x-code Comand line tools ..."
+	fcho "Installing x-code Command line tools ..."
 	xcode-select --install
 	
 	fcho "Starting git repo checks ..."
 	
 	cd $MAIN_DIR # just in case
+	# Toxcore
 	if [[ -e $TOX_DIR/.git/index ]]; then # Check if this exists
-		fcho "Toxcore git repo already inplace !"
+		fcho "Toxcore git repo already in place !"
 		cd $TOX_DIR
 		git pull
 	else
 		fcho "Cloning Toxcore git ... "
 		git clone https://github.com/irungentoo/toxcore.git
 	fi
+	# qTox
 	if [[ -e $QTOX_DIR/.git/index ]]; then # Check if this exists
-		fcho "qTox git repo already inplace !"
+		fcho "qTox git repo already in place !"
 		cd $QTOX_DIR
 		git pull
 	else
@@ -133,7 +135,7 @@ function install() {
 	fi
 	# filter_audio
 	if [[ -e $FA_DIR/.git/index ]]; then # Check if this exists
-		fcho "Filter_Audio git repo already inplace !"
+		fcho "Filter_Audio git repo already in place !"
 		cd $FA_DIR
 		git pull
 	else
@@ -142,10 +144,11 @@ function install() {
 		cd $FA_DIR
 	fi
 	fcho "Installing filter_audio."
-	make install PREFIX="${LIB_INSTALL_PREFIX}"
-	# toxcore
+	sudo make install PREFIX="${LIB_INSTALL_PREFIX}"
+	
+	# toxcore build
 	if [[ $TRAVIS = true ]]; then #travis check
-		build-toxcore
+		build_toxcore
 	else
 		fcho "If all went well you should now have all the tools needed to compile qTox!"
 		read -r -p "Would you like to install toxcore now? [y/N] " response
@@ -158,7 +161,7 @@ function install() {
 	fi
 	# put required by qTox libs/headers in `libs/`
 	cd "${QTOX_DIR}"
-	./bootstrap-osx.sh
+	sudo ./bootstrap-osx.sh
 }
 
 function update() {
@@ -184,7 +187,7 @@ function update() {
 	read -r -p "Did qTox update from git? [y/N] " response
 	if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 		fcho "Starting OSX bootstrap ..."
-		./bootstrap-osx.sh
+		sudo ./bootstrap-osx.sh
 	else
 	    fcho "Moving on!"
 	fi
@@ -247,17 +250,19 @@ if [[ "$1" == "-ubd" ]]; then
 fi
 
 if [[ "$1" == "-h" ]]; then
-	echo "This script was created to help ease the process of compiling and creating a distribuable qTox package for OSX systems."
-	echo "The avilable commands are:"
+	echo "This script was created to help ease the process of compiling and creating a distributable qTox package for OSX systems."
+	echo "The available commands are:"
 	echo "-h -- This help text."
 	echo "-i -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
 	echo "-u -- Check for updates and build Toxcore from git & update qTox from git."
 	echo "-b -- Builds qTox in: ${BUILD_DIR}"
-	echo "-d -- Makes a distributeable qTox.app file in: ${DEPLOY_DIR}"
+	echo "-d -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
 	echo "-ubd -- Does -u, -b, and -d sequentially"
 	fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/tux3/qTox"
 	exit 0
 fi
 
-fcho "Oh dear! You seemed to of started this script improperly! Use -h to get avilable commands and information!" 
+fcho "Oh dear! You seemed to of started this script improperly! Use -h to get available commands and information!"
+echo " "
+say -v Kathy -r 255 "Oh dear! You seemed to of started this script improperly! Use -h to get available commands and information!"
 exit 0
