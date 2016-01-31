@@ -125,13 +125,17 @@ function install() {
 		git clone https://github.com/irungentoo/toxcore.git
 	fi
 	# qTox
-	if [[ -e $QTOX_DIR/.git/index ]]; then # Check if this exists
-		fcho "qTox git repo already in place !"
-		cd $QTOX_DIR
-		git pull
+	if [[ $TRAVIS = true ]]; then #travis check
+		fcho "Travis... You already have qTox..."
 	else
-		fcho "Cloning qTox git ... "
-		git clone https://github.com/tux3/qTox.git
+		if [[ -e $QTOX_DIR/.git/index ]]; then # Check if this exists
+			fcho "qTox git repo already in place !"
+			cd $QTOX_DIR
+			git pull
+		else
+			fcho "Cloning qTox git ... "
+			git clone https://github.com/tux3/qTox.git
+		fi
 	fi
 	# filter_audio
 	if [[ -e $FA_DIR/.git/index ]]; then # Check if this exists
