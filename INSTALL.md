@@ -461,7 +461,7 @@ Compiling qTox on OS X for development requires 3 tools, [Xcode](https://develop
 
 ### Automated Script
 You can now set up your OS X system to compile qTox automatically thanks to the script in:
-`.dir/git/qTox/osx/qTox-Mac-Deployer-ULTIMATE.sh`
+`./osx/qTox-Mac-Deployer-ULTIMATE.sh`
 
 This script can be run independently of the qTox repo and is all that's needed to build from scratch on OS X.
 
