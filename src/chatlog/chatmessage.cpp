@@ -57,7 +57,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //markdown
-    if (Settings::getInstance().getMarkdownPreference() != 0)
+    if (Settings::getInstance().getMarkdownPreference() != MarkdownType::NONE)
         text = detectMarkdown(text);
 
     switch(type)
