@@ -122,7 +122,7 @@ Groupchats are a way to talk with multiple friends at the same time, like when y
 
 ## Message Styling
 
-Similar to other messaging applications, qTox supports stylized text formatting. Formatting follows [Markdown syntax](), thus:
+Similar to other messaging applications, qTox supports stylized text formatting. Formatting follows [Markdown syntax](https://daringfireball.net/projects/markdown/syntax), thus:
 
 * For **Bold**, surround text in double asterisks or underscores: `**text**` or `__text__`
 * For **Italics**, surround text in single asterisks or underscores: `*text*` or `_text_`
