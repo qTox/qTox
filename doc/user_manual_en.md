@@ -4,6 +4,7 @@
 * [User Profile](#user-profile)
 * [Settings](#settings)
 * [Groupchats](#groupchats)
+* [Message Styling](#message-styling)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 
@@ -118,6 +119,23 @@ NoSpam is a feature of Tox that prevents a malicious user from spamming you with
 ## Groupchats
 
 Groupchats are a way to talk with multiple friends at the same time, like when you are standing together in a group. To create a groupchat click the groupchat icon in the bottom left corner and set a name. Now you can invite your contacts by right-clicking on the contact and selecting "Invite to group". Currently, if the last person leaves the chat, it is closed and you have to create a new one. Videochats and file transfers are currently unsupported in groupchats.
+
+## Message Styling
+
+Similar to other messaging applications, qTox supports stylized text formatting. Formatting follows [Markdown syntax](), thus:
+
+* For **Bold**, surround text in double asterisks or underscores: `**text**` or `__text__`
+* For **Italics**, surround text in single asterisks or underscores: `*text*` or `_text_`
+* For **Strikethrough**, surround text in single tilde's: `~text~`
+* For **Underline**, surround text in single dashes: `-text-`
+
+Additionally, qTox supports three modes of Markdown parsing:
+
+* `Plaintext`: No text is stylized
+* `Show Formatting Characters`: Stylize text while showing formatting characters (Default)
+* `Don't Show Formatting Characters`: Stylize text without showing formatting characters
+
+*Note that any change in Markdown preference will require a restart.*
 
 ## Multi Window Mode
 
