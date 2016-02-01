@@ -208,7 +208,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
-    connect(bodyUI->markdownComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onMarkdownUpdated()));
+    connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -235,7 +235,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     // prevent stealing mouse wheel scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
+    // you can scroll through general settings without accidentially changing theme/skin/icons etc.
     // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
     for (QComboBox *cb : findChildren<QComboBox*>())
     {
