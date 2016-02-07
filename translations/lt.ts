@@ -31,14 +31,6 @@
         <translation>Garso įrenginiai</translation>
     </message>
     <message>
-        <source>Microphone</source>
-        <translation>Įrašymas</translation>
-    </message>
-    <message>
-        <source>Playback</source>
-        <translation>Išvestis</translation>
-    </message>
-    <message>
         <source>Use slider to set volume of your speakers.</source>
         <translation>Šliaužikliu nustatykite garsiakalbių garsumą.</translation>
     </message>
@@ -47,24 +39,28 @@
         <translation>Išvesties įrenginys</translation>
     </message>
     <message>
+        <source>Volume</source>
+        <translation>Garsumas</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation>...</translation>
+    </message>
+    <message>
         <source>Capture device</source>
         <translation>Įrašymo įrenginys</translation>
+    </message>
+    <message>
+        <source>Gain</source>
+        <translation>Garsumas</translation>
     </message>
     <message>
         <source>Filter audio</source>
         <translation>Filtruoti garso signalą</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
         <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
         <translation>Filtruoti mikrofono garsą, kad žmonės Jus geriau girdėtų.</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation>100</translation>
     </message>
     <message>
         <source>Use slider to set volume of your microphone.</source>
@@ -138,26 +134,6 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
         <translation>Licencija</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style= &quot;font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Autorių teisės: qTox projektas, 2014-2015.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox – Tox protokolu veikianti programa su Qt grafine aplinka.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox yra atvira programinė įranga: galite ją platinti ir (arba) modifikuoti pagal GNU atvirosios programinės įrangos licencijos (GPL), kurią parengė Laisvosios programinės įrangos fondas (FSF), trečiąją (ar bet kurią vėlesnę) versiją.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Tikimės, kad qTox bus Jums naudingas, bet nesuteikiame JOKIOS GARANTIJOS, įskaitant PERKAMUMO ar TINKAMUMO KOKIAM NORS TIKSLUI. Detalesnė informacija pateikta GPL licencijoje. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;GPL licencijos kopiją turėjote gauti kartu su šia programine įranga. Priešingu atveju, apsilankykite &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>toxcore version: $TOXCOREVERSION</source>
         <translation>toxcore versija: $TOXCOREVERSION</translation>
     </message>
@@ -168,6 +144,18 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Atnaujinimo maiša (&lt;i&gt;hash&lt;/i&gt;): &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Autorių teisės: qTox projektas, 2014-2015.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox – Tox protokolu veikianti programa su Qt grafine aplinka.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox yra atvira programinė įranga: galite ją platinti ir (arba) modifikuoti pagal GNU atvirosios programinės įrangos licencijos (GPL), kurią parengė Laisvosios programinės įrangos fondas (FSF), trečiąją (ar bet kurią vėlesnę) versiją.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Tikimės, kad qTox bus Jums naudingas, bet nesuteikiame JOKIOS GARANTIJOS, įskaitant PERKAMUMO ar TINKAMUMO KOKIAM NORS TIKSLUI. Detalesnė informacija pateikta GPL licencijoje. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;GPL licencijos kopiją turėjote gauti kartu su šia programine įranga. Priešingu atveju, apsilankykite &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation></translation>
     </message>
     <message>
         <source>Authors</source>
@@ -262,6 +250,12 @@ p, li { white-space: pre-wrap; }
         <translation>Tox ID</translation>
     </message>
     <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation>qTox naudoja Tox DNS, bet tai neįmanoma per įgaliotąjį (proxy) serverį.
+    Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translation>
+    </message>
+    <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
         <translation>76 šešioliktainės sistemos skaitmenys arba vardas@adresas.lt</translation>
@@ -292,12 +286,6 @@ p, li { white-space: pre-wrap; }
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Negalite naudoti savo Tox ID!</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox naudoja Tox DNS, bet tai neįmanoma per įgaliotąjį (proxy) serverį.
-Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
@@ -1455,6 +1443,10 @@ If you encountered this error, please report it.</source>
 Prašome pranešti apie šią klaidą.</translation>
     </message>
     <message>
+        <source>Password protected profile can&apos;t be loaded automatically.</source>
+        <translation>Slaptažodžiu apsaugoto profilio atidaryti automatiškai nepavyko.</translation>
+    </message>
+    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Nepavyko prisijungti</translation>
     </message>
@@ -1873,6 +1865,78 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox nepavyko atidaryti pokalbių žurnalo, todėl jis buvo išjungtas.</translation>
+    </message>
+    <message>
+        <source>Incorrect response</source>
+        <translation>Neteisingas atsakas</translation>
+    </message>
+    <message>
+        <source>No password in response</source>
+        <translation>Atsake trūksta slaptažodžio</translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation>Serveris nepalaiko Toxme funkcijos</translation>
+    </message>
+    <message>
+        <source>You must send POST requests to /api</source>
+        <translation>Reikia siųsti POST užklausas į /api</translation>
+    </message>
+    <message>
+        <source>Please try again using a HTTPS connection</source>
+        <translation>Bandykite per naujo naudodami HTTPS ryšį</translation>
+    </message>
+    <message>
+        <source>I was unable to read your encrypted payload</source>
+        <translation>Nepavyko perskaityti užšifruotų duomenų</translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation>Per daug užklausų. Pabandykite dar sykį po valandos</translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation>Vardas jau užimtas</translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation>Šis Tox ID jau užregistruotas kitu vardu</translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation>Vardas turi būti be tarpų</translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation>Neteisingas slaptažodis</translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation>Šio vardo naudoti negalima</translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation>Tokio vardo nėra</translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation>Tox ID neišsiųstas</translation>
+    </message>
+    <message>
+        <source>Lookup failed because the server replied with invalid data</source>
+        <translation>Užklausa nepavyko, nes serverio atsakas nesuprantamas</translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation>Šio naudotojo nėra</translation>
+    </message>
+    <message>
+        <source>Internal lookup error. Please file a bug</source>
+        <translation>Vidinė klaida. Praneškite apie šį įvykį programuotojams</translation>
+    </message>
+    <message>
+        <source>Unknown error (%1)</source>
+        <translation>Nežinoma klaida (%1)</translation>
     </message>
 </context>
 <context>
