@@ -11,3 +11,4 @@ qtox
 build-*-Release
 build-*-Debug
 .DS_Store
+tmp

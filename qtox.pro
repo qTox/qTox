@@ -320,6 +320,14 @@ contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
 }
 }
 
+CONFIG(debug, debug|release):GENERATED_FILES_DIR=tmp/debug
+CONFIG(release, debug|release):GENERATED_FILES_DIR=tmp/release
+
+MOC_DIR=$${GENERATED_FILES_DIR}/moc
+OBJECTS_DIR=$${GENERATED_FILES_DIR}/obj
+RCC_DIR=$${GENERATED_FILES_DIR}/rcc
+UI_DIR=$${GENERATED_FILES_DIR}/ui
+
 !android {
     RESOURCES += res.qrc \
         smileys/smileys.qrc
