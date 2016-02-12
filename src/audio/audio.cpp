@@ -499,8 +499,6 @@ void Audio::doCapture()
         getEchoesToFilter(filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
 #endif
         filterer.filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-        // disable echo cancelation, because we don't know the delay
-        filterer.enableDisableFilters(0, 1, 1, 1);
     }
 #endif
 
