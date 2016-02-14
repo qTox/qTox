@@ -70,6 +70,7 @@ protected:
 private slots:
     void onTopButtonClicked();
     void onBottomButtonClicked();
+    void onPreviewButtonClicked();
 
 private:
     Ui::FileTransferWidget *ui;

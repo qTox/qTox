@@ -53,7 +53,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     // hide the QWidget background (background-color: transparent doesn't seem to work)
     setAttribute(Qt::WA_TranslucentBackground, true);
 
-    ui->previewLabel->hide();
+    ui->previewButton->hide();
     ui->filenameLabel->setText(file.fileName);
     ui->progressBar->setValue(0);
     ui->fileSizeLabel->setText(getHumanReadableSize(file.filesize));
@@ -86,6 +86,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this, &FileTransferWidget::fileTransferBrokenUnbroken);
     connect(ui->topButton, &QPushButton::clicked, this, &FileTransferWidget::onTopButtonClicked);
     connect(ui->bottomButton, &QPushButton::clicked, this, &FileTransferWidget::onBottomButtonClicked);
+    connect(ui->previewButton, &QPushButton::clicked, this, &FileTransferWidget::onPreviewButtonClicked);
 
     setupButtons();
 
@@ -482,7 +483,7 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         }
     }
 
-    if (btn->objectName() == "ok")
+    if (btn->objectName() == "ok" || btn->objectName() == "previewButton")
     {
         Widget::confirmExecutableOpen(QFileInfo(fileInfo.filePath));
     }
@@ -501,13 +502,13 @@ void FileTransferWidget::showPreview(const QString &filename)
 
     if (previewExtensions.contains(QFileInfo(filename).suffix()))
     {
-        const int size = qMax(ui->previewLabel->width(), ui->previewLabel->height());
+        const int size = qMax(ui->previewButton->width(), ui->previewButton->height());
 
         QPixmap pmap = QPixmap(filename).scaled(QSize(size, size),
                                                 Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        ui->previewLabel->setPixmap(pmap);
-        ui->previewLabel->show();
-        ui->previewLabel->setCursor(Qt::PointingHandCursor);
+        ui->previewButton->setIcon(QIcon(pmap));
+        ui->previewButton->setIconSize(pmap.size());
+        ui->previewButton->show();
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
         QRect desktopSize = QApplication::desktop()->screenGeometry();
         QImage image = QImage(filename).scaled(0.5 * desktopSize.width(),
@@ -518,7 +519,7 @@ void FileTransferWidget::showPreview(const QString &filename)
         buffer.open(QIODevice::WriteOnly);
         image.save(&buffer, "PNG");
         buffer.close();
-        ui->previewLabel->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
+        ui->previewButton->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
     }
 }
 
@@ -530,4 +531,9 @@ void FileTransferWidget::onTopButtonClicked()
 void FileTransferWidget::onBottomButtonClicked()
 {
     handleButton(ui->bottomButton);
+}
+
+void FileTransferWidget::onPreviewButtonClicked()
+{
+    handleButton(ui->previewButton);
 }

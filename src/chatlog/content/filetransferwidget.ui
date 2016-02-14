@@ -270,7 +270,7 @@
          </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="previewLabel">
+         <widget class="QPushButton" name="previewButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -289,14 +289,21 @@
             <height>60</height>
            </size>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
-          <property name="lineWidth">
-           <number>2</number>
+          <property name="icon">
+           <iconset resource="../../../res.qrc">
+            <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>
           </property>
-          <property name="text">
-           <string>[preview]</string>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>18</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
