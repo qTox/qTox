@@ -38,7 +38,7 @@
 #include <QStandardPaths>
 #include <QDebug>
 
-static QStringList locales = {"bg", 
+static QStringList locales = {"bg",
                               "cs",
                               "de",
                               "el",
