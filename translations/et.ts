@@ -197,7 +197,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Autoriõigused © 2014-2015 The qTox Project&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox on Qt-põhine graafiline kasutajaliides Tox protokollile.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox on vaba tarkvara: seda võib levitada ja/või muuta vastavalt GNU üldisele Avalikule Litsentsile (originaali nimetus GNU General Public Licence), mille on sätestanud Free Software Foundation. Käesolevale programmile kohaldub litsentsi 3. või (teie vabal valikul) mistahes muu sellest uuem versioon.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qToxi levitatakse lootuses, et see on kasulik, ent ilma igasuguse garantiita; isegi ilma kaudse garantiita MÜÜGIKÕLBULIKKUSE või MINGIKS OTSTARBEKS SOBIMISE kohta. Täiendava teabe saamiseks vaadake GNU Üldist Avalikku Litsentsi.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qToxi levitatakse lootuses, et see on kasulik, ent ilma mistahes garantiita; isegi ilma kaudse garantiita MÜÜGIKÕLBULIKKUSE või MINGIKS OTSTARBEKS SOBIMISE kohta. Täiendava teabe saamiseks vaadake GNU Üldist Avalikku Litsentsi.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Te pidanuks koos selle programmiga saama ka koopia GNU Üldisest Avalikust Litsentsist. Kui Te koopiat ei saanud, vaadake &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -484,7 +484,7 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/widget/form/chatform.cpp" line="194"/>
         <location filename="../src/widget/form/chatform.cpp" line="659"/>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Üritad saata erilist faili (osafail), see ei lähe läbi!</translation>
+        <translation>Üritad saata erilist faili (sequential file), see ei lähe läbi!</translation>
     </message>
     <message>
         <location filename="../src/widget/form/chatform.cpp" line="271"/>
