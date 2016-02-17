@@ -36,9 +36,22 @@ public:
     void startFilter(uint32_t fs);
     void closeFilter();
 
-    /* Enable/disable filters. 1 to enable, 0 to disable. */
+    /**
+    Enable/disable filters. 1 to enable, 0 to disable.
+
+    @param[in] echo    enables/disables echo cancelation
+    @param[in] noise   enables/disables noise reduction
+    @param[in] gain    enables/disables automatic gain control
+    @param[in] vad     enables/disables voice activity detection
+
+    Echo cancelation needs a precise value for the input latency set by setEchoDelayMs(), else it adds echo!
+    */
     bool enableDisableFilters(int echo, int noise, int gain, int vad);
 
+    /**
+     * Does the actual filtering
+     * @return True if voice was detected
+    */
     bool filterAudio(int16_t* data, unsigned int samples);
 
     /* Give the audio output from your software to this function so it knows what echo to cancel from the frame */
