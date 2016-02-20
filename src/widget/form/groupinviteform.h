@@ -22,12 +22,15 @@
 
 #include <QWidget>
 #include <QSet>
+#include "src/widget/gui.h"
 
 class QLabel;
 class QVBoxLayout;
 class QPushButton;
 class QGroupBox;
 class QSignalMapper;
+
+class ContentLayout;
 
 namespace Ui {class MainWindow;}
 
@@ -37,7 +40,7 @@ class GroupInviteForm : public QWidget
 public:
     GroupInviteForm();
 
-    void show(Ui::MainWindow &ui);
+    void show(ContentLayout *contentLayout);
     void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
 
 signals:

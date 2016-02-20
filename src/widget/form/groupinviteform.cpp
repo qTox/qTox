@@ -31,6 +31,9 @@
 #include "src/widget/translator.h"
 #include "src/nexus.h"
 #include "src/core/core.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 
 GroupInviteForm::GroupInviteForm()
 {
@@ -61,10 +64,10 @@ GroupInviteForm::GroupInviteForm()
     Translator::registerHandler(std::bind(&GroupInviteForm::retranslateUi, this), this);
 }
 
-void GroupInviteForm::show(Ui::MainWindow &ui)
+void GroupInviteForm::show(ContentLayout* contentLayout)
 {
-    ui.mainContent->layout()->addWidget(this);
-    ui.mainHead->layout()->addWidget(headWidget);
+    contentLayout->mainContent->layout()->addWidget(this);
+    //contentLayout->mainHead->layout()->addWidget(head);
     QWidget::show();
     headWidget->show();
 }

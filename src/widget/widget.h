@@ -81,7 +81,8 @@ public:
         AddDialog,
         TransferDialog,
         SettingDialog,
-        ProfileDialog
+        ProfileDialog,
+        GroupDialog
     };
 
     static QString fromDialogType(DialogType type);
