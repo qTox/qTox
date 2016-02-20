@@ -703,19 +703,26 @@ void Widget::forceShow()
 
 void Widget::onAddClicked()
 {
-    //TODO: handle multiple windows mode
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!addFriendForm->isShown())
+            addFriendForm->show(createContentDialog(AddDialog));
 
-    addFriendForm->setMode(AddFriendForm::AddFriend);
-    addFriendForm->show(*ui);
-    setWindowTitle(tr("Add friend"));
-    setActiveToolMenuButton(Widget::AddButton);
-    activeChatroomWidget = nullptr;
+        setActiveToolMenuButton(Widget::None);
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        addFriendForm->show(contentLayout);
+        setWindowTitle(fromDialogType(AddDialog));
+        setActiveToolMenuButton(Widget::AddButton);
+    }
 }
 
 void Widget::onGroupClicked()
 {
-    hideMainForms();
-    groupInviteForm->show(*ui);
+    hideMainForms(nullptr);
+    groupInviteForm->show(contentLayout);
     setWindowTitle(tr("Group invites"));
     setActiveToolMenuButton(Widget::GroupButton);
     activeChatroomWidget = nullptr;

@@ -38,6 +38,7 @@
 #include "src/widget/contentlayout.h"
 #include "src/net/toxme.h"
 #include <QWindow>
+#include <QScrollArea>
 
 AddFriendForm::AddFriendForm()
 {
@@ -106,8 +107,8 @@ bool AddFriendForm::isShown() const
 
 void AddFriendForm::show(ContentLayout* contentLayout)
 {
-    ui.mainContent->layout()->addWidget(tabWidget);
-    ui.mainHead->layout()->addWidget(head);
+    contentLayout->mainContent->layout()->addWidget(tabWidget);
+    contentLayout->mainHead->layout()->addWidget(head);
     tabWidget->show();
     head->show();
     setIdFromClipboard();
@@ -274,7 +275,7 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     horLayout->setMargin(0);
     friendLayout->addLayout(horLayout);
 
-    CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
+    QLabel* friendLabel = new QLabel(friendWidget);
     friendLabel->setText("<b>" + friendAddress + "</b>");
     horLayout->addWidget(friendLabel);
 
