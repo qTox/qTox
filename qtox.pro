@@ -532,6 +532,8 @@ SOURCES += \
     src/widget/about/aboutuser.cpp \
     src/persistence/db/rawdatabase.cpp \
     src/persistence/history.cpp
+    src/widget/tool/removefrienddialog.cpp \
+    src/widget/form/groupinviteform.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -588,3 +590,5 @@ HEADERS += \
     src/widget/about/aboutuser.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h
+    src/widget/tool/removefrienddialog.h \
+    src/widget/form/groupinviteform.h

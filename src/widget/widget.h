@@ -49,10 +49,12 @@ class FilesForm;
 class ProfileForm;
 class SettingsWidget;
 class AddFriendForm;
+class GroupInviteForm;
 class CircleWidget;
 class QActionGroup;
 class ContentLayout;
 class ContentDialog;
+class QPushButton;
 
 class Widget final : public QMainWindow
 {
@@ -130,6 +132,7 @@ public slots:
     void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
+    void onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
@@ -180,6 +183,10 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
+    void friendRequestRecieved(const QString& friendAddress, const QString& message);
+    void friendRequestsUpdate();
+    void groupInvitesUpdate();
+    void groupInvitesClear();
 
 private:
     int icon_size;
@@ -249,6 +256,7 @@ private:
     QPoint dragPosition;
     ContentLayout* contentLayout;
     AddFriendForm *addFriendForm;
+    GroupInviteForm* groupInviteForm;
     ProfileForm *profileForm;
     SettingsWidget *settingsWidget;
     FilesForm *filesForm;
@@ -263,6 +271,9 @@ private:
     bool eventFlag;
     bool eventIcon;
     bool wasMaximized = false;
+    QPushButton* friendRequestsButton;
+    QPushButton* groupInvitesButton;
+    unsigned int unreadGroupInvites;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
