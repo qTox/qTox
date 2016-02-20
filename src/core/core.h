@@ -98,7 +98,7 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
-    void createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
+    int createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
 
     void removeFriend(uint32_t friendId, bool fake = false);
     void removeGroup(int groupId, bool fake = false);
