@@ -24,19 +24,15 @@
 # Your home DIR really (Most of this happens in it) {DONT USE: ~ }
 if [[ $TRAVIS = true ]]; then #travis check
 	MAIN_DIR="${TRAVIS_BUILD_DIR}"
+	QTOX_DIR="${MAIN_DIR}"
 else
 	MAIN_DIR="/Users/${USER}"
+	QTOX_DIR="${MAIN_DIR}/qTox"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
 VER="${QT_DIR}/5.5.1_2" # Potential future proffing for version testing
 QMAKE="${VER}/bin/qmake" # Don't change
 MACDEPLOYQT="${VER}/bin/macdeployqt" # Don't change
-
-if [[ $TRAVIS = true ]]; then #travis check
-	QTOX_DIR="${MAIN_DIR}"
-else
-	QTOX_DIR="${MAIN_DIR}/qTox" # Change to Git location
-fi
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
@@ -178,7 +174,7 @@ function update() {
 	git pull
 	read -r -p "Did Toxcore update from git? [y/N] " response
 	if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
-		build-toxcore	
+		build_toxcore
 	else
 	    fcho "Moving on!"
 	fi
