@@ -42,6 +42,7 @@ public:
 
     void show(ContentLayout *contentLayout);
     void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
+    bool isShown() const;
 
 signals:
     void groupCreate(uint8_t type);
