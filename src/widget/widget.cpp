@@ -2092,7 +2092,8 @@ void Widget::friendRequestsUpdate()
 
         connect(friendRequestsButton, &QPushButton::released, [this]()
         {
-            onGroupClicked();
+            onAddClicked();
+            addFriendForm->setMode(AddFriendForm::Mode::FriendRequest);
         });
     }
 
