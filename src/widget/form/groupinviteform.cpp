@@ -67,7 +67,7 @@ GroupInviteForm::GroupInviteForm()
 void GroupInviteForm::show(ContentLayout* contentLayout)
 {
     contentLayout->mainContent->layout()->addWidget(this);
-    //contentLayout->mainHead->layout()->addWidget(head);
+    contentLayout->mainHead->layout()->addWidget(headWidget);
     QWidget::show();
     headWidget->show();
 }
@@ -83,13 +83,13 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
 
     QPushButton* acceptButton = new QPushButton(this);
     acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteAccepted);
+    connect(acceptButton, &QPushButton::clicked, this, &GroupInviteForm::onGroupInviteAccepted);
     groupLayout->addWidget(acceptButton);
     retranslateAcceptButton(acceptButton);
 
     QPushButton* rejectButton = new QPushButton(this);
     rejectButtons.insert(rejectButton);
-    connect(rejectButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteRejected);
+    connect(rejectButton, &QPushButton::clicked, this, &GroupInviteForm::onGroupInviteRejected);
     groupLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 
@@ -113,7 +113,8 @@ void GroupInviteForm::showEvent(QShowEvent* event)
 
 void GroupInviteForm::onGroupInviteAccepted()
 {
-    QWidget* groupWidget = static_cast<QWidget*>(sender());
+    QPushButton* acceptButton = static_cast<QPushButton*>(sender());
+    QWidget* groupWidget = acceptButton->parentWidget();
     int index = inviteLayout->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
@@ -126,7 +127,8 @@ void GroupInviteForm::onGroupInviteAccepted()
 
 void GroupInviteForm::onGroupInviteRejected()
 {
-    QWidget* groupWidget = static_cast<QWidget*>(sender());
+    QPushButton* rejectButton = static_cast<QPushButton*>(sender());
+    QWidget* groupWidget = rejectButton->parentWidget();
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
