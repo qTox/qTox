@@ -287,13 +287,13 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
 
     QPushButton* acceptButton = new QPushButton(friendWidget);
     acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::clicked, this, &AddFriendForm::onFriendRequestAccepted);
+    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
     friendLayout->addWidget(acceptButton);
     retranslateAcceptButton(acceptButton);
 
     QPushButton* rejectButton = new QPushButton(friendWidget);
     acceptButtons.insert(rejectButton);
-    connect(rejectButton, &QPushButton::clicked, this, &AddFriendForm::onFriendRequestRejected);
+    connect(rejectButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestRejected);
     friendLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 

@@ -26,6 +26,7 @@
 #include <QGroupBox>
 #include <QDateTime>
 #include <QLabel>
+#include <QWindow>
 #include "ui_mainwindow.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
@@ -64,6 +65,17 @@ GroupInviteForm::GroupInviteForm()
     Translator::registerHandler(std::bind(&GroupInviteForm::retranslateUi, this), this);
 }
 
+bool GroupInviteForm::isShown() const
+{
+    if (this->isVisible())
+    {
+        headWidget->window()->windowHandle()->alert(0);
+        return true;
+    }
+
+    return false;
+}
+
 void GroupInviteForm::show(ContentLayout* contentLayout)
 {
     contentLayout->mainContent->layout()->addWidget(this);
@@ -83,13 +95,13 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
 
     QPushButton* acceptButton = new QPushButton(this);
     acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::clicked, this, &GroupInviteForm::onGroupInviteAccepted);
+    connect(acceptButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteAccepted);
     groupLayout->addWidget(acceptButton);
     retranslateAcceptButton(acceptButton);
 
     QPushButton* rejectButton = new QPushButton(this);
     rejectButtons.insert(rejectButton);
-    connect(rejectButton, &QPushButton::clicked, this, &GroupInviteForm::onGroupInviteRejected);
+    connect(rejectButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteRejected);
     groupLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 

@@ -721,11 +721,20 @@ void Widget::onAddClicked()
 
 void Widget::onGroupClicked()
 {
-    hideMainForms(nullptr);
-    groupInviteForm->show(contentLayout);
-    setWindowTitle(tr("Group invites"));
-    setActiveToolMenuButton(Widget::GroupButton);
-    activeChatroomWidget = nullptr;
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!groupInviteForm->isShown())
+            groupInviteForm->show(createContentDialog(GroupDialog));
+
+        setActiveToolMenuButton(Widget::None);
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        groupInviteForm->show(contentLayout);
+        setWindowTitle(fromDialogType(GroupDialog));
+        setActiveToolMenuButton(Widget::GroupButton);
+    }
 }
 
 void Widget::onTransferClicked()
@@ -1227,6 +1236,8 @@ QString Widget::fromDialogType(DialogType type)
     {
         case AddDialog:
             return tr("Add friend");
+        case GroupDialog:
+            return tr("Group invites");
         case TransferDialog:
             return tr("File transfers");
         case SettingDialog:
@@ -1269,9 +1280,8 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    QApplication::alert(this);
-    eventFlag = true;
-    friendRequestRecieved(userId, message);
+    addFriendForm->addFriendRequest(userId, message);
+    friendRequestsUpdate();
 }
 
 void Widget::updateFriendActivity(Friend *frnd)
@@ -2060,12 +2070,6 @@ void Widget::friendListContextMenu(const QPoint &pos)
         contactListWidget->addCircleWidget();
     else if (chosenAction == createGroupAction)
         Nexus::getCore()->createGroup();
-}
-
-void Widget::friendRequestRecieved(const QString& friendAddress, const QString& message)
-{
-    addFriendForm->addFriendRequest(friendAddress, message);
-    friendRequestsUpdate();
 }
 
 void Widget::friendRequestsUpdate()

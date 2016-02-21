@@ -184,7 +184,6 @@ private slots:
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
     void friendListContextMenu(const QPoint &pos);
-    void friendRequestRecieved(const QString& friendAddress, const QString& message);
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
