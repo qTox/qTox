@@ -217,7 +217,8 @@ void AddFriendForm::setIdFromClipboard()
 
 void AddFriendForm::onFriendRequestAccepted()
 {
-    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    QPushButton* acceptButton = static_cast<QPushButton*>(sender());
+    QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -228,7 +229,8 @@ void AddFriendForm::onFriendRequestAccepted()
 
 void AddFriendForm::onFriendRequestRejected()
 {
-    QWidget* friendWidget = static_cast<QWidget*>(sender());
+    QPushButton* rejectButton = static_cast<QPushButton*>(sender());
+    QWidget* friendWidget = rejectButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     friendWidget->deleteLater();
     requestsLayout->removeWidget(friendWidget);
@@ -285,13 +287,13 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
 
     QPushButton* acceptButton = new QPushButton(friendWidget);
     acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
+    connect(acceptButton, &QPushButton::clicked, this, &AddFriendForm::onFriendRequestAccepted);
     friendLayout->addWidget(acceptButton);
     retranslateAcceptButton(acceptButton);
 
     QPushButton* rejectButton = new QPushButton(friendWidget);
-    acceptButtons.insert(acceptButton);
-    connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
+    acceptButtons.insert(rejectButton);
+    connect(rejectButton, &QPushButton::clicked, this, &AddFriendForm::onFriendRequestRejected);
     friendLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 
