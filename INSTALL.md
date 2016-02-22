@@ -380,12 +380,31 @@ sudo make install
 If you are not using Fedora, skip this section, and go directly to compiling [**toxcore**](#toxcore-compiling).
 
 ```bash
+This method Auto detects whether to statically or Dynamically  link per your system configs.
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
 autoreconf -if
 ./configure
 make -j$(nproc)
 sudo make install
+cd ..
+
+
+Conversely, if you wish to explictly statically  or dynamically link sqlcipher use:
+
+Statically Linked:
+cd sqlpcipher
+$ ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+    LDFLAGS="/opt/local/lib/libcrypto.a"
+$ make
+$ sudo make install
+cd ..
+
+Dynamically Linked:
+cd sqlcipher$ ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+    LDFLAGS="-lcrypto"
+$ make
+$ sudo make install
 cd ..
 ````
 
