@@ -38,15 +38,14 @@
 #include <QMutexLocker>
 
 #include <sodium.h>
+#include <fcntl.h>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
 #endif
 
 #ifdef LOG_TO_FILE
-static std::unique_ptr<QTextStream> logFileStream {nullptr};
-static std::unique_ptr<QFile> logFileFile {nullptr};
-static QMutex mutex;
+static int logFileFileNO = -1;
 #endif
 
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
@@ -56,49 +55,26 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
-    QString LogMsg = QString("[%1] %2:%3 : ")
-            .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
-    switch (type)
-    {
-        case QtDebugMsg:
-            LogMsg += "Debug";
-            break;
-        case QtWarningMsg:
-            LogMsg += "Warning";
-            break;
-        case QtCriticalMsg:
-            LogMsg += "Critical";
-            break;
-        case QtFatalMsg:
-            LogMsg += "Fatal";
-            break;
-        default:
-            break;
-    }
-
-    LogMsg += ": " + msg + "\n";
-
-    QTextStream out(stderr, QIODevice::WriteOnly);
-    out << LogMsg;
+    QByteArray LogMsg = (qFormatLogMessage(type, ctxt, msg) + "\n").toLocal8Bit();
+    write(STDERR_FILENO, LogMsg.constData(), LogMsg.size());
 
 #ifdef LOG_TO_FILE
-    if (!logFileStream)
+    if (logFileFileNO < 0)
         return;
 
-    QMutexLocker locker(&mutex);
-    *logFileStream << LogMsg;
-    logFileStream->flush();
+    write(logFileFileNO, LogMsg.constData(), LogMsg.size());
 #endif
 }
 
 int main(int argc, char *argv[])
 {
+    qSetMessagePattern("%{time [HH:mm:ss.zzz]} %{file}:%{line} %{type} %{message}");
+    qInstallMessageHandler(logMessageHandler);
+
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
-
-    qInstallMessageHandler(logMessageHandler); // Enable log as early as possible (but not earlier!)
 
 #if defined(Q_OS_OSX)
     //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
@@ -130,36 +106,25 @@ int main(int argc, char *argv[])
 
 #ifdef LOG_TO_FILE
     QString logFileDir = Settings::getInstance().getSettingsDirPath();
-    logFileStream.reset(new QTextStream);
-    logFileFile.reset(new QFile(logFileDir + "qtox.log"));
+    QString logfile = logFileDir + "qtox.log";
+    logFileFileNO = open(logfile.toLocal8Bit().constData(), O_WRONLY | O_APPEND | O_CREAT);
 
-    // Trim log file if over 1MB
-    if (logFileFile->size() > 1000000) {
+    if (QFileInfo(logfile).size() > 1000000) {
         qDebug() << "Log file over 1MB, rotating...";
 		
         QDir dir (logFileDir);
-		
         // Check if log.1 already exists, and if so, delete it
-        if (dir.remove(logFileDir + "qtox.log.1"))
+        if (dir.remove(logFileDir + "qtox.log.1")) {
             qDebug() << "Removed log successfully";
-        else
+        } else {
             qDebug() << "Unable to remove old log file";
+        }
 
         dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1");
 
-        // Return to original log file path
-        logFileFile->setFileName(logFileDir + "qtox.log");
-    }
-
-    if (logFileFile->open(QIODevice::Append))
-    {
-        logFileStream->setDevice(logFileFile.get());
-        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' qTox file logger starting\n'");
-    }
-    else
-    {
-        qWarning() << "Couldn't open log file!\n";
-        logFileStream.release();
+        int oldLogFileFileNO = logFileFileNO;
+        logFileFileNO = open(logfile.toLocal8Bit().constData(), O_WRONLY | O_APPEND | O_CREAT);
+        close(oldLogFileFileNO);
     }
 #endif
 
@@ -263,7 +228,7 @@ int main(int argc, char *argv[])
     int errorcode = a.exec();
 
 #ifdef LOG_TO_FILE
-    logFileStream.release();
+    close(logFileFileNO);
 #endif
 
     Nexus::destroyInstance();
