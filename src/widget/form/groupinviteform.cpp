@@ -65,6 +65,11 @@ GroupInviteForm::GroupInviteForm()
     Translator::registerHandler(std::bind(&GroupInviteForm::retranslateUi, this), this);
 }
 
+GroupInviteForm::~GroupInviteForm()
+{
+    Translator::unregister(this);
+}
+
 bool GroupInviteForm::isShown() const
 {
     if (this->isVisible())
@@ -151,7 +156,10 @@ void GroupInviteForm::onGroupInviteRejected()
 void GroupInviteForm::retranslateUi()
 {
     headLabel->setText(tr("Groups"));
-    createButton->setText(tr("Create new group"));
+    if(createButton)
+    {
+        createButton->setText(tr("Create new group"));
+    }
     inviteBox->setTitle(tr("Group invites"));
 
     for (QPushButton* acceptButton : acceptButtons)
