@@ -36,6 +36,7 @@
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
+#include "src/widget/tool/croppinglabel.h"
 #include "src/net/toxme.h"
 #include <QWindow>
 #include <QScrollArea>
@@ -277,7 +278,7 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     horLayout->setMargin(0);
     friendLayout->addLayout(horLayout);
 
-    QLabel* friendLabel = new QLabel(friendWidget);
+    CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
     friendLabel->setText("<b>" + friendAddress + "</b>");
     horLayout->addWidget(friendLabel);
 
