@@ -39,6 +39,7 @@ class GroupInviteForm : public QWidget
     Q_OBJECT
 public:
     GroupInviteForm();
+    ~GroupInviteForm();
 
     void show(ContentLayout *contentLayout);
     void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
