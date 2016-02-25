@@ -327,7 +327,8 @@ void Settings::loadPersonal(Profile* profile)
     ps.beginGroup("Requests");
         unreadFriendRequests = ps.value("unread", 0).toUInt();
         size = ps.beginReadArray("Request");
-        friendLst.reserve(size);
+        friendRequests.clear();
+        friendRequests.reserve(size);
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
@@ -1533,16 +1534,23 @@ void Settings::setCircleExpanded(int id, bool expanded)
     circleLst[id].expanded = expanded;
 }
 
-void Settings::addFriendRequest(const QString &friendAddress, const QString &message)
+bool Settings::addFriendRequest(const QString &friendAddress, const QString &message)
 {
     QMutexLocker locker{&bigLock};
+
+    for (auto queued : friendRequests)
+    {
+       if (queued.first == friendAddress)
+       {
+           queued.second = message;
+           return false;
+       }
+    }
+
     QPair<QString, QString> request(friendAddress, message);
-
-    if (friendRequests.indexOf(request) != -1)
-        return;
-
     friendRequests.push_back(request);
     ++unreadFriendRequests;
+    return true;
 }
 
 unsigned int Settings::getUnreadFriendRequests() const
