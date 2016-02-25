@@ -1282,6 +1282,7 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 {
     addFriendForm->addFriendRequest(userId, message);
     friendRequestsUpdate();
+    newMessageAlert(window(), isActiveWindow(), true, true);
 }
 
 void Widget::updateFriendActivity(Friend *frnd)
@@ -1449,6 +1450,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
     {
         ++unreadGroupInvites;
         groupInvitesUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
         groupInviteForm->addGroupInvite(friendId, type, invite);
     }
     else
