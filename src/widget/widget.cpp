@@ -1280,9 +1280,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    addFriendForm->addFriendRequest(userId, message);
-    friendRequestsUpdate();
-    newMessageAlert(window(), isActiveWindow(), true, true);
+    if(addFriendForm->addFriendRequest(userId, message))
+    {
+        friendRequestsUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
+    }
 }
 
 void Widget::updateFriendActivity(Friend *frnd)

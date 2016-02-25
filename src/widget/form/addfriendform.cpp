@@ -127,11 +127,15 @@ void AddFriendForm::setMode(Mode mode)
     tabWidget->setCurrentIndex(mode);
 }
 
-void AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
+bool AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
 {
-    addFriendRequestWidget(friendAddress, message);
-    Settings::getInstance().addFriendRequest(friendAddress, message);
-    onCurrentChanged(tabWidget->currentIndex());
+    if(Settings::getInstance().addFriendRequest(friendAddress, message))
+    {
+        addFriendRequestWidget(friendAddress, message);
+        onCurrentChanged(tabWidget->currentIndex());
+        return true;
+    }
+    return false;
 }
 
 void AddFriendForm::onUsernameSet(const QString& username)

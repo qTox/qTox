@@ -52,7 +52,7 @@ public:
     QString getMessage() const;
     void setMode(Mode mode);
 
-    void addFriendRequest(const QString& friendAddress, const QString& message);
+    bool addFriendRequest(const QString& friendAddress, const QString& message);
 
 signals:
     void friendRequested(const QString& friendAddress, const QString& message);
