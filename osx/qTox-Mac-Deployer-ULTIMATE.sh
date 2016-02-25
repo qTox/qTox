@@ -77,7 +77,7 @@ function build_toxcore() {
 	fcho "Compiling toxcore."
 	make > /dev/null || exit 1
 	fcho "Installing toxcore."
-	sudo make install > /dev/null || exit 1
+	make install > /dev/null || exit 1
 }
 
 function install() {
@@ -144,7 +144,7 @@ function install() {
 		cd $FA_DIR
 	fi
 	fcho "Installing filter_audio."
-	sudo make install PREFIX="${LIB_INSTALL_PREFIX}"
+	make install PREFIX="${LIB_INSTALL_PREFIX}"
 	
 	# toxcore build
 	if [[ $TRAVIS = true ]]; then #travis check
