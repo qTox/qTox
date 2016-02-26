@@ -366,9 +366,8 @@ The script will automatically download and install `toxcore` and `libfilteraudio
 ```
 If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
 
-
 If you want to compile and install it manually:
-```bash
+```
 git clone https://github.com/irungentoo/filter_audio
 cd filter_audio
 make -j$(nproc)
@@ -379,8 +378,8 @@ sudo make install
 
 If you are not using Fedora, skip this section, and go directly to compiling [**toxcore**](#toxcore-compiling).
 
-```bash
-This method Auto detects whether to statically or Dynamically  link per your system configs.
+This method Auto detects whether to statically or Dynamically link per your system configs.
+```
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
 autoreconf -if
@@ -388,25 +387,30 @@ autoreconf -if
 make -j$(nproc)
 sudo make install
 cd ..
+```
+If you wish to explictly statically  or dynamically link sqlcipher use:
 
-
-Conversely, if you wish to explictly statically  or dynamically link sqlcipher use:
-
-Statically Linked:
+#### Statically Linked:
+```
+git clone https://github.com/sqlcipher/sqlcipher
 cd sqlpcipher
-$ ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
     LDFLAGS="/opt/local/lib/libcrypto.a"
-$ make
-$ sudo make install
+make
+sudo make install
 cd ..
+```
 
-Dynamically Linked:
-cd sqlcipher$ ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+#### Dynamically Linked:
+```
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlcipher
+./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
     LDFLAGS="-lcrypto"
-$ make
-$ sudo make install
+make
+sudo make install
 cd ..
-````
+```
 
 ### toxcore compiling
 
