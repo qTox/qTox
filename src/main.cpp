@@ -38,14 +38,14 @@
 #include <QMutexLocker>
 
 #include <sodium.h>
-#include <fcntl.h>
+#include <stdio.h>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
 #endif
 
 #ifdef LOG_TO_FILE
-static int logFileFileNO = -1;
+static FILE * logFileFile = nullptr;
 #endif
 
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
@@ -56,13 +56,13 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         return;
 
     QByteArray LogMsg = (qFormatLogMessage(type, ctxt, msg) + "\n").toLocal8Bit();
-    write(STDERR_FILENO, LogMsg.constData(), LogMsg.size());
+    fwrite(LogMsg.constData(), 1, LogMsg.size(), stderr);
 
 #ifdef LOG_TO_FILE
-    if (logFileFileNO < 0)
+    if (logFileFile == nullptr)
         return;
-
-    write(logFileFileNO, LogMsg.constData(), LogMsg.size());
+    fwrite(LogMsg.constData(), 1, LogMsg.size(), logFileFile);
+    fflush(logFileFile);
 #endif
 }
 
@@ -107,24 +107,23 @@ int main(int argc, char *argv[])
 #ifdef LOG_TO_FILE
     QString logFileDir = Settings::getInstance().getSettingsDirPath();
     QString logfile = logFileDir + "qtox.log";
-    logFileFileNO = open(logfile.toLocal8Bit().constData(), O_WRONLY | O_APPEND | O_CREAT);
+    logFileFile = fopen(logfile.toLocal8Bit().constData(), "a");
 
     if (QFileInfo(logfile).size() > 1000000) {
         qDebug() << "Log file over 1MB, rotating...";
 		
         QDir dir (logFileDir);
         // Check if log.1 already exists, and if so, delete it
-        if (dir.remove(logFileDir + "qtox.log.1")) {
+        if (dir.remove(logFileDir + "qtox.log.1"))
             qDebug() << "Removed log successfully";
-        } else {
+        else
             qDebug() << "Unable to remove old log file";
-        }
 
         dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1");
 
-        int oldLogFileFileNO = logFileFileNO;
-        logFileFileNO = open(logfile.toLocal8Bit().constData(), O_WRONLY | O_APPEND | O_CREAT);
-        close(oldLogFileFileNO);
+        FILE * oldLogFileFile = logFileFile;
+        logFileFile = fopen(logfile.toLocal8Bit().constData(), "a");
+        fclose(oldLogFileFile);
     }
 #endif
 
@@ -228,7 +227,7 @@ int main(int argc, char *argv[])
     int errorcode = a.exec();
 
 #ifdef LOG_TO_FILE
-    close(logFileFileNO);
+    fclose(logFileFile);
 #endif
 
     Nexus::destroyInstance();
