@@ -132,7 +132,10 @@ bool AddFriendForm::addFriendRequest(const QString &friendAddress, const QString
     if(Settings::getInstance().addFriendRequest(friendAddress, message))
     {
         addFriendRequestWidget(friendAddress, message);
-        onCurrentChanged(tabWidget->currentIndex());
+        if(isShown())
+        {
+            onCurrentChanged(tabWidget->currentIndex());
+        }
         return true;
     }
     return false;
