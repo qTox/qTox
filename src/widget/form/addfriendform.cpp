@@ -97,7 +97,7 @@ AddFriendForm::~AddFriendForm()
 
 bool AddFriendForm::isShown() const
 {
-    if (main->isVisible())
+    if (head->isVisible())
     {
         head->window()->windowHandle()->alert(0);
         return true;
@@ -290,6 +290,7 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     horLayout->addWidget(friendLabel);
 
     QLabel* messageLabel = new QLabel(message);
+    messageLabel->setTextFormat(Qt::PlainText);
     messageLabel->setWordWrap(true);
     horLayout->addWidget(messageLabel, 1);
 
