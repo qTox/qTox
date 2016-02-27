@@ -46,12 +46,15 @@ AVForm::AVForm() :
 
     bodyUI->btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
-
 #ifdef QTOX_FILTER_AUDIO
     bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
 #else
     bodyUI->filterAudio->setDisabled(true);
 #endif
+
+    // temporary remove audio filtering, because it makes audio quality worse
+    Settings::getInstance().setFilterAudio(false);
+    bodyUI->filterAudio->hide();
 
     auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
