@@ -21,6 +21,7 @@
 #include <QResizeEvent>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QTextDocument> 
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
@@ -126,7 +127,7 @@ void CroppingLabel::setElidedText()
 {
     QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
     if (elidedText != origText)
-        setToolTip(origText.toHtmlEscaped());
+        setToolTip(Qt::convertFromPlainText(origText, Qt::WhiteSpaceNormal));
     else
         setToolTip(QString());
 

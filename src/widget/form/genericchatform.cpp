@@ -272,7 +272,7 @@ QDate GenericChatForm::getLatestDate() const
 void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);
-    nameLabel->setToolTip(newName.toHtmlEscaped()); // for overlength names
+    nameLabel->setToolTip(Qt::convertFromPlainText(newName, Qt::WhiteSpaceNormal)); // for overlength names
 }
 
 void GenericChatForm::show(ContentLayout* contentLayout)
