@@ -40,8 +40,10 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     protected:
         void keyPressEvent(QKeyEvent* event) override
         {
-            if (event->key() == Qt::Key_Escape)
+            if (event->key() == Qt::Key_Escape) {
+                undo();
                 clearFocus();
+            }
 
             QLineEdit::keyPressEvent(event);
         }
@@ -53,8 +55,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    connect(textEdit, &QLineEdit::returnPressed, this, &CroppingLabel::editingFinished);
-    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::hideTextEdit);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
 }
 
 void CroppingLabel::editBegin()
@@ -162,6 +163,7 @@ void CroppingLabel::minimizeMaximumWidth()
 
 void CroppingLabel::editingFinished()
 {
+    hideTextEdit();
     QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
 
     if (origText != newText)
