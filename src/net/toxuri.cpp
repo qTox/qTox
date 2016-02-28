@@ -57,11 +57,7 @@ bool handleToxURI(const QString &toxURI)
     while (!core->isReady())
         qApp->processEvents();
 
-    QString toxaddr;
-    if (toxURI.startsWith("tox:"))
-        toxaddr = toxURI.mid(6);
-    else
-        toxaddr = toxURI.mid(4);
+    QString toxaddr = toxURI.mid(4);
 
     QString toxId = Toxme::lookup(toxaddr).toString();
     if (toxId.isEmpty())
