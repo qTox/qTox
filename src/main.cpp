@@ -129,7 +129,8 @@ int main(int argc, char *argv[])
     sodium_init(); // For the auto-updater
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = Settings::getInstance().getSettingsDirPath();
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QDir(logFileDir).mkpath(".");
     logFileStream.reset(new QTextStream);
     logFileFile.reset(new QFile(logFileDir + "qtox.log"));
 

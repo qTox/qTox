@@ -42,6 +42,8 @@ public:
     static Settings& getInstance();
     static void destroyInstance();
     QString getSettingsDirPath(); ///< The returned path ends with a directory separator
+    QString getAppDataDirPath(); ///< The returned path ends with a directory separator
+    QString getAppCacheDirPath(); ///< The returned path ends with a directory separator
 
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
     void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
