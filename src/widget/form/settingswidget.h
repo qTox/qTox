@@ -32,6 +32,7 @@ class PrivacyForm;
 class AVForm;
 class QLabel;
 class QTabWidget;
+class NotificationBackend;
 class ContentLayout;
 
 class SettingsWidget : public QWidget
@@ -44,6 +45,7 @@ public:
     bool isShown() const;
     void show(ContentLayout* contentLayout);
     void setBodyHeadStyle(QString style);
+    void reloadNotificationBackend();
 
     void showAbout();
 
@@ -52,6 +54,7 @@ signals:
     void compactToggled(bool compact);
     void separateWindowToggled(bool separateWindow);
     void groupchatPositionToggled(bool groupchatPosition);
+    void desktopNotificationsToggled(NotificationBackend* notificationBackend);
 
 private slots:
     void onTabChanged(int);
@@ -64,6 +67,7 @@ private:
     QTabWidget *settingsWidgets;
     QLabel *nameLabel, *imgLabel;
     std::array<GenericForm*, 5> cfgForms;
+    GeneralForm* gfrm;
     int currentIndex;
 };
 

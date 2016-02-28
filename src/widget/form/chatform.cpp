@@ -295,6 +295,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
     Audio& audio = Audio::getInstance();
     audio.startLoop();
     audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
+
+    emit invitedCall(f->getFriendID());
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)
