@@ -40,7 +40,8 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     protected:
         void keyPressEvent(QKeyEvent* event) override
         {
-            if (event->key() == Qt::Key_Escape) {
+            if (event->key() == Qt::Key_Escape)
+            {
                 undo();
                 clearFocus();
             }
