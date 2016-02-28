@@ -244,7 +244,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Rimuovi la cronologia (questa operazione non può essere cancellata!)</translation>
+        <translation>Rimuovi la cronologia (questa operazione non può essere annullata!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -252,7 +252,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>È possibile salvare un commento su questo contatto qui.</translation>
+        <translation>È possibile salvare un commento per questo contatto.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1710,7 +1710,7 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <location filename="../src/widget/form/loadhistorydialog.ui" line="23"/>
         <source>Load history from:</source>
-        <translation>Carica cronologia chat del giorno:</translation>
+        <translation>Carica cronologia chat dal giorno:</translation>
     </message>
 </context>
 <context>
