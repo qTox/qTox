@@ -49,14 +49,17 @@ AboutForm::AboutForm() :
 //nightly builds from stable releases.
 void AboutForm::replaceVersions()
 {
+    QString toxcoreVersionString = QString::number(TOX_VERSION_MAJOR) + "." +
+                                    QString::number(TOX_VERSION_MINOR) + "." +
+                                    QString::number(TOX_VERSION_PATCH);
     bodyUI->youareusing->setText(bodyUI->youareusing->text().replace("$GIT_DESCRIBE", QString(GIT_DESCRIBE)));
     bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
-    bodyUI->toxCoreVersion->setText(
-                bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION",
-                                                       QString::number(TOX_VERSION_MAJOR) + "." +
-                                                       QString::number(TOX_VERSION_MINOR) + "." +
-                                                       QString::number(TOX_VERSION_PATCH)));
-    bodyUI->qtVersion->setText(tr("Qt version:") + " " + QT_VERSION_STR);
+    bodyUI->toxCoreVersion->setText(bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION", toxcoreVersionString));
+    bodyUI->qtVersion->setText(bodyUI->qtVersion->text().replace("$QTVERSION", QT_VERSION_STR));
+    bodyUI->knownIssues->setText(bodyUI->knownIssues->text().replace("$GIT_DESCRIBE", QString(GIT_DESCRIBE)));
+    bodyUI->knownIssues->setText(bodyUI->knownIssues->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
+    bodyUI->knownIssues->setText(bodyUI->knownIssues->text().replace("$TOXCOREVERSION", toxcoreVersionString));
+    bodyUI->knownIssues->setText(bodyUI->knownIssues->text().replace("$QTVERSION", QT_VERSION_STR));
 }
 
 AboutForm::~AboutForm()
