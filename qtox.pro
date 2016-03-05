@@ -39,6 +39,7 @@ FORMS    += \
     src/widget/about/aboutuser.ui
 
 CONFIG   += c++11
+CONFIG   += link_pkgconfig
 
 QMAKE_CXXFLAGS += -fno-exceptions
 
@@ -219,105 +220,40 @@ win32 {
     }
 }
 
-# The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
 unix:!macx:!android {
-contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-    DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
+    # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
+    contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
+        DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
 
-    INCLUDEPATH += "/usr/include/glib-2.0"
-    INCLUDEPATH += "/usr/include/gtk-2.0"
-    INCLUDEPATH += "/usr/include/atk-1.0"
-    INCLUDEPATH += "/usr/include/cairo"
-    INCLUDEPATH += "/usr/include/ffmpeg"
-    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-    INCLUDEPATH += "/usr/include/libappindicator-0.1"
-    INCLUDEPATH += "/usr/include/libdbusmenu-glib-0.4"
-    INCLUDEPATH += "/usr/include/pango-1.0"
-    equals(QT_ARCH, x86_64) {
-        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-    }
-    else {
-        INCLUDEPATH += "/usr/lib/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+        PKGCONFIG += glib-2.0 gtk+-2.0 atk
+        PKGCONFIG += cairo gdk-pixbuf-2.0 pango
+        PKGCONFIG += appindicator-0.1 dbusmenu-glib-0.4
     }
 
-    LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
-}
-}
+    # The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
+    !contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
+        DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
 
-# The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
-unix:!macx:!android {
-contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
-} else {
-    DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
+        PKGCONFIG += glib-2.0 gtk+-2.0 atk
+        PKGCONFIG += cairo gdk-pixbuf-2.0 pango
 
-    INCLUDEPATH += "/usr/include/glib-2.0"
-    INCLUDEPATH += "/usr/include/gtk-2.0"
-    INCLUDEPATH += "/usr/include/atk-1.0"
-    INCLUDEPATH += "/usr/include/cairo"
-    INCLUDEPATH += "/usr/include/ffmpeg"
-    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-    INCLUDEPATH += "/usr/include/pango-1.0"
-    equals(QT_ARCH, x86_64) {
-        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
-    }
-    else {
-        INCLUDEPATH += "/usr/lib/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
+        SOURCES +=     src/platform/statusnotifier/closures.c \
+        src/platform/statusnotifier/enums.c \
+        src/platform/statusnotifier/statusnotifier.c
+
+        HEADERS += src/platform/statusnotifier/closures.h \
+        src/platform/statusnotifier/enums.h \
+        src/platform/statusnotifier/interfaces.h \
+        src/platform/statusnotifier/statusnotifier.h
     }
 
+    # The systray GTK backend implements a system tray icon compatible with many systems
+    !contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
+        DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
 
-    LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
-
-    SOURCES +=     src/platform/statusnotifier/closures.c \
-    src/platform/statusnotifier/enums.c \
-    src/platform/statusnotifier/statusnotifier.c
-
-    HEADERS += src/platform/statusnotifier/closures.h \
-    src/platform/statusnotifier/enums.h \
-    src/platform/statusnotifier/interfaces.h \
-    src/platform/statusnotifier/statusnotifier.h
-}
-}
-
-# The systray GTK backend implements a system tray icon compatible with many systems
-unix:!macx:!android {
-contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
-} else {
-    DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
-
-    INCLUDEPATH += "/usr/include/glib-2.0"
-    INCLUDEPATH += "/usr/include/gtk-2.0"
-    INCLUDEPATH += "/usr/include/atk-1.0"
-    INCLUDEPATH += "/usr/include/gdk-pixbuf-2.0"
-    INCLUDEPATH += "/usr/include/cairo"
-    INCLUDEPATH += "/usr/include/pango-1.0"
-    equals(QT_ARCH, x86_64) {
-        INCLUDEPATH += "/usr/lib64/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib64/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/x86_64-linux-gnu/gtk-2.0/include"
+        PKGCONFIG += glib-2.0 gtk+-2.0 atk
+        PKGCONFIG += gdk-pixbuf-2.0 cairo pango
     }
-    else {
-        INCLUDEPATH += "/usr/lib/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/glib-2.0/include"
-        INCLUDEPATH += "/usr/lib/gtk-2.0/include"
-        INCLUDEPATH += "/usr/lib/i386-linux-gnu/gtk-2.0/include"
-    }
-
-
-    LIBS += -lglib-2.0 -lgdk_pixbuf-2.0 -lgio-2.0 -lcairo -lgtk-x11-2.0 -lgdk-x11-2.0 -lgobject-2.0
-}
 }
 
 !android {
