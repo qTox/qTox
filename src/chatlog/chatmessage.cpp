@@ -306,5 +306,5 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
 
 QString ChatMessage::wrapDiv(const QString &str, const QString &div)
 {
-    return QString("<div class=%1>%2</div>").arg(div, str);
+    return QString("<p class=%1>%2</p>").arg(div, /*QChar(0x200E) + */QString(str));
 }
