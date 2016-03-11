@@ -116,7 +116,7 @@ void NotificationScrollArea::resizeEvent(QResizeEvent *event)
 
 void NotificationScrollArea::findNextWidget()
 {
-    int value;
+    int value = 0;
     GenericChatroomWidget* next = nullptr;
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 
@@ -151,7 +151,7 @@ void NotificationScrollArea::findNextWidget()
 
 void NotificationScrollArea::findPreviousWidget()
 {
-    int value;
+    int value = 0;
     GenericChatroomWidget* next = nullptr;
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 

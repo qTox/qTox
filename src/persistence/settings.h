@@ -26,6 +26,7 @@
 #include <QPixmap>
 #include <QMutex>
 #include <QDate>
+#include <QNetworkProxy>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -43,14 +44,14 @@ public:
     QString getSettingsDirPath(); ///< The returned path ends with a directory separator
 
     void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
-    void createPersonal(QString basename); ///< Write a default personnal .ini settings file for a profile
+    void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
 
     void savePersonal(); ///< Asynchronous, saves the current profile
     void savePersonal(Profile *profile); ///< Asynchronous
 
     void loadGlobal();
-    void loadPersonnal();
-    void loadPersonnal(Profile *profile);
+    void loadPersonal();
+    void loadPersonal(Profile *profile);
 
 public slots:
     void saveGlobal(); ///< Asynchronous
@@ -108,6 +109,8 @@ public:
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
+
+    QNetworkProxy getProxy() const;
 
     QString getProxyAddr() const;
     void setProxyAddr(const QString& newValue);
@@ -294,12 +297,13 @@ public:
         setWidgetData(widget->objectName() + "State", widget->saveState());
     }
 
+    static uint32_t makeProfileId(const QString& profile);
+
 private:
     Settings();
     ~Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
-    static uint32_t makeProfileId(const QString& profile);
 
 private slots:
     void savePersonal(QString profileName, QString password);

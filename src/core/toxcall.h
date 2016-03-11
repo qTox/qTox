@@ -2,15 +2,10 @@
 #define TOXCALL_H
 
 #include <cstdint>
-#include "src/core/indexedlist.h"
+#include <QtGlobal>
+#include <QMetaObject>
 
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
-#endif
+#include "src/core/indexedlist.h"
 
 #include <tox/toxav.h>
 
@@ -34,18 +29,14 @@ public:
      const ToxCall& operator=(ToxCall&& other) noexcept;
 
 protected:
-     QTimer* sendAudioTimer;
+     QMetaObject::Connection audioInConn;
 
 public:
-    uint32_t callId; ///< Could be a friendNum or groupNum, must uniquely identify the call
+    uint32_t callId; ///< Could be a friendNum or groupNum, must uniquely identify the call. Do not modify!
+    quint32 alSource;
     bool inactive; ///< True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
     bool muteMic;
     bool muteVol;
-    ALuint alSource;
-
-#ifdef QTOX_FILTER_AUDIO
-    AudioFilterer* filterer;
-#endif
 };
 
 struct ToxFriendCall : public ToxCall

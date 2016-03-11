@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>625</width>
+    <width>615</width>
     <height>243</height>
    </rect>
   </property>
@@ -68,10 +68,10 @@
       <item>
        <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,1">
         <property name="leftMargin">
-         <number>10</number>
+         <number>4</number>
         </property>
         <property name="rightMargin">
-         <number>6</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
          <number>0</number>
@@ -101,22 +101,22 @@
            <enum>QLayout::SetDefaultConstraint</enum>
           </property>
           <property name="leftMargin">
-           <number>6</number>
+           <number>4</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="rightMargin">
-           <number>6</number>
+           <number>4</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="horizontalSpacing">
            <number>6</number>
           </property>
           <property name="verticalSpacing">
-           <number>3</number>
+           <number>0</number>
           </property>
           <item row="1" column="0">
            <widget class="QWidget" name="statusWidget" native="true">
@@ -270,7 +270,7 @@
          </layout>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="previewLabel">
+         <widget class="QPushButton" name="previewButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -289,14 +289,21 @@
             <height>60</height>
            </size>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::Box</enum>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
-          <property name="lineWidth">
-           <number>2</number>
+          <property name="icon">
+           <iconset resource="../../../res.qrc">
+            <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>
           </property>
-          <property name="text">
-           <string>[preview]</string>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>18</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

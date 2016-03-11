@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>830</width>
-        <height>495</height>
+        <width>824</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -41,27 +41,54 @@
           <string>Audio Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="2" column="1">
-           <widget class="QLabel" name="playbackMin">
-            <property name="text">
-             <string>0</string>
+          <item row="0" column="1" colspan="2">
+           <widget class="QComboBox" name="outDevCombobox"/>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QSlider" name="microphoneSlider">
+            <property name="toolTip">
+             <string>Use slider to set volume of your microphone.</string>
+            </property>
+            <property name="maximum">
+             <number>100</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="filterAudio">
-            <property name="toolTip">
-             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
-            </property>
+          <item row="3" column="0">
+           <widget class="QLabel" name="microphoneLabel">
             <property name="text">
-             <string>Filter audio</string>
+             <string>Gain</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="outDevLabel">
+            <property name="text">
+             <string>Playback device</string>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QComboBox" name="outDevCombobox"/>
+           <widget class="QToolButton" name="btnPlayTestSound">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../res.qrc">
+              <normaloff>:/ui/volButton/volButton.png</normaloff>:/ui/volButton/volButton.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
-          <item row="2" column="2">
+          <item row="1" column="1">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
@@ -74,73 +101,19 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="microphoneLabel">
-            <property name="text">
-             <string>Microphone</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QLabel" name="microphoneMax">
-            <property name="text">
-             <string>100</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="playbackMax">
-            <property name="text">
-             <string>100</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="inDevLabel">
             <property name="text">
              <string>Capture device</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="microphoneMin">
-            <property name="text">
-             <string>0</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QSlider" name="microphoneSlider">
-            <property name="toolTip">
-             <string>Use slider to set volume of your microphone.</string>
-            </property>
-            <property name="maximum">
-             <number>400</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="playbackLabel">
             <property name="text">
-             <string>Playback</string>
+             <string>Volume</string>
             </property>
            </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="outDevLabel">
-            <property name="text">
-             <string>Playback device</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="MicFeedbackWidget" name="microphoneFeedback" native="true"/>
           </item>
          </layout>
         </widget>
@@ -236,13 +209,9 @@ which may lead to problems with video calls.</string>
    <header>src/widget/form/settings/verticalonlyscroller.h</header>
    <container>1</container>
   </customwidget>
-  <customwidget>
-   <class>MicFeedbackWidget</class>
-   <extends>QWidget</extends>
-   <header>src/widget/tool/micfeedbackwidget.h</header>
-   <container>1</container>
-  </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../../../../res.qrc"/>
+ </resources>
  <connections/>
 </ui>

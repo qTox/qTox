@@ -25,7 +25,6 @@
 #include "persistence/settings.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"
-#include "widget/style.h"
 #include "widget/loginscreen.h"
 #include <QThread>
 #include <QDebug>
@@ -98,7 +97,6 @@ void Nexus::start()
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
 
     loginScreen = new LoginScreen();
-    loginScreen->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
@@ -275,7 +273,7 @@ void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
     if (profile)
-        Settings::getInstance().loadPersonnal(profile);
+        Settings::getInstance().loadPersonal(profile);
 }
 
 AndroidGUI* Nexus::getAndroidGUI()

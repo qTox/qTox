@@ -66,8 +66,8 @@ private:
         /// Not followed by any data
         ArrayEnd=4,
     };
-    friend QDataStream& operator<<(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
-    friend QDataStream& operator>>(QDataStream& dataStream, SettingsSerializer::RecordTag& tag);
+    friend QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
+    friend QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& tag);
 
     struct Value
     {

@@ -14,64 +14,40 @@
 using namespace std;
 
 ToxCall::ToxCall(uint32_t CallId)
-    : sendAudioTimer{new QTimer}, callId{CallId},
-      inactive{true}, muteMic{false}, muteVol{false}, alSource{0}
+    : callId{CallId}, alSource{0},
+      inactive{true}, muteMic{false}, muteVol{false}
 {
-    sendAudioTimer->setInterval(5);
-    sendAudioTimer->setSingleShot(true);
-
-    Audio::getInstance().subscribeInput();
-
-#ifdef QTOX_FILTER_AUDIO
-    if (Settings::getInstance().getFilterAudio())
-    {
-        filterer = new AudioFilterer();
-        filterer->startFilter(AUDIO_SAMPLE_RATE);
-    }
-    else
-    {
-        filterer = nullptr;
-    }
-#endif
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
+    audio.subscribeOutput(alSource);
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept
-    : sendAudioTimer{other.sendAudioTimer}, callId{other.callId},
-      inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol},
-      alSource{other.alSource}
+    : audioInConn{other.audioInConn}, callId{other.callId}, alSource{other.alSource},
+      inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol}
 {
-    other.sendAudioTimer = nullptr;
+    other.audioInConn = QMetaObject::Connection();
     other.callId = numeric_limits<decltype(callId)>::max();
     other.alSource = 0;
 
-#ifdef QTOX_FILTER_AUDIO
-    filterer = other.filterer;
-    other.filterer = nullptr;
-#endif
+    // required -> ownership of audio input is moved to new instance
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
 }
 
 ToxCall::~ToxCall()
 {
-    if (sendAudioTimer)
-    {
-        QObject::disconnect(sendAudioTimer, nullptr, nullptr, nullptr);
-        sendAudioTimer->stop();
-        Audio::getInstance().unsubscribeInput();
-    }
+    Audio& audio = Audio::getInstance();
 
-    if (alSource)
-        Audio::deleteSource(&alSource);
-
-#ifdef QTOX_FILTER_AUDIO
-    if (filterer)
-        delete filterer;
-#endif
+    QObject::disconnect(audioInConn);
+    audio.unsubscribeInput();
+    audio.unsubscribeOutput(alSource);
 }
 
 const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
-    sendAudioTimer = other.sendAudioTimer;
-    other.sendAudioTimer = nullptr;
+    audioInConn = other.audioInConn;
+    other.audioInConn = QMetaObject::Connection();
     callId = other.callId;
     other.callId = numeric_limits<decltype(callId)>::max();
     inactive = other.inactive;
@@ -80,10 +56,9 @@ const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     alSource = other.alSource;
     other.alSource = 0;
 
-    #ifdef QTOX_FILTER_AUDIO
-        filterer = other.filterer;
-        other.filterer = nullptr;
-    #endif
+    // required -> ownership of audio input is moved to new instance
+    Audio& audio = Audio::getInstance();
+    audio.subscribeInput();
 
     return *this;
 }
@@ -121,14 +96,11 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
       state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)},
       av{&av}, timeoutTimer{nullptr}
 {
-    auto audioTimerCopy = sendAudioTimer; // this might change after a move, but not sendAudioTimer
-    QObject::connect(sendAudioTimer, &QTimer::timeout, [FriendNum,&av,audioTimerCopy]()
+    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+                     [&av,FriendNum](const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
     {
-        // If sendCallAudio returns false, there was a serious error and we might as well stop the timer
-        if (av.sendCallAudio(FriendNum))
-            audioTimerCopy->start();
+        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
     });
-    sendAudioTimer->start();
 
     if (videoEnabled)
     {
@@ -194,14 +166,11 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV &av)
     static_assert(numeric_limits<decltype(callId)>::max() >= numeric_limits<decltype(GroupNum)>::max(),
                   "The callId must be able to represent any group number, change its type if needed");
 
-    auto audioTimerCopy = sendAudioTimer; // this might change after a move, but not sendAudioTimer
-    QObject::connect(sendAudioTimer, &QTimer::timeout, [GroupNum,&av,audioTimerCopy]()
+    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
+                    [&av,GroupNum](const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
     {
-        // If sendGroupCallAudio returns false, there was a serious error and we might as well stop the timer
-        if (av.sendGroupCallAudio(GroupNum))
-            audioTimerCopy->start();
+        av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
     });
-    sendAudioTimer->start();
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept

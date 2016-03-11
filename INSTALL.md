@@ -32,6 +32,7 @@
     - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [filter_audio](#filter_audio)
+  - [sqlcipher](#sqlcipher)
   - [toxcore compiling](#toxcore-compiling)
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
@@ -42,7 +43,7 @@
 
 | Name         | Version     | Modules                                           |
 |--------------|-------------|-------------------------------------------------- |
-| Qt           | >= 5.2.0    | core, gui, network, opengl, sql, svg, widget, xml |
+| Qt           | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | GCC/MinGW    | >= 4.8      | C++11 enabled                                     |
 | toxcore      | most recent | core, av                                          |
 | FFmpeg       | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
@@ -77,10 +78,10 @@ There are available generic binaries for Linux:
 <a name="arch-easy" />
 #### Arch
 
-**Please note that installing toxcore/qTox from AUR is not supported**, although installing other dependencies, provided that they met requirements, should be fine, unless you are installing cryptography library from AUR, which should rise red flags by itself…
-
-That being said, there are supported PKGBUILDs at https://github.com/Tox/arch-repo-tox
-
+PKGBUILD is available in the `community` repo, to install:
+```bash
+pacman -S qtox
+```
 
 <a name="gentoo-easy" />
 #### Gentoo
@@ -191,16 +192,21 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 
 <a name="fedora-other-deps" />
 #### Fedora:
+**Note that sqlcipher is not included in Fedora(!).**
+
+**This means that you have to compile sqlcipher yourself, otherwise compiling qTox will fail.**
 ```bash
 sudo dnf group install "Development Tools"
 sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel qtsingleapplication qt5-linguist gtk2-devel
 ```
 
+**Go to [sqlcipher](#sqlcipher) section to compile it.**
+
 <a name="opensuse-other-deps" />
 #### openSUSE:
 
 ```bash
-sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel
+sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel sqlcipher-devel
 ```
 
 <a name="slackware-other-deps" />
@@ -332,7 +338,7 @@ You will need to install manually `libsodium`:
 ```
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
-git checkout tags/1.0.3
+git checkout tags/1.0.8
 ./autogen.sh
 ./configure && make check
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
@@ -360,15 +366,52 @@ The script will automatically download and install `toxcore` and `libfilteraudio
 ```
 If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
 
-
 If you want to compile and install it manually:
-```bash
+```
 git clone https://github.com/irungentoo/filter_audio
 cd filter_audio
 make -j$(nproc)
 sudo make install
 ```
 
+### sqlcipher
+
+If you are not using Fedora, skip this section, and go directly to compiling [**toxcore**](#toxcore-compiling).
+
+This method automatically detects whether to link statically or dynamically,
+depending on your system configs.
+```
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlcipher
+autoreconf -if
+./configure
+make -j$(nproc)
+sudo make install
+cd ..
+```
+If you wish to explictly link sqlcipher statically or dynamically use:
+
+#### Statically linked:
+```
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlpcipher
+./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+    LDFLAGS="/opt/local/lib/libcrypto.a"
+make
+sudo make install
+cd ..
+```
+
+#### Dynamically linked:
+```
+git clone https://github.com/sqlcipher/sqlcipher
+cd sqlcipher
+./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+    LDFLAGS="-lcrypto"
+make
+sudo make install
+cd ..
+```
 
 ### toxcore compiling
 
@@ -437,13 +480,53 @@ packages necessary for building .debs, so be prepared to type your password for 
 
 <a name="osx" />
 ## OS X
+
 Compiling qTox on OS X for development requires 3 tools, [Xcode](https://developer.apple.com/xcode/) and [Qt 5.4+](http://www.qt.io/qt5-4/), and [homebrew](http://brew.sh).
 
-### Required Libraries
+### Automated Script
+You can now set up your OS X system to compile qTox automatically thanks to the script in:
+`./osx/qTox-Mac-Deployer-ULTIMATE.sh`
+
+This script can be run independently of the qTox repo and is all that's needed to build from scratch on OS X.
+
+To use this script you must launch terminal which can be found: `Applications > Utilities > Terminal.app`
+
+If you wish to lean more you can run `./qTox-Mac-Deployer-ULTIMATE.sh -h`
+
+#### First Run / Install
+If you are running the script for the first time you will want to makesure your system is ready.
+To do this simply run `./qTox-Mac-Deployer-ULTIMATE.sh -i` to run you through the automated install set up.
+
+After running the installation setup you are now ready to build qTox from source, to do this simply run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -b`
+
+If there aren't any errors then you'll find a locally working qTox application in your home folder under 
+`~/qTox-Mac_Build`
+
+#### Updating
+If you want to update your application for testing purposes or you want to run a nightly build setup then run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -u` and follow the prompts. 
+(NOTE: If you know you updated the repos before running this hit Y)
+followed by
+`./qTox-Mac-Deployer-ULTIMATE.sh -b`
+to build the application once more. (NOTE: This will delete your previous build.)
+
+#### Deploying
+OS X requires an extra step to make the `qTox.app` file shareable on a system that doesn't have the required libraries installed already.
+
+If you want to share the build you've made with your other friends who use OS X then simply run:
+`./qTox-Mac-Deployer-ULTIMATE.sh -d`
+
+### Manual Compiling
+#### Required Libraries
+Install homebrew if you don't have it:
+```bash
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 First, let's install the dependencies available via brew.
 ```bash
-brew install git ffmpeg qrencode
+brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx opus sqlcipher libsodium
 ```
 
 Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
@@ -454,6 +537,8 @@ sudo make install
 cd ../
 ```
 
+Next, install [Toxcore](https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#osx)
+
 Then, clone qTox:
 ```bash
 git clone https://github.com/tux3/qTox``
@@ -461,38 +546,36 @@ git clone https://github.com/tux3/qTox``
 
 Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following commands:
 ```bash
-cd qTox
+cd ./git/qTox
 sudo bash bootstrap-osx.sh
 ```
 
-###Compiling
+#### Compiling
+You can build qTox with Qt Creator [seperate download](http://www.qt.io/download-open-source/#section-6) or you can hunt down the version of home brew qt5 your using in the `/usr/local/Cellar/qt5/` directory.
+e.g. `/usr/local/Cellar/qt5/5.5.1_2/bin/qmake` with `5.5.1_2` being the version of Qt5 that's been installed.
 
-Either open Qt creator and hit build or run ```qmake && make``` in your qTox folder and it'll just work™.
-
-Note that if you use the CLI to build you'll need to add Qt5's bins to your path.
+With that; in your terminal you can compile qTox in the git dir:
 ```bash
-export PATH=$PATH:~/Qt/5.4/clang_64/bin/
+/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ./qtox.pro
 ```
 
-### Fixing things up
-
-The bad news is that Qt breaks our linker paths so we need to fix those. First cd in to your qtox.app directory, if you used Qt Creator it's in ```~/build-qtox-Desktop_Qt_5_4_1_clang_64bit-Release``` most likely, otherwise it's in your qTox folder.
-
-Install qTox so we can copy its libraries and shove the following in a script somewhere:
-
+Or a cleaner method would be to:
 ```bash
-~macdeployqt qtox.app
-cp -r /Applications/qtox.app qtox_old.app
-cp qtox.app/Contents/MacOS/qtox qtox_old.app/Contents/MacOS/qtox
-rm -rf qtox.app
-mv qtox_old.app qtox.app
+cd ./git/dir/qTox
+mkdir ./build
+cd build
+/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ../qtox.pro
 ```
-* Give it a name like ~/deploy.qtox.sh
-* cd in to the folder with qtox.app
-* run ```bash ~/deploy.qtox.sh```
 
+#### Deploying
+If you compiled qTox properly you can now deploy the `qTox.app` that's created where you built qTox so you can distribute the package.
 
-### Running qTox
+Using your qt5 homebrew installation from the build directory:
+```bash
+/usr/local/Cellar/qt5/5.5.1_2/bin/macdeployqt ./qTox.app
+```
+
+#### Running qTox
 You've got 2 choices, either click on the qTox app that suddenly exists, or do the following:
 ```bash
 qtox.app/Contents/MacOS/qtox

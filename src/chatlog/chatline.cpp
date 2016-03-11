@@ -167,13 +167,16 @@ void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
 
 void ChatLine::layout(qreal w, QPointF scenePos)
 {
+    if (!content.size())
+        return;
+
     width = w;
     bbox.setTopLeft(scenePos);
 
     qreal fixedWidth = (content.size()-1) * columnSpacing;
     qreal varWidth = 0.0; // used for normalisation
 
-    for (int i = 0; i < static_cast<int>(format.size()); ++i)
+    for (size_t i = 0; i < format.size(); ++i)
     {
         if (format[i].policy == ColumnFormat::FixedSize)
             fixedWidth += format[i].size;
@@ -190,8 +193,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal xOffset = 0.0;
     qreal xPos[content.size()];
 
-
-    for (int i = 0; i < static_cast<int>(content.size()); ++i)
+    for (size_t i = 0; i < content.size(); ++i)
     {
         // calculate the effective width of the current column
         qreal width;
@@ -225,7 +227,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         maxVOffset = qMax(maxVOffset, content[i]->getAscent());
     }
 
-    for (int i = 0; i < static_cast<int>(content.size()); ++i)
+    for (size_t i = 0; i < content.size(); ++i)
     {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass

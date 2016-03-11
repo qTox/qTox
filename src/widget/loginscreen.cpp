@@ -26,6 +26,7 @@
 #include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
+#include "src/widget/style.h"
 #include <QMessageBox>
 #include <QDebug>
 
@@ -55,6 +56,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
 
     reset();
+    this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
+
     retranslateUi();
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);
 }
@@ -172,11 +175,18 @@ void LoginScreen::onLoginUsernameSelected(const QString &name)
     {
         ui->loginPasswordLabel->show();
         ui->loginPassword->show();
+        // there is no way to do autologin if profile is encrypted, and
+        // visible option confuses users into thinking that it is possible,
+        // thus disable it (and hope that users won't think that it's a bug)
+        ui->autoLoginCB->setEnabled(false);
+        ui->autoLoginCB->setToolTip(tr("Password protected profile can't be loaded automatically."));
     }
     else
     {
         ui->loginPasswordLabel->hide();
         ui->loginPassword->hide();
+        ui->autoLoginCB->setEnabled(true);
+        ui->autoLoginCB->setToolTip("");
     }
 }
 

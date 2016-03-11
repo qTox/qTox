@@ -72,7 +72,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     nameLabel->setText(f->getDisplayedName());
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
+    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 
     statusMessageLabel = new CroppingLabel();
     statusMessageLabel->setObjectName("statusLabel");
@@ -110,7 +110,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
-    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReciepts);
+    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(&typingTimer, &QTimer::timeout, this, [=]{
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;
@@ -294,7 +294,7 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
     Widget::getInstance()->newFriendMessageAlert(FriendId, false);
     Audio& audio = Audio::getInstance();
     audio.startLoop();
-    audio.playMono16Sound(":audio/ToxicIncomingCall.pcm");
+    audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)
@@ -673,7 +673,7 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     if (FriendId != f->getFriendID())
         return;
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"), Qt::transparent);
+    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 }
 
 void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
@@ -719,12 +719,13 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         ToxId authorId = ToxId(it.sender);
         QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isSelf() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
         bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
+        bool needSending = !it.isSent && authorId.isSelf();
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
                                                               isAction ? it.message.mid(4) : it.message,
                                                               isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
                                                               authorId.isSelf(),
-                                                              QDateTime());
+                                                              needSending ? QDateTime() : msgDateTime);
 
         if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
             msg->hideSender();
@@ -732,11 +733,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         prevId = authorId;
         prevMsgDateTime = msgDateTime;
 
-        if (it.isSent || !authorId.isSelf())
-        {
-            msg->markAsSent(msgDateTime);
-        }
-        else
+        if (needSending)
         {
             if (processUndelivered)
             {
@@ -949,13 +946,23 @@ void ChatForm::SendMessageStr(QString msg)
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-        auto* offMsgEngine = getOfflineMsgEngine();
-        Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                    Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
-                                    [offMsgEngine,rec,ma](int64_t id)
+
+        Profile* profile = Nexus::getProfile();
+        if (profile->isHistoryEnabled())
         {
-            offMsgEngine->registerReceipt(rec, id, ma);
-        });
+            auto* offMsgEngine = getOfflineMsgEngine();
+            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
+                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
+                                        [offMsgEngine,rec,ma](int64_t id)
+            {
+                offMsgEngine->registerReceipt(rec, id, ma);
+            });
+        }
+        else
+        {
+            /// TODO: Make faux-offline messaging work partially with the history disabled
+            ma->markAsSent(QDateTime::currentDateTime());
+        }
 
         msgEdit->setLastMessage(msg); //set last message only when sending it
 

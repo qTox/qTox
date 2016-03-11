@@ -110,7 +110,7 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
             restoreHiddenWindows();
 
         window->hide();
-        QTimer::singleShot(350, this, &ScreenshotGrabber::reInit);
+        QTimer::singleShot(350, this, SLOT(reInit()));
     }
     else
         return false;

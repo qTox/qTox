@@ -54,7 +54,7 @@ public:
     virtual qreal getAscent() const final;
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
-    virtual void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
     virtual QString getText() const final;
 

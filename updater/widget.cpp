@@ -28,6 +28,7 @@
 #include <QMetaObject>
 #include <QDebug>
 #include <QSettings>
+#include <QStandardPaths>
 
 #include "update.h"
 
@@ -49,9 +50,10 @@ const QString QTOX_PATH;
 #endif
 const QString SETTINGS_FILE = "settings.ini";
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Widget)
+Widget::Widget(const Settings &s) :
+    QWidget(nullptr),
+    ui(new Ui::Widget),
+    settings{s}
 {
     ui->setupUi(this);
 
@@ -59,66 +61,11 @@ Widget::Widget(QWidget *parent) :
     if (!supported)
         fatalError(tr("The qTox updater is not supported on this platform."));
 
-#ifdef Q_OS_WIN
-    // Get a primary unelevated token of the actual user
-    hPrimaryToken = nullptr;
-    HANDLE hShellProcess = nullptr, hShellProcessToken = nullptr;
-    const DWORD dwTokenRights = TOKEN_QUERY | TOKEN_IMPERSONATE | TOKEN_ASSIGN_PRIMARY
-                                | TOKEN_DUPLICATE | TOKEN_ADJUST_DEFAULT | TOKEN_ADJUST_SESSIONID;
-    DWORD dwPID = 0;
-    HWND hwnd = nullptr;
-    DWORD dwLastErr = 0;
-
-    // Enable SeIncreaseQuotaPrivilege
-    HANDLE hProcessToken = NULL;
-    if (!OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &hProcessToken))
-        goto unelevateFail;
-    TOKEN_PRIVILEGES tkp;
-    tkp.PrivilegeCount = 1;
-    LookupPrivilegeValueW(NULL, SE_INCREASE_QUOTA_NAME, &tkp.Privileges[0].Luid);
-    tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
-    AdjustTokenPrivileges(hProcessToken, FALSE, &tkp, 0, NULL, NULL);
-    dwLastErr = GetLastError();
-    CloseHandle(hProcessToken);
-    if (ERROR_SUCCESS != dwLastErr)
-        goto unelevateFail;
-
-    // Get a primary copy of the desktop shell's token,
-    // we're assuming the shell is running as the actual user
-    hwnd = GetShellWindow();
-    if (!hwnd)
-        goto unelevateFail;
-    GetWindowThreadProcessId(hwnd, &dwPID);
-    if (!dwPID)
-        goto unelevateFail;
-    hShellProcess = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, dwPID);
-    if (!hShellProcess)
-        goto unelevateFail;
-    if (!OpenProcessToken(hShellProcess, TOKEN_DUPLICATE, &hShellProcessToken))
-        goto unelevateFail;
-
-    // Duplicate the shell's process token to get a primary token.
-    // Based on experimentation, this is the minimal set of rights required for CreateProcessWithTokenW (contrary to current documentation).
-    if (!DuplicateTokenEx(hShellProcessToken, dwTokenRights, NULL, SecurityImpersonation, TokenPrimary, &hPrimaryToken))
-        goto unelevateFail;
-
-    qDebug() << "Unelevated primary access token acquired";
-    goto unelevateCleanup;
-unelevateFail:
-    qWarning() << "Unelevate failed, couldn't get access token";
-unelevateCleanup:
-    CloseHandle(hShellProcessToken);
-    CloseHandle(hShellProcess);
-#endif
-
     QMetaObject::invokeMethod(this, "update", Qt::QueuedConnection);
 }
 
 Widget::~Widget()
 {
-#ifdef Q_OS_WIN
-    CloseHandle(hPrimaryToken);
-#endif
     delete ui;
 }
 
@@ -140,7 +87,7 @@ void Widget::fatalError(QString message)
 
 void Widget::deleteUpdate()
 {
-    QDir updateDir(getSettingsDirPath()+"/update/");
+    QDir updateDir(settings.getSettingsDirPath()+"/update/");
     updateDir.removeRecursively();
 }
 
@@ -154,14 +101,31 @@ void Widget::startQToxAndExit()
     SecureZeroMemory(&pi, sizeof(pi));
     si.cb = sizeof(si);
 
-    if (!CreateProcessWithTokenW(hPrimaryToken, 0, QTOX_PATH.toStdWString().c_str(), 0, 0, 0, 0, &si, &pi))
+    bool unelevateOk = true;
+
+    auto advapi32H = LoadLibrary(TEXT("advapi32.dll"));
+    if ((unelevateOk = (advapi32H != nullptr)))
+    {
+        auto CreateProcessWithTokenWH = (decltype(&CreateProcessWithTokenW))
+                                        GetProcAddress(advapi32H, "CreateProcessWithTokenW");
+        if ((unelevateOk = (CreateProcessWithTokenWH != nullptr)))
+        {
+            if (!CreateProcessWithTokenWH(settings.getPrimaryToken(), 0,
+                                          QTOX_PATH.toStdWString().c_str(), 0, 0, 0,
+                                          QApplication::applicationDirPath().toStdWString().c_str(), &si, &pi))
+                unelevateOk = false;
+        }
+    }
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    if (!unelevateOk)
     {
         qWarning() << "Failed to start unelevated qTox";
         QProcess::startDetached(QTOX_PATH);
     }
 
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
 #else
     QProcess::startDetached(QTOX_PATH);
 #endif
@@ -180,42 +144,11 @@ void Widget::restoreBackups()
         QFile(file+".bak").rename(file);
 }
 
-QString Widget::getSettingsDirPath()
-{
-    if (isToxPortableEnabled())
-        return ".";
-
-#ifdef Q_OS_WIN
-    wchar_t* path;
-    SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, hPrimaryToken, &path);
-    QString pathStr = QString::fromStdWString(path);
-    pathStr.replace("\\", "/");
-    return pathStr + "/tox";
-#else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QDir::separator() + "tox");
-#endif
-}
-
-bool Widget::isToxPortableEnabled()
-{
-    QFile portableSettings(SETTINGS_FILE);
-    if (portableSettings.exists())
-    {
-        QSettings ps(SETTINGS_FILE, QSettings::IniFormat);
-        ps.beginGroup("General");
-        return ps.value("makeToxPortable", false).toBool();
-    }
-    else
-    {
-        return false;
-    }
-}
-
 void Widget::update()
 {
     /// 1. Find and parse the update (0-5%)
     // Check that the dir exists
-    QString updateDirStr = getSettingsDirPath()+"/update/";
+    QString updateDirStr = settings.getSettingsDirPath()+"/update/";
     QDir updateDir(updateDirStr);
     if (!updateDir.exists())
         fatalError(tr("No update found."));
@@ -225,7 +158,7 @@ void Widget::update()
     // Check that we have a flist and that every file on the diff exists
     QFile updateFlistFile(updateDirStr+"flist");
     if (!updateFlistFile.open(QIODevice::ReadOnly))
-        fatalError(tr("The update is incomplete."));
+        fatalError(tr("The update is incomplete!"));
 
     QByteArray updateFlistData = updateFlistFile.readAll();
     updateFlistFile.close();

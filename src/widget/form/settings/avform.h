@@ -39,7 +39,7 @@ class AVForm : public GenericForm
 public:
     AVForm();
     ~AVForm();
-    virtual QString getFormName() final override {return tr("Audio/Video");}
+    QString getFormName() final override {return tr("Audio/Video");}
 
 private:
     void getAudioInDevices();
@@ -57,22 +57,30 @@ private slots:
     void onInDevChanged(QString deviceDescriptor);
     void onOutDevChanged(QString deviceDescriptor);
     void onFilterAudioToggled(bool filterAudio);
+    void onPlaybackSliderMoved(int value);
     void onPlaybackValueChanged(int value);
+    void onMicrophoneSliderMoved(int value);
     void onMicrophoneValueChanged(int value);
 
     // camera
     void onVideoDevChanged(int index);
     void onVideoModesIndexChanged(int index);
 
-    virtual void hideEvent(QHideEvent*) final override;
-    virtual void showEvent(QShowEvent*) final override;
+    void on_btnPlayTestSound_clicked(bool checked);
 
 protected:
-    virtual bool eventFilter(QObject *o, QEvent *e) final override;
     void updateVideoModes(int curIndex);
 
 private:
+    bool eventFilter(QObject *o, QEvent *e) final override;
+
+    void hideEvent(QHideEvent* event) final override;
+    void showEvent(QShowEvent*event) final override;
+
+private:
     Ui::AVSettings *bodyUI;
+    bool subscribedToAudioIn;
+    bool mPlayTestSound;
     VideoSurface *camVideoSurface;
     CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;

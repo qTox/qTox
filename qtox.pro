@@ -160,9 +160,18 @@ win32 {
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
         LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
+        LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia -framework ApplicationServices
         LIBS += -lqrencode -lsqlcipher
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
+        #Files to be includes into the qTox.app/Contents/Resources folder
+        #OSX-Migrater.sh part of migrateProfiles() compatabilty code
+        APP_RESOURCE.files = img/icons/qtox_profile.icns OSX-Migrater.sh
+        APP_RESOURCE.path = Contents/Resources
+        QMAKE_BUNDLE_DATA += APP_RESOURCE
+        #Dynamic versioning for Info.plist
+        INFO_PLIST_PATH = $$shell_quote($${OUT_PWD}/$${TARGET}.app/Contents/Info.plist)
+        QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $${GIT_DESCRIBE}\" $${INFO_PLIST_PATH}
     } else {
         android {
             LIBS += -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns
@@ -462,7 +471,11 @@ macx {
         src/platform/install_osx.cpp
 
     HEADERS += \
-        src/platform/install_osx.h
+        src/platform/install_osx.h \
+        src/platform/camera/avfoundation.h
+
+    OBJECTIVE_SOURCES += \
+        src/platform/camera/avfoundation.mm
 }
 
 SOURCES += \

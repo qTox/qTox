@@ -44,6 +44,7 @@
 #include <QCryptographicHash>
 #include <QMutexLocker>
 #include <QThread>
+#include <QNetworkProxy>
 
 #define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
 
@@ -97,6 +98,7 @@ void Settings::loadGlobal()
     if (QFile(globalSettingsFile).exists())
     {
         QSettings ps(globalSettingsFile, QSettings::IniFormat);
+        ps.setIniCodec("UTF-8");
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
@@ -119,6 +121,7 @@ void Settings::loadGlobal()
     qDebug() << "Loading settings from " + filePath;
 
     QSettings s(filePath, QSettings::IniFormat);
+    s.setIniCodec("UTF-8");
     s.beginGroup("Login");
         autoLogin = s.value("autoLogin", false).toBool();
     s.endGroup();
@@ -192,7 +195,12 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("GUI");
-        smileyPack = s.value("smileyPack", ":/smileys/TwitterEmojiSVG/emoticons.xml").toString();
+        const QString DEFAULT_SMILEYS = ":/smileys/Universe/emoticons.xml";
+        smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
+        if (!SmileyPack::isValid(smileyPack))
+        {
+            smileyPack = DEFAULT_SMILEYS;
+        }
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
@@ -241,6 +249,7 @@ void Settings::loadGlobal()
     if (dhtServerList.isEmpty())
     {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
+        rcs.setIniCodec("UTF-8");
         rcs.beginGroup("DHT Server");
             int serverListSize = rcs.beginReadArray("dhtServerList");
             for (int i = 0; i < serverListSize; i ++)
@@ -260,18 +269,18 @@ void Settings::loadGlobal()
     loaded = true;
 }
 
-void Settings::loadPersonnal()
+void Settings::loadPersonal()
 {
     Profile* profile = Nexus::getProfile();
     if (!profile)
     {
-        qCritical() << "No active profile, couldn't load personnal settings";
+        qCritical() << "No active profile, couldn't load personal settings";
         return;
     }
-    loadPersonnal(profile);
+    loadPersonal(profile);
 }
 
-void Settings::loadPersonnal(Profile* profile)
+void Settings::loadPersonal(Profile* profile)
 {
     QMutexLocker locker{&bigLock};
 
@@ -283,7 +292,7 @@ void Settings::loadPersonnal(Profile* profile)
     if (QFile(tmp).exists()) // otherwise, filePath remains the global file
         filePath = tmp;
 
-    qDebug()<<"Loading personnal settings from"<<filePath;
+    qDebug()<<"Loading personal settings from"<<filePath;
 
     SettingsSerializer ps(filePath, profile->getPassword());
     ps.load();
@@ -345,6 +354,7 @@ void Settings::saveGlobal()
     qDebug() << "Saving global settings at " + path;
 
     QSettings s(path, QSettings::IniFormat);
+    s.setIniCodec("UTF-8");
 
     s.clear();
 
@@ -532,6 +542,9 @@ QString Settings::getSettingsDirPath()
 #ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
                            + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                            + QDir::separator() + "tox")+QDir::separator();
@@ -763,6 +776,29 @@ void Settings::setForceTCP(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     forceTCP = newValue;
+}
+
+QNetworkProxy Settings::getProxy() const
+{
+    QNetworkProxy proxy;
+    switch(Settings::getProxyType())
+    {
+        case ProxyType::ptNone:
+            proxy.setType(QNetworkProxy::NoProxy);
+            break;
+        case ProxyType::ptSOCKS5:
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+            break;
+        case ProxyType::ptHTTP:
+            proxy.setType(QNetworkProxy::HttpProxy);
+            break;
+        default:
+            proxy.setType(QNetworkProxy::NoProxy);
+            qWarning() << "Invalid Proxy type, setting to NoProxy";
+    }
+    proxy.setHostName(Settings::getProxyAddr());
+    proxy.setPort(Settings::getProxyPort());
+    return proxy;
 }
 
 ProxyType Settings::getProxyType() const
@@ -1203,7 +1239,8 @@ void Settings::setOutVolume(int volume)
 bool Settings::getFilterAudio() const
 {
     QMutexLocker locker{&bigLock};
-    return filterAudio;
+    // temporary disable filteraudio, as it doesn't work as expected
+    return false;
 }
 
 void Settings::setFilterAudio(bool newValue)
@@ -1507,6 +1544,7 @@ void Settings::createPersonal(QString basename)
     qDebug() << "Creating new profile settings in " << path;
 
     QSettings ps(path, QSettings::IniFormat);
+    ps.setIniCodec("UTF-8");
     ps.beginGroup("Friends");
         ps.beginWriteArray("Friend", 0);
         ps.endArray();

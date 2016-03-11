@@ -63,7 +63,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     nusersLabel->setObjectName("statusLabel");
     retranslateUi();
 
-    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()), Qt::transparent);
+    avatar->setPixmap(Style::scaleSvgImage(":/img/group_dark.svg", avatar->width(), avatar->height()));
 
     msgEdit->setObjectName("group");
 
@@ -216,7 +216,7 @@ void GroupChatForm::onUserListChanged()
     }
 
     // Enable or disable call button
-    if (peersCount != 1)
+    if (peersCount != 1 && !callButton->isEnabled())
     {
         callButton->setEnabled(true);
         callButton->setObjectName("green");

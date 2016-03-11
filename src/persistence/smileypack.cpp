@@ -33,10 +33,12 @@
 #include <QDomElement>
 #include <QBuffer>
 #include <QStringBuilder>
+#include <QtConcurrent/QtConcurrentRun>
 
 SmileyPack::SmileyPack()
 {
-    load(Settings::getInstance().getSmileyPack());
+    loadingMutex.lock();
+    QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
     connect(&Settings::getInstance(), &Settings::smileyPackChanged, this, &SmileyPack::onSmileyPackChanged);
 }
 
@@ -101,7 +103,10 @@ bool SmileyPack::load(const QString& filename)
     // open emoticons.xml
     QFile xmlFile(filename);
     if (!xmlFile.open(QIODevice::ReadOnly))
+    {
+        loadingMutex.unlock();
         return false; // cannot open file
+    }
 
     /* parse the cfg file
      * sample:
@@ -151,11 +156,14 @@ bool SmileyPack::load(const QString& filename)
     }
 
     // success!
+    loadingMutex.unlock();
     return true;
 }
 
 QString SmileyPack::smileyfied(QString msg)
 {
+    QMutexLocker locker(&loadingMutex);
+
     QRegExp exp("\\S+"); // matches words
 
     int index = msg.indexOf(exp);
@@ -179,6 +187,7 @@ QString SmileyPack::smileyfied(QString msg)
 
 QList<QStringList> SmileyPack::getEmoticons() const
 {
+    QMutexLocker locker(&loadingMutex);
     return emoticons;
 }
 
@@ -189,6 +198,7 @@ QString SmileyPack::getAsRichText(const QString &key)
 
 QIcon SmileyPack::getAsIcon(const QString &key)
 {
+    QMutexLocker locker(&loadingMutex);
     return getCachedSmiley(key);
 }
 
@@ -217,5 +227,6 @@ QIcon SmileyPack::getCachedSmiley(const QString &key)
 
 void SmileyPack::onSmileyPackChanged()
 {
-    load(Settings::getInstance().getSmileyPack());
+    loadingMutex.lock();
+    QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
 }

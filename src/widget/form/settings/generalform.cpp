@@ -41,6 +41,7 @@
 static QStringList locales = {"bg",
                               "cs",
                               "de",
+                              "et",
                               "el",
                               "en",
                               "es",
@@ -59,10 +60,12 @@ static QStringList locales = {"bg",
                               "sv",
                               "tr",
                               "uk",
+                              "ar",
                               "zh"};
 static QStringList langs = {"Български",
                             "Čeština",
                             "Deutsch",
+                            "Eesti",
                             "Ελληνικά",
                             "English",
                             "Español",
@@ -81,6 +84,7 @@ static QStringList langs = {"Български",
                             "Svenska",
                             "Türkçe",
                             "Українська",
+                            "Arabic",
                             "简体中文"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
@@ -104,9 +108,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
-#if defined(__APPLE__) && defined(__MACH__)
-    bodyUI->cbAutorun->setEnabled(false);
-#endif
 
     bool showSystemTray = Settings::getInstance().getShowSystemTray();
 

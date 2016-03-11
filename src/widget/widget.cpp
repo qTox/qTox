@@ -144,7 +144,9 @@ void Widget::init()
     actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
 
     actionQuit = new QAction(this);
+#ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
+#endif
     actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
@@ -680,7 +682,7 @@ void Widget::setWindowTitle(const QString& title)
 
 void Widget::forceShow()
 {
-    hide();                     // Workaround to force minimized window to be restored
+    hide(); // Workaround to force minimized window to be restored
     show();
     activateWindow();
 }
@@ -770,7 +772,7 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     }
     else if (reason == QSystemTrayIcon::Unknown)
     {
-        if (isHidden()) 
+        if (isHidden())
             forceShow();
     }
 }
@@ -783,6 +785,7 @@ void Widget::onSettingsClicked()
             settingsWidget->show(createContentDialog(SettingDialog));
 
         setActiveToolMenuButton(Widget::None);
+        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
@@ -801,6 +804,7 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
             profileForm->show(createContentDialog(ProfileDialog));
 
         setActiveToolMenuButton(Widget::None);
+        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
@@ -822,12 +826,6 @@ void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
         activeChatroomWidget->setAsInactiveChatroom();
 
     activeChatroomWidget = chatroomWidget;
-}
-
-void Widget::onUsernameChanged(const QString& newUsername, const QString& oldUsername)
-{
-    setUsername(oldUsername);               // restore old username until Core tells us to set it
-    Nexus::getCore()->setUsername(newUsername);
 }
 
 void Widget::setUsername(const QString& username)
@@ -1080,7 +1078,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     f->getChatForm()->addMessage(f->getToxId(), message, isAction, timestamp, true);
 
-    Nexus::getProfile()->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
+    Profile* profile = Nexus::getProfile();
+    if (profile->isHistoryEnabled())
+        profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
@@ -1243,7 +1243,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         }
 
         if (Settings::getInstance().getNotifySound() && sound)
-            Audio::getInstance().playMono16Sound(":/audio/notification.pcm");
+            Audio::getInstance().playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
     }
 
     return true;
@@ -1364,6 +1364,7 @@ ContentLayout* Widget::createContentDialog(DialogType type)
         void retranslateUi()
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
+            setWindowIcon(QIcon(":/img/icons/qtox.svg"));
         }
 
     protected:
@@ -1482,7 +1483,6 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
     {
-        qDebug() << "UPDATING PEER";
         g->updatePeer(peernumber, name);
     }
 }
@@ -1842,7 +1842,7 @@ void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
     for (Friend *f : frnds)
-        f->getChatForm()->getOfflineMsgEngine()->removeAllReciepts();
+        f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
 }
 
 void Widget::reloadTheme()

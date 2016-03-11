@@ -106,10 +106,6 @@ Core::~Core()
     }
 
     deadifyTox();
-
-    Audio& audio = Audio::getInstance();
-    audio.closeInput();
-    audio.closeOutput();
 }
 
 Core* Core::getInstance()
@@ -744,6 +740,9 @@ QString Core::getUsername() const
 
 void Core::setUsername(const QString& username)
 {
+    if (username == getUsername())
+        return;
+
     CString cUsername(username);
 
     if (tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr) == false)
@@ -817,6 +816,9 @@ Status Core::getStatus() const
 
 void Core::setStatusMessage(const QString& message)
 {
+    if (message == getStatusMessage())
+        return;
+
     CString cMessage(message);
 
     if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false)
@@ -976,21 +978,23 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
-    int nPeers = getGroupNumberPeers(groupId);
-    if (nPeers == -1)
+    int result = getGroupNumberPeers(groupId);
+    if (result < 0)
     {
         qWarning() << "getGroupPeerNames: Unable to get number of peers";
         return names;
     }
-    uint8_t namesArray[nPeers][TOX_MAX_NAME_LENGTH];
-    uint16_t* lengths = new uint16_t[nPeers];
-    int result = tox_group_get_names(tox, groupId, namesArray, lengths, nPeers);
+    uint16_t nPeers = static_cast<uint16_t>(result);
+
+    std::unique_ptr<uint8_t[][TOX_MAX_NAME_LENGTH]> namesArray{new uint8_t[nPeers][TOX_MAX_NAME_LENGTH]};
+    std::unique_ptr<uint16_t[]> lengths{new uint16_t[nPeers]};
+    result = tox_group_get_names(tox, groupId, namesArray.get(), lengths.get(), nPeers);
     if (result != nPeers)
     {
-        qWarning() << "getGroupPeerNames: Unexpected result";
+        qWarning() << "getGroupPeerNames: Unexpected tox_group_get_names result";
         return names;
     }
-    for (int i=0; i<nPeers; i++)
+    for (uint16_t i=0; i<nPeers; i++)
        names.push_back(CString::toString(namesArray[i], lengths[i]));
 
     return names;

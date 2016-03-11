@@ -24,17 +24,8 @@
 #include <QObject>
 #include <memory>
 #include <atomic>
-#include <tox/toxav.h>
-
-#if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
-#else
- #include <AL/al.h>
- #include <AL/alc.h>
-#endif
-
 #include "src/core/toxcall.h"
+#include <tox/toxav.h>
 
 #ifdef QTOX_FILTER_AUDIO
 class AudioFilterer;
@@ -61,12 +52,13 @@ public:
 
     bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
     bool isCallVideoEnabled(uint32_t friendNum);
-    bool sendCallAudio(uint32_t friendNum); ///< Returns false only on error, but not if there's nothing to send
+    /// Returns false only on error, but not if there's nothing to send
+    bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
-    bool sendGroupCallAudio(int groupNum);
+    bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
 
     VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
-    void resetCallSources(); ///< Forces to regenerate each call's audio sources
+    void invalidateCallSources(); ///< Forces to regenerate each call's audio sources
     void sendNoVideo(); ///< Signal to all peers that we're not sending video anymore. The next frame sent cancels this.
 
     void joinGroupCall(int groupNum); ///< Starts a call in an existing AV groupchat. Call from the GUI thread.

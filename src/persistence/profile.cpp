@@ -48,7 +48,7 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personnal settings (Nexus will do it), so we always load
+    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
     // the history, and if it fails we can't change the setting now, but we keep a nullptr
     history.reset(new History{name, password});
     if (!history->isValid())
@@ -342,11 +342,14 @@ QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
 
     QByteArray idData = ownerId.toUtf8();
-    constexpr int hashSize = TOX_PUBLIC_KEY_SIZE; // As long as an unencrypted hash
+    QByteArray pubkeyData = core->getSelfId().publicKey.toUtf8();
+    constexpr int hashSize = TOX_PUBLIC_KEY_SIZE;
     static_assert(hashSize >= crypto_generichash_BYTES_MIN
                   && hashSize <= crypto_generichash_BYTES_MAX, "Hash size not supported by libsodium");
+    static_assert(hashSize >= crypto_generichash_KEYBYTES_MIN
+                  && hashSize <= crypto_generichash_KEYBYTES_MAX, "Key size not supported by libsodium");
     QByteArray hash(hashSize, 0);
-    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), nullptr, 0);
+    crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), (uint8_t*)pubkeyData.data(), pubkeyData.size());
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
@@ -363,6 +366,11 @@ QPixmap Profile::loadAvatar(const QString &ownerId)
 }
 
 QByteArray Profile::loadAvatarData(const QString &ownerId)
+{
+  return loadAvatarData(ownerId, password);
+}
+
+QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &password)
 {
     QString path = avatarPath(ownerId);
     bool encrypted = !password.isEmpty();
@@ -554,7 +562,7 @@ void Profile::restartCore()
 void Profile::setPassword(QString newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
-
+    QString oldPassword = password;
     password = newPassword;
     passkey = *core->createPasskey(password);
     saveToxSave();
@@ -565,4 +573,12 @@ void Profile::setPassword(QString newPassword)
         Nexus::getDesktopGUI()->reloadHistory();
     }
     saveAvatar(avatar, core->getSelfId().publicKey);
+
+    QVector<uint32_t> friendList = core->getFriendList();
+    QVectorIterator<uint32_t> i(friendList);
+    while (i.hasNext())
+    {
+        QString friendPublicKey = core->getFriendPublicKey(i.next());
+        saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
+    }
 }

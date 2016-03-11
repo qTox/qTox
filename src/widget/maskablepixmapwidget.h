@@ -30,7 +30,6 @@ public:
     ~MaskablePixmapWidget();
     void autopickBackground();
     void setClickable(bool clickable);
-    void setPixmap(const QPixmap &pmap, const QColor &background);
     void setPixmap(const QPixmap &pmap);
     QPixmap getPixmap() const;
     void setSize(QSize size);
@@ -47,8 +46,7 @@ private:
     QPixmap* renderTarget = nullptr; // pointer to dynamically call the constructor
     QSize size;
     QString maskName;
-    QColor backgroundColor;
-    bool clickable, manualColor = false;
+    bool clickable;
 };
 
 #endif // MASKABLEPIXMAPWIDGET_H

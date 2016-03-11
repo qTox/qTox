@@ -22,6 +22,8 @@
 
 #include <QWidget>
 
+class AudioMeterListener;
+
 class MicFeedbackWidget : public QWidget
 {
     Q_OBJECT
@@ -30,13 +32,15 @@ public:
 
 protected:
     void paintEvent(QPaintEvent* event) override;
-    void timerEvent(QTimerEvent* event) override;
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
 
+private slots:
+    void onGainMetered(qreal value);
+
 private:
-    double current;
-    int timerId;
+    qreal current;
+    AudioMeterListener* mMeterListener;
 };
 
 #endif // MICFEEDBACKWIDGET_H

@@ -47,6 +47,7 @@
         <file>translations/de.qm</file>
         <file>translations/el.qm</file>
         <file>translations/es.qm</file>
+        <file>translations/et.qm</file>
         <file>translations/fi.qm</file>
         <file>translations/fr.qm</file>
         <file>translations/hr.qm</file>
@@ -62,6 +63,7 @@
         <file>translations/sv.qm</file>
         <file>translations/tr.qm</file>
         <file>translations/uk.qm</file>
+        <file>translations/ar.qm</file>
         <file>translations/zh.qm</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>
         <file>ui/callButton/callButton.css</file>

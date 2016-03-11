@@ -5,6 +5,7 @@ TRANSLATIONS = translations/es.ts \
                translations/bg.ts \
                translations/de.ts \
                translations/el.ts \
+               translations/et.ts \
                translations/fi.ts \
                translations/fr.ts \
                translations/hr.ts \
@@ -20,6 +21,7 @@ TRANSLATIONS = translations/es.ts \
                translations/tr.ts \
                translations/uk.ts \
                translations/zh.ts \
+               translations/ar.ts \
                translations/pt.ts
 
 #rules to generate ts

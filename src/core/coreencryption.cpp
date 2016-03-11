@@ -102,7 +102,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     QByteArray data = file.read(TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
     file.close();
 
-    uint8_t *salt = new uint8_t[TOX_PASS_SALT_LENGTH];
+    uint8_t salt[TOX_PASS_SALT_LENGTH];
     if (!tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt))
     {
         qWarning() << "can't get salt from" << filename << "header";
@@ -110,7 +110,6 @@ QByteArray Core::getSaltFromFile(QString filename)
     }
 
     QByteArray res(reinterpret_cast<const char*>(salt), TOX_PASS_SALT_LENGTH);
-    delete[] salt;
     return res;
 }
 

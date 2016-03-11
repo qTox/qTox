@@ -19,10 +19,12 @@
 
 #include "toxme.h"
 #include "src/core/core.h"
+#include <src/persistence/settings.h>
 #include <QtDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QCoreApplication>
+#include <QThread>
 #include <sodium/crypto_box.h>
 #include <sodium/randombytes.h>
 #include <string>
@@ -34,17 +36,22 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         return QByteArray();
 
     QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.post(request,json.toUtf8());
 
-    while (reply->isRunning()) {
-        error = reply->error();
-        if (error)
-            break;
-
-        reply->waitForReadyRead(100);
+    while (!reply->isFinished())
+    {
+        QThread::msleep(1);
         qApp->processEvents();
+    }
+
+    error = reply->error();
+    if (error)
+    {
+        qWarning() << "makeJsonRequest: A network error occured:" << reply->errorString();
+        return QByteArray();
     }
 
     return reply->readAll();
@@ -57,17 +64,22 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
 
     // Get key
     QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.get(request);
 
-    while (reply->isRunning()) {
-        error = reply->error();
-        if (error)
-            break;
-
-        reply->waitForReadyRead(100);
+    while (!reply->isFinished())
+    {
+        QThread::msleep(1);
         qApp->processEvents();
+    }
+
+    error = reply->error();
+    if (error)
+    {
+        qWarning() << "getServerPubkey: A network error occured:" << reply->errorString();
+        return QByteArray();
     }
 
     // Extract key
@@ -184,14 +196,14 @@ Toxme::ExecCode Toxme::extractError(QString json)
     {
         end = json.indexOf("}");
         if (end == -1)
-            return IncorrectResponce;
+            return IncorrectResponse;
     }
 
     json.truncate(end);
     bool ok;
     int r = json.toInt(&ok);
     if (!ok)
-        return IncorrectResponce;
+        return IncorrectResponse;
 
     return ExecCode(r);
 }
@@ -255,7 +267,7 @@ QString Toxme::getPass(QString json, ExecCode &code) {
     int end = json.indexOf("\"");
     if (end == -1)
     {
-        code = IncorrectResponce;
+        code = IncorrectResponse;
         return QString();
     }
 
@@ -277,8 +289,6 @@ int Toxme::deleteAddress(QString server, ToxId id)
     QString apiUrl = server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
     QByteArray response = makeJsonRequest(apiUrl, prepareEncryptedJson(pubkeyUrl, 2, payload), error);
-    if (error != QNetworkReply::NoError)
-        return error;
 
     return extractError(response);
 }
@@ -286,8 +296,8 @@ int Toxme::deleteAddress(QString server, ToxId id)
 QString Toxme::getErrorMessage(int errorCode)
 {
     switch (errorCode) {
-    case IncorrectResponce:
-        return QObject::tr("Incorrect responce");
+    case IncorrectResponse:
+        return QObject::tr("Incorrect response");
     case NoPassword:
         return QObject::tr("No password in response");
     case ServerError:
@@ -315,7 +325,7 @@ QString Toxme::getErrorMessage(int errorCode)
     case -31:
         return QObject::tr("Tox ID not sent");
     case -41:
-        return QObject::tr("Lookup failed because the other server replied with invalid data");
+        return QObject::tr("Lookup failed because the server replied with invalid data");
     case -42:
         return QObject::tr("That user does not exist");
     case -43:

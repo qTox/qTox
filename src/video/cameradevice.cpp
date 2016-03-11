@@ -34,6 +34,9 @@ extern "C" {
 #ifdef Q_OS_LINUX
 #include "src/platform/camera/v4l2.h"
 #endif
+#ifdef Q_OS_OSX
+#include "src/platform/camera/avfoundation.h"
+#endif
 
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
@@ -161,6 +164,23 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        av_dict_set(&options, "pixel_format", "mjpeg", 0);
+    }
+#endif
+#ifdef Q_OS_OSX
+    else if (iformat->name == QString("avfoundation"))
+    {
+        if (mode)
+        {
+            av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
+            av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
+        }
+        else if (devName.startsWith(avfoundation::CAPTURE_SCREEN))
+        {
+            av_dict_set(&options, "framerate", QString().setNum(5).toStdString().c_str(), 0);
+            av_dict_set_int(&options, "capture_cursor", 1, 0);
+            av_dict_set_int(&options, "capture_mouse_clicks", 1, 0);
+        }
     }
 #endif
     else if (mode)
@@ -282,6 +302,10 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     else if (iformat->name == QString("video4linux2,v4l2"))
         devices += v4l2::getDeviceList();
 #endif
+#ifdef Q_OS_OSX
+    else if (iformat->name == QString("avfoundation"))
+        devices += avfoundation::getDeviceList();
+#endif
     else
         devices += getRawDeviceListGeneric();
 
@@ -324,6 +348,10 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 #ifdef Q_OS_LINUX
     else if (iformat->name == QString("video4linux2,v4l2"))
         return v4l2::getDeviceModes(devName);
+#endif
+#ifdef Q_OS_OSX
+    else if (iformat->name == QString("avfoundation"))
+        return avfoundation::getDeviceModes(devName);
 #endif
     else
         qWarning() << "Video mode listing not implemented for input "<<iformat->name;

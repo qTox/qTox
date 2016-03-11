@@ -21,6 +21,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "settings.h"
 #include <QWidget>
 
 #ifdef Q_OS_WIN
@@ -36,15 +37,13 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = 0);
+    explicit Widget(const Settings& s);
     ~Widget();
 
     // Utilities
     void deleteBackups();
     void restoreBackups();
     void setProgress(int value);
-    QString getSettingsDirPath();
-    bool isToxPortableEnabled();
 
     // Noreturn
     void fatalError(QString message); ///< Calls deleteUpdate and startQToxAndExit
@@ -58,10 +57,7 @@ public slots:
 private:
     Ui::Widget *ui;
     QStringList backups;
-
-#ifdef Q_OS_WIN
-    HANDLE hPrimaryToken;
-#endif
+    const Settings& settings;
 };
 
 #endif // WIDGET_H

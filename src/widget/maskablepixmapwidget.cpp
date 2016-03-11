@@ -23,7 +23,6 @@
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)
     , maskName(maskName)
-    , backgroundColor(Qt::white)
     , clickable(false)
 {
     setSize(size);
@@ -32,43 +31,6 @@ MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString 
 MaskablePixmapWidget::~MaskablePixmapWidget()
 {
     delete renderTarget;
-}
-
-void MaskablePixmapWidget::autopickBackground()
-{
-    QImage pic = pixmap.toImage();
-
-    if (pic.isNull())
-        return;
-
-    int r = 0;
-    int g = 0;
-    int b = 0;
-    int weight = 0;
-
-    for (int x=0;x<pic.width();++x)
-    {
-        for (int y=0;y<pic.height();++y)
-        {
-            QRgb color = pic.pixel(x,y);
-            r += qRed(color);
-            g += qGreen(color);
-            b += qBlue(color);
-
-            weight += qAlpha(color);
-        }
-    }
-
-    weight = qMax(1, weight / 255);
-    r /= weight;
-    g /= weight;
-    b /= weight;
-
-    QColor color = QColor::fromRgb(r,g,b);
-    backgroundColor =  QColor::fromRgb(0xFFFFFF ^ color.rgb());
-    manualColor = false;
-
-    update();
 }
 
 void MaskablePixmapWidget::setClickable(bool clickable)
@@ -81,25 +43,12 @@ void MaskablePixmapWidget::setClickable(bool clickable)
         unsetCursor();
 }
 
-void MaskablePixmapWidget::setPixmap(const QPixmap &pmap, const QColor &background)
-{
-    if (!pmap.isNull())
-    {
-        unscaled = pmap;
-        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        backgroundColor = background;
-        manualColor = true;
-        update();
-    }
-}
-
 void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
     if (!pmap.isNull())
     {
         unscaled = pmap;
         pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        autopickBackground();
         update();
     }
 }
@@ -122,8 +71,6 @@ void MaskablePixmapWidget::setSize(QSize size)
     if (!unscaled.isNull())
     {
         pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        if (!manualColor)
-            autopickBackground();
         update();
     }
 }
@@ -136,7 +83,6 @@ void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 
     QPainter painter(renderTarget);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.fillRect(0,0,width(),height(),backgroundColor);
     painter.drawPixmap(offset,pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
     painter.drawPixmap(0,0,mask);

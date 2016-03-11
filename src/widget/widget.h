@@ -164,7 +164,6 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void showProfile();
-    void onUsernameChanged(const QString& newUsername, const QString& oldUsername);
     void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
