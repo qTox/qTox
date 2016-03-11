@@ -18,11 +18,13 @@ QMAKE_CXXFLAGS += -fno-exceptions
 SOURCES += main.cpp\
         widget.cpp \
     update.cpp \
-    serialize.cpp
+    serialize.cpp \
+    settings.cpp
 
 HEADERS  += widget.h \
     update.h \
-    serialize.h
+    serialize.h \
+    settings.h
 
 FORMS    += widget.ui
 

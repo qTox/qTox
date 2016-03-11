@@ -19,6 +19,7 @@
 
 
 #include "widget.h"
+#include "settings.h"
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
@@ -77,10 +78,10 @@ int main(int argc, char *argv[])
 {
     qInstallMessageHandler(logMessageHandler);
     QApplication a(argc, argv);
+    Settings s;
 
     logFileStream.reset(new QTextStream);
-    logFileFile.reset(new QFile(QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
-                                                + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator()+"qtox.log"));
+    logFileFile.reset(new QFile(s.getSettingsDirPath()+"qtox.log"));
     if (logFileFile->open(QIODevice::Append))
     {
         logFileStream->setDevice(logFileFile.get());
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
     GetUserNameA(buf, &bufsize);
     qDebug() << "Updater running as user" << buf;
 
-    Widget w;
+    Widget w(s);
     w.show();
 
     return a.exec();
