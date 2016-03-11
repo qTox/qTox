@@ -1239,7 +1239,8 @@ void Settings::setOutVolume(int volume)
 bool Settings::getFilterAudio() const
 {
     QMutexLocker locker{&bigLock};
-    return filterAudio;
+    // temporary disable filteraudio, as it doesn't work as expected
+    return false;
 }
 
 void Settings::setFilterAudio(bool newValue)

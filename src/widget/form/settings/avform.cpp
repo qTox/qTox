@@ -47,20 +47,12 @@ AVForm::AVForm() :
     bodyUI->btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
-#ifdef QTOX_FILTER_AUDIO
-    bodyUI->filterAudio->setChecked(Settings::getInstance().getFilterAudio());
-#else
-    bodyUI->filterAudio->setDisabled(true);
-#endif
-
     auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
     connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
     connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
     connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
     connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
-
-    connect(bodyUI->filterAudio, &QCheckBox::toggled, this, &AVForm::onFilterAudioToggled);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
     {
         getAudioInDevices();
@@ -85,11 +77,6 @@ AVForm::AVForm() :
     {
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
-    }
-
-    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
-    {
-        cb->installEventFilter(this);
     }
 
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
@@ -415,7 +402,7 @@ void AVForm::killVideoSurface()
 bool AVForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o) || qobject_cast<QSlider*>(o)))
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QSlider*>(o)))
     {
         e->ignore();
         return true;

@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>830</width>
-        <height>495</height>
+        <width>824</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -41,33 +41,36 @@
           <string>Audio Settings</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="outDevLabel">
-            <property name="text">
-             <string>Playback device</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1" colspan="2">
            <widget class="QComboBox" name="outDevCombobox"/>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="playbackLabel">
-            <property name="text">
-             <string>Volume</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSlider" name="playbackSlider">
+          <item row="3" column="1" colspan="2">
+           <widget class="QSlider" name="microphoneSlider">
             <property name="toolTip">
-             <string>Use slider to set volume of your speakers.</string>
+             <string>Use slider to set volume of your microphone.</string>
             </property>
             <property name="maximum">
              <number>100</number>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="microphoneLabel">
+            <property name="text">
+             <string>Gain</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="outDevLabel">
+            <property name="text">
+             <string>Playback device</string>
             </property>
            </widget>
           </item>
@@ -85,27 +88,10 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="inDevLabel">
-            <property name="text">
-             <string>Capture device</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="microphoneLabel">
-            <property name="text">
-             <string>Gain</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1" colspan="2">
-           <widget class="QSlider" name="microphoneSlider">
+          <item row="1" column="1">
+           <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
-             <string>Use slider to set volume of your microphone.</string>
+             <string>Use slider to set volume of your speakers.</string>
             </property>
             <property name="maximum">
              <number>100</number>
@@ -115,13 +101,17 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="filterAudio">
-            <property name="toolTip">
-             <string>Filter sound from your microphone, so that people hearing you would get better sound.</string>
-            </property>
+          <item row="2" column="0">
+           <widget class="QLabel" name="inDevLabel">
             <property name="text">
-             <string>Filter audio</string>
+             <string>Capture device</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="playbackLabel">
+            <property name="text">
+             <string>Volume</string>
             </property>
            </widget>
           </item>
