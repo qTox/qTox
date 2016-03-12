@@ -86,6 +86,9 @@ static QStringList langs = {"Български",
                             "Українська",
                             "Arabic",
                             "简体中文"};
+static QStringList mdPrefs = {"Plaintext",
+                              "Show Formatting Characters",
+                              "Don't Show Formatting Characters"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
@@ -107,6 +110,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         bodyUI->transComboBox->insertItem(i, langs[i]);
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
+    for (int i = 0; i < mdPrefs.size(); i++)
+        bodyUI->markdownComboBox->insertItem(i, mdPrefs[i]);
+
+    bodyUI->markdownComboBox->setCurrentIndex(Settings::getInstance().getMarkdownPreference());
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
 
     bool showSystemTray = Settings::getInstance().getShowSystemTray();
@@ -205,6 +212,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
+    connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -231,7 +239,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     // prevent stealing mouse wheel scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially chaning theme/skin/icons etc.
+    // you can scroll through general settings without accidentially changing theme/skin/icons etc.
     // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
     for (QComboBox *cb : findChildren<QComboBox*>())
     {
@@ -363,6 +371,11 @@ void GeneralForm::onUseEmoticonsChange()
 {
     Settings::getInstance().setUseEmoticons(bodyUI->useEmoticons->isChecked());
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
+}
+
+void GeneralForm::onMarkdownUpdated()
+{
+    Settings::getInstance().setMarkdownPreference(static_cast<MarkdownType>(bodyUI->markdownComboBox->currentIndex()));
 }
 
 void GeneralForm::onSetStatusChange()

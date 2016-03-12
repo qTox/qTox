@@ -35,6 +35,8 @@ namespace Db { enum class syncType; }
 
 enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 
+enum MarkdownType {NONE, WITH_CHARS, WITHOUT_CHARS};
+
 class Settings : public QObject
 {
     Q_OBJECT
@@ -177,6 +179,9 @@ public:
 
     int getThemeColor() const;
     void setThemeColor(const int& value);
+
+    MarkdownType getMarkdownPreference() const;
+    void setMarkdownPreference(MarkdownType newValue);
 
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
@@ -368,6 +373,7 @@ private:
     bool showSystemTray;
 
     // ChatView
+    MarkdownType markdownPreference;
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;

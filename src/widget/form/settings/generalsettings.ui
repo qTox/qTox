@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>671</width>
+    <width>1312</width>
     <height>1098</height>
    </rect>
   </property>
@@ -14,7 +14,16 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>9</number>
+   </property>
+   <property name="topMargin">
+    <number>9</number>
+   </property>
+   <property name="rightMargin">
+    <number>9</number>
+   </property>
+   <property name="bottomMargin">
     <number>9</number>
    </property>
    <item>
@@ -30,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>631</width>
-        <height>1141</height>
+        <width>1277</width>
+        <height>1272</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -227,6 +236,9 @@ instead of closing itself.</string>
               <property name="toolTip">
                <string>Set to 0 to disable</string>
               </property>
+              <property name="showGroupSeparator" stdset="0">
+               <bool>true</bool>
+              </property>
               <property name="suffix">
                <string notr="true"> min</string>
               </property>
@@ -235,9 +247,6 @@ instead of closing itself.</string>
               </property>
               <property name="maximum">
                <number>2147483647</number>
-              </property>
-              <property name="showGroupSeparator" stdset="0">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -347,6 +356,46 @@ instead of closing itself.</string>
                </layout>
               </item>
              </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="generalLayout_2">
+            <item>
+             <widget class="QLabel" name="transLabel_2">
+              <property name="toolTip">
+               <string>New markdown preference may not load until qTox restarts.</string>
+              </property>
+              <property name="text">
+               <string>Markdown:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="markdownComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Select Markdown preference.</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="generalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
