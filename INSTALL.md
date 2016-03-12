@@ -20,16 +20,13 @@
     - [Fedora](#fedora-other-deps)
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
-    - [Ubuntu <15.04](#ubuntu14-other-deps)
     - [Ubuntu >=15.04](#ubuntu-other-deps)
-  - [FFmpeg (Ubuntu <15.04)](#ffmpeg)
   - [toxcore dependencies](#toxcore-dependencies)
     - [Arch](#arch-toxcore)
     - [Debian](#debian-toxcore)
     - [Fedora](#fedora-toxcore)
     - [openSUSE](#opensuse-toxcore)
     - [Slackware](#slackware-toxcore)
-    - [Ubuntu <15.04](#ubuntu14-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
   - [filter_audio](#filter_audio)
   - [sqlcipher](#sqlcipher)
@@ -215,82 +212,10 @@ sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel lib
 List of all the ``qTox`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
 
 
-<a name="ubuntu14-other-deps" />
-#### Ubuntu <15.04:
-**Note that FFmpeg is not included in those distribution version(!).**
-
-**This means that you have to compile FFmpeg yourself, otherwise compiling qTox will fail.**
-
-```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
-```
-
-**Go to [FFmpeg](#ffmpeg) section to compile it.**
-
-
 <a name="ubuntu-other-deps" />
 #### Ubuntu >=15.04:
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
-```
-
-
-### FFmpeg
-
-If you have installed FFmpeg earlier (i.e. you don't run Ubuntu <15.04), skip this section, and go directly to installing [**toxcore**](#toxcore-dependencies).
-
-To get ffmpeg compiled and put in directory `libs`, run this script in qTox directory:
-```bash
-[ ! -e "libs" ] && mkdir libs   # create directory libs if doesn't exist
-[ ! -e "ffmpeg" ] && mkdir ffmpeg
-
-cd libs/
-export PREFIX_DIR="$PWD"
-
-cd ../ffmpeg
-wget http://ffmpeg.org/releases/ffmpeg-2.7.2.tar.bz2
-tar xf ffmpeg*
-cd ffmpeg*
-
-
-./configure --prefix="$PREFIX_DIR" \
-            --enable-shared \
-            --disable-static \
-            --disable-programs \
-            --disable-protocols \
-            --disable-doc \
-            --disable-sdl \
-            --disable-avfilter \
-            --disable-avresample \
-            --disable-filters \
-            --disable-iconv \
-            --disable-network \
-            --disable-muxers \
-            --disable-postproc \
-            --disable-swresample \
-            --disable-swscale-alpha \
-            --disable-dct \
-            --disable-dwt \
-            --disable-lsp \
-            --disable-lzo \
-            --disable-mdct \
-            --disable-rdft \
-            --disable-fft \
-            --disable-faan \
-            --disable-vaapi \
-            --disable-vdpau \
-            --disable-zlib \
-            --disable-xlib \
-            --disable-bzlib \
-            --disable-lzma \
-            --disable-encoders \
-            --enable-memalign-hack   # rm that line for debug stuff
-
-
-make -j$(nproc)
-make install
-
-cd ../../
 ```
 
 
@@ -326,25 +251,6 @@ sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE
 #### Slackware:
 
 List of all the ``toxcore`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/toxcore/
-
-
-<a name="ubuntu14-toxcore" />
-#### Ubuntu <15.04:
-```bash
-sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev
-```
-
-You will need to install manually `libsodium`:
-```
-git clone git://github.com/jedisct1/libsodium.git
-cd libsodium
-git checkout tags/1.0.8
-./autogen.sh
-./configure && make check
-sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.0 --nodoc
-sudo ldconfig
-cd ..
-```
 
 
 <a name="ubuntu-toxcore" />
@@ -435,13 +341,6 @@ Run in qTox directory to compile:
 ```bash
 qmake
 make
-```
-
-If you had to compile [FFmpeg](#ffmpeg) manually, run this script from qTox directory before starting qTox:
-```bash
-cd libs/lib
-export LD_LIBRARY_PATH="$PWD"
-cd ../../
 ```
 
 Now you can start compiled qTox with `./qtox`
