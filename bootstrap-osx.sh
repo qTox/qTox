@@ -28,6 +28,8 @@ cp /usr/local/lib/libav* libs/lib
 cp /usr/local/lib/libswscale* libs/lib
 cp /usr/local/lib/libqrencode* libs/lib
 cp /usr/local/lib/libsqlcipher* libs/lib
+cp /usr/local/lib/libfilteraudio* libs/lib
+cp /usr/local/lib/libtox* libs/lib
 echo Copying include files...
 cp -r /usr/local/include/vpx* libs/include
 cp -r /usr/local/include/sodium* libs/include
@@ -35,5 +37,7 @@ cp -r /usr/local/include/qrencode* libs/include
 cp -r /usr/local/include/libav* libs/include
 cp -r /usr/local/include/libswscale* libs/include
 cp -r /usr/local/include/sqlcipher* libs/include
+cp -r /usr/local/include/filter_audio.h libs/include
+cp -r /usr/local/include/tox libs/include
 echo Done.
 
