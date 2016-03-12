@@ -138,7 +138,7 @@ ChatForm::~ChatForm()
 void ChatForm::setStatusMessage(QString newMessage)
 {
     statusMessageLabel->setText(newMessage);
-    statusMessageLabel->setToolTip(newMessage.toHtmlEscaped()); // for overlength messsages
+    statusMessageLabel->setToolTip(Qt::convertFromPlainText(newMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
 }
 
 void ChatForm::onSendTriggered()

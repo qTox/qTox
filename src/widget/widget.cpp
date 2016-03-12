@@ -838,7 +838,7 @@ void Widget::setUsername(const QString& username)
     else
     {
         ui->nameLabel->setText(username);
-        ui->nameLabel->setToolTip(username.toHtmlEscaped());    // for overlength names
+        ui->nameLabel->setToolTip(Qt::convertFromPlainText(username, Qt::WhiteSpaceNormal)); // for overlength names
     }
 
     QString sanename = username;
@@ -863,7 +863,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
     else
     {
         ui->statusLabel->setText(statusMessage);
-        ui->statusLabel->setToolTip(statusMessage.toHtmlEscaped()); // for overlength messsages
+        ui->statusLabel->setToolTip(Qt::convertFromPlainText(statusMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
     }
 }
 
