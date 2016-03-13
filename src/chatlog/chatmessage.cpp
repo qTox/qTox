@@ -193,6 +193,7 @@ QString ChatMessage::detectMarkdown(const QString &str)
                 "|(\\-)([^\\-]{2,})(\\-)"           // Underline  -text-
                 "|(\\~)([^\\~]{2,})(\\~)"           // Strike  ~text~
                 "|(\\~~)([^\\~\\~]{2,})(\\~~)"      // Strike  ~~text~~
+                "|(\\`)([^\\`]{2,})(\\`)"           // Codeblock  `text`
                 );
 
     // Support for multi-line text
@@ -209,38 +210,37 @@ QString ChatMessage::detectMarkdown(const QString &str)
 
             QString htmledSnippet;
 
-            // Check for surrounding spaces and/or beginning/end of line
-            if (!((snipCheck.startsWith(' ') || offset == 0) && (snipCheck.endsWith(' ') || offset + snipCheck.trimmed().length() == out.length())))
+            // Only parse if surrounded by spaces, newline(s) and/or beginning/end of line
+            if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0) && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.toHtmlEscaped().length() == out.length()))
             {
+                int mul = 0; // Determines how many characters to strip from markdown text
+                // Set mul depending on markdownPreference
+                if (Settings::getInstance().getMarkdownPreference() == MarkdownType::WITHOUT_CHARS)
+                    mul = 2;
+
+                // Match captured string to corresponding md format
+                if (exp.cap(1) == "**") // Bold **text**
+                    htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
+                else if (exp.cap(4) == "*" && snippet.length() > 2) // Italics *text*
+                    htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
+                else if (exp.cap(7) == "_" && snippet.length() > 2) // Italics _text_
+                    htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
+                else if (exp.cap(10) == "__"&& snippet.length() > 4) // Bold __text__
+                    htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
+                else if (exp.cap(13) == "-" && snippet.length() > 2) // Underline -text-
+                    htmledSnippet = QString(" <u>%1</u> ").arg(snippet.mid(mul/2,snippet.length()-mul));
+                else if (exp.cap(16) == "~" && snippet.length() > 2) // Strikethrough ~text~
+                    htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul/2,snippet.length()-mul));
+                else if (exp.cap(19) == "~~" && snippet.length() > 4) // Strikethrough ~~text~~
+                    htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul,snippet.length()-2*mul));
+                else if (exp.cap(22) == "`" && snippet.length() > 2) // Codeblock `text`
+                    htmledSnippet = QString("<font color=#595959><code>%1</code></font>").arg(snippet.mid(mul/2,snippet.length()-mul));
+                else
+                    htmledSnippet = snippet;
+                out.replace(offset, exp.cap().length(), htmledSnippet);
+                offset += htmledSnippet.length();
+            } else
                 offset += snippet.length();
-                continue;
-            }
-
-            int mul = 0; // Determines how many characters to strip from markdown text
-
-            // Set mul depending on markdownPreference
-            if (Settings::getInstance().getMarkdownPreference() == 2)
-                mul = 2;
-
-            // Match captured string to corresponding md format
-            if (exp.cap(1) == "**") // Bold **text**
-                htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(4) == "*" && snippet.length() > 2) // Italics *text*
-                htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(7) == "_" && snippet.length() > 2) // Italics _text_
-                htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(10) == "__"&& snippet.length() > 4) // Bold __text__
-                htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(13) == "-" && snippet.length() > 2) // Underline -text-
-                htmledSnippet = QString(" <u>%1</u> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(16) == "~" && snippet.length() > 2) // Strikethrough ~text~
-                htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(19) == "~~" && snippet.length() > 4) // Strikethrough ~~text~~
-                htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else
-                htmledSnippet = snippet;
-            out.replace(offset, exp.cap().length(), htmledSnippet);
-            offset += htmledSnippet.length();
         }
         outLines.push_back(out);
     }
