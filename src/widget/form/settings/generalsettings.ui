@@ -364,7 +364,7 @@ instead of closing itself.</string>
             <item>
              <widget class="QLabel" name="transLabel_2">
               <property name="toolTip">
-               <string>New markdown preference may not load until qTox restarts.</string>
+               <string>New Markdown preference may not load until qTox restarts.</string>
               </property>
               <property name="text">
                <string>Markdown:</string>
