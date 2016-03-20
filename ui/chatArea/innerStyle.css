@@ -6,6 +6,7 @@ div.msg {
 div.action {
   color: #1818FF;
   font: @big;
+  font-style: italic;
 }
 
 div.typing {
