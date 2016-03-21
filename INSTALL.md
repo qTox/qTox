@@ -83,15 +83,10 @@ pacman -S qtox
 <a name="gentoo-easy" />
 #### Gentoo
 
-qTox ebuild is available in ``tox-overlay``. To add it and install qTox you will need to have installed ``layman``:
-```bash
-emerge layman
-```
+qTox is available in Gentoo.
 
-After that, add overlay and install qTox:
+To install:
 ```bash
-layman -f
-layman -a tox-overlay
 emerge qtox
 ```
 
