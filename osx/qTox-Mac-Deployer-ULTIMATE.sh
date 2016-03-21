@@ -30,7 +30,7 @@ else
 	QTOX_DIR="${MAIN_DIR}/qTox"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
-VER="${QT_DIR}/5.5.1_2" # Potential future proffing for version testing
+VER="${QT_DIR}/5.6.0" # Potential future proffing for version testing
 QMAKE="${VER}/bin/qmake" # Don't change
 MACDEPLOYQT="${VER}/bin/macdeployqt" # Don't change
 
