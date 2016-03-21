@@ -68,7 +68,6 @@ android {
     LIBS += -L$$PWD/libs/lib -L$$ANDROID_TOOLCHAIN/lib
 
     DISABLE_PLATFORM_EXT=YES
-    DISABLE_FILTER_AUDIO=YES
 
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     contains(ANDROID_TARGET_ARCH,armeabi) {
@@ -104,9 +103,7 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
-contains(DISABLE_FILTER_AUDIO, YES) {
-
-} else {
+contains(DISABLE_FILTER_AUDIO, NO) {
      DEFINES += QTOX_FILTER_AUDIO
 }
 
