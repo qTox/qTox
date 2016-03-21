@@ -90,12 +90,12 @@ $CC --version
 $CXX --version
 # first build qTox without support for optional dependencies
 echo '*** BUILDING "MINIMAL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" DISABLE_FILTER_AUDIO=YES ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
 make -j10
 # clean it up, and build normal version
 make clean
 echo '*** BUILDING "FULL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" 
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" DISABLE_FILTER_AUDIO=NO
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
 make -j10
