@@ -1,12 +1,35 @@
 # qTox User Manual
 ## Index
 
+* [Contact list](#contact-list)
 * [User Profile](#user-profile)
 * [Settings](#settings)
 * [Groupchats](#groupchats)
 * [Message Styling](#message-styling)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
+
+
+## Contact list
+
+Located on the left. Can be sorted e.g. `By Activity`.
+
+`By Activity` sorting in qTox is updated whenever client receives something that
+is directly aimed at the user, and not sent to all contacts, that is:
+
+* audio/video call
+* file transfer
+* groupchat invite
+* groupchat message
+* message
+
+**Not** updated on:
+
+* avatar change
+* name change
+* status change (`Online`/`Away`/`Busy`/`Offline`)
+* status message change
+
 
 ## User Profile
 Your User Profile contains everything you share with other people on Tox. You can open it by clicking the picture in the top left corner. It contains the following settings:
