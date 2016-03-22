@@ -160,11 +160,11 @@ void AVForm::updateVideoModes(int curIndex)
                     a.FPS>b.FPS;});
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
-    
-    // Identify the best resolutions available for the supposed XXXXp resolutions. 
+
+    // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
-    idealModes[240] = {460,240,0,0}; idealModes[360] = {640,360,0,0}; 
-    idealModes[480] = {854,480,0,0}; idealModes[720] = {1280,720,0,0}; 
+    idealModes[240] = {460,240,0,0}; idealModes[360] = {640,360,0,0};
+    idealModes[480] = {854,480,0,0}; idealModes[720] = {1280,720,0,0};
     idealModes[1080] = {1920,1080,0,0};
     std::map<int, int> bestModeInds;
 
@@ -205,7 +205,7 @@ void AVForm::updateVideoModes(int curIndex)
                     bestModeInds[res] = i;
                 }
                 else if (mode.FPS == videoModes[ind].FPS &&
-                        CameraDevice::betterPixelFormat(mode.pixel_format, videoModes[ind].pixel_format)) 
+                        CameraDevice::betterPixelFormat(mode.pixel_format, videoModes[ind].pixel_format))
                 {
                     bestModeInds[res] = i;
                 }
