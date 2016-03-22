@@ -21,18 +21,50 @@
 # Requires SSH key that github accepts and GPG set to sign merge commits.
 
 # usage:
-#   ./$script $pr_number
+#   ./$script $pr_number $optional_message
+#
+#
+# $pr_number – number of the PR as shown on GH
+# $optional_message – message that is going to be put in merge commit,
+#       before the appended shortlog.
+#
 
 PR=$1
+
+# make sure to add newlines to the message, otherwise merge message
+# will not look well
+if [[ ! -z $2 ]]
+then
+    OPT_MSG="
+$2
+"
+fi
+
 
 # FIXME: ↓
 #[[ ${PR} =~ "^[:digit:]+$" ]] || echo "Not a PR number!" && exit 1
 
 # list remotes, and if there's no tux3 one, add it
-if  ! git remote | grep original
+if  ! git remote | grep original > /dev/null
 then
     git remote add original git@github.com:tux3/qTox.git
 fi
+
+# print the message only if the merge was successful
+after_merge_msg() {
+    echo ""
+    echo "PR #$PR was merged into «merge$PR» branch."
+    echo "To compare with master:"
+    echo "git diff master..merge$PR"
+    echo ""
+    echo "To push that to master on github:"
+    echo "git checkout master && git merge --ff merge$PR && git push original master"
+    echo ""
+    echo "After pushing to master, delete branches:"
+    echo ""
+    echo "git branch -d {merge,}$PR"
+}
+
 
 git fetch original && \
 git checkout master && \
@@ -40,15 +72,6 @@ git rebase original/master master && \
 git fetch original pull/$PR/head:$PR && \
 git checkout master -b merge$PR && \
 git merge --no-ff -S $PR -m "Merge pull request #$PR
-
+$OPT_MSG
 $(git shortlog master..$PR)" && \
-echo ""
-echo "PR #$PR was merged into «merge$PR» branch."
-echo "To compare with master:"
-echo "git diff master..merge$PR"
-echo ""
-echo "To push that to master on github:"
-echo "git checkout master && git merge --ff merge$PR && git push original master"
-echo ""
-echo "After pushing to master, delete branches:"
-echo "git branch -d {merge,}$PR"
+after_merge_msg
