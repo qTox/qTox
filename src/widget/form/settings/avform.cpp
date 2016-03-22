@@ -174,6 +174,10 @@ void AVForm::updateVideoModes(int curIndex)
         VideoMode mode = videoModes[i];
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
 
+        // PS3-Cam protection, everything above 60fps makes no sense
+        if(mode.FPS > 60)
+            continue;
+
         for(auto iter = idealModes.begin(); iter != idealModes.end(); ++iter)
         {
             int res = iter->first;
