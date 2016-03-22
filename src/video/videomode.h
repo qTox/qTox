@@ -44,7 +44,7 @@ struct VideoMode
 
     uint32_t norm(const VideoMode& other) const
     {
-        return std::abs(this->width-other.width) + std::abs(this->height-other.height);
+        return abs(this->width-other.width) + abs(this->height-other.height);
     }
 };
 
