@@ -15,17 +15,17 @@
 Located on the left. Can be sorted e.g. `By Activity`.
 
 `By Activity` sorting in qTox is updated whenever client receives something that
-is directly aimed at the user, and not sent to all contacts, that is:
+is directly aimed at you, and not sent to everyone, that is:
 
 * audio/video call
 * file transfer
 * groupchat invite
-* groupchat message
 * message
 
 **Not** updated on:
 
 * avatar change
+* groupchat message
 * name change
 * status change (`Online`/`Away`/`Busy`/`Offline`)
 * status message change
