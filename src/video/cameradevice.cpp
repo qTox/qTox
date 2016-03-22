@@ -372,6 +372,15 @@ QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
 #endif
 }
 
+bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
+{
+#ifdef Q_OS_LINUX
+	return v4l2::betterPixelFormat(a, b);
+#else
+	return false;
+#endif
+}
+
 bool CameraDevice::getDefaultInputFormat()
 {
     QMutexLocker locker(&iformatLock);

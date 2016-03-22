@@ -41,6 +41,11 @@ struct VideoMode
                 && FPS == other.FPS
                 && pixel_format == other.pixel_format;
     }
+
+    uint32_t norm(const VideoMode& other) const
+    {
+        return std::abs(this->width-other.width) + std::abs(this->height-other.height);
+    }
 };
 
 #endif // VIDEOMODE_H

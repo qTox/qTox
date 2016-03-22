@@ -28,12 +28,33 @@
 #include <sys/ioctl.h>
 #include <linux/videodev2.h>
 #include <dirent.h>
+#include <map>
 
 /**
  * Most of this file is adapted from libavdevice's v4l2.c,
  * which retrieves useful information but only exposes it to
  * stdout and is not part of the public API for some reason.
  */
+
+static std::map<uint32_t,uint8_t> createPixFmtToQuality()
+{
+    std::map<uint32_t,uint8_t> m;
+    m[V4L2_PIX_FMT_H264] = 3;
+    m[V4L2_PIX_FMT_MJPEG] = 2;
+    m[V4L2_PIX_FMT_YUYV] = 1;
+    return m;
+}
+const std::map<uint32_t,uint8_t> pixFmtToQuality = createPixFmtToQuality();
+
+static std::map<uint32_t,QString> createPixFmtToName()
+{
+    std::map<uint32_t,QString> m;
+    m[V4L2_PIX_FMT_H264] = QString("h264");
+    m[V4L2_PIX_FMT_MJPEG] = QString("mjpeg");
+    m[V4L2_PIX_FMT_YUYV] = QString("yuyv422");
+    return m;
+}
+const std::map<uint32_t,QString> pixFmtToName = createPixFmtToName();
 
 static int deviceOpen(QString devName)
 {
@@ -173,20 +194,24 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
 
 QString v4l2::getPixelFormatString(uint32_t pixel_format)
 {
-    if (pixel_format == V4L2_PIX_FMT_H264)
+    if (pixFmtToName.find(pixel_format) == pixFmtToName.end())
     {
-        return QString("h264");
-    }
-    else if (pixel_format == V4L2_PIX_FMT_MJPEG)
-    {
-        return QString("mjpeg");
-    }
-    else if (pixel_format == V4L2_PIX_FMT_YUYV)
-    {
-        return QString("yuyv422");
-    }
-    else {
+        printf("BAD!\n");
         return QString("unknown");
     }
+    return pixFmtToName.at(pixel_format);
+}
+
+bool v4l2::betterPixelFormat(uint32_t a, uint32_t b)
+{
+    if (pixFmtToQuality.find(a) == pixFmtToQuality.end())
+    {
+        return false;
+    }
+    else if (pixFmtToQuality.find(b) == pixFmtToQuality.end())
+    {
+        return true;
+    }
+	return pixFmtToQuality.at(a) > pixFmtToQuality.at(b);
 }
 

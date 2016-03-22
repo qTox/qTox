@@ -61,6 +61,8 @@ public:
     static QVector<VideoMode> getVideoModes(QString devName);
     /// Get the name of the pixel format of a video mode
     static QString getPixelFormatString(uint32_t pixel_format);
+    /// Returns true if we prefer format a to b, false otherwise (such as if there's no preference)
+    static bool betterPixelFormat(uint32_t a, uint32_t b);
 
     /// Returns the short name of the default defice
     /// This is either the device in the settings
