@@ -30,9 +30,12 @@ else
 	QTOX_DIR="${MAIN_DIR}/qTox"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
-VER="${QT_DIR}/5.6.0" # Potential future proffing for version testing
-QMAKE="${VER}/bin/qmake" # Don't change
-MACDEPLOYQT="${VER}/bin/macdeployqt" # Don't change
+# Figure out latest version
+QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
+QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
+
+QMAKE="${QT_DIR_VER}/bin/qmake" # Don't change
+MACDEPLOYQT="${QT_DIR_VER}/bin/macdeployqt" # Don't change
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
@@ -43,8 +46,7 @@ if [[ ! -e "${LIB_INSTALL_PREFIX}" ]]; then
 	mkdir -p "${LIB_INSTALL_PREFIX}"
 fi
 
-BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build" # Change if needed
-
+BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build"
 DEPLOY_DIR="${MAIN_DIR}/qTox-Mac_Deployed"
 
 
@@ -58,20 +60,17 @@ function build_toxcore() {
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
 	
-	#Check if libsodium is correct version
-	if [[ -e /usr/local/opt/libsodium/lib/libsodium.18.dylib ]]; then
-	   	fcho " Beginnning Toxcore compile "
-  	else
-		echo "Error: libsodium.18.dylib not found! Unable to build!"
-		echo "Please make sure your Homebrew packages are up to date before retrying."
-		exit 1
-	fi
+	local LS_DIR="/usr/local/Cellar/libsodium/"
+	#Figure out latest version
+	local LS_VER=($(ls ${LS_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
+	local LS_DIR_VER="${LS_DIR}/${LS_VER[1]}"
+	
 	sleep 3
 	
 	autoreconf -if
 	
 	#Make sure the correct version of libsodium is used
-	./configure --with-libsodium-headers=/usr/local/Cellar/libsodium/1.0.8/include/ --with-libsodium-libs=/usr/local/Cellar/libsodium/1.0.8/lib/ --prefix="${LIB_INSTALL_PREFIX}"
+	./configure --with-libsodium-headers="${LS_DIR_VER}/include/" --with-libsodium-libs="${LS_DIR_VER}/lib/" --prefix="${LIB_INSTALL_PREFIX}"
 	
 	make clean &> /dev/null
 	fcho "Compiling toxcore."
@@ -97,13 +96,20 @@ function install() {
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
 	fcho "Updating brew formulas ..."
-	brew update
+	if [[ $TRAVIS = true ]]; then
+		brew update -v
+	else
+		brew update
+	fi
 	fcho "Getting home brew formulas ..."
 	sleep 3
 	if [[ $TRAVIS != true ]]; then #travis check
-		brew install wget libtool automake
+		brew install -v wget libtool automake
 	fi
-	brew install git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
+	brew install -v git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
+	
+	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
+	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 	
 	fcho "Installing x-code Command line tools ..."
 	xcode-select --install
@@ -221,6 +227,24 @@ function deploy() {
 	$MACDEPLOYQT qTox.app
 }
 
+function bootstrap() {
+	fcho "------------------------------"
+	fcho "starting bootstrap process ..."
+	
+	# filter_audio
+	cd $FA_DIR
+	fcho "Installing filter_audio."
+	make install PREFIX="${LIB_INSTALL_PREFIX}"
+	
+	#Toxcore
+	build_toxcore
+	
+	#Boot Strap
+	fcho "Running: sudo ${QTOX_DIR_VER}/bootstrap-osx.sh"
+	cd $QTOX_DIR
+	sudo ./bootstrap-osx.sh
+}
+
 # The commands
 if [[ "$1" == "-i" ]]; then
 	install
@@ -234,6 +258,11 @@ fi
 
 if [[ "$1" == "-b" ]]; then
 	build
+	exit
+fi
+
+if [[ "$1" == "-boot" ]]; then
+	bootstrap
 	exit
 fi
 
@@ -256,6 +285,7 @@ if [[ "$1" == "-h" ]]; then
 	echo "-i -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
 	echo "-u -- Check for updates and build Toxcore from git & update qTox from git."
 	echo "-b -- Builds qTox in: ${BUILD_DIR}"
+	echo "-boot -- Performs bootstrap steps."
 	echo "-d -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
 	echo "-ubd -- Does -u, -b, and -d sequentially"
 	fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/tux3/qTox"
