@@ -210,8 +210,10 @@ QString ChatMessage::detectMarkdown(const QString &str)
 
             QString htmledSnippet;
 
+            qDebug() << "snipCheck: " << snipCheck << " out: " << out << " snipLength: " << snippet.toHtmlEscaped().length() << " outLength: " << out.toHtmlEscaped().length();
+
             // Only parse if surrounded by spaces, newline(s) and/or beginning/end of line
-            if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0) && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.toHtmlEscaped().length() == out.length()))
+            if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0) && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.toHtmlEscaped().length() == out.toHtmlEscaped().length()))
             {
                 int mul = 0; // Determines how many characters to strip from markdown text
                 // Set mul depending on markdownPreference
