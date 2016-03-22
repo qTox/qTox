@@ -97,16 +97,16 @@ function install() {
 	fi
 	fcho "Updating brew formulas ..."
 	if [[ $TRAVIS = true ]]; then
-		brew update > /dev/null
+		brew update -vv
 	else
 		brew update
 	fi
 	fcho "Getting home brew formulas ..."
 	sleep 3
 	if [[ $TRAVIS != true ]]; then #travis check
-		brew install -v wget libtool automake
+		brew install -vv wget libtool automake
 	fi
-	brew install -v git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
+	brew install -vv git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
 	
 	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
