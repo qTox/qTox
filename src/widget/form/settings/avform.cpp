@@ -30,6 +30,7 @@
 
 #include <QDebug>
 #include <QShowEvent>
+#include <map>
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
@@ -159,21 +160,65 @@ void AVForm::updateVideoModes(int curIndex)
                     a.FPS>b.FPS;});
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
+    
+    // Identify the best resolutions available for the supposed XXXXp resolutions. 
+    std::map<int, VideoMode> idealModes;
+    idealModes[240] = {460,240,0,0}; idealModes[360] = {640,360,0,0}; 
+    idealModes[480] = {854,480,0,0}; idealModes[720] = {1280,720,0,0}; 
+    idealModes[1080] = {1920,1080,0,0};
+    std::map<int, int> bestModeInds;
+    for (int i=0; i<videoModes.size(); ++i)
+    {
+        VideoMode mode = videoModes[i];
+        printf("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+        for(auto iter = idealModes.begin(); iter != idealModes.end(); ++iter)
+        {
+            int res = iter->first;
+            VideoMode idealMode = iter->second;
+            // don't take approximately correct resolutions unless they really
+            // are close
+            if (mode.norm(idealMode) > 300) continue;
+            if (bestModeInds.find(res) == bestModeInds.end())
+            {
+                bestModeInds[res] = i;
+                continue;
+            }
+            int ind = bestModeInds[res];
+            if (mode.norm(idealMode) < videoModes[ind].norm(idealMode))
+            {
+                bestModeInds[res] = i;
+            }
+            else if (mode.norm(idealMode) == videoModes[ind].norm(idealMode))
+            {
+                // prefer higher FPS and "better" pixel formats
+                if (mode.FPS > videoModes[ind].FPS) {
+                    bestModeInds[res] = i;
+                }
+                else if (mode.FPS == videoModes[ind].FPS &&
+                        CameraDevice::betterPixelFormat(mode.pixel_format, videoModes[ind].pixel_format)) 
+                {
+                    bestModeInds[res] = i;
+                }
+            }
+        }
+    }
+    printf("=====\n");
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
-    for (int i=0; i<videoModes.size(); ++i)
+    // Iterate backwards to show higest resolution first.
+    for(auto iter = bestModeInds.rbegin(); iter != bestModeInds.rend(); ++iter)
     {
+        int i = iter->second;
         VideoMode mode = videoModes[i];
         if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
             prefResIndex = i;
         QString str;
+        printf("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
         if (mode.height && mode.width)
-            str += tr("%1x%2").arg(mode.width).arg(mode.height);
+            str += tr("%1p").arg(iter->first);
         else
             str += tr("Default resolution");
-        if (mode.FPS)
-            str += tr(" at %1 FPS").arg(mode.FPS);
         bodyUI->videoModescomboBox->addItem(str);
     }
     if (videoModes.isEmpty())

@@ -26,6 +26,7 @@ struct VideoMode
 {
     unsigned short width, height; ///< Displayed video resolution (NOT frame resolution)
     float FPS; ///< Max frames per second supported by the device at this resolution
+    uint32_t pixel_format;
 
     /// All zeros means a default/unspecified mode
     operator bool() const
@@ -37,7 +38,13 @@ struct VideoMode
     {
         return width == other.width
                 && height == other.height
-                && FPS == other.FPS;
+                && FPS == other.FPS
+                && pixel_format == other.pixel_format;
+    }
+
+    uint32_t norm(const VideoMode& other) const
+    {
+        return std::abs(this->width-other.width) + std::abs(this->height-other.height);
     }
 };
 

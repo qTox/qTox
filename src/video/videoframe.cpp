@@ -17,6 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <iostream>
+
 #include <QMutexLocker>
 #include <QDebug>
 #include <vpx/vpx_image.h>
@@ -48,12 +50,13 @@ VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void
     else
         frame->color_range = AVCOL_RANGE_UNSPECIFIED;
 
-    if (pixFmt == AV_PIX_FMT_YUV420P)
+    if (pixFmt == AV_PIX_FMT_YUV420P) {
         frameYUV420 = frame;
-    else if (pixFmt == AV_PIX_FMT_RGB24)
+    } else if (pixFmt == AV_PIX_FMT_RGB24) {
         frameRGB24 = frame;
-    else
+    } else {
         frameOther = frame;
+    }
 }
 
 VideoFrame::VideoFrame(AVFrame* frame, std::function<void()> freelistCallback)
@@ -126,6 +129,7 @@ bool VideoFrame::convertToRGB24(QSize size)
         qWarning() << "None of the frames are valid! Did someone release us?";
         return false;
     }
+    //std::cout << "converting to RGB24" << std::endl;
 
     if (size.isEmpty())
     {
@@ -198,6 +202,7 @@ bool VideoFrame::convertToYUV420()
         qCritical() << "None of the frames are valid! Did someone release us?";
         return false;
     }
+    //std::cout << "converting to YUV420" << std::endl;
 
     frameYUV420=av_frame_alloc();
     if (!frameYUV420)
