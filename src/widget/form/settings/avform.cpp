@@ -167,17 +167,22 @@ void AVForm::updateVideoModes(int curIndex)
     idealModes[480] = {854,480,0,0}; idealModes[720] = {1280,720,0,0}; 
     idealModes[1080] = {1920,1080,0,0};
     std::map<int, int> bestModeInds;
+
+    qDebug("available Modes:");
     for (int i=0; i<videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
-        printf("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+
         for(auto iter = idealModes.begin(); iter != idealModes.end(); ++iter)
         {
             int res = iter->first;
             VideoMode idealMode = iter->second;
             // don't take approximately correct resolutions unless they really
             // are close
-            if (mode.norm(idealMode) > 300) continue;
+            if (mode.norm(idealMode) > 300)
+                continue;
+
             if (bestModeInds.find(res) == bestModeInds.end())
             {
                 bestModeInds[res] = i;
@@ -191,7 +196,8 @@ void AVForm::updateVideoModes(int curIndex)
             else if (mode.norm(idealMode) == videoModes[ind].norm(idealMode))
             {
                 // prefer higher FPS and "better" pixel formats
-                if (mode.FPS > videoModes[ind].FPS) {
+                if (mode.FPS > videoModes[ind].FPS)
+                {
                     bestModeInds[res] = i;
                 }
                 else if (mode.FPS == videoModes[ind].FPS &&
@@ -202,7 +208,7 @@ void AVForm::updateVideoModes(int curIndex)
             }
         }
     }
-    printf("=====\n");
+    qDebug("selected Modes:");
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
@@ -214,7 +220,7 @@ void AVForm::updateVideoModes(int curIndex)
         if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
             prefResIndex = i;
         QString str;
-        printf("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
         if (mode.height && mode.width)
             str += tr("%1p").arg(iter->first);
         else
