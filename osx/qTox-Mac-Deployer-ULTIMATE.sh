@@ -97,7 +97,7 @@ function install() {
 	fi
 	fcho "Updating brew formulas ..."
 	if [[ $TRAVIS = true ]]; then
-		brew update -v
+		brew update > /dev/null
 	else
 		brew update
 	fi
