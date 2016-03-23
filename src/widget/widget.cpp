@@ -1418,6 +1418,8 @@ void Widget::copyFriendIdToClipboard(int friendId)
 
 void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
+    updateFriendActivity(FriendList::findFriend(friendId));
+
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
         if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId).toHtmlEscaped()), true, false))
@@ -1444,6 +1446,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
+
     bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
