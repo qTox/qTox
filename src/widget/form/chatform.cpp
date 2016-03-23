@@ -774,7 +774,7 @@ void ChatForm::doScreenshot()
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
     // Create dir for screenshots
-    QDir(Settings::getInstance().getAppDataDirPath()).mkdir("screenshots");
+    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("screenshots");
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
