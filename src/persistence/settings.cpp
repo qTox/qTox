@@ -553,6 +553,45 @@ QString Settings::getSettingsDirPath()
 #endif
 }
 
+QString Settings::getAppDataDirPath()
+{
+    QMutexLocker locker{&bigLock};
+    if (makeToxPortable)
+        return QString(".")+QDir::separator();
+
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+#ifdef Q_OS_WIN
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
+#else
+    // TODO: change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
+    //       For now we need support Qt 5.3, so we use deprecated DataLocation
+    //       BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))+QDir::separator();
+#endif
+}
+
+QString Settings::getAppCacheDirPath()
+{
+    QMutexLocker locker{&bigLock};
+    if (makeToxPortable)
+        return QString(".")+QDir::separator();
+
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+#ifdef Q_OS_WIN
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
+#else
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))+QDir::separator();
+#endif
+}
+
 const QList<DhtServer>& Settings::getDhtServerList() const
 {
     QMutexLocker locker{&bigLock};

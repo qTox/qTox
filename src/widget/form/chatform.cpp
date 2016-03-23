@@ -774,7 +774,7 @@ void ChatForm::doScreenshot()
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
     // Create dir for screenshots
-    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("screenshots");
+    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("screenshots");
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
@@ -783,7 +783,7 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
     QString filepath = QString("%1screenshots%2qTox_Screenshot_%3.png")
-                           .arg(Settings::getInstance().getSettingsDirPath())
+                           .arg(Settings::getInstance().getAppDataDirPath())
                            .arg(QDir::separator())
                            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
 
