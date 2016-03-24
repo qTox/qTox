@@ -63,14 +63,10 @@ AVForm::AVForm() :
 
     bodyUI->playbackSlider->setTracking(false);
     bodyUI->playbackSlider->installEventFilter(this);
-    connect(bodyUI->playbackSlider, &QSlider::sliderMoved,
-            this, &AVForm::onPlaybackSliderMoved);
     connect(bodyUI->playbackSlider, &QSlider::valueChanged,
             this, &AVForm::onPlaybackValueChanged);
     bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
-    connect(bodyUI->microphoneSlider, &QSlider::sliderMoved,
-            this, &AVForm::onMicrophoneSliderMoved);
     connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
             this, &AVForm::onMicrophoneValueChanged);
 
@@ -402,8 +398,10 @@ void AVForm::onFilterAudioToggled(bool filterAudio)
     Settings::getInstance().setFilterAudio(filterAudio);
 }
 
-void AVForm::onPlaybackSliderMoved(int value)
+void AVForm::onPlaybackValueChanged(int value)
 {
+    Settings::getInstance().setOutVolume(value);
+
     Audio& audio = Audio::getInstance();
     if (audio.isOutputReady()) {
         const qreal percentage = value / 100.0;
@@ -414,20 +412,12 @@ void AVForm::onPlaybackSliderMoved(int value)
     }
 }
 
-void AVForm::onPlaybackValueChanged(int value)
-{
-    Settings::getInstance().setOutVolume(value);
-}
-
-void AVForm::onMicrophoneSliderMoved(int value)
-{
-    const qreal percentage = value / 100.0;
-    Audio::getInstance().setInputVolume(percentage);
-}
-
 void AVForm::onMicrophoneValueChanged(int value)
 {
     Settings::getInstance().setInVolume(value);
+
+    const qreal percentage = value / 100.0;
+    Audio::getInstance().setInputVolume(percentage);
 }
 
 void AVForm::createVideoSurface()
