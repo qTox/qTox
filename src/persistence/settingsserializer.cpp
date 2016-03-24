@@ -22,6 +22,7 @@
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/core/core.h"
+#include <QSaveFile>
 #include <QFile>
 #include <QDebug>
 #include <memory>
@@ -219,7 +220,7 @@ void SettingsSerializer::load()
 
 void SettingsSerializer::save()
 {
-    QFile f(path);
+    QSaveFile f(path);
     if (!f.open(QIODevice::Truncate | QIODevice::WriteOnly))
     {
         qWarning() << "Couldn't open file";
@@ -280,7 +281,17 @@ void SettingsSerializer::save()
     }
 
     f.write(data);
-    f.close();
+
+    // check if everything got written
+    if(f.flush())
+    {
+        f.commit();
+    }
+    else
+    {
+        f.cancelWriting();
+        qCritical() << "Failed to write, can't save!";
+    }
 }
 
 void SettingsSerializer::readSerialized()

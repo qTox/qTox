@@ -332,8 +332,18 @@ void Profile::saveToxSave(QByteArray data)
     }
 
     saveFile.write(data);
-    saveFile.commit();
-    newProfile = false;
+
+    // check if everything got written
+    if(saveFile.flush())
+    {
+        saveFile.commit();
+        newProfile = false;
+    }
+    else
+    {
+        saveFile.cancelWriting();
+        qCritical() << "Failed to write, can't save!";
+    }
 }
 
 QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
