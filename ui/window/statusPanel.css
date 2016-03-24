@@ -25,6 +25,26 @@ QToolButton::menu-indicator {
     image: none
 }
 
+QPushButton#green {
+    background: none;
+    background-color: #6bc260;
+    color: white;
+    border-style: none;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 4px 8px;
+}
+
+QPushButton#green:hover
+{
+    background-color: #79c76f;
+}
+
+QPushButton#green:pressed
+{
+    background-color: #51b244;
+}
+
 /**
   Uncomment this after https://github.com/tux3/qTox/pull/1640
   is merged!
@@ -96,3 +116,4 @@ QListView {
   position: relative;
   bottom: 2px;
 }
+

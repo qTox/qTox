@@ -282,6 +282,13 @@ public:
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
 
+    bool addFriendRequest(const QString &friendAddress, const QString &message);
+    unsigned int getUnreadFriendRequests() const;
+    QPair<QString, QString> getFriendRequest(int index) const;
+    int getFriendRequestSize() const;
+    void clearUnreadFriendRequests();
+    void removeFriendRequest(int index);
+
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
     // for some general purpose widgets, such as MainWindows or Splitters,
@@ -360,6 +367,9 @@ private:
     QHash<QString, QString> autoAccept;
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
+
+    QList<QPair<QString, QString>> friendRequests;
+    unsigned int unreadFriendRequests;
 
     // GUI
     QString smileyPack;

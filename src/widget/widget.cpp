@@ -47,6 +47,7 @@
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/translator.h"
 #include "src/widget/form/addfriendform.h"
+#include "src/widget/form/groupinviteform.h"
 #include "src/widget/form/filesform.h"
 #include "src/widget/form/profileform.h"
 #include "src/widget/form/settingswidget.h"
@@ -232,6 +233,7 @@ void Widget::init()
 
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
+    groupInviteForm = new GroupInviteForm;
     profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
@@ -252,6 +254,7 @@ void Widget::init()
     connect(ui->statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
+    connect(groupInviteForm, &GroupInviteForm::groupCreate, Core::getInstance(), &Core::createGroup);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -356,6 +359,7 @@ void Widget::init()
     onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
 
     ui->addButton->setCheckable(true);
+    ui->groupButton->setCheckable(true);
     ui->transferButton->setCheckable(true);
     ui->settingsButton->setCheckable(true);
 
@@ -383,6 +387,15 @@ void Widget::init()
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
 #endif
+
+    friendRequestsButton = nullptr;
+    groupInvitesButton = nullptr;
+    unreadGroupInvites = 0;
+
+    connect(addFriendForm, &AddFriendForm::friendRequestsSeen, this, &Widget::friendRequestsUpdate);
+    connect(addFriendForm, &AddFriendForm::friendRequestAccepted, this, &Widget::friendRequestAccepted);
+    connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen, this, &Widget::groupInvitesClear);
+    connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted, this, &Widget::onGroupInviteAccepted);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
@@ -470,6 +483,7 @@ Widget::~Widget()
     delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
+    delete groupInviteForm;
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
@@ -707,7 +721,20 @@ void Widget::onAddClicked()
 
 void Widget::onGroupClicked()
 {
-    Nexus::getCore()->createGroup();
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!groupInviteForm->isShown())
+            groupInviteForm->show(createContentDialog(GroupDialog));
+
+        setActiveToolMenuButton(Widget::None);
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        groupInviteForm->show(contentLayout);
+        setWindowTitle(fromDialogType(GroupDialog));
+        setActiveToolMenuButton(Widget::GroupButton);
+    }
 }
 
 void Widget::onTransferClicked()
@@ -1209,6 +1236,8 @@ QString Widget::fromDialogType(DialogType type)
     {
         case AddDialog:
             return tr("Add friend");
+        case GroupDialog:
+            return tr("Group invites");
         case TransferDialog:
             return tr("File transfers");
         case SettingDialog:
@@ -1251,10 +1280,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    FriendRequestDialog dialog(this, userId, message);
-
-    if (dialog.exec() == QDialog::Accepted)
-        emit friendRequestAccepted(userId);
+    if(addFriendForm->addFriendRequest(userId, message))
+    {
+        friendRequestsUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
+    }
 }
 
 void Widget::updateFriendActivity(Friend *frnd)
@@ -1422,19 +1452,24 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId).toHtmlEscaped()), true, false))
-        {
-            int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
-            if (groupId < 0)
-            {
-                qWarning() << "onGroupInviteReceived: Unable to accept  group invite";
-                return;
-            }
-        }
+        ++unreadGroupInvites;
+        groupInvitesUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
+        groupInviteForm->addGroupInvite(friendId, type, invite);
     }
     else
     {
         qWarning() << "onGroupInviteReceived: Unknown groupchat type:"<<type;
+        return;
+    }
+}
+
+void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite)
+{
+    int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
+    if (groupId < 0)
+    {
+        qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
     }
 }
@@ -2034,11 +2069,66 @@ bool Widget::groupsVisible() const
 void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
+    QAction *createGroupAction = menu.addAction(tr("Create new group..."));
     QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
     QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+    else if (chosenAction == createGroupAction)
+        Nexus::getCore()->createGroup();
+}
+
+void Widget::friendRequestsUpdate()
+{
+    unsigned int unreadFriendRequests = Settings::getInstance().getUnreadFriendRequests();
+
+    if (unreadFriendRequests == 0)
+    {
+        delete friendRequestsButton;
+        friendRequestsButton = nullptr;
+    }
+    else if (!friendRequestsButton)
+    {
+        friendRequestsButton = new QPushButton(this);
+        friendRequestsButton->setObjectName("green");
+        ui->statusLayout->insertWidget(2, friendRequestsButton);
+
+        connect(friendRequestsButton, &QPushButton::released, [this]()
+        {
+            onAddClicked();
+            addFriendForm->setMode(AddFriendForm::Mode::FriendRequest);
+        });
+    }
+
+    if (friendRequestsButton)
+        friendRequestsButton->setText(tr("%n New Friend Request(s)", "", unreadFriendRequests));
+}
+
+void Widget::groupInvitesUpdate()
+{
+    if (unreadGroupInvites == 0)
+    {
+        delete groupInvitesButton;
+        groupInvitesButton = nullptr;
+    }
+    else if (!groupInvitesButton)
+    {
+        groupInvitesButton = new QPushButton(this);
+        groupInvitesButton->setObjectName("green");
+        ui->statusLayout->insertWidget(2, groupInvitesButton);
+
+        connect(groupInvitesButton, &QPushButton::released, this, &Widget::onGroupClicked);
+    }
+
+    if (groupInvitesButton)
+        groupInvitesButton->setText(tr("%n New Group Invite(s)", "", unreadGroupInvites));
+}
+
+void Widget::groupInvitesClear()
+{
+    unreadGroupInvites = 0;
+    groupInvitesUpdate();
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
@@ -2079,6 +2169,10 @@ void Widget::retranslateUi()
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(SettingDialog));
+
+    friendRequestsUpdate();
+    groupInvitesUpdate();
+
 
 #ifdef Q_OS_MAC
     Nexus::getInstance().retranslateUi();

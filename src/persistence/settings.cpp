@@ -325,6 +325,22 @@ void Settings::loadPersonal(Profile* profile)
         ps.endArray();
     ps.endGroup();
 
+    ps.beginGroup("Requests");
+        unreadFriendRequests = ps.value("unread", 0).toUInt();
+        size = ps.beginReadArray("Request");
+        friendRequests.clear();
+        friendRequests.reserve(size);
+        for (int i = 0; i < size; i ++)
+        {
+            ps.setArrayIndex(i);
+            QPair<QString, QString> request;
+            request.first = ps.value("addr").toString();
+            request.second = ps.value("message").toString();
+            friendRequests.push_back(request);
+        }
+        ps.endArray();
+    ps.endGroup();
+
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", true).toBool();
     ps.endGroup();
@@ -497,7 +513,22 @@ void Settings::savePersonal(QString profileName, QString password)
             if (getEnableLogging())
                 ps.setValue("activity", frnd.activity);
 
-            index++;
+            ++index;
+        }
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Requests");
+        ps.setValue("unread", unreadFriendRequests);
+        ps.beginWriteArray("Request", friendRequests.size());
+        index = 0;
+        for (auto& request : friendRequests)
+        {
+            ps.setArrayIndex(index);
+            ps.setValue("addr", request.first);
+            ps.setValue("message", request.second);
+
+            ++index;
         }
         ps.endArray();
     ps.endGroup();
@@ -1555,6 +1586,55 @@ bool Settings::getCircleExpanded(int id) const
 void Settings::setCircleExpanded(int id, bool expanded)
 {
     circleLst[id].expanded = expanded;
+}
+
+bool Settings::addFriendRequest(const QString &friendAddress, const QString &message)
+{
+    QMutexLocker locker{&bigLock};
+
+    for (auto queued : friendRequests)
+    {
+       if (queued.first == friendAddress)
+       {
+           queued.second = message;
+           return false;
+       }
+    }
+
+    QPair<QString, QString> request(friendAddress, message);
+    friendRequests.push_back(request);
+    ++unreadFriendRequests;
+    return true;
+}
+
+unsigned int Settings::getUnreadFriendRequests() const
+{
+    QMutexLocker locker{&bigLock};
+    return unreadFriendRequests;
+}
+
+QPair<QString, QString> Settings::getFriendRequest(int index) const
+{
+    QMutexLocker locker{&bigLock};
+    return friendRequests.at(index);
+}
+
+int Settings::getFriendRequestSize() const
+{
+    QMutexLocker locker{&bigLock};
+    return friendRequests.size();
+}
+
+void Settings::clearUnreadFriendRequests()
+{
+    QMutexLocker locker{&bigLock};
+    unreadFriendRequests = 0;
+}
+
+void Settings::removeFriendRequest(int index)
+{
+    QMutexLocker locker{&bigLock};
+    friendRequests.removeAt(index);
 }
 
 int Settings::removeCircle(int id)
