@@ -131,8 +131,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
     bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
     bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
-    bodyUI->showWindow->setChecked(Settings::getInstance().getShowWindow());
+
+    bool showWindow = Settings::getInstance().getShowWindow();
+
+    bodyUI->showWindow->setChecked(showWindow);
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->showInFront->setEnabled(showWindow);
     bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
