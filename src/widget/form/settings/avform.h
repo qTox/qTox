@@ -57,9 +57,7 @@ private slots:
     void onInDevChanged(QString deviceDescriptor);
     void onOutDevChanged(QString deviceDescriptor);
     void onFilterAudioToggled(bool filterAudio);
-    void onPlaybackSliderMoved(int value);
     void onPlaybackValueChanged(int value);
-    void onMicrophoneSliderMoved(int value);
     void onMicrophoneValueChanged(int value);
 
     // camera
