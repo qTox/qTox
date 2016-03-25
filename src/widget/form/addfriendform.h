@@ -72,6 +72,7 @@ private slots:
 private:
     void retranslateUi();
     void addFriendRequestWidget(const QString& friendAddress, const QString& message);
+    void removeFriendRequestWidget(QWidget *friendWidget);
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
 
@@ -86,8 +87,8 @@ private:
     QString lastUsername; // Cached username so we can retranslate the invite message
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;
-    QSet<QPushButton*> acceptButtons;
-    QSet<QPushButton*> rejectButtons;
+    QList<QPushButton*> acceptButtons;
+    QList<QPushButton*> rejectButtons;
 };
 
 #endif // ADDFRIENDFORM_H
