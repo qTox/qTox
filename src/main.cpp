@@ -34,6 +34,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QMutex>
 #include <QFontDatabase>
 #include <QMutexLocker>
 
@@ -45,7 +46,9 @@
 #endif
 
 #ifdef LOG_TO_FILE
-static FILE * logFileFile = nullptr;
+static QAtomicPointer<FILE> logFileFile = nullptr;
+static QList<QByteArray>* logBuffer = new QList<QByteArray>();   //Store log messages until log file opened
+QMutex* logBufferMutex = new QMutex();
 #endif
 
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
@@ -80,16 +83,40 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), stderr);
 
 #ifdef LOG_TO_FILE
-    if (logFileFile == nullptr)
-        return;
-    fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), logFileFile);
-    fflush(logFileFile);
+    FILE * logFilePtr = logFileFile.load(); // atomically load the file pointer
+    if (!logFilePtr)
+    {
+        logBufferMutex->lock();
+        if(logBuffer)
+        {
+            logBuffer->append(LogMsgBytes);
+        }
+        logBufferMutex->unlock();
+    }
+    else
+    {
+        logBufferMutex->lock();
+        if(logBuffer)
+        {
+            // empty logBuffer to file
+            foreach(QByteArray msg, *logBuffer)
+            {
+                fwrite(msg.constData(), 1, msg.size(), logFilePtr);
+            }
+
+            delete logBuffer;   // no longer needed
+            logBuffer = nullptr;
+        }
+        logBufferMutex->unlock();
+
+        fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), logFilePtr);
+        fflush(logFilePtr);
+    }
 #endif
 }
 
 int main(int argc, char *argv[])
 {
-    qSetMessagePattern("%{time [HH:mm:ss.zzz]} %{file}:%{line} %{type} %{message}");
     qInstallMessageHandler(logMessageHandler);
 
     QApplication a(argc, argv);
@@ -130,7 +157,7 @@ int main(int argc, char *argv[])
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";
-    logFileFile = fopen(logfile.toLocal8Bit().constData(), "a");
+    FILE * tmpLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
 
     // Trim log file if over 1MB
     if (QFileInfo(logfile).size() > 1000000)
@@ -141,16 +168,25 @@ int main(int argc, char *argv[])
 		
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
-            qDebug() << "Removed log successfully";
+            qDebug() << "Removed old log successfully";
         else
-            qDebug() << "Unable to remove old log file";
+            qWarning() << "Unable to remove old log file";
 
-        dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1");
+        if(!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
+            qCritical() << "Unable to move logs";
 
-        FILE * oldLogFileFile = logFileFile;
-        logFileFile = fopen(logfile.toLocal8Bit().constData(), "a");
-        fclose(oldLogFileFile);
+        // close old logfile
+        if(tmpLogFilePtr)
+            fclose(tmpLogFilePtr);
+
+        // open a new logfile
+        tmpLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
     }
+
+    if(!tmpLogFilePtr)
+        qCritical() << "Couldn't open logfile" << logfile;
+
+    logFileFile.store(tmpLogFilePtr);   // atomically set the logFile
 #endif
 
     // Windows platform plugins DLL hell fix
