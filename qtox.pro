@@ -227,6 +227,8 @@ unix:!macx:!android {
 
         PKGCONFIG += glib-2.0 gtk+-2.0 atk
         PKGCONFIG += cairo gdk-pixbuf-2.0 pango
+        PKGCONFIG += libavformat libavdevice libavcodec
+        PKGCONFIG += libavutil libswscale
         PKGCONFIG += appindicator-0.1 dbusmenu-glib-0.4
     }
 
@@ -236,6 +238,8 @@ unix:!macx:!android {
 
         PKGCONFIG += glib-2.0 gtk+-2.0 atk
         PKGCONFIG += cairo gdk-pixbuf-2.0 pango
+        PKGCONFIG += libavformat libavdevice libavcodec
+        PKGCONFIG += libavutil libswscale
 
         SOURCES +=     src/platform/statusnotifier/closures.c \
         src/platform/statusnotifier/enums.c \
