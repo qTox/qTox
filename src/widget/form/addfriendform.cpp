@@ -228,8 +228,7 @@ void AddFriendForm::onFriendRequestAccepted()
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
-    friendWidget->deleteLater();
-    requestsLayout->removeWidget(friendWidget);
+    removeFriendRequestWidget(friendWidget);
     emit friendRequestAccepted(Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1).first);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
@@ -240,8 +239,7 @@ void AddFriendForm::onFriendRequestRejected()
     QPushButton* rejectButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = rejectButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
-    friendWidget->deleteLater();
-    requestsLayout->removeWidget(friendWidget);
+    removeFriendRequestWidget(friendWidget);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
 }
@@ -295,18 +293,27 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     horLayout->addWidget(messageLabel, 1);
 
     QPushButton* acceptButton = new QPushButton(friendWidget);
-    acceptButtons.insert(acceptButton);
+    acceptButtons.append(acceptButton);
     connect(acceptButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestAccepted);
     friendLayout->addWidget(acceptButton);
     retranslateAcceptButton(acceptButton);
 
     QPushButton* rejectButton = new QPushButton(friendWidget);
-    rejectButtons.insert(rejectButton);
+    rejectButtons.append(rejectButton);
     connect(rejectButton, &QPushButton::released, this, &AddFriendForm::onFriendRequestRejected);
     friendLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 
     requestsLayout->insertWidget(0, friendWidget);
+}
+
+void AddFriendForm::removeFriendRequestWidget(QWidget* friendWidget)
+{
+    int index = requestsLayout->indexOf(friendWidget);
+    requestsLayout->removeWidget(friendWidget);
+    acceptButtons.removeAt(index);
+    rejectButtons.removeAt(index);
+    friendWidget->deleteLater();
 }
 
 void AddFriendForm::retranslateAcceptButton(QPushButton *acceptButton)
