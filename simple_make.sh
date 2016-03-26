@@ -7,7 +7,8 @@ if which apt-get; then
         libavdevice-dev \
         libxss-dev qrencode libqrencode-dev libtool autotools-dev \
         automake checkinstall check libopus-dev libvpx-dev libsodium-dev \
-        libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
+        libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev \
+        libsqlcipher-dev
 elif which pacman; then
     sudo pacman -S --needed \
         git base-devel qt5 opencv openal libxss qrencode opus libvpx \
