@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";
-    FILE * tmpLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
+    FILE * mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
 
     // Trim log file if over 1MB
     if (QFileInfo(logfile).size() > 1000000)
@@ -176,17 +176,17 @@ int main(int argc, char *argv[])
             qCritical() << "Unable to move logs";
 
         // close old logfile
-        if(tmpLogFilePtr)
-            fclose(tmpLogFilePtr);
+        if(mainLogFilePtr)
+            fclose(mainLogFilePtr);
 
         // open a new logfile
-        tmpLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
+        mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
     }
 
-    if(!tmpLogFilePtr)
+    if(!mainLogFilePtr)
         qCritical() << "Couldn't open logfile" << logfile;
 
-    logFileFile.store(tmpLogFilePtr);   // atomically set the logFile
+    logFileFile.store(mainLogFilePtr);   // atomically set the logFile
 #endif
 
     // Windows platform plugins DLL hell fix
@@ -288,13 +288,14 @@ int main(int argc, char *argv[])
     // Run
     int errorcode = a.exec();
 
-#ifdef LOG_TO_FILE
-    fclose(logFileFile);
-#endif
-
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
     Settings::destroyInstance();
     qDebug() << "Clean exit with status" << errorcode;
+
+#ifdef LOG_TO_FILE
+    logFileFile.store(nullptr);   // atomically disable logging to file
+    fclose(mainLogFilePtr);
+#endif
     return errorcode;
 }
