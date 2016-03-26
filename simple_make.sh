@@ -28,7 +28,8 @@ elif which zypper; then
 	libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel \
 	libQt5Sql-devel openal-soft-devel qrencode-devel \
 	libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
-	libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis
+	libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis \
+        sqlcipher-devel
 else
     echo "Unknown package manager, attempting to compile anyways"
 fi
