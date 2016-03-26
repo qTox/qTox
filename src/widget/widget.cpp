@@ -1500,13 +1500,9 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g = createGroup(groupnumber);
     }
 
-    QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
     {
-        if (name.isEmpty())
-            name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
-
         // g->addPeer(peernumber,name);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "white", QDateTime::currentDateTime());
@@ -1521,6 +1517,10 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
     {
+        QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
+        if (name.isEmpty())
+            name = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+
         g->updatePeer(peernumber, name);
     }
 }
