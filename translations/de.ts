@@ -8,16 +8,12 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <source>%1x%2</source>
+        <source>%1p</source>
         <translation></translation>
     </message>
     <message>
         <source>Default resolution</source>
         <translation>Standardauflösung</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation> bei %1.FPS</translation>
     </message>
     <message>
         <source>None</source>
@@ -49,10 +45,6 @@
     <message>
         <source>Gain</source>
         <translation>Aufnahmelautstärke</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation></translation>
     </message>
     <message>
         <source>Volume</source>
@@ -134,19 +126,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Qt version:</source>
         <translation>Qt-Version:</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Ausgelassen, da Lizenz original auf Englisch.</translatorcomment>
-        <translation></translation>
     </message>
     <message>
         <source>Authors</source>
@@ -273,6 +252,22 @@ hier ist %1! Hast du Lust, dich mit mir zu unterhalten?
 
 Viele Grüße,
 %1</translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation>Einen Freund hinzufügen</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Freundschaftsanfragen</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Annehmen</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Ablehnen</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -780,6 +775,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Chat aus diesem Fenster entfernen</translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation>Zu einer neuen Gruppe</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>In Gruppe „%1“ einladen</translation>
+    </message>
+    <message>
         <source>Set alias...</source>
         <translation>Namen setzen ...</translation>
     </message>
@@ -847,7 +850,8 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>None</source>
-        <translation>Nichts</translation>
+        <translatorcomment>Grundstil</translatorcomment>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1048,10 +1052,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Standardordner für Dateien:</translation>
     </message>
     <message>
-        <source>New markdown preference may not load until qTox restarts.</source>
-        <translation>Änderungen an den Markdown-Einstellungen werden erst nach einem Neustart von qTox wirksam.</translation>
-    </message>
-    <message>
         <source>Markdown:</source>
         <translation></translation>
     </message>
@@ -1119,6 +1119,10 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>IPv6 aktivieren (Empfohlen)</translation>
+    </message>
+    <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation>Änderungen an den Markdown-Einstellungen werden erst nach einem Neustart von qTox wirksam.</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1256,6 +1260,33 @@ werden übertragen, sobald ihr beide online seid.</translation>
     <message>
         <source>End audio call</source>
         <translation>Anruf beenden</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2.</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Gruppen</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Neue Gruppe erstellen</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Gruppeneinladungen</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Annehmen</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Ablehnen</translation>
     </message>
 </context>
 <context>
@@ -2224,16 +2255,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>%1 ist jetzt %2.</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Gruppeneinladung</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 hat dich in eine Gruppe eingeladen! Möchtest du ihr beitreten?</translation>
-    </message>
-    <message>
         <source>&lt;Unknown&gt;</source>
         <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
         <translation>&lt;Unbekannt&gt;</translation>
@@ -2255,12 +2276,34 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>Dein Status</translation>
     </message>
     <message>
+        <source>Group invites</source>
+        <translation>Gruppeneinladungen</translation>
+    </message>
+    <message>
         <source>Message failed to send</source>
         <translation>Nachricht konnte nicht gesendet werden</translation>
     </message>
     <message>
+        <source>Create new group...</source>
+        <translation>Neue Gruppe erstellen ...</translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation>Neuen Kreis hinzufügen ...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n neue Freundschaftsanfrage</numerusform>
+            <numerusform>%n neue Freundschaftsanfragen</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n neue Gruppeneinladung</numerusform>
+            <numerusform>%n neue Gruppeneinladungen</numerusform>
+        </translation>
     </message>
     <message>
         <source>By Name</source>
