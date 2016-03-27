@@ -8,16 +8,12 @@
         <translation>Audio/Vídeo</translation>
     </message>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
+        <source>%1p</source>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>Default resolution</source>
         <translation>Resolución por defecto</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation> a %1 FPS</translation>
     </message>
     <message>
         <source>None</source>
@@ -41,10 +37,6 @@
     <message>
         <source>Gain</source>
         <translation>Ganancia</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -248,6 +240,22 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>¡Hola, soy %1! ¿Quieres agregarme en Tox?</translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation>Agregar un amigo</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Solicitudes de Amistad</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Rechazar</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -718,6 +726,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Invitar a grupo</translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation>A un nuevo grupo</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Invitar a grupo &apos;%1&apos;</translation>
+    </message>
+    <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
         <translation>Mover a círculo...</translation>
@@ -945,6 +961,10 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Poner ventana en foco</translation>
     </message>
     <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation>Puede que necesites reiniciar qTox para activar la nueva configuración de Markdown.</translation>
+    </message>
+    <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
         <translation>Tu lista de amigos se mostrará en modo compacto.</translation>
@@ -995,10 +1015,6 @@ en lugar de la barra de tareas del sistema.</translation>
     <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Poner chats grupales al comienzo de la lista de amigos</translation>
-    </message>
-    <message>
-        <source>New markdown preference may not load until qTox restarts.</source>
-        <translation>Puede que necesites reiniciar qTox para activar la nueva configuración de Markdown.</translation>
     </message>
     <message>
         <source>Markdown:</source>
@@ -1187,6 +1203,14 @@ Hazlo sólo en caso de ser necesario.</translation>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Vacío&gt;</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 users in chat</source>
@@ -1221,6 +1245,33 @@ Hazlo sólo en caso de ser necesario.</translation>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 usuario en el chat</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation>Invitado por &lt;b&gt;%1&lt;/b&gt; en %2.</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Grupos</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Crear un nuevo grupo</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Unirse</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Declinar</translation>
     </message>
 </context>
 <context>
@@ -2080,8 +2131,35 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Agregar amigo</translation>
     </message>
     <message>
+        <source>Group invites</source>
+        <translation>Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Vacío&gt;</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Crear un nuevo grupo...</translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation>Agregar un nuevo círculo...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n Nueva(s) Solicitud(es) de Amistad</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n Nueva(s) Invitacion(es) a Grupos</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <source>By Name</source>
@@ -2213,21 +2291,6 @@ Será instalada cuando reinicies qTox.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 ahora está %2</translation>
-    </message>
-    <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Invitación a grupo</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 te ha invitado a un chat grupal. ¿Deseas unirte?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Desconocido&gt;</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
