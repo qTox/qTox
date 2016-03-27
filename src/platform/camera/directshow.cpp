@@ -1,6 +1,6 @@
 /*
     Copyright (c) 2010 Ramiro Polla
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
