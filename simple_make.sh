@@ -23,12 +23,12 @@ elif which dnf; then
         gdk-pixbuf2-devel gtk2-devel libsodium-devel
 elif which zypper; then
     sudo zypper in \
-	git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
-	libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel \
-	libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel \
-	libQt5Sql-devel openal-soft-devel qrencode-devel \
-	libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
-	libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis \
+        git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
+        libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel \
+        libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel \
+        libQt5Sql-devel openal-soft-devel qrencode-devel \
+        libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
+        libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis \
         sqlcipher-devel
 else
     echo "Unknown package manager, attempting to compile anyways"
