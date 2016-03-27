@@ -7,7 +7,8 @@ if which apt-get; then
         libavdevice-dev \
         libxss-dev qrencode libqrencode-dev libtool autotools-dev \
         automake checkinstall check libopus-dev libvpx-dev libsodium-dev \
-        libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev
+        libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev \
+        libsqlcipher-dev
 elif which pacman; then
     sudo pacman -S --needed \
         git base-devel qt5 opencv openal libxss qrencode opus libvpx \
@@ -27,7 +28,8 @@ elif which zypper; then
 	libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel \
 	libQt5Sql-devel openal-soft-devel qrencode-devel \
 	libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
-	libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis
+	libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis \
+        sqlcipher-devel
 else
     echo "Unknown package manager, attempting to compile anyways"
 fi
