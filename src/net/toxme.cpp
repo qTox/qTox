@@ -86,6 +86,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
     static const QByteArray pattern{"key\":\""};
 
     QString json = reply->readAll();
+    delete reply;
     json = json.remove(' ');
     int start = json.indexOf(pattern) + pattern.length();
     int end = json.indexOf("\"", start);
@@ -327,42 +328,6 @@ QString Toxme::getErrorMessage(int errorCode)
         return QObject::tr("Tox ID not sent");
     case -41:
         return QObject::tr("Lookup failed because the server replied with invalid data");
-    case -42:
-        return QObject::tr("That user does not exist");
-    case -43:
-        return QObject::tr("Internal lookup error. Please file a bug");
-    default:
-        return QObject::tr("Unknown error (%1)").arg(errorCode);
-    }
-}
-
-QString Toxme::getErrorMessage(int errorCode)
-{
-    switch (errorCode) {
-    case -1:
-        return QObject::tr("You must send POST requests to /api");
-    case -2:
-        return QObject::tr("Please try again using a HTTPS connection");
-    case -3:
-        return QObject::tr("I was unable to read your encrypted payload");
-    case -4:
-        return QObject::tr("You're making too many requests. Wait an hour and try again");
-    case -25:
-        return QObject::tr("This name is already in use");
-    case -26:
-        return QObject::tr("This Tox ID is already registered under another name");
-    case -27:
-        return QObject::tr("Please don't use a space in your name");
-    case -28:
-        return QObject::tr("Password incorrect");
-    case -29:
-        return QObject::tr("You can't use this name");
-    case -30:
-        return QObject::tr("Name not found");
-    case -31:
-        return QObject::tr("Tox ID not sent");
-    case -41:
-        return QObject::tr("Lookup failed because the other server replied with invalid data");
     case -42:
         return QObject::tr("That user does not exist");
     case -43:
