@@ -41,13 +41,17 @@ $2
 fi
 
 
-# FIXME: ↓
-#[[ ${PR} =~ "^[:digit:]+$" ]] || echo "Not a PR number!" && exit 1
+# check if supplied var is a number; if not exit
+if [[ ! "${PR}" =~ ^[[:digit:]]+$ ]]
+then
+    echo "Not a PR number!" && \
+    exit 1
+fi
 
 # list remotes, and if there's no tux3 one, add it
-if  ! git remote | grep original > /dev/null
+if  ! git remote | grep upstream > /dev/null
 then
-    git remote add original git@github.com:tux3/qTox.git
+    git remote add upstream git@github.com:tux3/qTox.git
 fi
 
 # print the message only if the merge was successful
@@ -58,20 +62,30 @@ after_merge_msg() {
     echo "git diff master..merge$PR"
     echo ""
     echo "To push that to master on github:"
-    echo "git checkout master && git merge --ff merge$PR && git push original master"
+    echo "git checkout master && git merge --ff merge$PR && git push upstream master"
     echo ""
     echo "After pushing to master, delete branches:"
     echo ""
     echo "git branch -d {merge,}$PR"
 }
 
+# print the message only if some merge step failed
+after_merge_failure_msg() {
+    echo ""
+    echo "Merge failed."
+    echo ""
+    echo "You may want to remove not merged branches, if they exist:"
+    echo ""
+    echo "git checkout master && git branch -D {merge,}$PR"
+}
 
-git fetch original && \
+
+git fetch upstream && \
 git checkout master && \
-git rebase original/master master && \
-git fetch original pull/$PR/head:$PR && \
+git rebase upstream/master master && \
+git fetch upstream pull/$PR/head:$PR && \
 git checkout master -b merge$PR && \
 git merge --no-ff -S $PR -m "Merge pull request #$PR
 $OPT_MSG
 $(git shortlog master..$PR)" && \
-after_merge_msg
+after_merge_msg || after_merge_failure_msg
