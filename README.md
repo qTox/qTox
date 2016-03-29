@@ -31,7 +31,7 @@ Builds other than installer/packages don't receive updates automatically, so mak
 Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
 
 
-![Screenshot 01](https://i.imgur.com/hwGmDeK.png)
+![Screenshot 01](https://i.imgur.com/olb89CN.png)
 ![Screenshot 02](https://i.imgur.com/tmX8z9s.png)
 
 
