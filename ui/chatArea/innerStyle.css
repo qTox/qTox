@@ -10,6 +10,7 @@ p.msg {
 p.action {
   color: #1818FF;
   font: @big;
+  font-style: italic;
 }
 
 p.typing {
