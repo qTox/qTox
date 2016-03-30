@@ -1,7 +1,7 @@
 /*
     Copyright (c) 2000,2001 Fabrice Bellard
     Copyright (c) 2006 Luca Abeni
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
