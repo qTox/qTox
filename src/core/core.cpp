@@ -883,6 +883,22 @@ QByteArray Core::getToxSaveData()
     return data;
 }
 
+void Core::saveToxSaveData()
+{
+    if(QThread::currentThread() != coreThread)
+    {
+        QMetaObject::invokeMethod(this,"saveToxData",Qt::QueuedConnection);
+        return;
+    }
+
+    while(!isReady())
+    {
+        qDebug() << "waiting for core";
+        coreThread->wait(100);
+    }
+    profile.saveToxSave();
+}
+
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);

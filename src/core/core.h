@@ -94,6 +94,7 @@ public slots:
     void bootstrapDht(); ///< Connects us to the Tox network
 
     QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
+    void saveToxSaveData(); ///< Requests the *.tox file to be saved, blocks until isReady() returns true
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);

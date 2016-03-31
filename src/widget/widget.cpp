@@ -1037,7 +1037,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     QString str = username; str.replace('\n', ' ');
     str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
     f->setName(str);
-    Nexus::getProfile()->saveToxSave();
+    QMetaObject::invokeMethod(Nexus::getCore(),"saveToxSaveData",Qt::QueuedConnection);
 }
 
 void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
