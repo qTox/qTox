@@ -230,6 +230,7 @@ void GroupChatForm::onUserListChanged()
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
         callButton->setToolTip("");
+        Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
         hideNetcam();
     }
 }
