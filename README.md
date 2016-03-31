@@ -17,7 +17,6 @@ qTox
   - [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
   - [**Armhf download**](https://build.tox.chat/job/qTox-qt5.4.2_build_linux_armhf_release/lastSuccessfulBuild/artifact/qTox-qt5.4.2_build_linux_armhf_release.tar.xz)
   - [**packages**](/INSTALL.md#simple-install)
-  - [**Gentoo overlay**](https://github.com/zetok/gentoo-overlay-tox)
 * **Mac**:
   - [**Experimental download**](https://github.com/RowenStipe/qTox-OSX/releases)
 * **FreeBSD**:
