@@ -309,13 +309,21 @@ void ProfileForm::onRenameClicked()
         if (Profile::exists(name))
             GUI::showError(tr("Profile already exists", "rename failure title"),
                            tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
-        else if (!nexus.getProfile()->rename(name))
-            GUI::showError(tr("Failed to rename", "rename failed title"),
-                             tr("Couldn't rename the profile to \"%1\"").arg(cur));
         else
         {
-            prFileLabelUpdate();
-            break;
+            bool renameSucces = false;
+            QMetaObject::invokeMethod(nexus.getCore(),"renameToxProfile",Qt::BlockingQueuedConnection,
+                                      Q_RETURN_ARG(bool, renameSucces), Q_ARG(QString, name));
+            if (renameSucces)
+            {
+                prFileLabelUpdate();
+                break;
+            }
+            else
+            {
+                GUI::showError(tr("Failed to rename", "rename failed title"),
+                             tr("Couldn't rename the profile to \"%1\"").arg(cur));
+            }
         }
     } while (true);
 }

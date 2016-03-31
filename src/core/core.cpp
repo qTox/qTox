@@ -899,6 +899,11 @@ void Core::saveToxSaveData()
     profile.saveToxSave();
 }
 
+bool Core::renameToxProfile(QString newName)
+{
+    return profile.rename(newName);
+}
+
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);

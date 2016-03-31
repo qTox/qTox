@@ -95,6 +95,7 @@ public slots:
 
     QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
     void saveToxSaveData(); ///< Requests the *.tox file to be saved, blocks until isReady() returns true
+    bool renameToxProfile(QString newName); ///< Renames als Profile specific files, returns true on succes
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
