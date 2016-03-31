@@ -298,7 +298,10 @@ fail:
 
 void Profile::saveToxSave()
 {
-    assert(core->isReady());
+    while(!core->isReady())
+    {
+        coreThread->wait(100);
+    }
     QByteArray data = core->getToxSaveData();
     assert(data.size());
     saveToxSave(data);
