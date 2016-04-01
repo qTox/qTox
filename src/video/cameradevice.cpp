@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
@@ -132,11 +133,20 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         }
         else
         {
-            screen = QApplication::desktop()->screenGeometry().size();
+            QScreen* defaultScreen = QApplication::screens().at(0);
+            qreal pixRatio;
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+            pixRatio = defaultScreen->devicePixelRatio();
+#else
+            pixRatio = 1.0;
+#endif
+
+            screen = defaultScreen->size();
             // Workaround https://trac.ffmpeg.org/ticket/4574 by choping 1 px bottom and right
             // Actually, let's chop two pixels, toxav hates odd resolutions (off by one stride)
-            screen.setWidth(screen.width()-2);
-            screen.setHeight(screen.height()-2);
+            screen.setWidth((screen.width() * pixRatio)-2);
+            screen.setHeight((screen.height() * pixRatio)-2);
         }
         av_dict_set(&options, "video_size", QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(), 0);
         if (mode.FPS)
