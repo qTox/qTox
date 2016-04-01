@@ -94,7 +94,7 @@ public slots:
     void bootstrapDht(); ///< Connects us to the Tox network
 
     QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
-    void saveToxSaveData(); ///< Requests the *.tox file to be saved, blocks until isReady() returns true
+    void onSaveToxSaveData(); ///< Requests the *.tox file to be saved, blocks until isReady() returns true
     bool renameToxProfile(QString newName); ///< Renames als Profile specific files, returns true on succes
 
     void acceptFriendRequest(const QString& userId);
@@ -236,6 +236,8 @@ private:
     Profile& profile;
     QMutex messageSendMutex;
     bool ready;
+    QTimer *saveTimeout;
+    bool savingNeeded;
 
     static QThread *coreThread;
 

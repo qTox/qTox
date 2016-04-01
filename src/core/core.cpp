@@ -66,6 +66,7 @@ Core::Core(QThread *CoreThread, Profile& profile) :
 
     Audio::getInstance();
 
+    saveTimeout = new QTimer(this);
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -883,7 +884,7 @@ QByteArray Core::getToxSaveData()
     return data;
 }
 
-void Core::saveToxSaveData()
+void Core::onSaveToxSaveData()
 {
     if(QThread::currentThread() != coreThread)
     {
@@ -891,12 +892,25 @@ void Core::saveToxSaveData()
         return;
     }
 
+    if(saveTimeout->isActive())
+    {
+        savingNeeded = true;    // set a flag for all saves during timeout
+        return;
+    }
+
+    if(!savingNeeded)           // exit if no saves needed
+    {
+        return;
+    }
+
     while(!isReady())
     {
-        qDebug() << "waiting for core";
+        qDebug() << "waiting for core to be ready";
         coreThread->wait(100);
     }
     profile.saveToxSave();
+    savingNeeded = false;
+    saveTimeout->singleShot(5*60*1000, &Core::onSaveToxSaveData);
 }
 
 bool Core::renameToxProfile(QString newName)
