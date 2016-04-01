@@ -66,6 +66,7 @@ Core::Core(QThread *CoreThread, Profile& profile) :
 
     Audio::getInstance();
 
+    saveTimeout = new QTimer(this);
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -881,6 +882,40 @@ QByteArray Core::getToxSaveData()
     data.resize(fileSize);
     tox_get_savedata(tox, (uint8_t*)data.data());
     return data;
+}
+
+void Core::onSaveToxSaveData()
+{
+    if(QThread::currentThread() != coreThread)
+    {
+        QMetaObject::invokeMethod(this,"saveToxData",Qt::QueuedConnection);
+        return;
+    }
+
+    if(saveTimeout->isActive())
+    {
+        savingNeeded = true;    // set a flag for all saves during timeout
+        return;
+    }
+
+    if(!savingNeeded)           // exit if no saves needed
+    {
+        return;
+    }
+
+    while(!isReady())
+    {
+        qDebug() << "waiting for core to be ready";
+        coreThread->wait(100);
+    }
+    profile.saveToxSave();
+    savingNeeded = false;
+    saveTimeout->singleShot(5*60*1000, &Core::onSaveToxSaveData);
+}
+
+bool Core::renameToxProfile(QString newName)
+{
+    return profile.rename(newName);
 }
 
 void Core::loadFriends()
