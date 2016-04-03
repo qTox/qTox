@@ -36,6 +36,7 @@
 - [Windows](#windows)
 
 <a name="dependencies" />
+<<<<<<< HEAD
 ## Dependencies
 
 | Name          | Version     | Modules                                           |
@@ -51,6 +52,20 @@
 | libXScrnSaver | >= 1.2      |                                                   |
 | pkg-config    | >= 0.28     |                                                   |
 
+=======
+##Dependencies
+
+| Name         | Version     | Modules                                           |
+|--------------|-------------|-------------------------------------------------- |
+| Qt           | >= 5.2.0    | core, gui, network, opengl, sql, svg, widget, xml |
+| GCC/MinGW    | >= 4.8      | C++11 enabled                                     |
+| Tox Core     | most recent | core, av                                          |
+| OpenCV       | >= 2.4.9    | core, highgui, imgproc                            |
+| OpenAL Soft  | >= 1.16.0   |                                                   |
+| filter_audio | most recent |                                                   |
+| qrencode     | >= 3.0.3    |                                                   |
+| sqlcipher    | most recent |                                                   |
+>>>>>>> master
 
 <a name="linux" />
 ## Linux
@@ -109,12 +124,22 @@ make install
 ----
 
 If your distribution is not listed, or you want / need to compile qTox, there are provided instructions.
+<<<<<<< HEAD
 
 
+----
+=======
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
+
+Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
+
+<<<<<<< HEAD
+=======
 ----
 
 Most of the dependencies should be available through your package manger. You may either follow the directions below, or simply run `./simple_make.sh` after cloning this repository, which will attempt to automatically download dependencies followed by compilation.
 
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 ### Install git
 In order to clone the qTox repository you need Git.
 
@@ -134,6 +159,16 @@ sudo apt-get install git
 <a name="fedora-git" />
 #### Fedora:
 *`yum` is now officially deprecated by `dnf`. using `yum` will redirect to `dnf` on Fedora 21 and fail on future versions.*
+<<<<<<< HEAD
+```bash
+sudo dnf install git
+```
+
+<a name="opensuse-git" />
+#### openSUSE:
+```bash
+sudo zypper install git
+=======
 ```bash
 sudo dnf install git
 ```
@@ -148,9 +183,19 @@ sudo zypper install git
 #### Ubuntu:
 ```bash
 sudo apt-get install git
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 ```
 
+<a name="ubuntu-git" />
+#### Ubuntu:
+```bash
+sudo apt-get install git
+```
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 ### Clone qTox
 Afterwards open a new Terminal, change to a directory of your choice and clone the repository:
 ```bash
@@ -184,12 +229,37 @@ sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools li
 
 <a name="fedora-other-deps" />
 #### Fedora:
+<<<<<<< HEAD
+=======
+
+**Note that you WILL need to enable rpmfusion-free repo for ffmpeg-devel(!).**
+
+      *We will use  dnf config-manager for this (see below for valid KeyIDs & fingerprints)*
+
+      F22: 97F4D1C1 | 5065 885A 371C 6200 3ED7  AC4F 81C9 B423 97F4 D1C1
+     
+      F23: E051B67E | 1E0D 69F0 77CA 4960 C32C  17E2 5B03 78C0 E051 B67E
+
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 **Note that sqlcipher is not included in Fedora(!).**
 
 **This means that you have to compile sqlcipher yourself, otherwise compiling qTox will fail.**
 ```bash
+<<<<<<< HEAD
+<<<<<<< HEAD
 sudo dnf groupinstall "Development Tools"  (can also use sudo dnf install @"Development Tools")
 sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel qtsingleapplication qt5-linguist gtk2-devel
+=======
+sudo dnf install @"Development Tools" 
+sudo dnf config-manager \
+--add-repo=http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-23.noarch.rpm \
+sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-soft-devel \
+libXScrnSaver-devel qrencode-devel ffmpeg-devel qtsingleapplication qt5-linguist gtk2-devel
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
+=======
+yum groupinstall "Development Tools"
+yum install qt-devel qt-doc qtsingleapplication qt-creator qt5-qtsvg opencv-devel openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel
+>>>>>>> master
 ```
 
 **Go to [sqlcipher](#sqlcipher) section to compile it.**
@@ -200,6 +270,20 @@ sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel openal-sof
 ```bash
 sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel sqlcipher-devel
 ```
+<<<<<<< HEAD
+
+<a name="slackware-other-deps" />
+#### Slackware:
+
+List of all the ``qTox`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/qTox/
+
+
+<a name="ubuntu-other-deps" />
+#### Ubuntu >=15.04:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
+```
+=======
 
 <a name="slackware-other-deps" />
 #### Slackware:
@@ -213,9 +297,37 @@ List of all the ``qTox`` dependencies and their SlackBuilds can be found here: h
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
 ```
 
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 
 ### toxcore dependencies
 
+<<<<<<< HEAD
+### toxcore dependencies
+
+Install all of the toxcore dependencies.
+
+<a name="arch-toxcore" />
+#### Arch Linux:
+```bash
+sudo pacman -S --needed opus libvpx libsodium
+```
+
+<a name="debian-toxcore" />
+#### Debian:
+```bash
+sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev libavdevice-dev
+```
+
+<a name="fedora-toxcore" />
+#### Fedora:
+```bash
+<<<<<<< HEAD
+sudo dnf install libtool autoconf automake check check-devel libsodium-devel opus-devel libvpx-devel
+```
+
+<a name="opensuse-toxcore" />
+#### openSUSE:
+=======
 Install all of the toxcore dependencies.
 
 <a name="arch-toxcore" />
@@ -239,6 +351,30 @@ sudo dnf install libtool autoconf automake check check-devel libsodium-devel opu
 <a name="opensuse-toxcore" />
 #### openSUSE:
 ```bash
+<<<<<<< HEAD
+sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis
+```
+
+<a name="slackware-toxcore" />
+#### Slackware:
+
+List of all the ``toxcore`` dependencies and their SlackBuilds can be found here: http://slackbuilds.org/repository/14.1/network/toxcore/
+
+
+<a name="ubuntu-toxcore" />
+#### Ubuntu >=15.04:
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
+=======
+yum install libtool autoconf automake check check-devel ffmpeg-devel 
+```
+
+Assuming you are  building ffmpeg from source per toxcore  Documentation.   you will need to compile in the -devel bits.
+
+Now you can either follow the instructions at https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the "bootstrap.sh" script located at "/home/user/qTox".
+The script will automatically download and install Tox Core and libsodium to "/home/user/qTox/libs":
+>>>>>>> master
+```bash
+<<<<<<< HEAD
 sudo zypper install libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis
 ```
 
@@ -251,6 +387,8 @@ List of all the ``toxcore`` dependencies and their SlackBuilds can be found here
 <a name="ubuntu-toxcore" />
 #### Ubuntu >=15.04:
 ```bash
+=======
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 sudo apt-get install libtool autotools-dev automake checkinstall check libopus-dev libvpx-dev libsodium-dev
 ```
 
@@ -417,6 +555,7 @@ Install homebrew if you don't have it:
 ```bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
+<<<<<<< HEAD
 
 First, let's install the dependencies available via brew.
 ```bash
@@ -448,6 +587,39 @@ sudo bash bootstrap-osx.sh
 You can build qTox with Qt Creator [seperate download](http://www.qt.io/download-open-source/#section-6) or you can hunt down the version of home brew qt5 your using in the `/usr/local/Cellar/qt5/` directory.
 e.g. `/usr/local/Cellar/qt5/5.5.1_2/bin/qmake` with `5.5.1_2` being the version of Qt5 that's been installed.
 
+=======
+
+First, let's install the dependencies available via brew.
+```bash
+brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx opus sqlcipher libsodium
+```
+
+Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you may delete the directory it creates afterwards):
+```bash
+git clone https://github.com/irungentoo/filter_audio.git
+cd filter_audio
+sudo make install
+cd ../
+```
+
+Next, install [Toxcore](https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#osx)
+
+Then, clone qTox:
+```bash
+git clone https://github.com/tux3/qTox``
+```
+
+Finally, copy all required files. Whenever you update your brew packages, you may skip all of the above steps and simply run the following commands:
+```bash
+cd ./git/qTox
+sudo bash bootstrap-osx.sh
+```
+
+#### Compiling
+You can build qTox with Qt Creator [seperate download](http://www.qt.io/download-open-source/#section-6) or you can hunt down the version of home brew qt5 your using in the `/usr/local/Cellar/qt5/` directory.
+e.g. `/usr/local/Cellar/qt5/5.5.1_2/bin/qmake` with `5.5.1_2` being the version of Qt5 that's been installed.
+
+>>>>>>> 3df0446dd55365b7352a7604ee5c9cd7fb6ba34a
 With that; in your terminal you can compile qTox in the git dir:
 ```bash
 /usr/local/Cellar/qt5/5.5.1_2/bin/qmake ./qtox.pro
