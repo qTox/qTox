@@ -249,7 +249,7 @@ QString ChatMessage::detectAnchors(const QString &str)
                 "(?:\\b)((www\\.)|(http[s]?|ftp)://)" // (protocol)://(printable - non-special character)
                 // http://ONEORMOREALHPA-DIGIT
                 "\\w+\\S+)" // any other character, lets domains and other
-                "|(?:\\b)(file:///.*$)" //link to a local file, valid until the end of the line
+                "|(?:\\b)(file:///)([\\S| ]*)" //link to a local file, valid until the end of the line
                 "|(?:\\b)(tox:[a-zA-Z\\d]{76}$)" //link with full user address
                 "|(?:\\b)(mailto:\\S+@\\S+\\.\\S+)" //@mail link
                 "|(?:\\b)(tox:\\S+@\\S+)"); // starts with `tox` then : and only alpha-digits till the end
