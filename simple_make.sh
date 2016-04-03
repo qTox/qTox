@@ -17,10 +17,12 @@ elif which dnf; then
     sudo dnf group install \
         "Development Tools"
     sudo dnf install \
+        http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-23.noarch.rpm && \ 
+    sudo dnf install \
         git qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel \
         openal-soft-devel libXScrnSaver-devel qrencode-devel \
         opus-devel libvpx-devel qt5-qttools-devel glib2-devel \
-        gdk-pixbuf2-devel gtk2-devel libsodium-devel
+        gdk-pixbuf2-devel gtk2-devel libsodium-devel ffmpeg-devel
 elif which zypper; then
     sudo zypper in \
         git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
