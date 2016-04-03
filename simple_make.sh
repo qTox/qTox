@@ -23,6 +23,10 @@ elif which dnf; then
         openal-soft-devel libXScrnSaver-devel qrencode-devel \
         opus-devel libvpx-devel qt5-qttools-devel glib2-devel \
         gdk-pixbuf2-devel gtk2-devel libsodium-devel ffmpeg-devel
+        git qt-devel qt-doc qt-creator qt5-qtsvg opencv-devel \
+        openal-soft-devel libXScrnSaver-devel qrencode-devel \
+        opus-devel libvpx-devel qt5-qttools-devel glib2-devel \
+        gdk-pixbuf2-devel gtk2-devel libsodium-devel
 elif which zypper; then
     sudo zypper in \
         git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
