@@ -56,28 +56,29 @@ static std::map<uint32_t,QString> createPixFmtToName()
 }
 const std::map<uint32_t,QString> pixFmtToName = createPixFmtToName();
 
-static int deviceOpen(QString devName)
+static int deviceOpen(QString devName, int* error)
 {
     struct v4l2_capability cap;
     int fd;
-    int err;
 
     fd = open(devName.toStdString().c_str(), O_RDWR, 0);
-    if (fd < 0)
-        return errno;
+    if (fd < 0) {
+        *error = errno;
+        return fd;
+    }
 
     if (ioctl(fd, VIDIOC_QUERYCAP, &cap) < 0) {
-        err = errno;
+        *error = errno;
         goto fail;
     }
 
     if (!(cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-        err = ENODEV;
+        *error = ENODEV;
         goto fail;
     }
 
     if (!(cap.capabilities & V4L2_CAP_STREAMING)) {
-        err = ENOSYS;
+        *error = ENOSYS;
         goto fail;
     }
 
@@ -85,7 +86,7 @@ static int deviceOpen(QString devName)
 
 fail:
     close(fd);
-    return err;
+    return -1;
 }
 
 static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsigned h, uint32_t pixelFormat)
@@ -120,8 +121,9 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
 {
     QVector<VideoMode> modes;
 
-    int fd = deviceOpen(devName);
-    if (fd < 0)
+    int error = 0;
+    int fd = deviceOpen(devName, &error);
+    if (fd < 0 || error != 0)
         return modes;
     v4l2_fmtdesc vfd{};
     vfd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
