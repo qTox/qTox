@@ -133,7 +133,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         }
         else
         {
-            QScreen* defaultScreen = static_cast<QGuiApplication*>(QGuiApplication::instance())->primaryScreen();
+            QScreen* defaultScreen = QApplication::primaryScreen();
             qreal pixRatio;
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
