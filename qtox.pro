@@ -187,6 +187,17 @@ win32 {
             desktop.files += qTox.desktop
             INSTALLS += target desktop
 
+            # Install application icons according to the XDG spec
+            ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
+            for(icon_size, ICON_SIZES) {
+                icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
+                icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
+                INSTALLS += icon_$${icon_size}
+            }
+            icon_scalable.files = img/icons/qtox.svg
+            icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
+            INSTALLS += icon_scalable
+
             # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
             contains(STATICPKG, YES) {
                 LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
