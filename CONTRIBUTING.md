@@ -47,31 +47,21 @@ through the **project history**.  But also, we use the git commit messages to
 
 
 ### Commit Message Format
-Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
-format that includes a **type**, a **scope** and a **subject**:
+Each commit message consists of a **header** and a **body**.  The header has a special format that
+includes a **type**, a **scope** and a **subject**:
 
 ```
 <type>(<scope>): <subject>
 <BLANK LINE>
 <body>
-<BLANK LINE>
-<footer>
 ```
 
-The **header** is mandatory and the **scope** of the header is optional.
+The **header** is mandatory and the **body** is optional. The **scope** of the header is also optional.
 
-Any line of the commit message cannot be longer 100 characters! This allows the message to be easier
-to read on GitHub as well as in various git tools.
+### Header
+The header must be a short (72 characters or less) summary of the changes made.
 
-Note that in the future `gitcop` will be used to check if commits in pull
-request conform to commit message format, but since it can't be configured to
-have an optional `(<scope>)`, it will claim that messages without it are wrong,
-while they're perfectly fine.
-
-### Revert
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
-
-### Type
+#### Type
 Must be one of the following:
 
 * **feat**: A new feature
@@ -80,27 +70,39 @@ Must be one of the following:
 * **style**: Changes that do not affect the meaning of the code (white-space, formatting, etc)
 * **refactor**: A code change that neither fixes a bug nor adds a feature
 * **perf**: A code change that improves performance
+* **revert**: Reverts a previous commit
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such as documentation
   generation
 
-### Scope
-The scope could be anything specifying place of the commit change. For example `$location`,
-`$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`, `ngView`, etc...
+##### Revert
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit. In the body it should say: `Revert commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
-### Subject
+#### Scope
+The scope could be anything specifying place of the commit change. For example `$location`,
+`$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`, `ngView`, etc.
+
+#### Subject
 The subject contains succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
 * don't capitalize first letter
 * no dot (.) at the end
 
+A properly formed git commit subject line should always be able to complete the following sentence:
+
+> If applied, this commit will ___your subject line here___
+
 ### Body
-Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
+Wrap the body at 72 characters whenever possible (for example, don't modify long links to follow this rule). Just as in the **subject**, use the imperative, present tense: "change" not "changed" nor "changes".
 The body should include the motivation for the change and contrast this with previous behavior.
 
-### Footer
-The footer should contain any information about **Breaking Changes** and is also the place to
-reference GitHub issues that this commit **Closes**.
+The body contains (in order of appearance):
 
-**Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
+* A detailed **description** of the committed changes.
+* References to GitHub issues that the commit **closes** (e.g., `Closes #000` or `Fixes #000`).
+* Any **breaking changes**.
+
+Include every section of the body that is relevant for your commit.
+
+**Breaking changes** should start with the phrase `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
