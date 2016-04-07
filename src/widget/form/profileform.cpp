@@ -483,24 +483,27 @@ void ProfileForm::onRegisterButtonClicked()
     Toxme::ExecCode code = Toxme::ExecCode::Ok;
     QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
 
-    switch (code) {
-    case Toxme::Updated:
-        QMessageBox::information(this, tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server), "Ok");
-        Settings::getInstance().setToxme(name, server, bio, privacy);
-        showExistenToxme();
-        break;
-    case Toxme::Ok:
-        QMessageBox::information(this, tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server), "Ok");
-        Settings::getInstance().setToxme(name, server, bio, privacy, response);
-        showExistenToxme();
-        break;
-    default:
-        QString errorMessage = Toxme::getErrorMessage(code);
-        QMessageBox::warning(this, tr("Toxme error"),  errorMessage, "Ok");
-    }
+    if (Core::getInstance())
+    {
+        switch (code) {
+        case Toxme::Updated:
+            QMessageBox::information(this, tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server), "Ok");
+            Settings::getInstance().setToxme(name, server, bio, privacy);
+            showExistenToxme();
+            break;
+        case Toxme::Ok:
+            QMessageBox::information(this, tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server), "Ok");
+            Settings::getInstance().setToxme(name, server, bio, privacy, response);
+            showExistenToxme();
+            break;
+        default:
+            QString errorMessage = Toxme::getErrorMessage(code);
+            QMessageBox::warning(this, tr("Toxme error"),  errorMessage, "Ok");
+        }
 
-    bodyUI->toxmeRegisterButton->setEnabled(true);
-    bodyUI->toxmeUpdateButton->setEnabled(true);
-    bodyUI->toxmeRegisterButton->setText(tr("Register"));
-    bodyUI->toxmeUpdateButton->setText(tr("Update"));
+        bodyUI->toxmeRegisterButton->setEnabled(true);
+        bodyUI->toxmeUpdateButton->setEnabled(true);
+        bodyUI->toxmeRegisterButton->setText(tr("Register"));
+        bodyUI->toxmeUpdateButton->setText(tr("Update"));
+    }
 }
