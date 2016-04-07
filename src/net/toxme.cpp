@@ -54,7 +54,9 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         return QByteArray();
     }
 
-    return reply->readAll();
+    QByteArray result = reply->readAll();
+    delete reply;
+    return result;
 }
 
 QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &error)
@@ -236,7 +238,8 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
     QString pubkeyUrl = server + "/pk";
     QString apiUrl =  server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
-    QByteArray response = makeJsonRequest(apiUrl, prepareEncryptedJson(pubkeyUrl, 1, payload), error);
+    QByteArray encrypted = prepareEncryptedJson(pubkeyUrl, 1, payload);
+    QByteArray response = makeJsonRequest(apiUrl, encrypted, error);
     qDebug() << response;
 
     code = extractError(response);
