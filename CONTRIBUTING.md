@@ -4,15 +4,14 @@
 * If you aren't sure, you can ask on the [**IRC channel**](https://webchat.freenode.net/?channels=qtox) or read our [**wiki**](https://github.com/tux3/qTox/wiki) first.
 * Do a quick **search**. Others might have already reported the issue.
 * Write in **English**!
-* Provide **version** information: (You can find version numbers in menu `Settings → About`)
-  ```
-qTox: 
+* Provide **version** information (you can find version numbers in menu `Settings → About`):
+```
+OS: 
+qTox version: 
 Commit hash: 
 toxcore: 
 Qt: 
-OS version: 
-
-  ```
+```
 * Provide **steps** to reproduce the problem, it will be easier to pinpoint the fault.
 * **Screenshots**! A screenshot is worth a thousand words. Just upload it. [(How?)](https://help.github.com/articles/file-attachments-on-issues-and-pull-requests)
 
@@ -25,7 +24,7 @@ OS version:
 # Opening a pull request
 
 ### Must read
-* Use **[commit message format](#commit-message-format)**.
+* Use [**commit message format**](#commit-message-format).
 * Read our [**coding guidelines**](https://github.com/tux3/qTox/wiki/Coding).
 * Keep the title **short** and provide a **clear** description about what your pull request does.
 * Provide **screenshots** for UI related changes.
