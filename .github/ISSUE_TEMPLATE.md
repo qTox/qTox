@@ -1,4 +1,4 @@
-#### Brief Description
+##### Brief Description
 
 OS: Windows / OS X / Linux (include version and/or distro)  
 qTox version: (version numbers in menu `Settings → About`)  
@@ -10,19 +10,19 @@ Hardware:
 
 Reproducible: Always / Almost Always / Sometimes / Rarely / Couldn't Reproduce
 
-#### Steps to reproduce
+##### Steps to reproduce
 
 1. 
 2. 
 3. …
 
-#### Observed Behavior
+##### Observed Behavior
 
 
-#### Expected Behavior
+##### Expected Behavior
 
 
-#### Additional Info
+##### Additional Info
 (links, images, etc go here)
 
 ----
