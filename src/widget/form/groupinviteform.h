@@ -20,10 +20,10 @@
 #ifndef GROUPINVITEFORM_H
 #define GROUPINVITEFORM_H
 
-#include <QDateTime>
 #include <QWidget>
+#include <QDateTime>
 #include <QSet>
-#include <src/widget/tool/croppinglabel.h>
+#include "src/widget/tool/croppinglabel.h"
 #include "src/widget/gui.h"
 
 class QLabel;
@@ -43,7 +43,7 @@ public:
     GroupInviteForm();
     ~GroupInviteForm();
 
-    void show(ContentLayout *contentLayout);
+    void show(ContentLayout* contentLayout);
     void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
     bool isShown() const;
 
@@ -63,6 +63,7 @@ private:
     void retranslateUi();
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
+    void retranslateGroupLabel(CroppingLabel* label);
     void deleteInviteButtons(QWidget* widget);
 
 private:
@@ -71,6 +72,7 @@ private:
         int32_t friendId;
         uint8_t type;
         QByteArray invite;
+        QDateTime time;
     };
 
     QWidget* headWidget;
@@ -80,6 +82,7 @@ private:
     QVBoxLayout* inviteLayout;
     QSet<QPushButton*> acceptButtons;
     QSet<QPushButton*> rejectButtons;
+    QSet<CroppingLabel*> groupLabels;
     QList<GroupInvite> groupInvites;
 };
 

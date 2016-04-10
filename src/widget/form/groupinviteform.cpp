@@ -96,6 +96,7 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);
 
     CroppingLabel* groupLabel = new CroppingLabel(this);
+    groupLabels.insert(groupLabel);
     QString name = Nexus::getCore()->getFriendUsername(friendId);
     QString time = QDateTime::currentDateTime().toString();
     groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(name, time));
@@ -119,6 +120,7 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     group.friendId = friendId;
     group.type = type;
     group.invite = invite;
+    group.time = QDateTime::currentDateTime();
     groupInvites.push_front(group);
 
     if (isVisible())
@@ -151,7 +153,6 @@ void GroupInviteForm::onGroupInviteRejected()
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
-
     deleteInviteButtons(groupWidget);
 }
 
@@ -169,6 +170,9 @@ void GroupInviteForm::deleteInviteButtons(QWidget* widget)
         acceptButtons.remove(buttons.at(1));
         rejectButtons.remove(buttons.at(0));
     }
+
+    QList<CroppingLabel*> labels = widget->findChildren<CroppingLabel*>();
+    groupLabels.remove(labels.at(0));
 
     widget->deleteLater();
     inviteLayout->removeWidget(widget);
@@ -188,6 +192,20 @@ void GroupInviteForm::retranslateUi()
 
     for (QPushButton* rejectButton : rejectButtons)
         retranslateRejectButton(rejectButton);
+
+    for (CroppingLabel* label : groupLabels)
+        retranslateGroupLabel(label);
+}
+
+void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
+{
+    QWidget* groupWidget = label->parentWidget();
+    int index = inviteLayout->indexOf(groupWidget);
+    GroupInvite invite = groupInvites.at(index);
+
+    QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
+    QString date = invite.time.toString();
+    label->setText(tr("Invited by <b>%1</b> on %2.").arg(name, date));
 }
 
 void GroupInviteForm::retranslateAcceptButton(QPushButton* acceptButton)
