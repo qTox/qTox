@@ -634,7 +634,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         setMinimumWidth(775);
 
-        onSettingsClicked();
+        onAddClicked();
     }
     else
     {
@@ -2168,7 +2168,7 @@ void Widget::retranslateUi()
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
 
     if (!Settings::getInstance().getSeparateWindow())
-        setWindowTitle(fromDialogType(SettingDialog));
+        setWindowTitle(fromDialogType(AddDialog));
 
     friendRequestsUpdate();
     groupInvitesUpdate();
