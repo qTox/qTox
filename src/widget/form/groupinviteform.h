@@ -78,6 +78,7 @@ private:
     QSet<QPushButton*> acceptButtons;
     QSet<QPushButton*> rejectButtons;
     QList<GroupInvite> groupInvites;
+    void deleteInviteButtons(QWidget *widget);
 };
 
 #endif // GROUPINVITEFORM_H

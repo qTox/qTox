@@ -20,6 +20,7 @@
 #include "groupinviteform.h"
 
 #include <tox/tox.h>
+#include <QDebug>
 #include <QSignalMapper>
 #include <QPushButton>
 #include <QBoxLayout>
@@ -136,8 +137,7 @@ void GroupInviteForm::onGroupInviteAccepted()
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
 
-    groupWidget->deleteLater();
-    inviteLayout->removeWidget(groupWidget);
+    deleteInviteButtons(groupWidget);
 
     emit groupInviteAccepted(invite.friendId, invite.type, invite.invite);
 }
@@ -149,8 +149,27 @@ void GroupInviteForm::onGroupInviteRejected()
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
-    groupWidget->deleteLater();
-    inviteLayout->removeWidget(groupWidget);
+
+    deleteInviteButtons(groupWidget);
+}
+
+void GroupInviteForm::deleteInviteButtons(QWidget *widget)
+{
+    QList<QPushButton*> buttons = widget->findChildren<QPushButton*>();
+
+    if (acceptButtons.contains(buttons.at(0)))
+    {
+        acceptButtons.remove(buttons.at(0));
+        rejectButtons.remove(buttons.at(1));
+    }
+    else
+    {
+        acceptButtons.remove(buttons.at(1));
+        rejectButtons.remove(buttons.at(0));
+    }
+
+    widget->deleteLater();
+    inviteLayout->removeWidget(widget);
 }
 
 void GroupInviteForm::retranslateUi()
