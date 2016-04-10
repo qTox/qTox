@@ -20,8 +20,10 @@
 #ifndef GROUPINVITEFORM_H
 #define GROUPINVITEFORM_H
 
+#include <QDateTime>
 #include <QWidget>
 #include <QSet>
+#include <src/widget/tool/croppinglabel.h>
 #include "src/widget/gui.h"
 
 class QLabel;
@@ -61,6 +63,7 @@ private:
     void retranslateUi();
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
+    void deleteInviteButtons(QWidget* widget);
 
 private:
     struct GroupInvite
@@ -78,7 +81,6 @@ private:
     QSet<QPushButton*> acceptButtons;
     QSet<QPushButton*> rejectButtons;
     QList<GroupInvite> groupInvites;
-    void deleteInviteButtons(QWidget *widget);
 };
 
 #endif // GROUPINVITEFORM_H
