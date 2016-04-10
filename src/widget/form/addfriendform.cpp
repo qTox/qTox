@@ -72,7 +72,6 @@ AddFriendForm::AddFriendForm()
     connect(&toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&toxId, &QLineEdit::textChanged, this, &AddFriendForm::onIdChanged);
     connect(tabWidget, &QTabWidget::currentChanged, this, &AddFriendForm::onCurrentChanged);
-    connect(&toxId,&QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
