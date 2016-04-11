@@ -538,7 +538,9 @@ Viele Grüße,
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me macht eine Freundschaftsanfrage, &quot;%1&quot;</translation>
+        <translation>/me macht eine Freundschaftsanfrage:
+
+„%1“</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -1226,6 +1228,14 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Kein Name&gt;</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>1 user in chat</source>
@@ -1500,8 +1510,8 @@ If you encountered this error, please report it.</source>
 Bitte melde diesen Fehler an die Entwickler.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
-        <translation>Ein passwortgeschütztes Profil kann nicht automatisch geladen werden.</translation>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Passwortgeschützte Profile können nicht automatisch geladen werden.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
@@ -2255,11 +2265,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>%1 ist jetzt %2.</translation>
     </message>
     <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Unbekannt&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 hat den Titel auf %2 geändert.</translation>
     </message>
@@ -2278,6 +2283,11 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Group invites</source>
         <translation>Gruppeneinladungen</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Kein Name&gt;</translation>
     </message>
     <message>
         <source>Message failed to send</source>
