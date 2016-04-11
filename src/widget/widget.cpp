@@ -445,8 +445,12 @@ void Widget::updateIcons()
             status = QStringLiteral("offline");
     }
 
-    QIcon ico = QIcon::fromTheme("qtox-" + status);
-    if (ico.isNull())
+    QIcon ico;
+    if (QIcon::hasThemeIcon("qtox-" + status))
+    {
+        ico = QIcon::fromTheme("qtox-" + status);
+    }
+    else
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
         QString path = ":/img/taskbar/" + color + "/taskbar_" + status + ".svg";
