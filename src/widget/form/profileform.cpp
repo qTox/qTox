@@ -480,25 +480,28 @@ void ProfileForm::onRegisterButtonClicked()
     if (name.isEmpty())
         return;
 
+    Core* oldCore = Core::getInstance();
+
     Toxme::ExecCode code = Toxme::ExecCode::Ok;
     QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
 
-    if (Core::getInstance())
+    Core* newCore = Core::getInstance();
+    if (oldCore == newCore)
     {
         switch (code) {
         case Toxme::Updated:
-            QMessageBox::information(this, tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server), "Ok");
+            GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy);
             showExistenToxme();
             break;
         case Toxme::Ok:
-            QMessageBox::information(this, tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server), "Ok");
+            GUI::showInfo(tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy, response);
             showExistenToxme();
             break;
         default:
             QString errorMessage = Toxme::getErrorMessage(code);
-            QMessageBox::warning(this, tr("Toxme error"),  errorMessage, "Ok");
+            GUI::showWarning(tr("Toxme error"),  errorMessage);
         }
 
         bodyUI->toxmeRegisterButton->setEnabled(true);
