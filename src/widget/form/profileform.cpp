@@ -92,6 +92,10 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     bodyUI->qrLabel->setWordWrap(true);
 
+    QRegExp re("[^@ ]+");
+    QRegExpValidator* validator = new QRegExpValidator(re);
+    bodyUI->toxmeUsername->setValidator(validator);
+
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setContextMenuPolicy(Qt::CustomContextMenu);
