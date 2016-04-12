@@ -83,7 +83,7 @@ private slots:
     void onRegisterButtonClicked();
 
 private:
-    void showExistenToxme();
+    void showExistingToxme();
     void retranslateUi();
     void prFileLabelUpdate();
 

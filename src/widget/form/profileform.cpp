@@ -88,7 +88,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     if (toxmeInfo.isEmpty()) // User not registered
         showRegisterToxme();
     else
-        showExistenToxme();
+        showExistingToxme();
 
     bodyUI->qrLabel->setWordWrap(true);
 
@@ -444,7 +444,7 @@ void ProfileForm::showRegisterToxme()
     bodyUI->toxmePasswordLabel->hide();
 }
 
-void ProfileForm::showExistenToxme()
+void ProfileForm::showExistingToxme()
 {
     QStringList info = Settings::getInstance().getToxmeInfo().split("@");
     bodyUI->toxmeUsername->setText(info[0]);
@@ -487,18 +487,20 @@ void ProfileForm::onRegisterButtonClicked()
     QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
 
     Core* newCore = Core::getInstance();
+    // Make sure the user didn't logout (or logout and login)
+    // before the request is finished, else qTox will crash.
     if (oldCore == newCore)
     {
         switch (code) {
         case Toxme::Updated:
             GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy);
-            showExistenToxme();
+            showExistingToxme();
             break;
         case Toxme::Ok:
             GUI::showInfo(tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy, response);
-            showExistenToxme();
+            showExistingToxme();
             break;
         default:
             QString errorMessage = Toxme::getErrorMessage(code);
