@@ -482,7 +482,10 @@ Widget::~Widget()
     Translator::unregister(this);
     AutoUpdater::abortUpdates();
     if (icon)
+    {
         icon->hide();
+        delete icon;
+    }
 
     delete profileForm;
     delete settingsWidget;
