@@ -84,7 +84,6 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     /* Toxme section init */
     bodyUI->toxmeServersList->addItem("toxme.io");
-    bodyUI->toxmeServersList->addItem("toxme.io");
     QString toxmeInfo = Settings::getInstance().getToxmeInfo();
     if (toxmeInfo.isEmpty()) // User not registered
         showRegisterToxme();
@@ -477,8 +476,6 @@ void ProfileForm::onRegisterButtonClicked()
     QString bio = bodyUI->toxmeBio->text();
     QString server = bodyUI->toxmeServersList->currentText();
     bool privacy = bodyUI->toxmePrivacy->isChecked();
-    if (name.isEmpty())
-        return;
 
     Core* oldCore = Core::getInstance();
 
