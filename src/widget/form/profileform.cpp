@@ -24,15 +24,16 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/form/setpassworddialog.h"
-#include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
+#include "src/widget/translator.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/profile.h"
-#include "src/widget/translator.h"
+#include "src/persistence/settings.h"
+#include "src/net/toxme.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -46,7 +47,6 @@
 #include <QWindow>
 #include <QMenu>
 #include <QMouseEvent>
-#include <src/net/toxme.h>
 
 ProfileForm::ProfileForm(QWidget *parent) :
     QWidget{parent}, qr{nullptr}
