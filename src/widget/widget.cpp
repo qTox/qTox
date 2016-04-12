@@ -1502,7 +1502,10 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     {
         qDebug() << "onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
+        if (!g)
+            return;
     }
+
 
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
@@ -1586,14 +1589,29 @@ Group *Widget::createGroup(int groupId)
     Group* g = GroupList::findGroup(groupId);
     if (g)
     {
-        qWarning() << "createGroup: Group already exists";
+        qWarning() << "Group already exists";
         return g;
     }
 
     Core* core = Nexus::getCore();
 
+    if (!core)
+    {
+        qWarning() << "Can't create group. Core does not exist";
+        return nullptr;
+    }
+
     QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, core->getAv()->isGroupAvEnabled(groupId));
+    CoreAV* coreAv = core->getAv();
+
+    if (!coreAv)
+    {
+        qWarning() << "Can't create group. CoreAv does not exist";
+        return nullptr;
+    }
+
+    bool enabled = coreAv->isGroupAvEnabled(groupId);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
@@ -1615,6 +1633,8 @@ Group *Widget::createGroup(int groupId)
 void Widget::onEmptyGroupCreated(int groupId)
 {
     Group* group = createGroup(groupId);
+    if (!group)
+        return;
 
     // Only rename group if groups are visible.
     if (Widget::getInstance()->groupsVisible())

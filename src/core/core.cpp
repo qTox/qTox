@@ -978,6 +978,12 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
+    if (!tox)
+    {
+        qWarning() << "Can't get group peer names, tox is null";
+        return names;
+    }
+
     int result = getGroupNumberPeers(groupId);
     if (result < 0)
     {
