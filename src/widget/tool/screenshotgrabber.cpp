@@ -50,6 +50,13 @@ ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
     window->setFrameShape(QFrame::NoFrame);
     window->installEventFilter(this);
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+    pixRatio = QApplication::primaryScreen()->devicePixelRatio();
+#endif
+
+    // Scale window down by devicePixelRatio to show full screen region
+    window->scale(1 / pixRatio, 1 / pixRatio);
+
     setupScene();
 }
 
@@ -141,6 +148,11 @@ void ScreenshotGrabber::setupScene()
 
     this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
     this->helperTooltip = scene->addText(QString());
+
+    // Scale UI elements up by devicePixelRatio to compensate for window downscaling
+    this->helperToolbox->setScale(pixRatio);
+    this->helperTooltip->setScale(pixRatio);
+
     scene->addItem(this->overlay);
     this->chooserRect = new ScreenGrabberChooserRectItem(scene);
     scene->addItem(this->helperToolbox);
@@ -188,8 +200,10 @@ void ScreenshotGrabber::adjustTooltipPosition()
     const QRectF ttRect = this->helperToolbox->childrenBoundingRect();
     int x = abs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
     int y = abs(recGL.y()) + rec.y();
-    helperToolbox->setX(x);
-    helperToolbox->setY(y);
+
+    // Multiply by devicePixelRatio to get centered positions under scaling
+    helperToolbox->setX(x * pixRatio);
+    helperToolbox->setY(y * pixRatio);
 }
 
 void ScreenshotGrabber::reject()
@@ -203,11 +217,13 @@ QPixmap ScreenshotGrabber::grabScreen()
 {
     QScreen* screen = QGuiApplication::primaryScreen();
     QRect rec = screen->virtualGeometry();
+
+    // Multiply by devicePixelRatio to get actual desktop size
     return screen->grabWindow(QApplication::desktop()->winId(),
-                              rec.x(),
-                              rec.y(),
-                              rec.width(),
-                              rec.height());
+                              rec.x() * pixRatio,
+                              rec.y() * pixRatio,
+                              rec.width() * pixRatio,
+                              rec.height() * pixRatio);
 }
 
 void ScreenshotGrabber::hideVisibleWindows()

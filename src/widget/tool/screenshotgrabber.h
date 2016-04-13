@@ -85,6 +85,8 @@ private:
     ToolBoxGraphicsItem* helperToolbox;
     QGraphicsTextItem* helperTooltip;
 
+    qreal pixRatio = 1.0;
+
     bool mQToxVisible;
     QVector< QPointer<QWidget> >   mHiddenWindows;
 };
