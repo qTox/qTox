@@ -160,16 +160,9 @@ void GroupInviteForm::deleteInviteButtons(QWidget* widget)
 {
     QList<QPushButton*> buttons = widget->findChildren<QPushButton*>();
 
-    if (acceptButtons.contains(buttons.at(0)))
-    {
-        acceptButtons.remove(buttons.at(0));
-        rejectButtons.remove(buttons.at(1));
-    }
-    else
-    {
-        acceptButtons.remove(buttons.at(1));
-        rejectButtons.remove(buttons.at(0));
-    }
+    QSet<QPushButton*> set = QSet<QPushButton*>::fromList(buttons);
+    acceptButtons.subtract(set);
+    rejectButtons.subtract(set);
 
     QList<CroppingLabel*> labels = widget->findChildren<CroppingLabel*>();
     groupLabels.remove(labels.at(0));
