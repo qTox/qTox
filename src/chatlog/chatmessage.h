@@ -45,13 +45,6 @@ public:
         ALERT,
     };
 
-    enum MarkdownType
-    {
-        NONE,
-        WITH_CHARS,
-        WITHOUT_CHARS,
-    };
-
     ChatMessage();
 
     static ChatMessage::Ptr createChatMessage(const QString& sender, const QString& rawMessage, MessageType type, bool isMe, const QDateTime& date = QDateTime());
