@@ -337,7 +337,7 @@ void CameraSource::stream()
         }
 
       // Free the packet that was allocated by av_read_frame
-      av_free_packet(&packet);
+      av_packet_unref(&packet);
     };
 
     forever {

@@ -20,6 +20,7 @@
 
 extern "C" {
 #include <libavcodec/avcodec.h>
+#include <libavutil/imgutils.h>
 }
 #include "corevideosource.h"
 #include "videoframe.h"
@@ -53,7 +54,8 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     avframe->height = height;
     avframe->format = AV_PIX_FMT_YUV420P;
 
-    buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_YUV420P, width, height));
+    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_YUV420P, width, height, 1);
+    buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
         av_frame_free(&avframe);
@@ -61,7 +63,9 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     }
     avframe->opaque = buf;
 
-    avpicture_fill((AVPicture*)avframe, buf, AV_PIX_FMT_YUV420P, width, height);
+    uint8_t** data = avframe->data;
+    int* linesize = avframe->linesize;
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 1);
 
     dstStride=avframe->linesize[0], srcStride=vpxframe->stride[0], minStride=std::min(dstStride, srcStride);
     for (int i=0; i<height; i++)
