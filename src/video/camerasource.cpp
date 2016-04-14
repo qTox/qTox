@@ -65,12 +65,12 @@ void CameraSource::open()
     open(CameraDevice::getDefaultDeviceName());
 }
 
-void CameraSource::open(const QString deviceName)
+void CameraSource::open(const QString& deviceName)
 {
     open(deviceName, VideoMode{0,0,0,0});
 }
 
-void CameraSource::open(const QString DeviceName, VideoMode Mode)
+void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 {
     streamBlocker = true;
     QMutexLocker l{&biglock};
