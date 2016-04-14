@@ -6,9 +6,13 @@
 
 ## GPG signing
 
-Read it: https://help.github.com/articles/signing-commits-using-gpg/
+While contributors are suggested to use GPG, as a maintainer you **are
+required** to use GPG to sign commits & merges.
 
-After you read it, perhaps including "Further reading", do what tip tells you.
+If you don't have GPG signing set up yet, now is the moment to do it.
+
+[Config, etc.](/CONTRIBUTING.md#git-config)
+
 
 ## SSH
 
@@ -16,6 +20,14 @@ Preferably use SSH.
 
 There are quite a few articles about that:
 https://help.github.com/categories/ssh/
+
+## Useful aliases
+
+Check whether commits are GPG-signed with `git logs`
+
+```
+git config --global alias.logs 'log --show-signature'
+```
 
 # Commits
 
