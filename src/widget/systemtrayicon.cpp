@@ -99,19 +99,6 @@ SystemTrayIcon::SystemTrayIcon()
 
 SystemTrayIcon::~SystemTrayIcon()
 {
-    delete qtIcon;
-#ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    delete unityIndicator;
-    delete unityMenu;
-#endif
-#ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    delete statusNotifier;
-    delete snMenu;
-#endif
-#ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    delete gtkIcon;
-    delete gtkMenu;
-#endif
     qDebug() << "Deleting SystemTrayIcon";
 }
 
