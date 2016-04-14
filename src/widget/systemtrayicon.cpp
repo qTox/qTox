@@ -99,33 +99,19 @@ SystemTrayIcon::SystemTrayIcon()
 
 SystemTrayIcon::~SystemTrayIcon()
 {
-    // only delete the used backend
-    switch(backendType)
-    {
-    case SystrayBackendType::Qt:
-        delete qtIcon;
-        break;
+    delete qtIcon;
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
-    case SystrayBackendType::Unity:
-        delete unityIndicator;
-        delete unityMenu;
-        break;
+    delete unityIndicator;
+    delete unityMenu;
 #endif
 #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-    case SystrayBackendType::StatusNotifier:
-        delete statusNotifier;
-        delete snMenu;
-        break;
+    delete statusNotifier;
+    delete snMenu;
 #endif
 #ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    case SystrayBackendType::GTK:
-        delete gtkIcon;
-        delete gtkMenu;
-        break;
+    delete gtkIcon;
+    delete gtkMenu;
 #endif
-    default:
-        qWarning() << "Unknown Systray Backend Type";
-    }
     qDebug() << "Deleting SystemTrayIcon";
 }
 
