@@ -502,22 +502,24 @@ void FileTransferWidget::showPreview(const QString &filename)
 
     if (previewExtensions.contains(QFileInfo(filename).suffix()))
     {
-        const int size = qMax(ui->previewButton->width(), ui->previewButton->height());
+        // Subtract to make border visible
+        const int size = qMax(ui->previewButton->width(), ui->previewButton->height()) - 4;
 
-        QPixmap pmap = QPixmap(filename).scaled(QSize(size, size),
-                                                Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-        ui->previewButton->setIcon(QIcon(pmap));
-        ui->previewButton->setIconSize(pmap.size());
+        const QImage image = QImage(filename);
+        const QPixmap iconPixmap = scaleCropIntoSquare(QPixmap::fromImage(image), size);
+
+        ui->previewButton->setIcon(QIcon(iconPixmap));
+        ui->previewButton->setIconSize(iconPixmap.size());
         ui->previewButton->show();
         // Show mouseover preview, but make sure it's not larger than 50% of the screen width/height
-        QRect desktopSize = QApplication::desktop()->screenGeometry();
-        QImage image = QImage(filename).scaled(0.5 * desktopSize.width(),
+        const QRect desktopSize = QApplication::desktop()->screenGeometry();
+        const QImage previewImage = image.scaled(0.5 * desktopSize.width(),
                                                0.5 * desktopSize.height(),
                                                Qt::KeepAspectRatio, Qt::SmoothTransformation);
         QByteArray imageData;
         QBuffer buffer(&imageData);
         buffer.open(QIODevice::WriteOnly);
-        image.save(&buffer, "PNG");
+        previewImage.save(&buffer, "PNG");
         buffer.close();
         ui->previewButton->setToolTip("<img src=data:image/png;base64," + imageData.toBase64() + "/>");
     }
@@ -536,4 +538,31 @@ void FileTransferWidget::onBottomButtonClicked()
 void FileTransferWidget::onPreviewButtonClicked()
 {
     handleButton(ui->previewButton);
+}
+
+QPixmap FileTransferWidget::scaleCropIntoSquare(const QPixmap &source, const int targetSize)
+{
+    QPixmap result;
+
+    // Make sure smaller-than-icon images (at least one dimension is smaller) will not be upscaled
+    if (source.width() < targetSize || source.height() < targetSize)
+    {
+        result = source;
+    }
+    else
+    {
+        result = source.scaled(targetSize, targetSize,
+                               Qt::KeepAspectRatioByExpanding,
+                               Qt::SmoothTransformation);
+    }
+
+    // Then, image has to be cropped (if needed) so it will not overflow rectangle
+    // Only one dimension will be bigger after Qt::KeepAspectRatioByExpanding
+    if (result.width() > targetSize)
+        return result.copy((result.width() - targetSize) / 2, 0, targetSize, targetSize);
+    else if (result.height() > targetSize)
+        return result.copy(0, (result.height() - targetSize) / 2, targetSize, targetSize);
+
+    // Picture was rectangle in the first place, no cropping
+    return result;
 }
