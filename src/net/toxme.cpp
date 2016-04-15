@@ -47,13 +47,6 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         qApp->processEvents();
     }
 
-    error = reply->error();
-    if (error)
-    {
-        qWarning() << "makeJsonRequest: A network error occured:" << reply->errorString();
-        return QByteArray();
-    }
-
     QByteArray result = reply->readAll();
     delete reply;
     return result;
