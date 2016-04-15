@@ -227,13 +227,11 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
                           "\"bio\":\""+bio+"\","
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};
 
-    qDebug() << payload;
     QString pubkeyUrl = server + "/pk";
     QString apiUrl =  server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
     QByteArray encrypted = prepareEncryptedJson(pubkeyUrl, 1, payload);
     QByteArray response = makeJsonRequest(apiUrl, encrypted, error);
-    qDebug() << response;
 
     code = extractError(response);
     if ((code != Ok && code != Updated) || error != QNetworkReply::NoError)
@@ -282,7 +280,6 @@ Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
     if (!server.contains("://"))
         server = "https://" + server;
 
-    qDebug() << payload;
     QString pubkeyUrl = server + "/pk";
     QString apiUrl = server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
