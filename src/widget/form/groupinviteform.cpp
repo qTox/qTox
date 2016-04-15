@@ -20,6 +20,7 @@
 #include "groupinviteform.h"
 
 #include <tox/tox.h>
+#include <QDebug>
 #include <QSignalMapper>
 #include <QPushButton>
 #include <QBoxLayout>
@@ -95,7 +96,10 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);
 
     CroppingLabel* groupLabel = new CroppingLabel(this);
-    groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(Nexus::getCore()->getFriendUsername(friendId), QDateTime::currentDateTime().toString()));
+    groupLabels.insert(groupLabel);
+    QString name = Nexus::getCore()->getFriendUsername(friendId);
+    QString time = QDateTime::currentDateTime().toString();
+    groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(name, time));
     groupLayout->addWidget(groupLabel);
 
     QPushButton* acceptButton = new QPushButton(this);
@@ -116,6 +120,7 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     group.friendId = friendId;
     group.type = type;
     group.invite = invite;
+    group.time = QDateTime::currentDateTime();
     groupInvites.push_front(group);
 
     if (isVisible())
@@ -136,8 +141,7 @@ void GroupInviteForm::onGroupInviteAccepted()
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
 
-    groupWidget->deleteLater();
-    inviteLayout->removeWidget(groupWidget);
+    deleteInviteButtons(groupWidget);
 
     emit groupInviteAccepted(invite.friendId, invite.type, invite.invite);
 }
@@ -149,8 +153,22 @@ void GroupInviteForm::onGroupInviteRejected()
     int index = inviteLayout->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
-    groupWidget->deleteLater();
-    inviteLayout->removeWidget(groupWidget);
+    deleteInviteButtons(groupWidget);
+}
+
+void GroupInviteForm::deleteInviteButtons(QWidget* widget)
+{
+    QList<QPushButton*> buttons = widget->findChildren<QPushButton*>();
+
+    QSet<QPushButton*> set = QSet<QPushButton*>::fromList(buttons);
+    acceptButtons.subtract(set);
+    rejectButtons.subtract(set);
+
+    QList<CroppingLabel*> labels = widget->findChildren<CroppingLabel*>();
+    groupLabels.remove(labels.at(0));
+
+    widget->deleteLater();
+    inviteLayout->removeWidget(widget);
 }
 
 void GroupInviteForm::retranslateUi()
@@ -167,14 +185,28 @@ void GroupInviteForm::retranslateUi()
 
     for (QPushButton* rejectButton : rejectButtons)
         retranslateRejectButton(rejectButton);
+
+    for (CroppingLabel* label : groupLabels)
+        retranslateGroupLabel(label);
 }
 
-void GroupInviteForm::retranslateAcceptButton(QPushButton *acceptButton)
+void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
+{
+    QWidget* groupWidget = label->parentWidget();
+    int index = inviteLayout->indexOf(groupWidget);
+    GroupInvite invite = groupInvites.at(index);
+
+    QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
+    QString date = invite.time.toString();
+    label->setText(tr("Invited by <b>%1</b> on %2.").arg(name, date));
+}
+
+void GroupInviteForm::retranslateAcceptButton(QPushButton* acceptButton)
 {
     acceptButton->setText(tr("Join"));
 }
 
-void GroupInviteForm::retranslateRejectButton(QPushButton *rejectButton)
+void GroupInviteForm::retranslateRejectButton(QPushButton* rejectButton)
 {
     rejectButton->setText(tr("Decline"));
 }
