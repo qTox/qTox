@@ -21,6 +21,7 @@
     - [openSUSE](#opensuse-other-deps)
     - [Slackware](#slackware-other-deps)
     - [Ubuntu >=15.04](#ubuntu-other-deps)
+    - [Ubuntu >=16.04](#ubuntu-other-1604-deps)
   - [toxcore dependencies](#toxcore-dependencies)
     - [Arch](#arch-toxcore)
     - [Debian](#debian-toxcore)
@@ -213,6 +214,11 @@ List of all the ``qTox`` dependencies and their SlackBuilds can be found here: h
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
 ```
 
+<a name="ubuntu-other-1604-deps" />
+#### Ubuntu >=16.04:
+```bash
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
+```
 
 ### toxcore dependencies
 
