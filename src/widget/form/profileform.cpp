@@ -24,15 +24,16 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/form/setpassworddialog.h"
-#include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
+#include "src/widget/translator.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/profile.h"
-#include "src/widget/translator.h"
+#include "src/persistence/settings.h"
+#include "src/net/toxme.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -81,7 +82,19 @@ ProfileForm::ProfileForm(QWidget *parent) :
     delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId);     // Original toxId is in heap, delete it
     bodyUI->toxId->hide();
 
+    /* Toxme section init */
+    bodyUI->toxmeServersList->addItem("toxme.io");
+    QString toxmeInfo = Settings::getInstance().getToxmeInfo();
+    if (toxmeInfo.isEmpty()) // User not registered
+        showRegisterToxme();
+    else
+        showExistingToxme();
+
     bodyUI->qrLabel->setWordWrap(true);
+
+    QRegExp re("[^@ ]+");
+    QRegExpValidator* validator = new QRegExpValidator(re);
+    bodyUI->toxmeUsername->setValidator(validator);
 
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
@@ -111,6 +124,8 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
+    connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
+    connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
 
     connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
     connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
@@ -415,4 +430,86 @@ void ProfileForm::retranslateUi()
     nameLabel->setText(tr("User Profile"));
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
+}
+
+void ProfileForm::showRegisterToxme()
+{
+    bodyUI->toxmeUsername->setText("");
+    bodyUI->toxmeBio->setText("");
+    bodyUI->toxmePrivacy->setChecked(false);
+
+    bodyUI->toxmeRegisterButton->show();
+    bodyUI->toxmeUpdateButton->hide();
+    bodyUI->toxmePassword->hide();
+    bodyUI->toxmePasswordLabel->hide();
+}
+
+void ProfileForm::showExistingToxme()
+{
+    QStringList info = Settings::getInstance().getToxmeInfo().split("@");
+    bodyUI->toxmeUsername->setText(info[0]);
+    bodyUI->toxmeServersList->addItem(info[1]);
+
+    QString bio = Settings::getInstance().getToxmeBio();
+    bodyUI->toxmeBio->setText(bio);
+
+    bool priv = Settings::getInstance().getToxmePriv();
+    bodyUI->toxmePrivacy->setChecked(priv);
+
+    QString pass = Settings::getInstance().getToxmePass();
+    bodyUI->toxmePassword->setText(pass);
+    bodyUI->toxmePassword->show();
+    bodyUI->toxmePasswordLabel->show();
+
+    bodyUI->toxmeRegisterButton->hide();
+    bodyUI->toxmeUpdateButton->show();
+}
+
+void ProfileForm::onRegisterButtonClicked()
+{
+    QString name =  bodyUI->toxmeUsername->text();
+    if (name.isEmpty())
+        return;
+
+    bodyUI->toxmeRegisterButton->setEnabled(false);
+    bodyUI->toxmeUpdateButton->setEnabled(false);
+    bodyUI->toxmeRegisterButton->setText(tr("Register (processing)"));
+    bodyUI->toxmeUpdateButton->setText(tr("Update (processing)"));
+
+    QString id = toxId->text();
+    QString bio = bodyUI->toxmeBio->text();
+    QString server = bodyUI->toxmeServersList->currentText();
+    bool privacy = bodyUI->toxmePrivacy->isChecked();
+
+    Core* oldCore = Core::getInstance();
+
+    Toxme::ExecCode code = Toxme::ExecCode::Ok;
+    QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
+
+    Core* newCore = Core::getInstance();
+    // Make sure the user didn't logout (or logout and login)
+    // before the request is finished, else qTox will crash.
+    if (oldCore == newCore)
+    {
+        switch (code) {
+        case Toxme::Updated:
+            GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
+            Settings::getInstance().setToxme(name, server, bio, privacy);
+            showExistingToxme();
+            break;
+        case Toxme::Ok:
+            GUI::showInfo(tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server));
+            Settings::getInstance().setToxme(name, server, bio, privacy, response);
+            showExistingToxme();
+            break;
+        default:
+            QString errorMessage = Toxme::getErrorMessage(code);
+            GUI::showWarning(tr("Toxme error"),  errorMessage);
+        }
+
+        bodyUI->toxmeRegisterButton->setEnabled(true);
+        bodyUI->toxmeUpdateButton->setEnabled(true);
+        bodyUI->toxmeRegisterButton->setText(tr("Register"));
+        bodyUI->toxmeUpdateButton->setText(tr("Update"));
+    }
 }

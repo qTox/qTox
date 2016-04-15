@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
+    <width>574</width>
     <height>659</height>
    </rect>
   </property>
@@ -39,11 +39,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>585</width>
-        <height>625</height>
+        <width>536</width>
+        <height>844</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
        <property name="spacing">
         <number>9</number>
        </property>
@@ -104,7 +104,11 @@ Share it with your friends to communicate.</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="toxId"/>
+           <widget class="QLineEdit" name="toxId">
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QFrame" name="verticalFrame">
@@ -145,6 +149,123 @@ Share it with your friends to communicate.</string>
              </item>
             </layout>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="title">
+          <string>Toxme register</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <layout class="QFormLayout" name="formLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="toxmeUsernameLabel">
+              <property name="text">
+               <string>Username</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="toxmeUsername">
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="toxmeBioLabel">
+              <property name="text">
+               <string>Biography</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="toxmeBio"/>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="toxmeServerLabel">
+              <property name="text">
+               <string>Server</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QComboBox" name="toxmeServersList">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <property name="currentIndex">
+               <number>-1</number>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="toxmePrivacy">
+              <property name="text">
+               <string>Hide my name from the public list</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QPushButton" name="toxmeRegisterButton">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Register</string>
+              </property>
+              <property name="autoDefault">
+               <bool>false</bool>
+              </property>
+              <property name="default">
+               <bool>false</bool>
+              </property>
+              <property name="flat">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="toxmePasswordLabel">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="text">
+               <string>Your password</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="toxmePassword">
+              <property name="frame">
+               <bool>false</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QPushButton" name="toxmeUpdateButton">
+                <property name="text">
+                 <string>Update</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -318,6 +439,26 @@ Profile does not contain your history.</string>
    <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>userName</tabstop>
+  <tabstop>statusMessage</tabstop>
+  <tabstop>toxmeUsername</tabstop>
+  <tabstop>toxmeBio</tabstop>
+  <tabstop>toxmeServersList</tabstop>
+  <tabstop>toxmePrivacy</tabstop>
+  <tabstop>toxmeRegisterButton</tabstop>
+  <tabstop>toxmePassword</tabstop>
+  <tabstop>toxId</tabstop>
+  <tabstop>saveQr</tabstop>
+  <tabstop>copyQr</tabstop>
+  <tabstop>renameButton</tabstop>
+  <tabstop>deleteButton</tabstop>
+  <tabstop>logoutButton</tabstop>
+  <tabstop>exportButton</tabstop>
+  <tabstop>deletePassButton</tabstop>
+  <tabstop>changePassButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

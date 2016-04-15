@@ -38,7 +38,7 @@ class Toxme
 public:
     enum ExecCode {
         ExecError = -50,
-        Registered = 0,
+        Ok = 0,
         Updated = 1,
         ServerError = 2,
         IncorrectResponse = 3,
@@ -54,7 +54,7 @@ public:
     static QString createAddress(ExecCode &code, QString server, ToxId id, QString address,
                               bool keepPrivate=true, QString bio=QString());
     /// Deletes the address associated with your current Tox ID
-    static int deleteAddress(QString server, ToxId id);
+    static ExecCode deleteAddress(QString server, ToxId id);
     /// Return string of the corresponding error code
     static QString getErrorMessage(int errorCode);
 

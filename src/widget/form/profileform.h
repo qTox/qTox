@@ -80,8 +80,10 @@ private slots:
     void onChangePassClicked();
     void onAvatarClicked();
     void showProfilePictureContextMenu(const QPoint &point);
+    void onRegisterButtonClicked();
 
 private:
+    void showExistingToxme();
     void retranslateUi();
     void prFileLabelUpdate();
 
@@ -97,6 +99,7 @@ private:
     bool hasCheck = false;
     QRWidget *qr;
     ClickableTE* toxId;
+    void showRegisterToxme();
 };
 
 #endif
