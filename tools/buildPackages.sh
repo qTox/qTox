@@ -66,9 +66,9 @@ fi
 if [[ $OPT_APT = "true" ]]; then
     echo "Installing missing dependencies (if any)..."
     if [[ $EUID -ne 0 && $OPT_SUDO = "true" ]]; then
-        sudo apt-get install qt5-qmake libopenal-dev libopencv-dev libopus-dev -y
+        sudo apt-get install qt5-qmake libopenal-dev libopus-dev -y
     else
-             apt-get install qt5-qmake libopenal-dev libopencv-dev libopus-dev -y
+             apt-get install qt5-qmake libopenal-dev libopus-dev -y
     fi
 fi
 

@@ -553,9 +553,9 @@ Download the Qt online installer for Windows from
 to assemble your Qt toolchain. Take the most recent version of Qt compiled with
 MinGW. Although the installer provides its own bundled MinGW compiler toolchain
 its recommend installing it separately because Qt is missing MSYS which is
-needed to compile and install OpenCV and OpenAL. Thus you can - if needed -
-deselect the tab `Tools`. The following steps assume that Qt is installed at
-`C:\Qt`. If you decided to choose another location, replace corresponding parts.
+needed to compile and install OpenAL. Thus you can - if needed - deselect the
+tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
+decided to choose another location, replace corresponding parts.
 
 ### MinGW
 
