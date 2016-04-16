@@ -1,9 +1,18 @@
 qTox
 ======
 
- [**User Manual**](/doc/user_manual_en.md) **⦁** [**Compile**](/INSTALL.md) **⦁** [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁** [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁** [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁** [**Jenkins builds**](https://build.tox.chat/) **⦁** [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁** [**Mailing list**](https://lists.tox.chat) **⦁** **IRC Channel:** [#qtox@freenode](https://webchat.freenode.net/?channels=qtox)
+ [**User Manual**](/doc/user_manual_en.md) **⦁**
+ [**Compile**](/INSTALL.md) **⦁**
+ [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁**
+ [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁**
+ [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁**
+ [**Jenkins builds**](https://build.tox.chat/) **⦁**
+ [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁**
+ [**Mailing list**](https://lists.tox.chat) **⦁**
+ **IRC Channel:** [#qtox@freenode](https://webchat.freenode.net/?channels=qtox)
 
-**qTox is a powerful Tox client that follows the Tox design guidelines while running on all major platforms.**
+**qTox is a powerful Tox client that follows the Tox design guidelines while
+running on all major platforms.**
 
 ----
 
@@ -21,11 +30,14 @@ qTox
   - [**Port**](/INSTALL.md#freebsd-easy)
 <br/>
 
-Builds other than installer/packages don't receive updates automatically, so make sure you get back to this site and regularly download the latest version of qTox.
+Builds other than installer/packages don't receive updates automatically, so
+make sure you get back to this site and regularly download the latest version of
+qTox.
 
 
 #### Screenshots
-Note: The screenshots may not always be up to date, but they should give a good idea of the general look and features.
+Note: The screenshots may not always be up to date, but they should give a good
+idea of the general look and features.
 
 
 ![Screenshot 01](https://i.imgur.com/olb89CN.png)

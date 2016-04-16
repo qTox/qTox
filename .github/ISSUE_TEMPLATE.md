@@ -27,6 +27,7 @@ Reproducible: Always / Almost Always / Sometimes / Rarely / Couldn't Reproduce
 
 ----
 
-More information on how to write good bug reports in the wiki: https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports.
+More information on how to write good bug reports in the wiki:
+https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports.
 
 Please remove any unnecessary template section before submitting.
