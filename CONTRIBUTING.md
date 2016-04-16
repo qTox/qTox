@@ -131,3 +131,88 @@ Include every section of the body that is relevant for your commit.
 
 **Breaking changes** should start with the phrase `BREAKING CHANGE:` with a
 space or two newlines. The rest of the commit message is then used for this.
+
+
+## Git config
+
+*Not a requirement, just a friendly tip. :wink:*
+
+It's nice when commits are being GPG-signed.  Github has a few articles about
+configuring & signing.
+
+https://help.github.com/articles/signing-commits-using-gpg/
+
+And *tl;dr* version:
+
+```
+gpg --gen-key
+gpg --send-keys <your generated key ID>
+git config --global commit.gpgsign true
+```
+
+
+# Coding Guidelines
+
+Use `C++11`.
+
+## Coding style
+```C++
+function()
+{
+    1st_line;
+    2nd_line;
+}
+
+// if / while / for / switch
+if ()
+    1_line;
+else if ()
+    just_one_line;
+else
+    each_condition;
+
+// ↑ note space between last line of conditional code, and code outside of condition
+if ()
+{
+    1_line;
+}
+else if ()
+{
+    what_if;
+    i_told_you;
+}
+else
+{
+    that_there_are;
+    more_lines;
+}
+
+QObject* asterisksGoWithTheType;
+uint8_t* array = new uint8_t[count];
+
+// camelCase for variables, CamelCase for classes
+QObject notToMentionThatWeUseCamelCase;
+```
+
+E.g. https://github.com/tux3/qTox/blob/master/src/misc/flowlayout.cpp
+
+## No translatable HTML tags
+
+Do not put HTML in UI files, or inside `tr()`. Instead, you can put put it in
+C++ code in the following way, to make only user-facing text translatable:
+```C++
+someWidget->setTooltip(
+    QStringLiteral("<html><!-- some HTML text -->") + tr("Translatable text…") +
+    QStringLiteral("</html>");
+```
+
+## Limitations
+
+### Filesystem
+Windows' unbeaten beauty and clarity:
+
+https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
+
+Symbols that should be forbidden for filenames under Windows:
+
+`<` `>` `:` `"` `/` `\` `|` `?` `*`
