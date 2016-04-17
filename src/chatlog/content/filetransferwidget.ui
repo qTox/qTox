@@ -292,6 +292,9 @@
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{ border: 2px solid white }</string>
+          </property>
           <property name="icon">
            <iconset resource="../../../res.qrc">
             <normaloff>:/ui/fileTransferInstance/no.svg</normaloff>:/ui/fileTransferInstance/no.svg</iconset>

@@ -73,6 +73,9 @@ private slots:
     void onPreviewButtonClicked();
 
 private:
+    static QPixmap scaleCropIntoSquare(const QPixmap &source, int targetSize);
+
+private:
     Ui::FileTransferWidget *ui;
     ToxFile fileInfo;
     QTime lastTick;
