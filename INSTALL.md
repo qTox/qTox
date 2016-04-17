@@ -549,7 +549,7 @@ becoming a hacker
 ### Qt
 
 Download the Qt online installer for Windows from
-[qt-project.org](http://qt-project.org/downloads). While installation you have
+[qt.io](https://www.qt.io/download-open-source/). While installation you have
 to assemble your Qt toolchain. Take the most recent version of Qt compiled with
 MinGW. Although the installer provides its own bundled MinGW compiler toolchain
 its recommend installing it separately because Qt is missing MSYS which is
