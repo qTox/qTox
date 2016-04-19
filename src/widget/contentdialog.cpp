@@ -518,7 +518,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
-        if (iter == friendList.end() || (iter != friendList.end() && std::get<0>(iter.value()) != this))
+        if (iter == friendList.end() || std::get<0>(iter.value()) != this)
             event->acceptProposedAction();
     }
     else if (event->mimeData()->hasFormat("group"))
@@ -526,7 +526,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
         int groupId = event->mimeData()->data("group").toInt();
         auto iter = groupList.find(groupId);
 
-        if (iter == groupList.end() || (iter != groupList.end() && std::get<0>(iter.value()) != this))
+        if (iter == groupList.end() || std::get<0>(iter.value()) != this)
             event->acceptProposedAction();
     }
 }
