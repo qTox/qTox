@@ -173,6 +173,7 @@ void AddFriendForm::onSendTriggered()
         id = toxId.toString();
     }
 
+    deleteFriendRequest(id);
     if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
         GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
     else
@@ -219,6 +220,20 @@ void AddFriendForm::setIdFromClipboard()
     {
         if (!ToxId(id).isSelf())
             toxId.setText(id);
+    }
+}
+
+void AddFriendForm::deleteFriendRequest(const QString& toxId)
+{
+    int size = Settings::getInstance().getFriendRequestSize();
+    for (int i = 0; i < size; i++)
+    {
+        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        if (ToxId(toxId) == ToxId(request.address))
+        {
+            Settings::getInstance().removeFriendRequest(i);
+            return;
+        }
     }
 }
 
