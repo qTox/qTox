@@ -23,7 +23,7 @@
 #include <QLinearGradient>
 
 MicFeedbackWidget::MicFeedbackWidget(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), mMeterListener(nullptr)
 {
     setFixedHeight(20);
 }
