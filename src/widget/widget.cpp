@@ -445,8 +445,35 @@ void Widget::updateIcons()
             status = QStringLiteral("offline");
     }
 
+    // Some builds of Qt appear to have a bug in icon loading:
+    // QIcon::hasThemeIcon is sometimes unaware that the icon returned
+    // from QIcon::fromTheme was a fallback icon, causing hasThemeIcon to
+    // incorrectly return true.
+    //
+    // In qTox this leads to the tray and window icons using the static qTox logo
+    // icon instead of an icon based on the current presence status.
+    //
+    // This workaround checks for an icon that definitely does not exist to
+    // determine if hasThemeIcon can be trusted.
+    //
+    // On systems with the Qt bug, this workaround will always use our included
+    // icons but user themes will be unable to override them.
+    static bool checkedHasThemeIcon = false;
+    static bool hasThemeIconBug = false;
+
+    if (!checkedHasThemeIcon)
+    {
+        hasThemeIconBug = QIcon::hasThemeIcon("qtox-asjkdfhawjkeghdfjgh");
+        checkedHasThemeIcon = true;
+
+        if (hasThemeIconBug)
+        {
+            qDebug() << "Detected buggy QIcon::hasThemeIcon. Icon overrides from theme will be ignored.";
+        }
+    }
+
     QIcon ico;
-    if (QIcon::hasThemeIcon("qtox-" + status))
+    if (!hasThemeIconBug && QIcon::hasThemeIcon("qtox-" + status))
     {
         ico = QIcon::fromTheme("qtox-" + status);
     }
