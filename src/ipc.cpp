@@ -281,7 +281,9 @@ void IPC::processEvents()
                         evt->processed = time(0);
                 }
                 else
+                {
                     evt->processed = time(0);
+                }
             }
 
         }
@@ -293,5 +295,5 @@ void IPC::processEvents()
 
 IPC::IPCMemory *IPC::global()
 {
-    return (IPCMemory*)globalMemory.data();
+    return static_cast<IPCMemory*>(globalMemory.data());
 }

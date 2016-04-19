@@ -28,7 +28,7 @@
 
 #include <QApplication>
 
-void emitChatroomWidget(QLayout* layout, int index)
+void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
 {
     GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
     if (chatWidget != nullptr)
@@ -83,11 +83,12 @@ void CategoryWidget::setExpanded(bool isExpanded, bool save)
     setMouseTracking(true);
     listWidget->setVisible(isExpanded);
 
+    QString pixmapPath;
     if (isExpanded)
-        statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarDownArrow.svg"));
+        pixmapPath = ":/ui/chatArea/scrollBarDownArrow.svg";
     else
-        statusPic.setPixmap(QPixmap(":/ui/chatArea/scrollBarRightArrow.svg"));
-
+        pixmapPath = ":/ui/chatArea/scrollBarRightArrow.svg";
+    statusPic.setPixmap(QPixmap(pixmapPath));
     // The listWidget will recieve a enterEvent for some reason if now visible.
     // Using the following, we prevent that.
     QApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
@@ -199,18 +200,16 @@ bool CategoryWidget::cycleContacts(FriendWidget* activeChatroomWidget, bool forw
     QLayout* currentLayout = nullptr;
 
     FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
-    if (friendWidget != nullptr)
-    {
-        currentLayout = listLayout->getLayoutOnline();
-        index = listLayout->indexOfFriendWidget(friendWidget, true);
-        if (index == -1)
-        {
-            currentLayout = listLayout->getLayoutOffline();
-            index = listLayout->indexOfFriendWidget(friendWidget, false);
-        }
-    }
-    else
+    if (friendWidget == nullptr)
         return false;
+
+    currentLayout = listLayout->getLayoutOnline();
+    index = listLayout->indexOfFriendWidget(friendWidget, true);
+    if (index == -1)
+    {
+        currentLayout = listLayout->getLayoutOffline();
+        index = listLayout->indexOfFriendWidget(friendWidget, false);
+    }
 
     index += forward ? 1 : -1;
     for (;;)

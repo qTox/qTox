@@ -60,6 +60,7 @@ protected:
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
     void moveFriendWidgets(FriendListWidget* friendList);
+    void emitChatroomWidget(QLayout *layout, int index);
 
 private:
     virtual void onSetName() {}
