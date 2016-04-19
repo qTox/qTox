@@ -69,7 +69,7 @@ public:
     QList<HistMessage> exportMessages();
 
 private:
-    HistoryKeeper(GenericDdInterface *db_);
+    explicit HistoryKeeper(GenericDdInterface *db_);
     HistoryKeeper(HistoryKeeper &hk) = delete;
     HistoryKeeper& operator=(const HistoryKeeper&) = delete;
     QString unWrapMessage(const QString &str);

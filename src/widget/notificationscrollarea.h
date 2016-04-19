@@ -29,7 +29,7 @@ class NotificationEdgeWidget;
 class NotificationScrollArea final : public AdjustingScrollArea
 {
 public:
-    NotificationScrollArea(QWidget* parent = 0);
+    explicit NotificationScrollArea(QWidget* parent = 0);
 
 public slots:
     void trackWidget(GenericChatroomWidget* widget);

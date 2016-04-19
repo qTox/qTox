@@ -52,7 +52,7 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    ProfileForm(QWidget *parent = nullptr);
+    explicit ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
     virtual void show() final{}
     void show(ContentLayout* contentLayout);

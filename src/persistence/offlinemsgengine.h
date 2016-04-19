@@ -34,7 +34,7 @@ class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
-    OfflineMsgEngine(Friend *);
+    explicit OfflineMsgEngine(Friend *);
     virtual ~OfflineMsgEngine();
     static QMutex globalMutex;
 

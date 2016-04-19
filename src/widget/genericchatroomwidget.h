@@ -34,7 +34,7 @@ class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
-    GenericChatroomWidget(QWidget *parent = 0);
+    explicit GenericChatroomWidget(QWidget *parent = 0);
 
     virtual void setAsActiveChatroom() = 0;
     virtual void setAsInactiveChatroom() = 0;

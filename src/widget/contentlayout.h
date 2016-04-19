@@ -27,7 +27,7 @@ class ContentLayout : public QVBoxLayout
 {
 public:
     ContentLayout();
-    ContentLayout(QWidget* parent);
+    explicit ContentLayout(QWidget* parent);
     ~ContentLayout();
 
     void clear();
