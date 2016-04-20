@@ -82,8 +82,8 @@ AddFriendForm::AddFriendForm()
 
     for (int i = 0; i < size; ++i)
     {
-        QPair<QString, QString> request = Settings::getInstance().getFriendRequest(i);
-        addFriendRequestWidget(request.first, request.second);
+        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        addFriendRequestWidget(request.address, request.message);
     }
 }
 
@@ -228,7 +228,8 @@ void AddFriendForm::onFriendRequestAccepted()
     QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
-    emit friendRequestAccepted(Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1).first);
+    Settings::Request request = Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
+    emit friendRequestAccepted(request.address);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
 }

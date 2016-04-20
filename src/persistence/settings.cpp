@@ -333,9 +333,10 @@ void Settings::loadPersonal(Profile* profile)
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
-            QPair<QString, QString> request;
-            request.first = ps.value("addr").toString();
-            request.second = ps.value("message").toString();
+            Request request;
+            request.address = ps.value("addr").toString();
+            request.message = ps.value("message").toString();
+            request.read = ps.value("read").toBool();
             friendRequests.push_back(request);
         }
         ps.endArray();
@@ -532,8 +533,9 @@ void Settings::savePersonal(QString profileName, QString password)
         for (auto& request : friendRequests)
         {
             ps.setArrayIndex(index);
-            ps.setValue("addr", request.first);
-            ps.setValue("message", request.second);
+            ps.setValue("addr", request.address);
+            ps.setValue("message", request.message);
+            ps.setValue("read", request.read);
 
             ++index;
         }
@@ -1674,14 +1676,19 @@ bool Settings::addFriendRequest(const QString &friendAddress, const QString &mes
 
     for (auto queued : friendRequests)
     {
-       if (queued.first == friendAddress)
+       if (queued.address == friendAddress)
        {
-           queued.second = message;
+           queued.message = message;
+           queued.read = false;
            return false;
        }
     }
 
-    QPair<QString, QString> request(friendAddress, message);
+    Request request;
+    request.address = friendAddress;
+    request.message = message;
+    request.read = false;
+
     friendRequests.push_back(request);
     ++unreadFriendRequests;
     return true;
@@ -1693,7 +1700,7 @@ unsigned int Settings::getUnreadFriendRequests() const
     return unreadFriendRequests;
 }
 
-QPair<QString, QString> Settings::getFriendRequest(int index) const
+Settings::Request Settings::getFriendRequest(int index) const
 {
     QMutexLocker locker{&bigLock};
     return friendRequests.at(index);

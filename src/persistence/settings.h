@@ -57,6 +57,14 @@ public:
     void loadPersonal();
     void loadPersonal(Profile *profile);
 
+    struct Request
+    {
+        QString address;
+        QString message;
+        bool read;
+    };
+
+
 public slots:
     void saveGlobal(); ///< Asynchronous
     void sync(); ///< Waits for all asynchronous operations to complete
@@ -299,7 +307,7 @@ public:
 
     bool addFriendRequest(const QString &friendAddress, const QString &message);
     unsigned int getUnreadFriendRequests() const;
-    QPair<QString, QString> getFriendRequest(int index) const;
+    Request getFriendRequest(int index) const;
     int getFriendRequestSize() const;
     void clearUnreadFriendRequests();
     void removeFriendRequest(int index);
@@ -389,7 +397,7 @@ private:
     bool autoSaveEnabled;
     QString globalAutoAcceptDir;
 
-    QList<QPair<QString, QString>> friendRequests;
+    QList<Request> friendRequests;
     unsigned int unreadFriendRequests;
 
     // GUI
