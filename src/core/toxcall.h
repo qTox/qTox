@@ -18,7 +18,7 @@ struct ToxCall
 {
 protected:
      ToxCall() = default;
-     ToxCall(uint32_t CallId);
+     explicit ToxCall(uint32_t CallId);
      ~ToxCall();
 public:
      ToxCall(const ToxCall& other) = delete;

@@ -303,7 +303,7 @@ bool GenericChatForm::event(QEvent* e)
 
 void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
-    QWidget* sender = (QWidget*)QObject::sender();
+    QWidget* sender = static_cast<QWidget*>(QObject::sender());
     pos = sender->mapToGlobal(pos);
 
     menu.exec(pos);

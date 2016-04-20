@@ -30,7 +30,7 @@ class GenericNetCamView : public QWidget
 {
     Q_OBJECT
 public:
-    GenericNetCamView(QWidget* parent);
+    explicit GenericNetCamView(QWidget* parent);
 
 signals:
     void showMessageClicked();

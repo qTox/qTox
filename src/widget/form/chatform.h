@@ -40,7 +40,7 @@ class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    ChatForm(Friend* chatFriend);
+    explicit ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(QString newMessage);
     void loadHistory(QDateTime since, bool processUndelivered = false);

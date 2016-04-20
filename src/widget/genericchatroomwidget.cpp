@@ -29,10 +29,13 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     : GenericChatItemWidget(parent), active{false}
 {
     // avatar
+    QSize size;
     if (isCompact())
-        avatar = new MaskablePixmapWidget(this, QSize(20,20), ":/img/avatar_mask.svg");
+        size = QSize(20,20);
     else
-        avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
+        size = QSize(40,40);
+
+    avatar = new MaskablePixmapWidget(this, size, ":/img/avatar_mask.svg");
 
     // status text
     statusMessageLabel = new CroppingLabel(this);

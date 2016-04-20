@@ -45,7 +45,7 @@ class CoreAV : public QObject
     Q_OBJECT
 
 public:
-    CoreAV(Tox* tox);
+    explicit CoreAV(Tox* tox);
     ~CoreAV();
 
     const ToxAV* getToxAv() const;

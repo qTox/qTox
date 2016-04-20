@@ -52,7 +52,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericChatForm(QWidget *parent = 0);
+    explicit GenericChatForm(QWidget *parent = 0);
     ~GenericChatForm();
 
     void setName(const QString &newName);

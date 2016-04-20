@@ -34,7 +34,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     class LineEdit : public QLineEdit
     {
     public:
-        LineEdit(QWidget* parent = 0) :
+        explicit LineEdit(QWidget* parent = 0) :
             QLineEdit(parent)
         {}
 

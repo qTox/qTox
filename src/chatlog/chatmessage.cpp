@@ -57,7 +57,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //markdown
-    if (Settings::getInstance().getMarkdownPreference() != MarkdownType::NONE)
+    if (Settings::getInstance().getMarkdownPreference() != NONE)
         text = detectMarkdown(text);
 
     switch(type)
@@ -209,7 +209,7 @@ QString ChatMessage::detectMarkdown(const QString &str)
         {
             int mul = 0; // Determines how many characters to strip from markdown text
             // Set mul depending on markdownPreference
-            if (Settings::getInstance().getMarkdownPreference() == MarkdownType::WITHOUT_CHARS)
+            if (Settings::getInstance().getMarkdownPreference() == WITHOUT_CHARS)
                 mul = 2;
 
             // Match captured string to corresponding md format

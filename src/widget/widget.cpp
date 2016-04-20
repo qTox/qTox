@@ -1404,7 +1404,7 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     class Dialog : public ActivateDialog
     {
     public:
-        Dialog(DialogType type)
+        explicit Dialog(DialogType type)
             : ActivateDialog()
             , type(type)
         {

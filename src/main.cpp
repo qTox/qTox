@@ -150,7 +150,11 @@ int main(int argc, char *argv[])
     IPC& ipc = IPC::getInstance();
 #endif
 
-    sodium_init(); // For the auto-updater
+    if (sodium_init() < 0) // For the auto-updater
+    {
+        qCritical() << "Can't init libsodium";
+        return EXIT_FAILURE;
+    }
 
 #ifdef LOG_TO_FILE
     QString logFileDir = Settings::getInstance().getAppCacheDirPath();

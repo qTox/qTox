@@ -38,7 +38,7 @@ class SettingsWidget : public QWidget
 {
     Q_OBJECT
 public:
-    SettingsWidget(QWidget* parent = nullptr);
+    explicit SettingsWidget(QWidget* parent = nullptr);
     ~SettingsWidget();
 
     bool isShown() const;
