@@ -311,6 +311,7 @@ public:
     int getFriendRequestSize() const;
     void clearUnreadFriendRequests();
     void removeFriendRequest(int index);
+    void readFriendRequest(int index);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it
@@ -398,7 +399,6 @@ private:
     QString globalAutoAcceptDir;
 
     QList<Request> friendRequests;
-    unsigned int unreadFriendRequests;
 
     // GUI
     QString smileyPack;

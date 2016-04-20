@@ -326,7 +326,6 @@ void Settings::loadPersonal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("Requests");
-        unreadFriendRequests = ps.value("unread", 0).toUInt();
         size = ps.beginReadArray("Request");
         friendRequests.clear();
         friendRequests.reserve(size);
@@ -527,7 +526,6 @@ void Settings::savePersonal(QString profileName, QString password)
     ps.endGroup();
 
     ps.beginGroup("Requests");
-        ps.setValue("unread", unreadFriendRequests);
         ps.beginWriteArray("Request", friendRequests.size());
         index = 0;
         for (auto& request : friendRequests)
@@ -1690,13 +1688,17 @@ bool Settings::addFriendRequest(const QString &friendAddress, const QString &mes
     request.read = false;
 
     friendRequests.push_back(request);
-    ++unreadFriendRequests;
     return true;
 }
 
 unsigned int Settings::getUnreadFriendRequests() const
 {
     QMutexLocker locker{&bigLock};
+    unsigned int unreadFriendRequests = 0;
+    for (auto request : friendRequests)
+        if (!request.read)
+            unreadFriendRequests++;
+
     return unreadFriendRequests;
 }
 
@@ -1715,13 +1717,21 @@ int Settings::getFriendRequestSize() const
 void Settings::clearUnreadFriendRequests()
 {
     QMutexLocker locker{&bigLock};
-    unreadFriendRequests = 0;
+
+    for (auto& request : friendRequests)
+        request.read = true;
 }
 
 void Settings::removeFriendRequest(int index)
 {
     QMutexLocker locker{&bigLock};
     friendRequests.removeAt(index);
+}
+
+void Settings::readFriendRequest(int index)
+{
+    QMutexLocker locker{&bigLock};
+    friendRequests[index].read = true;
 }
 
 int Settings::removeCircle(int id)
