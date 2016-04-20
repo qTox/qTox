@@ -9,5 +9,6 @@ qtox
 *.qm
 *.orig
 build-*-Release
+build-*-Profile
 build-*-Debug
 .DS_Store
