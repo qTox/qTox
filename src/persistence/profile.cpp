@@ -202,15 +202,9 @@ void Profile::scanProfiles()
     for (QString toxfile : toxfiles)
     {
         if (!inifiles.contains(toxfile))
-            importProfile(toxfile);
+            Settings::getInstance().createPersonal(toxfile);
         profiles.append(toxfile);
     }
-}
-
-void Profile::importProfile(QString name)
-{
-    assert(!exists(name));
-    Settings::getInstance().createPersonal(name);
 }
 
 QVector<QString> Profile::getProfiles()
@@ -464,7 +458,7 @@ void Profile::removeAvatar(const QString &ownerId)
 bool Profile::exists(QString name)
 {
     QString path = Settings::getInstance().getSettingsDirPath() + name;
-    return QFile::exists(path+".tox") && QFile::exists(path+".ini");
+    return QFile::exists(path+".tox");
 }
 
 bool Profile::isEncrypted() const
