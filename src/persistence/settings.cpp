@@ -326,16 +326,16 @@ void Settings::loadPersonal(Profile* profile)
     ps.endGroup();
 
     ps.beginGroup("Requests");
-        unreadFriendRequests = ps.value("unread", 0).toUInt();
         size = ps.beginReadArray("Request");
         friendRequests.clear();
         friendRequests.reserve(size);
         for (int i = 0; i < size; i ++)
         {
             ps.setArrayIndex(i);
-            QPair<QString, QString> request;
-            request.first = ps.value("addr").toString();
-            request.second = ps.value("message").toString();
+            Request request;
+            request.address = ps.value("addr").toString();
+            request.message = ps.value("message").toString();
+            request.read = ps.value("read").toBool();
             friendRequests.push_back(request);
         }
         ps.endArray();
@@ -526,14 +526,14 @@ void Settings::savePersonal(QString profileName, QString password)
     ps.endGroup();
 
     ps.beginGroup("Requests");
-        ps.setValue("unread", unreadFriendRequests);
         ps.beginWriteArray("Request", friendRequests.size());
         index = 0;
         for (auto& request : friendRequests)
         {
             ps.setArrayIndex(index);
-            ps.setValue("addr", request.first);
-            ps.setValue("message", request.second);
+            ps.setValue("addr", request.address);
+            ps.setValue("message", request.message);
+            ps.setValue("read", request.read);
 
             ++index;
         }
@@ -1674,26 +1674,35 @@ bool Settings::addFriendRequest(const QString &friendAddress, const QString &mes
 
     for (auto queued : friendRequests)
     {
-       if (queued.first == friendAddress)
+       if (queued.address == friendAddress)
        {
-           queued.second = message;
+           queued.message = message;
+           queued.read = false;
            return false;
        }
     }
 
-    QPair<QString, QString> request(friendAddress, message);
+    Request request;
+    request.address = friendAddress;
+    request.message = message;
+    request.read = false;
+
     friendRequests.push_back(request);
-    ++unreadFriendRequests;
     return true;
 }
 
 unsigned int Settings::getUnreadFriendRequests() const
 {
     QMutexLocker locker{&bigLock};
+    unsigned int unreadFriendRequests = 0;
+    for (auto request : friendRequests)
+        if (!request.read)
+            unreadFriendRequests++;
+
     return unreadFriendRequests;
 }
 
-QPair<QString, QString> Settings::getFriendRequest(int index) const
+Settings::Request Settings::getFriendRequest(int index) const
 {
     QMutexLocker locker{&bigLock};
     return friendRequests.at(index);
@@ -1708,13 +1717,21 @@ int Settings::getFriendRequestSize() const
 void Settings::clearUnreadFriendRequests()
 {
     QMutexLocker locker{&bigLock};
-    unreadFriendRequests = 0;
+
+    for (auto& request : friendRequests)
+        request.read = true;
 }
 
 void Settings::removeFriendRequest(int index)
 {
     QMutexLocker locker{&bigLock};
     friendRequests.removeAt(index);
+}
+
+void Settings::readFriendRequest(int index)
+{
+    QMutexLocker locker{&bigLock};
+    friendRequests[index].read = true;
 }
 
 int Settings::removeCircle(int id)

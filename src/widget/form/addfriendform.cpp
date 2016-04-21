@@ -82,8 +82,8 @@ AddFriendForm::AddFriendForm()
 
     for (int i = 0; i < size; ++i)
     {
-        QPair<QString, QString> request = Settings::getInstance().getFriendRequest(i);
-        addFriendRequestWidget(request.first, request.second);
+        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        addFriendRequestWidget(request.address, request.message);
     }
 }
 
@@ -173,6 +173,7 @@ void AddFriendForm::onSendTriggered()
         id = toxId.toString();
     }
 
+    deleteFriendRequest(id);
     if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
         GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
     else
@@ -222,13 +223,28 @@ void AddFriendForm::setIdFromClipboard()
     }
 }
 
+void AddFriendForm::deleteFriendRequest(const QString& toxId)
+{
+    int size = Settings::getInstance().getFriendRequestSize();
+    for (int i = 0; i < size; i++)
+    {
+        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        if (ToxId(toxId) == ToxId(request.address))
+        {
+            Settings::getInstance().removeFriendRequest(i);
+            return;
+        }
+    }
+}
+
 void AddFriendForm::onFriendRequestAccepted()
 {
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
-    emit friendRequestAccepted(Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1).first);
+    Settings::Request request = Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
+    emit friendRequestAccepted(request.address);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
 }

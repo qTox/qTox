@@ -75,9 +75,10 @@ private:
     void removeFriendRequestWidget(QWidget *friendWidget);
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
+    void deleteFriendRequest(const QString &toxId);
+    void setIdFromClipboard();
 
 private:
-    void setIdFromClipboard();
     QLabel headLabel, toxIdLabel, messageLabel;
     QPushButton sendButton;
     QLineEdit toxId;
