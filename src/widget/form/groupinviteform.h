@@ -25,6 +25,7 @@
 #include <QSet>
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/gui.h"
+#include <QScrollArea>
 
 class QLabel;
 class QVBoxLayout;
@@ -84,6 +85,7 @@ private:
     QSet<QPushButton*> rejectButtons;
     QSet<CroppingLabel*> groupLabels;
     QList<GroupInvite> groupInvites;
+    QScrollArea* scroll;
 };
 
 #endif // GROUPINVITEFORM_H

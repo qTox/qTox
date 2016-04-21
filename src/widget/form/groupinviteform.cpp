@@ -48,7 +48,16 @@ GroupInviteForm::GroupInviteForm()
 
     inviteBox = new QGroupBox(this);
     inviteLayout = new QVBoxLayout(inviteBox);
-    inviteLayout->addStretch(1);
+
+    scroll = new QScrollArea(this);
+
+    QWidget* innerWidget = new QWidget(scroll);
+    innerWidget->setLayout(new QVBoxLayout());
+    innerWidget->layout()->setAlignment(Qt::AlignTop);
+    scroll->setWidget(innerWidget);
+    scroll->setWidgetResizable(true);
+
+    inviteLayout->addWidget(scroll);
 
     layout->addWidget(createButton);
     layout->addWidget(inviteBox);
@@ -114,7 +123,7 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     groupLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
 
-    inviteLayout->insertWidget(0, groupWidget);
+    scroll->widget()->layout()->addWidget(groupWidget);
 
     GroupInvite group;
     group.friendId = friendId;
@@ -137,7 +146,7 @@ void GroupInviteForm::onGroupInviteAccepted()
 {
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* groupWidget = acceptButton->parentWidget();
-    int index = inviteLayout->indexOf(groupWidget);
+    int index = scroll->widget()->layout()->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
     groupInvites.removeAt(index);
 
@@ -150,7 +159,7 @@ void GroupInviteForm::onGroupInviteRejected()
 {
     QPushButton* rejectButton = static_cast<QPushButton*>(sender());
     QWidget* groupWidget = rejectButton->parentWidget();
-    int index = inviteLayout->indexOf(groupWidget);
+    int index = scroll->widget()->layout()->indexOf(groupWidget);
     groupInvites.removeAt(index);
 
     deleteInviteButtons(groupWidget);
@@ -168,7 +177,7 @@ void GroupInviteForm::deleteInviteButtons(QWidget* widget)
     groupLabels.remove(labels.at(0));
 
     widget->deleteLater();
-    inviteLayout->removeWidget(widget);
+    scroll->widget()->layout()->removeWidget(widget);
 }
 
 void GroupInviteForm::retranslateUi()
@@ -193,7 +202,7 @@ void GroupInviteForm::retranslateUi()
 void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
 {
     QWidget* groupWidget = label->parentWidget();
-    int index = inviteLayout->indexOf(groupWidget);
+    int index = scroll->widget()->layout()->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
 
     QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
