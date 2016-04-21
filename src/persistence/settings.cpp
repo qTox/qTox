@@ -156,7 +156,7 @@ void Settings::loadGlobal()
         showSystemTray = s.value("showSystemTray", SHOW_SYSTEM_TRAY_DEFAULT).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
-        closeToTray = s.value("closeToTray", false).toBool();
+        closeToTray = s.value("closeToTray", true).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
