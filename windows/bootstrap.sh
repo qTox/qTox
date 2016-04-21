@@ -25,7 +25,7 @@ if [ ! -f "libtoxcore_build_windows_x86_shared_release.zip" ]; then
 fi
 
 if [ ! -d "include/tox" ]; then
-    $QTOX_DIR/tools/unzip -o libtoxcore_build_windows_x86_shared_release.zip -d ./
+    unzip -o libtoxcore_build_windows_x86_shared_release.zip -d ./
 fi
 
 

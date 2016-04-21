@@ -567,9 +567,17 @@ location, replace corresponding parts. Check that the version of MinGW,
 corresponds to the version of the QT component!
 
 ### Wget
+
 Download the Wget installer for Windows from
 http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
 steps assume that Wget is installed at `C:\Program Files\GnuWin32\`. If you
+decided to choose another location, replace corresponding parts.
+
+### UnZip
+
+Download the UnZip installer for Windows from
+http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
+steps assume that UnZip is installed at `C:\Program Files\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
 ### Setting up Path
@@ -581,7 +589,7 @@ select tab `Advanced system settings` -> button `Environment Variables`). In the
 second box search for the `PATH` variable and press `Edit...`. The input box
 `Variable value:` should already contain some directories. Each directory is
 separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin`.
+`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
 by installer automatically.
 
