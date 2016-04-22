@@ -307,7 +307,7 @@ and install `toxcore` and `libfilteraudio`:
 If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
 
 If you want to compile and install it manually:
-```
+```bash
 git clone https://github.com/irungentoo/filter_audio
 cd filter_audio
 make -j$(nproc)
@@ -321,7 +321,7 @@ If you are not using Fedora, skip this section, and go directly to compiling
 
 This method automatically detects whether to link statically or dynamically,
 depending on your system configs.
-```
+```bash
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
 autoreconf -if
@@ -335,7 +335,7 @@ If you wish to explicitly link sqlcipher
 [dynamically](#dynamically-linked-sqlcipher).
 
 #### Statically linked sqlcipher
-```
+```bash
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlpcipher
 ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
@@ -346,7 +346,7 @@ cd ..
 ```
 
 #### Dynamically linked sqlcipher
-```
+```bash
 git clone https://github.com/sqlcipher/sqlcipher
 cd sqlcipher
 ./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
@@ -400,7 +400,7 @@ make
 #### Debian / Ubuntu / Mint
 If the compiling process stops with a missing dependency like:
 `... libswscale/swscale.h missing` try:
-```
+```bash
 apt-file search libswscale/swscale.h
 ```
 And install the package that provides the missing file.
