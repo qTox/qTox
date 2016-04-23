@@ -25,7 +25,6 @@
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/audio/audio.h"
 #include "src/persistence/profilelocker.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/persistence/profile.h"
@@ -63,9 +62,6 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     tox(nullptr), av(nullptr), profile(profile), ready{false}
 {
     coreThread = CoreThread;
-
-    Audio::getInstance();
-
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
