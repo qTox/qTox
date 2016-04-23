@@ -74,6 +74,11 @@ public:
     void micMuteToggle(uint32_t friendNum);
     void volMuteToggle(uint32_t friendNum);
 
+    static void groupCallCallback(void* tox, int group, int peer,
+                                  const int16_t* data, unsigned samples,
+                                  uint8_t channels, unsigned sample_rate,
+                                  void* core);
+
 public slots:
     bool startCall(uint32_t friendNum, bool video=false);
     bool answerCall(uint32_t friendNum);

@@ -1013,7 +1013,8 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendnumber);
         return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length,
-                                       &Audio::playGroupAudioQueued, const_cast<Core*>(this));
+                                       CoreAV::groupCallCallback,
+                                       const_cast<Core*>(this));
     }
     else
     {
@@ -1042,7 +1043,8 @@ int Core::createGroup(uint8_t type)
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int group = toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this);
+        int group = toxav_add_av_groupchat(tox, CoreAV::groupCallCallback,
+                                           this);
         emit emptyGroupCreated(group);
         return group;
     }

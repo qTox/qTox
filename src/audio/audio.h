@@ -86,9 +86,6 @@ public:
     void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                          unsigned channels, int sampleRate);
 
-    static void playGroupAudioQueued(void *, int group, int peer, const int16_t* data,
-                                     unsigned samples, uint8_t channels, unsigned sample_rate, void*);
-
 signals:
     void groupAudioPlayed(int group, int peer, unsigned short volume);
     /// When there are input subscribers, we regularly emit captured audio frames with this signal
