@@ -1629,7 +1629,7 @@ Group *Widget::createGroup(int groupId)
         return nullptr;
     }
 
-    QString groupName = QString("Groupchat #%1").arg(groupId);
+    QString groupName = tr("Groupchat #%1").arg(groupId);
     CoreAV* coreAv = core->getAv();
 
     if (!coreAv)
