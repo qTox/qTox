@@ -29,6 +29,7 @@ public:
     explicit ChatTextEdit(QWidget *parent = 0);
     ~ChatTextEdit();
     void setLastMessage(QString lm);
+    void sendKeyEvent(QKeyEvent * event);
 
 signals:
     void enterPressed();
