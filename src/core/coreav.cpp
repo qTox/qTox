@@ -386,9 +386,8 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
     Core* c = static_cast<Core*>(core);
     CoreAV* cav = c->getAv();
 
-    if (!cav->groupCalls.contains(group)) {
-        qWarning() << "Audio for invalid group id" << group
-                   << "will not be played back.";
+    if (!cav->groupCalls.contains(group))
+    {
         return;
     }
 
@@ -396,7 +395,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
 
     emit c->groupPeerAudioPlaying(group, peer);
 
-    if (call.muteVol)
+    if (call.muteVol || call.inactive)
         return;
 
     Audio& audio = Audio::getInstance();
