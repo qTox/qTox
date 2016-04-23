@@ -440,9 +440,8 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t *pcm, size_t samples,
 
     ToxGroupCall& call = groupCalls[groupId];
 
-    if (call.inactive || call.muteMic || !Audio::getInstance().isInputReady())
+    if (call.inactive || call.muteMic)
         return true;
-
 
     if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, pcm, samples, chans, rate) != 0)
         qDebug() << "toxav_group_send_audio error";
