@@ -364,6 +364,49 @@ void CoreAV::volMuteToggle(uint32_t callId)
         calls[callId].muteVol = !calls[callId].muteVol;
 }
 
+/**
+@brief Called from Tox API when group call receives audio data.
+
+@param[in] tox          the Tox object
+@param[in] group        the group number
+@param[in] peer         the peer number
+@param[in] data         the audio data to playback
+@param[in] samples      the audio samples
+@param[in] channels     the audio channels
+@param[in] sample_rate  the audio sample rate
+@param[in] core         the qTox Core class
+*/
+void CoreAV::groupCallCallback(void* tox, int group, int peer,
+                               const int16_t* data, unsigned samples,
+                               uint8_t channels, unsigned sample_rate,
+                               void* core)
+{
+    Q_UNUSED(tox);
+
+    Core* c = static_cast<Core*>(core);
+    CoreAV* cav = c->getAv();
+
+    if (!cav->groupCalls.contains(group)) {
+        qWarning() << "Audio for invalid group id" << group
+                   << "will not be played back.";
+        return;
+    }
+
+    ToxGroupCall& call = cav->groupCalls[group];
+
+    emit c->groupPeerAudioPlaying(group, peer);
+
+    if (call.muteVol)
+        return;
+
+    Audio& audio = Audio::getInstance();
+    if (!call.alSource)
+        audio.subscribeOutput(call.alSource);
+
+    audio.playAudioBuffer(call.alSource, data, samples, channels,
+                          sample_rate);
+}
+
 VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
 {
     if (!calls.contains(friendNum))

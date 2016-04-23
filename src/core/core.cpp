@@ -25,7 +25,6 @@
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/audio/audio.h"
 #include "src/persistence/profilelocker.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/persistence/profile.h"
@@ -63,9 +62,6 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     tox(nullptr), av(nullptr), profile(profile), ready{false}
 {
     coreThread = CoreThread;
-
-    Audio::getInstance();
-
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -1017,7 +1013,8 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendnumber);
         return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length,
-                                       &Audio::playGroupAudioQueued, const_cast<Core*>(this));
+                                       CoreAV::groupCallCallback,
+                                       const_cast<Core*>(this));
     }
     else
     {
@@ -1046,7 +1043,8 @@ int Core::createGroup(uint8_t type)
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        int group = toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this);
+        int group = toxav_add_av_groupchat(tox, CoreAV::groupCallCallback,
+                                           this);
         emit emptyGroupCreated(group);
         return group;
     }
