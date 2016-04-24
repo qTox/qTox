@@ -563,8 +563,10 @@ Download the MinGW installer for Windows from
 [sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
 sure to install MSYS (a set of Unix tools for Windows). The following steps
 assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Check that the version of MinGW,
-corresponds to the version of the QT component!
+location, replace corresponding parts. Select `mingw-developer-toolkit`, 
+`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
+packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
+version of MinGW, corresponds to the version of the QT component!
 
 ### Wget
 
