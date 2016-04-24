@@ -146,7 +146,7 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
 
     lock();
     lastFrame = newFrame;
-    newSize = lastFrame->getSize();
+    newSize = lastFrame->getSourceDimensions().size();
     unlock();
 
     float newRatio = getSizeRatio(newSize);

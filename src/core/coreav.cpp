@@ -362,7 +362,12 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
     vpx_image* frame = vframe->toVpxImage();
-    if (frame->fmt == VPX_IMG_FMT_NONE)
+
+    if(!frame)
+    {
+        return;
+    }
+    if(frame->fmt == VPX_IMG_FMT_NONE)
     {
         qWarning() << "Invalid frame";
         vpx_img_free(frame);
