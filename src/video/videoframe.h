@@ -146,6 +146,16 @@ public:
      * VideoFrame is no longer valid.
      */
     vpx_image* toVpxImage(QSize frameSize = {0, 0});
+
+    /**
+     * @brief Data alignment parameter used to populate AVFrame buffers.
+     *
+     * This field is public in effort to standardized the frame alignment parameter for all AVFrame
+     * allocations.
+     *
+     * It's currently set to 32-byte alignment for AVX2 support.
+     */
+    static constexpr int frameAlignment = 32;
 private:
     /**
      * @brief A function to create a hashable key from a given QSize dimension.
@@ -202,9 +212,6 @@ private:
      */
     void deleteFrameBuffer();
 private:
-    // Data alignment for framebuffers
-    static constexpr int data_alignment = 32;
-
     // Main framebuffer store
     QHash<int, QHash<quint64, AVFrame*>> frameBuffer {};
 

@@ -250,7 +250,7 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
 
     int bufSize = av_image_alloc(ret->data, ret->linesize,
                                  dimensions.width(), dimensions.height(),
-                                 static_cast<AVPixelFormat>(pixelFormat), data_alignment);
+                                 static_cast<AVPixelFormat>(pixelFormat), frameAlignment);
 
     if(bufSize < 0){
         av_frame_free(&ret);
