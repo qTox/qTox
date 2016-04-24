@@ -29,9 +29,11 @@
 #include <QBitmap>
 #include <QScreen>
 #include <QTemporaryFile>
+#include <QApplication>
 #include <QGuiApplication>
 #include <QStyle>
 #include <QSplitter>
+#include <QClipboard>
 #include <cassert>
 #include "chatform.h"
 #include "src/audio/audio.h"
@@ -79,6 +81,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
+    statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
     callConfirm = nullptr;
     offlineEngine = new OfflineMsgEngine(f);
@@ -100,6 +103,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
+    copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
 
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
@@ -111,6 +115,15 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
+    connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
+    {
+        if(!statusMessageLabel->text().isEmpty())
+        {
+            QWidget* sender = static_cast<QWidget*>(QObject::sender());
+
+            statusMessageMenu.exec(sender->mapToGlobal(pos));
+        }
+    } );
     connect(&typingTimer, &QTimer::timeout, this, [=]{
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;
@@ -826,6 +839,17 @@ void ChatForm::onMessageInserted()
         netcam->setShowMessages(true, true);
 }
 
+void ChatForm::onCopyStatusMessage()
+{
+    QString text = statusMessageLabel->text();
+    QClipboard* clipboard = QApplication::clipboard();
+
+    if (clipboard)
+    {
+        clipboard->setText(text, QClipboard::Clipboard);
+    }
+}
+
 void ChatForm::startCounter()
 {
     if (!callDurationTimer)
@@ -975,6 +999,7 @@ void ChatForm::retranslateUi()
     QString volObjectName = volButton->objectName();
     QString micObjectName = micButton->objectName();
     loadHistoryAction->setText(tr("Load chat history..."));
+    copyStatusAction->setText(tr("Copy"));
 
     if (volObjectName == QStringLiteral("green"))
         volButton->setToolTip(tr("Mute call"));

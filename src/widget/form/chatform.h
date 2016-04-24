@@ -84,6 +84,7 @@ private slots:
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
     void onMessageInserted();
+    void onCopyStatusMessage();
 
 private:
     void retranslateUi();
@@ -101,6 +102,7 @@ private:
     CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;
+    QMenu statusMessageMenu;
     QLabel *callDuration;
     QTimer *callDurationTimer;
     QTimer typingTimer;
@@ -108,6 +110,7 @@ private:
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
+    QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
