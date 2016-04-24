@@ -4,6 +4,8 @@
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
 
+#include <QApplication>
+#include <QClipboard>
 #include <QDir>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -16,10 +18,21 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     ui->label_4->hide();
     ui->aliases->hide();
 
+    statusMessageMenu.addAction(tr("Copy"), this, SLOT(onCopyStatusMessage()));
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
+    connect(ui->statusMessage, &QLabel::customContextMenuRequested, this, [&](const QPoint& pos)
+    {
+        if(!ui->statusMessage->text().isEmpty())
+        {
+            QWidget* sender = static_cast<QWidget*>(QObject::sender());
+
+            statusMessageMenu.exec(sender->mapToGlobal(pos));
+        }
+    } );
 
     this->toxId = toxId;
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
@@ -103,6 +116,17 @@ void AboutUser::onRemoveHistoryClicked()
                                      tr("History removed"),
                                      tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
                                      QMessageBox::Ok);
+}
+
+void AboutUser::onCopyStatusMessage()
+{
+    QString text = ui->statusMessage->text();
+    QClipboard* clipboard = QApplication::clipboard();
+
+    if (clipboard)
+    {
+        clipboard->setText(text, QClipboard::Clipboard);
+    }
 }
 
 AboutUser::~AboutUser()
