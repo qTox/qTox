@@ -105,6 +105,9 @@ public:
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
+    // Used to reset the blinking icon
+    void resetIcon();
+
 public slots:
     void onSettingsClicked();
     void onSeparateWindowClicked(bool separate);

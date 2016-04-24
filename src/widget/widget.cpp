@@ -1670,6 +1670,12 @@ void Widget::onEmptyGroupCreated(int groupId)
         group->getGroupWidget()->editName();
 }
 
+void Widget::resetIcon() {
+    eventIcon = false;
+    eventFlag = false;
+    updateIcons();
+}
+
 bool Widget::event(QEvent * e)
 {
     switch (e->type())
@@ -1687,11 +1693,7 @@ bool Widget::event(QEvent * e)
             }
 
             if (eventFlag)
-            {
-                eventFlag = false;
-                eventIcon = false;
-                updateIcons();
-            }
+                resetIcon();
 
             focusChatInput();
 

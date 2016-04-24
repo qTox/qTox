@@ -496,6 +496,7 @@ bool ContentDialog::event(QEvent* event)
                     g->getGroupWidget()->resetEventFlags();
                     g->getGroupWidget()->updateStatusLight();
                 }
+                Widget::getInstance()->resetIcon();
             }
 
             currentDialog = this;
