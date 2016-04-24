@@ -219,10 +219,14 @@ void GroupChatForm::onUserListChanged()
     // Enable or disable call button
     if (peersCount > 1 && group->isAvGroupchat())
     {
-        callButton->setEnabled(true);
-        callButton->setObjectName("green");
-        callButton->style()->polish(callButton);
-        callButton->setToolTip(tr("Start audio call"));
+        // don't set button to green if call running
+        if(!inCall)
+        {
+            callButton->setEnabled(true);
+            callButton->setObjectName("green");
+            callButton->style()->polish(callButton);
+            callButton->setToolTip(tr("Start audio call"));
+        }
     }
     else
     {
