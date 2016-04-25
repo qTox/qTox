@@ -1018,9 +1018,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     ContentDialog::updateFriendStatus(friendId);
 
-    //won't print the message if there were no messages before
-    if (!f->getChatForm()->isEmpty()
-            && Settings::getInstance().getStatusChangeNotificationEnabled())
+    if (Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
         switch (f->getStatus())
