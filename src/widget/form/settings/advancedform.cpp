@@ -32,7 +32,7 @@ AdvancedForm::AdvancedForm() :
 
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
 
-    connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
+    connect_global_saver(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
     connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
 
     for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes

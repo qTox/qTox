@@ -50,10 +50,10 @@ AVForm::AVForm() :
 
     auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
     auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
-    connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
-    connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
-    connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
-    connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
+    connect_global_saver(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
+    connect_global_saver(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
+    connect_global_saver(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
+    connect_global_saver(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
     {
         getAudioInDevices();
@@ -63,11 +63,11 @@ AVForm::AVForm() :
 
     bodyUI->playbackSlider->setTracking(false);
     bodyUI->playbackSlider->installEventFilter(this);
-    connect(bodyUI->playbackSlider, &QSlider::valueChanged,
+    connect_global_saver(bodyUI->playbackSlider, &QSlider::valueChanged,
             this, &AVForm::onPlaybackValueChanged);
     bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
-    connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
+    connect_global_saver(bodyUI->microphoneSlider, &QSlider::valueChanged,
             this, &AVForm::onMicrophoneValueChanged);
 
     for (QComboBox* cb : findChildren<QComboBox*>())

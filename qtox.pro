@@ -484,7 +484,8 @@ SOURCES += \
     src/persistence/db/rawdatabase.cpp \
     src/persistence/history.cpp \
     src/widget/form/groupinviteform.cpp \
-    src/widget/tool/profileimporter.cpp
+    src/widget/tool/profileimporter.cpp \
+    src/persistence/settingstransaction.cpp
 
 HEADERS += \
     src/audio/audio.h \
@@ -542,4 +543,5 @@ HEADERS += \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
     src/widget/form/groupinviteform.h \
-    src/widget/tool/profileimporter.h
+    src/widget/tool/profileimporter.h \
+    src/persistence/settingstransaction.h

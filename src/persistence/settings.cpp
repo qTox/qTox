@@ -26,6 +26,7 @@
 #include "src/widget/gui.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
+#include "src/persistence/settingstransaction.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
@@ -497,7 +498,6 @@ void Settings::savePersonal(QString profileName, QString password)
     if (QThread::currentThread() != settingsThread)
         return (void) QMetaObject::invokeMethod(&getInstance(), "savePersonal",
                                                 Q_ARG(QString, profileName), Q_ARG(QString, password));
-
     QMutexLocker locker{&bigLock};
 
     QString path = getSettingsDirPath() + profileName + ".ini";
@@ -1511,10 +1511,19 @@ int Settings::getFriendCircleID(const ToxId &id) const
 
 void Settings::setFriendCircleID(const ToxId &id, int circleID)
 {
+    PersonalSettingsTransaction transaction;
+
     QString key = id.publicKey;
     auto it = friendLst.find(key);
+
     if (it != friendLst.end())
     {
+        if (it->circleID == circleID)
+        {
+            transaction.cancel();
+            return; // no change
+        }
+
         it->circleID = circleID;
     }
     else
@@ -1639,12 +1648,14 @@ QString Settings::getCircleName(int id) const
 
 void Settings::setCircleName(int id, const QString &name)
 {
+    PersonalSettingsTransaction transaction;
     circleLst[id].name = name;
-    savePersonal();
 }
 
 int Settings::addCircle(const QString &name)
 {
+    PersonalSettingsTransaction transaction;
+
     circleProp cp;
     cp.expanded = false;
 
@@ -1654,7 +1665,7 @@ int Settings::addCircle(const QString &name)
         cp.name = name;
 
     circleLst.append(cp);
-    savePersonal();
+
     return circleLst.count() - 1;
 }
 
@@ -1665,6 +1676,14 @@ bool Settings::getCircleExpanded(int id) const
 
 void Settings::setCircleExpanded(int id, bool expanded)
 {
+    PersonalSettingsTransaction transaction;
+
+    if (circleLst[id].expanded == expanded)
+    {
+        transaction.cancel();
+        return; // no change
+    }
+
     circleLst[id].expanded = expanded;
 }
 
@@ -1736,11 +1755,12 @@ void Settings::readFriendRequest(int index)
 
 int Settings::removeCircle(int id)
 {
+    PersonalSettingsTransaction transaction;
+
     // Replace index with last one and remove last one instead.
     // This gives you contiguous ids all the time.
     circleLst[id] = circleLst.last();
     circleLst.pop_back();
-    savePersonal();
     return circleLst.count();
 }
 

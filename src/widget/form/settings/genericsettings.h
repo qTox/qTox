@@ -32,6 +32,16 @@ public:
 
 protected:
     QPixmap formIcon;
+
+    template<typename Sender, typename Signal, typename... Rest>
+    static QMetaObject::Connection connect_global_saver(const Sender sender, const Signal signal, const Rest... receiver);
+
+    template<typename Sender, typename Signal, typename... Rest>
+    static QMetaObject::Connection connect_personal_saver(const Sender sender, const Signal signal, const Rest... receiver);
 };
+
+// Because these are template functions they must be included into the header, otherwise
+// the linker will not have references to the concrete instantiations of the template.
+#include "genericsettings.tpp"
 
 #endif

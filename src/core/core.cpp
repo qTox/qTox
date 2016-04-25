@@ -1210,6 +1210,7 @@ void Core::setNospam(uint32_t nospam)
     uint8_t *nspm = reinterpret_cast<uint8_t*>(&nospam);
     std::reverse(nspm, nspm + 4);
     tox_self_set_nospam(tox, nospam);
+    profile.saveToxSave();
 
     emit idSet(getSelfId().toString());
 }

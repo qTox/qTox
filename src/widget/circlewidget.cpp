@@ -22,6 +22,7 @@
 #include "friendlistwidget.h"
 #include "tool/croppinglabel.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/settingstransaction.h"
 #include "src/friendlist.h"
 #include "src/friend.h"
 #include "src/widget/contentdialog.h"
@@ -100,6 +101,8 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
         }
         else if (selectedItem == removeAction)
         {
+            PersonalSettingsTransaction transaction;
+
             FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
             moveFriendWidgets(friendList);
 
@@ -192,13 +195,14 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
 void CircleWidget::onSetName()
 {
+    PersonalSettingsTransaction transaction;
     Settings::getInstance().setCircleName(id, getName());
 }
 
 void CircleWidget::onExpand()
 {
+    PersonalSettingsTransaction transaction;
     Settings::getInstance().setCircleExpanded(id, isExpanded());
-    Settings::getInstance().savePersonal();
 }
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
@@ -213,6 +217,8 @@ void CircleWidget::updateID(int index)
 
     if (id == index)
         return;
+
+    PersonalSettingsTransaction transaction;
 
     id = index;
     circleList[id] = this;

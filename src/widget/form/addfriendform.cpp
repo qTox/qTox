@@ -33,6 +33,7 @@
 #include "src/net/toxdns.h"
 #include "src/net/toxme.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/settingstransaction.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
@@ -239,6 +240,8 @@ void AddFriendForm::deleteFriendRequest(const QString& toxId)
 
 void AddFriendForm::onFriendRequestAccepted()
 {
+    PersonalSettingsTransaction transaction;
+
     QPushButton* acceptButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
@@ -246,25 +249,26 @@ void AddFriendForm::onFriendRequestAccepted()
     Settings::Request request = Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
     emit friendRequestAccepted(request.address);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
-    Settings::getInstance().savePersonal();
 }
 
 void AddFriendForm::onFriendRequestRejected()
 {
+    PersonalSettingsTransaction transaction;
+
     QPushButton* rejectButton = static_cast<QPushButton*>(sender());
     QWidget* friendWidget = rejectButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
-    Settings::getInstance().savePersonal();
 }
 
 void AddFriendForm::onCurrentChanged(int index)
 {
+    PersonalSettingsTransaction transaction;
+
     if (index == FriendRequest && Settings::getInstance().getUnreadFriendRequests() != 0)
     {
         Settings::getInstance().clearUnreadFriendRequests();
-        Settings::getInstance().savePersonal();
         emit friendRequestsSeen();
     }
 }
