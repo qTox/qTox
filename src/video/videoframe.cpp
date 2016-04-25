@@ -27,10 +27,11 @@ extern "C"{
 VideoFrame::VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void ()> destructCallback, bool freeSourceFrame)
     : sourceDimensions(dimensions),
       sourcePixelFormat(pixFmt),
+      sourceFrameKey(getFrameKey(dimensions.size(), pixFmt, sourceFrame->linesize[0])),
       freeSourceFrame(freeSourceFrame),
       destructCallback(destructCallback)
 {
-    frameBuffer[pixFmt][dimensionsToKey(dimensions.size())] = sourceFrame;
+    frameBuffer[sourceFrameKey] = sourceFrame;
 }
 
 VideoFrame::VideoFrame(AVFrame* sourceFrame, std::function<void ()> destructCallback, bool freeSourceFrame)
@@ -62,7 +63,7 @@ bool VideoFrame::isValid()
     return retValue;
 }
 
-const AVFrame* VideoFrame::getAVFrame(const QSize& dimensions, const int pixelFormat)
+const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned)
 {
     frameLock.lockForRead();
 
@@ -73,7 +74,12 @@ const AVFrame* VideoFrame::getAVFrame(const QSize& dimensions, const int pixelFo
         return nullptr;
     }
 
-    AVFrame* ret = retrieveAVFrame(dimensions, pixelFormat);
+    if(frameSize.width() == 0 && frameSize.height() == 0)
+    {
+        frameSize = sourceDimensions.size();
+    }
+
+    AVFrame* ret = retrieveAVFrame(frameSize, pixelFormat, requireAligned);
 
     if(ret)
     {
@@ -82,19 +88,19 @@ const AVFrame* VideoFrame::getAVFrame(const QSize& dimensions, const int pixelFo
     }
 
     // VideoFrame does not contain an AVFrame to spec, generate one here
-    ret = generateAVFrame(dimensions, pixelFormat);
+    ret = generateAVFrame(frameSize, pixelFormat, requireAligned);
 
     /*
      * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
      *
      * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Absolute worst-case scenario, we merely perform the
-     * generation process twice, and discard the old result.
+     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
+     * process twice, and discard the old result.
      */
     frameLock.unlock();
     frameLock.lockForWrite();
 
-    storeAVFrame(ret, dimensions, pixelFormat);
+    storeAVFrame(ret, frameSize, pixelFormat);
 
     frameLock.unlock();
     return ret;
@@ -125,7 +131,7 @@ QImage VideoFrame::toQImage(QSize frameSize)
         frameSize = sourceDimensions.size();
     }
 
-    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24));
+    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24), false);
 
     if(frame)
     {
@@ -136,14 +142,14 @@ QImage VideoFrame::toQImage(QSize frameSize)
     }
 
     // VideoFrame does not contain an AVFrame to spec, generate one here
-    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24));
+    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24), false);
 
     /*
      * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
      *
      * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Absolute worst-case scenario, we merely perform the
-     * generation process twice, and discard the old result.
+     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
+     * process twice, and discard the old result.
      */
     frameLock.unlock();
     frameLock.lockForWrite();
@@ -172,7 +178,7 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
         frameSize = sourceDimensions.size();
     }
 
-    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P));
+    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P), true);
 
     if(frame)
     {
@@ -196,14 +202,14 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
     }
 
     // VideoFrame does not contain an AVFrame to spec, generate one here
-    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P));
+    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P), true);
 
     /*
      * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
      *
      * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Absolute worst-case scenario, we merely perform the
-     * generation process twice, and discard the old result.
+     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
+     * process twice, and discard the old result.
      */
     frameLock.unlock();
     frameLock.lockForWrite();
@@ -229,11 +235,27 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
     return ret;
 }
 
-AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFormat)
+AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned)
 {
-    if(frameBuffer.contains(pixelFormat) && frameBuffer[pixelFormat].contains(dimensionsToKey(dimensions)))
+    if(!requireAligned)
     {
-        return frameBuffer[pixelFormat][dimensionsToKey(dimensions)];
+        /*
+         * We attempt to obtain a unaligned frame first because an unaligned linesize corresponds
+         * to a data aligned frame.
+         */
+        FrameBufferKey frameKey = getFrameKey(dimensions, pixelFormat, false);
+
+        if(frameBuffer.count(frameKey) > 0)
+        {
+            return frameBuffer[frameKey];
+        }
+    }
+
+    FrameBufferKey frameKey = getFrameKey(dimensions, pixelFormat, true);
+
+    if(frameBuffer.count(frameKey) > 0)
+    {
+        return frameBuffer[frameKey];
     }
     else
     {
@@ -241,7 +263,7 @@ AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFor
     }
 }
 
-AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFormat)
+AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned)
 {
     AVFrame* ret = av_frame_alloc();
 
@@ -254,9 +276,25 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
     ret->height = dimensions.height();
     ret->format = pixelFormat;
 
-    int bufSize = av_image_alloc(ret->data, ret->linesize,
+    /*
+     * We generate a frame under data alignment only if the dimensions allow us to be frame aligned
+     * or if the caller doesn't require frame alignment
+     */
+
+    int bufSize;
+
+    if(!requireAligned || (dimensions.width() % 8 == 0 && dimensions.height() % 8 == 0))
+    {
+        bufSize = av_image_alloc(ret->data, ret->linesize,
                                  dimensions.width(), dimensions.height(),
-                                 static_cast<AVPixelFormat>(pixelFormat), frameAlignment);
+                                 static_cast<AVPixelFormat>(pixelFormat), dataAlignment);
+    }
+    else
+    {
+        bufSize = av_image_alloc(ret->data, ret->linesize,
+                                 dimensions.width(), dimensions.height(),
+                                 static_cast<AVPixelFormat>(pixelFormat), 1);
+    }
 
     if(bufSize < 0){
         av_frame_free(&ret);
@@ -279,7 +317,7 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
         return nullptr;
     }
 
-    AVFrame* source = frameBuffer[sourcePixelFormat][dimensionsToKey(sourceDimensions.size())];
+    AVFrame* source = frameBuffer[sourceFrameKey];
 
     sws_scale(swsCtx, source->data, source->linesize, 0, sourceDimensions.height(), ret->data, ret->linesize);
     sws_freeContext(swsCtx);
@@ -289,10 +327,12 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
 
 void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat)
 {
+    FrameBufferKey frameKey = getFrameKey(dimensions, pixelFormat, frame->linesize[0]);
+
     // We check the prescence of the frame in case of double-computation
-    if(frameBuffer.contains(pixelFormat) && frameBuffer[pixelFormat].contains(dimensionsToKey(dimensions)))
+    if(frameBuffer.count(frameKey) > 0)
     {
-        AVFrame* old_ret = frameBuffer[pixelFormat][dimensionsToKey(dimensions)];
+        AVFrame* old_ret = frameBuffer[frameKey];
 
         // Free old frame
         av_freep(&old_ret->data[0]);
@@ -300,39 +340,38 @@ void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int
         av_frame_free(&old_ret);
     }
 
-    frameBuffer[pixelFormat].insert(dimensionsToKey(dimensions), frame);
+    frameBuffer[frameKey] = frame;
 }
 
 void VideoFrame::deleteFrameBuffer()
 {
-    const quint64 sourceKey = dimensionsToKey(sourceDimensions.size());
-
-    for(auto pixFmtIter = frameBuffer.begin(); pixFmtIter != frameBuffer.end(); ++pixFmtIter)
+    for(auto frameIterator = frameBuffer.begin(); frameIterator != frameBuffer.end(); ++frameIterator)
     {
-        const auto& pixFmtMap = pixFmtIter.value();
+        AVFrame* frame = frameIterator->second;
 
-        for(auto dimKeyIter = pixFmtMap.begin(); dimKeyIter != pixFmtMap.end(); ++dimKeyIter)
+        // Treat source frame and derived frames separately
+        if(sourceFrameKey == frameIterator->first)
         {
-            AVFrame* frame = dimKeyIter.value();
-
-            // Treat source frame and derived frames separately
-            if(pixFmtIter.key() == sourcePixelFormat && dimKeyIter.key() == sourceKey)
-            {
-                if(freeSourceFrame)
-                {
-                    av_freep(&frame->data[0]);
-                }
-                av_frame_unref(frame);
-                av_frame_free(&frame);
-            }
-            else
+            if(freeSourceFrame)
             {
                 av_freep(&frame->data[0]);
-                av_frame_unref(frame);
-                av_frame_free(&frame);
             }
+            av_frame_unref(frame);
+            av_frame_free(&frame);
+        }
+        else
+        {
+            av_freep(&frame->data[0]);
+            av_frame_unref(frame);
+            av_frame_free(&frame);
         }
     }
 
     frameBuffer.clear();
 }
+
+VideoFrame::FrameBufferKey::FrameBufferKey(const int pixFmt, const int width, const int height, const bool lineAligned)
+    : frameWidth(width),
+      frameHeight(height),
+      pixelFormat(pixFmt),
+      linesizeAligned(lineAligned){}
