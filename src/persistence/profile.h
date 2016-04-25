@@ -50,7 +50,7 @@ public:
 
     void startCore(); ///< Starts the Core thread
     void restartCore(); ///< Delete core and restart a new one
-    bool isNewProfile();
+    bool isNewProfile() const;
     bool isEncrypted() const; ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
     QString getPassword() const;
@@ -71,7 +71,7 @@ public:
     void removeAvatar(); ///< Removes our own avatar
 
     /// Returns true if the history is enabled in the settings, and loaded successfully for this profile
-    bool isHistoryEnabled();
+    bool isHistoryEnabled() const;
     /// May return a nullptr if the history failed to load
     History* getHistory();
 

@@ -70,13 +70,13 @@ public:
     void replaceContent(int col, ChatLineContent* lineContent);
     void layout(qreal width, QPointF scenePos);
     void moveBy(qreal deltaY);
-    void removeFromScene();
-    void addToScene(QGraphicsScene* scene);
-    void setVisible(bool visible);
-    void selectionCleared();
-    void selectionFocusChanged(bool focusIn);
+    void removeFromScene() const;
+    void addToScene(QGraphicsScene* scene) const;
+    void setVisible(bool visible) const;
+    void selectionCleared() const;
+    void selectionFocusChanged(bool focusIn) const;
 
-    int getColumnCount();
+    int getColumnCount() const;
     int getRow() const;
 
     ChatLineContent* getContent(int col) const;

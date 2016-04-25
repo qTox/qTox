@@ -57,8 +57,8 @@ public:
     QString toString() const;
     bool isAction() const;
     void setAsAction();
-    void hideSender();
-    void hideDate();
+    void hideSender() const;
+    void hideDate() const;
 
 protected:
     static QString detectMarkdown(const QString& str);

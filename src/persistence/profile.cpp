@@ -227,7 +227,7 @@ void Profile::startCore()
     coreThread->start();
 }
 
-bool Profile::isNewProfile()
+bool Profile::isNewProfile() const
 {
     return newProfile;
 }
@@ -438,7 +438,7 @@ void Profile::removeAvatar()
     removeAvatar(core->getSelfId().publicKey);
 }
 
-bool Profile::isHistoryEnabled()
+bool Profile::isHistoryEnabled() const
 {
     return Settings::getInstance().getEnableLogging() && history;
 }

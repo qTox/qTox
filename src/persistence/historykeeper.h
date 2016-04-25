@@ -64,7 +64,7 @@ public:
     static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
     static bool checkPassword(const TOX_PASS_KEY& passkey, int encrypted = -1);
     static bool isFileExist(bool encrypted);
-    void removeHistory();
+    static void removeHistory();
     static QList<HistMessage> exportMessagesDeleteFile();
     QList<HistMessage> exportMessages();
 
@@ -72,7 +72,7 @@ private:
     explicit HistoryKeeper(GenericDdInterface *db_);
     HistoryKeeper(HistoryKeeper &hk) = delete;
     HistoryKeeper& operator=(const HistoryKeeper&) = delete;
-    QString unWrapMessage(const QString &str);
+    static QString unWrapMessage(const QString &str);
 
     GenericDdInterface *oldDb;
 };
