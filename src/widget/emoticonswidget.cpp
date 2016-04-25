@@ -161,6 +161,18 @@ void EmoticonsWidget::mousePressEvent(QMouseEvent*)
 {
 }
 
+void EmoticonsWidget::keyPressEvent(QKeyEvent *ev)
+{
+    switch(ev->key()) {
+    case Qt::Key_Enter:
+        break;
+    default:
+        break;
+    }
+
+    hide();
+}
+
 void EmoticonsWidget::wheelEvent (QWheelEvent *e)
 {
     if (e->orientation() == Qt::Vertical)

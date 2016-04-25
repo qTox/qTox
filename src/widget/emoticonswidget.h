@@ -41,6 +41,7 @@ private slots:
 protected:
     void mouseReleaseEvent(QMouseEvent *ev) final override;
     void mousePressEvent(QMouseEvent *ev) final override;
+    void keyPressEvent(QKeyEvent * ev) final override;
     void wheelEvent(QWheelEvent * event) final override;
 
 private:
