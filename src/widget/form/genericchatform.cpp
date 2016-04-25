@@ -368,6 +368,7 @@ void GenericChatForm::onEmoteButtonClicked()
 
     EmoticonsWidget widget;
     connect(&widget, SIGNAL(insertEmoticon(QString)), this, SLOT(onEmoteInsertRequested(QString)));
+    widget.installEventFilter(this);
 
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
@@ -500,6 +501,15 @@ void GenericChatForm::resizeEvent(QResizeEvent* event)
 
 bool GenericChatForm::eventFilter(QObject* object, QEvent* event)
 {
+    EmoticonsWidget * ev = qobject_cast<EmoticonsWidget *>(object);
+    if (( ev) && (event->type() == QEvent::KeyPress) )
+    {
+        QKeyEvent* key = static_cast<QKeyEvent*>(event);
+        msgEdit->sendKeyEvent(key);
+        msgEdit->setFocus();
+        return false;
+    }
+
     if (object != this->fileButton && object != this->fileFlyout)
         return false;
 

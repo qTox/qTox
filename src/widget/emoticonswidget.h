@@ -42,6 +42,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *ev) final override;
     void mousePressEvent(QMouseEvent *ev) final override;
     void wheelEvent(QWheelEvent * event) final override;
+    void keyPressEvent(QKeyEvent *e) final override;
 
 private:
     QStackedWidget stack;
