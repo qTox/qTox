@@ -35,9 +35,7 @@
  * Think: "last one out closes the door."
  */
 SettingsTransaction::SettingsTransaction()
-{
-    qDebug() << "created" << this;
-}
+{}
 
 QSemaphore PersonalSettingsTransaction::activeTransactions(INT_MAX);
 QMutex PersonalSettingsTransaction::lock;
@@ -60,8 +58,6 @@ PersonalSettingsTransaction::~PersonalSettingsTransaction()
 
     bool save = activeTransactions.available() == INT_MAX;
 
-    qDebug() << "destroyed" << this << "save:" << save;
-
     if (save)
         Settings::getInstance().savePersonal();
 }
@@ -72,8 +68,6 @@ void PersonalSettingsTransaction::cancel()
 
     activeTransactions.release();
     canceled = true;
-
-    qDebug() << "canceled" << this;
 }
 
 QSemaphore GlobalSettingsTransaction::activeTransactions(INT_MAX);
@@ -97,8 +91,6 @@ GlobalSettingsTransaction::~GlobalSettingsTransaction()
 
     bool save = activeTransactions.available() == INT_MAX;
 
-    qDebug() << "destroyed" << this << "save:" << save;
-
     if (save)
         Settings::getInstance().saveGlobal();
 }
@@ -109,6 +101,4 @@ void GlobalSettingsTransaction::cancel()
 
     activeTransactions.release();
     canceled = true;
-
-    qDebug() << "canceled" << this;
 }
