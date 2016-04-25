@@ -182,7 +182,12 @@ ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
 
     if(frame)
     {
-        ToxAVFrame ret {frameSize.width(), frameSize.height(), frame->data[0], frame->data[1], frame->data[2]};
+        ToxAVFrame ret
+        {
+            static_cast<std::uint16_t>(frameSize.width()),
+            static_cast<std::uint16_t>(frameSize.height()),
+            frame->data[0], frame->data[1], frame->data[2]
+        };
 
         frameLock.unlock();
         return ret;
@@ -203,7 +208,12 @@ ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
 
     storeAVFrame(frame, frameSize, static_cast<int>(AV_PIX_FMT_YUV420P));
 
-    ToxAVFrame ret {frameSize.width(), frameSize.height(), frame->data[0], frame->data[1], frame->data[2]};
+    ToxAVFrame ret
+    {
+        static_cast<std::uint16_t>(frameSize.width()),
+        static_cast<std::uint16_t>(frameSize.height()),
+        frame->data[0], frame->data[1], frame->data[2]
+    };
 
     frameLock.unlock();
     return ret;
