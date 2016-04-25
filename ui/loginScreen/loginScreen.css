@@ -36,6 +36,7 @@ QStackedWidget QPushButton
 }
 
 #loginButton,
+#importButton,
 #createAccountButton {
   border-radius:5px;
   padding:5px;
@@ -43,6 +44,7 @@ QStackedWidget QPushButton
 }
 
 #loginButton:hover,
+#importButton:hover,
 #createAccountButton:hover {
   background: #0c530d;
 }

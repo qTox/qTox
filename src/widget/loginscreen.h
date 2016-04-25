@@ -54,6 +54,7 @@ private slots:
     // Buttons to submit form
     void onCreateNewProfile();
     void onLogin();
+    void onImportProfile();
 
 private:
     void retranslateUi();

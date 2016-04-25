@@ -42,7 +42,7 @@
     <bool>true</bool>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="newPage">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -333,6 +333,13 @@
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QPushButton" name="importButton">
+             <property name="text">
+              <string>Import</string>
+             </property>
+            </widget>
+           </item>
            <item>
             <spacer name="horizontalSpacer_2">
              <property name="orientation">
