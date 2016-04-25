@@ -89,7 +89,13 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
     for (Group* group : GroupList::getAllGroups())
     {
-        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group->getGroupWidget()->getName()));
+        int maxNameLen = 30;
+        QString name = group->getGroupWidget()->getName();
+        if ( name.length() > maxNameLen )
+        {
+            name = name.left(maxNameLen).trimmed() + "..";
+        }
+        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
         groupActions[groupAction] =  group;
     }
 
