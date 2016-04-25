@@ -2,7 +2,6 @@
 #define ABOUTUSER_H
 
 #include <QDialog>
-#include <QMenu>
 #include "src/friend.h"
 
 
@@ -21,7 +20,6 @@ public:
 
 private:
     Ui::AboutUser *ui;
-    QMenu statusMessageMenu;
     ToxId toxId;
 
 private slots:
@@ -29,7 +27,6 @@ private slots:
     void onAutoAcceptClicked();
     void onSelectDirClicked();
     void onRemoveHistoryClicked();
-    void onCopyStatusMessage();
 };
 
 #endif // ABOUTUSER_H
