@@ -77,7 +77,7 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 
     int bufSize = av_image_alloc(avframe->data, avframe->linesize,
                                  width, height,
-                                 static_cast<AVPixelFormat>(AV_PIX_FMT_YUV420P), VideoFrame::frameAlignment);
+                                 static_cast<AVPixelFormat>(AV_PIX_FMT_YUV420P), VideoFrame::dataAlignment);
 
     if(bufSize < 0){
         av_frame_free(&avframe);

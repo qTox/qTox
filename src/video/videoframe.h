@@ -20,7 +20,6 @@
 #ifndef VIDEOFRAME_H
 #define VIDEOFRAME_H
 
-#include <QHash>
 #include <QImage>
 #include <QReadWriteLock>
 #include <QRect>
@@ -33,6 +32,7 @@ extern "C"{
 #include <vpx/vpx_image.h>
 #include <functional>
 #include <memory>
+#include <unordered_map>
 
 /**
  * @brief An ownernship and management class for AVFrames.
@@ -44,6 +44,14 @@ extern "C"{
  *
  * Every function in this class is thread safe apart from concurrent construction and deletion of
  * the object.
+ *
+ * This class uses the phrase "frame alignment" to specify the property that each frame's width is
+ * equal to it's maximum linesize. Note: this is NOT "data alignment" which specifies how allocated
+ * buffers are aligned in memory. Though internally the two are related, unless otherwise specified
+ * all instances of the term "alignment" exposed from public functions refer to frame alignment.
+ *
+ * Frame alignment is an important concept because ToxAV does not support frames with linesizes not
+ * directly equal to the width.
  */
 class VideoFrame
 {
@@ -91,12 +99,14 @@ public:
      * If a given frame does not exist, this function will perform appropriate conversions to
      * return a frame that fulfills the given parameters.
      *
-     * @param dimensions the dimensions of the frame.
+     * @param frameSize the dimensions of the frame to get. If frame size is 0, defaults to source
+     * frame size.
      * @param pixelFormat the desired pixel format of the frame.
+     * @param requireAligned true if the returned frame must be frame aligned, false if not.
      * @return a pointer to a AVFrame with the given parameters or nullptr if the VideoFrame is no
      * longer valid.
      */
-    const AVFrame* getAVFrame(const QSize& dimensions, const int pixelFormat);
+    const AVFrame* getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned);
 
     /**
      * @brief Releases all frames managed by this VideoFrame and invalidates it.
@@ -151,21 +161,122 @@ public:
     /**
      * @brief Data alignment parameter used to populate AVFrame buffers.
      *
-     * This field is public in effort to standardized the frame alignment parameter for all AVFrame
+     * This field is public in effort to standardized the data alignment parameter for all AVFrame
      * allocations.
      *
      * It's currently set to 32-byte alignment for AVX2 support.
      */
-    static constexpr int frameAlignment = 32;
+    static constexpr int dataAlignment = 32;
+
 private:
     /**
-     * @brief A function to create a hashable key from a given QSize dimension.
-     * @param dimensions the dimensions to hash.
-     * @return a hashable unsigned 64-bit number representing the dimension.
+     * @brief A class representing a structure that stores frame properties to be used as the key
+     * value for a std::unordered_map.
      */
-    static inline quint64 dimensionsToKey(const QSize& dimensions)
+    class FrameBufferKey{
+    public:
+        /**
+         * @brief Constructs a new FrameBufferKey with the given attributes.
+         *
+         * @param width the width of the frame.
+         * @param height the height of the frame.
+         * @param pixFmt the pixel format of the frame.
+         * @param lineAligned whether the linesize matches the width of the image.
+         */
+        FrameBufferKey(const int width, const int height, const int pixFmt, const bool lineAligned);
+
+        // Explictly state default constructor/destructor
+
+        FrameBufferKey(const FrameBufferKey&) = default;
+        FrameBufferKey(FrameBufferKey&&) = default;
+        ~FrameBufferKey() = default;
+
+        // Assignment operators are disabled for the FrameBufferKey
+
+        const FrameBufferKey& operator=(const FrameBufferKey&) = delete;
+        const FrameBufferKey& operator=(FrameBufferKey&&) = delete;
+
+        /**
+         * @brief Comparison operator for FrameBufferKey.
+         *
+         * @param other instance to compare against.
+         * @return true if instances are equivilent, false otherwise.
+         */
+        inline bool operator==(const FrameBufferKey& other) const
+        {
+            return pixelFormat == other.pixelFormat &&
+                   frameWidth == other.frameWidth &&
+                   frameHeight == other.frameHeight &&
+                   linesizeAligned == other.linesizeAligned;
+        }
+
+        /**
+         * @brief Not equal to operator for FrameBufferKey.
+         *
+         * @param other instance to compare against
+         * @return true if instances are not equivilent, false otherwise.
+         */
+        inline bool operator!=(const FrameBufferKey& other) const
+        {
+            return !operator==(other);
+        }
+
+        /**
+         * @brief Hash function for class.
+         *
+         * This function computes a hash value for use with std::unordered_map.
+         *
+         * @param key the given instance to compute hash value of.
+         * @return the hash of the given instance.
+         */
+        static inline size_t hash(const FrameBufferKey& key)
+        {
+            std::hash<int> intHasher;
+            std::hash<bool> boolHasher;
+
+            // Use java-style hash function to combine fields
+            size_t ret = 47;
+
+            ret = 37 * ret + intHasher(key.frameWidth);
+            ret = 37 * ret + intHasher(key.frameHeight);
+            ret = 37 * ret + intHasher(key.pixelFormat);
+            ret = 37 * ret + boolHasher(key.linesizeAligned);
+
+            return ret;
+        }
+
+    public:
+        const int frameWidth;
+        const int frameHeight;
+        const int pixelFormat;
+        const bool linesizeAligned;
+    };
+
+private:
+    /**
+     * @brief Generates a key object based on given parameters.
+     *
+     * @param frameSize the given size of the frame.
+     * @param pixFmt the pixel format of the frame.
+     * @param linesize the maximum linesize of the frame, may be larger than the width.
+     * @return a FrameBufferKey object representing the key for the frameBuffer map.
+     */
+    static inline FrameBufferKey getFrameKey(const QSize& frameSize, const int pixFmt, const int linesize)
     {
-        return (static_cast<quint64>(dimensions.width()) << 32) | dimensions.height();
+        return getFrameKey(frameSize, pixFmt, frameSize.width() == linesize);
+    }
+
+    /**
+     * @brief Generates a key object based on given parameters.
+     *
+     * @param frameSize the given size of the frame.
+     * @param pixFmt the pixel format of the frame.
+     * @param frameAligned true if the frame is aligned, false otherwise.
+     * @return a FrameBufferKey object representing the key for the frameBuffer map.
+     */
+    static inline FrameBufferKey getFrameKey(const QSize& frameSize, const int pixFmt, const bool frameAligned)
+    {
+        return {frameSize.width(), frameSize.height(), pixFmt, frameAligned};
     }
 
     /**
@@ -179,10 +290,11 @@ private:
      *
      * @param dimensions the dimensions of the frame.
      * @param pixelFormat the desired pixel format of the frame.
+     * @param requireAligned true if the frame must be frame aligned, false otherwise.
      * @return a pointer to a AVFrame with the given parameters or nullptr if no such frame was
      * found.
      */
-    AVFrame* retrieveAVFrame(const QSize& dimensions, const int pixelFormat);
+    AVFrame* retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
 
     /**
      * @brief Generates an AVFrame based on the given specifications.
@@ -191,9 +303,10 @@ private:
      *
      * @param dimensions the required dimensions for the frame.
      * @param pixelFormat the required pixel format for the frame.
+     * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
      * @return an AVFrame with the given specifications.
      */
-    AVFrame* generateAVFrame(const QSize& dimensions, const int pixelFormat);
+    AVFrame* generateAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
 
     /**
      * @brief Stores a given AVFrame within the frameBuffer map.
@@ -212,13 +325,15 @@ private:
      * This function is not thread-safe and must be called from a thread-safe context.
      */
     void deleteFrameBuffer();
+
 private:
     // Main framebuffer store
-    QHash<int, QHash<quint64, AVFrame*>> frameBuffer {};
+    std::unordered_map<FrameBufferKey, AVFrame*, std::function<decltype(FrameBufferKey::hash)>> frameBuffer {3, FrameBufferKey::hash};
 
     // Source frame
     const QRect sourceDimensions;
     const int sourcePixelFormat;
+    const FrameBufferKey sourceFrameKey;
     const bool freeSourceFrame;
 
     // Destructor callback
