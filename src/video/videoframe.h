@@ -29,10 +29,23 @@ extern "C"{
 #include <libavcodec/avcodec.h>
 }
 
-#include <vpx/vpx_image.h>
 #include <functional>
 #include <memory>
 #include <unordered_map>
+
+/**
+ * @brief A simple structure to represent a ToxAV frame.
+ */
+struct ToxAVFrame
+{
+public:
+    const std::uint16_t width;
+    const std::uint16_t height;
+
+    const uint8_t* y;
+    const uint8_t* u;
+    const uint8_t* v;
+};
 
 /**
  * @brief An ownernship and management class for AVFrames.
@@ -145,18 +158,17 @@ public:
     QImage toQImage(QSize frameSize = {0, 0});
 
     /**
-     * @brief Converts this VideoFrame to a vpx_image that shares this VideoFrame's buffer.
+     * @brief Converts this VideoFrame to a ToxAVFrame that shares this VideoFrame's buffer.
      *
-     * Given that libvpx does not provide a way to create vpx_images that uses external buffers,
-     * the vpx_image constructed by this function is done in a non-compliant way, requiring the
-     * use of the C++ delete keyword to properly deallocate memory associated with this image.
+     * The given ToxAVFrame will be frame aligned under a pixel format of planar YUV with a chroma
+     * subsampling format of 4:2:0 (i.e. AV_PIX_FMT_YUV420P).
      *
-     * @param frameSize the given frame size of vpx_image to generate. If frame size is 0, defaults
+     * @param frameSize the given frame size of ToxAVFrame to generate. If frame size is 0, defaults
      * to source frame size.
-     * @return a vpx_image that represents this VideoFrame, sharing it's buffers or nullptr if this
-     * VideoFrame is no longer valid.
+     * @return a ToxAVFrame structure that represents this VideoFrame, sharing it's buffers or an
+     * empty structure if this VideoFrame is no longer valid.
      */
-    vpx_image* toVpxImage(QSize frameSize = {0, 0});
+    ToxAVFrame toToxAVFrame(QSize frameSize = {0, 0});
 
     /**
      * @brief Data alignment parameter used to populate AVFrame buffers.

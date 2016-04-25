@@ -162,7 +162,7 @@ QImage VideoFrame::toQImage(QSize frameSize)
     return ret;
 }
 
-vpx_image* VideoFrame::toVpxImage(QSize frameSize)
+ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
 {
     frameLock.lockForRead();
 
@@ -170,7 +170,7 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
     if(frameBuffer.size() == 0)
     {
         frameLock.unlock();
-        return nullptr;
+        return {0, 0, nullptr, nullptr, nullptr};
     }
 
     if(frameSize.width() == 0 && frameSize.height() == 0)
@@ -182,20 +182,7 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
 
     if(frame)
     {
-        vpx_image* ret = new vpx_image {};
-        memset(ret, 0, sizeof(vpx_image));
-
-        ret->w = ret->d_w = frameSize.width();
-        ret->h = ret->d_h = frameSize.height();
-        ret->fmt = VPX_IMG_FMT_I420;
-        ret->planes[0] = frame->data[0];
-        ret->planes[1] = frame->data[1];
-        ret->planes[2] = frame->data[2];
-        ret->planes[3] = nullptr;
-        ret->stride[0] = frame->linesize[0];
-        ret->stride[1] = frame->linesize[1];
-        ret->stride[2] = frame->linesize[2];
-        ret->stride[3] = frame->linesize[3];
+        ToxAVFrame ret {frameSize.width(), frameSize.height(), frame->data[0], frame->data[1], frame->data[2]};
 
         frameLock.unlock();
         return ret;
@@ -216,20 +203,7 @@ vpx_image* VideoFrame::toVpxImage(QSize frameSize)
 
     storeAVFrame(frame, frameSize, static_cast<int>(AV_PIX_FMT_YUV420P));
 
-    vpx_image* ret = new vpx_image {};
-    memset(ret, 0, sizeof(vpx_image));
-
-    ret->w = ret->d_w = frameSize.width();
-    ret->h = ret->d_h = frameSize.height();
-    ret->fmt = VPX_IMG_FMT_I420;
-    ret->planes[0] = frame->data[0];
-    ret->planes[1] = frame->data[1];
-    ret->planes[2] = frame->data[2];
-    ret->planes[3] = nullptr;
-    ret->stride[0] = frame->linesize[0];
-    ret->stride[1] = frame->linesize[1];
-    ret->stride[2] = frame->linesize[2];
-    ret->stride[3] = frame->linesize[3];
+    ToxAVFrame ret {frameSize.width(), frameSize.height(), frame->data[0], frame->data[1], frame->data[2]};
 
     frameLock.unlock();
     return ret;

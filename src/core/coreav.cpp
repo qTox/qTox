@@ -361,16 +361,10 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     }
 
     // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
-    vpx_image* frame = vframe->toVpxImage();
+    ToxAVFrame frame = vframe->toToxAVFrame();
 
-    if(!frame)
+    if(frame.width == 0 || frame.height == 0)
     {
-        return;
-    }
-    if(frame->fmt == VPX_IMG_FMT_NONE)
-    {
-        qWarning() << "Invalid frame";
-        vpx_img_free(frame);
         return;
     }
 
@@ -379,8 +373,8 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     TOXAV_ERR_SEND_FRAME err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav, callId, frame->d_w, frame->d_h,
-                                    frame->planes[0], frame->planes[1], frame->planes[2], &err))
+        if (!toxav_video_send_frame(toxav, callId, frame.width, frame.height,
+                                    frame.y, frame.u, frame.v, &err))
         {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC)
             {
@@ -395,8 +389,6 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
     if (err == TOXAV_ERR_SEND_FRAME_SYNC)
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
-
-    vpx_img_free(frame);
 }
 
 void CoreAV::micMuteToggle(uint32_t callId)
