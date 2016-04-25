@@ -27,6 +27,7 @@
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
+#include "src/widget/tool/profileimporter.h"
 #include <QMessageBox>
 #include <QDebug>
 
@@ -54,6 +55,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
+    connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
@@ -254,4 +256,14 @@ void LoginScreen::onAutoLoginToggled(int state)
 void LoginScreen::retranslateUi()
 {
     ui->retranslateUi(this);
+}
+
+void LoginScreen::onImportProfile()
+{
+    ProfileImporter *pi = new ProfileImporter(this);
+    if(pi->importProfile() == true)
+    {
+        reset();
+    }
+    delete pi;
 }
