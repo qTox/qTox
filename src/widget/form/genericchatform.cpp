@@ -315,6 +315,9 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString 
     bool authorIsActiveProfile = author.isSelf();
     QString authorStr = authorIsActiveProfile ? Core::getInstance()->getUsername() : resolveToxId(author);
 
+    if (getLatestDate() != QDate::currentDate())
+        addSystemInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+
     ChatMessage::Ptr msg;
     if (isAction)
     {
