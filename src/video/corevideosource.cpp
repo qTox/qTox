@@ -70,22 +70,19 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     AVFrame* avframe = av_frame_alloc();
     if (!avframe)
         return;
+
     avframe->width = width;
     avframe->height = height;
     avframe->format = AV_PIX_FMT_YUV420P;
 
-    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_YUV420P, width, height, 1);
-    uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
-    if (!buf)
-    {
+    int bufSize = av_image_alloc(avframe->data, avframe->linesize,
+                                 width, height,
+                                 static_cast<AVPixelFormat>(AV_PIX_FMT_YUV420P), VideoFrame::frameAlignment);
+
+    if(bufSize < 0){
         av_frame_free(&avframe);
         return;
     }
-    avframe->opaque = buf;
-
-    uint8_t** data = avframe->data;
-    int* linesize = avframe->linesize;
-    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 1);
 
     for (int i = 0; i < 3; i++)
     {
@@ -96,14 +93,13 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 
         for (int j = 0; j < size; j++)
         {
-            uint8_t *dst = avframe->data[i] + dstStride * j;
-            uint8_t *src = vpxframe->planes[i] + srcStride * j;
+            uint8_t* dst = avframe->data[i] + dstStride * j;
+            uint8_t* src = vpxframe->planes[i] + srcStride * j;
             memcpy(dst, src, minStride);
         }
     }
 
-    vframe = std::make_shared<VideoFrame>(avframe);
-
+    vframe = std::make_shared<VideoFrame>(avframe, true);
     emit frameAvailable(vframe);
 }
 

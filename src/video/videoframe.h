@@ -56,10 +56,11 @@ public:
      * @param destructCallback callback function to run upon destruction of the VideoFrame
      * this callback is only run when destroying a valid VideoFrame (e.g. a VideoFrame instance in
      * which releaseFrame() was called upon it will not call the callback).
+     * @param freeSourceFrame whether to free the source frame buffers or not.
      */
-    VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void()> destructCallback);
-    VideoFrame(AVFrame* sourceFrame, std::function<void()> destructCallback);
-    VideoFrame(AVFrame* sourceFrame);
+    VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void()> destructCallback, bool freeSourceFrame = false);
+    VideoFrame(AVFrame* sourceFrame, std::function<void()> destructCallback, bool freeSourceFrame = false);
+    VideoFrame(AVFrame* sourceFrame, bool freeSourceFrame = false);
 
     /**
      * Destructor for VideoFrame.
@@ -218,6 +219,7 @@ private:
     // Source frame
     const QRect sourceDimensions;
     const int sourcePixelFormat;
+    const bool freeSourceFrame;
 
     // Destructor callback
     const std::function<void ()> destructCallback;
