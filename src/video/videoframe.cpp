@@ -24,19 +24,20 @@ extern "C"{
 #include <libswscale/swscale.h>
 }
 
-VideoFrame::VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void ()> destructCallback)
+VideoFrame::VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void ()> destructCallback, bool freeSourceFrame)
     : sourceDimensions(dimensions),
       sourcePixelFormat(pixFmt),
+      freeSourceFrame(freeSourceFrame),
       destructCallback(destructCallback)
 {
     frameBuffer[pixFmt][dimensionsToKey(dimensions.size())] = sourceFrame;
 }
 
-VideoFrame::VideoFrame(AVFrame* sourceFrame, std::function<void ()> destructCallback)
-    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, destructCallback){}
+VideoFrame::VideoFrame(AVFrame* sourceFrame, std::function<void ()> destructCallback, bool freeSourceFrame)
+    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, destructCallback, freeSourceFrame){}
 
-VideoFrame::VideoFrame(AVFrame* sourceFrame)
-    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, nullptr){}
+VideoFrame::VideoFrame(AVFrame* sourceFrame, bool freeSourceFrame)
+    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, nullptr, freeSourceFrame){}
 
 VideoFrame::~VideoFrame()
 {
@@ -248,6 +249,11 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
         return nullptr;
     }
 
+    // Populate AVFrame fields
+    ret->width = dimensions.width();
+    ret->height = dimensions.height();
+    ret->format = pixelFormat;
+
     int bufSize = av_image_alloc(ret->data, ret->linesize,
                                  dimensions.width(), dimensions.height(),
                                  static_cast<AVPixelFormat>(pixelFormat), frameAlignment);
@@ -267,6 +273,8 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
                                          resizeAlgo, nullptr, nullptr, nullptr);
 
     if(!swsCtx){
+        av_freep(&ret->data[0]);
+        av_frame_unref(ret);
         av_frame_free(&ret);
         return nullptr;
     }
@@ -274,13 +282,8 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
     AVFrame* source = frameBuffer[sourcePixelFormat][dimensionsToKey(sourceDimensions.size())];
 
     sws_scale(swsCtx, source->data, source->linesize, 0, sourceDimensions.height(), ret->data, ret->linesize);
-
-    // Populate AVFrame fields
-    ret->width = dimensions.width();
-    ret->height = dimensions.height();
-    ret->format = pixelFormat;
-
     sws_freeContext(swsCtx);
+
     return ret;
 }
 
@@ -292,7 +295,7 @@ void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int
         AVFrame* old_ret = frameBuffer[pixelFormat][dimensionsToKey(dimensions)];
 
         // Free old frame
-        av_freep(&frame->data[0]);
+        av_freep(&old_ret->data[0]);
         av_frame_unref(old_ret);
         av_frame_free(&old_ret);
     }
@@ -312,9 +315,13 @@ void VideoFrame::deleteFrameBuffer()
         {
             AVFrame* frame = dimKeyIter.value();
 
-            // We only need to free allocated buffers for derived frames and not the original source
+            // Treat source frame and derived frames separately
             if(pixFmtIter.key() == sourcePixelFormat && dimKeyIter.key() == sourceKey)
             {
+                if(freeSourceFrame)
+                {
+                    av_freep(&frame->data[0]);
+                }
                 av_frame_unref(frame);
                 av_frame_free(&frame);
             }
