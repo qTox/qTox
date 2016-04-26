@@ -119,7 +119,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     {
         if(!statusMessageLabel->text().isEmpty())
         {
-            QWidget* sender = static_cast<QWidget*>(QObject::sender());
+            QWidget* sender = static_cast<QWidget*>(this->sender());
 
             statusMessageMenu.exec(sender->mapToGlobal(pos));
         }
