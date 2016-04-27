@@ -47,7 +47,7 @@ public:
     /// Moves the database file on disk to match the new name
     void rename(const QString& newName);
     /// Deletes the on-disk database file
-    void remove();
+    bool remove();
 
     /// Erases all the chat history from the database
     void eraseHistory();
@@ -61,11 +61,11 @@ public:
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime &from, const QDateTime &to);
     /// Marks a message as sent, removing it from the faux-offline pending messages list
     void markAsSent(qint64 id);
-
+    /// Retrieves the path to the database file for a given profile.
+    static QString getDbPath(const QString& profileName);
 protected:
     /// Makes sure the history tables are created
     void init();
-    static QString getDbPath(const QString& profileName);
     QVector<RawDatabase::Query> generateNewMessageQueries(const QString& friendPk, const QString& message,
                                     const QString& sender, const QDateTime &time, bool isSent, QString dispName,
                                                           std::function<void(int64_t)> insertIdCallback={});

@@ -487,12 +487,12 @@ void Profile::remove()
 {
     if (isRemoved)
     {
-        qWarning() << "Profile "<<name<<" is already removed!";
+        qWarning() << "Profile " << name << " is already removed!";
         return;
     }
     isRemoved = true;
 
-    qDebug() << "Removing profile"<<name;
+    qDebug() << "Removing profile" << name;
     for (int i=0; i<profiles.size(); i++)
     {
         if (profiles[i] == name)
@@ -503,14 +503,36 @@ void Profile::remove()
     }
     QString path = Settings::getInstance().getSettingsDirPath() + name;
     ProfileLocker::unlock();
-    QFile::remove(path+".tox");
-    QFile::remove(path+".ini");
 
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
+    QFile profileMain {path + ".tox"};
+    QFile profileConfig {path + ".ini"};
+    QFile historyLegacyUnencrypted {HistoryKeeper::getHistoryPath(name, 0)};
+    QFile historyLegacyEncrypted {HistoryKeeper::getHistoryPath(name, 1)};
+
+    if(!profileMain.remove() && profileMain.exists())
+    {
+        qWarning() << "Could not remove file " << profileMain.fileName();
+    }
+    if(!profileConfig.remove() && profileConfig.exists())
+    {
+        qWarning() << "Could not remove file " << profileConfig.fileName();
+    }
+
+    if(!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
+    {
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+    if(!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
+    {
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+
     if (history)
     {
-        history->remove();
+        if(!history->remove() && QFile::exists(History::getDbPath(name)))
+        {
+            qWarning() << "Could not remove file " << History::getDbPath(name);
+        }
         history.release();
     }
 }
