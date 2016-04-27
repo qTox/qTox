@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>824</width>
-        <height>489</height>
+        <width>830</width>
+        <height>495</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -147,6 +147,13 @@ which may lead to problems with video calls.</string>
               </property>
              </widget>
             </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="FPSLabel">
+              <property name="text">
+               <string>FPS</string>
+              </property>
+             </widget>
+            </item>
             <item row="1" column="1">
              <widget class="QComboBox" name="videoModescomboBox">
               <property name="sizePolicy">
@@ -166,6 +173,22 @@ which may lead to problems with video calls.</string>
             </item>
             <item row="0" column="1">
              <widget class="QComboBox" name="videoDevCombobox"/>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="FPSSpinbox">
+              <property name="minimum">
+               <number>5</number>
+              </property>
+              <property name="maximum">
+               <number>60</number>
+              </property>
+              <property name="singleStep">
+               <number>1</number>
+              </property>
+              <property name="value">
+               <number>20</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>

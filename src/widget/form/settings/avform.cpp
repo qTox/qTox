@@ -54,6 +54,7 @@ AVForm::AVForm() :
     connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
     connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
     connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
+    connect(bodyUI->FPSSpinbox, SIGNAL (valueChanged (int)), this, SLOT (onVideoFPSChanged (int)));
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
     {
         getAudioInDevices();
@@ -135,9 +136,19 @@ void AVForm::onVideoModesIndexChanged(int index)
     }
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
+    
+    /* Set the FPS spinbox to the default value of this video mode. */
+    bodyUI->FPSSpinbox->setValue (mode.FPS);
+    
     Settings::getInstance().setCamVideoRes(QSize(mode.width, mode.height));
     Settings::getInstance().setCamVideoFPS(mode.FPS);
     camera.open(devName, mode);
+}
+
+void AVForm::onVideoFPSChanged (int fps)
+{
+    /* This will be overwritten with every video mode change. */
+    Settings::getInstance ().setCamVideoFPS ((short) fps);
 }
 
 void AVForm::updateVideoModes(int curIndex)
@@ -212,12 +223,13 @@ void AVForm::updateVideoModes(int curIndex)
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
+    bodyUI->FPSSpinbox->setValue (prefFPS);
     // Iterate backwards to show higest resolution first.
     for(auto iter = bestModeInds.rbegin(); iter != bestModeInds.rend(); ++iter)
     {
         int i = iter->second;
         VideoMode mode = videoModes[i];
-        if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
+        if (mode.width==prefRes.width() && mode.height==prefRes.height() && prefResIndex==-1)
             prefResIndex = i;
         QString str;
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
