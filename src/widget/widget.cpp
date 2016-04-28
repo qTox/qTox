@@ -1204,6 +1204,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     {
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
+        ui->friendList->trackWidget(f->getFriendWidget());
 
         if (contentDialog == nullptr)
         {
