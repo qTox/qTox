@@ -63,6 +63,12 @@ Easy qTox install is provided for variety of distributions:
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
 
+#### Community builds
+
+There are community builds for wide range of distrubutions:
+
+https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+
 
 #### Generic
 There are available generic binaries for Linux:
