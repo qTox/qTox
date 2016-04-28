@@ -33,7 +33,7 @@ Qt:
 
 ### Must read
 * Use [**commit message format**](#commit-message-format).
-* Read our [**coding guidelines**](https://github.com/tux3/qTox/wiki/Coding).
+* Read our [**coding guidelines**](#coding-guidelines).
 * Keep the title **short** and provide a **clear** description about what your
   pull request does.
 * Provide **screenshots** for UI related changes.
