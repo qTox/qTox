@@ -367,7 +367,7 @@ instead of closing itself.</string>
                <string>New Markdown preference may not load until qTox restarts.</string>
               </property>
               <property name="text">
-               <string>Markdown:</string>
+               <string>Text formatting (Markdown):</string>
               </property>
              </widget>
             </item>
