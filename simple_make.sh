@@ -14,11 +14,14 @@ elif which pacman; then
 elif which dnf; then
     sudo dnf group install \
         "Development Tools"
+    # pure Fedora doesn't have what it takes to compile qTox (ffmpeg)
     sudo dnf install \
-        git qt-devel qt-doc qt-creator qt5-qtsvg  openal-soft-devel \
-        libXScrnSaver-devel qrencode-devel opus-devel libvpx-devel \
-        qt5-qttools-devel glib2-devel gdk-pixbuf2-devel gtk2-devel \
-        libsodium-devel
+        http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install \
+        git qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel \
+        openal-soft-devel qt5-qttools-devel libXScrnSaver-devel \
+        qrencode-devel opus-devel libvpx-devel glib2-devel gdk-pixbuf2-devel \
+        gtk2-devel libsodium-devel ffmpeg-devel
 elif which zypper; then
     sudo zypper in \
         git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
@@ -26,8 +29,8 @@ elif which zypper; then
         libQt5OpenGL-devel libQt5Concurrent-devel libQt5Xml-devel \
         libQt5Sql-devel openal-soft-devel qrencode-devel \
         libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
-        libsodium-devel libvpx-devel libopus-devel patterns-openSUSE-devel_basis \
-        sqlcipher-devel
+        libsodium-devel libvpx-devel libopus-devel \
+        patterns-openSUSE-devel_basis sqlcipher-devel
 else
     echo "Unknown package manager, attempting to compile anyways"
 fi
@@ -38,4 +41,4 @@ if [ -e /etc/redhat-release -o -e /etc/zypp ]; then
 else
     qmake
 fi
-make
+make -j$(nproc)
