@@ -483,12 +483,12 @@ bool Profile::isEncrypted(QString name)
     return tox_is_data_encrypted(data);
 }
 
-bool Profile::remove()
+QVector<QString> Profile::remove()
 {
     if (isRemoved)
     {
         qWarning() << "Profile " << name << " is already removed!";
-        return true;
+        return {};
     }
     isRemoved = true;
 
@@ -509,27 +509,27 @@ bool Profile::remove()
     QFile historyLegacyUnencrypted {HistoryKeeper::getHistoryPath(name, 0)};
     QFile historyLegacyEncrypted {HistoryKeeper::getHistoryPath(name, 1)};
 
-    bool isDeleted = true;
+    QVector<QString> ret;
 
     if(!profileMain.remove() && profileMain.exists())
     {
-        isDeleted = false;
+        ret.push_back(profileMain.fileName());
         qWarning() << "Could not remove file " << profileMain.fileName();
     }
     if(!profileConfig.remove() && profileConfig.exists())
     {
-        isDeleted = false;
+        ret.push_back(profileConfig.fileName());
         qWarning() << "Could not remove file " << profileConfig.fileName();
     }
 
     if(!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
     {
-        isDeleted = false;
+        ret.push_back(historyLegacyUnencrypted.fileName());
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
     if(!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
     {
-        isDeleted = false;
+        ret.push_back(historyLegacyEncrypted.fileName());
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
 
@@ -537,13 +537,13 @@ bool Profile::remove()
     {
         if(!history->remove() && QFile::exists(History::getDbPath(name)))
         {
-            isDeleted = false;
+            ret.push_back(History::getDbPath(name));
             qWarning() << "Could not remove file " << History::getDbPath(name);
         }
         history.release();
     }
 
-    return isDeleted;
+    return ret;
 }
 
 bool Profile::rename(QString newName)

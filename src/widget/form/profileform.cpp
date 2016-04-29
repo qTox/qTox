@@ -362,9 +362,20 @@ void ProfileForm::onDeleteClicked()
     {
         Nexus& nexus = Nexus::getInstance();
 
-        if(!nexus.getProfile()->remove())
+        QVector<QString> manualDeleteFiles = nexus.getProfile()->remove();
+
+        if(!manualDeleteFiles.empty())
         {
-            GUI::showError(tr("Files could not be deleted!"), tr("Some files could not be deleted, please manually remove them."));
+            QString message = tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
+
+            for(auto& file : manualDeleteFiles)
+            {
+                message = message + file + "\n";
+            }
+
+            message = message + "\n" + tr("Please manually remove them.", "deletion failed text part 2");
+
+            GUI::showError(tr("Files could not be deleted!", "deletion failed title"), message);
         }
 
         nexus.showLogin();
