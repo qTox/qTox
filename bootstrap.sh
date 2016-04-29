@@ -193,7 +193,7 @@ if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
 fi
 
 #install sqlcipher
-if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
+if [[ $INSTALL_SQLCIPHER = "true" ]]; then
     git clone https://github.com/sqlcipher/sqlcipher.git ${BASE_DIR}/${SQLCIPHER_DIR} --depth 1
     pushd ${BASE_DIR}/${SQLCIPHER_DIR}
 
