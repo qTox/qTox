@@ -361,7 +361,12 @@ void ProfileForm::onDeleteClicked()
                 tr("Are you sure you want to delete this profile?", "deletion confirmation text")))
     {
         Nexus& nexus = Nexus::getInstance();
-        nexus.getProfile()->remove();
+
+        if(!nexus.getProfile()->remove())
+        {
+            GUI::showError(tr("Files could not be deleted!"), tr("Some files could not be deleted, please manually remove them."));
+        }
+
         nexus.showLogin();
     }
 }
