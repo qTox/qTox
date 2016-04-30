@@ -42,9 +42,9 @@ void History::rename(const QString &newName)
     db.rename(getDbPath(newName));
 }
 
-void History::remove()
+bool History::remove()
 {
-    db.remove();
+    return db.remove();
 }
 
 void History::eraseHistory()

@@ -78,7 +78,8 @@ public:
     /// Removes the profile permanently
     /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
     /// Updates the profiles vector
-    void remove();
+    /// Returns a vector of filenames that could not be removed.
+    QVector<QString> remove();
 
     /// Tries to rename the profile
     bool rename(QString newName);

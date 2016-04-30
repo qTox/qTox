@@ -483,16 +483,16 @@ bool Profile::isEncrypted(QString name)
     return tox_is_data_encrypted(data);
 }
 
-void Profile::remove()
+QVector<QString> Profile::remove()
 {
     if (isRemoved)
     {
-        qWarning() << "Profile "<<name<<" is already removed!";
-        return;
+        qWarning() << "Profile " << name << " is already removed!";
+        return {};
     }
     isRemoved = true;
 
-    qDebug() << "Removing profile"<<name;
+    qDebug() << "Removing profile" << name;
     for (int i=0; i<profiles.size(); i++)
     {
         if (profiles[i] == name)
@@ -503,16 +503,47 @@ void Profile::remove()
     }
     QString path = Settings::getInstance().getSettingsDirPath() + name;
     ProfileLocker::unlock();
-    QFile::remove(path+".tox");
-    QFile::remove(path+".ini");
 
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
+    QFile profileMain {path + ".tox"};
+    QFile profileConfig {path + ".ini"};
+    QFile historyLegacyUnencrypted {HistoryKeeper::getHistoryPath(name, 0)};
+    QFile historyLegacyEncrypted {HistoryKeeper::getHistoryPath(name, 1)};
+
+    QVector<QString> ret;
+
+    if(!profileMain.remove() && profileMain.exists())
+    {
+        ret.push_back(profileMain.fileName());
+        qWarning() << "Could not remove file " << profileMain.fileName();
+    }
+    if(!profileConfig.remove() && profileConfig.exists())
+    {
+        ret.push_back(profileConfig.fileName());
+        qWarning() << "Could not remove file " << profileConfig.fileName();
+    }
+
+    if(!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
+    {
+        ret.push_back(historyLegacyUnencrypted.fileName());
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+    if(!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
+    {
+        ret.push_back(historyLegacyEncrypted.fileName());
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+
     if (history)
     {
-        history->remove();
+        if(!history->remove() && QFile::exists(History::getDbPath(name)))
+        {
+            ret.push_back(History::getDbPath(name));
+            qWarning() << "Could not remove file " << History::getDbPath(name);
+        }
         history.release();
     }
+
+    return ret;
 }
 
 bool Profile::rename(QString newName)
