@@ -2,7 +2,7 @@ qTox
 ======
 
  [**User Manual**](/doc/user_manual_en.md) **⦁**
- [**Compile**](/INSTALL.md) **⦁**
+ [**Install**](/INSTALL.md) **⦁**
  [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁**
  [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁**
  [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁**
