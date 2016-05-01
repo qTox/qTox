@@ -414,6 +414,7 @@ SOURCES += \
     src/persistence/db/rawdatabase.cpp \
     src/persistence/history.cpp \
     src/video/videoframe.cpp \
+    src/video/videosource.cpp \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
