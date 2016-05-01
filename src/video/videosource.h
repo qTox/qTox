@@ -21,6 +21,8 @@
 #define VIDEOSOURCE_H
 
 #include <QObject>
+
+#include <atomic>
 #include <memory>
 
 class VideoFrame;
@@ -35,7 +37,12 @@ class VideoSource : public QObject
 {
     Q_OBJECT
 
+    using IDType = std::uint_fast64_t;
+    using AtomicIDType = std::atomic_uint_fast64_t;
+
 public:
+    VideoSource() : id(sourceIDs.fetch_add(std::memory_order_relaxed)){}
+
     virtual ~VideoSource() = default;
     /**
     If subscribe sucessfully opens the source, it will start emitting frameAvailable signals.
@@ -46,6 +53,8 @@ public:
     */
     virtual void unsubscribe() = 0;
 
+    /// ID of this VideoSource
+    const IDType id;
 signals:
     /**
     Emitted when new frame available to use.
@@ -57,6 +66,9 @@ signals:
     but might restart sending frames again later
     */
     void sourceStopped();
+private:
+    /// Used to manage a global ID for all VideoSources
+    static AtomicIDType sourceIDs;
 };
 
 #endif // VIDEOSOURCE_H
