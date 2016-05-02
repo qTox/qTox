@@ -24,34 +24,50 @@ extern "C"{
 #include <libswscale/swscale.h>
 }
 
-VideoFrame::VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void ()> destructCallback, bool freeSourceFrame)
-    : sourceDimensions(dimensions),
+// Initialize static fields
+VideoFrame::AtomicIDType VideoFrame::frameIDs {0};
+
+std::unordered_map<VideoFrame::IDType, QMutex> VideoFrame::mutexMap {};
+std::unordered_map<VideoFrame::IDType, std::unordered_map<VideoFrame::IDType, std::weak_ptr<VideoFrame>>> VideoFrame::refsMap {};
+
+QReadWriteLock VideoFrame::refsLock {};
+
+VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt, bool freeSourceFrame)
+    : frameID(frameIDs.fetch_add(std::memory_order_relaxed)),
+      sourceID(sourceID),
+      sourceDimensions(dimensions),
       sourcePixelFormat(pixFmt),
       sourceFrameKey(getFrameKey(dimensions.size(), pixFmt, sourceFrame->linesize[0])),
-      freeSourceFrame(freeSourceFrame),
-      destructCallback(destructCallback)
+      freeSourceFrame(freeSourceFrame)
 {
     frameBuffer[sourceFrameKey] = sourceFrame;
 }
 
-VideoFrame::VideoFrame(AVFrame* sourceFrame, std::function<void ()> destructCallback, bool freeSourceFrame)
-    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, destructCallback, freeSourceFrame){}
-
-VideoFrame::VideoFrame(AVFrame* sourceFrame, bool freeSourceFrame)
-    : VideoFrame(sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, nullptr, freeSourceFrame){}
+VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame)
+    : VideoFrame(sourceID, sourceFrame, QRect {0, 0, sourceFrame->width, sourceFrame->height}, sourceFrame->format, freeSourceFrame){}
 
 VideoFrame::~VideoFrame()
 {
+    // Release frame
     frameLock.lockForWrite();
-
-    if(destructCallback && frameBuffer.size() > 0)
-    {
-        destructCallback();
-    }
 
     deleteFrameBuffer();
 
     frameLock.unlock();
+
+    // Delete tracked reference
+    refsLock.lockForRead();
+
+    if(refsMap.count(sourceID) > 0)
+    {
+        QMutex& sourceMutex = mutexMap[sourceID];
+
+        sourceMutex.lock();
+        refsMap[sourceID].erase(frameID);
+        sourceMutex.unlock();
+    }
+
+    refsLock.unlock();
 }
 
 bool VideoFrame::isValid()
@@ -61,6 +77,80 @@ bool VideoFrame::isValid()
     frameLock.unlock();
 
     return retValue;
+}
+
+std::shared_ptr<VideoFrame> VideoFrame::trackFrame()
+{
+    // Add frame to tracked reference list
+    refsLock.lockForRead();
+
+    if(refsMap.count(sourceID) == 0)
+    {
+        // We need to add a new source to our reference map, obtain write lock
+        refsLock.unlock();
+        refsLock.lockForWrite();
+    }
+
+    QMutex& sourceMutex = mutexMap[sourceID];
+
+    sourceMutex.lock();
+
+    std::shared_ptr<VideoFrame> ret {this};
+
+    refsMap[sourceID][frameID] = ret;
+
+    sourceMutex.unlock();
+    refsLock.unlock();
+
+    return ret;
+}
+
+void VideoFrame::untrackFrames(const VideoFrame::IDType& sourceID, bool releaseFrames)
+{
+    refsLock.lockForWrite();
+
+    if(refsMap.count(sourceID) == 0)
+    {
+        // No tracking reference exists for source, simply return
+        refsLock.unlock();
+
+        return;
+    }
+
+    if(releaseFrames)
+    {
+        QMutex& sourceMutex = mutexMap[sourceID];
+
+        sourceMutex.lock();
+
+        for(auto& frameIterator : refsMap[sourceID])
+        {
+            std::shared_ptr<VideoFrame> frame = frameIterator.second.lock();
+
+            if(frame)
+            {
+                frame->releaseFrame();
+            }
+        }
+
+        sourceMutex.unlock();
+    }
+
+    refsMap[sourceID].clear();
+
+    mutexMap.erase(sourceID);
+    refsMap.erase(sourceID);
+
+    refsLock.unlock();
+}
+
+void VideoFrame::releaseFrame()
+{
+    frameLock.lockForWrite();
+
+    deleteFrameBuffer();
+
+    frameLock.unlock();
 }
 
 const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned)
@@ -104,15 +194,6 @@ const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, co
 
     frameLock.unlock();
     return ret;
-}
-
-void VideoFrame::releaseFrame()
-{
-    frameLock.lockForWrite();
-
-    deleteFrameBuffer();
-
-    frameLock.unlock();
 }
 
 QImage VideoFrame::toQImage(QSize frameSize)
