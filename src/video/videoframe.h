@@ -21,6 +21,7 @@
 #define VIDEOFRAME_H
 
 #include <QImage>
+#include <QMutex>
 #include <QReadWriteLock>
 #include <QRect>
 #include <QSize>
@@ -29,6 +30,8 @@ extern "C"{
 #include <libavcodec/avcodec.h>
 }
 
+#include <atomic>
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <unordered_map>
@@ -68,20 +71,20 @@ public:
  */
 class VideoFrame
 {
+    using IDType = std::uint_fast64_t;
+    using AtomicIDType = std::atomic_uint_fast64_t;
+
 public:
     /**
      * @brief Constructs a new instance of a VideoFrame, sourced by a given AVFrame pointer.
+     * @param sourceID the VideoSource's ID to track the frame under.
      * @param sourceFrame the source AVFrame pointer to use, must be valid.
      * @param dimensions the dimensions of the AVFrame, obtained from the AVFrame if not given.
      * @param pixFmt the pixel format of the AVFrame, obtained from the AVFrame if not given.
-     * @param destructCallback callback function to run upon destruction of the VideoFrame
-     * this callback is only run when destroying a valid VideoFrame (e.g. a VideoFrame instance in
-     * which releaseFrame() was called upon it will not call the callback).
      * @param freeSourceFrame whether to free the source frame buffers or not.
      */
-    VideoFrame(AVFrame* sourceFrame, QRect dimensions, int pixFmt, std::function<void()> destructCallback, bool freeSourceFrame = false);
-    VideoFrame(AVFrame* sourceFrame, std::function<void()> destructCallback, bool freeSourceFrame = false);
-    VideoFrame(AVFrame* sourceFrame, bool freeSourceFrame = false);
+    VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt, bool freeSourceFrame = false);
+    VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame = false);
 
     /**
      * Destructor for VideoFrame.
@@ -107,6 +110,34 @@ public:
     bool isValid();
 
     /**
+     * @brief Causes the VideoFrame class to maintain an internal reference for the frame.
+     *
+     * The internal reference is managed via a std::weak_ptr such that it doesn't inhibit
+     * destruction of the object once all external references are no longer reachable.
+     *
+     * @return a std::shared_ptr holding a reference to this frame.
+     */
+    std::shared_ptr<VideoFrame> trackFrame();
+
+    /**
+     * @brief Untracks all the frames for the given VideoSource, releasing them if specified.
+     *
+     * This function causes all internally tracked frames for the given VideoSource to be dropped.
+     * If the releaseFrames option is set to true, the frames are sequentially released on the
+     * caller's thread in an unspecified order.
+     *
+     * @param sourceID the ID of the VideoSource to untrack frames from.
+     * @param releaseFrames true to release the frames as necessary, false otherwise. Defaults to
+     * false.
+     */
+    static void untrackFrames(const IDType& sourceID, bool releaseFrames = false);
+
+    /**
+     * @brief Releases all frames managed by this VideoFrame and invalidates it.
+     */
+    void releaseFrame();
+
+    /**
      * @brief Retrieves an AVFrame derived from the source based on the given parameters.
      *
      * If a given frame does not exist, this function will perform appropriate conversions to
@@ -120,11 +151,6 @@ public:
      * longer valid.
      */
     const AVFrame* getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned);
-
-    /**
-     * @brief Releases all frames managed by this VideoFrame and invalidates it.
-     */
-    void releaseFrame();
 
     /**
      * @brief Retrieves a copy of the source VideoFrame's dimensions.
@@ -339,6 +365,10 @@ private:
     void deleteFrameBuffer();
 
 private:
+    // ID
+    const IDType frameID;
+    const IDType sourceID;
+
     // Main framebuffer store
     std::unordered_map<FrameBufferKey, AVFrame*, std::function<decltype(FrameBufferKey::hash)>> frameBuffer {3, FrameBufferKey::hash};
 
@@ -348,11 +378,15 @@ private:
     const FrameBufferKey sourceFrameKey;
     const bool freeSourceFrame;
 
-    // Destructor callback
-    const std::function<void ()> destructCallback;
+    // Reference store
+    static AtomicIDType frameIDs;
+
+    static std::unordered_map<IDType, QMutex> mutexMap;
+    static std::unordered_map<IDType, std::unordered_map<IDType, std::weak_ptr<VideoFrame>>> refsMap;
 
     // Concurrency
     QReadWriteLock frameLock {};
+    static QReadWriteLock refsLock;
 };
 
 #endif // VIDEOFRAME_H

@@ -74,9 +74,6 @@ open but the device closed if there are zero subscribers.
 @var QMutex CameraSource::biglock
 @brief True when locked. Faster than mutexes for video decoding.
 
-@var QMutex CameraSource::freelistLock
-@brief True when locked. Faster than mutexes for video decoding.
-
 @var std::atomic_bool CameraSource::streamBlocker
 @brief Holds the streaming thread still when true
 
@@ -186,14 +183,7 @@ CameraSource::~CameraSource()
         return;
 
     // Free all remaining VideoFrame
-    // Locking must be done precisely this way to avoid races
-    for (int i = 0; i < freelist.size(); i++)
-    {
-        std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
-        if (!vframe)
-            continue;
-        vframe->releaseFrame();
-    }
+    VideoFrame::untrackFrames(id, true);
 
     if (cctx)
         avcodec_free_context(&cctx);
@@ -375,17 +365,7 @@ void CameraSource::closeDevice()
     qDebug() << "Closing device "<<deviceName;
 
     // Free all remaining VideoFrame
-    // Locking must be done precisely this way to avoid races
-    for (int i = 0; i < freelist.size(); i++)
-    {
-        std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
-        if (!vframe)
-            continue;
-
-        vframe->releaseFrame();
-    }
-    freelist.clear();
-    freelist.squeeze();
+    VideoFrame::untrackFrames(id, true);
 
     // Free our resources and close the device
     videoStreamIndex = -1;
@@ -410,8 +390,6 @@ void CameraSource::stream()
         if (!frame)
             return;
 
-        frame->opaque = nullptr;
-
         AVPacket packet;
         if (av_read_frame(device->context, &packet) < 0)
             return;
@@ -425,14 +403,8 @@ void CameraSource::stream()
             if (!frameFinished)
                 return;
 
-            freelistLock.lock();
-
-            int freeFreelistSlot = getFreelistSlotLockless();
-            auto frameFreeCb = std::bind(&CameraSource::freelistCallback, this, freeFreelistSlot);
-            std::shared_ptr<VideoFrame> vframe = std::make_shared<VideoFrame>(frame, frameFreeCb);
-            freelist.append(vframe);
-            freelistLock.unlock();
-            emit frameAvailable(vframe);
+            VideoFrame* vframe = new VideoFrame(id, frame);
+            emit frameAvailable(vframe->trackFrame());
         }
 
       // Free the packet that was allocated by av_read_frame
@@ -460,37 +432,4 @@ void CameraSource::stream()
 
         QThread::yieldCurrentThread();
     }
-}
-
-/**
-@brief CameraSource::freelistCallback
-@param freelistIndex
-
-All VideoFrames must be deleted or released before we can close the device
-or the device will forcibly free them, and then ~VideoFrame() will double free.
-In theory very careful coding from our users could ensure all VideoFrames
-die before unsubscribing, even the ones currently in flight in the metatype system.
-But that's just asking for trouble and mysterious crashes, so we'll just
-maintain a freelist and have all VideoFrames tell us when they die so we can forget them.
-*/
-void CameraSource::freelistCallback(int freelistIndex)
-{
-    QMutexLocker l{&freelistLock};
-    freelist[freelistIndex].reset();
-}
-
-/**
-@brief Get the index of a free slot in the freelist.
-@note Callers must hold the freelistLock.
-@return Index of a free slot.
-*/
-int CameraSource::getFreelistSlotLockless()
-{
-    int size = freelist.size();
-    for (int i = 0; i < size; ++i)
-        if (freelist[i].expired())
-            return i;
-
-    freelist.resize(size + (size>>1) + 4); // Arbitrary growth strategy, should work well
-    return size;
 }
