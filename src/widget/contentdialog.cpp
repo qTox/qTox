@@ -496,6 +496,7 @@ bool ContentDialog::event(QEvent* event)
                 widget->resetEventFlags();
                 widget->updateStatusLight();
 
+                Widget::getInstance()->updateScroll(widget);
                 Widget::getInstance()->resetIcon();
             }
 

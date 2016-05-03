@@ -1386,6 +1386,11 @@ void Widget::clearContactsList()
         removeGroup(g, true);
 }
 
+void Widget::updateScroll(GenericChatroomWidget *widget) {
+    ui->friendList->updateTracking(widget);
+}
+
+
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
@@ -1682,6 +1687,9 @@ bool Widget::event(QEvent * e)
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonDblClick:
             focusChatInput();
+            break;
+        case QEvent::Paint:
+            ui->friendList->updateVisualTracking();
             break;
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
