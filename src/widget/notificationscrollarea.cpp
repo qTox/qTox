@@ -25,8 +25,8 @@
 NotificationScrollArea::NotificationScrollArea(QWidget* parent)
     : AdjustingScrollArea(parent)
 {
-    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &NotificationScrollArea::updateTracking);
-    connect(verticalScrollBar(), &QAbstractSlider::rangeChanged, this, &NotificationScrollArea::updateTracking);
+    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &NotificationScrollArea::updateVisualTracking);
+    connect(verticalScrollBar(), &QAbstractSlider::rangeChanged, this, &NotificationScrollArea::updateVisualTracking);
 }
 
 void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
@@ -66,12 +66,23 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
     }
 }
 
-void NotificationScrollArea::updateTracking()
+/**
+ * @brief Delete notification bar to visible elements on scroll area
+ */
+void NotificationScrollArea::updateVisualTracking() {
+    updateTracking(nullptr);
+}
+
+/**
+ * @brief Delete notification bar from visible elements and widget on scroll area
+ * @param widget Chatroom widget to remove from tracked widgets
+ */
+void NotificationScrollArea::updateTracking(GenericChatroomWidget *widget)
 {
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
     while (i != trackedWidgets.end())
     {
-        if (widgetVisible(i.key()) == Visible)
+        if (i.key() == widget || widgetVisible(i.key()) == Visible)
         {
             if (i.value() == Above)
             {
