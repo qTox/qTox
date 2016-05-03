@@ -61,6 +61,7 @@ public:
     void hideDate();
 
 protected:
+    static QString detectMarkdown(const QString& str);
     static QString detectAnchors(const QString& str);
     static QString detectQuotes(const QString& str, MessageType type);
     static QString wrapDiv(const QString& str, const QString& div);

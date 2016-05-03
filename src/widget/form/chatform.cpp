@@ -138,7 +138,7 @@ ChatForm::~ChatForm()
 void ChatForm::setStatusMessage(QString newMessage)
 {
     statusMessageLabel->setText(newMessage);
-    statusMessageLabel->setToolTip(newMessage.toHtmlEscaped()); // for overlength messsages
+    statusMessageLabel->setToolTip(Qt::convertFromPlainText(newMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
 }
 
 void ChatForm::onSendTriggered()
@@ -774,7 +774,7 @@ void ChatForm::doScreenshot()
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
     screenshotGrabber->showGrabber();
     // Create dir for screenshots
-    QDir(Settings::getInstance().getSettingsDirPath()).mkdir("screenshots");
+    QDir(Settings::getInstance().getAppDataDirPath()).mkpath("screenshots");
 }
 
 void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
@@ -783,7 +783,7 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     // Windows has to be supported, thus filename can't have `:` in it :/
     // Format should be: `qTox_Screenshot_yyyy-MM-dd HH-mm-ss.zzz.png`
     QString filepath = QString("%1screenshots%2qTox_Screenshot_%3.png")
-                           .arg(Settings::getInstance().getSettingsDirPath())
+                           .arg(Settings::getInstance().getAppDataDirPath())
                            .arg(QDir::separator())
                            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss.zzz"));
 
@@ -885,7 +885,7 @@ void ChatForm::setFriendTyping(bool isTyping)
     chatWidget->setTypingNotificationVisible(isTyping);
 
     Text* text = static_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
-    text->setText("<div class=typing>" + QString("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
+    text->setText("<div class=typing>" + tr("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
 void ChatForm::show(ContentLayout* contentLayout)

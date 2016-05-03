@@ -8,16 +8,12 @@
         <translation>Audio/Vídeo</translation>
     </message>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
+        <source>%1p</source>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>Default resolution</source>
         <translation>Resolución por defecto</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation> a %1 FPS</translation>
     </message>
     <message>
         <source>None</source>
@@ -35,20 +31,20 @@
         <translation>Resolución</translation>
     </message>
     <message>
-        <source>Playback</source>
-        <translation>Volumen de altavoces</translation>
-    </message>
-    <message>
-        <source>Microphone</source>
-        <translation>Volumen del micrófono</translation>
-    </message>
-    <message>
         <source>Audio Settings</source>
         <translation>Opciones de Audio</translation>
     </message>
     <message>
+        <source>Gain</source>
+        <translation>Ganancia</translation>
+    </message>
+    <message>
         <source>Use slider to set volume of your speakers.</source>
         <translation>Usa el control deslizante para ajustar el volumen de los altavoces.</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volumen</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -57,22 +53,6 @@
     <message>
         <source>Capture device</source>
         <translation>Dispositivo de captura</translation>
-    </message>
-    <message>
-        <source>Filter audio</source>
-        <translation>Filtrar audio</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation>100</translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Filtrará el sonido del micrófono para mejorar la calidad del audio.</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation>0</translation>
     </message>
     <message>
         <source>Video device</source>
@@ -136,26 +116,6 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>License</source>
         <translation>Licencia</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -262,6 +222,12 @@ p, li { white-space: pre-wrap; }
         <translation>Tox ID</translation>
     </message>
     <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation>qTox necesita usar Tox DNS, pero no puede hacerlo a través de un proxy.
+¿Ignorar el proxy y conectar directamente a Internet?</translation>
+    </message>
+    <message>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>Mensaje</translation>
@@ -276,6 +242,22 @@ p, li { white-space: pre-wrap; }
         <translation>¡Hola, soy %1! ¿Quieres agregarme en Tox?</translation>
     </message>
     <message>
+        <source>Add a friend</source>
+        <translation>Agregar un amigo</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Solicitudes de Amistad</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Aceptar</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Rechazar</translation>
+    </message>
+    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>No se pudo agregar el amigo</translation>
     </message>
@@ -283,12 +265,6 @@ p, li { white-space: pre-wrap; }
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>¡No puedes agregarte a ti mismo como amigo!</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox necesita usar el DNS Tox, pero no puede hacerlo a través de un proxy.
-¿Ignorar el proxy y conectarse directamente a Internet?</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
@@ -604,10 +580,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Nombre del archivo</translation>
     </message>
     <message>
-        <source>[preview]</source>
-        <translation>[vista previa]</translation>
-    </message>
-    <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
         <translation>Envío en espera...</translation>
@@ -752,6 +724,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
         <translation>Invitar a grupo</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>A un nuevo grupo</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Invitar a grupo &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -981,6 +961,10 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Poner ventana en foco</translation>
     </message>
     <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation>Puede que necesites reiniciar qTox para activar la nueva configuración de Markdown.</translation>
+    </message>
+    <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
         <translation>Tu lista de amigos se mostrará en modo compacto.</translation>
@@ -1009,7 +993,7 @@ en lugar de la barra de tareas del sistema.</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Iniciar qTox (usando el perfil actual) junto con el sistema operativo</translation>
+        <translation>Iniciar qTox (usando el perfil actual) junto con el sistema operativo.</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -1031,6 +1015,14 @@ en lugar de la barra de tareas del sistema.</translation>
     <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Poner chats grupales al comienzo de la lista de amigos</translation>
+    </message>
+    <message>
+        <source>Markdown:</source>
+        <translation>Markdown:</translation>
+    </message>
+    <message>
+        <source>Select Markdown preference.</source>
+        <translation>Seleccionar preferencia de Markdown.</translation>
     </message>
     <message>
         <source>Messages you are trying to send to your friends when they are not online
@@ -1211,6 +1203,14 @@ Hazlo sólo en caso de ser necesario.</translation>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Vacío&gt;</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>%1 users in chat</source>
@@ -1245,6 +1245,33 @@ Hazlo sólo en caso de ser necesario.</translation>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
         <translation>1 usuario en el chat</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation>Invitado por &lt;b&gt;%1&lt;/b&gt; en %2.</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Grupos</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Crear un nuevo grupo</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Unirse</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Declinar</translation>
     </message>
 </context>
 <context>
@@ -1455,6 +1482,10 @@ Verifica que sea la misma en ambos recuadros.</translation>
 If you encountered this error, please report it.</source>
         <translation>Error desconocido: no se pudo crear un nuevo perfil.
 Por favor reporta este error.</translation>
+    </message>
+    <message>
+        <source>Password protected profile can&apos;t be loaded automatically.</source>
+        <translation>No se puede cargar automaticamente un perfil protegido con contraseña.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
@@ -1865,8 +1896,8 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Pantalla</translation>
     </message>
     <message>
-        <source>Incorrect responce</source>
-        <translation>Respuesta erronea</translation>
+        <source>Incorrect response</source>
+        <translation>Respuesta incorrecta</translation>
     </message>
     <message>
         <source>No password in response</source>
@@ -1921,7 +1952,7 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>No se envió la Tox ID</translation>
     </message>
     <message>
-        <source>Lookup failed because the other server replied with invalid data</source>
+        <source>Lookup failed because the server replied with invalid data</source>
         <translation>La consulta falló debido a datos inválidos enviados por el servidor</translation>
     </message>
     <message>
@@ -2100,8 +2131,35 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Agregar amigo</translation>
     </message>
     <message>
+        <source>Group invites</source>
+        <translation>Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Vacío&gt;</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Crear un nuevo grupo...</translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation>Agregar un nuevo círculo...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n Nueva(s) Solicitud(es) de Amistad</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n Nueva(s) Invitacion(es) a Grupos</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <source>By Name</source>
@@ -2233,21 +2291,6 @@ Será instalada cuando reinicies qTox.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 ahora está %2</translation>
-    </message>
-    <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Invitación a grupo</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 te ha invitado a un chat grupal. ¿Deseas unirte?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Desconocido&gt;</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

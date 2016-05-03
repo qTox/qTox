@@ -17,11 +17,14 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <iostream>
+
 #include <QMutexLocker>
 #include <QDebug>
 #include <vpx/vpx_image.h>
 extern "C" {
 #include <libavcodec/avcodec.h>
+#include <libavutil/imgutils.h>
 #include <libswscale/swscale.h>
 }
 #include "videoframe.h"
@@ -48,12 +51,13 @@ VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void
     else
         frame->color_range = AVCOL_RANGE_UNSPECIFIED;
 
-    if (pixFmt == AV_PIX_FMT_YUV420P)
+    if (pixFmt == AV_PIX_FMT_YUV420P) {
         frameYUV420 = frame;
-    else if (pixFmt == AV_PIX_FMT_RGB24)
+    } else if (pixFmt == AV_PIX_FMT_RGB24) {
         frameRGB24 = frame;
-    else
+    } else {
         frameOther = frame;
+    }
 }
 
 VideoFrame::VideoFrame(AVFrame* frame, std::function<void()> freelistCallback)
@@ -126,6 +130,7 @@ bool VideoFrame::convertToRGB24(QSize size)
         qWarning() << "None of the frames are valid! Did someone release us?";
         return false;
     }
+    //std::cout << "converting to RGB24" << std::endl;
 
     if (size.isEmpty())
     {
@@ -150,7 +155,8 @@ bool VideoFrame::convertToRGB24(QSize size)
         return false;
     }
 
-    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, size.width(), size.height()));
+    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGB24, size.width(), size.height(), 1);
+    uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
         qCritical() << "av_malloc failed";
@@ -159,7 +165,9 @@ bool VideoFrame::convertToRGB24(QSize size)
     }
     frameRGB24->opaque = buf;
 
-    avpicture_fill((AVPicture*)frameRGB24, buf, AV_PIX_FMT_RGB24, size.width(), size.height());
+    uint8_t** data = frameRGB24->data;
+    int* linesize = frameRGB24->linesize;
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_RGB24, size.width(), size.height(), 1);
     frameRGB24->width = size.width();
     frameRGB24->height = size.height();
 
@@ -198,6 +206,7 @@ bool VideoFrame::convertToYUV420()
         qCritical() << "None of the frames are valid! Did someone release us?";
         return false;
     }
+    //std::cout << "converting to YUV420" << std::endl;
 
     frameYUV420=av_frame_alloc();
     if (!frameYUV420)
@@ -206,7 +215,8 @@ bool VideoFrame::convertToYUV420()
         return false;
     }
 
-    uint8_t* buf = (uint8_t*)av_malloc(avpicture_get_size(AV_PIX_FMT_RGB24, width, height));
+    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGB24, width, height, 1);
+    uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
         qCritical() << "av_malloc failed";
@@ -215,7 +225,9 @@ bool VideoFrame::convertToYUV420()
     }
     frameYUV420->opaque = buf;
 
-    avpicture_fill((AVPicture*)frameYUV420, buf, AV_PIX_FMT_YUV420P, width, height);
+    uint8_t** data = frameYUV420->data;
+    int* linesize = frameYUV420->linesize;
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 1);
 
     SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
                                           width, height, AV_PIX_FMT_YUV420P,

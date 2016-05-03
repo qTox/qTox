@@ -180,6 +180,7 @@ void Settings::loadGlobal()
         separateWindow = s.value("separateWindow", false).toBool();
         dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
+        markdownPreference = static_cast<MarkdownType>(s.value("markdownPreference", 1).toInt());
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -245,7 +246,7 @@ void Settings::loadGlobal()
         camVideoFPS = s.value("camVideoFPS", 0).toUInt();
     s.endGroup();
 
-    // Read the embedded DHT bootsrap nodes list if needed
+    // Read the embedded DHT bootstrap nodes list if needed
     if (dhtServerList.isEmpty())
     {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
@@ -324,6 +325,22 @@ void Settings::loadPersonal(Profile* profile)
         ps.endArray();
     ps.endGroup();
 
+    ps.beginGroup("Requests");
+        size = ps.beginReadArray("Request");
+        friendRequests.clear();
+        friendRequests.reserve(size);
+        for (int i = 0; i < size; i ++)
+        {
+            ps.setArrayIndex(i);
+            Request request;
+            request.address = ps.value("addr").toString();
+            request.message = ps.value("message").toString();
+            request.read = ps.value("read").toBool();
+            friendRequests.push_back(request);
+        }
+        ps.endArray();
+    ps.endGroup();
+
     ps.beginGroup("General");
         compactLayout = ps.value("compactLayout", true).toBool();
     ps.endGroup();
@@ -341,6 +358,13 @@ void Settings::loadPersonal(Profile* profile)
             circleLst.push_back(cp);
         }
         ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Toxme");
+        toxmeInfo = ps.value("info", "").toString();
+        toxmeBio  = ps.value("bio", "").toString();
+        toxmePriv = ps.value("priv", false).toBool();
+        toxmePass = ps.value("pass", "").toString();
     ps.endGroup();
 }
 
@@ -400,6 +424,7 @@ void Settings::saveGlobal()
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
+        s.setValue("markdownPreference", static_cast<int>(markdownPreference));
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -495,7 +520,22 @@ void Settings::savePersonal(QString profileName, QString password)
             if (getEnableLogging())
                 ps.setValue("activity", frnd.activity);
 
-            index++;
+            ++index;
+        }
+        ps.endArray();
+    ps.endGroup();
+
+    ps.beginGroup("Requests");
+        ps.beginWriteArray("Request", friendRequests.size());
+        index = 0;
+        for (auto& request : friendRequests)
+        {
+            ps.setArrayIndex(index);
+            ps.setValue("addr", request.address);
+            ps.setValue("message", request.message);
+            ps.setValue("read", request.read);
+
+            ++index;
         }
         ps.endArray();
     ps.endGroup();
@@ -520,6 +560,13 @@ void Settings::savePersonal(QString profileName, QString password)
     ps.beginGroup("Privacy");
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
+    ps.endGroup();
+
+    ps.beginGroup("Toxme");
+        ps.setValue("info", toxmeInfo);
+        ps.setValue("bio", toxmeBio);
+        ps.setValue("priv", toxmePriv);
+        ps.setValue("pass", toxmePass);
     ps.endGroup();
 
     ps.save();
@@ -548,6 +595,45 @@ QString Settings::getSettingsDirPath()
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                            + QDir::separator() + "tox")+QDir::separator();
+#endif
+}
+
+QString Settings::getAppDataDirPath()
+{
+    QMutexLocker locker{&bigLock};
+    if (makeToxPortable)
+        return QString(".")+QDir::separator();
+
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+#ifdef Q_OS_WIN
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
+#else
+    // TODO: change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
+    //       For now we need support Qt 5.3, so we use deprecated DataLocation
+    //       BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))+QDir::separator();
+#endif
+}
+
+QString Settings::getAppCacheDirPath()
+{
+    QMutexLocker locker{&bigLock};
+    if (makeToxPortable)
+        return QString(".")+QDir::separator();
+
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+#ifdef Q_OS_WIN
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
+#elif defined(Q_OS_OSX)
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
+#else
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))+QDir::separator();
 #endif
 }
 
@@ -764,6 +850,72 @@ void Settings::setTranslation(QString newValue)
 {
     QMutexLocker locker{&bigLock};
     translation = newValue;
+}
+
+void Settings::deleteToxme()
+{
+    setToxmeInfo("");
+    setToxmeBio("");
+    setToxmePriv("");
+    setToxmePass("");
+}
+
+void Settings::setToxme(QString name, QString server, QString bio, bool priv, QString pass)
+{
+    setToxmeInfo(name + "@" + server);
+    setToxmeBio(bio);
+    setToxmePriv(priv);
+    if (!pass.isEmpty())
+        setToxmePass(pass);
+}
+
+QString Settings::getToxmeInfo() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmeInfo;
+}
+
+void Settings::setToxmeInfo(QString info)
+{
+    QMutexLocker locker{&bigLock};
+    if (info.split("@").size() == 2)
+        toxmeInfo = info;
+}
+
+QString Settings::getToxmeBio() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmeBio;
+}
+
+void Settings::setToxmeBio(QString bio)
+{
+    QMutexLocker locker{&bigLock};
+    toxmeBio = bio;
+}
+
+bool Settings::getToxmePriv() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmePriv;
+}
+
+void Settings::setToxmePriv(bool priv)
+{
+    QMutexLocker locker{&bigLock};
+    toxmePriv = priv;
+}
+
+QString Settings::getToxmePass() const
+{
+    QMutexLocker locker{&bigLock};
+    return toxmePass;
+}
+
+void Settings::setToxmePass(QString pass)
+{
+    QMutexLocker locker{&bigLock};
+    toxmePass = pass;
 }
 
 bool Settings::getForceTCP() const
@@ -1054,6 +1206,18 @@ void Settings::setDateFormat(const QString &format)
 {
     QMutexLocker locker{&bigLock};
     dateFormat = format;
+}
+
+MarkdownType Settings::getMarkdownPreference() const
+{
+    QMutexLocker locker{&bigLock};
+    return markdownPreference;
+}
+
+void Settings::setMarkdownPreference(MarkdownType newValue)
+{
+    QMutexLocker locker{&bigLock};
+    markdownPreference = newValue;
 }
 
 QByteArray Settings::getWindowGeometry() const
@@ -1502,6 +1666,72 @@ bool Settings::getCircleExpanded(int id) const
 void Settings::setCircleExpanded(int id, bool expanded)
 {
     circleLst[id].expanded = expanded;
+}
+
+bool Settings::addFriendRequest(const QString &friendAddress, const QString &message)
+{
+    QMutexLocker locker{&bigLock};
+
+    for (auto queued : friendRequests)
+    {
+       if (queued.address == friendAddress)
+       {
+           queued.message = message;
+           queued.read = false;
+           return false;
+       }
+    }
+
+    Request request;
+    request.address = friendAddress;
+    request.message = message;
+    request.read = false;
+
+    friendRequests.push_back(request);
+    return true;
+}
+
+unsigned int Settings::getUnreadFriendRequests() const
+{
+    QMutexLocker locker{&bigLock};
+    unsigned int unreadFriendRequests = 0;
+    for (auto request : friendRequests)
+        if (!request.read)
+            unreadFriendRequests++;
+
+    return unreadFriendRequests;
+}
+
+Settings::Request Settings::getFriendRequest(int index) const
+{
+    QMutexLocker locker{&bigLock};
+    return friendRequests.at(index);
+}
+
+int Settings::getFriendRequestSize() const
+{
+    QMutexLocker locker{&bigLock};
+    return friendRequests.size();
+}
+
+void Settings::clearUnreadFriendRequests()
+{
+    QMutexLocker locker{&bigLock};
+
+    for (auto& request : friendRequests)
+        request.read = true;
+}
+
+void Settings::removeFriendRequest(int index)
+{
+    QMutexLocker locker{&bigLock};
+    friendRequests.removeAt(index);
+}
+
+void Settings::readFriendRequest(int index)
+{
+    QMutexLocker locker{&bigLock};
+    friendRequests[index].read = true;
 }
 
 int Settings::removeCircle(int id)

@@ -8,16 +8,12 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <source>%1x%2</source>
+        <source>%1p</source>
         <translation></translation>
     </message>
     <message>
         <source>Default resolution</source>
         <translation>Standardauflösung</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation> bei %1.FPS</translation>
     </message>
     <message>
         <source>None</source>
@@ -29,15 +25,6 @@
     <message>
         <source>Audio Settings</source>
         <translation>Audioeinstellungen</translation>
-    </message>
-    <message>
-        <source>Microphone</source>
-        <translatorcomment>Das englische Original erscheint mir unpassend.</translatorcomment>
-        <translation>Aufnahmelautstärke</translation>
-    </message>
-    <message>
-        <source>Playback</source>
-        <translation>Wiedergabelautstärke</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -52,26 +39,16 @@
         <translation>Aufnahmegerät</translation>
     </message>
     <message>
-        <source>Filter audio</source>
-        <translation>Aufnahme filtern</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Das Filtern kann die Tonqualität verbessern.</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Use slider to set volume of your microphone.</source>
         <translation>Verwende den Schieber, um die Aufnahmelautstärke deines Mikrofons anzupassen.</translation>
+    </message>
+    <message>
+        <source>Gain</source>
+        <translation>Aufnahmelautstärke</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Wiedergabelautstärke</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -137,19 +114,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>License</source>
         <translation>Lizenz</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Ausgelassen, da Lizenz original auf Englisch</translatorcomment>
-        <translation></translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -256,6 +220,12 @@ p, li { white-space: pre-wrap; }
         <translation>Tox ID</translation>
     </message>
     <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, kann das bei aktiviertem Proxyserver aber nicht.
+Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden? </translation>
+    </message>
+    <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
         <translation>entweder 76 hexadezimale Zeichen oder name@example.com</translation>
@@ -284,6 +254,22 @@ Viele Grüße,
 %1</translation>
     </message>
     <message>
+        <source>Add a friend</source>
+        <translation>Einen Freund hinzufügen</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Freundschaftsanfragen</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Annehmen</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Ablehnen</translation>
+    </message>
+    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Freund konnte nicht hinzugefügt werden</translation>
     </message>
@@ -291,12 +277,6 @@ Viele Grüße,
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Du kannst dich nicht selbst als Freund hinzufügen!</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, kann das bei aktiviertem Proxyserver aber nicht.
-Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden? </translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
@@ -309,18 +289,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>Advanced</source>
         <translation>Erweitert</translation>
-    </message>
-    <message>
-        <source>Synchronized - safe (recommended)</source>
-        <translation>Synchron - sicher (empfohlen)</translation>
-    </message>
-    <message>
-        <source>Partially async - risky (20% faster)</source>
-        <translation>Teilweise asynchron - riskant (20% schneller)</translation>
-    </message>
-    <message>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation>Asynchron - unsicher (am schnellsten)</translation>
     </message>
 </context>
 <context>
@@ -347,14 +315,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>Reset to default settings</source>
         <translation>Einstellungen zurücksetzen</translation>
-    </message>
-    <message>
-        <source>Chat history</source>
-        <translation>Gesprächsverläufe</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>Datenbankverwendung</translation>
     </message>
 </context>
 <context>
@@ -578,7 +538,9 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me macht eine Freundschaftsanfrage, &quot;%1&quot;</translation>
+        <translation>/me macht eine Freundschaftsanfrage:
+
+„%1“</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -640,11 +602,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Filename</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>[preview]</source>
         <translatorcomment>Ausgelassen</translatorcomment>
         <translation></translation>
     </message>
@@ -820,6 +777,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Chat aus diesem Fenster entfernen</translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation>Zu einer neuen Gruppe</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>In Gruppe „%1“ einladen</translation>
+    </message>
+    <message>
         <source>Set alias...</source>
         <translation>Namen setzen ...</translation>
     </message>
@@ -887,7 +852,8 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>None</source>
-        <translation>Nichts</translation>
+        <translatorcomment>Grundstil</translatorcomment>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1037,7 +1003,8 @@ instead of system taskbar.</source>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Nachrichten, die du versendest während der entsprechende Kontakt nicht online ist, werden übertragen, sobald er verfügbar ist und du ebenfalls online bist.</translation>
+        <translation>Nachrichten, die du versendest, während der entsprechende Kontakt nicht online ist,
+werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
@@ -1085,6 +1052,14 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Default directory to save files:</source>
         <translation>Standardordner für Dateien:</translation>
+    </message>
+    <message>
+        <source>Markdown:</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Select Markdown preference.</source>
+        <translation>Wähle Markdown-Einstellungen.</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -1146,6 +1121,10 @@ will be sent to them when they appear online to you.</source>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>IPv6 aktivieren (Empfohlen)</translation>
+    </message>
+    <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation>Änderungen an den Markdown-Einstellungen werden erst nach einem Neustart von qTox wirksam.</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -1249,6 +1228,14 @@ will be sent to them when they appear online to you.</source>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Kein Name&gt;</translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>1 user in chat</source>
@@ -1283,6 +1270,33 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>End audio call</source>
         <translation>Anruf beenden</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2.</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Gruppen</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Neue Gruppe erstellen</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Gruppeneinladungen</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Annehmen</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Ablehnen</translation>
     </message>
 </context>
 <context>
@@ -1494,6 +1508,10 @@ Bitte gib in beide Felder das gleiche Passwort ein.</translation>
 If you encountered this error, please report it.</source>
         <translation>Unbekannter Fehler: Konnte kein neues Profil anlegen.
 Bitte melde diesen Fehler an die Entwickler.</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Passwortgeschützte Profile können nicht automatisch geladen werden.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
@@ -1909,6 +1927,86 @@ Viele Grüße,
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Bildschirm</translation>
     </message>
+    <message>
+        <source>Incorrect response</source>
+        <translation>Fehlerhafte Antwort.</translation>
+    </message>
+    <message>
+        <source>No password in response</source>
+        <translation>Kein Passwort als Antwort.</translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation>Der Server unterstützt kein ToxMe.</translation>
+    </message>
+    <message>
+        <source>You must send POST requests to /api</source>
+        <translation>Du musst POST-Anfragen an /api senden.</translation>
+    </message>
+    <message>
+        <source>Please try again using a HTTPS connection</source>
+        <translation>Bitte versuche es noch einmal mit einer HTTPS-Verbindung.</translation>
+    </message>
+    <message>
+        <source>I was unable to read your encrypted payload</source>
+        <translation>Ich konnte deinen verschlüsselten Payload nicht lesen.</translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation>Du machst zu viele Anfragen. Bitte versuche es in einer Stunde erneut.</translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation>Dieser Name wird bereits verwendet.</translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation>Diese Tox ID ist bereits unter einem anderen Namen registriert.</translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation>Dein Name darf keine Leerzeichen enthalten.</translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation>Falsches Passwort.</translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation>Du kannst diesen Namen leider nicht verwenden.</translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation>Name nicht gefunden.</translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation>Tox ID wurde nicht gesendet.</translation>
+    </message>
+    <message>
+        <source>Lookup failed because the server replied with invalid data</source>
+        <translation>Lookup ist gescheitert, weil die Server-Antwort ungültig war.</translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation>Dieser Benutzer existiert nicht.</translation>
+    </message>
+    <message>
+        <source>Internal lookup error. Please file a bug</source>
+        <translation>Interner Lookup-Fehler. Bitte melde diesen Fehler.</translation>
+    </message>
+    <message>
+        <source>Unknown error (%1)</source>
+        <translation>Unbekannter Fehler (%1)</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation>qTox konnte deine Gesprächshistorie nicht öffnen. Das Speichern der Gespräche wird deaktiviert!</translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2167,21 +2265,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>%1 ist jetzt %2.</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Gruppeneinladung</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 hat dich in eine Gruppe eingeladen! Möchtest du ihr beitreten?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Unbekannt&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 hat den Titel auf %2 geändert.</translation>
     </message>
@@ -2198,12 +2281,39 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>Dein Status</translation>
     </message>
     <message>
+        <source>Group invites</source>
+        <translation>Gruppeneinladungen</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Kein Name&gt;</translation>
+    </message>
+    <message>
         <source>Message failed to send</source>
         <translation>Nachricht konnte nicht gesendet werden</translation>
     </message>
     <message>
+        <source>Create new group...</source>
+        <translation>Neue Gruppe erstellen ...</translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation>Neuen Kreis hinzufügen ...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n neue Freundschaftsanfrage</numerusform>
+            <numerusform>%n neue Freundschaftsanfragen</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n neue Gruppeneinladung</numerusform>
+            <numerusform>%n neue Gruppeneinladungen</numerusform>
+        </translation>
     </message>
     <message>
         <source>By Name</source>

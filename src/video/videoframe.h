@@ -37,7 +37,7 @@ struct vpx_image;
 class VideoFrame
 {
 public:
-    VideoFrame(AVFrame* frame);
+    explicit VideoFrame(AVFrame* frame);
     VideoFrame(AVFrame* frame, std::function<void()> freelistCallback);
     VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback);
     ~VideoFrame();

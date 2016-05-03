@@ -39,7 +39,7 @@ class ScreenshotGrabber : public QObject
     Q_OBJECT
 public:
 
-    ScreenshotGrabber(QObject* parent);
+    explicit ScreenshotGrabber(QObject* parent);
     ~ScreenshotGrabber() override;
 
     bool eventFilter(QObject* object, QEvent* event) override;
@@ -84,6 +84,8 @@ private:
     ScreenGrabberChooserRectItem* chooserRect;
     ToolBoxGraphicsItem* helperToolbox;
     QGraphicsTextItem* helperTooltip;
+
+    qreal pixRatio = 1.0;
 
     bool mQToxVisible;
     QVector< QPointer<QWidget> >   mHiddenWindows;

@@ -25,7 +25,6 @@
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
-#include "src/audio/audio.h"
 #include "src/persistence/profilelocker.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/persistence/profile.h"
@@ -63,9 +62,6 @@ Core::Core(QThread *CoreThread, Profile& profile) :
     tox(nullptr), av(nullptr), profile(profile), ready{false}
 {
     coreThread = CoreThread;
-
-    Audio::getInstance();
-
 
     toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
@@ -978,6 +974,12 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
+    if (!tox)
+    {
+        qWarning() << "Can't get group peer names, tox is null";
+        return names;
+    }
+
     int result = getGroupNumberPeers(groupId);
     if (result < 0)
     {
@@ -1011,7 +1013,8 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendnumber);
         return toxav_join_av_groupchat(tox, friendnumber, friend_group_public_key, length,
-                                       &Audio::playGroupAudioQueued, const_cast<Core*>(this));
+                                       CoreAV::groupCallCallback,
+                                       const_cast<Core*>(this));
     }
     else
     {
@@ -1030,19 +1033,25 @@ void Core::groupInviteFriend(uint32_t friendId, int groupId)
     tox_invite_friend(tox, friendId, groupId);
 }
 
-void Core::createGroup(uint8_t type)
+int Core::createGroup(uint8_t type)
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
     {
-        emit emptyGroupCreated(tox_add_groupchat(tox));
+        int group = tox_add_groupchat(tox);
+        emit emptyGroupCreated(group);
+        return group;
     }
     else if (type == TOX_GROUPCHAT_TYPE_AV)
     {
-        emit emptyGroupCreated(toxav_add_av_groupchat(tox, &Audio::playGroupAudioQueued, this));
+        int group = toxav_add_av_groupchat(tox, CoreAV::groupCallCallback,
+                                           this);
+        emit emptyGroupCreated(group);
+        return group;
     }
     else
     {
         qWarning() << "createGroup: Unknown type "<<type;
+        return -1;
     }
 }
 

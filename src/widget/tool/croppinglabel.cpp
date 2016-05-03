@@ -21,6 +21,7 @@
 #include <QResizeEvent>
 #include <QLineEdit>
 #include <QKeyEvent>
+#include <QTextDocument> 
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
@@ -33,7 +34,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     class LineEdit : public QLineEdit
     {
     public:
-        LineEdit(QWidget* parent = 0) :
+        explicit LineEdit(QWidget* parent = 0) :
             QLineEdit(parent)
         {}
 
@@ -41,7 +42,10 @@ CroppingLabel::CroppingLabel(QWidget* parent)
         void keyPressEvent(QKeyEvent* event) override
         {
             if (event->key() == Qt::Key_Escape)
+            {
+                undo();
                 clearFocus();
+            }
 
             QLineEdit::keyPressEvent(event);
         }
@@ -53,8 +57,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
                                   | Qt::ImhNoPredictiveText
                                   | Qt::ImhPreferLatin);
 
-    connect(textEdit, &QLineEdit::returnPressed, this, &CroppingLabel::editingFinished);
-    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::hideTextEdit);
+    connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
 }
 
 void CroppingLabel::editBegin()
@@ -126,7 +129,7 @@ void CroppingLabel::setElidedText()
 {
     QString elidedText = fontMetrics().elidedText(origText, elideMode, width());
     if (elidedText != origText)
-        setToolTip(origText.toHtmlEscaped());
+        setToolTip(Qt::convertFromPlainText(origText, Qt::WhiteSpaceNormal));
     else
         setToolTip(QString());
 
@@ -162,6 +165,7 @@ void CroppingLabel::minimizeMaximumWidth()
 
 void CroppingLabel::editingFinished()
 {
+    hideTextEdit();
     QString newText = textEdit->text().trimmed().remove(QRegExp("[\\t\\n\\v\\f\\r\\x0000]"));
 
     if (origText != newText)

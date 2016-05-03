@@ -26,7 +26,7 @@ class ScreenGrabberChooserRectItem final : public QObject, public QGraphicsItemG
 {
     Q_OBJECT
 public:
-    ScreenGrabberChooserRectItem(QGraphicsScene* scene);
+    explicit ScreenGrabberChooserRectItem(QGraphicsScene* scene);
     ~ScreenGrabberChooserRectItem();
 
     virtual QRectF boundingRect() const final override;

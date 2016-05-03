@@ -76,14 +76,14 @@ SystemTrayIcon::SystemTrayIcon()
         void (*callbackTrigger)(GtkStatusIcon*, gpointer) =
                 [](GtkStatusIcon*, gpointer data)
         {
-            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
+            static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::Trigger);
         };
         g_signal_connect(gtkIcon, "activate", G_CALLBACK(callbackTrigger), this);
         void (*callbackButtonClick)(GtkStatusIcon*, GdkEvent*, gpointer) =
                 [](GtkStatusIcon*, GdkEvent* event, gpointer data)
         {
             if (event->button.button == 2)
-                ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::MiddleClick);
+                static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::MiddleClick);
         };
         g_signal_connect(gtkIcon, "button-release-event", G_CALLBACK(callbackButtonClick), this);
     }
@@ -124,13 +124,13 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         void (*callbackClick)(StatusNotifier*, gint, gint, gpointer) =
                 [](StatusNotifier*, gint, gint, gpointer data)
         {
-            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Trigger);
+            static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::Trigger);
         };
         g_signal_connect(statusNotifier, "activate", G_CALLBACK(callbackClick), this);
         void (*callbackMiddleClick)(StatusNotifier*, gint, gint, gpointer) =
                 [](StatusNotifier*, gint, gint, gpointer data)
         {
-            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::MiddleClick);
+            static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::MiddleClick);
         };
         g_signal_connect(statusNotifier, "secondary_activate", G_CALLBACK(callbackMiddleClick), this);
 
@@ -175,8 +175,8 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         void (*callbackMenu)(StatusNotifier*, gint, gint, gpointer) =
                 [](StatusNotifier*, gint, gint, gpointer data)
         {
-            gtk_widget_show_all(((SystemTrayIcon*)data)->snMenu);
-            gtk_menu_popup(GTK_MENU(((SystemTrayIcon*)data)->snMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
+            gtk_widget_show_all(static_cast<SystemTrayIcon*>(data)->snMenu);
+            gtk_menu_popup(GTK_MENU(static_cast<SystemTrayIcon*>(data)->snMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
         };
         g_signal_connect(statusNotifier, "context-menu", G_CALLBACK(callbackMenu), this);
     }
@@ -225,8 +225,8 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         void (*callbackMenu)(GtkMenu*, gint, gint, gpointer) =
                 [](GtkMenu*, gint, gint, gpointer data)
         {
-            gtk_widget_show_all(((SystemTrayIcon*)data)->gtkMenu);
-            gtk_menu_popup(GTK_MENU(((SystemTrayIcon*)data)->gtkMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
+            gtk_widget_show_all(static_cast<SystemTrayIcon*>(data)->gtkMenu);
+            gtk_menu_popup(GTK_MENU(static_cast<SystemTrayIcon*>(data)->gtkMenu), 0, 0, 0, 0, 3, gtk_get_current_event_time());
         };
         g_signal_connect(gtkIcon, "popup-menu", G_CALLBACK(callbackMenu), this);
     }
@@ -253,7 +253,7 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
             gtk_menu_shell_append(GTK_MENU_SHELL(unityMenu), item);
             void (*callback)(GtkMenu*, gpointer data) = [](GtkMenu*, gpointer a)
             {
-                ((QAction*)a)->activate(QAction::Trigger);
+                static_cast<QAction*>(a)->activate(QAction::Trigger);
             };
             g_signal_connect(item, "activate", G_CALLBACK(callback), a);
             gtk_widget_show(item);
@@ -266,7 +266,7 @@ void SystemTrayIcon::setContextMenu(QMenu* menu)
         void (*callback)(DbusmenuMenuitem *, gpointer) =
                 [](DbusmenuMenuitem *, gpointer data)
         {
-            ((SystemTrayIcon*)data)->activated(QSystemTrayIcon::Unknown);
+            static_cast<SystemTrayIcon*>(data)->activated(QSystemTrayIcon::Unknown);
         };
         g_signal_connect(rootMenuItem, "about-to-show", G_CALLBACK(callback), this);
     }

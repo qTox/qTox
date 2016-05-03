@@ -17,10 +17,10 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
 extern "C" {
 #include <libavformat/avformat.h>
 #include <libavdevice/avdevice.h>
@@ -105,7 +105,7 @@ out:
 
 CameraDevice* CameraDevice::open(QString devName)
 {
-    VideoMode mode{0,0,0};
+    VideoMode mode{0,0,0,0};
     return open(devName, mode);
 }
 
@@ -133,11 +133,20 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
         }
         else
         {
-            screen = QApplication::desktop()->screenGeometry().size();
+            QScreen* defaultScreen = QApplication::primaryScreen();
+            qreal pixRatio;
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+            pixRatio = defaultScreen->devicePixelRatio();
+#else
+            pixRatio = 1.0;
+#endif
+
+            screen = defaultScreen->size();
             // Workaround https://trac.ffmpeg.org/ticket/4574 by choping 1 px bottom and right
             // Actually, let's chop two pixels, toxav hates odd resolutions (off by one stride)
-            screen.setWidth(screen.width()-2);
-            screen.setHeight(screen.height()-2);
+            screen.setWidth((screen.width() * pixRatio)-2);
+            screen.setHeight((screen.height() * pixRatio)-2);
         }
         av_dict_set(&options, "video_size", QString("%1x%2").arg(screen.width()).arg(screen.height()).toStdString().c_str(), 0);
         if (mode.FPS)
@@ -164,7 +173,11 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     {
         av_dict_set(&options, "video_size", QString("%1x%2").arg(mode.width).arg(mode.height).toStdString().c_str(), 0);
         av_dict_set(&options, "framerate", QString().setNum(mode.FPS).toStdString().c_str(), 0);
-        av_dict_set(&options, "pixel_format", "mjpeg", 0);
+        const char *pixel_format = v4l2::getPixelFormatString(mode.pixel_format).toStdString().c_str();
+        if (strncmp(pixel_format, "unknown", 7) != 0)
+        {
+            av_dict_set(&options, "pixel_format", pixel_format, 0);
+        }
     }
 #endif
 #ifdef Q_OS_OSX
@@ -358,6 +371,24 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 
     (void)devName;
     return {};
+}
+
+QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
+{
+#ifdef Q_OS_LINUX
+    return v4l2::getPixelFormatString(pixel_format);
+#else
+    return QString("unknown");
+#endif
+}
+
+bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
+{
+#ifdef Q_OS_LINUX
+	return v4l2::betterPixelFormat(a, b);
+#else
+	return false;
+#endif
 }
 
 bool CameraDevice::getDefaultInputFormat()

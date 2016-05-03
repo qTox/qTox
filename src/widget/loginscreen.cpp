@@ -179,7 +179,7 @@ void LoginScreen::onLoginUsernameSelected(const QString &name)
         // visible option confuses users into thinking that it is possible,
         // thus disable it (and hope that users won't think that it's a bug)
         ui->autoLoginCB->setEnabled(false);
-        ui->autoLoginCB->setToolTip(tr("Password protected profile can't be loaded automatically."));
+        ui->autoLoginCB->setToolTip(tr("Password protected profiles can't be automatically loaded."));
     }
     else
     {

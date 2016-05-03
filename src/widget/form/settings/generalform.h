@@ -32,7 +32,7 @@ class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    GeneralForm(SettingsWidget *parent);
+    explicit GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
     virtual QString getFormName() final override {return tr("General");}
 
@@ -53,6 +53,7 @@ private slots:
     void onStyleSelected(QString style);
     void onTimestampSelected(int index);
     void onDateFormatSelected(int index);
+    void onMarkdownUpdated();
     void onSetStatusChange();
     void onAutoAwayChanged();
     void onUseEmoticonsChange();

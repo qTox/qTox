@@ -24,7 +24,7 @@ class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
-    GenericForm(const QPixmap &icon) : formIcon(icon) {;}
+    explicit GenericForm(const QPixmap &icon) : formIcon(icon) {;}
     virtual ~GenericForm() {}
 
     virtual QString getFormName() = 0;

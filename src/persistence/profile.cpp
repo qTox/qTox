@@ -202,15 +202,9 @@ void Profile::scanProfiles()
     for (QString toxfile : toxfiles)
     {
         if (!inifiles.contains(toxfile))
-            importProfile(toxfile);
+            Settings::getInstance().createPersonal(toxfile);
         profiles.append(toxfile);
     }
-}
-
-void Profile::importProfile(QString name)
-{
-    assert(!exists(name));
-    Settings::getInstance().createPersonal(name);
 }
 
 QVector<QString> Profile::getProfiles()
@@ -332,8 +326,18 @@ void Profile::saveToxSave(QByteArray data)
     }
 
     saveFile.write(data);
-    saveFile.commit();
-    newProfile = false;
+
+    // check if everything got written
+    if(saveFile.flush())
+    {
+        saveFile.commit();
+        newProfile = false;
+    }
+    else
+    {
+        saveFile.cancelWriting();
+        qCritical() << "Failed to write, can't save!";
+    }
 }
 
 QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
@@ -454,7 +458,7 @@ void Profile::removeAvatar(const QString &ownerId)
 bool Profile::exists(QString name)
 {
     QString path = Settings::getInstance().getSettingsDirPath() + name;
-    return QFile::exists(path+".tox") && QFile::exists(path+".ini");
+    return QFile::exists(path+".tox");
 }
 
 bool Profile::isEncrypted() const

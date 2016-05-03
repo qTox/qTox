@@ -47,6 +47,7 @@
 #include "src/persistence/offlinemsgengine.h"
 #include "src/widget/translator.h"
 #include "src/widget/form/addfriendform.h"
+#include "src/widget/form/groupinviteform.h"
 #include "src/widget/form/filesform.h"
 #include "src/widget/form/profileform.h"
 #include "src/widget/form/settingswidget.h"
@@ -232,6 +233,7 @@ void Widget::init()
 
     filesForm = new FilesForm();
     addFriendForm = new AddFriendForm;
+    groupInviteForm = new GroupInviteForm;
     profileForm = new ProfileForm();
     settingsWidget = new SettingsWidget();
 
@@ -252,6 +254,7 @@ void Widget::init()
     connect(ui->statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(ui->mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
     connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
+    connect(groupInviteForm, &GroupInviteForm::groupCreate, Core::getInstance(), &Core::createGroup);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -356,6 +359,7 @@ void Widget::init()
     onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
 
     ui->addButton->setCheckable(true);
+    ui->groupButton->setCheckable(true);
     ui->transferButton->setCheckable(true);
     ui->settingsButton->setCheckable(true);
 
@@ -383,6 +387,16 @@ void Widget::init()
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
 #endif
+
+    friendRequestsButton = nullptr;
+    groupInvitesButton = nullptr;
+    unreadGroupInvites = 0;
+
+    connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequestsUpdate);
+    connect(addFriendForm, &AddFriendForm::friendRequestsSeen, this, &Widget::friendRequestsUpdate);
+    connect(addFriendForm, &AddFriendForm::friendRequestAccepted, this, &Widget::friendRequestAccepted);
+    connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen, this, &Widget::groupInvitesClear);
+    connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted, this, &Widget::onGroupInviteAccepted);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
@@ -432,8 +446,39 @@ void Widget::updateIcons()
             status = QStringLiteral("offline");
     }
 
-    QIcon ico = QIcon::fromTheme("qtox-" + status);
-    if (ico.isNull())
+    // Some builds of Qt appear to have a bug in icon loading:
+    // QIcon::hasThemeIcon is sometimes unaware that the icon returned
+    // from QIcon::fromTheme was a fallback icon, causing hasThemeIcon to
+    // incorrectly return true.
+    //
+    // In qTox this leads to the tray and window icons using the static qTox logo
+    // icon instead of an icon based on the current presence status.
+    //
+    // This workaround checks for an icon that definitely does not exist to
+    // determine if hasThemeIcon can be trusted.
+    //
+    // On systems with the Qt bug, this workaround will always use our included
+    // icons but user themes will be unable to override them.
+    static bool checkedHasThemeIcon = false;
+    static bool hasThemeIconBug = false;
+
+    if (!checkedHasThemeIcon)
+    {
+        hasThemeIconBug = QIcon::hasThemeIcon("qtox-asjkdfhawjkeghdfjgh");
+        checkedHasThemeIcon = true;
+
+        if (hasThemeIconBug)
+        {
+            qDebug() << "Detected buggy QIcon::hasThemeIcon. Icon overrides from theme will be ignored.";
+        }
+    }
+
+    QIcon ico;
+    if (!hasThemeIconBug && QIcon::hasThemeIcon("qtox-" + status))
+    {
+        ico = QIcon::fromTheme("qtox-" + status);
+    }
+    else
     {
         QString color = Settings::getInstance().getLightTrayIcon() ? "light" : "dark";
         QString path = ":/img/taskbar/" + color + "/taskbar_" + status + ".svg";
@@ -470,6 +515,7 @@ Widget::~Widget()
     delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
+    delete groupInviteForm;
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
@@ -620,7 +666,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
         setMinimumWidth(775);
 
-        onSettingsClicked();
+        onAddClicked();
     }
     else
     {
@@ -707,7 +753,20 @@ void Widget::onAddClicked()
 
 void Widget::onGroupClicked()
 {
-    Nexus::getCore()->createGroup();
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (!groupInviteForm->isShown())
+            groupInviteForm->show(createContentDialog(GroupDialog));
+
+        setActiveToolMenuButton(Widget::None);
+    }
+    else
+    {
+        hideMainForms(nullptr);
+        groupInviteForm->show(contentLayout);
+        setWindowTitle(fromDialogType(GroupDialog));
+        setActiveToolMenuButton(Widget::GroupButton);
+    }
 }
 
 void Widget::onTransferClicked()
@@ -838,7 +897,7 @@ void Widget::setUsername(const QString& username)
     else
     {
         ui->nameLabel->setText(username);
-        ui->nameLabel->setToolTip(username.toHtmlEscaped());    // for overlength names
+        ui->nameLabel->setToolTip(Qt::convertFromPlainText(username, Qt::WhiteSpaceNormal)); // for overlength names
     }
 
     QString sanename = username;
@@ -863,7 +922,7 @@ void Widget::setStatusMessage(const QString &statusMessage)
     else
     {
         ui->statusLabel->setText(statusMessage);
-        ui->statusLabel->setToolTip(statusMessage.toHtmlEscaped()); // for overlength messsages
+        ui->statusLabel->setToolTip(Qt::convertFromPlainText(statusMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
     }
 }
 
@@ -1209,6 +1268,8 @@ QString Widget::fromDialogType(DialogType type)
     {
         case AddDialog:
             return tr("Add friend");
+        case GroupDialog:
+            return tr("Group invites");
         case TransferDialog:
             return tr("File transfers");
         case SettingDialog:
@@ -1251,10 +1312,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    FriendRequestDialog dialog(this, userId, message);
-
-    if (dialog.exec() == QDialog::Accepted)
-        emit friendRequestAccepted(userId);
+    if(addFriendForm->addFriendRequest(userId, message))
+    {
+        friendRequestsUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
+    }
 }
 
 void Widget::updateFriendActivity(Friend *frnd)
@@ -1343,7 +1405,7 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     class Dialog : public ActivateDialog
     {
     public:
-        Dialog(DialogType type)
+        explicit Dialog(DialogType type)
             : ActivateDialog()
             , type(type)
         {
@@ -1418,21 +1480,28 @@ void Widget::copyFriendIdToClipboard(int friendId)
 
 void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
+    updateFriendActivity(FriendList::findFriend(friendId));
+
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        if (GUI::askQuestion(tr("Group invite", "popup title"), tr("%1 has invited you to a groupchat. Would you like to join?", "popup text").arg(Nexus::getCore()->getFriendUsername(friendId).toHtmlEscaped()), true, false))
-        {
-            int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
-            if (groupId < 0)
-            {
-                qWarning() << "onGroupInviteReceived: Unable to accept  group invite";
-                return;
-            }
-        }
+        ++unreadGroupInvites;
+        groupInvitesUpdate();
+        newMessageAlert(window(), isActiveWindow(), true, true);
+        groupInviteForm->addGroupInvite(friendId, type, invite);
     }
     else
     {
         qWarning() << "onGroupInviteReceived: Unknown groupchat type:"<<type;
+        return;
+    }
+}
+
+void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite)
+{
+    int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
+    if (groupId < 0)
+    {
+        qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
         return;
     }
 }
@@ -1444,6 +1513,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
         return;
 
     ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
+
     bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
@@ -1460,15 +1530,14 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     {
         qDebug() << "onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
         g = createGroup(groupnumber);
+        if (!g)
+            return;
     }
 
-    QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
+
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
     {
-        if (name.isEmpty())
-            name = tr("<Unknown>", "Placeholder when we don't know someone's name in a group chat");
-
         // g->addPeer(peernumber,name);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "white", QDateTime::currentDateTime());
@@ -1483,6 +1552,10 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
     {
+        QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
+        if (name.isEmpty())
+            name = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+
         g->updatePeer(peernumber, name);
     }
 }
@@ -1544,17 +1617,33 @@ Group *Widget::createGroup(int groupId)
     Group* g = GroupList::findGroup(groupId);
     if (g)
     {
-        qWarning() << "createGroup: Group already exists";
+        qWarning() << "Group already exists";
         return g;
     }
 
     Core* core = Nexus::getCore();
 
-    QString groupName = QString("Groupchat #%1").arg(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, core->getAv()->isGroupAvEnabled(groupId));
+    if (!core)
+    {
+        qWarning() << "Can't create group. Core does not exist";
+        return nullptr;
+    }
+
+    QString groupName = tr("Groupchat #%1").arg(groupId);
+    CoreAV* coreAv = core->getAv();
+
+    if (!coreAv)
+    {
+        qWarning() << "Can't create group. CoreAv does not exist";
+        return nullptr;
+    }
+
+    bool enabled = coreAv->isGroupAvEnabled(groupId);
+    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
+    contactListWidget->activateWindow();
 
     connect(settingsWidget, &SettingsWidget::compactToggled, newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
@@ -1573,10 +1662,18 @@ Group *Widget::createGroup(int groupId)
 void Widget::onEmptyGroupCreated(int groupId)
 {
     Group* group = createGroup(groupId);
+    if (!group)
+        return;
 
     // Only rename group if groups are visible.
     if (Widget::getInstance()->groupsVisible())
         group->getGroupWidget()->editName();
+}
+
+void Widget::resetIcon() {
+    eventIcon = false;
+    eventFlag = false;
+    updateIcons();
 }
 
 bool Widget::event(QEvent * e)
@@ -1596,11 +1693,7 @@ bool Widget::event(QEvent * e)
             }
 
             if (eventFlag)
-            {
-                eventFlag = false;
-                eventIcon = false;
-                updateIcons();
-            }
+                resetIcon();
 
             focusChatInput();
 
@@ -2031,11 +2124,66 @@ bool Widget::groupsVisible() const
 void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
+    QAction *createGroupAction = menu.addAction(tr("Create new group..."));
     QAction *addCircleAction = menu.addAction(tr("Add new circle..."));
     QAction *chosenAction = menu.exec(ui->friendList->mapToGlobal(pos));
 
     if (chosenAction == addCircleAction)
         contactListWidget->addCircleWidget();
+    else if (chosenAction == createGroupAction)
+        Nexus::getCore()->createGroup();
+}
+
+void Widget::friendRequestsUpdate()
+{
+    unsigned int unreadFriendRequests = Settings::getInstance().getUnreadFriendRequests();
+
+    if (unreadFriendRequests == 0)
+    {
+        delete friendRequestsButton;
+        friendRequestsButton = nullptr;
+    }
+    else if (!friendRequestsButton)
+    {
+        friendRequestsButton = new QPushButton(this);
+        friendRequestsButton->setObjectName("green");
+        ui->statusLayout->insertWidget(2, friendRequestsButton);
+
+        connect(friendRequestsButton, &QPushButton::released, [this]()
+        {
+            onAddClicked();
+            addFriendForm->setMode(AddFriendForm::Mode::FriendRequest);
+        });
+    }
+
+    if (friendRequestsButton)
+        friendRequestsButton->setText(tr("%n New Friend Request(s)", "", unreadFriendRequests));
+}
+
+void Widget::groupInvitesUpdate()
+{
+    if (unreadGroupInvites == 0)
+    {
+        delete groupInvitesButton;
+        groupInvitesButton = nullptr;
+    }
+    else if (!groupInvitesButton)
+    {
+        groupInvitesButton = new QPushButton(this);
+        groupInvitesButton->setObjectName("green");
+        ui->statusLayout->insertWidget(2, groupInvitesButton);
+
+        connect(groupInvitesButton, &QPushButton::released, this, &Widget::onGroupClicked);
+    }
+
+    if (groupInvitesButton)
+        groupInvitesButton->setText(tr("%n New Group Invite(s)", "", unreadGroupInvites));
+}
+
+void Widget::groupInvitesClear()
+{
+    unreadGroupInvites = 0;
+    groupInvitesUpdate();
 }
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
@@ -2075,7 +2223,11 @@ void Widget::retranslateUi()
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
 
     if (!Settings::getInstance().getSeparateWindow())
-        setWindowTitle(fromDialogType(SettingDialog));
+        setWindowTitle(fromDialogType(AddDialog));
+
+    friendRequestsUpdate();
+    groupInvitesUpdate();
+
 
 #ifdef Q_OS_MAC
     Nexus::getInstance().retranslateUi();

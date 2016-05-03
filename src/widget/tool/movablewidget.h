@@ -25,7 +25,7 @@
 class MovableWidget : public QWidget
 {
 public:
-    MovableWidget(QWidget* parent);
+    explicit MovableWidget(QWidget* parent);
     void resetBoundary(QRect newBoundary);
     void setBoundary(QRect newBoundary);
     float getRatio() const;

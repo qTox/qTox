@@ -33,7 +33,7 @@ class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    GroupChatForm(Group* chatGroup);
+    explicit GroupChatForm(Group* chatGroup);
     ~GroupChatForm();
 
     void onUserListChanged();

@@ -39,7 +39,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
     netman.setProxy(Settings::getInstance().getProxy());
     QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    QNetworkReply* reply = netman.post(request,json.toUtf8());
+    QNetworkReply* reply = netman.post(request, json.toUtf8());
 
     while (!reply->isFinished())
     {
@@ -47,14 +47,9 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
         qApp->processEvents();
     }
 
-    error = reply->error();
-    if (error)
-    {
-        qWarning() << "makeJsonRequest: A network error occured:" << reply->errorString();
-        return QByteArray();
-    }
-
-    return reply->readAll();
+    QByteArray result = reply->readAll();
+    delete reply;
+    return result;
 }
 
 QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &error)
@@ -86,6 +81,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
     static const QByteArray pattern{"key\":\""};
 
     QString json = reply->readAll();
+    delete reply;
     json = json.remove(' ');
     int start = json.indexOf(pattern) + pattern.length();
     int end = json.indexOf("\"", start);
@@ -231,15 +227,14 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
                           "\"bio\":\""+bio+"\","
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};
 
-    qDebug() << payload;
     QString pubkeyUrl = server + "/pk";
     QString apiUrl =  server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
-    QByteArray response = makeJsonRequest(apiUrl, prepareEncryptedJson(pubkeyUrl, 1, payload), error);
-    qDebug() << response;
+    QByteArray encrypted = prepareEncryptedJson(pubkeyUrl, 1, payload);
+    QByteArray response = makeJsonRequest(apiUrl, encrypted, error);
 
     code = extractError(response);
-    if ((code != Registered && code != Updated) || error != QNetworkReply::NoError)
+    if ((code != Ok && code != Updated) || error != QNetworkReply::NoError)
         return QString();
 
     return getPass(response, code);
@@ -276,7 +271,7 @@ QString Toxme::getPass(QString json, ExecCode &code) {
     return json;
 }
 
-int Toxme::deleteAddress(QString server, ToxId id)
+Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
 {
     const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};

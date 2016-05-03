@@ -34,19 +34,21 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QMutex>
 #include <QFontDatabase>
 #include <QMutexLocker>
 
 #include <sodium.h>
+#include <stdio.h>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
 #endif
 
 #ifdef LOG_TO_FILE
-static std::unique_ptr<QTextStream> logFileStream {nullptr};
-static std::unique_ptr<QFile> logFileFile {nullptr};
-static QMutex mutex;
+static QAtomicPointer<FILE> logFileFile = nullptr;
+static QList<QByteArray>* logBuffer = new QList<QByteArray>();   //Store log messages until log file opened
+QMutex* logBufferMutex = new QMutex();
 #endif
 
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
@@ -57,7 +59,7 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
         return;
 
     QString LogMsg = QString("[%1] %2:%3 : ")
-            .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
+                .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
     switch (type)
     {
         case QtDebugMsg:
@@ -77,28 +79,50 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     }
 
     LogMsg += ": " + msg + "\n";
-
-    QTextStream out(stderr, QIODevice::WriteOnly);
-    out << LogMsg;
+    QByteArray LogMsgBytes = LogMsg.toUtf8();
+    fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), stderr);
 
 #ifdef LOG_TO_FILE
-    if (!logFileStream)
-        return;
+    FILE * logFilePtr = logFileFile.load(); // atomically load the file pointer
+    if (!logFilePtr)
+    {
+        logBufferMutex->lock();
+        if(logBuffer)
+        {
+            logBuffer->append(LogMsgBytes);
+        }
+        logBufferMutex->unlock();
+    }
+    else
+    {
+        logBufferMutex->lock();
+        if(logBuffer)
+        {
+            // empty logBuffer to file
+            foreach(QByteArray msg, *logBuffer)
+            {
+                fwrite(msg.constData(), 1, msg.size(), logFilePtr);
+            }
 
-    QMutexLocker locker(&mutex);
-    *logFileStream << LogMsg;
-    logFileStream->flush();
+            delete logBuffer;   // no longer needed
+            logBuffer = nullptr;
+        }
+        logBufferMutex->unlock();
+
+        fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), logFilePtr);
+        fflush(logFilePtr);
+    }
 #endif
 }
 
 int main(int argc, char *argv[])
 {
+    qInstallMessageHandler(logMessageHandler);
+
     QApplication a(argc, argv);
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
-
-    qInstallMessageHandler(logMessageHandler); // Enable log as early as possible (but not earlier!)
 
 #if defined(Q_OS_OSX)
     //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
@@ -126,41 +150,47 @@ int main(int argc, char *argv[])
     IPC& ipc = IPC::getInstance();
 #endif
 
-    sodium_init(); // For the auto-updater
+    if (sodium_init() < 0) // For the auto-updater
+    {
+        qCritical() << "Can't init libsodium";
+        return EXIT_FAILURE;
+    }
 
 #ifdef LOG_TO_FILE
-    QString logFileDir = Settings::getInstance().getSettingsDirPath();
-    logFileStream.reset(new QTextStream);
-    logFileFile.reset(new QFile(logFileDir + "qtox.log"));
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QDir(logFileDir).mkpath(".");
+
+    QString logfile = logFileDir + "qtox.log";
+    FILE * mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
 
     // Trim log file if over 1MB
-    if (logFileFile->size() > 1000000) {
+    if (QFileInfo(logfile).size() > 1000000)
+    {
         qDebug() << "Log file over 1MB, rotating...";
 		
         QDir dir (logFileDir);
 		
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
-            qDebug() << "Removed log successfully";
+            qDebug() << "Removed old log successfully";
         else
-            qDebug() << "Unable to remove old log file";
+            qWarning() << "Unable to remove old log file";
 
-        dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1");
+        if(!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
+            qCritical() << "Unable to move logs";
 
-        // Return to original log file path
-        logFileFile->setFileName(logFileDir + "qtox.log");
+        // close old logfile
+        if(mainLogFilePtr)
+            fclose(mainLogFilePtr);
+
+        // open a new logfile
+        mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
     }
 
-    if (logFileFile->open(QIODevice::Append))
-    {
-        logFileStream->setDevice(logFileFile.get());
-        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' qTox file logger starting\n'");
-    }
-    else
-    {
-        qWarning() << "Couldn't open log file!\n";
-        logFileStream.release();
-    }
+    if(!mainLogFilePtr)
+        qCritical() << "Couldn't open logfile" << logfile;
+
+    logFileFile.store(mainLogFilePtr);   // atomically set the logFile
 #endif
 
     // Windows platform plugins DLL hell fix
@@ -262,13 +292,14 @@ int main(int argc, char *argv[])
     // Run
     int errorcode = a.exec();
 
-#ifdef LOG_TO_FILE
-    logFileStream.release();
-#endif
-
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
     Settings::destroyInstance();
     qDebug() << "Clean exit with status" << errorcode;
+
+#ifdef LOG_TO_FILE
+    logFileFile.store(nullptr);   // atomically disable logging to file
+    fclose(mainLogFilePtr);
+#endif
     return errorcode;
 }
