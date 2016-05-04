@@ -361,7 +361,8 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
                                  static_cast<AVPixelFormat>(pixelFormat), 1);
     }
 
-    if(bufSize < 0){
+    if(bufSize < 0)
+    {
         av_frame_free(&ret);
         return nullptr;
     }

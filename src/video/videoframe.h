@@ -71,6 +71,8 @@ public:
  */
 class VideoFrame
 {
+public:
+    // Declare type aliases
     using IDType = std::uint_fast64_t;
     using AtomicIDType = std::atomic_uint_fast64_t;
 
