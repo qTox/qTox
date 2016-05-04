@@ -108,11 +108,6 @@ contains(DISABLE_FILTER_AUDIO, NO) {
      DEFINES += QTOX_FILTER_AUDIO
 }
 
-contains(HIGH_DPI, YES) {
-    QT_DEVICE_PIXEL_RATIO= auto
-    DEFINES += HIGH_DPI
-}
-
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
 } else {

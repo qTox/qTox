@@ -117,6 +117,12 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 int main(int argc, char *argv[])
 {
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
     qInstallMessageHandler(logMessageHandler);
 
     QApplication a(argc, argv);
@@ -127,10 +133,6 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_OSX)
     //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
     osx::migrateProfiles();
-#endif
-
-#ifdef HIGH_DPI
-    a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
 
     qsrand(time(0));
