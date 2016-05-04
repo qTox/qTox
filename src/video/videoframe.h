@@ -153,10 +153,31 @@ public:
     const AVFrame* getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned);
 
     /**
+     * @brief Returns the ID for the given frame.
+     *
+     * Frame IDs are globally unique (with respect to the running instance).
+     *
+     * @return an integer representing the ID of this frame.
+     */
+    inline IDType getFrameID() const
+    {
+        return frameID;
+    }
+
+    /**
+     * @brief Returns the ID for the VideoSource which created this frame.
+     * @return an integer representing the ID of the VideoSource which created this frame.
+     */
+    inline IDType getSourceID() const
+    {
+        return sourceID;
+    }
+
+    /**
      * @brief Retrieves a copy of the source VideoFrame's dimensions.
      * @return QRect copy representing the source VideoFrame's dimensions.
      */
-    inline QRect getSourceDimensions()
+    inline QRect getSourceDimensions() const
     {
         return sourceDimensions;
     }
@@ -165,7 +186,7 @@ public:
      * @brief Retrieves a copy of the source VideoFormat's pixel format.
      * @return integer copy represetning the source VideoFrame's pixel format.
      */
-    inline int getSourcePixelFormat()
+    inline int getSourcePixelFormat() const
     {
         return sourcePixelFormat;
     }
