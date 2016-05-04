@@ -1,15 +1,15 @@
 qTox
 ======
 
- [**User Manual**](/doc/user_manual_en.md) **⦁**
- [**Install**](/INSTALL.md) **⦁**
- [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **⦁**
- [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **⦁**
- [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **⦁**
- [**Jenkins builds**](https://build.tox.chat/) **⦁**
- [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **⦁**
- [**Mailing list**](https://lists.tox.chat) **⦁**
- **IRC Channel:** [#qtox@freenode](https://webchat.freenode.net/?channels=qtox)
+ [**User Manual**](/doc/user_manual_en.md) **|**
+ [**Install**](/INSTALL.md) **|**
+ [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **|**
+ [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|**
+ [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **|**
+ [**Jenkins builds**](https://build.tox.chat/) **|**
+ [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|**
+ [**Mailing list**](https://lists.tox.chat) **|**
+ **IRC Channel:** [#qtox@freenode]
 
 **qTox is a powerful Tox client that follows the Tox design guidelines while
 running on all major platforms.**
@@ -63,4 +63,26 @@ idea of the general look and features.
 - Auto-updates on Windows and Mac, packages on Linux
 - And many more options!
 
+
+#### Meetings
+
+Time & place where qTox committee gathers to discuss. Meetings happen every
+week on Saturday, `18:00 UTC±00:00` on IRC channel [#qtox@freenode].
+
+Logs from the meetings will be posted at least to the mailing list.
+
+Committee members are active maintainers.
+
+Currently they are:
+
+* @agilob
+* @antis81
+* @sudden6
+* @TheSpiritXIII
+* @tux3
+* @zetok
+
 [![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.org/tux3/qTox)
+
+
+[#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
