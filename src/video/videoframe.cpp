@@ -410,12 +410,12 @@ void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int
 
 void VideoFrame::deleteFrameBuffer()
 {
-    for(auto frameIterator = frameBuffer.begin(); frameIterator != frameBuffer.end(); ++frameIterator)
+    for(const auto& frameIterator : frameBuffer)
     {
-        AVFrame* frame = frameIterator->second;
+        AVFrame* frame = frameIterator.second;
 
         // Treat source frame and derived frames separately
-        if(sourceFrameKey == frameIterator->first)
+        if(sourceFrameKey == frameIterator.first)
         {
             if(freeSourceFrame)
             {
