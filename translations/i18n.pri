@@ -4,6 +4,7 @@ TRANSLATIONS = \
     translations/ar.ts \
     translations/bg.ts \
     translations/cs.ts \
+    translations/da.ts \
     translations/de.ts \
     translations/el.ts \
     translations/es.ts \
