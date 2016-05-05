@@ -39,25 +39,9 @@
         <translation>音频设置</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use slider to set volume of your speakers.</source>
         <translatorcomment> </translatorcomment>
         <translation>使用滑块设置扬声器音量</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -78,6 +62,22 @@ which may lead to problems with video calls.</source>
 请注意，更好的视频质量需要更好的网络连接来承载
 有时你的网络连接并不足以承载如此高的视频质量
 这有可能导致视频通话的问题</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your microphone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -231,24 +231,6 @@ which may lead to problems with video calls.</source>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>either 76 hexadecimal characters or name@example.com</source>
-        <comment>Tox ID format description</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
         <translation>好友验证消息</translation>
@@ -256,11 +238,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Send friend request</source>
         <translation>发送好友请求</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -287,6 +264,29 @@ which may lead to problems with video calls.</source>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>此Tox ID不存在</translation>
+    </message>
+    <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>either 76 hexadecimal characters or name@example.com</source>
+        <comment>Tox ID format description</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -328,11 +328,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Someone</source>
-        <translation type="unfinished"></translation>
+        <translation>某人</translation>
     </message>
     <message>
         <source>Someone else</source>
-        <translation type="unfinished"></translation>
+        <translation>其他人</translation>
     </message>
     <message>
         <source>Groupbot</source>
@@ -340,7 +340,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
+        <translation>我不记得添加过他</translation>
     </message>
     <message>
         <source>NASA manager</source>
@@ -382,14 +382,6 @@ which may lead to problems with video calls.</source>
         <translation>接听视频通话</translation>
     </message>
     <message>
-        <source>Unable to open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bad idea</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Accept audio call</source>
         <translation>接听音频通话</translation>
     </message>
@@ -400,10 +392,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>End video call</source>
         <translation>结束视频通话</translation>
-    </message>
-    <message>
-        <source>End audio call</source>
-        <translation>结束音频童话</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -470,6 +458,18 @@ which may lead to problems with video calls.</source>
         <source>Call duration: </source>
         <translation>通话时长:</translation>
     </message>
+    <message>
+        <source>Unable to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bad idea</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End audio call</source>
+        <translation type="unfinished">结束音频童话</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -517,14 +517,6 @@ which may lead to problems with video calls.</source>
         <translation>使用qTox与他人交流</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Friend is already added</source>
         <translation>此人已被添加为好友</translation>
     </message>
@@ -552,11 +544,6 @@ History will be disabled!</source>
 历史记录功能已被关闭</translation>
     </message>
     <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
@@ -570,6 +557,19 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Disable chat history</source>
         <translation>关闭聊天历史记录</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
+        <comment>used in load() when no hist pw set</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -657,17 +657,17 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>FilesForm</name>
     <message>
-        <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translation>下载</translation>
     </message>
     <message>
         <source>Uploads</source>
         <translation>上传</translation>
+    </message>
+    <message>
+        <source>Transferred Files</source>
+        <comment>&quot;Headline&quot; of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -745,6 +745,45 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>在新窗口打开</translation>
     </message>
     <message>
+        <source>Set alias...</source>
+        <translation>添加备注名...</translation>
+    </message>
+    <message>
+        <source>Auto accept files from this friend</source>
+        <comment>context menu entry</comment>
+        <translation>自动接收此好友发送的文件</translation>
+    </message>
+    <message>
+        <source>Show details</source>
+        <translation>查看详情</translation>
+    </message>
+    <message>
+        <source>Online</source>
+        <translation type="unfinished">在线</translation>
+    </message>
+    <message>
+        <source>Away</source>
+        <translation type="unfinished">离开</translation>
+    </message>
+    <message>
+        <source>Busy</source>
+        <translation type="unfinished">忙碌</translation>
+    </message>
+    <message>
+        <source>Offline</source>
+        <translation>离线</translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation>选择默认接收目录</translation>
+    </message>
+    <message>
+        <source>Remove friend</source>
+        <comment>Menu to remove the friend from our friendlist</comment>
+        <translation>删除好友</translation>
+    </message>
+    <message>
         <source>Remove chat from this window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -774,47 +813,8 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Set alias...</source>
-        <translation>添加备注名...</translation>
-    </message>
-    <message>
-        <source>Auto accept files from this friend</source>
-        <comment>context menu entry</comment>
-        <translation>自动接收此好友发送的文件</translation>
-    </message>
-    <message>
-        <source>Show details</source>
-        <translation>查看详情</translation>
-    </message>
-    <message>
         <source>New message</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Online</source>
-        <translation type="unfinished">在线</translation>
-    </message>
-    <message>
-        <source>Away</source>
-        <translation type="unfinished">离开</translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="unfinished">忙碌</translation>
-    </message>
-    <message>
-        <source>Offline</source>
-        <translation>离线</translation>
-    </message>
-    <message>
-        <source>Choose an auto accept directory</source>
-        <comment>popup title</comment>
-        <translation>选择默认接收目录</translation>
-    </message>
-    <message>
-        <source>Remove friend</source>
-        <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>删除好友</translation>
     </message>
 </context>
 <context>
@@ -995,12 +995,6 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation type="unfinished"></translation>
@@ -1138,6 +1132,12 @@ will be sent to them when they appear online to you.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
         <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
     </message>
+    <message>
+        <source>Messages you are trying to send to your friends when they are not online
+will be sent to them when they appear online to you.</source>
+        <comment>toolTip for Faux offline messaging setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1154,8 +1154,24 @@ will be sent to them when they appear online to you.</source>
         <translation>发送文件</translation>
     </message>
     <message>
+        <source>Send a screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Save chat log</source>
         <translation>保存聊天记录</translation>
+    </message>
+    <message>
+        <source>Clear displayed messages</source>
+        <translation>清屏</translation>
+    </message>
+    <message>
+        <source>Not sent</source>
+        <translation>未发送</translation>
+    </message>
+    <message>
+        <source>Cleared</source>
+        <translation>已清除</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1180,22 +1196,6 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>End video call</source>
         <translation type="unfinished">结束视频通话</translation>
-    </message>
-    <message>
-        <source>Send a screenshot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear displayed messages</source>
-        <translation>清屏</translation>
-    </message>
-    <message>
-        <source>Not sent</source>
-        <translation>未发送</translation>
-    </message>
-    <message>
-        <source>Cleared</source>
-        <translation>已清除</translation>
     </message>
 </context>
 <context>
@@ -1292,10 +1292,6 @@ will be sent to them when they appear online to you.</source>
         <translation>%1 人正在聊天</translation>
     </message>
     <message>
-        <source>Open chat in new window</source>
-        <translation type="unfinished">在新窗口打开</translation>
-    </message>
-    <message>
         <source>Remove chat from this window</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1309,24 +1305,16 @@ will be sent to them when they appear online to you.</source>
         <translation>退出群组</translation>
     </message>
     <message>
+        <source>Open chat in new window</source>
+        <translation type="unfinished">在新窗口打开</translation>
+    </message>
+    <message>
         <source>1 user in chat</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
-    <message>
-        <source>Public Information</source>
-        <translation>公开信息</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
@@ -1341,6 +1329,61 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Your Tox ID (click to copy)</source>
         <translation>你的 Tox ID (点击复制)</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">升级</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <comment>import profile button</comment>
+        <translation type="unfinished">登出</translation>
+    </message>
+    <message>
+        <source>Remove password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation>更改密码</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <comment>rename profile button</comment>
+        <translation>重命名</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <comment>export profile button</comment>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <source>Allows you to export your Tox profile to a file.
+Profile does not contain your history.</source>
+        <comment>tooltip for profile exporting button</comment>
+        <translation>导出你的Tox配置文件到一个独立文件
+配置文件不包含你的历史记录</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <comment>delete profile button</comment>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Public Information</source>
+        <translation>公开信息</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
@@ -1379,14 +1422,6 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="unfinished">升级</translation>
-    </message>
-    <message>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1408,41 +1443,6 @@ Share it with your friends to communicate.</source>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <comment>import profile button</comment>
-        <translation type="unfinished">登出</translation>
-    </message>
-    <message>
-        <source>Remove password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change password</source>
-        <translation type="unfinished">更改密码</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <comment>rename profile button</comment>
-        <translation>重命名</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <comment>export profile button</comment>
-        <translation>导出</translation>
-    </message>
-    <message>
-        <source>Allows you to export your Tox profile to a file.
-Profile does not contain your history.</source>
-        <comment>tooltip for profile exporting button</comment>
-        <translation>导出你的Tox配置文件到一个独立文件
-配置文件不包含你的历史记录</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <comment>delete profile button</comment>
-        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -1477,10 +1477,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Create Profile</source>
         <translation>创建配置</translation>
-    </message>
-    <message>
-        <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation></translation>
     </message>
     <message>
         <source>Load automatically</source>
@@ -1562,6 +1558,10 @@ You may want to create one.</source>
         <source>Wrong password.</source>
         <translation>密码错误。</translation>
     </message>
+    <message>
+        <source>If the profile does not have a password, qTox can skip the login screen</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1595,7 +1595,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1666,6 +1666,13 @@ You may want to create one.</source>
         <translation>你的好友将看到你“正在输入”的提示</translation>
     </message>
     <message>
+        <source>Chat history keeping is still in development.
+Save format changes are possible, which may result in data loss.</source>
+        <comment>toolTip for Keep History setting</comment>
+        <translation>聊天记录的保存仍然在开发中
+保存格式的更改是有可能的，这意味着数据丢失</translation>
+    </message>
+    <message>
         <source>Send typing notifications</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1693,39 +1700,16 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Generate random NoSpam</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Chat history keeping is still in development.
-Save format changes are possible, which may result in data loss.</source>
-        <comment>toolTip for Keep History setting</comment>
-        <translation>聊天记录的保存仍然在开发中
-保存格式的更改是有可能的，这意味着数据丢失</translation>
-    </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
-        <source>Current profile: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose a profile picture</source>
-        <translation type="unfinished">选择头像</translation>
+        <translation>选择头像</translation>
     </message>
     <message>
         <source>Error</source>
         <translation type="unfinished">错误</translation>
-    </message>
-    <message>
-        <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -1733,56 +1717,9 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rename &quot;%1&quot;</source>
-        <comment>renaming a profile</comment>
-        <translation type="unfinished">重命名 &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>rename failure title</comment>
-        <translation type="unfinished">用户配置文件已存在</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
-        <comment>rename confirm text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to rename</source>
-        <comment>rename failed title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export profile</source>
-        <comment>save dialog title</comment>
-        <translation type="unfinished">导出用户配置文件</translation>
-    </message>
-    <message>
-        <source>Tox save file (*.tox)</source>
-        <comment>save dialog filter</comment>
-        <translation type="unfinished">Tox文件 (*.tox)</translation>
-    </message>
-    <message>
-        <source>Location not writable</source>
-        <comment>Title of permissions popup</comment>
-        <translation type="unfinished">目录不可写</translation>
-    </message>
-    <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
         <translation type="unfinished">您没有写入此目录的权限。请选择其他目录或取消保存对话。</translation>
-    </message>
-    <message>
-        <source>Failed to copy file</source>
-        <translation type="unfinished">复制文件失败</translation>
-    </message>
-    <message>
-        <source>The file you chose could not be written to.</source>
-        <translation type="unfinished">您选择的文件不可被写入。</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
@@ -1861,12 +1798,90 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Register</source>
+        <source>Update</source>
+        <translation type="unfinished">升级</translation>
+    </message>
+    <message>
+        <source>Current profile: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update</source>
-        <translation type="unfinished">升级</translation>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open this file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to read this image.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename &quot;%1&quot;</source>
+        <comment>renaming a profile</comment>
+        <translation type="unfinished">重命名 &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>rename failure title</comment>
+        <translation type="unfinished">用户配置文件已存在</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists.</source>
+        <comment>rename confirm text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to rename</source>
+        <comment>rename failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <comment>save dialog title</comment>
+        <translation type="unfinished">导出用户配置文件</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>save dialog filter</comment>
+        <translation type="unfinished">Tox文件 (*.tox)</translation>
+    </message>
+    <message>
+        <source>Location not writable</source>
+        <comment>Title of permissions popup</comment>
+        <translation type="unfinished">目录不可写</translation>
+    </message>
+    <message>
+        <source>Failed to copy file</source>
+        <translation type="unfinished">复制文件失败</translation>
+    </message>
+    <message>
+        <source>The file you chose could not be written to.</source>
+        <translation type="unfinished">您选择的文件不可被写入。</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1875,6 +1890,16 @@ Share it with your friends to communicate.</source>
         <source>Import profile</source>
         <comment>import dialog title</comment>
         <translation type="unfinished">导入用户配置文件</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -1887,19 +1912,9 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished">忽略非Tox的文件</translation>
     </message>
     <message>
-        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
         <translation type="unfinished">用户配置文件已存在</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished">一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
 </context>
 <context>
@@ -1920,21 +1935,12 @@ Share it with your friends to communicate.</source>
         <translation>用户配置文件已存在</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
-    </message>
-    <message>
         <source>Profile imported</source>
         <translation>已导入用户配置文件</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
         <translation>%1 已成功导入</translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Update</source>
@@ -2080,6 +2086,15 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2254,19 +2269,6 @@ It will be installed when qTox restarts.</source>
         <translation>无法添加为好友</translation>
     </message>
     <message>
-        <source>Status</source>
-        <translation type="unfinished">状态</translation>
-    </message>
-    <message>
-        <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Executable file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation type="unfinished"></translation>
@@ -2305,12 +2307,59 @@ It will be installed when qTox restarts.</source>
         <translation>%1 %2 了</translation>
     </message>
     <message>
+        <source>Offline</source>
+        <translation type="unfinished">离线</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">群组</translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <comment>Tray action menu to logout user</comment>
+        <translation>登出</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit tox</comment>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <source>Log out</source>
+        <translation>登出</translation>
+    </message>
+    <message>
+        <source>%1 has set the title to %2</source>
+        <translation>%1 已将标题设置为 %2</translation>
+    </message>
+    <message>
+        <source>Message failed to send</source>
+        <translation>消息发送失败</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">状态</translation>
+    </message>
+    <message>
+        <source>toxcore failed to start, the application will terminate after you close this message.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executable file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2346,30 +2395,12 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Offline</source>
-        <translation type="unfinished">离线</translation>
-    </message>
-    <message>
         <source>Friends</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Groups</source>
-        <translation type="unfinished">群组</translation>
-    </message>
-    <message>
         <source>Search Contacts</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <comment>Tray action menu to logout user</comment>
-        <translation>登出</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
-        <translation>退出</translation>
     </message>
     <message>
         <source>Filter...</source>
@@ -2396,10 +2427,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Log out</source>
-        <translation>登出</translation>
-    </message>
-    <message>
         <source>Add Contact...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2410,18 +2437,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Previous Conversation</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has set the title to %2</source>
-        <translation>%1 已将标题设置为 %2</translation>
-    </message>
-    <message>
-        <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Message failed to send</source>
-        <translation>消息发送失败</translation>
     </message>
 </context>
 </TS>
