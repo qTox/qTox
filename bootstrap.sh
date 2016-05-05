@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # This script's purpose is to ease compiling qTox for users.
-# 
+#
 # NO AUTOMATED BUILDS SHOULD DEPEND ON IT.
-# 
+#
 # This script is and will be a subject to breaking changes, and at no time one
 # should expect it to work - it's something that you could try to use but
 # don't expect that it will work for sure.
@@ -14,12 +14,13 @@
 # With that being said, reporting that this script doesn't work would be nice.
 #
 # If you are contributing code to qTox that change its dependencies / the way
-# it's being build, please keep in mind that changing just bootstrap.sh 
+# it's being build, please keep in mind that changing just bootstrap.sh
 # *IS NOT* and will not be sufficient - you should update INSTALL.md first.
 
+set -eu -o pipefail
 
-WINDOWS_VERSION=$(cmd.exe /c ver 2>/dev/null | grep "Microsoft Windows")
-if [ ! -z "$WINDOWS_VERSION" ]; then
+# windows check
+if cmd.exe /c ver 2>/dev/null ; then
     cd windows
     ./bootstrap.sh
     exit $?
@@ -39,30 +40,19 @@ BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 # directory names of cloned repositories
 TOX_CORE_DIR=libtoxcore-latest
 FILTER_AUDIO_DIR=libfilteraudio-latest
-
-if [ -z "$BASE_DIR" ]; then
-    echo "internal error detected!"
-    echo "BASE_DIR should not be empty.  Aborting."
-    exit 1
-fi
-
-if [ -z "$TOX_CORE_DIR" ]; then
-    echo "internal error detected!"
-    echo "TOX_CORE_DIR should not be empty.  Aborting."
-    exit 1
-fi
-
-if [ -z "$FILTER_AUDIO_DIR" ]; then
-    echo "internal error detected!"
-    echo "FILTER_AUDIO_DIR should not be empty.  Aborting."
-    exit 1
-fi
+SQLCIPHER_DIR=sqlcipher-stable
 
 # default values for user given parameters
 INSTALL_TOX=true
 INSTALL_FILTER_AUDIO=true
+INSTALL_SQLCIPHER=false
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
+
+# if Fedora, by default install sqlcipher
+if which dnf &> /dev/null ; then
+    INSTALL_SQLCIPHER=true
+fi
 
 
 ########## parse input parameters ##########
@@ -79,6 +69,12 @@ while [ $# -ge 1 ] ; do
     elif [ ${1} = "--without-filter-audio" ] ; then
         INSTALL_FILTER_AUDIO=false
         shift
+    elif [ ${1} = "--with-sqlcipher" ] ; then
+        INSTALL_SQLCIPHER=true
+        shift
+    elif [ ${1} = "--without-sqlcipher" ] ; then
+        INSTALL_SQLCIPHER=false
+        shift
     elif [ ${1} = "-l" -o ${1} = "--local" ] ; then
         SYSTEM_WIDE=false
         shift
@@ -90,7 +86,7 @@ while [ $# -ge 1 ] ; do
             echo "[ERROR] Unknown parameter \"${1}\""
             echo ""
         fi
-    
+
         # print help
         echo "Use this script to install/update libtoxcore and libfilteraudio"
         echo ""
@@ -102,6 +98,8 @@ while [ $# -ge 1 ] ; do
         echo "    --without-tox          : do not install/update libtoxcore"
         echo "    --with-filter-audio    : install/update libfilteraudio"
         echo "    --without-filter-audio : do not install/update libfilteraudio"
+        echo "    --with-sqlcipher       : install/update sqlcipher"
+        echo "    --without-sqlcipher    : do not install/update sqlcipher"
         echo "    -h|--help              : displays this help"
         echo "    -l|--local             : install packages into ${INSTALL_DIR}"
         echo "    -k|--keep              : keep build files after installation/update"
@@ -116,7 +114,8 @@ done
 ############ print debug output ############
 echo "with tox                    : ${INSTALL_TOX}"
 echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
-echo "install into ${INSTALL_DIR} : ${SYSTEM_WIDE}"
+echo "with sqlcipher              : ${INSTALL_SQLCIPHER}"
+echo "install system-wide         : ${SYSTEM_WIDE}"
 echo "keep build files            : ${KEEP_BUILD_FILES}"
 
 
@@ -124,27 +123,37 @@ echo "keep build files            : ${KEEP_BUILD_FILES}"
 # create BASE_DIR directory if necessary
 mkdir -p ${BASE_DIR}
 
+
+# remove not needed dirs
+remove_build_dirs() {
+    rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
+    rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    rm -rf ${BASE_DIR}/${SQLCIPHER_DIR}
+}
+
+
 # maybe an earlier run of this script failed
 # thus we should remove the cloned repositories
 # if exists, otherwise cloning them may fail
-rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
-rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+remove_build_dirs
 
 
 ############### install step ###############
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
-    git clone https://github.com/irungentoo/toxcore.git ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+    git clone https://github.com/irungentoo/toxcore.git \
+        ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+
     pushd ${BASE_DIR}/${TOX_CORE_DIR}
     ./autogen.sh
-    
+
     # configure
     if [[ $SYSTEM_WIDE = "false" ]]; then
         ./configure --prefix=${BASE_DIR}
     else
         ./configure
     fi
-    
+
     # ensure A/V support is enabled
     if ! grep -Fxq "BUILD_AV_TRUE=''" config.log
     then
@@ -152,10 +161,10 @@ if [[ $INSTALL_TOX = "true" ]]; then
         echo "Maybe the dev-packages of libopus and libvpx are not installed?"
         exit 1
     fi
-    
+
     # compile
-    make -j 2
-    
+    make -j $(nproc)
+
     # install
     if [[ $SYSTEM_WIDE = "false" ]]; then
         make install
@@ -163,24 +172,59 @@ if [[ $INSTALL_TOX = "true" ]]; then
         sudo make install
         sudo ldconfig
     fi
-    
+
     popd
 fi
 
 #install libfilteraudio
 if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
-    git clone https://github.com/irungentoo/filter_audio.git ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
+    git clone https://github.com/irungentoo/filter_audio.git \
+        ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
     pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
-    
+
     if [[ $SYSTEM_WIDE = "false" ]]; then
-        PREFIX=${BASE_DIR} make -j2
+        PREFIX=${BASE_DIR} make -j$(nproc)
         PREFIX=${BASE_DIR} make install
     else
-        make -j2
+        make -j$(nproc)
         sudo make install
         sudo ldconfig
     fi
-    
+
+    popd
+fi
+
+
+#install sqlcipher
+if [[ $INSTALL_SQLCIPHER = "true" ]]; then
+    git clone https://github.com/sqlcipher/sqlcipher.git \
+        ${BASE_DIR}/${SQLCIPHER_DIR} \
+        --depth 1 \
+        --branch v3.4.0
+
+    pushd ${BASE_DIR}/${SQLCIPHER_DIR}
+    autoreconf -if
+
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+        ./configure --prefix="${BASE_DIR}" \
+            --enable-tempstore=yes \
+            CFLAGS="-DSQLITE_HAS_CODEC"
+        make -j$(nproc)
+        make install || \
+            echo ""
+            echo "Sqlcipher failed to install locally."
+            echo ""
+            echo "Try without \"-l|--local\""
+            exit 1
+    else
+        ./configure \
+            --enable-tempstore=yes \
+            CFLAGS="-DSQLITE_HAS_CODEC"
+        make -j$(nproc)
+        sudo make install
+        sudo ldconfig
+    fi
+
     popd
 fi
 
@@ -188,6 +232,5 @@ fi
 ############### cleanup step ###############
 # remove cloned repositories
 if [[ $KEEP_BUILD_FILES = "false" ]]; then
-    rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
-    rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    remove_build_dirs
 fi
