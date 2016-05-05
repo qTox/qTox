@@ -37,9 +37,16 @@ can open it by clicking the picture in the top left corner. It contains the
 following settings:
 
 ### Public Information
-* _Name:_ This is your nickname which everyone who has your Tox ID can see.
-* _Status:_ You can post a status message here, which again everyone on who has
-  your Tox ID can see.
+
+* _Name:_ This is your nickname which everyone who is on your contact list can
+  see.
+* _Status:_ You can post a status message here, which again everyone on your
+  contact list can see.
+
+#### Avatar
+
+Your profile picture that all your friends can see. To add or change, click on
+the avatar. To remove, right-click.
 
 ### Tox ID
 
