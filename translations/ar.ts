@@ -4,16 +4,8 @@
 <context>
     <name>AVForm</name>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>الأبعاد الطبيعية</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation></translation>
     </message>
     <message>
         <source>None</source>
@@ -23,20 +15,16 @@
         <source>Audio/Video</source>
         <translation>صوت/فيديو</translation>
     </message>
+    <message>
+        <source>%1p</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
         <translation>إعدادات الصوت</translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>فلترة صوت المايكروفون, ستجعل الناس تسمع الصوت بشكل أفضل.</translation>
-    </message>
-    <message>
-        <source>Filter audio</source>
-        <translation>فلترة الصوت</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -83,20 +71,12 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
-        <translation type="unfinished">...</translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
-    <message>
-        <source>Qt version:</source>
-        <translation>اصدار Qt:</translation>
-    </message>
     <message>
         <source>Restart qTox to install version %1</source>
         <translation>اعادة التشغيل لتثبيت النسخة %1</translation>
@@ -110,6 +90,22 @@ which may lead to problems with video calls.</source>
         <source>About</source>
         <translation>نبذة</translation>
     </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -119,10 +115,6 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Qt version:</source>
         <translation></translation>
     </message>
     <message>
@@ -141,18 +133,6 @@ which may lead to problems with video calls.</source>
         <source>License</source>
         <translation></translation>
     </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Authors</source>
         <translation></translation>
@@ -166,8 +146,8 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -246,11 +226,6 @@ p, li { white-space: pre-wrap; }
         <translation>لا تستطيع اضافة نفسك كصديق!</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>هذا المعرف غير مستخدم</translation>
@@ -286,6 +261,27 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>%1 هنا! </translation>
+    </message>
+    <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation type="unfinished">إضافة صديق</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">قبول</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation type="unfinished">رفض</translation>
     </message>
 </context>
 <context>
@@ -461,6 +457,14 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>Load chat history...</source>
         <translation>تحميل سجل الرسائل...</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">المحادثة</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -582,10 +586,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Filename</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>[preview]</source>
         <translation></translation>
     </message>
     <message>
@@ -801,6 +801,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Offline</source>
         <translation>غير متصل</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1112,6 +1120,18 @@ will be sent to them when they appear online to you.</source>
         <comment>reconnect button</comment>
         <translation>إعادة الإتصال</translation>
     </message>
+    <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text formatting (Markdown):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Markdown preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1188,6 +1208,14 @@ will be sent to them when they appear online to you.</source>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>1 user in chat</source>
@@ -1222,6 +1250,33 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>End audio call</source>
         <translation>انهاء المكالمة الصوتية</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">المجموعات</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1350,6 +1405,38 @@ Profile does not contain your history.</source>
         <source>Change password</source>
         <translation>تغيير كلمة المرور</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">تحديث</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1459,7 +1546,11 @@ You may want to create one.</source>
         <translation>كلمة المرور خاطئة.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1742,6 +1833,86 @@ Please use another image.</source>
 Share it with your friends to communicate.</source>
         <translation>هذه الباقة من الحروف تسمح لبقية المستخدمين بالتواصل معك.
 شاركها مع اصدقائك لتتواصلوا.</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">تحديث</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation type="unfinished">(*.tox) حفظ ملفات Tox </translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">تخطي , ليس ملف Tox</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation type="unfinished">الملف الشخصي موجود فعلا</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation type="unfinished">الملف الشخصي &quot;%1&quot; موجود فعلا . هل تريد  محوه ؟</translation>
     </message>
 </context>
 <context>
@@ -2128,21 +2299,6 @@ It will be installed when qTox restarts.</source>
         <translation>الملف الشخصي</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>دعوة لمجموعة</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 قد دعاك الى مجموعة . هل تريد الانضمام؟</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation></translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation></translation>
     </message>
@@ -2250,6 +2406,45 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Previous Conversation</source>
         <translation>المحادثة السابقة</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>

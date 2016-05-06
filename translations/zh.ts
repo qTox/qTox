@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_CN" sourcelanguage="en">
+<TS version="2.0" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AVForm</name>
     <message>
@@ -2095,7 +2095,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
 </context>
 <context>

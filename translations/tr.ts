@@ -4,16 +4,8 @@
 <context>
     <name>AVForm</name>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Varsayılan çözünürlük</translation>
-    </message>
-    <message>
-        <source> at %1 FPS</source>
-        <translation>%1 FPS</translation>
     </message>
     <message>
         <source>None</source>
@@ -24,6 +16,10 @@
         <translatorcomment>Hata olabilir.</translatorcomment>
         <translation>Ses/Görüntü</translation>
     </message>
+    <message>
+        <source>%1p</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
@@ -32,32 +28,8 @@
         <translation>Ses Ayarları</translation>
     </message>
     <message>
-        <source>0</source>
-        <translation>0</translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Mikrofonunuzdan gelen ses süzülsün, böylece karşı taraf konuşmanızı daha kolay anlayabilir.</translation>
-    </message>
-    <message>
-        <source>Filter audio</source>
-        <translation>Sesi süz</translation>
-    </message>
-    <message>
         <source>Use slider to set volume of your speakers.</source>
         <translation>Kayan düğmeği kullanarak hoparlörünüzün sesini ayarlayın.</translation>
-    </message>
-    <message>
-        <source>Microphone</source>
-        <translation>Ses düzeyi</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation>100</translation>
-    </message>
-    <message>
-        <source>Rescan audio devices</source>
-        <translation>Ses aygıtlarını tekrar tara</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -66,10 +38,6 @@
     <message>
         <source>Use slider to set volume of your microphone.</source>
         <translation>Kayan düğmeği kullanarak mikrofonunuzun sesini ayarlayın.</translation>
-    </message>
-    <message>
-        <source>Playback</source>
-        <translation>Ses düzeyi</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -98,24 +66,53 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Resolution</source>
         <translation>Çözünürlük</translation>
     </message>
+    <message>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt sürümü:</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Hakkında</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart qTox to install version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qTox is downloading update %1</source>
+        <comment>%1 is the version of the update</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
     <message>
         <source>Version</source>
         <translation>Sürüm</translation>
@@ -125,33 +122,12 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation>toxcore sürümü: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt sürümü:</translation>
-    </message>
-    <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
-        <source>You are using a qTox nightly build.</source>
-        <translatorcomment>Değiştirilebilir.</translatorcomment>
-        <translation>qTox&apos;un gecelik derlenen bir sürümünü kullanmaktasınız.</translation>
-    </message>
-    <message>
         <source>License</source>
         <translation>Lisans</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
     </message>
     <message>
         <source>Authors</source>
@@ -167,8 +143,80 @@ p, li { white-space: pre-wrap; }
         <translation>Bilinen Sorunlar</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bililen sorunların bir listesi Github&apos;da &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;hata takibi  &lt;/span&gt;&lt;/a&gt;kısmından temin edilebilir. Eğer qTox&apos;ta bir hata ya da güvenlik zafiyeti tespit ederseniz lütfen &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt; Hata Bildirme Kılavuzu&lt;/span&gt;&lt;/a&gt;&apos;na uygun biçimde durumu bildiriniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using qTox version $GIT_DESCRIBE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading update: %p%</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AboutUser</name>
+    <message>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>status message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public key:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Used aliases:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HISTORY OF ALIASES</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default directory to save files:</source>
+        <translation type="unfinished">Dosyaların kaydedileceği varsayılan dizin:</translation>
+    </message>
+    <message>
+        <source>Auto accept for this contact is disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove history (operation can not be undone!)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can save comment about this contact here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose an auto accept directory</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Sormadan kabul edilen aktarımlar için dizin belirle</translation>
+    </message>
+    <message>
+        <source>History removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -181,11 +229,6 @@ p, li { white-space: pre-wrap; }
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Kendinizi, arkadaşınız olarak ekleyemezsiniz!</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox&apos;un Tox DNS hizmetini kullanabilmesi için vekil sunucuyu devre dışı bırakmanız gerekiyor. Vekil sunucuyu devre dışı bırakıp doğrudan bağlanmak ister misiniz?</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
@@ -225,21 +268,30 @@ Ignore the proxy and connect to the Internet directly?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>Selam, ben %1, biraz toxlayalım mı?</translation>
     </message>
+    <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation type="unfinished">Arkadaş ekle</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Kabul et</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation type="unfinished">Reddet</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
-    <message>
-        <source>Synchronized - safe (recommended)</source>
-        <translation>Eşzamanlı - güvenlidir (tavsiye edilir)</translation>
-    </message>
-    <message>
-        <source>Partially async - risky (20% faster)</source>
-        <translation>Kısmen eşzamanlı - riskli (20% daha çabuk)</translation>
-    </message>
-    <message>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation>Eşzamansız - tehlikeli (en çabuk)</translation>
-    </message>
     <message>
         <source>Advanced</source>
         <translatorcomment>Ya da basitçe gelişmiş, ileri seviye denilebilir, alışılageldiği üzere</translatorcomment>
@@ -248,10 +300,6 @@ Ignore the proxy and connect to the Internet directly?</source>
 </context>
 <context>
     <name>AdvancedSettings</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
@@ -268,14 +316,6 @@ Ignore the proxy and connect to the Internet directly?</source>
     <message>
         <source>Reset to default settings</source>
         <translation>Varsayılana ayarla</translation>
-    </message>
-    <message>
-        <source>Chat history</source>
-        <translation>Sohbet geçmişi</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Veritabanına yazılıyor&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -424,6 +464,14 @@ Ignore the proxy and connect to the Internet directly?</source>
         <source>Load chat history...</source>
         <translation>Sohbet geçmişini yükle...</translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopyala</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -546,10 +594,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Filename</source>
         <translation>Dosya ismi</translation>
-    </message>
-    <message>
-        <source>[preview]</source>
-        <translation>[önizleme]</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -761,6 +805,18 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Offline</source>
         <translation>Çevrimdışı</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show details</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1072,6 +1128,18 @@ will be sent to them when they appear online to you.</source>
         <comment>reconnect button</comment>
         <translation>Yeniden bağlan</translation>
     </message>
+    <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text formatting (Markdown):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Markdown preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1148,6 +1216,14 @@ will be sent to them when they appear online to you.</source>
     </message>
 </context>
 <context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupChatForm</name>
     <message>
         <source>1 user in chat</source>
@@ -1182,6 +1258,33 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>End audio call</source>
         <translation>Sesli konuşmayı bitir</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Gruplar</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1309,6 +1412,38 @@ Profile does not contain your history.</source>
         <source>Change password</source>
         <translation>Parolayı değiştir</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Güncelleme</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1323,10 +1458,6 @@ Profile does not contain your history.</source>
 </context>
 <context>
     <name>LoginScreen</name>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
     <message>
         <source>Username:</source>
         <translation>Kullanıcı adı:</translation>
@@ -1420,6 +1551,14 @@ Yeni bir tane oluşturmak isteyebilirsiniz.</translation>
     <message>
         <source>Wrong password.</source>
         <translation>Yanlış parola.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1693,6 +1832,86 @@ Please use another image.</source>
 Share it with your friends to communicate.</source>
         <translation>Bu karakterler sizin benzersiz kimliğinizdir. Tox ağındaki diğer kişiler sizi bu şekilde bulur. Kimliğinizi arkadaşlarınızla paylaşın.</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Güncelleme</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation type="unfinished">Tox kayıt dosyası (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Tox dosyası dışındakiler görmezden geliniyor</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation type="unfinished">Bu profil zaten var</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation type="unfinished">&quot;%1&quot; isimli bir profil zaten var, silmek ister misiniz?</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1789,6 +2008,90 @@ It will be installed when qTox restarts.</source>
         <source>Incoming call...</source>
         <translation>Gelen çağrı...</translation>
     </message>
+    <message>
+        <source>Version %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incorrect response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No password in response</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must send POST requests to /api</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please try again using a HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I was unable to read your encrypted payload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lookup failed because the server replied with invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal lookup error. Please file a bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Hata</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -1882,28 +2185,6 @@ It will be installed when qTox restarts.</source>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
         <translation>Metin kaydında beklenmeyen sayıda değer var</translation>
-    </message>
-    <message>
-        <source>The version of Tox DNS used by this server is not supported</source>
-        <comment>Error with the DNS</comment>
-        <translation>Bu sunucunun kullandığı Tox DNS sürümü desteklenmiyor</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain any Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS sorgusu bir Tox kimliği içermiyor</translation>
-    </message>
-    <message>
-        <source>The DNS lookup does not contain a valid Tox ID</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS sorgusu geçerli bir Tox kimliğini içermiyor</translation>
-    </message>
-    <message>
-        <source>It appears that qTox has to use the old toxdns1 protocol to access the DNS record of your friend&apos;s Tox ID.
-Unfortunately toxdns1 is not secure, and you are at risk of someone hijacking what is sent between you and the ToxDNS service.
-Should toxdns1 be used anyway?
-If unsure press &apos;No&apos;, so that the request to the ToxDNS service will not be made using an insecure protocol.</source>
-        <translation>Görünüşe göre, arkadaşlarınıza eklemek istediğiniz kişinin DNS kaydına ulaşabilmek için, qTox&apos;un eski toxdns1 protokolünü kullanması gerekiyor.</translation>
     </message>
 </context>
 <context>
@@ -2015,21 +2296,6 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
         <translation>Profil</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Grup daveti</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 sizi grup sohbetine davet etti. Davete icabet etmek ister misiniz?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Bilinemeyen&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 başlığını %2 olarak değiştirdi</translation>
     </message>
@@ -2137,6 +2403,35 @@ If unsure press &apos;No&apos;, so that the request to the ToxDNS service will n
     <message>
         <source>Previous Conversation</source>
         <translation>Önceki Sohbet</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>

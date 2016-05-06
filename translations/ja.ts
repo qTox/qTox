@@ -153,10 +153,6 @@ which may lead to problems with video calls.</source>
         <source>Known Issues</source>
         <translation type="unfinished">既知の問題点</translation>
     </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please &lt;a href=&quot;https://github.com/tux3/qTox/issues/new?body=%0A%0A%0A%0A---%0A%0AqTox:+$GIT_DESCRIBE%0ACommit+hash:+$GIT_VERSION%0Atoxcore:+$TOXCOREVERSION%0AQt:+$QTVERSION%0AOS+version:&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;report it&lt;/span&gt;&lt;/a&gt; according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;既知の問題点の多くは、私達のGithub上にある&lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;バグ・トラッカー&lt;/span&gt;&lt;/a&gt;で見つけることができます。もし、qToxに関係するバグもしくはセキュリテ脆弱性を見つけたら、どうか私達のガイドライン「&lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;分かりやすいバグ報告の書き方&lt;/span&gt;&lt;/a&gt;」に従って、&lt;a href=&quot;https://github.com/tux3/qTox/issues/new?body=%0A%0A%0A%0A---%0A%0AqTox:+$GIT_DESCRIBE%0ACommit+hash:+$GIT_VERSION%0Atoxcore:+$TOXCOREVERSION%0AQt:+$QTVERSION%0AOS+version:&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;それを報告&lt;/span&gt;&lt;/a&gt;してください。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>AboutUser</name>
@@ -999,10 +995,6 @@ instead of closing itself.</source>
         <translation type="unfinished">qToxを再起動するまで、新しい書式が読み込まれない可能性があります。</translation>
     </message>
     <message>
-        <source>Markdown:</source>
-        <translation type="unfinished">書式</translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation type="unfinished">書式を選んでください</translation>
     </message>
@@ -1141,6 +1133,10 @@ will be sent to them when they appear online to you.</source>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">再接続</translation>
+    </message>
+    <message>
+        <source>Text formatting (Markdown):</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1873,6 +1869,21 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Update</source>
         <translation type="unfinished">アップデート</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
