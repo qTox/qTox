@@ -39,6 +39,7 @@ BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 # directory names of cloned repositories
 TOX_CORE_DIR=libtoxcore-latest
 FILTER_AUDIO_DIR=libfilteraudio-latest
+SQLCIPHER_DIR=sqlcipher
 
 if [ -z "$BASE_DIR" ]; then
     echo "internal error detected!"
@@ -58,9 +59,16 @@ if [ -z "$FILTER_AUDIO_DIR" ]; then
     exit 1
 fi
 
+if [ -z "$SQLCIPHER_DIR" ]; then
+    echo "internal error detected!"
+    echo "SQLCIPHER_DIR should not be empty.  Aborting."
+    exit 1
+fi
+
 # default values for user given parameters
 INSTALL_TOX=true
 INSTALL_FILTER_AUDIO=true
+INSTALL_SQLCIPHER=true
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
 
@@ -129,7 +137,7 @@ mkdir -p ${BASE_DIR}
 # if exists, otherwise cloning them may fail
 rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
 rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
-
+rm -rf ${BASE_DIR}/${SQLCIPHER_DIR}
 
 ############### install step ###############
 #install libtoxcore
@@ -184,10 +192,35 @@ if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
     popd
 fi
 
+#install sqlcipher
+if [[ $INSTALL_SQLCIPHER = "true" ]]; then
+    git clone https://github.com/sqlcipher/sqlcipher.git ${BASE_DIR}/${SQLCIPHER_DIR} --depth 1
+    pushd ${BASE_DIR}/${SQLCIPHER_DIR}
+
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+        PREFIX=${BASE_DIR} make -j2
+        PREFIX=${BASE_DIR} make install
+
+    else
+    if [[ $INSTALL_SQLCIPHER = "true" ]] ; then
+    
+	autoreconf -if
+	./configure --enable-tempstore=yes CFLAGS="-DSQLITE_HAS_CODEC" \
+    LDFLAGS="/opt/local/lib/libcrypto.a"
+        make -j2
+        sudo make install
+    
+    popd
+    
+fi
+
+    popd
+
 
 ############### cleanup step ###############
 # remove cloned repositories
 if [[ $KEEP_BUILD_FILES = "false" ]]; then
     rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
     rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
+    rm -rf ${BASE_DIR}/${SQLCIPHER_DIR}
 fi
