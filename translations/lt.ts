@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="lt_LT">
+<TS version="2.1" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
 </context>
 <context>
@@ -96,19 +96,19 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visų žinomų problemų sąrašą galite rasti mūsų Github %1. Jei radote problemą ar saugumo spragą qTox programoje, prašome %3 pagal gaires mūsų viki straipsnyje „%2“.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>klaidų seklyje</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaip parašyti naudingą klaidos pranešimą</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>pranešti apie tai</translation>
     </message>
 </context>
 <context>
@@ -151,7 +151,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt versija: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -274,19 +274,19 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished">Pridėti kontaktą</translation>
+        <translation>Pridėti kontaktą</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų užklausos</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Priimti kontaktą</translation>
+        <translation>Priimti</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished">Atmesti kontaktą</translation>
+        <translation>Atmesti</translation>
     </message>
 </context>
 <context>
@@ -464,11 +464,11 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 rašo</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopijuoti</translation>
+        <translation>Kopijuoti</translation>
     </message>
 </context>
 <context>
@@ -810,11 +810,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Į naują grupės pokalbį</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakviesti į grupės pokalbį „%1“</translation>
     </message>
 </context>
 <context>
@@ -1131,15 +1131,15 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdown nustatymai bus pritaikyti perkrovus qTox.</translation>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksto formatavimas (Markdown):</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkite Markdown vaizdavimo tipą.</translation>
     </message>
 </context>
 <context>
@@ -1221,7 +1221,7 @@ bus nusiųstos jiems prisijungus.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;nėra&gt;</translation>
     </message>
 </context>
 <context>
@@ -1265,27 +1265,27 @@ bus nusiųstos jiems prisijungus.</translation>
     <name>GroupInviteForm</name>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt; pakvietė %2.</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupės</translation>
+        <translation>Grupės</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti naują grupės pokalbį</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakvietimai į grupes</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijungti</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmesti</translation>
     </message>
 </context>
 <context>
@@ -1417,35 +1417,35 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme registras</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo vardas</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Biografija</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Serveris</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Paslėpti mano vardą viešajame sąraše</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jūsų slaptažodis</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Atnaujinimas</translation>
+        <translation>Atnaujinti</translation>
     </message>
 </context>
 <context>
@@ -1559,11 +1559,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuoti</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžiu apsaugotų profilių automatiškai užkrauti negalima.</translation>
     </message>
 </context>
 <context>
@@ -1851,49 +1851,49 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Šių failų ištrinti nepavyko:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Prašome juos ištrinti patiems.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Failų ištrinti nepavyko!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis (vykdoma)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti (vykdoma)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Baigta!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Paskyra %1@%2 sėkmingai atnaujinta</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>%1@%2 užregistruotas duomenų bazėje. Nepamirškite slaptažodžio</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme klaida</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Atnaujinimas</translation>
+        <translation>Atnaujinti</translation>
     </message>
 </context>
 <context>
@@ -1901,32 +1901,32 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Importuoti profilį</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox failas (*.tox)</translation>
+        <translation>Tox failas (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Praleidžiamas failas</translation>
+        <translation>Praleidžiamas failas</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Įspėjimas: pasirinktas failas nėra Tox failas – praleista.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Toks profilis jau yra</translation>
+        <translation>Toks profilis jau yra</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished">Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
+        <translation>Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
     </message>
 </context>
 <context>
@@ -2423,35 +2423,35 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakvietimai į grupes</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;nėra&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupės pokalbis Nr. %1</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sukurti naują grupę...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nauja kontaktų užklausa</numerusform>
+            <numerusform>%n naujos kontaktų užklausos</numerusform>
+            <numerusform>%n naujų kontaktų užklausų</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n naujas grupės pakvietimas</numerusform>
+            <numerusform>%n nauji grupės pakvietimai</numerusform>
+            <numerusform>%n naujų grupės pakvietimų</numerusform>
         </translation>
     </message>
 </context>
