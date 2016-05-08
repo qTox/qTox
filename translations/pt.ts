@@ -1896,7 +1896,7 @@ Compartilhe com seus contatos para se comunicar.</translation>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arquivo Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>

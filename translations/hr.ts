@@ -1903,7 +1903,7 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ignoriram ne-Tox datoteku</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>

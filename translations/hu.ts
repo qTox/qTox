@@ -1897,7 +1897,7 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nem Tox-fájl mellőzése</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>

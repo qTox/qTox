@@ -5,7 +5,7 @@
     <name>AVForm</name>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>Default resolution</source>
@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Отсутствует</translation>
+        <translation>Отсутствует</translation>
     </message>
     <message>
         <source>Audio/Video</source>
@@ -97,19 +97,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Список всех известных проблем вы можете найти на нашем %1 на Github. Если вы обнаружите ошибку или уязвимость в безопасности qTox, пожалуйста %3 согласно указаниям в нашей статье %2 вики.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>баг-трекере</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Написание полезных отчетов об ошибках</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>сообщите о них</translation>
     </message>
 </context>
 <context>
@@ -152,26 +152,26 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>имя пользователя</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>статус</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Публичный ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -179,7 +179,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>ИСТОРИЯ ПСЕВДОНИМОВ</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -233,7 +233,8 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox необходимо использовать Tox DNS, но не может сделать это через прокси. 
+    Игнорировать прокси и подключитесь к Интернету напрямую?</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -350,7 +351,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Lorem</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Ipsum</source>
@@ -358,7 +359,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Dolor</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolor</translation>
     </message>
 </context>
 <context>
@@ -468,11 +469,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 набирает сообщение</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Копировать</translation>
+        <translation>Копировать</translation>
     </message>
 </context>
 <context>
@@ -1064,7 +1065,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Для изменения отображения разметки необходимо перезапустить qTox</translation>
+        <translation>Для изменения отображения разметки необходимо перезапустить qTox.</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
@@ -1148,7 +1149,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>Форматирование текста (Markdown):</translation>
     </message>
 </context>
 <context>
@@ -1230,7 +1231,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Пусто&gt;</translation>
     </message>
 </context>
 <context>
@@ -1426,35 +1427,35 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрация Toxme</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользователя</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>О себе</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Не отображать меня в публичном списке</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрация</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш пароль</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Обновление</translation>
+        <translation>Обновление</translation>
     </message>
 </context>
 <context>
@@ -1568,11 +1569,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Профили защищенные паролем не могут быть загружены автоматически.</translation>
     </message>
 </context>
 <context>
@@ -1857,49 +1858,49 @@ Share it with your friends to communicate.</source>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Следующие файлы не могут быть удалены:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, удалите их вручную.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файлы не могут быть удалены!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрация (в процессе)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновление (в процессе)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнено!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Аккаунт %1@%2 обновлен успешно</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Аккаунт %1@%2 успешно записан. Сохраните ваш пароль</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка Toxme</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрация</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Обновление</translation>
+        <translation>Обновить</translation>
     </message>
 </context>
 <context>
@@ -1907,32 +1908,32 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Импорт профиля</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Файл Tox (*.tox)</translation>
+        <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Выбран не файл Tox</translation>
+        <translation>Игнорирование не-Tox файлов</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предупреждение: Вы выбрали файл, который не является Tox файлом; он будет проигнорирован.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Профиль уже существует</translation>
+        <translation>Профиль уже существует</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished">Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
+        <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
     </message>
 </context>
 <context>
@@ -2040,75 +2041,75 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправильный ответ</translation>
     </message>
     <message>
         <source>No password in response</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет пароля в ответе</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер не поддерживает Toxme</translation>
     </message>
     <message>
         <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы должны отправить POST запросы к /api</translation>
     </message>
     <message>
         <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, попробуйте снова через подключение HTTPS</translation>
     </message>
     <message>
         <source>I was unable to read your encrypted payload</source>
-        <translation type="unfinished"></translation>
+        <translation>Я не смог прочитать ваши зашифрованные данные</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы делаете слишком много запросов. Подождите один час и повторите попытку</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
+        <translation>Это имя уже используется</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот Tox ID уже зарегистрирован под другим именем</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, не используйте пробелы в вашем имени</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный пароль</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя использовать это имя</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя не найдено</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID не отправлен</translation>
     </message>
     <message>
         <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
+        <translation>Произошел сбой при поиске, потому что сервер ответил с недопустимыми данными</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот пользователь не существует</translation>
     </message>
     <message>
         <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутренняя ошибка. Пожалуйста Отправить сообщение об ошибке</translation>
     </message>
     <message>
         <source>Unknown error (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестная ошибка (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2116,7 +2117,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox не может загрузить историю переписки</translation>
+        <translation>qTox не может загрузить историю переписки, она будет отключена</translation>
     </message>
 </context>
 <context>
@@ -2284,12 +2285,12 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">Приглашение группы</translation>
+        <translation>Приглашения в группы</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Пусто&gt;</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -2301,18 +2302,18 @@ It will be installed when qTox restarts.</source>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform>Новых запросов в друзья: %n</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новый запрос в друзья</numerusform>
+            <numerusform>%n новых запроса в друзья</numerusform>
+            <numerusform>%n новых запросов в друзья</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform>Новых приглашений в группу: %n</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новое приглашение в группу</numerusform>
+            <numerusform>%n новых приглашения в группы</numerusform>
+            <numerusform>%n новых приглашений в группы</numerusform>
         </translation>
     </message>
     <message>
@@ -2462,7 +2463,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Групповой чат #%1</translation>
     </message>
 </context>
 </TS>
