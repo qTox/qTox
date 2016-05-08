@@ -5,7 +5,7 @@ qTox
  [**Install**](/INSTALL.md) **|**
  [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **|**
  [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|**
- [**Translate**](https://github.com/tux3/qTox/wiki/Translating) **|**
+ [**Translate**](/translations/README.md) **|**
  [**Jenkins builds**](https://build.tox.chat/) **|**
  [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|**
  [**Mailing list**](https://lists.tox.chat) **|**
@@ -54,7 +54,7 @@ idea of the general look and features.
 - Audio calls, including group calls
 - Video calls
 - Tox DNS and Tox URI support
-- Translations in various languages
+- Translations in 26 languages
 - Avatars
 - Faux offline messages
 - History
