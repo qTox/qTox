@@ -201,11 +201,11 @@ QString ChatMessage::detectMarkdown(const QString &str)
     {
         QString snipCheck = out.mid(offset-1,exp.cap(0).length()+2);
         QString snippet = exp.cap(0).trimmed();
-
         QString htmledSnippet;
 
         // Only parse if surrounded by spaces, newline(s) and/or beginning/end of line
-        if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0) && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.toHtmlEscaped().length() == out.toHtmlEscaped().length()))
+        if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0)
+            && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.length() == out.length()))
         {
             int mul = 0; // Determines how many characters to strip from markdown text
             // Set mul depending on markdownPreference
