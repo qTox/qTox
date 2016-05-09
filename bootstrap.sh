@@ -211,10 +211,10 @@ if [[ $INSTALL_SQLCIPHER = "true" ]]; then
             CFLAGS="-DSQLITE_HAS_CODEC"
         make -j$(nproc)
         make install || \
-            echo ""
-            echo "Sqlcipher failed to install locally."
-            echo ""
-            echo "Try without \"-l|--local\""
+            echo "" && \
+            echo "Sqlcipher failed to install locally." && \
+            echo "" && \
+            echo "Try without \"-l|--local\"" && \
             exit 1
     else
         ./configure \
