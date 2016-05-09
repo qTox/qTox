@@ -1,4 +1,18 @@
 <a name=""></a>
+## v1.4.1 (2016-05-09)
+
+This release fixes an issue with the updater not installing updates correctly.
+This update also fixes some problems with portable mode,
+which could affect where the updater downloaded files.
+
+#### Bug Fixes
+
+* **settings:**  Look for portable setting in module path, not CWD ([95634f1c](https://github.com/tux3/qTox/commit/95634f1cfebdec0aadd71077175d8258a4e89d67))
+* **updater:**  Use module path, not working dir ([0f1c8a78](https://github.com/tux3/qTox/commit/0f1c8a783beb9d09f3af01b68a2054379e16b1dd))
+
+
+
+<a name=""></a>
 ## v1.4.0 (2016-04-24)
 
 Time flows, and with the flow come new features, new bugfixes, and hopefully no
