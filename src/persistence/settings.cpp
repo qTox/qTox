@@ -95,9 +95,9 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    if (QFile(globalSettingsFile).exists())
+    if (QFile(qApp->applicationDirPath()+QDir::separator()+globalSettingsFile).exists())
     {
-        QSettings ps(globalSettingsFile, QSettings::IniFormat);
+        QSettings ps(qApp->applicationDirPath()+QDir::separator()+globalSettingsFile, QSettings::IniFormat);
         ps.setIniCodec("UTF-8");
         ps.beginGroup("General");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
@@ -583,7 +583,7 @@ QString Settings::getSettingsDirPath()
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return QString(".")+QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
@@ -602,7 +602,7 @@ QString Settings::getAppDataDirPath()
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return QString(".")+QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
@@ -623,7 +623,7 @@ QString Settings::getAppCacheDirPath()
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return QString(".")+QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
     // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
