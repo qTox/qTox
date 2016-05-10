@@ -24,11 +24,15 @@
 #include "src/persistence/profilelocker.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
+#ifdef QTOX_PLATFORM_EXT
+#include "src/platform/capslock.h"
+#endif
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QMessageBox>
+#include <QToolButton>
 #include <QDebug>
 
 LoginScreen::LoginScreen(QWidget *parent) :
@@ -57,6 +61,17 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
+    int width = 130;
+    int height = 23;
+
+    capsIndicator = new QToolButton(ui->newPass);
+    QIcon icon = QIcon(":img/caps_lock.svg");
+    capsIndicator->setIcon(icon);
+    capsIndicator->setIconSize(QSize(height, height));
+    capsIndicator->setCursor(Qt::ArrowCursor);
+    capsIndicator->move(width - height, 0);
+    capsIndicator->setStyleSheet("border: none; padding: 0;");
+
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 
@@ -64,10 +79,38 @@ LoginScreen::LoginScreen(QWidget *parent) :
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);
 }
 
+void LoginScreen::showCapsIndicator() {
+    capsIndicator->show();
+
+    int height = 23;
+    // TODO: get correct style
+    QString style = QString("padding-right: %1px").arg(height);
+    capsIndicator->parentWidget()->setStyleSheet(style);
+}
+
+void LoginScreen::hideCapsIndicator() {
+    capsIndicator->hide();
+
+    capsIndicator->parentWidget()->setStyleSheet("");
+}
+
+void LoginScreen::checkCapsLock() {
+    bool caps = false;
+#ifdef QTOX_PLATFORM_EXT
+    caps = Platform::capsLockEnabled();
+#endif
+    if (caps)
+        showCapsIndicator();
+    else
+        hideCapsIndicator();
+}
+
 LoginScreen::~LoginScreen()
 {
     Translator::unregister(this);
     delete ui;
+    delete capsIndicator;
+    //delete confimCapsIndicator;
 }
 
 void LoginScreen::reset()
@@ -104,15 +147,27 @@ void LoginScreen::reset()
     ui->autoLoginCB->blockSignals(false);
 }
 
-#ifdef Q_OS_MAC
 bool LoginScreen::event(QEvent* event)
 {
-    if (event->type() == QEvent::WindowActivate || event->type() == QEvent::WindowStateChange)
-       emit windowStateChanged(windowState());
+    switch (event->type())
+    {
+#ifdef Q_OS_MAC
+    case QEvent::WindowActivate:
+    case QEvent::WindowStateChange:
+        emit windowStateChanged(windowState());
+        break;
+#endif
+    case QEvent::Show:
+    case QEvent::KeyRelease:
+        checkCapsLock();
+        break;
+    default:
+        break;
+    }
+
 
     return QWidget::event(event);
 }
-#endif
 
 void LoginScreen::onNewProfilePageClicked()
 {
