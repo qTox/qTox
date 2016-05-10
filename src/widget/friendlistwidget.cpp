@@ -254,28 +254,30 @@ void FriendListWidget::setMode(Mode mode)
                 currentDate = currentDate.addMonths(-1);
         }
 
+        QLocale *ql = new QLocale(Settings::getInstance().getTranslation());
+
         CategoryWidget* categoryLast1Month = new CategoryWidget(this);
-        categoryLast1Month->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast1Month->setName(ql->monthName(currentDate.month()));
         activityLayout->addWidget(categoryLast1Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast2Month = new CategoryWidget(this);
-        categoryLast2Month->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast2Month->setName(ql->monthName(currentDate.month()));
         activityLayout->addWidget(categoryLast2Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast3Month = new CategoryWidget(this);
-        categoryLast3Month->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast3Month->setName(ql->monthName(currentDate.month()));
         activityLayout->addWidget(categoryLast3Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast4Month = new CategoryWidget(this);
-        categoryLast4Month->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast4Month->setName(ql->monthName(currentDate.month()));
         activityLayout->addWidget(categoryLast4Month);
 
         currentDate = currentDate.addMonths(-1);
         CategoryWidget* categoryLast5Month = new CategoryWidget(this);
-        categoryLast5Month->setName(QDate::longMonthName(currentDate.month()));
+        categoryLast5Month->setName(ql->monthName(currentDate.month()));
         activityLayout->addWidget(categoryLast5Month);
 
         CategoryWidget* categoryOlder = new CategoryWidget(this);
@@ -285,6 +287,9 @@ void FriendListWidget::setMode(Mode mode)
         CategoryWidget* categoryNever = new CategoryWidget(this);
         categoryNever->setName(tr("Unknown", "Category for sorting friends by activity"));
         activityLayout->addWidget(categoryNever);
+
+        delete ql;
+        ql = 0;
 
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
