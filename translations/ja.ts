@@ -1873,17 +1873,17 @@ Share it with your friends to communicate.</source>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">次のファイルは削除できませんでした:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">手動で削除してください。</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ファイルが削除できませんでした！</translation>
     </message>
 </context>
 <context>
@@ -2384,62 +2384,62 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">退席中</translation>
+        <translation>退席中</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">忙しい</translation>
+        <translation>忙しい</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished">ログアウト</translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation type="unfinished">終了</translation>
+        <translation>終了</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished">フィルタ...</translation>
+        <translation>フィルタ...</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">ファイル</translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">編集</translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished">連絡先</translation>
+        <translation>連絡先</translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation type="unfinished">ステータス変更</translation>
+        <translation>ステータス変更</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished">プロファイル編集</translation>
+        <translation>プロファイル編集</translation>
     </message>
     <message>
         <source>Log out</source>
-        <translation type="unfinished">ログアウト</translation>
+        <translation>ログアウト</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation type="unfinished">連絡先の追加...</translation>
+        <translation>連絡先の追加...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation type="unfinished">次の会話</translation>
+        <translation>次の会話</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation type="unfinished">前の会話</translation>
+        <translation>前の会話</translation>
     </message>
 </context>
 </TS>
