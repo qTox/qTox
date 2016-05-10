@@ -94,19 +94,21 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>Bug-Tracker (Englisch)</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Original-Titel, deshalb auf Englisch</translatorcomment>
+        <translation>„Writing Useful Bug Reports“ (Englisch)</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Unnötig, wird nicht verwendet!</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -149,7 +151,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt-Version: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -164,7 +166,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>status message</source>
-        <translation>Status Nachricht</translation>
+        <translation>Status-Nachricht</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -231,7 +233,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, kann das bei aktiviertem Proxyserver aber nicht.
-   Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden?</translation>
+Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden?</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -284,7 +286,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Diese Tox ID existiert nicht</translation>
+        <translation>Diese Tox ID existiert nicht.</translation>
     </message>
 </context>
 <context>
@@ -307,11 +309,10 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Der Html Code ist recht übertrieben und enthält Fehler.</translatorcomment>
         <translation>&lt;html&gt;
-&lt;body style=&quot; font-weight:400; color:#500;&quot;&gt;
+&lt;body style=&quot;font-weight:400; color:#500;&quot;&gt;
 &lt;p&gt;Wichtiger Hinweis:&lt;/p&gt;
-&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es zu Problemen und sogar Datenverlust wie z. B. Beschädigungen der Gesprächsverläufe kommen!&lt;/p&gt;
+&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es zu Problemen und sogar Datenverlust wie z. B. Verlust der Gesprächsverläufe kommen!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>
     </message>
@@ -325,7 +326,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Form</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Von</translation>
+        <translation></translation>
     </message>
     <message>
         <source>qTox</source>
@@ -335,12 +336,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Someone</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Jemand</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Someone else</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Jemand anderes</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Groupbot</source>
@@ -350,12 +351,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>That guy who I don&apos;t remember adding</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Jemand den ich wohl nicht hinzugefügt hatte</translation>
+        <translation></translation>
     </message>
     <message>
         <source>NASA manager</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>NASA-Manager</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Lorem</source>
@@ -479,11 +480,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tippt gerade</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopieren</translation>
+        <translation>Kopieren</translation>
     </message>
 </context>
 <context>
@@ -1162,7 +1163,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>Text-Formatierung (Markdown)</translation>
     </message>
 </context>
 <context>
@@ -1441,35 +1442,35 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe-Registrierung</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe-Name</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffentliche Info (optional)</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Name nicht zur öffentlichen Liste hinzufügen</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrieren</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Dein Passwort</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Aktualisierung</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -1587,7 +1588,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren</translation>
     </message>
 </context>
 <context>
@@ -1872,49 +1873,49 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Die folgenden Dateien konnten nicht gelöscht werden:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bitte lösche sie manuell.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dateien konnten nicht gelöscht werden!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrieren (in Arbeit)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren (in Arbeit)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Erledigt!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Account %1@%2 wurde erfolgreich aktualisiert.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Benutzer %1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern.</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe-Fehler</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrieren</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Aktualisierung</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -1922,32 +1923,32 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profil importieren</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox-Datei (*.tox)</translation>
+        <translation>Tox-Datei (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Nicht-Tox-Datei ignoriert</translation>
+        <translation>Nicht-Tox-Datei ignoriert</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Warnung: Die von dir gewählte Datei ist keine Tox-Datei. Sie wird ignoriert.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Profil bereits vorhanden</translation>
+        <translation>Profil bereits vorhanden</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished">Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
+        <translation>Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
 </context>
 <context>
@@ -2473,7 +2474,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppenchat #%1</translation>
     </message>
 </context>
 </TS>
