@@ -520,7 +520,9 @@ void ProfileForm::onRegisterButtonClicked()
             break;
         default:
             QString errorMessage = Toxme::getErrorMessage(code);
-            GUI::showWarning(tr("Toxme error"),  errorMessage);
+            qWarning() << errorMessage;
+            QString translated = Toxme::translateErrorMessage(code);
+            GUI::showWarning(tr("Toxme error"),  translated);
         }
 
         bodyUI->toxmeRegisterButton->setEnabled(true);
