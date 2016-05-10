@@ -288,6 +288,9 @@ void FriendListWidget::setMode(Mode mode)
         categoryNever->setName(tr("Unknown", "Category for sorting friends by activity"));
         activityLayout->addWidget(categoryNever);
 
+        delete ql;
+        ql = 0;
+
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
         {
