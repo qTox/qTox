@@ -93,6 +93,10 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
     SOURCES += src/platform/autorun_win.cpp \
                src/platform/autorun_xdg.cpp \
                src/platform/autorun_osx.cpp
+
+    HEADERS += src/platform/capslock.h
+    SOURCES += src/platform/capslock_win.cpp \
+               src/platform/capslock_x11.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux
