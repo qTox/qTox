@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AVForm</name>
     <message>
@@ -1172,6 +1172,18 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Port:</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Plaintext</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Pokazuj znaki formatujące</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Nie pokazuj znaków formatujących</translation>
     </message>
 </context>
 <context>
