@@ -1294,7 +1294,9 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
                 currentWindow->activateWindow();
         }
 
-        if (Settings::getInstance().getNotifySound() && sound)
+        bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
+
+        if (Settings::getInstance().getNotifySound() && sound && !isBusy)
             Audio::getInstance().playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
     }
 
