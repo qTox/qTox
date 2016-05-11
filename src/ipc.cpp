@@ -86,9 +86,6 @@ IPC::~IPC()
 
 IPC& IPC::getInstance()
 {
-#ifdef Q_OS_ANDROID
-    Q_ASSERT(0 && "IPC can not be used on android");
-#endif
     static IPC instance;
     return instance;
 }
