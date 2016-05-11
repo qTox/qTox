@@ -61,16 +61,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    int width = 130;
-    int height = 23;
-
-    capsIndicator = new QToolButton(ui->newPass);
-    QIcon icon = QIcon(":img/caps_lock.svg");
-    capsIndicator->setIcon(icon);
-    capsIndicator->setIconSize(QSize(height, height));
-    capsIndicator->setCursor(Qt::ArrowCursor);
-    capsIndicator->move(width - height, 0);
-    capsIndicator->setStyleSheet("border: none; padding: 0;");
+    capsIndicator = new CapsLockIndicator(ui->newPass);
+    confimCapsIndicator = new CapsLockIndicator(ui->newPassConfirm);
 
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
@@ -79,30 +71,40 @@ LoginScreen::LoginScreen(QWidget *parent) :
     Translator::registerHandler(std::bind(&LoginScreen::retranslateUi, this), this);
 }
 
-void LoginScreen::showCapsIndicator() {
-    capsIndicator->show();
+LoginScreen::CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent) {
+    inputSize = QSize(130, 23);
+    cleanInputStyle = parentWidget()->styleSheet();
 
-    int height = 23;
-    // TODO: get correct style
-    QString style = QString("padding-right: %1px").arg(height);
-    capsIndicator->parentWidget()->setStyleSheet(style);
+    QIcon icon = QIcon(":img/caps_lock.svg");
+    setIcon(icon);
+    QSize iconSize(inputSize.height(), inputSize.height());
+    setIconSize(iconSize);
+    setCursor(Qt::ArrowCursor);
+    move(inputSize.width() - inputSize.height(), 0);
+    setStyleSheet("border: none; padding: 0;");
 }
 
-void LoginScreen::hideCapsIndicator() {
-    capsIndicator->hide();
+void LoginScreen::CapsLockIndicator::show() {
+    QToolButton::show();
 
-    capsIndicator->parentWidget()->setStyleSheet("");
+    QString style = QString("padding: -3px %1px -3px -6px").arg(iconSize().width() - 3);
+    parentWidget()->setStyleSheet(style);
 }
 
-void LoginScreen::checkCapsLock() {
+void LoginScreen::CapsLockIndicator::hide() {
+    QToolButton::hide();
+    parentWidget()->setStyleSheet(cleanInputStyle);
+}
+
+void LoginScreen::CapsLockIndicator::updateIndicator() {
     bool caps = false;
 #ifdef QTOX_PLATFORM_EXT
     caps = Platform::capsLockEnabled();
 #endif
     if (caps)
-        showCapsIndicator();
+        show();
     else
-        hideCapsIndicator();
+        hide();
 }
 
 LoginScreen::~LoginScreen()
@@ -110,7 +112,7 @@ LoginScreen::~LoginScreen()
     Translator::unregister(this);
     delete ui;
     delete capsIndicator;
-    //delete confimCapsIndicator;
+    delete confimCapsIndicator;
 }
 
 void LoginScreen::reset()
@@ -159,7 +161,8 @@ bool LoginScreen::event(QEvent* event)
 #endif
     case QEvent::Show:
     case QEvent::KeyRelease:
-        checkCapsLock();
+        capsIndicator->updateIndicator();
+        confimCapsIndicator->updateIndicator();
         break;
     default:
         break;

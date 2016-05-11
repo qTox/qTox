@@ -64,10 +64,25 @@ private:
     void checkCapsLock();
 
 private:
+    class CapsLockIndicator : QToolButton {
+    public:
+        CapsLockIndicator(QWidget *widget);
+        void updateIndicator();
+
+    private:
+        void show();
+        void hide();
+
+    private:
+        QString cleanInputStyle;
+        QSize inputSize;
+    };
+
+private:
     Ui::LoginScreen *ui;
     QShortcut quitShortcut;
-    QToolButton *capsIndicator;
-    QToolButton *confimCapsIndicator;
+    CapsLockIndicator *capsIndicator;
+    CapsLockIndicator *confimCapsIndicator;
 };
 
 #endif // LOGINSCREEN_H
