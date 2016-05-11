@@ -82,6 +82,7 @@ LoginScreen::CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton
     setCursor(Qt::ArrowCursor);
     move(inputSize.width() - inputSize.height(), 0);
     setStyleSheet("border: none; padding: 0;");
+    setToolTip(tr("CAPS-LOCK ENABLED"));
 }
 
 void LoginScreen::CapsLockIndicator::show() {
