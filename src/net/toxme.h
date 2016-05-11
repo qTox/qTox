@@ -57,6 +57,7 @@ public:
     static ExecCode deleteAddress(QString server, ToxId id);
     /// Return string of the corresponding error code
     static QString getErrorMessage(int errorCode);
+    static QString translateErrorMessage(int errorCode);
 
 private:
     Toxme()=delete;
