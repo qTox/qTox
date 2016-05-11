@@ -22,7 +22,7 @@
 #include <windows.h>
 #include "src/platform/capslock.h"
 
-bool Platform::checkCapsLock()
+bool Platform::capsLockEnabled()
 {
     return GetKeyState(VK_CAPITAL) == 1;
 }

@@ -99,7 +99,8 @@ void LoginScreen::CapsLockIndicator::hide() {
 
 void LoginScreen::CapsLockIndicator::updateIndicator() {
     bool caps = false;
-#ifdef QTOX_PLATFORM_EXT
+    // It doesn't needed for OSX, because it shows indicator by default
+#ifdef QTOX_PLATFORM_EXT && !defined(Q_OS_OSX)
     caps = Platform::capsLockEnabled();
 #endif
     if (caps)

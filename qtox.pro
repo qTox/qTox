@@ -96,7 +96,8 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 
     HEADERS += src/platform/capslock.h
     SOURCES += src/platform/capslock_win.cpp \
-               src/platform/capslock_x11.cpp
+               src/platform/capslock_x11.cpp \
+               src/platform/capslock_osx.cpp
 }
 
 # Rules for Windows, Mac OSX, and Linux
