@@ -121,6 +121,7 @@ private:
     void disableCallButtons();
     bool isTyping;
     void SendMessageStr(QString msg);
+    QString downloadFile(QString url);
 };
 
 #endif // CHATFORM_H

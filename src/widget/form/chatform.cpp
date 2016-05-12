@@ -64,6 +64,9 @@
 #include "src/video/camerasource.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QTemporaryDir>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -643,6 +646,39 @@ void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
         ev->acceptProposedAction();
 }
 
+QString ChatForm::downloadFile(QString url) {
+    QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
+    QNetworkRequest request{url};
+    QNetworkReply* reply = netman.get(request);
+
+    while (!reply->isFinished())
+    {
+        QThread::msleep(1);
+        qApp->processEvents();
+    }
+
+    QByteArray result = reply->readAll();
+    delete reply;
+    QFileInfo info(url);
+
+    QTemporaryDir dir;
+    info = QFileInfo(dir.path() + info.fileName());
+    QFile *file = new QFile(info.absoluteFilePath());
+
+    if (!file->open(QIODevice::WriteOnly)) {
+        QMessageBox::information(this, tr("File download"),
+                      tr("Unable to save the file %1: %2.")
+                      .arg(info.fileName(), file->errorString()));
+        delete file;
+        return "";
+    }
+
+    file->write(result);
+    file->close();
+    return info.absoluteFilePath();
+}
+
 void ChatForm::dropEvent(QDropEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
@@ -652,20 +688,16 @@ void ChatForm::dropEvent(QDropEvent *ev)
             QFileInfo info(url.path());
 
             QFile file(info.absoluteFilePath());
-            if (url.isValid() && !url.isLocalFile() && (url.toString().length() < TOX_MAX_MESSAGE_LENGTH))
-            {
-                SendMessageStr(url.toString());
-                continue;
+            if (url.isValid() && !url.isLocalFile()) {
+                QString fileName = downloadFile(url.toString());
+                info.setFile(fileName);
+                file.setFileName(fileName);
             }
+
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
-                info.setFile(url.toLocalFile());
-                file.setFileName(info.absoluteFilePath());
-                if (!file.exists() || !file.open(QIODevice::ReadOnly))
-                {
-                    QMessageBox::warning(this, tr("Unable to open"), tr("qTox wasn't able to open %1").arg(info.fileName()));
-                    continue;
-                }
+                QMessageBox::warning(this, tr("Unable to open"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                continue;
             }
             if (file.isSequential())
             {
@@ -676,7 +708,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
             file.close();
 
             if (info.exists())
-                Core::getInstance()->sendFile(f->getFriendID(), info.fileName(), info.absoluteFilePath(), info.size());
+                Core::getInstance()->sendFile(f->getFriendID(), url.fileName(), info.absoluteFilePath(), info.size());
         }
     }
 }
