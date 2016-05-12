@@ -171,6 +171,7 @@ void Settings::loadGlobal()
         showWindow = s.value("showWindow", true).toBool();
         showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
+        busySound = s.value("busySound", false).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
@@ -417,6 +418,7 @@ void Settings::saveGlobal()
         s.setValue("showWindow", showWindow);
         s.setValue("showInFront", showInFront);
         s.setValue("notifySound", notifySound);
+        s.setValue("busySound", busySound);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
         s.setValue("separateWindow", separateWindow);
@@ -826,6 +828,18 @@ void Settings::setNotifySound(bool newValue)
 {
     QMutexLocker locker{&bigLock};
     notifySound = newValue;
+}
+
+bool Settings::getBusySound() const
+{
+    QMutexLocker locker{&bigLock};
+    return busySound;
+}
+
+void Settings::setBusySound(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+    busySound = newValue;
 }
 
 bool Settings::getGroupAlwaysNotify() const

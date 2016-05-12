@@ -138,7 +138,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI->showWindow->setChecked(showWindow);
     bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
     bodyUI->showInFront->setEnabled(showWindow);
-    bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
+
+    bool notifySound = Settings::getInstance().getNotifySound();
+
+    bodyUI->notifySound->setChecked(notifySound);
+    bodyUI->busySound->setChecked(Settings::getInstance().getBusySound());
+    bodyUI->busySound->setEnabled(notifySound);
     bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
     bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
     bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
@@ -217,6 +222,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
+    connect(bodyUI->busySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetBusySound);
     connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
@@ -487,6 +493,11 @@ void GeneralForm::onSetShowInFront()
 void GeneralForm::onSetNotifySound()
 {
     Settings::getInstance().setNotifySound(bodyUI->notifySound->isChecked());
+}
+
+void GeneralForm::onSetBusySound()
+{
+    Settings::getInstance().setBusySound(bodyUI->busySound->isChecked());
 }
 
 void GeneralForm::onSetGroupAlwaysNotify()

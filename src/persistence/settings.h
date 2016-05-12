@@ -169,6 +169,9 @@ public:
     bool getNotifySound() const;
     void setNotifySound(bool newValue);
 
+    bool getBusySound() const;
+    void setBusySound(bool newValue);
+
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
@@ -372,6 +375,7 @@ private:
     bool showWindow;
     bool showInFront;
     bool notifySound;
+    bool busySound;
     bool groupAlwaysNotify;
 
     bool forceTCP;
