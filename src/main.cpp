@@ -167,9 +167,9 @@ int main(int argc, char *argv[])
     if (QFileInfo(logfile).size() > 1000000)
     {
         qDebug() << "Log file over 1MB, rotating...";
-		
+
         QDir dir (logFileDir);
-		
+
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
             qDebug() << "Removed old log successfully";

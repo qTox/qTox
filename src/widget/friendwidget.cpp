@@ -30,6 +30,7 @@
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/style.h"
 #include "src/persistence/settings.h"
+#include "src/persistence/settingstransaction.h"
 #include "src/widget/widget.h"
 #include "src/widget/about/aboutuser.h"
 #include <QContextMenuEvent>
@@ -222,9 +223,16 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
                 circleWidget->updateStatus();
 
             if (friendList != nullptr)
+            {
+                PersonalSettingsTransaction transaction;
+
                 friendList->addCircleWidget(FriendList::findFriend(friendId)->getFriendWidget());
+            }
             else
+            {
+                PersonalSettingsTransaction transaction;
                 Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+            }
         }
         else if (groupActions.contains(selectedItem))
         {
@@ -419,9 +427,10 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 
 void FriendWidget::setAlias(const QString& _alias)
 {
+    PersonalSettingsTransaction transaction;
+
     QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
-    Settings::getInstance().savePersonal();
 }

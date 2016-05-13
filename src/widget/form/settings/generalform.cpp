@@ -19,6 +19,7 @@
 
 #include "ui_generalsettings.h"
 #include "generalform.h"
+#include "genericsettings.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
@@ -209,43 +210,43 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     onUseProxyUpdated();
 
     //general
-    connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
-    connect(bodyUI->transComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTranslationUpdated()));
-    connect(bodyUI->cbAutorun, &QCheckBox::stateChanged, this, &GeneralForm::onAutorunUpdated);
-    connect(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
-    connect(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
-    connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
-    connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
-    connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
-    connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
-    connect(bodyUI->autoAwaySpinBox, SIGNAL(editingFinished()), this, SLOT(onAutoAwayChanged()));
-    connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
-    connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
-    connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
-    connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
-    connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
-    connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-    connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
+    connect_global_saver(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
+    connect_global_saver(bodyUI->transComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onTranslationUpdated);
+    connect_global_saver(bodyUI->cbAutorun, &QCheckBox::stateChanged, this, &GeneralForm::onAutorunUpdated);
+    connect_global_saver(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
+    connect_global_saver(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
+    connect_global_saver(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
+    connect_global_saver(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
+    connect_global_saver(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
+    connect_global_saver(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
+    connect_global_saver(bodyUI->autoAwaySpinBox, &QSpinBox::editingFinished, this, &GeneralForm::onAutoAwayChanged);
+    connect_global_saver(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
+    connect_global_saver(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
+    connect_global_saver(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
+    connect_global_saver(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
+    connect_global_saver(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
+    connect_global_saver(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
+    connect_global_saver(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
     //theme
-    connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
-    connect(bodyUI->smileyPackBrowser, SIGNAL(currentIndexChanged(int)), this, SLOT(onSmileyBrowserIndexChanged(int)));
-    connect(bodyUI->styleBrowser, SIGNAL(currentTextChanged(QString)), this, SLOT(onStyleSelected(QString)));
-    connect(bodyUI->themeColorCBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onThemeColorChanged(int)));
-    connect(bodyUI->emoticonSize, SIGNAL(editingFinished()), this, SLOT(onEmoticonSizeChanged()));
-    connect(bodyUI->timestamp, SIGNAL(currentIndexChanged(int)), this, SLOT(onTimestampSelected(int)));
-    connect(bodyUI->dateFormats, SIGNAL(currentIndexChanged(int)), this, SLOT(onDateFormatSelected(int)));
+    connect_global_saver(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &GeneralForm::onUseEmoticonsChange);
+    connect_global_saver(bodyUI->smileyPackBrowser, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onSmileyBrowserIndexChanged);
+    connect_global_saver(bodyUI->styleBrowser, &QComboBox::currentTextChanged, this, &GeneralForm::onStyleSelected);
+    connect_global_saver(bodyUI->themeColorCBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onThemeColorChanged);
+    connect_global_saver(bodyUI->emoticonSize, &QSpinBox::editingFinished, this, &GeneralForm::onEmoticonSizeChanged);
+    connect_global_saver(bodyUI->timestamp, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onTimestampSelected);
+    connect_global_saver(bodyUI->dateFormats, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onDateFormatSelected);
     //connection
-    connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
-    connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
-    connect(bodyUI->proxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(onUseProxyUpdated()));
-    connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
-    connect(bodyUI->proxyPort, SIGNAL(valueChanged(int)), this, SLOT(onProxyPortEdited(int)));
+    connect_global_saver(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &GeneralForm::onEnableIPv6Updated);
+    connect_global_saver(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &GeneralForm::onUDPUpdated);
+    connect_global_saver(bodyUI->proxyType, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &GeneralForm::onUseProxyUpdated);
+    connect_global_saver(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &GeneralForm::onProxyAddrEdited);
+    connect_global_saver(bodyUI->proxyPort, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &GeneralForm::onProxyPortEdited);
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &GeneralForm::onReconnectClicked);
-    connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
-    connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
-    connect(bodyUI->cbSeparateWindow, &QCheckBox::stateChanged, this, &GeneralForm::onSeparateWindowChanged);
-    connect(bodyUI->cbDontGroupWindows, &QCheckBox::stateChanged, this, &GeneralForm::onDontGroupWindowsChanged);
-    connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
+    connect_global_saver(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
+    connect_personal_saver(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &GeneralForm::onCompactLayout);
+    connect_global_saver(bodyUI->cbSeparateWindow, &QCheckBox::stateChanged, this, &GeneralForm::onSeparateWindowChanged);
+    connect_global_saver(bodyUI->cbDontGroupWindows, &QCheckBox::stateChanged, this, &GeneralForm::onDontGroupWindowsChanged);
+    connect_global_saver(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
 
     // prevent stealing mouse wheel scroll
     // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling

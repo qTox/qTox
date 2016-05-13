@@ -39,8 +39,8 @@ PrivacyForm::PrivacyForm() :
     bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
 
-    connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
-    connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
+    connect_personal_saver(bodyUI->cbTypingNotification, &QCheckBox::stateChanged, this, &PrivacyForm::onTypingNotificationEnabledUpdated);
+    connect_personal_saver(bodyUI->cbKeepHistory, &QCheckBox::stateChanged, this, &PrivacyForm::onEnableLoggingUpdated);
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));

@@ -22,8 +22,9 @@
 
 #include "genericsettings.h"
 
-namespace Ui {
-class GeneralSettings;
+namespace Ui
+{
+    class GeneralSettings;
 }
 
 class SettingsWidget;
