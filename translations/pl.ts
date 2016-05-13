@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl_PL">
+<TS version="2.1" language="pl_PL">
 <context>
     <name>AVForm</name>
     <message>
@@ -1173,6 +1173,18 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <extracomment>Text on proxy port label</extracomment>
         <translation>Port:</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Plaintext</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Pokazuj znaki formatujące</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Nie pokazuj znaków formatujących</translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -2157,6 +2169,18 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox nie był w stanie otworzyć Twojej historii, zostanie ona wyłączona.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="vanished">Plaintext</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="vanished">Pokazuj znaki formatujące</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="vanished">Nie pokazuj znaków formatujących</translation>
     </message>
 </context>
 <context>
