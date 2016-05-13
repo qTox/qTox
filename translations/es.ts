@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es_MX">
+<TS version="2.1" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -96,19 +96,19 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puedes encontrar una lista de problemas conocidos en nuestro %1 en Github. Si descubres un error o vulnerabilidad en qTox, por favor %3 según las normas descritas en el artículo &quot;%2&quot; de nuestra wiki.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Writing Useful Bug Reports</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>repórtalo</translation>
     </message>
 </context>
 <context>
@@ -151,7 +151,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -465,11 +465,11 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 está escribiendo</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
 </context>
 <context>
@@ -1141,7 +1141,7 @@ Hazlo sólo en caso de ser necesario.</translation>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de texto (Markdown):</translation>
     </message>
 </context>
 <context>
@@ -1419,35 +1419,35 @@ El perfil no contiene tu historial.</translation>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registro Toxme</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Biografía</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Servidor</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar mi nombre de la lista pública</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrar</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Tu contraseña</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Actualización</translation>
+        <translation>Actualizar</translation>
     </message>
 </context>
 <context>
@@ -1561,11 +1561,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Perfiles protegidos con contraseña no pueden ser cargados automáticamente.</translation>
     </message>
 </context>
 <context>
@@ -1849,49 +1849,49 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Los siguientes archivos no pudieron ser eliminados:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Por favor elimínalos manualmente.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Error al eliminar archivos</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registro (procesando)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualización (procesando)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizado!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta %1@%2 actualizada exitósamente</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuenta %1@%2 agregada exitosamente a la base de datos. Respalda tu contraseña</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Error en Toxme</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrar</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Actualización</translation>
+        <translation>Actualizar</translation>
     </message>
 </context>
 <context>
@@ -1899,32 +1899,32 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Importar perfil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Archivo Tox (*.tox)</translation>
+        <translation>Archivo Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Ignorando archivo no Tox</translation>
+        <translation>Ignorando archivo no Tox</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Advertencia: el archivo Tox seleccionado es inválido y ha sido ignorado.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Perfil ya existe</translation>
+        <translation>Perfil ya existe</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished">Un perfil llamado &quot;%1&quot; ya existe. ¿Deseas eliminarlo?</translation>
+        <translation>Un perfil llamado &quot;%1&quot; ya existe. ¿Deseas eliminarlo?</translation>
     </message>
 </context>
 <context>
@@ -2028,28 +2028,12 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Pantalla</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Respuesta incorrecta</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Respuesta sin contraseña</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>El servidor no soporta Toxme</translation>
     </message>
     <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Tienes que mandar una petición POST a /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Inténtalo de nuevo usando una conexión HTTPS</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>No fue posible leer tu payload cifrado</translation>
+        <source>Problem with HTTPS connection</source>
+        <translation>Problema con la conexión HTTPS</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2084,20 +2068,12 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>No se envió la Tox ID</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>La consulta falló debido a datos inválidos enviados por el servidor</translation>
+        <source>Internal ToxMe error</source>
+        <translation>Error interno de Toxme</translation>
     </message>
     <message>
         <source>That user does not exist</source>
         <translation>Ese usuario no existe</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Fallo interno en la consulta. Por favor reporta este error</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Error desconocido (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2448,7 +2424,7 @@ Será instalada cuando reinicies qTox.</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat grupal #%1</translation>
     </message>
 </context>
 </TS>
