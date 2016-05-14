@@ -64,6 +64,8 @@
 #include "src/video/camerasource.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTemporaryDir>
@@ -660,23 +662,33 @@ QString ChatForm::downloadFile(QString url) {
 
     QByteArray result = reply->readAll();
     delete reply;
-    QFileInfo info(url);
 
-    QTemporaryDir dir;
-    info = QFileInfo(dir.path() + info.fileName());
-    QFile *file = new QFile(info.absoluteFilePath());
+    QMimeType type = QMimeDatabase().mimeTypeForData(result);
+    QString fileName;
 
-    if (!file->open(QIODevice::WriteOnly)) {
+    QTemporaryFile tmpFile;
+    if (!tmpFile.open()) {
+        QMessageBox::information(this, tr("Temporary file"),
+                              tr("Can't create temporary file."));
+        return "";
+    }
+    fileName = tmpFile.fileName() + '.' + type.preferredSuffix();
+    tmpFile.close();
+
+    QFile *file = new QFile(fileName);
+
+    if (!file->open(QIODevice::WriteOnly))
+    {
         QMessageBox::information(this, tr("File download"),
                       tr("Unable to save the file %1: %2.")
-                      .arg(info.fileName(), file->errorString()));
+                      .arg(fileName, file->errorString()));
         delete file;
         return "";
     }
 
     file->write(result);
     file->close();
-    return info.absoluteFilePath();
+    return fileName;
 }
 
 void ChatForm::dropEvent(QDropEvent *ev)
@@ -708,7 +720,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
             file.close();
 
             if (info.exists())
-                Core::getInstance()->sendFile(f->getFriendID(), url.fileName(), info.absoluteFilePath(), info.size());
+                Core::getInstance()->sendFile(f->getFriendID(), info.fileName(), info.absoluteFilePath(), info.size());
         }
     }
 }
