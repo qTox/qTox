@@ -158,7 +158,7 @@ if [[ $INSTALL_TOX = "true" ]]; then
         make install
     else
         sudo make install
-    	echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
+    echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 	sudo ldconfig
     fi
 
