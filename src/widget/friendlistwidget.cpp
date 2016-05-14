@@ -289,7 +289,7 @@ void FriendListWidget::setMode(Mode mode)
         activityLayout->addWidget(categoryNever);
 
         delete ql;
-        ql = 0;
+        ql = nullptr;
 
         QList<Friend*> friendList = FriendList::getAllFriends();
         for (Friend* contact : friendList)
