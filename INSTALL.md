@@ -51,6 +51,7 @@
 | sqlcipher     | >= 3.2.0    |                                                   |
 | libXScrnSaver | >= 1.2      |                                                   |
 | pkg-config    | >= 0.28     |                                                   |
+| libX11        | >= 1.6.0    |                                                   |
 
 
 <a name="linux" />
