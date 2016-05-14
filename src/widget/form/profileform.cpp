@@ -393,15 +393,15 @@ void ProfileForm::onLogoutClicked()
 
 void ProfileForm::setPasswordButtonsText()
 {
-    if (!Nexus::getProfile()->isEncrypted())
-    {
-        bodyUI->changePassButton->setText(tr("Set profile password", "button text"));
-        bodyUI->deletePassButton->setVisible(false);
-    }
-    else
+    if (Nexus::getProfile()->isEncrypted())
     {
         bodyUI->changePassButton->setText(tr("Change password", "button text"));
         bodyUI->deletePassButton->setVisible(true);
+    }
+    else
+    {
+        bodyUI->changePassButton->setText(tr("Set profile password", "button text"));
+        bodyUI->deletePassButton->setVisible(false);
     }
 }
 
