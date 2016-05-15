@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1278</width>
-        <height>1413</height>
+        <width>1270</width>
+        <height>1468</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -327,6 +327,20 @@ instead of closing itself.</string>
                  <string>Play sound</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <property name="leftMargin">
+                 <number>40</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="busySound">
+                  <property name="text">
+                   <string>Play sound while Busy</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <widget class="QCheckBox" name="showWindow">
@@ -952,6 +966,22 @@ will be sent to them when they appear online to you.</string>
     <hint type="destinationlabel">
      <x>119</x>
      <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>notifySound</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>busySound</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>665</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>551</y>
     </hint>
    </hints>
   </connection>
