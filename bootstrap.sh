@@ -169,8 +169,9 @@ if [[ $INSTALL_TOX = "true" ]]; then
     if [[ $SYSTEM_WIDE = "false" ]]; then
         make install
     else
-        sudo make install
-        sudo ldconfig
+	echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf 
+	sudo ldconfig
+	sudo make install
     fi
 
     popd
