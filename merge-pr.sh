@@ -59,14 +59,21 @@ after_merge_msg() {
     echo ""
     echo "PR #$PR was merged into «merge$PR» branch."
     echo "To compare with master:"
-    echo "git diff master..merge$PR"
+    echo ""
+    echo "  git diff master..merge$PR"
     echo ""
     echo "To push that to master on github:"
-    echo "git checkout master && git merge --ff merge$PR && git push upstream master"
+    echo ""
+    echo "  git checkout master && git merge --ff merge$PR && git push upstream master"
     echo ""
     echo "After pushing to master, delete branches:"
     echo ""
-    echo "git branch -d {merge,}$PR"
+    echo "  git branch -d {merge,}$PR"
+    echo ""
+    echo "To discard any changes:"
+    echo ""
+    echo "  git checkout master && git branch -D {merge,}$PR"
+    echo ""
 }
 
 # print the message only if some merge step failed
@@ -76,7 +83,8 @@ after_merge_failure_msg() {
     echo ""
     echo "You may want to remove not merged branches, if they exist:"
     echo ""
-    echo "git checkout master && git branch -D {merge,}$PR"
+    echo "  git checkout master && git branch -D {merge,}$PR"
+    echo ""
 }
 
 
