@@ -378,7 +378,8 @@ HEADERS  += \
     src/widget/tool/movablewidget.h \
     src/widget/about/aboutuser.h \
     src/widget/form/groupinviteform.h \
-    src/widget/tool/profileimporter.h
+    src/widget/tool/profileimporter.h \
+    src/widget/capslockindicator.h
 
 SOURCES += \
     src/ipc.cpp \
@@ -494,4 +495,5 @@ SOURCES += \
     src/widget/tool/removefrienddialog.cpp \
     src/widget/about/aboutuser.cpp \
     src/widget/form/groupinviteform.cpp \
-    src/widget/tool/profileimporter.cpp
+    src/widget/tool/profileimporter.cpp \
+    src/widget/capslockindicator.cpp
