@@ -324,49 +324,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">Form</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Хтось</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Хтось інший</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Менеджер NASA</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1148,6 +1105,18 @@ will be sent to them when they appear online to you.</source>
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1901,6 +1870,16 @@ Share it with your friends to communicate.</source>
         <source>Update</source>
         <translation type="unfinished">Оновити</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Змінити пароль</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2028,28 +2007,8 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Некоректна відповідь</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>У відповіді відсутній пароль</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Сервер не підтримує Toxme</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Ви повинні відправити POST-запит до /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Спробуйте ще раз, використовуючи HTTPS-з&apos;єднання, будь ласка</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Я не міг прочитати Ваш зашифрований трафік</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2084,20 +2043,8 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>Tox ID не надіслано</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Пошук завершився невдало, тому що сервер надіслав некоректні дані</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Такого користувача не існує</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Внутрішня помилка пошуку. Будь ласка, повідомте про помилку</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Невідома помилка (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2117,6 +2064,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <comment>Desktop as a camera input for screen sharing</comment>
         <translatorcomment>I think in this case more appropriate is &quot;Екран&quot; which means &quot;Screen&quot;</translatorcomment>
         <translation>Робочий стіл</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

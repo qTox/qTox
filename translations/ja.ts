@@ -317,49 +317,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">フォーム</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1138,6 +1095,18 @@ will be sent to them when they appear online to you.</source>
         <source>Text formatting (Markdown):</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1885,6 +1854,16 @@ Share it with your friends to communicate.</source>
         <comment>deletion failed title</comment>
         <translation type="unfinished">ファイルが削除できませんでした！</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">パスワード変更</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -1953,28 +1932,8 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">アップデート</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished">誤った返答</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished">返答にパスワードがない</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation type="unfinished">サーバーがToxmeに対応していません</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished">あなたは/apiにPOSTリクエストを送信しないといけない</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished">HTTPS接続を使って、再度試してください</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation type="unfinished">あなたの暗号化された情報を読めませんでした</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2009,20 +1968,8 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">Tox IDが送信されていません</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished">サーバが誤った回答をしたため検索に失敗しました</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation type="unfinished">ユーザーは存在しません</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished">内部検索エラー。バグを報告してください</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished">不明なエラー (%1)</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2098,6 +2045,14 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Incoming call...</source>
         <translation type="unfinished">お電話です...</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

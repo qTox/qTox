@@ -317,49 +317,6 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Qualcuno</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Qualcun altro</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Groupbot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Quel tipo che non mi ricordo di aver aggiunto</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA manager</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Pippo</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Pluto</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Paperino</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1141,6 +1098,18 @@ will be sent to them when they appear online to you.</source>
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1890,6 +1859,16 @@ Condividilo con chi vuoi comunicare.</translation>
         <source>Update</source>
         <translation type="unfinished">Nuova versione</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Cambia password</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2021,27 +2000,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2077,19 +2036,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2103,6 +2050,14 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

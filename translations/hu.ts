@@ -316,49 +316,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Valaki</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Valaki más</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Csoportbot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Olyasvalaki, akit nem felejtek el hozzáadni</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA menedzser</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Mégvalaki</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Gipsz Jakab</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Átlagpista</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1140,6 +1097,18 @@ will be sent to them when they appear online to you.</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1881,6 +1850,16 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
         <source>Update</source>
         <translation type="unfinished">Frissítés</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Jelszó változtatás</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2006,27 +1985,7 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2062,19 +2021,7 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2093,6 +2040,14 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -317,50 +317,6 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Aken</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translatorcomment>qTox</translatorcomment>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Keegi</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Keegi teine</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Grupirobot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>See sell, kelle lisamine mulle ei meenu</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA juht</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1148,6 +1104,18 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1899,6 +1867,16 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
         <source>Update</source>
         <translation type="unfinished">Uuendus</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Muuda salasõna</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -1968,28 +1946,8 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Uuendus</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Sobimatu vastus</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Vastus ei sisalda salasõna</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Serveril puudub Toxme tugi</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>POST päringud tuleb saata asukohta /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Palun proovi uuesti, kasutades HTTPS ühendust</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Ei suutnud edastada sisulist osa krüpteeritud andmetest</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2024,20 +1982,8 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Tox ID-d ei saadetud</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Otsing nurjus, kuna server vastas sobimatute andmetega</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Seda kasutajat pole olemas</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Süsteemi töös esines otsimisel viga. Palun kirjutage selle kohta vearaport</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Tundmatu viga (%1)</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2113,6 +2059,14 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Sissetulev kõne...</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -322,59 +322,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1165,6 +1112,18 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <source>Text formatting (Markdown):</source>
         <translation>Text-Formatierung (Markdown)</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1917,6 +1876,16 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Passwort ändern</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2052,28 +2021,8 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Bildschirm</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Fehlerhafte Antwort.</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Kein Passwort als Antwort.</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Der Server unterstützt kein ToxMe.</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Du musst POST-Anfragen an /api senden.</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Bitte versuche es noch einmal mit einer HTTPS-Verbindung.</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Ich konnte deinen verschlüsselten Payload nicht lesen.</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2108,20 +2057,8 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Tox ID wurde nicht gesendet.</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Lookup ist gescheitert, weil die Server-Antwort ungültig war.</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Dieser Benutzer existiert nicht.</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Interner Lookup-Fehler. Bitte melde diesen Fehler.</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Unbekannter Fehler (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2130,6 +2067,14 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox konnte deine Gesprächshistorie nicht öffnen. Das Speichern der Gespräche wird deaktiviert!</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

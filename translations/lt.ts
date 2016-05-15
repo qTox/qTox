@@ -317,49 +317,6 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Kažkas</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Kažkas kitas</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Grupės robotas</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Neprisimenu, kodėl jį pakviečiau</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA vadybininkas</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1141,6 +1098,18 @@ bus nusiųstos jiems prisijungus.</translation>
         <source>Select Markdown preference.</source>
         <translation>Pasirinkite Markdown vaizdavimo tipą.</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1895,6 +1864,16 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <source>Update</source>
         <translation>Atnaujinti</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Pakeisti slaptažodį</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2038,28 +2017,8 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>qTox nepavyko atidaryti pokalbių žurnalo, todėl jis buvo išjungtas.</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Neteisingas atsakas</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Atsake trūksta slaptažodžio</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Serveris nepalaiko Toxme funkcijos</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Reikia siųsti POST užklausas į /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Bandykite per naujo naudodami HTTPS ryšį</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Nepavyko perskaityti užšifruotų duomenų</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2094,20 +2053,16 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Tox ID neišsiųstas</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Užklausa nepavyko, nes serverio atsakas nesuprantamas</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Šio naudotojo nėra</translation>
     </message>
     <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Vidinė klaida. Praneškite apie šį įvykį programuotojams</translation>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown error (%1)</source>
-        <translation>Nežinoma klaida (%1)</translation>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -315,49 +315,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Planilha</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Alguém</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Mais alguém</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation type="unfinished">Bot do grupo</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Aquela pessoa que não lembro de ter adicionado</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Diretor da NASA</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1139,6 +1096,18 @@ desconectados serão enviadas assim que eles aparecerem contectados para você.<
         <extracomment>Text on proxy port label</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1885,6 +1854,16 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <source>Update</source>
         <translation type="unfinished">Atualizar</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Mudar a senha</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2010,27 +1989,7 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2066,19 +2025,7 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2097,6 +2044,14 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

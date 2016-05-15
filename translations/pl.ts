@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pl_PL">
+<TS version="2.0" language="pl_PL">
 <context>
     <name>AVForm</name>
     <message>
@@ -322,50 +322,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Reset do domyślnych ustawień</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Formularz</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translatorcomment>really?</translatorcomment>
-        <translation>Ktoś</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Ktoś inne</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Ten kogo nie pamiętam, że dodałem/am</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Manadżer NASA</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
     </message>
 </context>
 <context>
@@ -1951,6 +1907,16 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <source>Update</source>
         <translation>Aktualizacja</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Zmień hasło</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2091,28 +2057,8 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Wersja %1, %2</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Niepoprawna odpowiedź</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Brak hasła w odpowiedzi</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Ten serwer nie wspiera Toxme</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished">Musisz wysłać zapytanie POST do /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished">Proszę spróbować użyć połączenia HTTPS</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation type="unfinished">Nie powiodło się odszyfrowanie payload??</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2147,20 +2093,8 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Nie wysłano Tox ID</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Zapytanie nie powiodło się z winy serwera. Nieznany problem</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Ten użytkownik nie istnieje</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Wewnętrzny błąd. Proszę zgłoś to</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Nieznany błąd (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2169,6 +2103,14 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox nie był w stanie otworzyć Twojej historii, zostanie ona wyłączona.</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

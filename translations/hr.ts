@@ -320,49 +320,6 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Obrazac</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Netko</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Netko drugi</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Grupobot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Onaj tip kojeg sam zaboravio dofati</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA menadžer</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1144,6 +1101,18 @@ will be sent to them when they appear online to you.</source>
         <extracomment>Text on proxy port label</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1887,6 +1856,16 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <source>Update</source>
         <translation type="unfinished">Ažuriranje</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Promijeni lozinku</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2012,27 +1991,7 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2068,19 +2027,7 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2099,6 +2046,14 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

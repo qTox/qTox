@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_MX">
+<TS version="2.0" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -315,49 +315,6 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Restablecer configuración por defecto</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Plantilla</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Alguien</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Alguien más</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Groupbot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Esa persona que no recuerdo haber agregado</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Director de la NASA</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
     </message>
 </context>
 <context>
@@ -1143,6 +1100,18 @@ Hazlo sólo en caso de ser necesario.</translation>
         <source>Text formatting (Markdown):</source>
         <translation>Formato de texto (Markdown):</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1892,6 +1861,16 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>Update</source>
         <translation>Actualizar</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Cambiar contraseña</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

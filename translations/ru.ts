@@ -320,49 +320,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Форма</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Кто-то</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Кто-то другой</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Групповой чат</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Парень, которого я не добавлял</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Менеджер НАСА</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1151,6 +1108,18 @@ will be sent to them when they appear online to you.</source>
         <source>Text formatting (Markdown):</source>
         <translation>Форматирование текста (Markdown):</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1902,6 +1871,16 @@ Share it with your friends to communicate.</source>
         <source>Update</source>
         <translation>Обновить</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Сменить пароль</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2040,28 +2019,8 @@ It will be installed when qTox restarts.</source>
         <translation>Рабочий стол</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Неправильный ответ</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Нет пароля в ответе</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Сервер не поддерживает Toxme</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Вы должны отправить POST запросы к /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Пожалуйста, попробуйте снова через подключение HTTPS</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Я не смог прочитать ваши зашифрованные данные</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2096,20 +2055,8 @@ It will be installed when qTox restarts.</source>
         <translation>Tox ID не отправлен</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Произошел сбой при поиске, потому что сервер ответил с недопустимыми данными</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Этот пользователь не существует</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Внутренняя ошибка. Пожалуйста Отправить сообщение об ошибке</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Неизвестная ошибка (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2118,6 +2065,14 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox не может загрузить историю переписки, она будет отключена</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
