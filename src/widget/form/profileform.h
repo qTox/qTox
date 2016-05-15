@@ -67,6 +67,7 @@ public slots:
     void onLogoutClicked();
 
 private slots:
+    void setPasswordButtonsText();
     void setToxId(const QString& id);
     void copyIdClicked();
     void onUserNameEdited();

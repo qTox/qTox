@@ -122,6 +122,8 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
     connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
     connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
@@ -389,6 +391,20 @@ void ProfileForm::onLogoutClicked()
     nexus.showLogin();
 }
 
+void ProfileForm::setPasswordButtonsText()
+{
+    if (Nexus::getProfile()->isEncrypted())
+    {
+        bodyUI->changePassButton->setText(tr("Change password", "button text"));
+        bodyUI->deletePassButton->setVisible(true);
+    }
+    else
+    {
+        bodyUI->changePassButton->setText(tr("Set profile password", "button text"));
+        bodyUI->deletePassButton->setVisible(false);
+    }
+}
+
 void ProfileForm::onCopyQrClicked()
 {
     QApplication::clipboard()->setImage(*qr->getImage());
@@ -444,6 +460,7 @@ void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
     nameLabel->setText(tr("User Profile"));
+    setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
 }
