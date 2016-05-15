@@ -92,9 +92,6 @@ static QStringList langs = {"Arabic",
                             "Türkçe",
                             "Українська",
                             "简体中文"};
-static QStringList mdPrefs = {"Plaintext",
-                              "Show Formatting Characters",
-                              "Don't Show Formatting Characters"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
@@ -116,8 +113,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
         bodyUI->transComboBox->insertItem(i, langs[i]);
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
-    for (int i = 0; i < mdPrefs.size(); i++)
-        bodyUI->markdownComboBox->insertItem(i, mdPrefs[i]);
 
     bodyUI->markdownComboBox->setCurrentIndex(Settings::getInstance().getMarkdownPreference());
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());

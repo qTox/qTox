@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1277</width>
-        <height>1272</height>
+        <width>1278</width>
+        <height>1413</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -382,6 +382,21 @@ instead of closing itself.</string>
               <property name="toolTip">
                <string>Select Markdown preference.</string>
               </property>
+              <item>
+               <property name="text">
+                <string>Plaintext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Show formatting characters</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Don't show formatting characters</string>
+               </property>
+              </item>
              </widget>
             </item>
             <item>
