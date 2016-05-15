@@ -148,9 +148,7 @@ int main(int argc, char *argv[])
     parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
-#ifndef Q_OS_ANDROID
     IPC& ipc = IPC::getInstance();
-#endif
 
     if (sodium_init() < 0) // For the auto-updater
     {
@@ -214,7 +212,6 @@ int main(int argc, char *argv[])
 
     QString profileName;
     bool autoLogin = Settings::getInstance().getAutoLogin();
-#ifndef Q_OS_ANDROID
     // Inter-process communication
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
@@ -264,7 +261,6 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
     }
-#endif
 
     // Autologin
     if (autoLogin)
@@ -283,13 +279,11 @@ int main(int argc, char *argv[])
 
     Nexus::getInstance().start();
 
-#ifndef Q_OS_ANDROID
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
         handleToxURI(firstParam.toUtf8());
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
-#endif
 
     // Run
     int errorcode = a.exec();

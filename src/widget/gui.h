@@ -25,7 +25,7 @@
 
 class QWidget;
 
-/// Abstracts the GUI from the target backend (AndroidGUI, DesktopGUI, ...)
+/// Abstracts the GUI from the target backend (DesktopGUI, ...)
 /// All the functions exposed here are thread-safe
 /// Prefer calling this class to calling a GUI backend directly
 class GUI : public QObject

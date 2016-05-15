@@ -23,7 +23,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET    = qtox
 TEMPLATE  = app
 FORMS    += \
-    src/android.ui \
     src/loginscreen.ui \
     src/mainwindow.ui \
     src/chatlog/content/filetransferwidget.ui \
@@ -62,41 +61,6 @@ TIMESTAMP = $$system($1 2>null||echo 0||a;rm null;date +%s||echo 0) # I'm so sor
 DEFINES += TIMESTAMP=$$TIMESTAMP
 DEFINES += LOG_TO_FILE
 DEFINES += QT_MESSAGELOGCONTEXT
-
-android {
-    ANDROID_TOOLCHAIN=/opt/android/toolchain-r9d-17/
-    INCLUDEPATH += $$ANDROID_TOOLCHAIN/include/
-    LIBS += -L$$PWD/libs/lib -L$$ANDROID_TOOLCHAIN/lib
-
-    DISABLE_PLATFORM_EXT=YES
-
-    ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-    contains(ANDROID_TARGET_ARCH,armeabi) {
-        exists($$ANDROID_TOOLCHAIN/lib/libopenal.so) {
-            ANDROID_EXTRA_LIBS = $$ANDROID_TOOLCHAIN/lib/libopenal.so
-        } else {
-        exists($$PWD/libs/lib/libopenal.so) {
-            ANDROID_EXTRA_LIBS = $$PWD/libs/lib/libopenal.so
-        } else {
-            error(Can\'t find libopenal.so)
-        }}
-    }
-
-    RESOURCES += android.qrc
-
-    HEADERS += src/widget/androidgui.h
-
-    SOURCES += src/widget/androidgui.cpp
-
-    DISTFILES += \
-        android/gradle/wrapper/gradle-wrapper.jar \
-        android/AndroidManifest.xml \
-        android/gradlew.bat \
-        android/res/values/libs.xml \
-        android/build.gradle \
-        android/gradle/wrapper/gradle-wrapper.properties \
-        android/gradlew
-}
 
 contains(DISABLE_PLATFORM_EXT, YES) {
 
@@ -166,68 +130,62 @@ win32 {
         INFO_PLIST_PATH = $$shell_quote($${OUT_PWD}/$${TARGET}.app/Contents/Info.plist)
         QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $${GIT_DESCRIBE}\" $${INFO_PLIST_PATH}
     } else {
-        android {
-            LIBS += -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns
-            LIBS += -llibjpeg -llibwebp -llibpng -llibtiff -llibjasper -lIlmImf
-            LIBS += -lopus -lvpx -lsodium -lopenal
+        isEmpty(PREFIX) {
+            PREFIX = /usr
+        }
+
+        BINDIR = $$PREFIX/bin
+        DATADIR = $$PREFIX/share
+        target.path = $$BINDIR
+        desktop.path = $$DATADIR/applications
+        desktop.files += qTox.desktop
+        INSTALLS += target desktop
+
+        # Install application icons according to the XDG spec
+        ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
+        for(icon_size, ICON_SIZES) {
+            icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
+            icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
+            INSTALLS += icon_$${icon_size}
+        }
+        icon_scalable.files = img/icons/qtox.svg
+        icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
+        INSTALLS += icon_scalable
+
+        # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
+        contains(STATICPKG, YES) {
+            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
+            LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
+            LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
+            LIBS += -lqrencode -lsqlcipher
         } else {
-            isEmpty(PREFIX) {
-                PREFIX = /usr
-            }
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
+            LIBS += -lqrencode -lsqlcipher
+        }
 
-            BINDIR = $$PREFIX/bin
-            DATADIR = $$PREFIX/share
-            target.path = $$BINDIR
-            desktop.path = $$DATADIR/applications
-            desktop.files += qTox.desktop
-            INSTALLS += target desktop
+        contains(DEFINES, QTOX_PLATFORM_EXT) {
+            LIBS += -lX11 -lXss
+        }
 
-            # Install application icons according to the XDG spec
-            ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
-            for(icon_size, ICON_SIZES) {
-                icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
-                icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
-                INSTALLS += icon_$${icon_size}
-            }
-            icon_scalable.files = img/icons/qtox.svg
-            icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
-            INSTALLS += icon_scalable
-
-            # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
+        contains(DEFINES, QTOX_FILTER_AUDIO) {
             contains(STATICPKG, YES) {
-                LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
-                LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-                LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
-                LIBS += -lqrencode -lsqlcipher
+                LIBS += -Wl,-Bstatic -lfilteraudio
             } else {
-                LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
-                LIBS += -lqrencode -lsqlcipher
+                LIBS += -lfilteraudio
             }
+        }
 
-            contains(DEFINES, QTOX_PLATFORM_EXT) {
-                LIBS += -lX11 -lXss
+        contains(JENKINS, YES) {
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavformat-ffmpeg.so ./libs/lib/libavdevice-ffmpeg.so ./libs/lib/libavcodec-ffmpeg.so ./libs/lib/libavutil-ffmpeg.so ./libs/lib/libswscale-ffmpeg.so -ldl -lX11 -lXss -lqrencode
+            contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
+                LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
             }
-
-            contains(DEFINES, QTOX_FILTER_AUDIO) {
-                contains(STATICPKG, YES) {
-                    LIBS += -Wl,-Bstatic -lfilteraudio
-                } else {
-                    LIBS += -lfilteraudio
-                }
-            }
-
-            contains(JENKINS, YES) {
-                LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavformat-ffmpeg.so ./libs/lib/libavdevice-ffmpeg.so ./libs/lib/libavcodec-ffmpeg.so ./libs/lib/libavutil-ffmpeg.so ./libs/lib/libswscale-ffmpeg.so -ldl -lX11 -lXss -lqrencode
-                contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-                    LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
-                }
-                LIBS += -s
-            }
+            LIBS += -s
         }
     }
 }
 
-unix:!macx:!android {
+unix:!macx {
     # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
     contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
         DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
@@ -267,136 +225,6 @@ unix:!macx:!android {
     }
 }
 
-!android {
-    RESOURCES += res.qrc \
-        smileys/smileys.qrc
-
-    HEADERS  += \
-        src/friend.h \
-        src/group.h \
-        src/grouplist.h \
-        src/friendlist.h \
-        src/persistence/smileypack.h \
-        src/widget/emoticonswidget.h \
-        src/widget/style.h \
-        src/widget/tool/croppinglabel.h \
-        src/widget/maskablepixmapwidget.h \
-        src/video/videosurface.h \
-        src/net/toxuri.h \
-        src/net/toxdns.h \
-        src/persistence/toxsave.h \
-        src/persistence/serialize.h \
-        src/chatlog/chatlog.h \
-        src/chatlog/chatline.h \
-        src/chatlog/chatlinecontent.h \
-        src/chatlog/chatlinecontentproxy.h \
-        src/chatlog/content/text.h \
-        src/chatlog/content/spinner.h \
-        src/chatlog/content/filetransferwidget.h \
-        src/chatlog/chatmessage.h \
-        src/chatlog/content/image.h \
-        src/chatlog/customtextdocument.h \
-        src/widget/form/settings/aboutform.h \
-        src/widget/form/settings/advancedform.h \
-        src/chatlog/content/notificationicon.h \
-        src/chatlog/content/timestamp.h \
-        src/chatlog/documentcache.h \
-        src/chatlog/pixmapcache.h \
-        src/persistence/offlinemsgengine.h \
-        src/widget/form/addfriendform.h \
-        src/widget/form/chatform.h \
-        src/widget/form/groupchatform.h \
-        src/widget/form/settingswidget.h \
-        src/widget/form/settings/genericsettings.h \
-        src/widget/form/settings/generalform.h \
-        src/widget/form/settings/privacyform.h \
-        src/widget/form/settings/avform.h \
-        src/widget/form/filesform.h \
-        src/widget/form/profileform.h \
-        src/widget/tool/chattextedit.h \
-        src/widget/tool/friendrequestdialog.h \
-        src/widget/friendwidget.h \
-        src/widget/groupwidget.h \
-        src/widget/widget.h \
-        src/video/netcamview.h \
-        src/widget/friendlistwidget.h \
-        src/widget/genericchatroomwidget.h \
-        src/widget/form/genericchatform.h \
-        src/widget/tool/adjustingscrollarea.h \
-        src/widget/form/loadhistorydialog.h \
-        src/widget/form/setpassworddialog.h \
-        src/widget/form/tabcompleter.h \
-        src/net/autoupdate.h \
-        src/widget/tool/callconfirmwidget.h \
-        src/widget/systemtrayicon.h \
-        src/widget/qrwidget.h \
-        src/widget/systemtrayicon_private.h \
-        src/widget/loginscreen.h \
-        src/ipc.h
-
-    SOURCES += \
-        src/widget/form/addfriendform.cpp \
-        src/widget/form/settingswidget.cpp \
-        src/widget/form/settings/generalform.cpp \
-        src/widget/form/settings/privacyform.cpp \
-        src/widget/form/settings/avform.cpp \
-        src/widget/form/profileform.cpp \
-        src/widget/form/filesform.cpp \
-        src/widget/tool/chattextedit.cpp \
-        src/widget/tool/friendrequestdialog.cpp \
-        src/widget/widget.cpp \
-        src/video/netcamview.cpp \
-        src/widget/friendlistwidget.cpp \
-        src/widget/tool/adjustingscrollarea.cpp \
-        src/widget/form/loadhistorydialog.cpp \
-        src/widget/form/setpassworddialog.cpp \
-        src/widget/form/tabcompleter.cpp \
-        src/widget/flowlayout.cpp \
-        src/net/autoupdate.cpp \
-        src/widget/tool/callconfirmwidget.cpp \
-        src/widget/systemtrayicon.cpp \
-        src/widget/groupwidget.cpp \
-        src/widget/friendwidget.cpp \
-        src/widget/form/chatform.cpp \
-        src/widget/form/groupchatform.cpp \
-        src/widget/form/genericchatform.cpp \
-        src/friend.cpp \
-        src/friendlist.cpp \
-        src/group.cpp \
-        src/grouplist.cpp \
-        src/persistence/smileypack.cpp \
-        src/widget/emoticonswidget.cpp \
-        src/widget/style.cpp \
-        src/widget/tool/croppinglabel.cpp \
-        src/widget/maskablepixmapwidget.cpp \
-        src/video/videosurface.cpp \
-        src/net/toxuri.cpp \
-        src/net/toxdns.cpp \
-        src/persistence/toxsave.cpp \
-        src/persistence/serialize.cpp \
-        src/chatlog/chatlog.cpp \
-        src/chatlog/chatline.cpp \
-        src/chatlog/chatlinecontent.cpp \
-        src/chatlog/chatlinecontentproxy.cpp \
-        src/chatlog/content/text.cpp \
-        src/chatlog/content/spinner.cpp \
-        src/chatlog/content/filetransferwidget.cpp \
-        src/chatlog/chatmessage.cpp \
-        src/chatlog/content/image.cpp \
-        src/chatlog/customtextdocument.cpp\
-        src/widget/form/settings/aboutform.cpp \
-        src/widget/form/settings/advancedform.cpp \
-        src/chatlog/content/notificationicon.cpp \
-        src/chatlog/content/timestamp.cpp \
-        src/chatlog/documentcache.cpp \
-        src/chatlog/pixmapcache.cpp \
-        src/persistence/offlinemsgengine.cpp \
-        src/widget/qrwidget.cpp \
-        src/widget/genericchatroomwidget.cpp \
-        src/widget/loginscreen.cpp \
-        src/ipc.cpp
-}
-
 win32 {
     HEADERS += \
         src/platform/camera/directshow.h
@@ -425,97 +253,111 @@ macx {
         src/platform/camera/avfoundation.mm
 }
 
-SOURCES += \
-    src/audio/audio.cpp \
-    src/persistence/historykeeper.cpp \
-    src/main.cpp \
-    src/nexus.cpp \
-    src/core/cdata.cpp \
-    src/core/cstring.cpp \
-    src/persistence/settings.cpp \
-    src/persistence/db/genericddinterface.cpp \
-    src/persistence/db/plaindb.cpp \
-    src/persistence/db/encrypteddb.cpp \
-    src/video/videoframe.cpp \
-    src/widget/gui.cpp \
-    src/net/toxme.cpp \
-    src/core/core.cpp \
-    src/core/coreav.cpp \
-    src/core/coreencryption.cpp \
-    src/core/corefile.cpp \
-    src/core/corestructs.cpp \
-    src/persistence/profilelocker.cpp \
-    src/net/avatarbroadcaster.cpp \
-    src/widget/tool/screenshotgrabber.cpp \
-    src/widget/tool/screengrabberchooserrectitem.cpp \
-    src/widget/tool/screengrabberoverlayitem.cpp \
-    src/widget/tool/toolboxgraphicsitem.cpp \
-    src/widget/tool/flyoutoverlaywidget.cpp \
-    src/widget/form/settings/verticalonlyscroller.cpp \
-    src/video/cameradevice.cpp \
-    src/video/camerasource.cpp \
-    src/video/corevideosource.cpp \
-    src/core/toxid.cpp \
-    src/persistence/profile.cpp \
-    src/widget/translator.cpp \
-    src/persistence/settingsserializer.cpp \
-    src/widget/notificationscrollarea.cpp \
-    src/widget/notificationedgewidget.cpp \
-    src/widget/circlewidget.cpp \
-    src/widget/genericchatitemwidget.cpp \
-    src/widget/friendlistlayout.cpp \
-    src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp \
-    src/widget/contentlayout.cpp \
-    src/widget/contentdialog.cpp \
-    src/video/genericnetcamview.cpp \
-    src/widget/tool/activatedialog.cpp \
-    src/widget/tool/movablewidget.cpp \
-    src/widget/tool/micfeedbackwidget.cpp \
-    src/widget/tool/removefrienddialog.cpp \
-    src/video/groupnetcamview.cpp \
-    src/core/toxcall.cpp \
-    src/widget/about/aboutuser.cpp \
-    src/persistence/db/rawdatabase.cpp \
-    src/persistence/history.cpp \
-    src/widget/form/groupinviteform.cpp \
-    src/widget/tool/profileimporter.cpp
+RESOURCES += res.qrc \
+    smileys/smileys.qrc
 
-HEADERS += \
+HEADERS  += \
+    src/friend.h \
+    src/friendlist.h \
+    src/group.h \
+    src/grouplist.h \
+    src/ipc.h \
+    src/nexus.h \
     src/audio/audio.h \
+    src/chatlog/chatlog.h \
+    src/chatlog/chatline.h \
+    src/chatlog/chatlinecontent.h \
+    src/chatlog/chatlinecontentproxy.h \
+    src/chatlog/content/text.h \
+    src/chatlog/content/spinner.h \
+    src/chatlog/content/filetransferwidget.h \
+    src/chatlog/chatmessage.h \
+    src/chatlog/content/image.h \
+    src/chatlog/customtextdocument.h \
+    src/chatlog/content/notificationicon.h \
+    src/chatlog/content/timestamp.h \
+    src/chatlog/documentcache.h \
+    src/chatlog/pixmapcache.h \
     src/core/core.h \
     src/core/coreav.h \
     src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/persistence/historykeeper.h \
-    src/nexus.h \
     src/core/cdata.h \
     src/core/cstring.h \
+    src/core/toxid.h \
+    src/core/indexedlist.h \
+    src/core/toxcall.h \
+    src/net/toxuri.h \
+    src/net/toxdns.h \
+    src/net/autoupdate.h \
+    src/net/toxme.h \
+    src/net/avatarbroadcaster.h \
+    src/persistence/smileypack.h \
+    src/persistence/toxsave.h \
+    src/persistence/serialize.h \
+    src/persistence/offlinemsgengine.h \
+    src/persistence/profilelocker.h \
+    src/persistence/profile.h \
+    src/persistence/settingsserializer.h \
+    src/persistence/db/rawdatabase.h \
+    src/persistence/history.h \
+    src/persistence/historykeeper.h \
     src/persistence/settings.h \
     src/persistence/db/genericddinterface.h \
     src/persistence/db/plaindb.h \
     src/persistence/db/encrypteddb.h \
+    src/video/videosurface.h \
+    src/video/netcamview.h \
     src/video/videoframe.h \
     src/video/videosource.h \
+    src/video/cameradevice.h \
+    src/video/camerasource.h \
+    src/video/corevideosource.h \
+    src/video/videomode.h \
+    src/video/genericnetcamview.h \
+    src/video/groupnetcamview.h \
+    src/widget/emoticonswidget.h \
+    src/widget/style.h \
+    src/widget/tool/croppinglabel.h \
+    src/widget/maskablepixmapwidget.h \
+    src/widget/form/settings/aboutform.h \
+    src/widget/form/settings/advancedform.h \
+    src/widget/form/addfriendform.h \
+    src/widget/form/chatform.h \
+    src/widget/form/groupchatform.h \
+    src/widget/form/settingswidget.h \
+    src/widget/form/settings/genericsettings.h \
+    src/widget/form/settings/generalform.h \
+    src/widget/form/settings/privacyform.h \
+    src/widget/form/settings/avform.h \
+    src/widget/form/filesform.h \
+    src/widget/form/profileform.h \
+    src/widget/tool/chattextedit.h \
+    src/widget/tool/friendrequestdialog.h \
+    src/widget/friendwidget.h \
+    src/widget/groupwidget.h \
+    src/widget/widget.h \
+    src/widget/friendlistwidget.h \
+    src/widget/genericchatroomwidget.h \
+    src/widget/form/genericchatform.h \
+    src/widget/tool/adjustingscrollarea.h \
+    src/widget/form/loadhistorydialog.h \
+    src/widget/form/setpassworddialog.h \
+    src/widget/form/tabcompleter.h \
+    src/widget/tool/callconfirmwidget.h \
+    src/widget/systemtrayicon.h \
+    src/widget/qrwidget.h \
+    src/widget/systemtrayicon_private.h \
+    src/widget/loginscreen.h \
     src/widget/gui.h \
-    src/net/toxme.h \
-    src/persistence/profilelocker.h \
-    src/net/avatarbroadcaster.h \
     src/widget/tool/screenshotgrabber.h \
     src/widget/tool/screengrabberchooserrectitem.h \
     src/widget/tool/screengrabberoverlayitem.h \
     src/widget/tool/toolboxgraphicsitem.h \
     src/widget/tool/flyoutoverlaywidget.h \
     src/widget/form/settings/verticalonlyscroller.h \
-    src/video/cameradevice.h \
-    src/video/camerasource.h \
-    src/video/corevideosource.h \
-    src/video/videomode.h \
-    src/core/toxid.h \
-    src/persistence/profile.h \
     src/widget/translator.h \
-    src/persistence/settingsserializer.h \
     src/widget/notificationscrollarea.h \
     src/widget/notificationedgewidget.h \
     src/widget/circlewidget.h \
@@ -529,12 +371,122 @@ HEADERS += \
     src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/removefrienddialog.h \
     src/widget/tool/movablewidget.h \
-    src/video/genericnetcamview.h \
-    src/video/groupnetcamview.h \
-    src/core/indexedlist.h \
-    src/core/toxcall.h \
     src/widget/about/aboutuser.h \
-    src/persistence/db/rawdatabase.h \
-    src/persistence/history.h \
     src/widget/form/groupinviteform.h \
     src/widget/tool/profileimporter.h
+
+SOURCES += \
+    src/ipc.cpp \
+    src/friend.cpp \
+    src/friendlist.cpp \
+    src/group.cpp \
+    src/grouplist.cpp \
+    src/main.cpp \
+    src/nexus.cpp \
+    src/audio/audio.cpp \
+    src/core/cdata.cpp \
+    src/core/cstring.cpp \
+    src/core/core.cpp \
+    src/core/coreav.cpp \
+    src/core/coreencryption.cpp \
+    src/core/corefile.cpp \
+    src/core/corestructs.cpp \
+    src/core/toxid.cpp \
+    src/core/toxcall.cpp \
+    src/chatlog/chatlog.cpp \
+    src/chatlog/chatline.cpp \
+    src/chatlog/chatlinecontent.cpp \
+    src/chatlog/chatlinecontentproxy.cpp \
+    src/chatlog/content/text.cpp \
+    src/chatlog/content/spinner.cpp \
+    src/chatlog/content/filetransferwidget.cpp \
+    src/chatlog/chatmessage.cpp \
+    src/chatlog/content/image.cpp \
+    src/chatlog/customtextdocument.cpp\
+    src/chatlog/content/notificationicon.cpp \
+    src/chatlog/content/timestamp.cpp \
+    src/chatlog/documentcache.cpp \
+    src/chatlog/pixmapcache.cpp \
+    src/net/autoupdate.cpp \
+    src/net/toxuri.cpp \
+    src/net/toxdns.cpp \
+    src/net/toxme.cpp \
+    src/net/avatarbroadcaster.cpp \
+    src/persistence/historykeeper.cpp \
+    src/persistence/settings.cpp \
+    src/persistence/db/genericddinterface.cpp \
+    src/persistence/db/plaindb.cpp \
+    src/persistence/db/encrypteddb.cpp \
+    src/persistence/profile.cpp \
+    src/persistence/settingsserializer.cpp \
+    src/persistence/smileypack.cpp \
+    src/persistence/toxsave.cpp \
+    src/persistence/serialize.cpp \
+    src/persistence/offlinemsgengine.cpp \
+    src/persistence/profilelocker.cpp \
+    src/persistence/db/rawdatabase.cpp \
+    src/persistence/history.cpp \
+    src/video/videoframe.cpp \
+    src/video/cameradevice.cpp \
+    src/video/camerasource.cpp \
+    src/video/corevideosource.cpp \
+    src/video/genericnetcamview.cpp \
+    src/video/groupnetcamview.cpp \
+    src/video/netcamview.cpp \
+    src/video/videosurface.cpp \
+    src/widget/form/addfriendform.cpp \
+    src/widget/form/settingswidget.cpp \
+    src/widget/form/settings/generalform.cpp \
+    src/widget/form/settings/privacyform.cpp \
+    src/widget/form/settings/avform.cpp \
+    src/widget/form/profileform.cpp \
+    src/widget/form/filesform.cpp \
+    src/widget/tool/chattextedit.cpp \
+    src/widget/tool/friendrequestdialog.cpp \
+    src/widget/widget.cpp \
+    src/widget/friendlistwidget.cpp \
+    src/widget/tool/adjustingscrollarea.cpp \
+    src/widget/form/loadhistorydialog.cpp \
+    src/widget/form/setpassworddialog.cpp \
+    src/widget/form/tabcompleter.cpp \
+    src/widget/flowlayout.cpp \
+    src/widget/tool/callconfirmwidget.cpp \
+    src/widget/systemtrayicon.cpp \
+    src/widget/groupwidget.cpp \
+    src/widget/friendwidget.cpp \
+    src/widget/form/chatform.cpp \
+    src/widget/form/groupchatform.cpp \
+    src/widget/form/genericchatform.cpp \
+    src/widget/emoticonswidget.cpp \
+    src/widget/style.cpp \
+    src/widget/tool/croppinglabel.cpp \
+    src/widget/maskablepixmapwidget.cpp \
+    src/widget/form/settings/aboutform.cpp \
+    src/widget/form/settings/advancedform.cpp \
+    src/widget/qrwidget.cpp \
+    src/widget/genericchatroomwidget.cpp \
+    src/widget/loginscreen.cpp \
+    src/widget/gui.cpp \
+    src/widget/tool/screenshotgrabber.cpp \
+    src/widget/tool/screengrabberchooserrectitem.cpp \
+    src/widget/tool/screengrabberoverlayitem.cpp \
+    src/widget/tool/toolboxgraphicsitem.cpp \
+    src/widget/tool/flyoutoverlaywidget.cpp \
+    src/widget/form/settings/verticalonlyscroller.cpp \
+    src/widget/translator.cpp \
+    src/widget/notificationscrollarea.cpp \
+    src/widget/notificationedgewidget.cpp \
+    src/widget/circlewidget.cpp \
+    src/widget/genericchatitemwidget.cpp \
+    src/widget/friendlistlayout.cpp \
+    src/widget/genericchatitemlayout.cpp \
+    src/widget/categorywidget.cpp \
+    src/widget/contentlayout.cpp \
+    src/widget/contentdialog.cpp \
+    src/widget/tool/activatedialog.cpp \
+    src/widget/tool/movablewidget.cpp \
+    src/widget/tool/micfeedbackwidget.cpp \
+    src/widget/tool/removefrienddialog.cpp \
+    src/widget/about/aboutuser.cpp \
+    src/widget/form/groupinviteform.cpp \
+    src/widget/tool/profileimporter.cpp

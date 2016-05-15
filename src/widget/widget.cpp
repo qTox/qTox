@@ -83,12 +83,6 @@
 #include <QSignalMapper>
 #endif
 
-#ifdef Q_OS_ANDROID
-#define IS_ON_DESKTOP_GUI 0
-#else
-#define IS_ON_DESKTOP_GUI 1
-#endif
-
 bool toxActivateEventHandler(const QByteArray&)
 {
     Widget* widget = Nexus::getDesktopGUI();
@@ -530,8 +524,6 @@ Widget::~Widget()
 
 Widget* Widget::getInstance()
 {
-    assert(IS_ON_DESKTOP_GUI); // Widget must only be used on Desktop platforms
-
     if (!instance)
         instance = new Widget();
 

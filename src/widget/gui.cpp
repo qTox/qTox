@@ -19,6 +19,7 @@
 
 
 #include "gui.h"
+#include "widget.h"
 #include "src/nexus.h"
 #include <assert.h>
 #include <QCoreApplication>
@@ -30,21 +31,12 @@
 #include <QPushButton>
 #include <QThread>
 
-#ifdef Q_OS_ANDROID
-#include "androidgui.h"
-#else
-#include "widget.h"
-#endif
-
 GUI::GUI(QObject *parent) :
     QObject(parent)
 {
     assert(QThread::currentThread() == qApp->thread());
-
-#ifndef Q_OS_ANDROID
     assert(Nexus::getDesktopGUI());
     connect(Nexus::getDesktopGUI(), &Widget::resized, this, &GUI::resized);
-#endif
 }
 
 GUI& GUI::getInstance()
@@ -239,19 +231,12 @@ QString GUI::passwordDialog(const QString& cancel, const QString& body)
 
 void GUI::_clearContacts()
 {
-#ifdef Q_OS_ANDROID
-#else
     Nexus::getDesktopGUI()->clearContactsList();
-#endif
 }
 
 void GUI::_setEnabled(bool state)
 {
-#ifdef Q_OS_ANDROID
-    Nexus::getAndroidGUI()->setEnabled(state);
-#else
     Nexus::getDesktopGUI()->setEnabled(state);
-#endif
 }
 
 void GUI::_setWindowTitle(const QString& title)
@@ -264,9 +249,7 @@ void GUI::_setWindowTitle(const QString& title)
 
 void GUI::_reloadTheme()
 {
-#ifndef Q_OS_ANDROID
     Nexus::getDesktopGUI()->reloadTheme();
-#endif
 }
 
 void GUI::_showInfo(const QString& title, const QString& msg)
@@ -286,9 +269,7 @@ void GUI::_showError(const QString& title, const QString& msg)
 
 void GUI::_showUpdateDownloadProgress()
 {
-#ifndef Q_OS_ANDROID
     Nexus::getDesktopGUI()->showUpdateDownloadProgress();
-#endif
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
@@ -391,10 +372,6 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
 QWidget* GUI::getMainWidget()
 {
     QWidget* maingui{nullptr};
-#ifdef Q_OS_ANDROID
-    maingui = Nexus::getAndroidGUI();
-#else
     maingui = Nexus::getDesktopGUI();
-#endif
     return maingui;
 }
