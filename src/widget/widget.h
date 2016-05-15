@@ -75,6 +75,7 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+    void updateScroll(GenericChatroomWidget *widget);
 
     enum DialogType
     {

@@ -484,18 +484,19 @@ bool ContentDialog::event(QEvent* event)
                 updateTitle(activeChatroomWidget);
 
                 Friend* frnd = activeChatroomWidget->getFriend();
+                Group* group = activeChatroomWidget->getGroup();
+
+                GenericChatroomWidget *widget = nullptr;
 
                 if (frnd)
-                {
-                    frnd->getFriendWidget()->resetEventFlags();
-                    frnd->getFriendWidget()->updateStatusLight();
-                }
+                    widget = frnd->getFriendWidget();
                 else
-                {
-                    Group* g = activeChatroomWidget->getGroup();
-                    g->getGroupWidget()->resetEventFlags();
-                    g->getGroupWidget()->updateStatusLight();
-                }
+                    widget = group->getGroupWidget();
+
+                widget->resetEventFlags();
+                widget->updateStatusLight();
+
+                Widget::getInstance()->updateScroll(widget);
                 Widget::getInstance()->resetIcon();
             }
 
