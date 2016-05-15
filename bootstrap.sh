@@ -157,9 +157,33 @@ if [[ $INSTALL_TOX = "true" ]]; then
     if [[ $SYSTEM_WIDE = "false" ]]; then
         make install
     else
+<<<<<<< f81c2fbd9c98a5e6cd39b56ea23f38aa4606ecf5
         sudo make install
     	    echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 	sudo ldconfig
+=======
+	echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf 
+	sudo ldconfig
+	sudo make install
+    fi
+
+    popd
+fi
+
+#install libfilteraudio
+if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
+    git clone https://github.com/irungentoo/filter_audio.git \
+        ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
+    pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
+
+    if [[ $SYSTEM_WIDE = "false" ]]; then
+        PREFIX=${BASE_DIR} make -j$(nproc)
+        PREFIX=${BASE_DIR} make install
+    else
+        make -j$(nproc)
+        sudo make install
+        sudo ldconfig
+>>>>>>>  Proper link for  bootstrap
     fi
 
     popd
