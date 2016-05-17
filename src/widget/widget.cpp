@@ -120,7 +120,8 @@ void Widget::init()
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
-    offlineMsgTimer->start(15000);
+    // FIXME: ↓ make a proper fix instead of increasing timeout into ∞
+    offlineMsgTimer->start(2*60*1000);
 
     icon_size = 15;
     statusOnline = new QAction(this);
