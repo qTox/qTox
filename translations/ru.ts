@@ -1110,14 +1110,18 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный текст</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображать символы форматирования</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
+        <translation>Не отображать символы форматирования</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1874,12 +1878,12 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Сменить пароль</translation>
+        <translation>Сменить пароль</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Установить пароль для профиля</translation>
     </message>
 </context>
 <context>
@@ -2064,15 +2068,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox не может загрузить историю переписки, она будет отключена</translation>
+        <translation>qTox не может загрузить историю переписки, она будет отключена.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Проблема с HTTPS соединением</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Внутренняя ошибка ToxMe</translation>
     </message>
 </context>
 <context>

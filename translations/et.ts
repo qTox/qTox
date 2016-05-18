@@ -1116,6 +1116,10 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
         <source>Don&apos;t show formatting characters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>

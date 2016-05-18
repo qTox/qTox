@@ -1141,6 +1141,10 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <source>Don&apos;t show formatting characters</source>
         <translation>Nie pokazuj znaków formatujących</translation>
     </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
