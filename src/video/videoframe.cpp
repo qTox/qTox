@@ -155,113 +155,45 @@ void VideoFrame::releaseFrame()
 
 const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned)
 {
-    frameLock.lockForRead();
-
-    // We return nullptr if the VideoFrame is no longer valid
-    if(frameBuffer.size() == 0)
+    // Since we are retrieving the AVFrame* directly, we merely need to pass the arguement through
+    const std::function<AVFrame*(AVFrame* const)> converter = [](AVFrame* const frame)
     {
-        frameLock.unlock();
-        return nullptr;
-    }
+        return frame;
+    };
 
-    if(frameSize.width() == 0 && frameSize.height() == 0)
-    {
-        frameSize = sourceDimensions.size();
-    }
+    // We need an explicit null pointer holding object to pass to toGenericObject()
+    AVFrame* nullPointer = nullptr;
 
-    AVFrame* ret = retrieveAVFrame(frameSize, pixelFormat, requireAligned);
-
-    if(ret)
-    {
-        frameLock.unlock();
-        return ret;
-    }
-
-    // VideoFrame does not contain an AVFrame to spec, generate one here
-    ret = generateAVFrame(frameSize, pixelFormat, requireAligned);
-
-    /*
-     * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
-     *
-     * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
-     * process twice, and discard the old result.
-     */
-    frameLock.unlock();
-    frameLock.lockForWrite();
-
-    storeAVFrame(ret, frameSize, pixelFormat);
-
-    frameLock.unlock();
-    return ret;
+    // Returns std::nullptr case of invalid generation
+    return toGenericObject(frameSize, pixelFormat, requireAligned, converter, nullPointer);
 }
 
 QImage VideoFrame::toQImage(QSize frameSize)
 {
-    frameLock.lockForRead();
-
-    // We return an empty QImage if the VideoFrame is no longer valid
-    if(frameBuffer.size() == 0)
-    {
-        frameLock.unlock();
-        return QImage {};
-    }
-
     if(frameSize.width() == 0 && frameSize.height() == 0)
     {
         frameSize = sourceDimensions.size();
     }
 
-    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24), false);
-
-    if(frame)
+    // Converter function (constructs QImage out of AVFrame*)
+    const std::function<QImage(AVFrame* const)> converter = [&](AVFrame* const frame)
     {
-        QImage ret {*(frame->data), frameSize.width(), frameSize.height(), *(frame->linesize), QImage::Format_RGB888};
+        return QImage {*(frame->data), frameSize.width(), frameSize.height(), *(frame->linesize), QImage::Format_RGB888};
+    };
 
-        frameLock.unlock();
-        return ret;
-    }
-
-    // VideoFrame does not contain an AVFrame to spec, generate one here
-    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_RGB24), false);
-
-    /*
-     * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
-     *
-     * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
-     * process twice, and discard the old result.
-     */
-    frameLock.unlock();
-    frameLock.lockForWrite();
-
-    storeAVFrame(frame, frameSize, static_cast<int>(AV_PIX_FMT_RGB24));
-
-    QImage ret {*(frame->data), frameSize.width(), frameSize.height(), *(frame->linesize), QImage::Format_RGB888};
-
-    frameLock.unlock();
-    return ret;
+    // Returns an empty constructed QImage in case of invalid generation
+    return toGenericObject(frameSize, AV_PIX_FMT_RGB24, false, converter, QImage {});
 }
 
 ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
 {
-    frameLock.lockForRead();
-
-    // We return nullptr if the VideoFrame is no longer valid
-    if(frameBuffer.size() == 0)
-    {
-        frameLock.unlock();
-        return {0, 0, nullptr, nullptr, nullptr};
-    }
-
     if(frameSize.width() == 0 && frameSize.height() == 0)
     {
         frameSize = sourceDimensions.size();
     }
 
-    AVFrame* frame = retrieveAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P), true);
-
-    if(frame)
+    // Converter function (constructs ToxAVFrame out of AVFrame*)
+    const std::function<ToxAVFrame(AVFrame* const)> converter = [&](AVFrame* const frame)
     {
         ToxAVFrame ret
         {
@@ -270,34 +202,10 @@ ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
             frame->data[0], frame->data[1], frame->data[2]
         };
 
-        frameLock.unlock();
         return ret;
-    }
-
-    // VideoFrame does not contain an AVFrame to spec, generate one here
-    frame = generateAVFrame(frameSize, static_cast<int>(AV_PIX_FMT_YUV420P), true);
-
-    /*
-     * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
-     *
-     * It doesn't matter if another thread obtains the write lock before we finish since it is
-     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
-     * process twice, and discard the old result.
-     */
-    frameLock.unlock();
-    frameLock.lockForWrite();
-
-    storeAVFrame(frame, frameSize, static_cast<int>(AV_PIX_FMT_YUV420P));
-
-    ToxAVFrame ret
-    {
-        static_cast<std::uint16_t>(frameSize.width()),
-        static_cast<std::uint16_t>(frameSize.height()),
-        frame->data[0], frame->data[1], frame->data[2]
     };
 
-    frameLock.unlock();
-    return ret;
+    return toGenericObject(frameSize, AV_PIX_FMT_YUV420P, true, converter, ToxAVFrame {0, 0, nullptr, nullptr, nullptr});
 }
 
 AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned)
