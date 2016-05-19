@@ -313,6 +313,13 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1176,7 +1183,7 @@ kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Tsiteeri valitud tekst</translation>
     </message>
 </context>
 <context>
@@ -2413,6 +2420,11 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
             <numerusform>%n uus grupi kutse</numerusform>
             <numerusform>%n uut gruppide kutset</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
