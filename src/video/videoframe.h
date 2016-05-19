@@ -387,6 +387,70 @@ private:
      */
     void deleteFrameBuffer();
 
+    /**
+     * @brief Converts this VideoFrame to a generic type T based on the given parameters and
+     * supplied converter functions.
+     *
+     * This function is used internally to create various toXObject functions that all follow the
+     * same generation pattern (where XObject is some existing type like QImage).
+     *
+     * In order to create such a type, a object constructor function is required that takes the
+     * generated AVFrame object and creates type T out of it. This function additionally requires
+     * a null object of type T that represents an invalid/null object for when the generation
+     * process fails (e.g. when the VideoFrame is no longer valid).
+     *
+     * @param dimensions the dimensions of the frame.
+     * @param pixelFormat the pixel format of the frame.
+     * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
+     * @param objectConstructor a std::function that takes the generated AVFrame and converts it
+     * to an object of type T.
+     * @param nullObject an object of type T that represents the null/invalid object to be used
+     * when the generation process fails.
+     */
+    template <typename T>
+    T toGenericObject(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
+                      const std::function<T(AVFrame* const)> objectConstructor, const T& nullObject)
+    {
+        frameLock.lockForRead();
+
+        // We return nullObject if the VideoFrame is no longer valid
+        if(frameBuffer.size() == 0)
+        {
+            frameLock.unlock();
+            return nullObject;
+        }
+
+        AVFrame* frame = retrieveAVFrame(dimensions, static_cast<int>(pixelFormat), requireAligned);
+
+        if(frame)
+        {
+            T ret = objectConstructor(frame);
+
+            frameLock.unlock();
+            return ret;
+        }
+
+        // VideoFrame does not contain an AVFrame to spec, generate one here
+        frame = generateAVFrame(dimensions, static_cast<int>(pixelFormat), requireAligned);
+
+        /*
+         * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
+         *
+         * It doesn't matter if another thread obtains the write lock before we finish since it is
+         * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
+         * process twice, and discard the old result.
+         */
+        frameLock.unlock();
+        frameLock.lockForWrite();
+
+        storeAVFrame(frame, dimensions, static_cast<int>(pixelFormat));
+
+        T ret = objectConstructor(frame);
+
+        frameLock.unlock();
+        return ret;
+    }
+
 private:
     // ID
     const IDType frameID;
