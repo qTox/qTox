@@ -22,10 +22,8 @@ running on all major platforms.**
   - [**64 bit portable**](https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip)
   - [**32 bit portable**](https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip)
 * **Linux**:
-  - [**64 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86-64_release.tar.xz)
-  - [**32 bit download**](https://build.tox.chat/view/Clients/job/qTox_build_linux_x86_release/lastSuccessfulBuild/artifact/qTox_build_linux_x86_release.tar.xz)
-  - [**Armhf download**](https://build.tox.chat/job/qTox-qt5.4.2_build_linux_armhf_release/lastSuccessfulBuild/artifact/qTox-qt5.4.2_build_linux_armhf_release.tar.xz)
-  - [**packages**](/INSTALL.md#simple-install)
+  - [**CentOS, Debian, Fedora, openSUSE, Ubuntu**](https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox)
+  - [other](/INSTALL.md#linux)
 * **Mac**:
   - [**Experimental download**](https://github.com/RowenStipe/qTox-OSX/releases)
 * **FreeBSD**:
