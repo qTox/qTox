@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
 </context>
 <context>
@@ -96,19 +96,19 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Loetelu tuntud vigadest asub Githubis meie %1. Kui sa leiad qToxis vea või haavatavuse turvalisuses, siis palun %3 vastavalt juhendile meie wiki artiklis %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>veahalduse süsteemis (inglise keeles)</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>„Writing Useful Bug Reports“ (inglise keeles)</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>raporteeri sellest</translation>
     </message>
 </context>
 <context>
@@ -119,7 +119,7 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>toxcore&apos;i versioon: $TOXCOREVERSION</translation>
+        <translation>TOXcore&apos;i versioon: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -151,7 +151,7 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt versioon: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -274,19 +274,19 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished">Lisa sõber</translation>
+        <translation>Lisa sõber</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutsed sõpradelt</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Nõustu</translation>
+        <translation>Nõustu</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished">Keeldu</translation>
+        <translation>Keeldu</translation>
     </message>
 </context>
 <context>
@@ -423,11 +423,11 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 on kirjutamas</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopeeri</translation>
+        <translation>Kopeeri</translation>
     </message>
 </context>
 <context>
@@ -772,11 +772,11 @@ Vestluste ajaloo logimise väljalülitamine ei hävita krüpteeritud ajalugu, en
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Uude gruppi</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutsu gruppi „%1“</translation>
     </message>
 </context>
 <context>
@@ -1053,8 +1053,7 @@ kui nad sulle nähtavaks muutuvad.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu.
-Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
+        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -1094,31 +1093,31 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdowni uus eelistus võidakse laadida alles qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksti vormindamine (Markdown):</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali Markdowni eelistus.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Lihttekst</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuva vorminduse märgid</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ära kuva vorminduse märke</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Olles hõivatud, mängi heli</translation>
     </message>
 </context>
 <context>
@@ -1200,7 +1199,7 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Tühi&gt;</translation>
     </message>
 </context>
 <context>
@@ -1244,27 +1243,27 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
     <name>GroupInviteForm</name>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutsus &lt;b&gt;%1&lt;/b&gt;  %2.</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupid</translation>
+        <translation>Grupid</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Loo uus grupp</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupi kutsed</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Liitu</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Keeldu</translation>
     </message>
 </context>
 <context>
@@ -1396,35 +1395,35 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme register</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutajanimi</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Biograafia</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Peida mu nimi avalikust loendist</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registreeri</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinu salasõna</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Uuendus</translation>
+        <translation>Värskenda</translation>
     </message>
 </context>
 <context>
@@ -1538,11 +1537,11 @@ Võimalik, et peaksid selle looma.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Impordi</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salasõnaga kaitstud profiile ei saa automaatselt laadida.</translation>
     </message>
 </context>
 <context>
@@ -1827,59 +1826,59 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Järgmiste failide kustutamine nurjus:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Palun kustuta need käsitsi.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Faile ei suudetud kustutada!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registreerimine (töötlemisel)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uuendamine (töötlemisel)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Valmis!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Konto %1@%2 väskendus oli edukas</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>%1@%2 lisati edukalt andmebaasi. Salvesta oma salasõna</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme viga</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registreeri</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Uuendus</translation>
+        <translation>Värskenda</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Muuda salasõna</translation>
+        <translation>Muuda salasõna</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Määra profiili salasõna</translation>
     </message>
 </context>
 <context>
@@ -1887,32 +1886,32 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Impordi profiil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox profiili fail (*.tox)</translation>
+        <translation>Tox profiili fail (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Eiran faili, mis pole Tox vormingus</translation>
+        <translation>Eiran mitte-Toxi faili</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hoiatus: faili eratakse, sest oled valinud faili, mida Tox ei ole salvestanud.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Profiil on juba olemas</translation>
+        <translation>Profiil on juba olemas</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished">Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
+        <translation>Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
     </message>
 </context>
 <context>
@@ -2066,11 +2065,11 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Probleemid HTTPS ühendusega</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisemine Toxme viga</translation>
     </message>
 </context>
 <context>
@@ -2386,33 +2385,33 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppide kutsed</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Tühi&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupivestlus #%1</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Loo uus grupp...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n uus sõbra kutse</numerusform>
+            <numerusform>%n uut sõbra kutset</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n uus grupi kutse</numerusform>
+            <numerusform>%n uut gruppide kutset</numerusform>
         </translation>
     </message>
 </context>
