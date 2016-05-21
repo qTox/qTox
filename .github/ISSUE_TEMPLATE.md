@@ -30,6 +30,8 @@ Reproducible: Always / Almost Always / Sometimes / Rarely / Couldn't Reproduce
 E.g., include log located in `~/.config/Tox/qTox/` / `%APPDATA\tox\`.
 To include it, rename it from `.log` to `.txt`, or zip it.
 
+Tip: use `v4l-info` and `v4l2-ctl --all` to get webcam info on Linux.
+
 More information on how to write good bug reports in the wiki:
 https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports.
 
