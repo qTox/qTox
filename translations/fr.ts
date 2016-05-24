@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -91,11 +91,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>logiciel de suivi de problèmes</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecrire des rapports de plantage utiles</translation>
     </message>
     <message>
         <source>report it</source>
@@ -103,12 +103,12 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Redémarrez qTox pour installer la version %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox télécharge la mise à jour %1</translation>
     </message>
 </context>
 <context>
@@ -143,7 +143,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Version de Qt : $QTVERSION</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
@@ -162,7 +162,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>status message</source>
@@ -170,7 +170,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Clé publique:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
