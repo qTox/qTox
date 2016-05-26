@@ -13,14 +13,14 @@ CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent) {
     setIconSize(iconSize);
     setCursor(Qt::ArrowCursor);
     move(inputSize.width() - inputSize.height(), 0);
-    setStyleSheet("border: none; padding: 0;");
-    setToolTip("CAPS-LOCK ENABLED");
+    setStyleSheet("border: none; padding: 0; color: white");
+    setToolTip(tr("CAPS-LOCK ENABLED"));
 }
 
 void CapsLockIndicator::show() {
     QToolButton::show();
 
-    QString style = QString("padding: -3px %1px -3px -6px").arg(iconSize().width() - 3);
+    QString style = QString("padding: -3px %1px -3px -6px; color: white").arg(iconSize().width() - 3);
     parentWidget()->setStyleSheet(style);
 }
 
