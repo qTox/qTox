@@ -1,14 +1,24 @@
 sudo: required
 dist: trusty
-
 language: cpp
-
 os:
- - linux
- - osx
-
+- linux
+- osx
 script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./verify-commit-messages.sh "$TRAVIS_COMMIT_RANGE" ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./verify-commit-messages.sh "$TRAVIS_COMMIT_RANGE"; fi
 - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./.travis/build-ubuntu_14_04.sh; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i ; fi
 - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b ; fi
+before_deploy:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d ; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg ; fi
+deploy:
+  provider: releases
+  api_key:
+    secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+  file: "./qTox.dmg"
+  on:
+    condition: $TRAVIS_OS_NAME == osx
+    repo: tux3/qTox
+    tags: true
+  skip_cleanup: true
