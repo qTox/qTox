@@ -75,6 +75,10 @@ AVForm::AVForm() :
                 .arg(audio.maxInputGain()));
     bodyUI->microphoneSlider->setMinimum(qRound(audio.minInputGain()) * 10);
     bodyUI->microphoneSlider->setMaximum(qRound(audio.maxInputGain()) * 10);
+    bodyUI->microphoneSlider->setTickPosition(QSlider::TicksBothSides);
+    bodyUI->microphoneSlider->setTickInterval(
+                (qAbs(bodyUI->microphoneSlider->minimum()) +
+                 bodyUI->microphoneSlider->maximum()) / 4);
     bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
     connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
