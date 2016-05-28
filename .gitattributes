@@ -1,5 +1,8 @@
 # Fix GitHub thinking our translations are TypeScript
 *.ts linguist-language=XML
 
+# fix bootstrap.sh on Windows MSYS
+*.sh eol=lf
+
 # Don't count the translation files in the language stats
 translations/* linguist-vendored
