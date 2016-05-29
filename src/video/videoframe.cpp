@@ -269,7 +269,7 @@ void VideoFrame::releaseFrameLockless()
     }
 }
 
-QSize VideoFrame::getSize()
+QSize VideoFrame::getSize() const
 {
     return {width, height};
 }

@@ -43,7 +43,7 @@ public:
     ~VideoFrame();
 
     /// Return the size of the original frame
-    QSize getSize();
+    QSize getSize() const;
 
     /// Frees all internal buffers and frame data, removes the freelistCallback
     /// This makes all converted objects that shares our internal buffers invalid

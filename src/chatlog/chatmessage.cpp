@@ -167,14 +167,14 @@ void ChatMessage::setAsAction()
     action = true;
 }
 
-void ChatMessage::hideSender()
+void ChatMessage::hideSender() const
 {
     ChatLineContent* c = getContent(0);
     if (c)
         c->hide();
 }
 
-void ChatMessage::hideDate()
+void ChatMessage::hideDate() const
 {
     ChatLineContent* c = getContent(2);
     if (c)

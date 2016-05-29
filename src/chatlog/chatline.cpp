@@ -82,7 +82,7 @@ ChatLineContent *ChatLine::getContent(QPointF scenePos) const
     return nullptr;
 }
 
-void ChatLine::removeFromScene()
+void ChatLine::removeFromScene() const
 {
     for (ChatLineContent* c : content)
     {
@@ -91,7 +91,7 @@ void ChatLine::removeFromScene()
     }
 }
 
-void ChatLine::addToScene(QGraphicsScene *scene)
+void ChatLine::addToScene(QGraphicsScene *scene) const
 {
     if (!scene)
         return;
@@ -100,25 +100,25 @@ void ChatLine::addToScene(QGraphicsScene *scene)
         scene->addItem(c);
 }
 
-void ChatLine::setVisible(bool visible)
+void ChatLine::setVisible(bool visible) const
 {
     for (ChatLineContent* c : content)
         c->setVisible(visible);
 }
 
-void ChatLine::selectionCleared()
+void ChatLine::selectionCleared() const
 {
     for (ChatLineContent* c : content)
         c->selectionCleared();
 }
 
-void ChatLine::selectionFocusChanged(bool focusIn)
+void ChatLine::selectionFocusChanged(bool focusIn) const
 {
     for (ChatLineContent* c : content)
         c->selectionFocusChanged(focusIn);
 }
 
-int ChatLine::getColumnCount()
+int ChatLine::getColumnCount() const
 {
     return content.size();
 }
