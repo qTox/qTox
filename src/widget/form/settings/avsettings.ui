@@ -46,12 +46,6 @@
           </item>
           <item row="3" column="1" colspan="2">
            <widget class="QSlider" name="microphoneSlider">
-            <property name="toolTip">
-             <string>Use slider to set volume of your microphone.</string>
-            </property>
-            <property name="maximum">
-             <number>100</number>
-            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>

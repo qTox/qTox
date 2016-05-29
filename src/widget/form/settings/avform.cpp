@@ -45,6 +45,8 @@ AVForm::AVForm() :
     bodyUI = new Ui::AVSettings;
     bodyUI->setupUi(this);
 
+    const Audio& audio = Audio::getInstance();
+
     bodyUI->btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
@@ -65,6 +67,14 @@ AVForm::AVForm() :
     bodyUI->playbackSlider->installEventFilter(this);
     connect(bodyUI->playbackSlider, &QSlider::valueChanged,
             this, &AVForm::onPlaybackValueChanged);
+
+    bodyUI->microphoneSlider->setToolTip(
+                tr("Use slider to set the gain of your input device ranging"
+                   " from %1dB to %2dB.")
+                .arg(audio.minInputGain())
+                .arg(audio.maxInputGain()));
+    bodyUI->microphoneSlider->setMinimum(qRound(audio.minInputGain()) * 10);
+    bodyUI->microphoneSlider->setMaximum(qRound(audio.maxInputGain()) * 10);
     bodyUI->microphoneSlider->setTracking(false);
     bodyUI->microphoneSlider->installEventFilter(this);
     connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
@@ -378,7 +388,7 @@ void AVForm::onInDevChanged(QString deviceDescriptor)
     Audio& audio = Audio::getInstance();
     audio.reinitInput(deviceDescriptor);
     bodyUI->microphoneSlider->setEnabled(bodyUI->inDevCombobox->currentIndex() != 0);
-    bodyUI->microphoneSlider->setSliderPosition(audio.inputVolume() * 100.f);
+    bodyUI->microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
 }
 
 void AVForm::onOutDevChanged(QString deviceDescriptor)
@@ -390,7 +400,7 @@ void AVForm::onOutDevChanged(QString deviceDescriptor)
     Audio& audio = Audio::getInstance();
     audio.reinitOutput(deviceDescriptor);
     bodyUI->playbackSlider->setEnabled(audio.isOutputReady());
-    bodyUI->playbackSlider->setSliderPosition(audio.outputVolume() * 100.f);
+    bodyUI->playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
 
 void AVForm::onFilterAudioToggled(bool filterAudio)
@@ -414,10 +424,10 @@ void AVForm::onPlaybackValueChanged(int value)
 
 void AVForm::onMicrophoneValueChanged(int value)
 {
-    Settings::getInstance().setInVolume(value);
+    const qreal dB = value / 10.0;
 
-    const qreal percentage = value / 100.0;
-    Audio::getInstance().setInputVolume(percentage);
+    Settings::getInstance().setAudioInGain(dB);
+    Audio::getInstance().setInputGain(dB);
 }
 
 void AVForm::createVideoSurface()

@@ -236,7 +236,7 @@ void Settings::loadGlobal()
     s.beginGroup("Audio");
         inDev = s.value("inDev", "").toString();
         outDev = s.value("outDev", "").toString();
-        inVolume = s.value("inVolume", 100).toInt();
+        audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
         filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
@@ -467,7 +467,7 @@ void Settings::saveGlobal()
     s.beginGroup("Audio");
         s.setValue("inDev", inDev);
         s.setValue("outDev", outDev);
-        s.setValue("inVolume", inVolume);
+        s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
         s.setValue("filterAudio", filterAudio);
     s.endGroup();
@@ -1366,16 +1366,16 @@ void Settings::setInDev(const QString& deviceSpecifier)
     inDev = deviceSpecifier;
 }
 
-int Settings::getInVolume() const
+qreal Settings::getAudioInGain() const
 {
     QMutexLocker locker{&bigLock};
-    return inVolume;
+    return audioInGainDecibel;
 }
 
-void Settings::setInVolume(int volume)
+void Settings::setAudioInGain(qreal dB)
 {
     QMutexLocker locker{&bigLock};
-    inVolume = volume;
+    audioInGainDecibel = dB;
 }
 
 QString Settings::getVideoDev() const
