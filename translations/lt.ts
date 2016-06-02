@@ -1104,11 +1104,11 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti formatavimo simbolius</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Nerodyti formatavimo simbolių</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
