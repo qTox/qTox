@@ -74,8 +74,8 @@ public:
     bool isInputReady() const;
     bool isOutputReady() const;
 
-    static const char* outDeviceNames();
-    static const char* inDeviceNames();
+    static QStringList outDeviceNames();
+    static QStringList inDeviceNames();
     void subscribeOutput(ALuint& sid);
     void unsubscribeOutput(ALuint& sid);
     void subscribeInput();

@@ -50,6 +50,18 @@ public:
     {
     }
 
+    static const ALchar* inDeviceNames()
+    {
+        return alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    }
+
+    static const ALchar* outDeviceNames()
+    {
+        return (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
+                ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
+                : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    }
+
     qreal inputGain() const
     {
         return gain;
@@ -323,7 +335,7 @@ bool Audio::initInput(QString inDevDescr)
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
     if (inDevDescr.isEmpty())
     {
-        const ALchar *pDeviceList = Audio::inDeviceNames();
+        const ALchar *pDeviceList = Private::inDeviceNames();
         if (pDeviceList)
             inDevDescr = QString::fromUtf8(pDeviceList, strlen(pDeviceList));
     }
@@ -366,7 +378,7 @@ bool Audio::initOutput(QString outDevDescr)
     if (outDevDescr.isEmpty())
     {
         // default to the first available audio device.
-        const ALchar *pDeviceList = Audio::outDeviceNames();
+        const ALchar *pDeviceList = Private::outDeviceNames();
         if (pDeviceList)
             outDevDescr = QString::fromUtf8(pDeviceList, strlen(pDeviceList));
     }
@@ -600,20 +612,40 @@ bool Audio::isOutputReady() const
     return alOutDev && outputInitialized;
 }
 
-const char* Audio::outDeviceNames()
+QStringList Audio::outDeviceNames()
 {
-    const char* pDeviceList;
-    if (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-        pDeviceList = alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER);
-    else
-        pDeviceList = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+    QStringList list;
+    const ALchar* pDeviceList = Private::outDeviceNames();
 
-    return pDeviceList;
+    if (pDeviceList)
+    {
+        while (*pDeviceList)
+        {
+            int len = static_cast<int>(strlen(pDeviceList));
+            list << QString::fromUtf8(pDeviceList, len);
+            pDeviceList += len+1;
+        }
+    }
+
+    return list;
 }
 
-const char* Audio::inDeviceNames()
+QStringList Audio::inDeviceNames()
 {
-    return alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
+    QStringList list;
+    const ALchar* pDeviceList = Private::inDeviceNames();
+
+    if (pDeviceList)
+    {
+        while (*pDeviceList)
+        {
+            int len = static_cast<int>(strlen(pDeviceList));
+            list << QString::fromUtf8(pDeviceList, len);
+            pDeviceList += len+1;
+        }
+    }
+
+    return list;
 }
 
 void Audio::subscribeOutput(ALuint& sid)
