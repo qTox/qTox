@@ -344,52 +344,30 @@ void AVForm::getVideoDevices()
 
 void AVForm::getAudioInDevices()
 {
-    QString settingsInDev = Settings::getInstance().getInDev();
-    int inDevIndex = 0;
+    QStringList deviceNames;
+    deviceNames << tr("None") << Audio::inDeviceNames();
+
     bodyUI->inDevCombobox->blockSignals(true);
     bodyUI->inDevCombobox->clear();
-    bodyUI->inDevCombobox->addItem(tr("None"));
-    const char* pDeviceList = Audio::inDeviceNames();
-    if (pDeviceList)
-    {
-        while (*pDeviceList)
-        {
-            int len = strlen(pDeviceList);
-            QString inDev = QString::fromUtf8(pDeviceList, len);
-            bodyUI->inDevCombobox->addItem(inDev);
-            if (settingsInDev == inDev)
-                inDevIndex = bodyUI->inDevCombobox->count()-1;
-            pDeviceList += len+1;
-        }
-    }
+    bodyUI->inDevCombobox->addItems(deviceNames);
     bodyUI->inDevCombobox->blockSignals(false);
-    bodyUI->inDevCombobox->setCurrentIndex(inDevIndex);
+
+    int idx = deviceNames.indexOf(Settings::getInstance().getInDev());
+    bodyUI->inDevCombobox->setCurrentIndex(idx > 0 ? idx : 0);
 }
 
 void AVForm::getAudioOutDevices()
 {
-    QString settingsOutDev = Settings::getInstance().getOutDev();
-    int outDevIndex = 0;
+    QStringList deviceNames;
+    deviceNames << tr("None") << Audio::outDeviceNames();
+
     bodyUI->outDevCombobox->blockSignals(true);
     bodyUI->outDevCombobox->clear();
-    bodyUI->outDevCombobox->addItem(tr("None"));
-    const char* pDeviceList = Audio::outDeviceNames();
-    if (pDeviceList)
-    {
-        while (*pDeviceList)
-        {
-            int len = strlen(pDeviceList);
-            QString outDev = QString::fromUtf8(pDeviceList, len);
-            bodyUI->outDevCombobox->addItem(outDev);
-            if (settingsOutDev == outDev)
-            {
-                outDevIndex = bodyUI->outDevCombobox->count()-1;
-            }
-            pDeviceList += len+1;
-        }
-    }
+    bodyUI->outDevCombobox->addItems(deviceNames);
     bodyUI->outDevCombobox->blockSignals(false);
-    bodyUI->outDevCombobox->setCurrentIndex(outDevIndex);
+
+    int idx = deviceNames.indexOf(Settings::getInstance().getOutDev());
+    bodyUI->outDevCombobox->setCurrentIndex(idx > 0 ? idx : 0);
 }
 
 void AVForm::onInDevChanged(QString deviceDescriptor)
