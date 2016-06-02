@@ -1122,7 +1122,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Воспроизводить звук, когда Занят</translation>
     </message>
 </context>
 <context>
