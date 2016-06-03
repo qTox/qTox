@@ -176,7 +176,7 @@ win32 {
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a -ldl -lX11 -lXss -lqrencode
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
             contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
                 LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
             }
