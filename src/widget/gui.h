@@ -73,6 +73,10 @@ public:
                     int current = 0, bool editable = true, bool * ok = 0,
                     Qt::WindowFlags flags = 0,
                     Qt::InputMethodHints hints = Qt::ImhNone);
+    /// Asks the user to input text
+    /// cancel is the text on the cancel button and body
+    /// is descriptive text that will be shown to the user
+    static QString textDialog(const QString &title, const QString &label);
     /// Asks the user to answer a password
     /// cancel is the text on the cancel button and body
     /// is descriptive text that will be shown to the user
@@ -107,6 +111,7 @@ private slots:
                         int current = 0, bool editable = true, bool * ok = 0,
                         Qt::WindowFlags flags = 0,
                         Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
+    QString _textDialog(const QString& title, const QString& label);
     QString _passwordDialog(const QString& cancel, const QString& body);
 };
 

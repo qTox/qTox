@@ -23,6 +23,8 @@
 #include "src/persistence/settings.h"
 #include "src/persistence/db/plaindb.h"
 #include "src/widget/translator.h"
+#include "src/core/core.h"
+#include "src/widget/gui.h"
 
 AdvancedForm::AdvancedForm() :
     GenericForm(QPixmap(":/img/settings/general.png"))
@@ -33,7 +35,8 @@ AdvancedForm::AdvancedForm() :
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
 
     connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
-    connect(bodyUI->resetButton, SIGNAL(clicked()), this, SLOT(resetToDefault()));
+    connect(bodyUI->addDevBtn, &QPushButton::clicked, this, &AdvancedForm::onAddDeviceClicked);
+    connect(bodyUI->delDevBtn, &QPushButton::clicked, this, &AdvancedForm::onRemoveDeviceClicked);
 
     for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
     {
@@ -54,10 +57,6 @@ void AdvancedForm::onMakeToxPortableUpdated()
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
-void AdvancedForm::resetToDefault()
-{
-}
-
 bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
@@ -69,7 +68,66 @@ bool AdvancedForm::eventFilter(QObject *o, QEvent *e)
     return QWidget::eventFilter(o, e);
 }
 
+void AdvancedForm::showEvent(QShowEvent *event)
+{
+    fillDeviceList();
+}
+
 void AdvancedForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
+}
+
+void AdvancedForm::fillDeviceList()
+{
+    QVector<ToxDevice> devices = Core::getInstance()->getDeviceList();
+
+    bodyUI->devsTable->clearContents();
+    bodyUI->devsTable->setRowCount(0);
+
+    for (auto&& dev : devices)
+    {
+        int newRow = bodyUI->devsTable->rowCount();
+        bodyUI->devsTable->insertRow(newRow);
+        bodyUI->devsTable->setItem(newRow, 0, new QTableWidgetItem(dev.name));
+        if (dev.status == DeviceStatus::Pending)
+            bodyUI->devsTable->setItem(newRow, 1, new QTableWidgetItem("Pending"));
+        else if (dev.status == DeviceStatus::Confirmed)
+            bodyUI->devsTable->setItem(newRow, 1, new QTableWidgetItem("Offline"));
+        else if (dev.status == DeviceStatus::Online)
+            bodyUI->devsTable->setItem(newRow, 1, new QTableWidgetItem("Online"));
+        bodyUI->devsTable->setItem(newRow, 2, new QTableWidgetItem(QString(dev.pk.toHex()).toUpper()));
+    }
+}
+
+void AdvancedForm::onAddDeviceClicked()
+{
+    QString toxId = GUI::textDialog("Add Device", "Tox ID");
+    if (!ToxId::isToxId(toxId))
+        GUI::showError("Error", "Invalid Tox ID");
+    QByteArray pk = QByteArray::fromHex(ToxId(toxId).publicKey.toUtf8());
+
+    if (!Core::getInstance()->addDevice("Unnamed", pk))
+        GUI::showError("Error", "Failed to add the device");
+
+    fillDeviceList();
+}
+
+void AdvancedForm::onRemoveDeviceClicked()
+{
+    QList<QTableWidgetSelectionRange> ranges = bodyUI->devsTable->selectedRanges();
+    if (ranges.isEmpty())
+        return;
+    QByteArray pk = QByteArray::fromHex(bodyUI->devsTable->item(ranges[0].topRow(), 2)->text().toUtf8());
+
+    if (!GUI::askQuestion("Are you sure?", "The device will be blacklisted permanently.\nContinue?"))
+        return;
+
+    if (!Core::getInstance()->removeDevice(pk))
+    {
+        GUI::showError("Error", "Failed to remove the device");
+        return;
+    }
+
+    fillDeviceList();
 }

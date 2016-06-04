@@ -38,13 +38,16 @@ public:
 
 protected:
     bool eventFilter(QObject *o, QEvent *e) final override;
+    void showEvent(QShowEvent*event) final override;
 
 private slots:
     void onMakeToxPortableUpdated();
-    void resetToDefault();
+    void onAddDeviceClicked();
+    void onRemoveDeviceClicked();
 
 private:
     void retranslateUi();
+    void fillDeviceList();
 
 private:
     Ui::AdvancedSettings* bodyUI;

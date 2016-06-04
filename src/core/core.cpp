@@ -792,6 +792,42 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
     return keypair;
 }
 
+QVector<ToxDevice> Core::getDeviceList() const
+{
+    QVector<ToxDevice> devs;
+
+    if (!tox)
+        return devs;
+
+    size_t count = tox_self_get_device_count(tox);
+    for (size_t i=0; i<count; ++i)
+    {
+        char name[TOX_MAX_NAME_LENGTH+1];
+        QByteArray pk(TOX_PUBLIC_KEY_SIZE, 0);
+        TOX_DEVICE_STATUS status;
+        if (!tox_self_get_device(tox, i, (uint8_t*)name, &status, (uint8_t*)pk.data(), nullptr))
+            break;
+
+        devs.append({CString::toString((uint8_t*)name, strlen(name)), pk, (DeviceStatus)status});
+    }
+
+    return devs;
+}
+
+bool Core::addDevice(QString name, QByteArray pk)
+{
+    if (pk.size() != TOX_PUBLIC_KEY_SIZE)
+        return false;
+
+    CString cName(name);
+    return (bool)tox_self_add_device(tox, (uint8_t*)cName.data(), cName.size(), (uint8_t*)pk.data(), nullptr);
+}
+
+bool Core::removeDevice(QByteArray pk)
+{
+    return (bool)tox_self_delete_device(tox, (uint8_t*)pk.data(), nullptr);
+}
+
 QString Core::getStatusMessage() const
 {
     QString sname;

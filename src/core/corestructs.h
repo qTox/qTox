@@ -10,6 +10,7 @@ class QFile;
 class QTimer;
 
 enum class Status : int {Online = 0, Away, Busy, Offline};
+enum class DeviceStatus : int {Pending = 0, Confirmed, Online};
 
 struct DhtServer
 {
@@ -17,6 +18,13 @@ struct DhtServer
     QString userId;
     QString address;
     quint16 port;
+};
+
+struct ToxDevice
+{
+    QString name;
+    QByteArray pk;
+    DeviceStatus status;
 };
 
 struct ToxFile

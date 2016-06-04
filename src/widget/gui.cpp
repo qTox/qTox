@@ -211,6 +211,22 @@ QString GUI::itemInputDialog(QWidget * parent, const QString & title,
     }
 }
 
+QString GUI::textDialog(const QString &cancel, const QString &body)
+{
+    if (QThread::currentThread() == qApp->thread())
+    {
+        return getInstance()._textDialog(cancel, body);
+    }
+    else
+    {
+        QString r;
+        QMetaObject::invokeMethod(&getInstance(), "_textDialog", Qt::BlockingQueuedConnection,
+                        Q_RETURN_ARG(QString, r),
+                        Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
+        return r;
+    }
+}
+
 QString GUI::passwordDialog(const QString& cancel, const QString& body)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -309,6 +325,11 @@ QString GUI::_itemInputDialog(QWidget * parent, const QString & title,
                               Qt::InputMethodHints hints)
 {
     return QInputDialog::getItem(parent, title, label, items, current, editable, ok, flags, hints);
+}
+
+QString GUI::_textDialog(const QString &title, const QString &label)
+{
+    return QInputDialog::getText(nullptr, title, label);
 }
 
 QString GUI::_passwordDialog(const QString& cancel, const QString& body)
