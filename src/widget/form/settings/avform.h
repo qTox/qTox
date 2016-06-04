@@ -54,8 +54,8 @@ private:
 private slots:
 
     // audio
-    void onInDevChanged(QString deviceDescriptor);
-    void onOutDevChanged(QString deviceDescriptor);
+    void onAudioInDevChanged(int deviceIndex);
+    void onAudioOutDevChanged(int deviceIndex);
     void onPlaybackValueChanged(int value);
     void onMicrophoneValueChanged(int value);
 
