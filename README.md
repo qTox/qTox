@@ -65,7 +65,7 @@ idea of the general look and features.
 #### Meetings
 
 Time & place where qTox committee gathers to discuss. Meetings happen every
-week on Saturday, `18:00 UTC±00:00` on IRC channel [#qtox@freenode].
+week on Saturday, `16:00 UTC±00:00` on IRC channel [#qtox@freenode].
 
 Logs from the meetings will be posted at least to the mailing list.
 
@@ -80,7 +80,7 @@ Currently they are:
 * @tux3
 * @zetok
 
-[![Build Status](https://travis-ci.org/tux3/qTox.svg)](https://travis-ci.org/tux3/qTox)
+[![Build Status](https://travis-ci.org/tux3/qTox.svg?branch=master)](https://travis-ci.org/tux3/qTox)
 
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
