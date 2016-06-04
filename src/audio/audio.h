@@ -104,8 +104,8 @@ private:
 
     bool autoInitInput();
     bool autoInitOutput();
-    bool initInput(QString inDevDescr);
-    bool initOutput(QString outDevDescr);
+    bool initInput(const QString& deviceName);
+    bool initOutput(const QString& outDevDescr);
     void cleanupInput();
     void cleanupOutput();
     /// Called after a mono16 sound stopped playing

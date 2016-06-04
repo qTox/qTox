@@ -318,13 +318,12 @@ bool Audio::autoInitOutput()
     return alOutDev ? true : initOutput(Settings::getInstance().getOutDev());
 }
 
-bool Audio::initInput(QString inDevDescr)
+bool Audio::initInput(const QString& deviceName)
 {
-    qDebug() << "Opening audio input" << inDevDescr;
+    if (deviceName.toLower() == QStringLiteral("none"))
+        return false;
 
-    if (inDevDescr == "none")
-        return true;
-
+    qDebug() << "Opening audio input" << deviceName;
     assert(!alInDev);
 
     /// TODO: Try to actually detect if our audio source is stereo
@@ -333,27 +332,22 @@ bool Audio::initInput(QString inDevDescr)
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
     const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
-    if (inDevDescr.isEmpty())
-    {
-        const ALchar *pDeviceList = Private::inDeviceNames();
-        if (pDeviceList)
-            inDevDescr = QString::fromUtf8(pDeviceList, strlen(pDeviceList));
-    }
 
-    if (!inDevDescr.isEmpty())
-        alInDev = alcCaptureOpenDevice(inDevDescr.toUtf8().constData(),
-                                       sampleRate, stereoFlag, bufSize);
+    const ALchar* tmpDevName = deviceName.isEmpty()
+                               ? nullptr
+                               : deviceName.toUtf8().constData();
+    alInDev = alcCaptureOpenDevice(tmpDevName, sampleRate, stereoFlag, bufSize);
 
     // Restart the capture if necessary
     if (!alInDev)
     {
-        qWarning() << "Failed to initialize audio input device:" << inDevDescr;
+        qWarning() << "Failed to initialize audio input device:" << deviceName;
         return false;
     }
 
     d->setInputGain(Settings::getInstance().getAudioInGain());
 
-    qDebug() << "Opened audio input" << inDevDescr;
+    qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);
 
     return true;
@@ -364,35 +358,29 @@ bool Audio::initInput(QString inDevDescr)
 
 Open an audio output device
 */
-bool Audio::initOutput(QString outDevDescr)
+bool Audio::initOutput(const QString& deviceName)
 {
-    qDebug() << "Opening audio output" << outDevDescr;
     outSources.clear();
 
     outputInitialized = false;
-    if (outDevDescr == "none")
+    if (deviceName.toLower() == QStringLiteral("none"))
         return false;
 
+    qDebug() << "Opening audio output" << deviceName;
     assert(!alOutDev);
 
-    if (outDevDescr.isEmpty())
-    {
-        // default to the first available audio device.
-        const ALchar *pDeviceList = Private::outDeviceNames();
-        if (pDeviceList)
-            outDevDescr = QString::fromUtf8(pDeviceList, strlen(pDeviceList));
-    }
-
-    if (!outDevDescr.isEmpty())
-        alOutDev = alcOpenDevice(outDevDescr.toUtf8().constData());
+    const ALchar* tmpDevName = deviceName.isEmpty()
+                               ? nullptr
+                               : deviceName.toUtf8().constData();
+    alOutDev = alcOpenDevice(tmpDevName);
 
     if (!alOutDev)
     {
-        qWarning() << "Cannot open output audio device" << outDevDescr;
+        qWarning() << "Cannot open output audio device" << deviceName;
         return false;
     }
 
-    qDebug() << "Opened audio output" << outDevDescr;
+    qDebug() << "Opened audio output" << deviceName;
     alOutContext = alcCreateContext(alOutDev, nullptr);
     checkAlcError(alOutDev);
 

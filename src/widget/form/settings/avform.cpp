@@ -50,10 +50,10 @@ AVForm::AVForm() :
     bodyUI->btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
-    auto qcbxIndexChangedStr = (void(QComboBox::*)(const QString&)) &QComboBox::currentIndexChanged;
-    auto qcbxIndexChangedInt = (void(QComboBox::*)(int)) &QComboBox::currentIndexChanged;
-    connect(bodyUI->inDevCombobox, qcbxIndexChangedStr, this, &AVForm::onInDevChanged);
-    connect(bodyUI->outDevCombobox, qcbxIndexChangedStr, this, &AVForm::onOutDevChanged);
+    auto qcbxIndexChangedInt = static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged);
+
+    connect(bodyUI->inDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioInDevChanged);
+    connect(bodyUI->outDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioOutDevChanged);
     connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
     connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
     connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
@@ -370,27 +370,31 @@ void AVForm::getAudioOutDevices()
     bodyUI->outDevCombobox->setCurrentIndex(idx > 0 ? idx : 0);
 }
 
-void AVForm::onInDevChanged(QString deviceDescriptor)
+void AVForm::onAudioInDevChanged(int deviceIndex)
 {
-    if (!bodyUI->inDevCombobox->currentIndex())
-        deviceDescriptor = "none";
+    QString deviceName = deviceIndex > 0
+                         ? bodyUI->inDevCombobox->itemText(deviceIndex)
+                         : QStringLiteral("none");
 
-    Settings::getInstance().setInDev(deviceDescriptor);
+    Settings::getInstance().setInDev(deviceName);
+
     Audio& audio = Audio::getInstance();
-    audio.reinitInput(deviceDescriptor);
-    bodyUI->microphoneSlider->setEnabled(bodyUI->inDevCombobox->currentIndex() != 0);
+    audio.reinitInput(deviceName);
+    bodyUI->microphoneSlider->setEnabled(deviceIndex > 0);
     bodyUI->microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
 }
 
-void AVForm::onOutDevChanged(QString deviceDescriptor)
+void AVForm::onAudioOutDevChanged(int deviceIndex)
 {
-    if (!bodyUI->outDevCombobox->currentIndex())
-        deviceDescriptor = "none";
+    QString deviceName = deviceIndex > 0
+                         ? bodyUI->outDevCombobox->itemText(deviceIndex)
+                         : QStringLiteral("none");
 
-    Settings::getInstance().setOutDev(deviceDescriptor);
+    Settings::getInstance().setOutDev(deviceName);
+
     Audio& audio = Audio::getInstance();
-    audio.reinitOutput(deviceDescriptor);
-    bodyUI->playbackSlider->setEnabled(audio.isOutputReady());
+    audio.reinitOutput(deviceName);
+    bodyUI->playbackSlider->setEnabled(deviceIndex > 0);
     bodyUI->playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
 
