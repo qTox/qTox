@@ -39,7 +39,6 @@ MACDEPLOYQT="${QT_DIR_VER}/bin/macdeployqt" # Don't change
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
-FA_DIR="${MAIN_DIR}/filter_audio"
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
 if [[ ! -e "${LIB_INSTALL_PREFIX}" ]]; then
@@ -139,18 +138,6 @@ function install() {
 			git clone https://github.com/tux3/qTox.git
 		fi
 	fi
-	# filter_audio
-	if [[ -e $FA_DIR/.git/index ]]; then # Check if this exists
-		fcho "Filter_Audio git repo already in place !"
-		cd $FA_DIR
-		git pull
-	else
-		fcho "Cloning Filter_Audio git ... "
-		git clone https://github.com/irungentoo/filter_audio.git
-		cd $FA_DIR
-	fi
-	fcho "Installing filter_audio."
-	make install PREFIX="${LIB_INSTALL_PREFIX}"
 	
 	# toxcore build
 	if [[ $TRAVIS = true ]]; then #travis check
@@ -230,11 +217,6 @@ function deploy() {
 function bootstrap() {
 	fcho "------------------------------"
 	fcho "starting bootstrap process ..."
-	
-	# filter_audio
-	cd $FA_DIR
-	fcho "Installing filter_audio."
-	make install PREFIX="${LIB_INSTALL_PREFIX}"
 	
 	#Toxcore
 	build_toxcore

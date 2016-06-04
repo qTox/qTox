@@ -407,11 +407,6 @@ void AVForm::onOutDevChanged(QString deviceDescriptor)
     bodyUI->playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
 
-void AVForm::onFilterAudioToggled(bool filterAudio)
-{
-    Settings::getInstance().setFilterAudio(filterAudio);
-}
-
 void AVForm::onPlaybackValueChanged(int value)
 {
     Settings::getInstance().setOutVolume(value);

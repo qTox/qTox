@@ -42,9 +42,6 @@
 #include <AL/alext.h>
 #endif
 
-#ifdef QTOX_FILTER_AUDIO
-#include "audiofilterer.h"
-#endif
 
 // Public default audio settings
 static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
@@ -115,9 +112,7 @@ private:
     void playMono16SoundCleanup();
     /// Called on the captureTimer events to capture audio
     void doCapture();
-#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
-    void getEchoesToFilter(AudioFilterer* filter, int samples);
-#endif
+
 
 private:
     Private* d;
@@ -137,9 +132,6 @@ private:
     bool                outputInitialized;
 
     QList<ALuint>       outSources;
-#ifdef QTOX_FILTER_AUDIO
-    AudioFilterer filterer;
-#endif
 };
 
 #endif // AUDIO_H

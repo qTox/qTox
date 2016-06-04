@@ -238,7 +238,6 @@ void Settings::loadGlobal()
         outDev = s.value("outDev", "").toString();
         audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
-        filterAudio = s.value("filterAudio", false).toBool();
     s.endGroup();
 
     s.beginGroup("Video");
@@ -469,7 +468,6 @@ void Settings::saveGlobal()
         s.setValue("outDev", outDev);
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
-        s.setValue("filterAudio", filterAudio);
     s.endGroup();
 
     s.beginGroup("Video");
@@ -1412,19 +1410,6 @@ void Settings::setOutVolume(int volume)
 {
     QMutexLocker locker{&bigLock};
     outVolume = volume;
-}
-
-bool Settings::getFilterAudio() const
-{
-    QMutexLocker locker{&bigLock};
-    // temporary disable filteraudio, as it doesn't work as expected
-    return false;
-}
-
-void Settings::setFilterAudio(bool newValue)
-{
-    QMutexLocker locker{&bigLock};
-    filterAudio = newValue;
 }
 
 QSize Settings::getCamVideoRes() const

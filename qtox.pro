@@ -68,19 +68,10 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
-contains(DISABLE_FILTER_AUDIO, NO) {
-     DEFINES += QTOX_FILTER_AUDIO
-}
-
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
 } else {
     INCLUDEPATH += libs/include
-}
-
-contains(DEFINES, QTOX_FILTER_AUDIO) {
-    HEADERS += src/audio/audiofilterer.h
-    SOURCES += src/audio/audiofilterer.cpp
 }
 
 contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -103,13 +94,6 @@ win32 {
     LIBS += -lqrencode -lsqlcipher -lcrypto
     LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
     LIBS += -lstrmiids # For DirectShow
-    contains(DEFINES, QTOX_FILTER_AUDIO) {
-        contains(STATICPKG, YES) {
-            LIBS += -Wl,-Bstatic -lfilteraudio
-        } else {
-            LIBS += -lfilteraudio
-        }
-    }
 } else {
     macx {
         BUNDLEID = chat.tox.qtox
@@ -120,7 +104,6 @@ win32 {
         LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia -framework ApplicationServices
         LIBS += -lqrencode -lsqlcipher
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
-        contains(DEFINES, QTOX_FILTER_AUDIO) { LIBS += -lfilteraudio }
         #Files to be includes into the qTox.app/Contents/Resources folder
         #OSX-Migrater.sh part of migrateProfiles() compatabilty code
         APP_RESOURCE.files = img/icons/qtox_profile.icns OSX-Migrater.sh
@@ -167,16 +150,8 @@ win32 {
             LIBS += -lX11 -lXss
         }
 
-        contains(DEFINES, QTOX_FILTER_AUDIO) {
-            contains(STATICPKG, YES) {
-                LIBS += -Wl,-Bstatic -lfilteraudio
-            } else {
-                LIBS += -lfilteraudio
-            }
-        }
-
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libfilteraudio.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
             contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
                 LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
             }

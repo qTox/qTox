@@ -29,7 +29,6 @@
     - [openSUSE](#opensuse-toxcore)
     - [Slackware](#slackware-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
-  - [filter_audio](#filter_audio)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
@@ -46,7 +45,6 @@
 | toxcore       | most recent | core, av                                          |
 | FFmpeg        | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
 | OpenAL Soft   | >= 1.16.0   |                                                   |
-| filter_audio  | most recent |                                                   |
 | qrencode      | >= 3.0.3    |                                                   |
 | sqlcipher     | >= 3.2.0    |                                                   |
 | libXScrnSaver | >= 1.2      |                                                   |
@@ -298,28 +296,6 @@ libopus-dev libvpx-dev libsodium-dev
 ```
 
 
-### filter_audio
-This step is  best done before compiling toxcore.
-
-Now you can either follow the instructions at
-https://github.com/irungentoo/toxcore/blob/master/INSTALL.md#unix or use the
-[`bootstrap.sh`](/bootstrap.sh) script. The script will automatically download
-and install `toxcore` and `libfilteraudio`:
-```bash
-## in qTox directory
-./bootstrap.sh # use -h or --help for more information
-
-```
-If you've used script, you can skip directly to [compiling qTox](#compile-qtox).
-
-If you want to compile and install it manually:
-```bash
-git clone https://github.com/irungentoo/filter_audio
-cd filter_audio
-make -j$(nproc)
-sudo make install
-```
-
 ### sqlcipher
 
 If you are not using Fedora, skip this section, and go directly to compiling
@@ -457,15 +433,6 @@ First, let's install the dependencies available via `brew`.
 ```bash
 brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx \
 opus sqlcipher libsodium
-```
-
-Next, install [filter_audio](https://github.com/irungentoo/filter_audio) (you
-may delete the directory it creates afterwards):
-```bash
-git clone https://github.com/irungentoo/filter_audio.git
-cd filter_audio
-sudo make install
-cd ../
 ```
 
 Next, install

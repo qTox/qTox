@@ -32,10 +32,6 @@
 
 #include <cassert>
 
-#ifdef QTOX_FILTER_AUDIO
-#include "audiofilterer.h"
-#endif
-
 /**
 @internal
 
@@ -108,10 +104,6 @@ Audio::Audio()
 
     moveToThread(audioThread);
 
-#ifdef QTOX_FILTER_AUDIO
-    filterer.startFilter(AUDIO_SAMPLE_RATE);
-#endif
-
     connect(&captureTimer, &QTimer::timeout, this, &Audio::doCapture);
     captureTimer.setInterval(AUDIO_FRAME_DURATION/2);
     captureTimer.setSingleShot(false);
@@ -128,9 +120,6 @@ Audio::~Audio()
     audioThread->wait();
     cleanupInput();
     cleanupOutput();
-#ifdef QTOX_FILTER_AUDIO
-    filterer.closeFilter();
-#endif
     delete d;
 }
 
@@ -580,17 +569,6 @@ void Audio::doCapture()
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
-#ifdef QTOX_FILTER_AUDIO
-    if (Settings::getInstance().getFilterAudio())
-    {
-#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
-        // compatibility with older versions of OpenAL
-        getEchoesToFilter(filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-#endif
-        filterer.filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-    }
-#endif
-
     for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i)
     {
         // gain amplification with clipping to 16-bit boundaries
@@ -698,18 +676,3 @@ void Audio::stopLoop()
     alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
     alSourceStop(alMainSource);
 }
-
-#if defined(QTOX_FILTER_AUDIO) && defined(ALC_LOOPBACK_CAPTURE_SAMPLES)
-void Audio::getEchoesToFilter(AudioFilterer* filterer, int samples)
-{
-    ALint samples;
-    alcGetIntegerv(&alOutDev, ALC_LOOPBACK_CAPTURE_SAMPLES, sizeof(samples), &samples);
-    if (samples >= samples)
-    {
-        int16_t buf[samples];
-        alcCaptureSamplesLoopback(&alOutDev, buf, samples);
-        filterer->passAudioOutput(buf, samples);
-        filterer->setEchoDelayMs(5); // This 5ms is configurable I believe
-    }
-}
-#endif

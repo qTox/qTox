@@ -187,9 +187,6 @@ public:
     int getOutVolume() const;
     void setOutVolume(int volume);
 
-    bool getFilterAudio() const;
-    void setFilterAudio(bool newValue);
-
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
 
@@ -434,7 +431,6 @@ private:
     QString outDev;
     qreal audioInGainDecibel;
     int outVolume;
-    bool filterAudio;
 
     // Video
     QString videoDev;

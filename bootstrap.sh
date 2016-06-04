@@ -39,12 +39,10 @@ BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
 
 # directory names of cloned repositories
 TOX_CORE_DIR=libtoxcore-latest
-FILTER_AUDIO_DIR=libfilteraudio-latest
 SQLCIPHER_DIR=sqlcipher-stable
 
 # default values for user given parameters
 INSTALL_TOX=true
-INSTALL_FILTER_AUDIO=true
 INSTALL_SQLCIPHER=false
 SYSTEM_WIDE=true
 KEEP_BUILD_FILES=false
@@ -62,12 +60,6 @@ while [ $# -ge 1 ] ; do
         shift
     elif [ ${1} = "--without-tox" ] ; then
         INSTALL_TOX=false
-        shift
-    elif [ ${1} = "--with-filter-audio" ] ; then
-        INSTALL_FILTER_AUDIO=true
-        shift
-    elif [ ${1} = "--without-filter-audio" ] ; then
-        INSTALL_FILTER_AUDIO=false
         shift
     elif [ ${1} = "--with-sqlcipher" ] ; then
         INSTALL_SQLCIPHER=true
@@ -88,7 +80,7 @@ while [ $# -ge 1 ] ; do
         fi
 
         # print help
-        echo "Use this script to install/update libtoxcore and libfilteraudio"
+        echo "Use this script to install/update libtoxcore"
         echo ""
         echo "usage:"
         echo "    ${0} PARAMETERS"
@@ -96,8 +88,6 @@ while [ $# -ge 1 ] ; do
         echo "parameters:"
         echo "    --with-tox             : install/update libtoxcore"
         echo "    --without-tox          : do not install/update libtoxcore"
-        echo "    --with-filter-audio    : install/update libfilteraudio"
-        echo "    --without-filter-audio : do not install/update libfilteraudio"
         echo "    --with-sqlcipher       : install/update sqlcipher"
         echo "    --without-sqlcipher    : do not install/update sqlcipher"
         echo "    -h|--help              : displays this help"
@@ -105,7 +95,7 @@ while [ $# -ge 1 ] ; do
         echo "    -k|--keep              : keep build files after installation/update"
         echo ""
         echo "example usages:"
-        echo "    ${0}    -- install libtoxcore and libfilteraudio"
+        echo "    ${0}    -- install libtoxcore"
         exit 1
     fi
 done
@@ -113,7 +103,6 @@ done
 
 ############ print debug output ############
 echo "with tox                    : ${INSTALL_TOX}"
-echo "with filter-audio           : ${INSTALL_FILTER_AUDIO}"
 echo "with sqlcipher              : ${INSTALL_SQLCIPHER}"
 echo "install system-wide         : ${SYSTEM_WIDE}"
 echo "keep build files            : ${KEEP_BUILD_FILES}"
@@ -127,7 +116,6 @@ mkdir -p ${BASE_DIR}
 # remove not needed dirs
 remove_build_dirs() {
     rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
-    rm -rf ${BASE_DIR}/${FILTER_AUDIO_DIR}
     rm -rf ${BASE_DIR}/${SQLCIPHER_DIR}
 }
 
@@ -169,24 +157,6 @@ if [[ $INSTALL_TOX = "true" ]]; then
     if [[ $SYSTEM_WIDE = "false" ]]; then
         make install
     else
-        sudo make install
-        sudo ldconfig
-    fi
-
-    popd
-fi
-
-#install libfilteraudio
-if [[ $INSTALL_FILTER_AUDIO = "true" ]]; then
-    git clone https://github.com/irungentoo/filter_audio.git \
-        ${BASE_DIR}/${FILTER_AUDIO_DIR} --depth 1
-    pushd ${BASE_DIR}/${FILTER_AUDIO_DIR}
-
-    if [[ $SYSTEM_WIDE = "false" ]]; then
-        PREFIX=${BASE_DIR} make -j$(nproc)
-        PREFIX=${BASE_DIR} make install
-    else
-        make -j$(nproc)
         sudo make install
         sudo ldconfig
     fi

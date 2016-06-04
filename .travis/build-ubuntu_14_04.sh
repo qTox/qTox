@@ -60,12 +60,6 @@ cd ffmpeg*
 make -j$(nproc)
 make install
 cd ../../
-# filter_audio
-git clone https://github.com/irungentoo/filter_audio
-cd filter_audio
-make -j$(nproc)
-sudo make install
-cd ..
 # libsodium
 git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
@@ -96,6 +90,6 @@ make -j10
 # clean it up, and build normal version
 make clean
 echo '*** BUILDING "FULL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" DISABLE_FILTER_AUDIO=NO
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX"
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
 make -j10

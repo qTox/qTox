@@ -27,10 +27,6 @@
 #include "src/core/toxcall.h"
 #include <tox/toxav.h>
 
-#ifdef QTOX_FILTER_AUDIO
-class AudioFilterer;
-#endif
-
 class QTimer;
 class QThread;
 class CoreVideoSource;

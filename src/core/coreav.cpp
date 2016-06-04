@@ -31,10 +31,6 @@
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrentRun>
 
-#ifdef QTOX_FILTER_AUDIO
-#include "src/audio/audiofilterer.h"
-#endif
-
 IndexedList<ToxFriendCall> CoreAV::calls;
 IndexedList<ToxGroupCall> CoreAV::groupCalls;
 
@@ -250,30 +246,6 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
     {
         return true;
     }
-
-#if 0
-#ifdef QTOX_FILTER_AUDIO
-    if (Settings::getInstance().getFilterAudio())
-    {
-        if (!call.filterer)
-        {
-            call.filterer = new AudioFilterer();
-            call.filterer->startFilter(AUDIO_SAMPLE_RATE);
-        }
-
-#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
-        // compatibility with older versions of OpenAL
-        Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-#endif
-        call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-    }
-    else if (call.filterer)
-    {
-        delete call.filterer;
-        call.filterer = nullptr;
-    }
-#endif
-#endif
 
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     TOXAV_ERR_SEND_FRAME err;

@@ -7,10 +7,6 @@
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
-#ifdef QTOX_FILTER_AUDIO
-#include "src/audio/audiofilterer.h"
-#endif
-
 using namespace std;
 
 ToxCall::ToxCall(uint32_t CallId)
