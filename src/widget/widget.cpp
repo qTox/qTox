@@ -124,6 +124,10 @@ void Widget::init()
     offlineMsgTimer->start(2*60*1000);
 
     icon_size = 15;
+
+    actionActivate = new QAction(this);
+    connect(actionActivate, &QAction::triggered, this, &Widget::forceShow);
+
     statusOnline = new QAction(this);
     statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
@@ -143,6 +147,7 @@ void Widget::init()
 #ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
 #endif
+
     actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
@@ -1785,6 +1790,9 @@ void Widget::onTryCreateTrayIcon()
             updateIcons();
             trayMenu = new QMenu(this);
 
+            // adding activate to the top, avoids accidentally clicking quit
+            trayMenu->addAction(actionActivate);
+            trayMenu->addSeparator();
             trayMenu->addAction(statusOnline);
             trayMenu->addAction(statusAway);
             trayMenu->addAction(statusBusy);
@@ -2245,6 +2253,7 @@ void Widget::retranslateUi()
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
     actionLogout->setText(tr("Logout", "Tray action menu to logout user"));
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
+    actionActivate->setText(tr("Activate", "Tray action menu to reactivate qTox window"));
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(AddDialog));
