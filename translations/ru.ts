@@ -1176,6 +1176,10 @@ will be sent to them when they appear online to you.</source>
         <translation>Очистить показываемые сообщения</translation>
     </message>
     <message>
+        <source>Quote selected text</source>
+        <translation>Цитировать выделенное</translation>
+    </message>
+    <message>
         <source>Not sent</source>
         <translation>Не отправлено</translation>
     </message>
