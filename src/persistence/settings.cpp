@@ -197,7 +197,7 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("GUI");
-        const QString DEFAULT_SMILEYS = ":/smileys/Universe/emoticons.xml";
+        const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
         if (!SmileyPack::isValid(smileyPack))
         {
