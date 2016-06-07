@@ -3,7 +3,8 @@
 #include "src/platform/capslock.h"
 #endif
 
-CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent) {
+CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent)
+{
     inputSize = QSize(130, 23);
     cleanInputStyle = parentWidget()->styleSheet();
 
@@ -17,24 +18,28 @@ CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent) {
     setToolTip(tr("CAPS-LOCK ENABLED"));
 }
 
-void CapsLockIndicator::show() {
+void CapsLockIndicator::show()
+{
     QToolButton::show();
 
     QString style = QString("padding: -3px %1px -3px -6px; color: white").arg(iconSize().width() - 3);
     parentWidget()->setStyleSheet(style);
 }
 
-void CapsLockIndicator::hide() {
+void CapsLockIndicator::hide()
+{
     QToolButton::hide();
     parentWidget()->setStyleSheet(cleanInputStyle);
 }
 
-void CapsLockIndicator::updateIndicator() {
+void CapsLockIndicator::updateIndicator()
+{
     bool caps = false;
     // It doesn't needed for OSX, because it shows indicator by default
 #if defined(QTOX_PLATFORM_EXT) && !defined(Q_OS_OSX)
     caps = Platform::capsLockEnabled();
 #endif
+
     if (caps)
         show();
     else

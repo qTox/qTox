@@ -3,7 +3,8 @@
 
 #include <QToolButton>
 
-class CapsLockIndicator : QToolButton {
+class CapsLockIndicator : QToolButton
+{
 public:
     CapsLockIndicator(QWidget *widget);
     void updateIndicator();
