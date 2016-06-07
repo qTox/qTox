@@ -67,10 +67,6 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>Scansiona dispositivi</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

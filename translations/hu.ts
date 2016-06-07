@@ -59,10 +59,6 @@ Néha az Internet-kapcsolat nem elég jó ahhoz, hogy kezelni tudja a jobb minő
 ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

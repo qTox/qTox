@@ -47,10 +47,6 @@
         <translation>Garsumas</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Šliaužikliu nustatykite mikrofono garsumą.</translation>
-    </message>
-    <message>
         <source>Video Settings</source>
         <translation>Vaizdo nustatymai</translation>
     </message>

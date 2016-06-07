@@ -39,10 +39,6 @@
         <translation>Підсилення</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Використовуйте повзунок для регулювання чутливості мікрофону.</translation>
-    </message>
-    <message>
         <source>Rescan devices</source>
         <translation>Пересканувати пристрої</translation>
     </message>

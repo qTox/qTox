@@ -62,10 +62,6 @@ Observe no entanto que uma qualidade de vídeo maior exige uma conexão melhor c
 Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo maior, que pode levar a problemas em chamadas de vídeo.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

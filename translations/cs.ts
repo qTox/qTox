@@ -63,10 +63,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>Rozlišení</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

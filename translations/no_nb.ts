@@ -62,10 +62,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>Oppløsning</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

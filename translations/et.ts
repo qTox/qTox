@@ -47,10 +47,6 @@
         <translation>Võimendus</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Kasuta liugurit, et seada mikrofoni võimendust.</translation>
-    </message>
-    <message>
         <source>Video Settings</source>
         <translation>Videoseaded</translation>
     </message>

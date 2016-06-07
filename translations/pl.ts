@@ -65,10 +65,6 @@ Może się zdarzyć, iż twoje połączenie nie jest wystarczająco dobre do wy�
 co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Użyj suwaka by ustawić poziom mikrofonu.</translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation>Głośniej</translation>
     </message>

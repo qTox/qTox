@@ -39,10 +39,6 @@
         <translation>התקן לכידה</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>שימוש במחוון גלילה להגדרת עצמת השמע של המיקרופון שלך.</translation>
-    </message>
-    <message>
         <source>Video Settings</source>
         <translation>הגדרות וידאו</translation>
     </message>

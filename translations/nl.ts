@@ -63,10 +63,6 @@ Het kan mogelijk zijn dat je internetverbinding niet snel genoeg is om een hoger
 wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

@@ -47,10 +47,6 @@
         <translation>Microphone</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Utilisez cette barre pour régler le volume de votre microphone.</translation>
-    </message>
-    <message>
         <source>Video device</source>
         <translation>Source vidéo</translation>
     </message>

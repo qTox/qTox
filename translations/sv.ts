@@ -55,10 +55,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

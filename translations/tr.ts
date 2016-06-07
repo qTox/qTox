@@ -36,10 +36,6 @@
         <translation>Mikrofon</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Kayan düğmeği kullanarak mikrofonunuzun sesini ayarlayın.</translation>
-    </message>
-    <message>
         <source>Playback device</source>
         <translation>Hoparlör</translation>
     </message>

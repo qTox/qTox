@@ -74,10 +74,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Rescan devices</source>
         <translation>Volver a detectar dispositivos</translation>
     </message>
-    <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Usa el control deslizante para ajustar el volumen del micrófono.</translation>
-    </message>
 </context>
 <context>
     <name>AboutForm</name>

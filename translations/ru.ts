@@ -74,10 +74,6 @@ which may lead to problems with video calls.</source>
 Иногда подключение слишком слабое, что бы передать видео выского качества,
 что может привести к проблемам при видеозвонке.</translation>
     </message>
-    <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Используйте ползунок для регулировки громкости микрофона.</translation>
-    </message>
 </context>
 <context>
     <name>AboutForm</name>

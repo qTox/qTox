@@ -59,10 +59,6 @@ Včasih se lahko zgodi da je tvoj internet prepočasen za visoko kvaliteto videa
 in zato lahko pride do problemov pri video pogovorih.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>

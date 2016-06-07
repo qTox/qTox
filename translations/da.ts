@@ -39,10 +39,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Brug skyderen til at indstille lydstyrken af mikrofonen.</translation>
-    </message>
-    <message>
         <source>Video Settings</source>
         <translation>Video-indstillinger</translation>
     </message>

@@ -27,10 +27,6 @@
         <translation type="unfinished">オーディオ設定</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation type="unfinished">スライダーを使って、マイクの音声を調節します</translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation type="unfinished">ゲイン調整</translation>
     </message>

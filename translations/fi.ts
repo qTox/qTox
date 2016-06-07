@@ -39,10 +39,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Aseta mikrofonin äänenvoimakkuus liukusäätimellä.</translation>
-    </message>
-    <message>
         <source>Video Settings</source>
         <translation>Videoasetukset</translation>
     </message>
