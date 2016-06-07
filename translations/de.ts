@@ -39,10 +39,6 @@
         <translation>Aufnahmegerät</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Verwende den Schieber, um die Aufnahmelautstärke deines Mikrofons anzupassen.</translation>
-    </message>
-    <message>
         <source>Gain</source>
         <translation>Aufnahmelautstärke</translation>
     </message>
@@ -1114,7 +1110,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Klartext</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
