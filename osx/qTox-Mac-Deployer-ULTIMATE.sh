@@ -22,12 +22,15 @@
 # Use: ./qTox-Mac-Deployer-ULTIMATE.sh -h
 
 # Your home DIR really (Most of this happens in it) {DONT USE: ~ }
+SUBGIT="" #Change this to define a 'sub' git folder e.g. "-Patch"
+			#Applys to $QTOX_DIR, $BUILD_DIR, and $DEPLOY_DIR folders for organization puropses
+
 if [[ $TRAVIS = true ]]; then #travis check
 	MAIN_DIR="${TRAVIS_BUILD_DIR}"
 	QTOX_DIR="${MAIN_DIR}"
 else
 	MAIN_DIR="/Users/${USER}"
-	QTOX_DIR="${MAIN_DIR}/qTox"
+	QTOX_DIR="${MAIN_DIR}/qTox${SUBGIT}"
 fi
 QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
 # Figure out latest version
@@ -45,8 +48,8 @@ if [[ ! -e "${LIB_INSTALL_PREFIX}" ]]; then
 	mkdir -p "${LIB_INSTALL_PREFIX}"
 fi
 
-BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build"
-DEPLOY_DIR="${MAIN_DIR}/qTox-Mac_Deployed"
+BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build${SUBGIT}"
+DEPLOY_DIR="${MAIN_DIR}/qTox-Mac_Deployed${SUBGIT}"
 
 
 function fcho() {
@@ -227,52 +230,64 @@ function bootstrap() {
 	sudo ./bootstrap-osx.sh
 }
 
-# The commands
-if [[ "$1" == "-i" ]]; then
-	install
-	exit
-fi
-	
-if [[ "$1" == "-u" ]]; then
-	update
-	exit
-fi
+function dmgmake() {
+	fcho "------------------------------"
+	fcho "Starting DMG creation"
+	cd $DEPLOY_DIR
+	ln -s /Applications "./Install to Applications"
+	cp -r -f $QTOX_DIR/osx/background-DMG ./.background
+	cp -f $QTOX_DIR/osx/DS_Store-DMG ./.DS_Store
+	cp -f $QTOX_DIR/LICENSE ./LICENSE
+	cp -f $QTOX_DIR/README.md ./README.md
+	cd $QTOX_DIR
+	hdiutil create -volname qTox${SUBGIT} -srcfolder $DEPLOY_DIR -format UDZO qTox${SUBGIT}.dmg
+}
 
-if [[ "$1" == "-b" ]]; then
-	build
-	exit
-fi
-
-if [[ "$1" == "-boot" ]]; then
-	bootstrap
-	exit
-fi
-
-if [[ "$1" == "-d" ]]; then
-	deploy
-	exit
-fi
-
-if [[ "$1" == "-ubd" ]]; then
-	update
-	build
-	deploy
-	exit
-fi
-
-if [[ "$1" == "-h" ]]; then
+function helpme() {
 	echo "This script was created to help ease the process of compiling and creating a distributable qTox package for OSX systems."
 	echo "The available commands are:"
-	echo "-h -- This help text."
-	echo "-i -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
-	echo "-u -- Check for updates and build Toxcore from git & update qTox from git."
-	echo "-b -- Builds qTox in: ${BUILD_DIR}"
-	echo "-boot -- Performs bootstrap steps."
-	echo "-d -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
-	echo "-ubd -- Does -u, -b, and -d sequentially"
+	echo "-h  | --help      -- This help text."
+	echo "-i  | --instal    -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
+	echo "-u  | --update    -- Check for updates and build Toxcore from git & update qTox from git."
+	echo "-b  | --build     -- Builds qTox in: ${BUILD_DIR}"
+	echo "-d  | --deploy    -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
+	echo "-bs | --bootstrap -- Performs bootstrap steps."
 	fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/tux3/qTox"
 	exit 0
-fi
+}
+
+case "$1" in
+	-h | --help)
+	helpme
+	exit
+	;;
+	-i | --install)
+	install
+	exit
+	;;
+	-u | --update)
+	update
+	exit
+	;;
+	-b | --build)
+	build
+	exit
+	;;
+	-d | --deploy)
+	deploy
+	exit
+	;;
+	-bs | --bootstrap)
+	bootstrap
+	exit
+	;;
+	-dmg)
+	dmgmake
+	exit
+	;;
+	*)
+	;;
+esac
 
 fcho "Oh dear! You seemed to of started this script improperly! Use -h to get available commands and information!"
 echo " "
