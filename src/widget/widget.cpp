@@ -1189,8 +1189,28 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     }
     else
     {
-        currentWindow = window();
-        hasActive = f->getFriendWidget() == activeChatroomWidget;
+        if (Settings::getInstance().getSeparateWindow())
+        {
+            if (Settings::getInstance().getDontGroupWindows())
+            {
+                contentDialog = createContentDialog();
+            }
+            else
+            {
+                contentDialog = ContentDialog::current();
+                if (!contentDialog)
+                    contentDialog = createContentDialog();
+            }
+
+            addFriendDialog(f, contentDialog);
+            currentWindow = contentDialog->window();
+            hasActive = ContentDialog::isFriendWidgetActive(friendId);
+        }
+        else
+        {
+            currentWindow = window();
+            hasActive = f->getFriendWidget() == activeChatroomWidget;
+        }
     }
 
     if (newMessageAlert(currentWindow, hasActive, sound))
@@ -1391,7 +1411,6 @@ void Widget::updateScroll(GenericChatroomWidget *widget) {
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
-    contentDialog->show();
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
