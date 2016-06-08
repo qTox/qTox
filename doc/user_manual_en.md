@@ -245,8 +245,10 @@ Additionally, qTox supports three modes of Markdown parsing:
 qTox has feature to quote selected text in chat window:
 
 1. Select the text you want to quote.
-2. Right-click on the selected text and choose "Quote selected text" in the context menu. Also you can use `ALT` + `q` shortcut.
-3. Selected text will be automatically quoted into a message input area in a pretty formatting.
+2. Right-click on the selected text and choose "Quote selected text" in the
+context menu. You also can use `ALT` + `q` shortcut.
+3. Selected text will be automatically quoted into the message input area in a
+pretty formatting.
 
 ## Multi Window Mode
 
