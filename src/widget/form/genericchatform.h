@@ -91,6 +91,7 @@ protected slots:
     void hideFileMenu();
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
+    void quoteSelectedText();
 
 private:
     void retranslateUi();
@@ -109,7 +110,7 @@ protected:
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction* saveChatAction, *clearAction;
+    QAction* saveChatAction, *clearAction, *quoteAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;

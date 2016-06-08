@@ -6,6 +6,7 @@
 * [Settings](#settings)
 * [Groupchats](#groupchats)
 * [Message Styling](#message-styling)
+* [Quotes](#quotes)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 
@@ -239,6 +240,16 @@ Additionally, qTox supports three modes of Markdown parsing:
 
 *Note that any change in Markdown preference will require a restart.*
 
+## Quotes
+
+qTox has feature to quote selected text in chat window:
+
+1. Select the text you want to quote.
+2. Right-click on the selected text and choose "Quote selected text" in the
+context menu. You also can use `ALT` + `q` shortcut.
+3. Selected text will be automatically quoted into the message input area in a
+pretty formatting.
+
 ## Multi Window Mode
 
 In this mode, qTox will separate its main window into a single contact list and
@@ -260,3 +271,4 @@ The following shortcuts are currently supported:
 | `CTRL` + `Page Up` | Switch to the previous contact|
 | `CTRL` + `TAB` | Switch to the next contact |
 | `CTRL` + `SHIFT` + `TAB` | Switch to the previous contact|
+| `ALT` + `q` | Quote selected text |
