@@ -229,6 +229,7 @@ Formatting follows
   or `_text_`
 * For **Strikethrough**, surround text in single tilde's: `~text~`
 * For **Underline**, surround text in single dashes: `-text-`
+* For **Code**, surround your code in in single backticks: `` `text` ``
 
 Additionally, qTox supports three modes of Markdown parsing:
 
@@ -240,6 +241,10 @@ Additionally, qTox supports three modes of Markdown parsing:
 
 *Note that any change in Markdown preference will require a restart.*
 
+qTox also supports action messages by prefixing a message with `/me`, where
+`/me` is replaced with your current username. For example `/me likes cats`
+turns into *` * qTox User likes cats`*.
+
 ## Quotes
 
 qTox has feature to quote selected text in chat window:
@@ -249,6 +254,20 @@ qTox has feature to quote selected text in chat window:
 context menu. You also can use `ALT` + `q` shortcut.
 3. Selected text will be automatically quoted into the message input area in a
 pretty formatting.
+
+## Friend- and Groupinvites
+
+To invite a friend to a chat with you, you have to click the `+` button on the
+bottom left of the qTox window. The "Add a friend" Tab allows you to enter the
+Tox ID of your friend, or the username of a ToxMe service if your friend
+registered there.
+
+On the "Friend requests" tab you can see, friend requests you got from other
+Tox users. You can then choose to either accept or decline these requests.
+
+On the Groupinvites page, you can create a new groupchat and add users to it by
+using the context menu in your contact list. Invites from your contacts are
+also displayed here and you can accept and decline them.
 
 ## Multi Window Mode
 
