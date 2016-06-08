@@ -47,7 +47,7 @@ private:
 
 private:
     SystrayBackendType backendType;
-    QSystemTrayIcon* qtIcon;
+    QSystemTrayIcon* qtIcon = nullptr;
 
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     AppIndicator *unityIndicator;
