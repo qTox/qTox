@@ -25,7 +25,7 @@ running on all major platforms.**
   - [**CentOS, Debian, Fedora, openSUSE, Ubuntu**](https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox)
   - [other](/INSTALL.md#linux)
 * **Mac**:
-  - [**Experimental download**](https://github.com/RowenStipe/qTox-OSX/releases)
+  - [**Experimental download**](https://github.com/tux3/qTox/releases/latest)
 * **FreeBSD**:
   - [**Port**](/INSTALL.md#freebsd-easy)
 <br/>
