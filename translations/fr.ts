@@ -64,7 +64,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Volume</translation>
+        <translation>Gain</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -72,7 +72,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Réanalyser les périphériques</translation>
+        <translation>Actualiser la liste des périphériques</translation>
     </message>
 </context>
 <context>
@@ -143,7 +143,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Vous utilisez la version de qTox $GIT_DESCRIBE.</translation>
+        <translation>Vous utilisez qTox version $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -162,7 +162,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>Message personnel</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -170,11 +170,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias utilisés :</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique des alias</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1089,11 +1089,11 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Text formatting (Markdown):</source>
-        <translation>Mise en forme du texte (Markdown):</translation>
+        <translation>Formatage du texte (Markdown) :</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
-        <translation>Sélectionner votre choix de Markdown.</translation>
+        <translation>Sélectionner les préférence de Markdown.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -1109,7 +1109,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Jouer un son lorsque je suis occupé</translation>
+        <translation>Jouer un son en Occupé</translation>
     </message>
 </context>
 <context>
@@ -1191,7 +1191,7 @@ au lieu de se fermer.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Vide&gt;</translation>
     </message>
 </context>
 <context>
@@ -1235,7 +1235,7 @@ au lieu de se fermer.</translation>
     <name>GroupInviteForm</name>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous êtes invité par &lt;b&gt;%1&lt;/b&gt; dans %2.</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -1530,11 +1530,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importation</translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les profiles protégés par mot de passe ne peuvent pas être chargé automatiquement.</translation>
     </message>
 </context>
 <context>
@@ -1828,7 +1828,7 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation>Des fichiers n&apos;ont pas pu être supprimés!</translation>
+        <translation>Des fichiers n&apos;ont pas pu être supprimés !</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -1840,7 +1840,7 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation>Fini!</translation>
+        <translation>Fini !</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
@@ -2381,7 +2381,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Vide&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
