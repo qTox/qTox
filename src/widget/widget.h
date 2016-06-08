@@ -234,7 +234,7 @@ private:
     void focusChatInput();
 
 private:
-    SystemTrayIcon *icon;
+    SystemTrayIcon *icon = nullptr;
     QMenu *trayMenu;
     QAction *statusOnline;
     QAction *statusAway;

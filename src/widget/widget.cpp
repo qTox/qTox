@@ -507,6 +507,7 @@ Widget::~Widget()
     if (icon)
         icon->hide();
 
+    delete icon;
     delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
