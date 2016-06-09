@@ -24,7 +24,7 @@
     <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordoj de sono</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordoj de video</translation>
     </message>
     <message>
         <source>Video device</source>
@@ -68,14 +68,14 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reskani aparatojn</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vi povas trovi liston de problemoj konatoj je nia %1 je Github. Se vi trovos cimon aŭ atakeblan punkton en qTox, bonvole %3 laŭ la petoj en nia %2 vikia artikolo.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -91,31 +91,31 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Restartigu qTox por instalo de versio %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">qTox elŝutas ĝisdatigon %1</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Versio</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Versio de toxcore: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Versio de Qt: $QTVERSION</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -304,6 +304,13 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reset to default settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2368,18 +2375,23 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Log out</source>
-        <translation type="unfinished"></translation>
+        <translation>Elsaluti</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni kontakton...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Malantaŭa retbabilo</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
+        <translation>Antaŭa retbabilo</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
