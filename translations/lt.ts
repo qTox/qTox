@@ -1169,6 +1169,10 @@ bus nusiųstos jiems prisijungus.</translation>
         <source>Cleared</source>
         <translation>Išvalyta</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

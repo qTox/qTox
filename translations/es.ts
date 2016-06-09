@@ -1171,6 +1171,10 @@ Hazlo sólo en caso de ser necesario.</translation>
         <source>End video call</source>
         <translation>Terminar la videollamada</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

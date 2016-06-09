@@ -1167,6 +1167,10 @@ desconectados serão enviadas assim que eles aparecerem contectados para você.<
         <source>End video call</source>
         <translation type="unfinished">Terminar chamada de vídeo</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

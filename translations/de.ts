@@ -1183,6 +1183,10 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <source>Cleared</source>
         <translation>Gesprächsverlauf entfernt</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

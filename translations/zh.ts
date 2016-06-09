@@ -1166,6 +1166,10 @@ will be sent to them when they appear online to you.</source>
         <source>End video call</source>
         <translation type="unfinished">结束视频通话</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

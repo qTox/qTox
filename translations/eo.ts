@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="el">
+<TS version="2.0" language="eo">
 <context>
     <name>AVForm</name>
-    <message>
-        <source>Default resolution</source>
-        <translation>Προεπιλεγμένη ανάλυση</translation>
-    </message>
-    <message>
-        <source>Audio/Video</source>
-        <translation>Ήχος/Βίντεο</translation>
-    </message>
     <message>
         <source>%1p</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Default resolution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio/Video</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24,27 +24,35 @@
     <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Επιλογές Ήχου</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Χρησιμοποίησε την μπάρα για την ένταση των ηχείων σου.</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Συσκευή λήψης</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Συσκευή αναπαραγωγής</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Επιλογές βίντεο</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Συσκευή βίντεο</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -52,22 +60,10 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Όρισε την ανάλυση της κάμεράς σου.
-Όσο υψηλότερη η ανάλυση, τόσο καλύτερη η ποιότητα του βίντεο που θα βλέπουν οι φίλοι σου.
-Έχε υπόψη, όμως, ότι μια καλύτερη ποιότητα βίντεο χρειάζεται καλύτερη σύνδεση στο διαδίκτυο.
-Μερικές φορές η σύνδεσή σου μπορεί να μην επαρκεί για να υποστηρίξει μια υψηλότερη ποιότητα βίντεο,
-κάτι το οποίο μπορεί να οδηγήσει σε προβλήματα με τις βιντεοκλήσεις</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Ανάλυση</translation>
-    </message>
-    <message>
-        <source>Gain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Volume</source>
+        <source>Resolution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -77,10 +73,6 @@ which may lead to problems with video calls.</source>
 </context>
 <context>
     <name>AboutForm</name>
-    <message>
-        <source>About</source>
-        <translation>Σχετικά</translation>
-    </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
         <translation type="unfinished"></translation>
@@ -106,39 +98,27 @@ which may lead to problems with video calls.</source>
         <comment>%1 is the version of the update</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation>Έκδοση</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished">Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished">toxcore version: $TOXCOREVERSION</translation>
-    </message>
-    <message>
-        <source>License</source>
-        <translation type="unfinished">Άδεια</translation>
-    </message>
-    <message>
-        <source>Authors</source>
-        <translation type="unfinished">Δημιουργοί</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Known Issues</source>
-        <translation type="unfinished">Γνωστά Προβλήματα</translation>
+        <source>toxcore version: $TOXCOREVERSION</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -147,6 +127,22 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Downloading update: %p%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>License</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known Issues</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -217,47 +213,27 @@ which may lead to problems with video calls.</source>
 <context>
     <name>AddFriendForm</name>
     <message>
-        <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Αδυναμία προσθήκης φίλου/φίλης</translation>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
-        <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Δεν μπορείς να προσθέσεις τον εαυτό σου ως φίλο!</translation>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation type="unfinished">Αυτή το Tox ID δεν υπάρχει</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add Friends</source>
-        <translation type="unfinished">Πρόσθεσε Φίλους</translation>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation type="unfinished">Tox ID</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <comment>The message you send in friend requests</comment>
-        <translatorcomment>Το μήνυμα που στέλνεις σε αιτήματα φιλίας</translatorcomment>
-        <translation type="unfinished">Μήνυμα</translation>
-    </message>
-    <message>
-        <source>Send friend request</source>
-        <translation type="unfinished">Στείλε αίτημα φιλίας</translation>
-    </message>
-    <message>
-        <source>%1 here! Tox me maybe?</source>
-        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translatorcomment>Προεπιλεγμένο μήνυμα σε αιτήματα φιλίας όταν το αντίστοιχο πεδίο είναι κενό. Γράψε κάτι κατάλληλο!</translatorcomment>
-        <translation type="unfinished">%1 εδώ! Θες να μιλήσουμε στο Τοξ;</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -267,6 +243,24 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message</source>
+        <comment>The message you send in friend requests</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Send friend request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 here! Tox me maybe?</source>
+        <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -372,6 +366,10 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Calling %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Start audio call</source>
         <translation type="unfinished"></translation>
     </message>
@@ -409,15 +407,11 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load chat history...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Calling %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load chat history...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -529,7 +523,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">Αίτηση</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -702,6 +696,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
         <translation type="unfinished"></translation>
@@ -733,6 +735,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Show details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation type="unfinished"></translation>
@@ -755,18 +761,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show details</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -926,6 +920,10 @@ instead of closing itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
         <translation type="unfinished"></translation>
@@ -941,6 +939,30 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Focus window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Markdown preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text formatting (Markdown):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Markdown preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1077,34 +1099,6 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Play sound while Busy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1302,7 +1296,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation type="unfinished">Tox ID</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1324,6 +1318,38 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Copy image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toxme register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1383,38 +1409,6 @@ Profile does not contain your history.</source>
         <source>Change password</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Toxme register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1458,6 +1452,10 @@ Profile does not contain your history.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1496,6 +1494,20 @@ If you encountered this error, please report it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t load profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There is no selected profile.
+
+You may want to create one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1511,27 +1523,17 @@ If you encountered this error, please report it.</source>
         <source>Wrong password.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Couldn&apos;t load profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>There is no selected profile.
-
-You may want to create one.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
+    <message>
+        <source>Your name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your status</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>...</source>
         <translation type="unfinished"></translation>
@@ -1554,14 +1556,6 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Your status</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1606,7 +1600,6 @@ You may want to create one.</source>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
@@ -1679,11 +1672,11 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error</source>
+        <source>Choose a profile picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Choose a profile picture</source>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1762,6 +1755,31 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Save</source>
         <comment>save qr image</comment>
         <translation type="unfinished"></translation>
@@ -1794,27 +1812,12 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>User Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The following files could not be deleted:</source>
-        <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please manually remove them.</source>
-        <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Files could not be deleted!</source>
-        <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1847,16 +1850,6 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Change password</source>
-        <comment>button text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Set profile password</source>
-        <comment>button text</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1912,19 +1905,79 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update</source>
-        <comment>The title of a message box</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Version %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <comment>The title of a message box</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished">%1 εδώ! Θες να μιλήσουμε στο Τοξ;</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
@@ -1986,66 +2039,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal ToxMe error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2240,6 +2233,10 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>File transfers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2252,7 +2249,16 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 has set the title to %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2260,8 +2266,24 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add new circle...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <source>By Name</source>
@@ -2311,6 +2333,16 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Logout</source>
+        <comment>Tray action menu to logout user</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <comment>Tray action menu to exit tox</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Filter...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2348,47 +2380,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create new group...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Logout</source>
-        <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <comment>Tray action menu to exit tox</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

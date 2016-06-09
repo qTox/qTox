@@ -1174,6 +1174,10 @@ vil bli sent til de når de vises som pålogget til deg.</translation>
         <source>End video call</source>
         <translation type="unfinished">Avslutt videosamtale</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

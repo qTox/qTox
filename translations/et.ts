@@ -1174,6 +1174,10 @@ kui nad sulle nähtavaks muutuvad.</translation>
         <source>Clear displayed messages</source>
         <translation>Eemalda kuvatud teated</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

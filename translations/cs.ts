@@ -1169,6 +1169,10 @@ se opět připojí.</translation>
         <source>End video call</source>
         <translation type="unfinished">Ukončit video hovor</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

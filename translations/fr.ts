@@ -1170,6 +1170,10 @@ au lieu de se fermer.</translation>
         <source>Cleared</source>
         <translation>Effacé</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

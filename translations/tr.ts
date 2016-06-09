@@ -1168,6 +1168,10 @@ will be sent to them when they appear online to you.</source>
         <source>Clear displayed messages</source>
         <translation>Gösterilen iletileri temizle</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
