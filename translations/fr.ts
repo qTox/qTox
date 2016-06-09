@@ -211,7 +211,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation>L&apos;historique de la dicussion avec %1 à été effacé!</translation>
+        <translation>L&apos;historique de la dicussion avec %1 a été effacé!</translation>
     </message>
 </context>
 <context>
@@ -1844,7 +1844,7 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Le compte %1@%2 à été mis à jour avec succès</translation>
+        <translation>Le compte %1@%2 a été mis à jour avec succès</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
