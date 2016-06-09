@@ -2040,7 +2040,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>ID Tox non envoyé</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2056,7 +2056,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Problème avec la connection HTPPS</translation>
+        <translation>Problème avec la connection HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
