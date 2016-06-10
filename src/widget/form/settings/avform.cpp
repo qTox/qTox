@@ -232,6 +232,10 @@ void AVForm::updateVideoModes(int curIndex)
     {
         int i = iter->second;
         VideoMode mode = allVideoModes[i];
+
+        if (videoModes.contains(mode))
+            continue;
+
         videoModes.append(mode);
         if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
             prefResIndex = videoModes.size() - 1;
