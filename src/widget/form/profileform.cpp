@@ -93,7 +93,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     bodyUI->qrLabel->setWordWrap(true);
 
     QRegExp re("[^@ ]+");
-    QRegExpValidator* validator = new QRegExpValidator(re);
+    QRegExpValidator* validator = new QRegExpValidator(re, this);
     bodyUI->toxmeUsername->setValidator(validator);
 
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");

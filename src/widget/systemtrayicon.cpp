@@ -100,6 +100,7 @@ SystemTrayIcon::SystemTrayIcon()
 SystemTrayIcon::~SystemTrayIcon()
 {
     qDebug() << "Deleting SystemTrayIcon";
+    delete qtIcon;
 }
 
 QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
