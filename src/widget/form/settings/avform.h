@@ -62,6 +62,7 @@ private slots:
     // camera
     void onVideoDevChanged(int index);
     void onVideoModesIndexChanged(int index);
+    void onVideoFPSChanged (int fps);
 
     void on_btnPlayTestSound_clicked(bool checked);
 
