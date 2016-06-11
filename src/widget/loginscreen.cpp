@@ -136,6 +136,8 @@ bool LoginScreen::event(QEvent* event)
 void LoginScreen::onNewProfilePageClicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    capsIndicator->updateSize();
+    confimCapsIndicator->updateSize();
 }
 
 void LoginScreen::onLoginPageClicked()

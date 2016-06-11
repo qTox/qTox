@@ -8,6 +8,7 @@ class CapsLockIndicator : QToolButton
 public:
     CapsLockIndicator(QWidget *widget);
     void updateIndicator();
+    void updateSize();
 
 private:
     void show();

@@ -5,17 +5,24 @@
 
 CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent)
 {
-    inputSize = QSize(130, 23);
     cleanInputStyle = parentWidget()->styleSheet();
 
     QIcon icon = QIcon(":img/caps_lock.svg");
     setIcon(icon);
-    QSize iconSize(inputSize.height(), inputSize.height());
-    setIconSize(iconSize);
     setCursor(Qt::ArrowCursor);
-    move(inputSize.width() - inputSize.height(), 0);
     setStyleSheet("border: none; padding: 0; color: white");
     setToolTip(tr("CAPS-LOCK ENABLED"));
+    updateSize();
+}
+
+void CapsLockIndicator::updateSize()
+{
+    inputSize = parentWidget()->size();
+    move(inputSize.width() - inputSize.height(), 0);
+
+    int side = inputSize.height() - 5;
+    QSize iconSize(side, side);
+    setIconSize(iconSize);
 }
 
 void CapsLockIndicator::show()
