@@ -29,6 +29,7 @@
 #include "src/widget/style.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QMessageBox>
+#include <QToolButton>
 #include <QDebug>
 
 LoginScreen::LoginScreen(QWidget *parent) :
@@ -57,6 +58,9 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
+    capsIndicator = new CapsLockIndicator(ui->newPass);
+    confimCapsIndicator = new CapsLockIndicator(ui->newPassConfirm);
+
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 
@@ -68,6 +72,8 @@ LoginScreen::~LoginScreen()
 {
     Translator::unregister(this);
     delete ui;
+    delete capsIndicator;
+    delete confimCapsIndicator;
 }
 
 void LoginScreen::reset()
@@ -104,19 +110,34 @@ void LoginScreen::reset()
     ui->autoLoginCB->blockSignals(false);
 }
 
-#ifdef Q_OS_MAC
 bool LoginScreen::event(QEvent* event)
 {
-    if (event->type() == QEvent::WindowActivate || event->type() == QEvent::WindowStateChange)
-       emit windowStateChanged(windowState());
+    switch (event->type())
+    {
+#ifdef Q_OS_MAC
+    case QEvent::WindowActivate:
+    case QEvent::WindowStateChange:
+        emit windowStateChanged(windowState());
+        break;
+#endif
+    case QEvent::Show:
+    case QEvent::KeyRelease:
+        capsIndicator->updateIndicator();
+        confimCapsIndicator->updateIndicator();
+        break;
+    default:
+        break;
+    }
+
 
     return QWidget::event(event);
 }
-#endif
 
 void LoginScreen::onNewProfilePageClicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    capsIndicator->updateSize();
+    confimCapsIndicator->updateSize();
 }
 
 void LoginScreen::onLoginPageClicked()

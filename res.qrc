@@ -129,5 +129,6 @@
         <file>ui/notificationEdge/notificationEdge.css</file>
         <file>ui/loginScreen/loginScreen.css</file>
         <file>img/others/logout-icon.svg</file>
+        <file>img/caps_lock.svg</file>
     </qresource>
 </RCC>

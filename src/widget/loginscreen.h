@@ -21,8 +21,10 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
+#include "capslockindicator.h"
 #include <QWidget>
 #include <QShortcut>
+#include <QToolButton>
 
 namespace Ui {
 class LoginScreen;
@@ -37,9 +39,9 @@ public:
     ~LoginScreen();
     void reset(); ///< Resets the UI, clears all fields
 
-#ifdef Q_OS_MAC
     bool event(QEvent* event) final override;
 
+#ifdef Q_OS_MAC
 signals:
     void windowStateChanged(Qt::WindowStates states);
 #endif
@@ -58,10 +60,15 @@ private slots:
 
 private:
     void retranslateUi();
+    void showCapsIndicator();
+    void hideCapsIndicator();
+    void checkCapsLock();
 
 private:
     Ui::LoginScreen *ui;
     QShortcut quitShortcut;
+    CapsLockIndicator *capsIndicator;
+    CapsLockIndicator *confimCapsIndicator;
 };
 
 #endif // LOGINSCREEN_H
