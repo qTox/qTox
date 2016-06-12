@@ -1,21 +1,16 @@
 #ifndef CAPSLOCKINDICATOR_H
 #define CAPSLOCKINDICATOR_H
 
-#include <QToolButton>
+#include <QAction>
+#include <QLineEdit>
 
-class CapsLockIndicator : QToolButton
+class CapsLockIndicator : QAction
 {
 public:
-    CapsLockIndicator(QWidget *widget);
+    CapsLockIndicator(QLineEdit *widget);
     void updateIndicator();
-    void updateSize();
 
 private:
-    void show();
-    void hide();
-
-private:
-    QString cleanInputStyle;
-    QSize inputSize;
+    QLineEdit *parent;
 };
 #endif // CAPSLOCKINDICATOR_H

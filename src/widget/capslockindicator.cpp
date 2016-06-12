@@ -3,40 +3,12 @@
 #include "src/platform/capslock.h"
 #endif
 
-CapsLockIndicator::CapsLockIndicator(QWidget *parent) : QToolButton(parent)
+CapsLockIndicator::CapsLockIndicator(QLineEdit *parent) :
+    QAction(parent),
+    parent(parent)
 {
-    cleanInputStyle = parentWidget()->styleSheet();
-
-    QIcon icon = QIcon(":img/caps_lock.svg");
-    setIcon(icon);
-    setCursor(Qt::ArrowCursor);
-    setStyleSheet("border: none; padding: 0; color: white");
+    setIcon(QIcon(":img/caps_lock.svg"));
     setToolTip(tr("CAPS-LOCK ENABLED"));
-    updateSize();
-}
-
-void CapsLockIndicator::updateSize()
-{
-    inputSize = parentWidget()->size();
-    move(inputSize.width() - inputSize.height(), 0);
-
-    int side = inputSize.height() - 5;
-    QSize iconSize(side, side);
-    setIconSize(iconSize);
-}
-
-void CapsLockIndicator::show()
-{
-    QToolButton::show();
-
-    QString style = QString("padding: -3px %1px -3px -6px; color: white").arg(iconSize().width() - 3);
-    parentWidget()->setStyleSheet(style);
-}
-
-void CapsLockIndicator::hide()
-{
-    QToolButton::hide();
-    parentWidget()->setStyleSheet(cleanInputStyle);
 }
 
 void CapsLockIndicator::updateIndicator()
@@ -48,7 +20,7 @@ void CapsLockIndicator::updateIndicator()
 #endif
 
     if (caps)
-        show();
+        parent->addAction(this, QLineEdit::TrailingPosition);
     else
-        hide();
+        parent->removeAction(this);
 }
