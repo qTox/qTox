@@ -120,6 +120,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
+    connect(this, &ChatForm::remoteFileDropped, this, &ChatForm::onRemoteFileDropped, Qt::QueuedConnection);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
         if(!statusMessageLabel->text().isEmpty())
@@ -691,6 +692,27 @@ QString ChatForm::downloadFile(QString url) {
     return fileName;
 }
 
+void ChatForm::onRemoteFileDropped(const QString &url)
+{
+    QString path = downloadFile(url);
+    QFileInfo info(path);
+    if (f == nullptr)
+    {
+        qWarning() << "freind is null";
+        return;
+    }
+
+    uint32_t id = f->getFriendID();
+    Core *core = Core::getInstance();
+    if (core == nullptr)
+    {
+        qWarning() << "core is null. (User not logged?)";
+        return;
+    }
+
+    core->sendFile(id, info.fileName(), info.absoluteFilePath(), info.size());
+}
+
 void ChatForm::dropEvent(QDropEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
@@ -701,9 +723,8 @@ void ChatForm::dropEvent(QDropEvent *ev)
 
             QFile file(info.absoluteFilePath());
             if (url.isValid() && !url.isLocalFile()) {
-                QString fileName = downloadFile(url.toString());
-                info.setFile(fileName);
-                file.setFileName(fileName);
+                emit remoteFileDropped(url.toString());
+                return;
             }
 
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
