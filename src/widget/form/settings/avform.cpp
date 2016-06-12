@@ -173,8 +173,11 @@ void AVForm::updateVideoModes(int curIndex)
 
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
-    idealModes[240] = {460,240,0,0}; idealModes[360] = {640,360,0,0};
-    idealModes[480] = {854,480,0,0}; idealModes[720] = {1280,720,0,0};
+    idealModes[120] = {160,120,0,0};
+    idealModes[240] = {460,240,0,0};
+    idealModes[360] = {640,360,0,0};
+    idealModes[480] = {854,480,0,0};
+    idealModes[720] = {1280,720,0,0};
     idealModes[1080] = {1920,1080,0,0};
     std::map<int, int> bestModeInds;
 
