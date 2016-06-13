@@ -66,10 +66,7 @@ SystemTrayIcon::SystemTrayIcon()
         backendType = SystrayBackendType::GTK;
         gtk_init(nullptr, nullptr);
 
-        // No ':' needed in resource path!
-        GdkPixbuf *pixbuf = gdk_pixbuf_new_from_resource("/img/icon.png", NULL);
-        gtkIcon = gtk_status_icon_new_from_pixbuf(pixbuf);
-        g_object_unref(pixbuf);
+        gtkIcon = gtk_status_icon_new();
 
         gtkMenu = gtk_menu_new();
 
