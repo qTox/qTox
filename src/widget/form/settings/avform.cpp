@@ -154,23 +154,8 @@ void AVForm::onVideoModesIndexChanged(int index)
     camera.open(devName, mode);
 }
 
-void AVForm::updateVideoModes(int curIndex)
+std::map<int, int> AVForm::getBestModeInds(QVector<VideoMode> &allVideoModes)
 {
-    if (curIndex<0 || curIndex>=videoDeviceList.size())
-    {
-        qWarning() << "Invalid index";
-        return;
-    }
-    QString devName = videoDeviceList[curIndex].first;
-    QVector<VideoMode> allVideoModes = CameraDevice::getVideoModes(devName);
-    std::sort(allVideoModes.begin(), allVideoModes.end(),
-        [](const VideoMode& a, const VideoMode& b)
-            {return a.width!=b.width ? a.width>b.width :
-                    a.height!=b.height ? a.height>b.height :
-                    a.FPS>b.FPS;});
-    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
-    bodyUI->videoModescomboBox->clear();
-
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
     idealModes[120] = {160,120,0,0};
@@ -179,10 +164,9 @@ void AVForm::updateVideoModes(int curIndex)
     idealModes[480] = {854,480,0,0};
     idealModes[720] = {1280,720,0,0};
     idealModes[1080] = {1920,1080,0,0};
-    std::map<int, int> bestModeInds;
 
-    qDebug("available Modes:");
-    for (int i=0; i<allVideoModes.size(); ++i)
+    std::map<int, int> bestModeInds;
+    for (int i = 0; i < allVideoModes.size(); ++i)
     {
         VideoMode mode = allVideoModes[i];
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
@@ -225,83 +209,142 @@ void AVForm::updateVideoModes(int curIndex)
             }
         }
     }
-    qDebug("selected Modes:");
+
+    QVector<VideoMode> newVideoModes;
+    int index = 0;
+    for (auto it = bestModeInds.rbegin(); it != bestModeInds.rend(); ++it)
+    {
+        int i = it->second;
+        VideoMode mode = videoModes[i];
+        auto result = std::find(newVideoModes.begin(), newVideoModes.end(), mode);
+        if (result == newVideoModes.end())
+            newVideoModes.push_back(mode);
+        it->second = index++;
+    }
+    videoModes = newVideoModes;
+
+    return bestModeInds;
+}
+
+int AVForm::fillModesComboBox(std::map<int, int> bestModeInds)
+{
+    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
+    bodyUI->videoModescomboBox->clear();
+
     int prefResIndex = -1;
     QSize prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
+
     // Iterate backwards to show higest resolution first.
     videoModes.clear();
     for(auto iter = bestModeInds.rbegin(); iter != bestModeInds.rend(); ++iter)
     {
-        int i = iter->second;
-        VideoMode mode = allVideoModes[i];
+        int index = iter->second;
+        VideoMode mode = videoModes[index];
 
-        if (videoModes.contains(mode))
-            continue;
+        if (mode.width == prefRes.width()
+                && mode.height == prefRes.height()
+                && mode.FPS == prefFPS
+                && prefResIndex == -1)
+            prefResIndex = index;
 
-        videoModes.append(mode);
-        if (mode.width==prefRes.width() && mode.height==prefRes.height() && mode.FPS == prefFPS && prefResIndex==-1)
-            prefResIndex = videoModes.size() - 1;
         QString str;
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
+
         if (mode.height && mode.width)
-            str += tr("%1p").arg(iter->first);
+            str += QString("%1p").arg(iter->first);
         else
             str += tr("Default resolution");
+
         bodyUI->videoModescomboBox->addItem(str);
     }
+
     if (videoModes.isEmpty())
         bodyUI->videoModescomboBox->addItem(tr("Default resolution"));
+
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+    return prefResIndex;
+}
+
+void AVForm::updateVideoModes(int curIndex)
+{
+    if (curIndex<0 || curIndex>=videoDeviceList.size())
+    {
+        qWarning() << "Invalid index";
+        return;
+    }
+    QString devName = videoDeviceList[curIndex].first;
+    QVector<VideoMode> allVideoModes = CameraDevice::getVideoModes(devName);
+
+    std::sort(allVideoModes.begin(), allVideoModes.end(),
+        [](const VideoMode& a, const VideoMode& b)
+            {return a.width!=b.width ? a.width>b.width :
+                    a.height!=b.height ? a.height>b.height :
+                    a.FPS>b.FPS;});
+
+    qDebug("available Modes:");
+    std::map<int, int> bestModeInds = getBestModeInds(allVideoModes);
+    videoModes = allVideoModes;
+
+    qDebug("selected Modes:");
+    int prefResIndex = fillModesComboBox(bestModeInds);
     if (prefResIndex != -1)
     {
         bodyUI->videoModescomboBox->setCurrentIndex(prefResIndex);
+        return;
+    }
+
+    if (videoModes.size() == 0)
+    {
+        // We don't have any video modes, open it with the default mode
+        camera.open(devName);
+        return;
+    }
+
+
+    // If the user hasn't set a preferred resolution yet,
+    // we'll pick the resolution in the middle of the list,
+    // and the best FPS for that resolution.
+    // If we picked the lowest resolution, the quality would be awful
+    // but if we picked the largest, FPS would be bad and thus quality bad too.
+    int numRes=0;
+    QSize lastSize;
+    for (int i=0; i<videoModes.size(); i++)
+    {
+        if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
+        {
+            numRes++;
+            lastSize = {videoModes[i].width, videoModes[i].height};
+        }
+    }
+    int target = numRes/2;
+    numRes=0;
+    for (int i=0; i<videoModes.size(); i++)
+    {
+        if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
+        {
+            numRes++;
+            lastSize = {videoModes[i].width, videoModes[i].height};
+        }
+        if (numRes==target)
+        {
+            bodyUI->videoModescomboBox->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    if (videoModes.size())
+    {
+        bodyUI->videoModescomboBox->setUpdatesEnabled(false);
+        bodyUI->videoModescomboBox->setCurrentIndex(-1);
+        bodyUI->videoModescomboBox->setUpdatesEnabled(true);
+        bodyUI->videoModescomboBox->setCurrentIndex(0);
     }
     else
     {
-        // If the user hasn't set a preffered resolution yet,
-        // we'll pick the resolution in the middle of the list,
-        // and the best FPS for that resolution.
-        // If we picked the lowest resolution, the quality would be awful
-        // but if we picked the largest, FPS would be bad and thus quality bad too.
-        int numRes=0;
-        QSize lastSize;
-        for (int i=0; i<videoModes.size(); i++)
-        {
-            if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
-            {
-                numRes++;
-                lastSize = {videoModes[i].width, videoModes[i].height};
-            }
-        }
-        int target = numRes/2;
-        numRes=0;
-        for (int i=0; i<videoModes.size(); i++)
-        {
-            if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
-            {
-                numRes++;
-                lastSize = {videoModes[i].width, videoModes[i].height};
-            }
-            if (numRes==target)
-            {
-                bodyUI->videoModescomboBox->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        if (videoModes.size())
-        {
-            bodyUI->videoModescomboBox->setUpdatesEnabled(false);
-            bodyUI->videoModescomboBox->setCurrentIndex(-1);
-            bodyUI->videoModescomboBox->setUpdatesEnabled(true);
-            bodyUI->videoModescomboBox->setCurrentIndex(0);
-        }
-        else
-        {
-            // We don't have any video modes, open it with the default mode
-            camera.open(devName);
-        }
+        // We don't have any video modes, open it with the default mode
+        camera.open(devName);
     }
 }
 

@@ -46,6 +46,9 @@ private:
     void getAudioOutDevices();
     void getVideoDevices();
 
+    std::map<int, int> getBestModeInds(QVector<VideoMode> &allVideoModes);
+    int fillModesComboBox(std::map<int, int> bestModeInds);
+
     void createVideoSurface();
     void killVideoSurface();
 
@@ -70,7 +73,6 @@ protected:
 
 private:
     bool eventFilter(QObject *o, QEvent *e) final override;
-
     void hideEvent(QHideEvent* event) final override;
     void showEvent(QShowEvent*event) final override;
 
