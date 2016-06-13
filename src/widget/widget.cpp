@@ -1195,7 +1195,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     }
     else
     {
-        if (Settings::getInstance().getSeparateWindow())
+        if (Settings::getInstance().getSeparateWindow() && Settings::getInstance().getShowWindow())
         {
             if (Settings::getInstance().getDontGroupWindows())
             {
