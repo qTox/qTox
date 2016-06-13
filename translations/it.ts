@@ -1229,9 +1229,9 @@ will be sent to them when they appear online to you.</source>
         <translation>Avvia chiamata</translation>
     </message>
     <message>
-        <source>%1 user in chat</source>
+        <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>%1 utenti in chat</translation>
+        <translation>1 utente in chat</translation>
     </message>
 </context>
 <context>
@@ -1285,8 +1285,8 @@ will be sent to them when they appear online to you.</source>
         <translation>Rimuovi la chat da questa finestra</translation>
     </message>
     <message>
-        <source>%1 user in chat</source>
-        <translation>%1 utenti in chat</translation>
+        <source>1 user in chat</source>
+        <translation>1 utente in chat</translation>
     </message>
 </context>
 <context>
