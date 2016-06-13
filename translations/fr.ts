@@ -313,6 +313,13 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2408,6 +2415,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
             <numerusform>Nouvelle invitation de groupe</numerusform>
             <numerusform>Nouvelles invitations de groupe</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

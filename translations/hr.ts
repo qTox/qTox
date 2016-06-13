@@ -316,6 +316,13 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -2403,6 +2410,11 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -312,6 +312,13 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2406,6 +2413,11 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

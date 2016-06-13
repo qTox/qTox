@@ -313,6 +313,13 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -2399,6 +2406,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Previous Conversation</source>
         <translation>前の会話</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

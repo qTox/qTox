@@ -83,7 +83,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Un elenco di tutti i problemi può essere trovata nel nostro %1 su Github. Se si scopre un bug o vulnerabilità di sicurezza all'interno qTox, si prega di %3 seguendo le linee guida nel nostro articolo wiki %2.</translation>
+        <translation>Un elenco di tutti i problemi può essere trovata nel nostro %1 su Github. Se si scopre un bug o vulnerabilità di sicurezza all&apos;interno qTox, si prega di %3 seguendo le linee guida nel nostro articolo wiki %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -104,7 +104,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>%1 è la versione dell'aggiornamento</translation>
+        <translation>%1 è la versione dell&apos;aggiornamento</translation>
     </message>
 </context>
 <context>
@@ -310,6 +310,13 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Reimposta impostazioni di default</translation>
+    </message>
+</context>
+<context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1845,7 +1852,7 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>L'Account %1@%2 è stato aggiornato con successo</translation>
+        <translation>L&apos;Account %1@%2 è stato aggiornato con successo</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
@@ -2406,6 +2413,11 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Previous Conversation</source>
         <translation>Conversazione precedente</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

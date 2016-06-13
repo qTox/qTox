@@ -321,6 +321,13 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
 </context>
 <context>
+    <name>CapsLockIndicator</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -2469,6 +2476,11 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
         <translation>Zakończ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
