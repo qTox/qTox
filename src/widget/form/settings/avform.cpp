@@ -299,44 +299,8 @@ void AVForm::updateVideoModes(int curIndex)
     // and the best FPS for that resolution.
     // If we picked the lowest resolution, the quality would be awful
     // but if we picked the largest, FPS would be bad and thus quality bad too.
-    int numRes=0;
-    QSize lastSize;
-    for (int i = 0; i<videoModes.size(); i++)
-    {
-        if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
-        {
-            numRes++;
-            lastSize = {videoModes[i].width, videoModes[i].height};
-        }
-    }
-    int target = numRes/2;
-    numRes=0;
-    for (int i=0; i<videoModes.size(); i++)
-    {
-        if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
-        {
-            numRes++;
-            lastSize = {videoModes[i].width, videoModes[i].height};
-        }
-        if (numRes==target)
-        {
-            bodyUI->videoModescomboBox->setCurrentIndex(i);
-            break;
-        }
-    }
-
-    if (videoModes.size())
-    {
-        bodyUI->videoModescomboBox->setUpdatesEnabled(false);
-        bodyUI->videoModescomboBox->setCurrentIndex(-1);
-        bodyUI->videoModescomboBox->setUpdatesEnabled(true);
-        bodyUI->videoModescomboBox->setCurrentIndex(0);
-    }
-    else
-    {
-        // We don't have any video modes, open it with the default mode
-        camera.open(devName);
-    }
+    int mid = videoModes.size() / 2;
+    bodyUI->videoModescomboBox->setCurrentIndex(mid);
 }
 
 void AVForm::onVideoDevChanged(int index)
@@ -352,7 +316,13 @@ void AVForm::onVideoDevChanged(int index)
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
-    camera.open(dev);
+
+    int modeIndex = bodyUI->videoModescomboBox->currentIndex();
+    VideoMode mode = VideoMode();
+    if (0 < modeIndex || modeIndex < videoModes.size())
+        mode = videoModes[modeIndex];
+
+    camera.open(dev, mode);
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
 }
