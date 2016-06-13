@@ -46,8 +46,8 @@ private:
     void getAudioOutDevices();
     void getVideoDevices();
 
-    std::map<int, int> getBestModeInds(QVector<VideoMode> &allVideoModes);
-    int fillModesComboBox(std::map<int, int> bestModeInds);
+    void selectBestModes(QVector<VideoMode> &allVideoModes);
+    int fillModesComboBox();
 
     void createVideoSurface();
     void killVideoSurface();

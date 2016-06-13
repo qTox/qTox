@@ -154,7 +154,7 @@ void AVForm::onVideoModesIndexChanged(int index)
     camera.open(devName, mode);
 }
 
-std::map<int, int> AVForm::getBestModeInds(QVector<VideoMode> &allVideoModes)
+void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
 {
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
@@ -169,7 +169,8 @@ std::map<int, int> AVForm::getBestModeInds(QVector<VideoMode> &allVideoModes)
     for (int i = 0; i < allVideoModes.size(); ++i)
     {
         VideoMode mode = allVideoModes[i];
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, CameraDevice::getPixelFormatString(mode.pixel_format).toStdString().c_str());
+        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         // PS3-Cam protection, everything above 60fps makes no sense
         if(mode.FPS > 60)
@@ -189,44 +190,43 @@ std::map<int, int> AVForm::getBestModeInds(QVector<VideoMode> &allVideoModes)
                 bestModeInds[res] = i;
                 continue;
             }
-            int ind = bestModeInds[res];
-            if (mode.norm(idealMode) < allVideoModes[ind].norm(idealMode))
+
+            int index = bestModeInds[res];
+            VideoMode best = allVideoModes[index];
+            if (mode.norm(idealMode) < best.norm(idealMode))
             {
                 bestModeInds[res] = i;
+                continue;
             }
-            else if (mode.norm(idealMode) == allVideoModes[ind].norm(idealMode))
+
+            if (mode.norm(idealMode) == best.norm(idealMode))
             {
                 // prefer higher FPS and "better" pixel formats
-                if (mode.FPS > allVideoModes[ind].FPS)
+                if (mode.FPS > best.FPS)
                 {
                     bestModeInds[res] = i;
+                    continue;
                 }
-                else if (mode.FPS == allVideoModes[ind].FPS &&
-                        CameraDevice::betterPixelFormat(mode.pixel_format, allVideoModes[ind].pixel_format))
-                {
+
+                bool better = CameraDevice::betterPixelFormat(mode.pixel_format, best.pixel_format);
+                if (mode.FPS == best.FPS && better)
                     bestModeInds[res] = i;
-                }
             }
         }
     }
 
     QVector<VideoMode> newVideoModes;
-    int index = 0;
     for (auto it = bestModeInds.rbegin(); it != bestModeInds.rend(); ++it)
     {
-        int i = it->second;
-        VideoMode mode = videoModes[i];
+        VideoMode mode = allVideoModes[it->second];
         auto result = std::find(newVideoModes.begin(), newVideoModes.end(), mode);
         if (result == newVideoModes.end())
             newVideoModes.push_back(mode);
-        it->second = index++;
     }
-    videoModes = newVideoModes;
-
-    return bestModeInds;
+    allVideoModes = newVideoModes;
 }
 
-int AVForm::fillModesComboBox(std::map<int, int> bestModeInds)
+int AVForm::fillModesComboBox()
 {
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
@@ -235,25 +235,22 @@ int AVForm::fillModesComboBox(std::map<int, int> bestModeInds)
     QSize prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
 
-    // Iterate backwards to show higest resolution first.
-    videoModes.clear();
-    for(auto iter = bestModeInds.rbegin(); iter != bestModeInds.rend(); ++iter)
+    for(int i = 0; i < videoModes.size(); i++)
     {
-        int index = iter->second;
-        VideoMode mode = videoModes[index];
+        VideoMode mode = videoModes[i];
 
         if (mode.width == prefRes.width()
                 && mode.height == prefRes.height()
                 && mode.FPS == prefFPS
                 && prefResIndex == -1)
-            prefResIndex = index;
+            prefResIndex = i;
 
         QString str;
         QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         if (mode.height && mode.width)
-            str += QString("%1p").arg(iter->first);
+            str += QString("%1p").arg(mode.height);
         else
             str += tr("Default resolution");
 
@@ -269,7 +266,7 @@ int AVForm::fillModesComboBox(std::map<int, int> bestModeInds)
 
 void AVForm::updateVideoModes(int curIndex)
 {
-    if (curIndex<0 || curIndex>=videoDeviceList.size())
+    if (curIndex < 0 || curIndex >= videoDeviceList.size())
     {
         qWarning() << "Invalid index";
         return;
@@ -277,18 +274,12 @@ void AVForm::updateVideoModes(int curIndex)
     QString devName = videoDeviceList[curIndex].first;
     QVector<VideoMode> allVideoModes = CameraDevice::getVideoModes(devName);
 
-    std::sort(allVideoModes.begin(), allVideoModes.end(),
-        [](const VideoMode& a, const VideoMode& b)
-            {return a.width!=b.width ? a.width>b.width :
-                    a.height!=b.height ? a.height>b.height :
-                    a.FPS>b.FPS;});
-
     qDebug("available Modes:");
-    std::map<int, int> bestModeInds = getBestModeInds(allVideoModes);
+    selectBestModes(allVideoModes);
     videoModes = allVideoModes;
 
     qDebug("selected Modes:");
-    int prefResIndex = fillModesComboBox(bestModeInds);
+    int prefResIndex = fillModesComboBox();
     if (prefResIndex != -1)
     {
         bodyUI->videoModescomboBox->setCurrentIndex(prefResIndex);
@@ -301,7 +292,6 @@ void AVForm::updateVideoModes(int curIndex)
         camera.open(devName);
         return;
     }
-
 
     // If the user hasn't set a preferred resolution yet,
     // we'll pick the resolution in the middle of the list,
