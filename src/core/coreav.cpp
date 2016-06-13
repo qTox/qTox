@@ -79,8 +79,6 @@ IndexedList<ToxFriendCall> CoreAV::calls;
 */
 IndexedList<ToxGroupCall> CoreAV::groupCalls;
 
-using namespace std;
-
 CoreAV::CoreAV(Tox *tox)
     : coreavThread{new QThread}, iterateTimer{new QTimer{this}},
       threadSwitchLock{false}
@@ -188,7 +186,7 @@ bool CoreAV::answerCall(uint32_t friendNum)
 
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -220,10 +218,12 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
             qDebug() << "CoreAV::startCall: Backed off of thread-switch lock";
             return false;
         }
-        bool ret;
 
-        (void)QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
+        bool ret;
+        QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(uint32_t, friendNum),
+                                  Q_ARG(bool, video));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -256,8 +256,10 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         }
 
         bool ret;
-        QMetaObject::invokeMethod(this, "cancelCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+        QMetaObject::invokeMethod(this, "cancelCall",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(uint32_t, friendNum));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -338,7 +340,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
     return true;
 }
 
-void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
+void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 {
     // We might be running in the FFmpeg thread and holding the CameraSource lock
     // So be careful not to deadlock with anything while toxav locks in toxav_video_send_frame
