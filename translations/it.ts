@@ -118,7 +118,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>Stai utilizzando la versione $GIT_DESCRIBE.</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quo    t;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
         <translation>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
@@ -768,7 +768,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation>Invita &apos;%1&apos; </translation>
+        <translation>Invita &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1819,7 +1819,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation>I seguenti file non possono essere eliminati: </translation>
+        <translation>I seguenti file non possono essere eliminati:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
@@ -2058,7 +2058,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished">Problema con la connessione HTTPS</translation>
+        <translation>Problema con la connessione HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
@@ -2360,7 +2360,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished">Esci</translation>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2369,7 +2369,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished">Filtro...</translation>
+        <translation>Filtro...</translation>
     </message>
     <message>
         <source>File</source>
