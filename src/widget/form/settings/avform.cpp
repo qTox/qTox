@@ -226,24 +226,14 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     allVideoModes = newVideoModes;
 }
 
-int AVForm::fillModesComboBox()
+void AVForm::fillModesComboBox()
 {
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
 
-    int prefResIndex = -1;
-    QSize prefRes = Settings::getInstance().getCamVideoRes();
-    unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
-
     for(int i = 0; i < videoModes.size(); i++)
     {
         VideoMode mode = videoModes[i];
-
-        if (mode.width == prefRes.width()
-                && mode.height == prefRes.height()
-                && mode.FPS == prefFPS
-                && prefResIndex == -1)
-            prefResIndex = i;
 
         QString str;
         QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
@@ -261,7 +251,23 @@ int AVForm::fillModesComboBox()
         bodyUI->videoModescomboBox->addItem(tr("Default resolution"));
 
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
-    return prefResIndex;
+}
+
+int AVForm::searchPreferredIndex()
+{
+    QSize prefRes = Settings::getInstance().getCamVideoRes();
+    unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
+
+    for (int i = 0; i < videoModes.size(); i++)
+    {
+        VideoMode mode = videoModes[i];
+        if (mode.width == prefRes.width()
+                && mode.height == prefRes.height()
+                && mode.FPS == prefFPS)
+            return i;
+    }
+
+    return -1;
 }
 
 void AVForm::updateVideoModes(int curIndex)
@@ -279,17 +285,12 @@ void AVForm::updateVideoModes(int curIndex)
     videoModes = allVideoModes;
 
     qDebug("selected Modes:");
-    int prefResIndex = fillModesComboBox();
-    if (prefResIndex != -1)
-    {
-        bodyUI->videoModescomboBox->setCurrentIndex(prefResIndex);
-        return;
-    }
+    fillModesComboBox();
 
-    if (videoModes.size() == 0)
+    int preferedIndex = searchPreferredIndex();
+    if (preferedIndex!= -1)
     {
-        // We don't have any video modes, open it with the default mode
-        camera.open(devName);
+        bodyUI->videoModescomboBox->setCurrentIndex(preferedIndex);
         return;
     }
 
@@ -300,7 +301,7 @@ void AVForm::updateVideoModes(int curIndex)
     // but if we picked the largest, FPS would be bad and thus quality bad too.
     int numRes=0;
     QSize lastSize;
-    for (int i=0; i<videoModes.size(); i++)
+    for (int i = 0; i<videoModes.size(); i++)
     {
         if (lastSize != QSize{videoModes[i].width, videoModes[i].height})
         {
