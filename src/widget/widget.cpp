@@ -125,8 +125,8 @@ void Widget::init()
 
     icon_size = 15;
 
-    actionActivate = new QAction(this);
-    connect(actionActivate, &QAction::triggered, this, &Widget::forceShow);
+    actionShow = new QAction(this);
+    connect(actionShow, &QAction::triggered, this, &Widget::forceShow);
 
     statusOnline = new QAction(this);
     statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
@@ -1791,7 +1791,7 @@ void Widget::onTryCreateTrayIcon()
             trayMenu = new QMenu(this);
 
             // adding activate to the top, avoids accidentally clicking quit
-            trayMenu->addAction(actionActivate);
+            trayMenu->addAction(actionShow);
             trayMenu->addSeparator();
             trayMenu->addAction(statusOnline);
             trayMenu->addAction(statusAway);
@@ -2253,7 +2253,7 @@ void Widget::retranslateUi()
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
     actionLogout->setText(tr("Logout", "Tray action menu to logout user"));
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
-    actionActivate->setText(tr("Activate", "Tray action menu to reactivate qTox window"));
+    actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(AddDialog));

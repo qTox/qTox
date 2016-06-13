@@ -241,7 +241,7 @@ private:
     QAction *statusBusy;
     QAction *actionLogout;
     QAction *actionQuit;
-    QAction *actionActivate;
+    QAction *actionShow;
 
     QMenu* filterMenu;
 
