@@ -53,7 +53,6 @@ enum class RecordTag : uint8_t
 {
 
 };
-
 /**
 @var static const char magic[];
 @brief Little endian ASCII "QTOX" magic
@@ -130,7 +129,7 @@ void SettingsSerializer::endGroup()
 int SettingsSerializer::beginReadArray(const QString &prefix)
 {
     auto index = std::find_if(std::begin(arrays), std::end(arrays),
-                         [=](const Array& a)
+                              [=](const Array& a)
     {
         return a.name==prefix;
     });
@@ -153,7 +152,7 @@ int SettingsSerializer::beginReadArray(const QString &prefix)
 void SettingsSerializer::beginWriteArray(const QString &prefix, int size)
 {
     auto index = std::find_if(std::begin(arrays), std::end(arrays),
-                         [=](const Array& a)
+                              [=](const Array& a)
     {
         return a.name==prefix;
     });
