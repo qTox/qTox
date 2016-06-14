@@ -136,13 +136,13 @@ void AVForm::showEvent(QShowEvent* event)
 
 void AVForm::onVideoModesIndexChanged(int index)
 {
-    if (index<0 || index>=videoModes.size())
+    if (index < 0 || index >= videoModes.size())
     {
         qWarning() << "Invalid mode index";
         return;
     }
     int devIndex = bodyUI->videoDevCombobox->currentIndex();
-    if (devIndex<0 || devIndex>=videoModes.size())
+    if (devIndex < 0 || devIndex >= videoDeviceList.size())
     {
         qWarning() << "Invalid device index";
         return;
@@ -150,8 +150,7 @@ void AVForm::onVideoModesIndexChanged(int index)
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
 
-    QRect rect(mode.x, mode.y, mode.width, mode.height);
-    Settings::getInstance().setCamVideoRes(rect);
+    Settings::getInstance().setCamVideoRes(mode.toRect());
     Settings::getInstance().setCamVideoFPS(mode.FPS);
     camera.open(devName, mode);
 }
@@ -228,7 +227,7 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     allVideoModes = newVideoModes;
 }
 
-void AVForm::fillModesComboBox()
+void AVForm::fillCameraModesComboBox()
 {
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     bodyUI->videoModescomboBox->clear();
@@ -272,6 +271,25 @@ int AVForm::searchPreferredIndex()
     return -1;
 }
 
+void AVForm::fillScreenModesComboBox()
+{
+    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
+    bodyUI->videoModescomboBox->clear();
+
+    for(int i = 0; i < videoModes.size(); i++)
+    {
+        VideoMode mode = videoModes[i];
+        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+        qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y, mode.FPS, pixelFormat.toStdString().c_str());
+
+        QString name = QString("Screen %1").arg(i + 1);
+        bodyUI->videoModescomboBox->addItem(name);
+    }
+
+    bodyUI->videoModescomboBox->addItem(tr("Select region"));
+    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+}
+
 void AVForm::updateVideoModes(int curIndex)
 {
     if (curIndex < 0 || curIndex >= videoDeviceList.size())
@@ -283,11 +301,19 @@ void AVForm::updateVideoModes(int curIndex)
     QVector<VideoMode> allVideoModes = CameraDevice::getVideoModes(devName);
 
     qDebug("available Modes:");
-    selectBestModes(allVideoModes);
-    videoModes = allVideoModes;
+    if (CameraDevice::isScreen(devName))
+    {
+        videoModes = allVideoModes;
+        fillScreenModesComboBox();
+    }
+    else
+    {
+        selectBestModes(allVideoModes);
+        videoModes = allVideoModes;
 
-    qDebug("selected Modes:");
-    fillModesComboBox();
+        qDebug("selected Modes:");
+        fillCameraModesComboBox();
+    }
 
     int preferedIndex = searchPreferredIndex();
     if (preferedIndex!= -1)
@@ -307,7 +333,7 @@ void AVForm::updateVideoModes(int curIndex)
 
 void AVForm::onVideoDevChanged(int index)
 {
-    if (index<0 || index>=videoDeviceList.size())
+    if (index < 0 || index >= videoDeviceList.size())
     {
         qWarning() << "Invalid index";
         return;

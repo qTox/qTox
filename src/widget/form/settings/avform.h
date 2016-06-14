@@ -47,7 +47,8 @@ private:
     void getVideoDevices();
 
     void selectBestModes(QVector<VideoMode> &allVideoModes);
-    void fillModesComboBox();
+    void fillCameraModesComboBox();
+    void fillScreenModesComboBox();
     int searchPreferredIndex();
 
     void createVideoSurface();
