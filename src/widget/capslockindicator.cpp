@@ -4,21 +4,40 @@
 #endif
 #include <QCoreApplication>
 
+CapsLockIndicator::EventHandler* CapsLockIndicator::eventHandler{nullptr};
+
 CapsLockIndicator::CapsLockIndicator(QObject* parent) :
     QAction(parent)
 {
     setIcon(QIcon(":img/caps_lock.svg"));
     setToolTip(tr("CAPS-LOCK ENABLED"));
 
-    QCoreApplication::instance()->installEventFilter(this);
+    if (!eventHandler)
+        eventHandler = new EventHandler();
+    eventHandler->actions.append(this);
 }
 
 CapsLockIndicator::~CapsLockIndicator()
 {
+    eventHandler->actions.removeOne(this);
+    if (eventHandler->actions.isEmpty())
+    {
+        delete eventHandler;
+        eventHandler = nullptr;
+    }
+}
+
+CapsLockIndicator::EventHandler::EventHandler()
+{
+    QCoreApplication::instance()->installEventFilter(this);
+}
+
+CapsLockIndicator::EventHandler::~EventHandler()
+{
     QCoreApplication::instance()->removeEventFilter(this);
 }
 
-void CapsLockIndicator::updateIndicator()
+void CapsLockIndicator::EventHandler::updateActions(const QObject* object)
 {
     bool caps = false;
     // It doesn't needed for OSX, because it shows indicator by default
@@ -26,24 +45,27 @@ void CapsLockIndicator::updateIndicator()
     caps = Platform::capsLockEnabled();
 #endif
 
-    setVisible(caps);
+    for (QAction* action : actions)
+    {
+        if (! object || object == action)
+            action->setVisible(caps);
+    }
 }
 
-bool CapsLockIndicator::eventFilter(QObject *obj, QEvent *event)
+bool CapsLockIndicator::EventHandler::eventFilter(QObject *obj, QEvent *event)
 {
     switch (event->type())
     {
     case QEvent::Show:
-        if (obj == this)
-            updateIndicator();
+        updateActions(obj);
         break;
     case QEvent::WindowActivate:
     case QEvent::KeyRelease:
-        updateIndicator();
+        updateActions();
         break;
     default:
         break;
     }
 
-    return QAction::eventFilter(obj, event);
+    return QObject::eventFilter(obj, event);
 }

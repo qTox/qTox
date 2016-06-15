@@ -10,10 +10,19 @@ public:
     CapsLockIndicator(QObject *parent);
     ~CapsLockIndicator();
 
-protected:
-    bool eventFilter(QObject *obj, QEvent *event);
+private:
+    class EventHandler : QObject
+    {
+    public:
+        QVector<QAction*> actions;
+
+        EventHandler();
+        ~EventHandler();
+        void updateActions(const QObject* object = nullptr);
+        bool eventFilter(QObject *obj, QEvent *event);
+    };
 
 private:
-    void updateIndicator();
+    static EventHandler* eventHandler;
 };
 #endif // CAPSLOCKINDICATOR_H
