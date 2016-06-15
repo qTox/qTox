@@ -4,18 +4,16 @@
 #include <QAction>
 #include <QLineEdit>
 
-class CapsLockIndicator : QAction
+class CapsLockIndicator : public QAction
 {
 public:
-    CapsLockIndicator(QLineEdit *widget);
+    CapsLockIndicator(QObject *parent);
+    ~CapsLockIndicator();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
     void updateIndicator();
-
-private:
-    QLineEdit *parent;
 };
 #endif // CAPSLOCKINDICATOR_H

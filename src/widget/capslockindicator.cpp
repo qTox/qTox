@@ -4,14 +4,18 @@
 #endif
 #include <QCoreApplication>
 
-CapsLockIndicator::CapsLockIndicator(QLineEdit *parent) :
-    QAction(parent),
-    parent(parent)
+CapsLockIndicator::CapsLockIndicator(QObject* parent) :
+    QAction(parent)
 {
     setIcon(QIcon(":img/caps_lock.svg"));
     setToolTip(tr("CAPS-LOCK ENABLED"));
 
     QCoreApplication::instance()->installEventFilter(this);
+}
+
+CapsLockIndicator::~CapsLockIndicator()
+{
+    QCoreApplication::instance()->removeEventFilter(this);
 }
 
 void CapsLockIndicator::updateIndicator()
@@ -22,10 +26,7 @@ void CapsLockIndicator::updateIndicator()
     caps = Platform::capsLockEnabled();
 #endif
 
-    if (caps)
-        parent->addAction(this, QLineEdit::TrailingPosition);
-    else
-        parent->removeAction(this);
+    setVisible(caps);
 }
 
 bool CapsLockIndicator::eventFilter(QObject *obj, QEvent *event)

@@ -58,8 +58,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    capsIndicator = new CapsLockIndicator(ui->newPass);
-    confimCapsIndicator = new CapsLockIndicator(ui->newPassConfirm);
+    ui->newPass->addAction(new CapsLockIndicator(this), QLineEdit::TrailingPosition);
+    ui->newPassConfirm->addAction(new CapsLockIndicator(this), QLineEdit::TrailingPosition);
 
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
@@ -72,8 +72,6 @@ LoginScreen::~LoginScreen()
 {
     Translator::unregister(this);
     delete ui;
-    delete capsIndicator;
-    delete confimCapsIndicator;
 }
 
 void LoginScreen::reset()

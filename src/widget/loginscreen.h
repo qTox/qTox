@@ -67,8 +67,6 @@ private:
 private:
     Ui::LoginScreen *ui;
     QShortcut quitShortcut;
-    CapsLockIndicator *capsIndicator;
-    CapsLockIndicator *confimCapsIndicator;
 };
 
 #endif // LOGINSCREEN_H
