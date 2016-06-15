@@ -131,6 +131,7 @@ void ScreenshotGrabber::acceptRegion()
     if (rect.width() < 1 || rect.height() < 1)
         return;
 
+    emit regionChosen(rect);
     qDebug() << "Screenshot accepted, chosen region" << rect;
     emit screenshotTaken(this->screenGrab.copy(rect));
     this->window->close();

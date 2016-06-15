@@ -25,12 +25,14 @@
 #include "src/video/cameradevice.h"
 #include "src/video/videosurface.h"
 #include "src/widget/translator.h"
+#include "src/widget/tool/screenshotgrabber.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 
 #include <QDebug>
 #include <QShowEvent>
 #include <map>
+
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
@@ -149,6 +151,25 @@ void AVForm::onVideoModesIndexChanged(int index)
     }
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
+
+    if (CameraDevice::isScreen(devName) && !mode.height && !mode.width)
+    {
+        ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
+
+        auto onGrabbed = [screenshotGrabber, devName, this] (QRect region)
+        {
+            VideoMode mode(region);
+            mode.width = mode.width / 2 * 2;
+            mode.height = mode.height / 2 * 2;
+            camera.open(devName, mode);
+            delete screenshotGrabber;
+        };
+
+        connect(screenshotGrabber, &ScreenshotGrabber::regionChosen, this, onGrabbed, Qt::QueuedConnection);
+
+        screenshotGrabber->showGrabber();
+        return;
+    }
 
     Settings::getInstance().setCamVideoRes(mode.toRect());
     Settings::getInstance().setCamVideoFPS(mode.FPS);
@@ -282,11 +303,15 @@ void AVForm::fillScreenModesComboBox()
         QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
         qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y, mode.FPS, pixelFormat.toStdString().c_str());
 
-        QString name = QString("Screen %1").arg(i + 1);
+        QString name;
+        if (mode.width && mode.height)
+            name = QString("Screen %1").arg(i + 1);
+        else
+            name = tr("Select region");
+
         bodyUI->videoModescomboBox->addItem(name);
     }
 
-    bodyUI->videoModescomboBox->addItem(tr("Select region"));
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
 }
 
@@ -303,6 +328,8 @@ void AVForm::updateVideoModes(int curIndex)
     qDebug("available Modes:");
     if (CameraDevice::isScreen(devName))
     {
+        // Add extra video mode to region selection
+        allVideoModes.push_back(VideoMode());
         videoModes = allVideoModes;
         fillScreenModesComboBox();
     }
