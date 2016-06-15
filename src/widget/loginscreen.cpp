@@ -120,11 +120,6 @@ bool LoginScreen::event(QEvent* event)
         emit windowStateChanged(windowState());
         break;
 #endif
-    case QEvent::Show:
-    case QEvent::KeyRelease:
-        capsIndicator->updateIndicator();
-        confimCapsIndicator->updateIndicator();
-        break;
     default:
         break;
     }

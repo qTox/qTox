@@ -2,6 +2,7 @@
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/capslock.h"
 #endif
+#include <QCoreApplication>
 
 CapsLockIndicator::CapsLockIndicator(QLineEdit *parent) :
     QAction(parent),
@@ -9,6 +10,8 @@ CapsLockIndicator::CapsLockIndicator(QLineEdit *parent) :
 {
     setIcon(QIcon(":img/caps_lock.svg"));
     setToolTip(tr("CAPS-LOCK ENABLED"));
+
+    QCoreApplication::instance()->installEventFilter(this);
 }
 
 void CapsLockIndicator::updateIndicator()
@@ -23,4 +26,22 @@ void CapsLockIndicator::updateIndicator()
         parent->addAction(this, QLineEdit::TrailingPosition);
     else
         parent->removeAction(this);
+}
+
+bool CapsLockIndicator::eventFilter(QObject *obj, QEvent *event)
+{
+    switch (event->type())
+    {
+    case QEvent::Show:
+        if (obj == this)
+            updateIndicator();
+        break;
+    case QEvent::KeyRelease:
+        updateIndicator();
+        break;
+    default:
+        break;
+    }
+
+    return QAction::eventFilter(obj, event);
 }

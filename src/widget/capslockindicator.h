@@ -8,6 +8,11 @@ class CapsLockIndicator : QAction
 {
 public:
     CapsLockIndicator(QLineEdit *widget);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
+private:
     void updateIndicator();
 
 private:
