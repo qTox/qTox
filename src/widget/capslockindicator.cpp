@@ -36,6 +36,7 @@ bool CapsLockIndicator::eventFilter(QObject *obj, QEvent *event)
         if (obj == this)
             updateIndicator();
         break;
+    case QEvent::WindowActivate:
     case QEvent::KeyRelease:
         updateIndicator();
         break;
