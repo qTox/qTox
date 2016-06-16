@@ -4,29 +4,41 @@
 #endif
 #include <QCoreApplication>
 
+// It isn't needed for OSX, because it shows indicator by default
+#if defined(QTOX_PLATFORM_EXT) && !defined(Q_OS_OSX)
+#define ENABLE_CAPSLOCK_INDICATOR
+#endif
+
 CapsLockIndicator::EventHandler* CapsLockIndicator::eventHandler{nullptr};
 
 CapsLockIndicator::CapsLockIndicator(QObject* parent) :
     QAction(parent)
 {
+#ifndef ENABLE_CAPSLOCK_INDICATOR
+    setVisible(false);
+#else
     setIcon(QIcon(":img/caps_lock.svg"));
     setToolTip(tr("CAPS-LOCK ENABLED"));
 
     if (!eventHandler)
         eventHandler = new EventHandler();
     eventHandler->actions.append(this);
+#endif
 }
 
 CapsLockIndicator::~CapsLockIndicator()
 {
+#ifdef ENABLE_CAPSLOCK_INDICATOR
     eventHandler->actions.removeOne(this);
     if (eventHandler->actions.isEmpty())
     {
         delete eventHandler;
         eventHandler = nullptr;
     }
+#endif
 }
 
+#ifdef ENABLE_CAPSLOCK_INDICATOR
 CapsLockIndicator::EventHandler::EventHandler()
 {
     QCoreApplication::instance()->installEventFilter(this);
@@ -39,11 +51,7 @@ CapsLockIndicator::EventHandler::~EventHandler()
 
 void CapsLockIndicator::EventHandler::updateActions(const QObject* object)
 {
-    bool caps = false;
-    // It doesn't needed for OSX, because it shows indicator by default
-#if defined(QTOX_PLATFORM_EXT) && !defined(Q_OS_OSX)
-    caps = Platform::capsLockEnabled();
-#endif
+    bool caps = Platform::capsLockEnabled();
 
     for (QAction* action : actions)
     {
@@ -69,3 +77,4 @@ bool CapsLockIndicator::EventHandler::eventFilter(QObject *obj, QEvent *event)
 
     return QObject::eventFilter(obj, event);
 }
+#endif // ENABLE_CAPSLOCK_INDICATOR
