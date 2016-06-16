@@ -295,7 +295,7 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
     if (frame->fmt == VPX_IMG_FMT_NONE)
     {
         qWarning() << "Invalid frame";
-        delete frame;
+        vpx_img_free(frame);
         return;
     }
 
@@ -321,7 +321,7 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
     if (err == TOXAV_ERR_SEND_FRAME_SYNC)
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
 
-    delete frame;
+    vpx_img_free(frame);
 }
 
 void CoreAV::micMuteToggle(uint32_t callId)
