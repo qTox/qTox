@@ -2730,5 +2730,6 @@
         <file>emojione/3297.svg</file>
         <file>emojione/3299.svg</file>
         <file>emojione/emoticons.xml</file>
+        <file>ASCII+emojione/emoticons.xml</file>
     </qresource>
 </RCC>
