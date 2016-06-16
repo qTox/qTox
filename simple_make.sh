@@ -13,7 +13,8 @@ elif which pacman; then
         git base-devel qt5 openal libxss qrencode opus libvpx libsodium
 elif which dnf; then
     sudo dnf group install \
-        "Development Tools"
+        "Development Tools" \
+        "C Development Tools and Libraries"
     # pure Fedora doesn't have what it takes to compile qTox (ffmpeg)
     sudo dnf install \
         http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
@@ -21,7 +22,10 @@ elif which dnf; then
         git qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel \
         openal-soft-devel qt5-qttools-devel libXScrnSaver-devel \
         qrencode-devel opus-devel libvpx-devel glib2-devel gdk-pixbuf2-devel \
-        gtk2-devel libsodium-devel ffmpeg-devel sqlite sqlite-devel
+        gtk2-devel libsodium-devel ffmpeg-devel sqlite sqlite-devel libtool \
+        openssl-devel
+    # Fedora by default doesn't include libs in /usr/local/lib so add it
+    echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 elif which zypper; then
     sudo zypper in \
         git patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
