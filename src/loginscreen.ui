@@ -294,11 +294,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="loginPassword">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
+          <widget class="PasswordEdit" name="loginPassword"/>
          </item>
          <item>
           <widget class="QCheckBox" name="autoLoginCB">
