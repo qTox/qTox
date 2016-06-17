@@ -17,14 +17,11 @@ PasswordEdit::PasswordEdit(QWidget* parent) :
 {
     setEchoMode(QLineEdit::Password);
 
-#ifndef ENABLE_CAPSLOCK_INDICATOR
-    action->setVisible(false);
-#else
+#ifdef ENABLE_CAPSLOCK_INDICATOR
     action->setIcon(QIcon(":img/caps_lock.svg"));
     action->setToolTip(tr("CAPS-LOCK ENABLED"));
-#endif
-
     addAction(action, QLineEdit::TrailingPosition);
+#endif
 }
 
 PasswordEdit::~PasswordEdit()
