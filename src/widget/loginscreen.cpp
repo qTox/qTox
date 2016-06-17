@@ -58,9 +58,6 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    ui->newPass->addAction(new CapsLockIndicator(this), QLineEdit::TrailingPosition);
-    ui->newPassConfirm->addAction(new CapsLockIndicator(this), QLineEdit::TrailingPosition);
-
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 

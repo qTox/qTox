@@ -21,7 +21,6 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
-#include "capslockindicator.h"
 #include <QWidget>
 #include <QShortcut>
 #include <QToolButton>
