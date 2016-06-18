@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/smileys/Classic/">
+        <file>angry.png</file>
+        <file>cool.png</file>
+        <file>crying.png</file>
+        <file>emoticons.xml</file>
+        <file>happy.png</file>
+        <file>laugh_closed_eyes.png</file>
+        <file>laugh.png</file>
+        <file>plain.png</file>
+        <file>sad.png</file>
+        <file>scared.png</file>
+        <file>smile.png</file>
+        <file>stunned.png</file>
+        <file>tongue.png</file>
+        <file>uncertain.png</file>
+        <file>wink.png</file>
+    </qresource>
+</RCC>

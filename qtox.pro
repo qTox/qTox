@@ -234,7 +234,11 @@ macx {
 }
 
 RESOURCES += res.qrc \
-    smileys/smileys.qrc
+    smileys/smileys.qrc \
+    smileys/Basic/Basic.qrc \
+    smileys/Classic/Classic.qrc \
+    smileys/emojione/emojione.qrc \
+    smileys/Universe/Universe.qrc
 
 HEADERS  += \
     src/friend.h \
