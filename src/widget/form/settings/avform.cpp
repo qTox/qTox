@@ -149,7 +149,9 @@ void AVForm::onVideoModesIndexChanged(int index)
     }
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
-    Settings::getInstance().setCamVideoRes(QSize(mode.width, mode.height));
+
+    QRect rect(mode.x, mode.y, mode.width, mode.height);
+    Settings::getInstance().setCamVideoRes(rect);
     Settings::getInstance().setCamVideoFPS(mode.FPS);
     camera.open(devName, mode);
 }
@@ -158,12 +160,12 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
 {
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
-    idealModes[120] = {160,120,0,0};
-    idealModes[240] = {460,240,0,0};
-    idealModes[360] = {640,360,0,0};
-    idealModes[480] = {854,480,0,0};
-    idealModes[720] = {1280,720,0,0};
-    idealModes[1080] = {1920,1080,0,0};
+    idealModes[120] = VideoMode(160, 120);
+    idealModes[240] = VideoMode(460, 240);
+    idealModes[360] = VideoMode(640, 360);
+    idealModes[480] = VideoMode(854, 480);
+    idealModes[720] = VideoMode(1280, 720);
+    idealModes[1080] = VideoMode(1920, 1080);
 
     std::map<int, int> bestModeInds;
     for (int i = 0; i < allVideoModes.size(); ++i)
@@ -255,7 +257,7 @@ void AVForm::fillModesComboBox()
 
 int AVForm::searchPreferredIndex()
 {
-    QSize prefRes = Settings::getInstance().getCamVideoRes();
+    QRect prefRes = Settings::getInstance().getCamVideoRes();
     unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
 
     for (int i = 0; i < videoModes.size(); i++)

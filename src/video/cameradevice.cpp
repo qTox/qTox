@@ -73,7 +73,7 @@ CameraDevice* CameraDevice::open(QString devName, AVDictionary** options)
         format = iformat;
     }
 
-    if (avformat_open_input(&fctx, devName.toStdString().c_str(), format, options)<0)
+    if (avformat_open_input(&fctx, devName.toStdString().c_str(), format, options) < 0)
         goto out;
 
     // Fix avformat_find_stream_info hanging on garbage input
@@ -105,7 +105,7 @@ out:
 
 CameraDevice* CameraDevice::open(QString devName)
 {
-    VideoMode mode{0,0,0,0};
+    VideoMode mode = VideoMode();
     return open(devName, mode);
 }
 

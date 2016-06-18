@@ -190,8 +190,8 @@ public:
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
 
-    QSize getCamVideoRes() const;
-    void setCamVideoRes(QSize newValue);
+    QRect getCamVideoRes() const;
+    void setCamVideoRes(QRect newValue);
 
     unsigned short getCamVideoFPS() const;
     void setCamVideoFPS(unsigned short newValue);
@@ -434,7 +434,7 @@ private:
 
     // Video
     QString videoDev;
-    QSize camVideoRes;
+    QRect camVideoRes;
     unsigned short camVideoFPS;
 
     struct friendProp

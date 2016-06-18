@@ -242,7 +242,7 @@ void Settings::loadGlobal()
 
     s.beginGroup("Video");
         videoDev = s.value("videoDev", "").toString();
-        camVideoRes = s.value("camVideoRes",QSize()).toSize();
+        camVideoRes = s.value("camVideoRes", QRect()).toRect();
         camVideoFPS = s.value("camVideoFPS", 0).toUInt();
     s.endGroup();
 
@@ -1412,13 +1412,13 @@ void Settings::setOutVolume(int volume)
     outVolume = volume;
 }
 
-QSize Settings::getCamVideoRes() const
+QRect Settings::getCamVideoRes() const
 {
     QMutexLocker locker{&bigLock};
     return camVideoRes;
 }
 
-void Settings::setCamVideoRes(QSize newValue)
+void Settings::setCamVideoRes(QRect newValue)
 {
     QMutexLocker locker{&bigLock};
     camVideoRes = newValue;
