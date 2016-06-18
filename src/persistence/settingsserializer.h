@@ -34,7 +34,7 @@
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, QString password=QString());
+    SettingsSerializer(QString filePath, const QString &password=QString());
 
     static bool isSerializedFormat(QString filePath); ///< Check if the file is serialized settings. False on error.
 

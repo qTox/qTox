@@ -37,7 +37,7 @@
 
 QVector<QString> Profile::profiles;
 
-Profile::Profile(QString name, QString password, bool isNewProfile)
+Profile::Profile(QString name, const QString &password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
@@ -65,7 +65,7 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     QObject::connect(coreThread, &QThread::started, core, &Core::start);
 }
 
-Profile* Profile::loadProfile(QString name, QString password)
+Profile* Profile::loadProfile(QString name, const QString &password)
 {
     if (ProfileLocker::hasLock())
     {
@@ -594,7 +594,7 @@ void Profile::restartCore()
     QMetaObject::invokeMethod(core, "reset");
 }
 
-void Profile::setPassword(QString newPassword)
+void Profile::setPassword(const QString &newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
     QString oldPassword = password;

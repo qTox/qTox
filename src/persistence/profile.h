@@ -38,7 +38,7 @@ class Profile
 public:
     /// Locks and loads an existing profile and create the associate Core* instance
     /// Returns a nullptr on error, for example if the profile is already in use
-    static Profile* loadProfile(QString name, QString password = QString());
+    static Profile* loadProfile(QString name, const QString &password = QString());
     /// Creates a new profile and the associated Core* instance
     /// If password is not empty, the profile will be encrypted
     /// Returns a nullptr on error, for example if the profile already exists
@@ -54,7 +54,7 @@ public:
     bool isEncrypted() const; ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
     QString getPassword() const;
-    void setPassword(QString newPassword); ///< Changes the encryption password and re-saves everything with it
+    void setPassword(const QString &newPassword); ///< Changes the encryption password and re-saves everything with it
     const TOX_PASS_KEY& getPasskey() const;
 
     QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
@@ -93,7 +93,7 @@ public:
     static bool isEncrypted(QString name); ///< Returns false on error. Checks the actual file on disk.
 
 private:
-    Profile(QString name, QString password, bool newProfile);
+    Profile(QString name, const QString &password, bool newProfile);
     /// Lists all the files in the config dir with a given extension
     /// Pass the raw extension, e.g. "jpeg" not ".jpeg".
     static QVector<QString> getFilesByExt(QString extension);
