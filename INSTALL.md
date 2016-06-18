@@ -66,7 +66,10 @@ Easy qTox install is provided for variety of distributions:
 
 There are community builds for wide range of distrubutions:
 
-https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+Link | Distros | Architecture
+---- | ------- | ------------
+[OBS] | Arch, CentOS, Debian, Fedora, openSUSE, Ubuntu | x86, x86_64
+[Ubuntu PPA] | Ubuntu | arm64, armhf, ppc64el
 
 
 #### Generic
@@ -553,3 +556,8 @@ decided to choose another location, replace corresponding parts.
 ### Getting dependencies
 Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
 dependencies compile them and put to appropriate directories.
+
+
+
+[OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+[Ubuntu PPA]: https://launchpad.net/~abbat/+archive/ubuntu/tox
