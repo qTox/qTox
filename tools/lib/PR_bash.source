@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+#    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Source for bash functions used in `/{merge,test}-pr.sh`.
+#
+# Only to be sourced in those files.
+
+set -e -o pipefail
+
+is_pr_number() {
+    # check if supplied var is a number; if not exit
+    [[ "$@" =~ ^[[:digit:]]+$ ]]
+}
+
+exit_if_not_pr() {
+    is_pr_number $@ \
+    || (echo "Not a PR number!" \
+        && exit 1 )
+}
+
+# check if remote is present
+is_remote_present() {
+    git remote \
+        | grep $@ > /dev/null
+}
+
+# there's no tux3 remote, add it
+# if `https` is supplied, https version of repo is used
+add_remote() {
+    local remote_url="git@github.com:tux3/qTox.git"
+    local remote_name="upstream"
+
+    # change to https if needed
+    [[ "$@" == "https" ]] \
+        && local remote_url="https://github.com/tux3/qTox.git"
+
+    is_remote_present $remote_name \
+        || git remote add $remote_name "${remote_url}"
+}
+
+
+# print the message only if the merge was successful
+#
+# supply either `merge`, `test` or whatever else merge branch name you want
+after_merge_msg() {
+    echo ""
+    echo "PR #$PR was merged into «$@$PR» branch."
+    echo "To compare with master:"
+    echo ""
+    echo "  git diff master..$@$PR"
+    echo ""
+    if [[ "$@" == "merge" ]]
+    then
+        echo "To push that to master on github:"
+        echo ""
+        echo "  git checkout master && git merge --ff $@$PR && git push upstream master"
+        echo ""
+        echo "After pushing to master, delete branches:"
+        echo ""
+        echo "  git branch -d {$@,}$PR"
+        echo ""
+    fi
+    echo "To discard any changes:"
+    echo ""
+    echo "  git checkout master && git branch -D {$@,}$PR"
+    echo ""
+}
+
+# print the message only if some merge step failed
+after_merge_failure_msg() {
+    echo ""
+    echo "Merge failed."
+    echo ""
+    echo "You may want to remove not merged branches, if they exist:"
+    echo ""
+    echo "  git checkout master && git branch -D {$@,}$PR"
+    echo ""
+}
+
+
+get_sources() {
+    add_remote
+    git fetch $remote_name && \
+    git checkout master && \
+    git rebase $remote_name/master master && \
+    git fetch $remote_name pull/$PR/head:$PR && \
+    git checkout master -b $merge_branch$PR
+}
+
+# check whether to sign
+merge() {
+    local signed="$@"
+    git merge --no-ff $signed $PR -m "Merge pull request #$PR
+    $OPT_MSG
+    $(git shortlog master..$PR)"
+}

@@ -15,10 +15,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Script for merging pull requests. Works only when there are no merge
+# Script for testing pull requests. Works only when there are no merge
 # conflicts. Assumes that working dir is a qTox git repo.
 #
-# Requires SSH key that github accepts and GPG set to sign merge commits.
 
 # usage:
 #   ./$script $pr_number $optional_message
@@ -49,13 +48,13 @@ source_functions() {
 
 main() {
     local remote_name="upstream"
-    local merge_branch="merge"
+    local merge_branch="test"
     source_functions
     exit_if_not_pr $PR
-    add_remote
+    add_remote "https"
     get_sources
 
-    merge "-S" \
+    merge "--no-gpg-sign" \
         && after_merge_msg $merge_branch \
         || after_merge_failure_msg $merge_branch
 }
