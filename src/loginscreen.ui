@@ -130,11 +130,7 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="QLineEdit" name="newPass">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
+          <widget class="PasswordEdit" name="newPass"/>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_8">
@@ -147,11 +143,7 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="QLineEdit" name="newPassConfirm">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
+          <widget class="PasswordEdit" name="newPassConfirm"/>
          </item>
          <item row="7" column="0" colspan="2">
           <widget class="QProgressBar" name="passStrengthMeter">
@@ -302,11 +294,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="loginPassword">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
+          <widget class="PasswordEdit" name="loginPassword"/>
          </item>
          <item>
           <widget class="QCheckBox" name="autoLoginCB">
@@ -431,6 +419,13 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PasswordEdit</class>
+   <extends>QLineEdit</extends>
+   <header>src/widget/passwordedit.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../res.qrc"/>
  </resources>

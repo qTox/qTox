@@ -21,7 +21,6 @@
 #ifndef LOGINSCREEN_H
 #define LOGINSCREEN_H
 
-#include "capslockindicator.h"
 #include <QWidget>
 #include <QShortcut>
 #include <QToolButton>
@@ -67,8 +66,6 @@ private:
 private:
     Ui::LoginScreen *ui;
     QShortcut quitShortcut;
-    CapsLockIndicator *capsIndicator;
-    CapsLockIndicator *confimCapsIndicator;
 };
 
 #endif // LOGINSCREEN_H
