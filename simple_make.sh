@@ -48,10 +48,10 @@ pacman_install() {
 
 dnf_install() {
     local dnf_group_packages=(
-        'Development Tools'
-        'C Development Tools and Libraries'
+        '@"development-tools"'
+       
     )
-    sudo dnf group install "${dnf_group_packages[@]}"
+    sudo dnf install "${dnf_group_packages[@]}"
 
     # pure Fedora doesn't have what it takes to compile qTox (ffmpeg)
     local fedora_version=$(rpm -E %fedora)
@@ -82,6 +82,8 @@ dnf_install() {
         qt-doc
         sqlite
         sqlite-devel
+	sqlite-tcl
+	intltool
     )
     sudo dnf install "${dnf_packages[@]}"
 }
