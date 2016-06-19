@@ -41,6 +41,7 @@ CONFIG   += c++11
 CONFIG   += link_pkgconfig
 
 QMAKE_CXXFLAGS += -fno-exceptions
+QMAKE_RESOURCE_FLAGS += -compress 9 -threshold 0
 
 # Rules for creating/updating {ts|qm}-files
 include(translations/i18n.pri)
