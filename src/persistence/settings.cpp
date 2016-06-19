@@ -243,6 +243,8 @@ void Settings::loadGlobal()
     s.beginGroup("Video");
         videoDev = s.value("videoDev", "").toString();
         camVideoRes = s.value("camVideoRes", QRect()).toRect();
+        screenRegion = s.value("screenRegion", QRect()).toRect();
+        screenGrabbed = s.value("screenGrabbed", false).toBool();
         camVideoFPS = s.value("camVideoFPS", 0).toUInt();
     s.endGroup();
 
@@ -472,8 +474,10 @@ void Settings::saveGlobal()
 
     s.beginGroup("Video");
         s.setValue("videoDev", videoDev);
-        s.setValue("camVideoRes",camVideoRes);
-        s.setValue("camVideoFPS",camVideoFPS);
+        s.setValue("camVideoRes", camVideoRes);
+        s.setValue("camVideoFPS", camVideoFPS);
+        s.setValue("screenRegion", screenRegion);
+        s.setValue("screenGrabbed", screenGrabbed);
     s.endGroup();
 }
 
@@ -1410,6 +1414,28 @@ void Settings::setOutVolume(int volume)
 {
     QMutexLocker locker{&bigLock};
     outVolume = volume;
+}
+
+QRect Settings::getScreenRegion() const
+{
+    return screenRegion;
+}
+
+void Settings::setScreenRegion(const QRect &value)
+{
+    QMutexLocker locker{&bigLock};
+    screenRegion = value;
+}
+
+bool Settings::getScreenGrabbed() const
+{
+    return screenGrabbed;
+}
+
+void Settings::setScreenGrabbed(bool value)
+{
+    QMutexLocker locker{&bigLock};
+    screenGrabbed = value;
 }
 
 QRect Settings::getCamVideoRes() const

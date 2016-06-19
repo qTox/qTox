@@ -190,6 +190,12 @@ public:
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
 
+    QRect getScreenRegion() const;
+    void setScreenRegion(const QRect &value);
+
+    bool getScreenGrabbed() const;
+    void setScreenGrabbed(bool value);
+
     QRect getCamVideoRes() const;
     void setCamVideoRes(QRect newValue);
 
@@ -435,6 +441,8 @@ private:
     // Video
     QString videoDev;
     QRect camVideoRes;
+    QRect screenRegion;
+    bool screenGrabbed;
     unsigned short camVideoFPS;
 
     struct friendProp

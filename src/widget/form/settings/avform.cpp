@@ -40,8 +40,8 @@
 
 AVForm::AVForm() :
     GenericForm(QPixmap(":/img/settings/av.png"))
-    , subscribedToAudioIn{false}
-    , camVideoSurface{nullptr}
+    , subscribedToAudioIn(false)
+    , camVideoSurface(nullptr)
     , camera(CameraSource::getInstance())
 {
     bodyUI = new Ui::AVSettings;
@@ -136,6 +136,14 @@ void AVForm::showEvent(QShowEvent* event)
     GenericForm::showEvent(event);
 }
 
+void AVForm::open(const QString &devName, const VideoMode &mode)
+{
+    QRect rect = mode.toRect();
+    Settings::getInstance().setCamVideoRes(rect);
+    Settings::getInstance().setCamVideoFPS(mode.FPS);
+    camera.open(devName, mode);
+}
+
 void AVForm::onVideoModesIndexChanged(int index)
 {
     if (index < 0 || index >= videoModes.size())
@@ -152,8 +160,15 @@ void AVForm::onVideoModesIndexChanged(int index)
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
 
-    if (CameraDevice::isScreen(devName) && !mode.height && !mode.width)
+    if (CameraDevice::isScreen(devName) && mode == VideoMode())
     {
+        if (Settings::getInstance().getScreenGrabbed())
+        {
+            VideoMode mode(Settings::getInstance().getScreenRegion());
+            open(devName, mode);
+            return;
+        }
+
         ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
 
         auto onGrabbed = [screenshotGrabber, devName, this] (QRect region)
@@ -161,19 +176,21 @@ void AVForm::onVideoModesIndexChanged(int index)
             VideoMode mode(region);
             mode.width = mode.width / 2 * 2;
             mode.height = mode.height / 2 * 2;
-            camera.open(devName, mode);
+
+            Settings::getInstance().setScreenRegion(mode.toRect());
+            Settings::getInstance().setScreenGrabbed(true);
+
+            open(devName, mode);
             delete screenshotGrabber;
         };
 
         connect(screenshotGrabber, &ScreenshotGrabber::regionChosen, this, onGrabbed, Qt::QueuedConnection);
-
         screenshotGrabber->showGrabber();
         return;
     }
 
-    Settings::getInstance().setCamVideoRes(mode.toRect());
-    Settings::getInstance().setCamVideoFPS(mode.FPS);
-    camera.open(devName, mode);
+    Settings::getInstance().setScreenGrabbed(false);
+    open(devName, mode);
 }
 
 void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
@@ -326,7 +343,8 @@ void AVForm::updateVideoModes(int curIndex)
     QVector<VideoMode> allVideoModes = CameraDevice::getVideoModes(devName);
 
     qDebug("available Modes:");
-    if (CameraDevice::isScreen(devName))
+    bool isScreen = CameraDevice::isScreen(devName);
+    if (isScreen)
     {
         // Add extra video mode to region selection
         allVideoModes.push_back(VideoMode());
@@ -343,9 +361,20 @@ void AVForm::updateVideoModes(int curIndex)
     }
 
     int preferedIndex = searchPreferredIndex();
-    if (preferedIndex!= -1)
+    if (preferedIndex != -1)
     {
         bodyUI->videoModescomboBox->setCurrentIndex(preferedIndex);
+        return;
+    }
+
+    if (isScreen)
+    {
+        QRect rect = Settings::getInstance().getScreenRegion();
+        VideoMode mode(rect);
+
+        Settings::getInstance().setScreenGrabbed(true);
+        bodyUI->videoModescomboBox->setCurrentIndex(videoModes.size() - 1);
+        open(devName, mode);
         return;
     }
 
@@ -354,7 +383,7 @@ void AVForm::updateVideoModes(int curIndex)
     // and the best FPS for that resolution.
     // If we picked the lowest resolution, the quality would be awful
     // but if we picked the largest, FPS would be bad and thus quality bad too.
-    int mid = videoModes.size() / 2;
+    int mid = (videoModes.size() - 1) / 2;
     bodyUI->videoModescomboBox->setCurrentIndex(mid);
 }
 
@@ -366,15 +395,19 @@ void AVForm::onVideoDevChanged(int index)
         return;
     }
 
+    Settings::getInstance().setScreenGrabbed(false);
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
     bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
     bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
 
+    if (Settings::getInstance().getScreenGrabbed())
+        return;
+
     int modeIndex = bodyUI->videoModescomboBox->currentIndex();
     VideoMode mode = VideoMode();
-    if (0 < modeIndex || modeIndex < videoModes.size())
+    if (0 < modeIndex && modeIndex < videoModes.size())
         mode = videoModes[modeIndex];
 
     camera.open(dev, mode);

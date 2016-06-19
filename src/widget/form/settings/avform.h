@@ -77,6 +77,7 @@ private:
     bool eventFilter(QObject *o, QEvent *e) final override;
     void hideEvent(QHideEvent* event) final override;
     void showEvent(QShowEvent*event) final override;
+    void open(const QString &devName, const VideoMode &mode);
 
 private:
     Ui::AVSettings *bodyUI;
