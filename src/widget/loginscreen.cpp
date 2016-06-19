@@ -58,9 +58,6 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
-    capsIndicator = new CapsLockIndicator(ui->newPass);
-    confimCapsIndicator = new CapsLockIndicator(ui->newPassConfirm);
-
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
 
@@ -72,8 +69,6 @@ LoginScreen::~LoginScreen()
 {
     Translator::unregister(this);
     delete ui;
-    delete capsIndicator;
-    delete confimCapsIndicator;
 }
 
 void LoginScreen::reset()
@@ -120,11 +115,6 @@ bool LoginScreen::event(QEvent* event)
         emit windowStateChanged(windowState());
         break;
 #endif
-    case QEvent::Show:
-    case QEvent::KeyRelease:
-        capsIndicator->updateIndicator();
-        confimCapsIndicator->updateIndicator();
-        break;
     default:
         break;
     }
@@ -136,8 +126,6 @@ bool LoginScreen::event(QEvent* event)
 void LoginScreen::onNewProfilePageClicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
-    capsIndicator->updateSize();
-    confimCapsIndicator->updateSize();
 }
 
 void LoginScreen::onLoginPageClicked()
