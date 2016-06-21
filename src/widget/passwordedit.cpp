@@ -42,10 +42,11 @@ void PasswordEdit::registerHandler()
 void PasswordEdit::unregisterHandler()
 {
 #ifdef ENABLE_CAPSLOCK_INDICATOR
-    if (eventHandler && eventHandler->actions.contains(action))
+    int idx;
+
+    if (eventHandler && (idx = eventHandler->actions.indexOf(action)) >= 0)
     {
-        //TODO: future: use removeOne() when Qt 5.3 (Debian 8) support ends.
-        eventHandler->actions.remove(eventHandler->actions.indexOf(action));
+        eventHandler->actions.remove(idx);
         if (eventHandler->actions.isEmpty())
         {
             delete eventHandler;
