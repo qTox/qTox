@@ -132,9 +132,10 @@ void ScreenshotGrabber::acceptRegion()
         return;
 
     qDebug() << "Screenshot accepted, chosen region" << rect;
-    emit screenshotTaken(this->screenGrab.copy(rect));
+    QPixmap pixmap = this->screenGrab.copy(rect);
     this->window->close();
     restoreHiddenWindows();
+    emit screenshotTaken(pixmap);
 }
 
 void ScreenshotGrabber::setupScene()

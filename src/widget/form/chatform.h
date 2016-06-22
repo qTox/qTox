@@ -20,12 +20,14 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
-#include "genericchatform.h"
-#include "src/core/corestructs.h"
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
+
+#include "genericchatform.h"
+#include "src/core/corestructs.h"
+#include "src/widget/tool/screenshotgrabber.h"
 
 class Friend;
 class FileTransferInstance;
@@ -112,6 +114,7 @@ private:
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
+    ScreenshotGrabber* screenshotGrabber;
     QHash<uint, FileTransferInstance*> ftransWidgets;
     void startCounter();
     void stopCounter();
