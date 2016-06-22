@@ -28,6 +28,7 @@ extern "C" {
 #include <QtConcurrent/QtConcurrentRun>
 #include <memory>
 #include <functional>
+#include "src/persistence/settings.h"
 #include "camerasource.h"
 #include "cameradevice.h"
 #include "videoframe.h"
@@ -67,7 +68,15 @@ void CameraSource::open()
 
 void CameraSource::open(const QString& deviceName)
 {
-    open(deviceName, VideoMode());
+    bool isScreen = CameraDevice::isScreen(deviceName);
+    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
+    if (!isScreen)
+    {
+        mode = VideoMode(Settings::getInstance().getCamVideoRes());
+        mode.FPS = Settings::getInstance().getCamVideoFPS();
+    }
+
+    open(deviceName, mode);
 }
 
 void CameraSource::open(const QString& DeviceName, VideoMode Mode)

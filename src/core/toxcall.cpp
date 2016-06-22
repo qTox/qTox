@@ -102,6 +102,7 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     {
         videoSource = new CoreVideoSource;
         CameraSource& source = CameraSource::getInstance();
+
         if (!source.isOpen())
             source.open();
         source.subscribe();
