@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es_MX">
+<TS version="2.1" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -311,13 +311,6 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Restablecer configuración por defecto</translation>
-    </message>
-</context>
-<context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1105,19 +1098,19 @@ Hazlo sólo en caso de ser necesario.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto plano</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar caracteres de formato</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>No mostrar caracteres de formato</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproducir sonido en estado Ocupado</translation>
     </message>
 </context>
 <context>
@@ -1180,7 +1173,7 @@ Hazlo sólo en caso de ser necesario.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Citar texto seleccionado</translation>
     </message>
 </context>
 <context>
@@ -1630,6 +1623,13 @@ You may want to create one.</source>
     </message>
 </context>
 <context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>BLOQ MAYÚS ACTIVO</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
@@ -1876,12 +1876,12 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Cambiar contraseña</translation>
+        <translation>Cambiar contraseña</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Establecer contraseña del perfil</translation>
     </message>
 </context>
 <context>
@@ -2419,7 +2419,7 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar</translation>
     </message>
 </context>
 </TS>
