@@ -39,6 +39,7 @@
 #include <QDebug>
 
 static QStringList locales = {"ar",
+                              "be",
                               "bg",
                               "cs",
                               "da",
@@ -67,6 +68,7 @@ static QStringList locales = {"ar",
                               "uk",
                               "zh"};
 static QStringList langs = {"Arabic",
+                            "Беларуская",
                             "Български",
                             "Čeština",
                             "Dansk",

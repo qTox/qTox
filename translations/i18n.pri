@@ -2,6 +2,7 @@
 
 TRANSLATIONS = \
     translations/ar.ts \
+    translations/be.ts \
     translations/bg.ts \
     translations/cs.ts \
     translations/da.ts \

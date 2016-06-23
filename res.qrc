@@ -42,6 +42,8 @@
         <file>img/taskbar/light/taskbar_offline.svg</file>
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
+        <file>translations/ar.qm</file>
+        <file>translations/be.qm</file>
         <file>translations/bg.qm</file>
         <file>translations/cs.qm</file>
         <file>translations/da.qm</file>
@@ -67,7 +69,6 @@
         <file>translations/sv.qm</file>
         <file>translations/tr.qm</file>
         <file>translations/uk.qm</file>
-        <file>translations/ar.qm</file>
         <file>translations/zh.qm</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>
         <file>ui/callButton/callButton.css</file>
