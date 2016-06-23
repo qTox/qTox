@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>None</source>
@@ -68,11 +68,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlasitost</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Znovu načíst zařízení</translation>
     </message>
 </context>
 <context>
@@ -91,7 +91,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Psaní užitečných chybových hlášení</translation>
     </message>
     <message>
         <source>report it</source>
@@ -104,7 +104,7 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox stahuje aktualizaci %1</translation>
     </message>
 </context>
 <context>
@@ -131,11 +131,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>toxcore verze: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt verze: $QTVERSION</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -147,7 +147,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Stahování aktualizace: %p%</translation>
     </message>
 </context>
 <context>
@@ -158,7 +158,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>uživatelské jméno</translation>
     </message>
     <message>
         <source>status message</source>
@@ -166,7 +166,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Veřejný klíč:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -178,7 +178,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí adresář pro ukládání souborů:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -186,7 +186,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky přijímat soubory</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -194,7 +194,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Poznámky</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -265,7 +265,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný formát Tox ID</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -309,13 +309,6 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Návrat k výchozímu nastavení</translation>
-    </message>
-</context>
-<context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -411,19 +404,19 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze otevřít</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished"></translation>
+        <translation>Špatný nápad</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Volání %1</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 píše</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -466,7 +459,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít vše v novém okně</translation>
     </message>
 </context>
 <context>
@@ -603,15 +596,15 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pozastaveno</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít soubor</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít adresář souboru</translation>
     </message>
 </context>
 <context>
@@ -627,7 +620,7 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Přenesené soubory</translation>
     </message>
 </context>
 <context>
@@ -770,11 +763,11 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvat do skupiny &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit podrobnosti</translation>
     </message>
 </context>
 <context>
@@ -1065,7 +1058,7 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Výchozí adresář pro ukládání souborů:</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -1074,7 +1067,7 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otevřít okno</translation>
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
@@ -1099,11 +1092,11 @@ se opět připojí.</translation>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Prostý text</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
@@ -1154,7 +1147,7 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahájit audiohovor</translation>
     </message>
     <message>
         <source>Accept audio call</source>
@@ -1189,11 +1182,11 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit zprávy</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrýt zprávy</translation>
     </message>
 </context>
 <context>
@@ -1253,7 +1246,7 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit novou skupinu</translation>
     </message>
     <message>
         <source>Group invites</source>
@@ -1261,7 +1254,7 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Připojit se</translation>
     </message>
     <message>
         <source>Decline</source>
@@ -1397,7 +1390,7 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelské jméno</translation>
     </message>
     <message>
         <source>Biography</source>
@@ -1405,7 +1398,7 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
@@ -1413,11 +1406,11 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Registrace</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše heslo</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1511,7 +1504,7 @@ Pokud narazíte na tento problém, prosím zašlete jej.</translation>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit Profil</translation>
     </message>
     <message>
         <source>Load automatically</source>
@@ -1527,11 +1520,11 @@ Pokud narazíte na tento problém, prosím zašlete jej.</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst Profil</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslem chráněné profily nelze načíst automaticky.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
@@ -1627,6 +1620,13 @@ You may want to create one.</source>
     </message>
 </context>
 <context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
@@ -1634,7 +1634,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrzení</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
@@ -1813,11 +1813,11 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuální profil: </translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -1844,15 +1844,15 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizace (zpracování)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotovo!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Účet %1@%2 byl úspěšně aktualizován</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
@@ -1860,11 +1860,11 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme chyba</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Registrace</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1886,7 +1886,7 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Importovat profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -2002,11 +2002,11 @@ Bude nainstalována po restartu qTox.</translation>
     </message>
     <message>
         <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze %1, %2</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
+        <translation>Server nepodporuje Toxme</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2026,7 +2026,7 @@ Bude nainstalována po restartu qTox.</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesprávné heslo</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
@@ -2042,7 +2042,7 @@ Bude nainstalována po restartu qTox.</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento uživatel neexistuje</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2060,11 +2060,11 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>Plocha</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Problém s připojením HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
@@ -2087,7 +2087,7 @@ Bude nainstalována po restartu qTox.</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit</translation>
     </message>
 </context>
 <context>
@@ -2413,12 +2413,12 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Konec</translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit</translation>
     </message>
 </context>
 </TS>
