@@ -17,8 +17,8 @@ running on all major platforms.**
 ----
 
 * **Windows**:
-  - [**64 bit installer**](https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe)
-  - [**32 bit installer**](https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe)
+  - [**64 bit installer**] - [*signature*](https://qtox-win.pkg.tox.chat/qtox/win64/setup-qtox.exe.asc)
+  - [**32 bit installer**] - [*signature*](https://qtox-win.pkg.tox.chat/qtox/win32/setup-qtox.exe.asc)
   - [**64 bit portable**](https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip)
   - [**32 bit portable**](https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip)
 * **Linux**:
@@ -84,3 +84,6 @@ Currently they are:
 
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
+
+[**64 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[**32 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
