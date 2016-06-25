@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>465</width>
-    <height>406</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -164,26 +164,56 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="5" column="0" colspan="2">
+      <widget class="QCheckBox" name="autoacceptfile">
+       <property name="text">
+        <string>Auto accept file</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Default directory to save files:</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="8" column="1">
       <widget class="QPushButton" name="selectSaveDir">
        <property name="text">
         <string>Auto accept for this contact is disabled</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QCheckBox" name="autoaccept">
-       <property name="text">
-        <string>Auto accept files</string>
-       </property>
-      </widget>
+     <item row="3" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Auto accept call :</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="autoacceptcall">
+         <item>
+          <property name="text">
+           <string>Manual</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Audio</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Audio + Video</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>

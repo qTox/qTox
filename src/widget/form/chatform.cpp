@@ -280,39 +280,50 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
         return;
 
     qDebug() << "onAvInvite";
-
     disableCallButtons();
-    if (video)
-    {
-        callConfirm = new CallConfirmWidget(videoButton, *f);
-        videoButton->setObjectName("yellow");
-        videoButton->setToolTip(tr("Accept video call"));
-        videoButton->style()->polish(videoButton);
-        connect(videoButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
-    }
-    else
-    {
-        callConfirm = new CallConfirmWidget(callButton, *f);
-        callButton->setObjectName("yellow");
-        callButton->setToolTip(tr("Accept audio call"));
-        callButton->style()->polish(callButton);
-        connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
-    }
-
-    if (f->getFriendWidget()->chatFormIsSet(false))
-        callConfirm->show();
-
-    connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
-    connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
-
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()),
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
+    /* AutoAcceptCall is set for this friend */
+    if ((video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Video)) ||
+       (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Audio)))
+    {
+        uint32_t friendId;
+        friendId = f->getFriendID();
+        qDebug() << "automatic call answer";
+        QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection, Q_ARG(uint32_t, friendId));
+        onAvStart(friendId,video);
+    }
+    else
+    {
+        if (video)
+        {
+            callConfirm = new CallConfirmWidget(videoButton, *f);
+            videoButton->setObjectName("yellow");
+            videoButton->setToolTip(tr("Accept video call"));
+            videoButton->style()->polish(videoButton);
+            connect(videoButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
+        }
+        else
+        {
+            callConfirm = new CallConfirmWidget(callButton, *f);
+            callButton->setObjectName("yellow");
+            callButton->setToolTip(tr("Accept audio call"));
+            callButton->style()->polish(callButton);
+            connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
+        }
 
-    Widget::getInstance()->newFriendMessageAlert(FriendId, false);
-    Audio& audio = Audio::getInstance();
-    audio.startLoop();
-    audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
+        if (f->getFriendWidget()->chatFormIsSet(false))
+            callConfirm->show();
+
+        connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
+        connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
+
+        Widget::getInstance()->newFriendMessageAlert(FriendId, false);
+        Audio& audio = Audio::getInstance();
+        audio.startLoop();
+        audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
+    }
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)
