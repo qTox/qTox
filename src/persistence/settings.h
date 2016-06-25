@@ -220,6 +220,9 @@ public:
     QString getAutoAcceptDir(const ToxId& id) const;
     void setAutoAcceptDir(const ToxId& id, const QString& dir);
 
+    bool getAutoAcceptCall(const ToxId& id) const;
+    void setAutoAcceptCall(const ToxId& id, bool accept);
+
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
 
@@ -445,6 +448,7 @@ private:
         QString note;
         int circleID = -1;
         QDate activity = QDate();
+        bool autoAcceptCall;
     };
 
     struct circleProp
