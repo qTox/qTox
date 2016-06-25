@@ -24,7 +24,8 @@ private:
 
 private slots:
     void onAcceptedClicked();
-    void onAutoAcceptClicked();
+    void onAutoAcceptDirClicked();
+    void onAutoAcceptCallClicked();
     void onSelectDirClicked();
     void onRemoveHistoryClicked();
 };
