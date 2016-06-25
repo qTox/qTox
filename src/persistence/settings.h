@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <QDate>
 #include <QNetworkProxy>
+#include <QFlags>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -131,6 +132,14 @@ class Settings : public QObject
 public:
     enum class ProxyType {ptNone = 0, ptSOCKS5 = 1, ptHTTP = 2};
     enum class StyleType {NONE = 0, WITH_CHARS = 1, WITHOUT_CHARS = 2};
+    enum class AutoAcceptCall
+        {
+            None     = 0x00,
+            Audio    = 0x01,
+            Video    = 0x02,
+            AV       = Audio | Video
+        };
+        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
 
 public:
     static Settings& getInstance();
@@ -192,6 +201,7 @@ signals:
     void globalAutoAcceptDirChanged(const QString& path);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
+    void autoAcceptCallChanged(const ToxId& id, AutoAcceptCallFlags accept);
 
     // GUI
     void autoLoginChanged(bool enabled);
@@ -396,6 +406,9 @@ public:
 
     QString getAutoAcceptDir(const ToxId& id) const;
     void setAutoAcceptDir(const ToxId& id, const QString& dir);
+
+    AutoAcceptCallFlags getAutoAcceptCall(const ToxId& id) const;
+    void setAutoAcceptCall(const ToxId& id, AutoAcceptCallFlags accept);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -620,6 +633,7 @@ private:
         QString note;
         int circleID = -1;
         QDate activity = QDate();
+        AutoAcceptCallFlags autoAcceptCall;
     };
 
     struct circleProp
@@ -640,4 +654,5 @@ private:
     static QThread* settingsThread;
 };
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(Settings::AutoAcceptCallFlags)
 #endif // SETTINGS_HPP
