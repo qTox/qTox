@@ -187,6 +187,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
     IPin *pin;
     if (devFilter->EnumPins(&pins) != S_OK)
         return modes;
+
     while (pins->Next(1, &pin, nullptr) == S_OK)
     {
         IKsPropertySet *p = nullptr;
@@ -214,12 +215,14 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
                 goto next;
             if (config->GetNumberOfCapabilities(&n, &size) != S_OK)
                 goto pinend;
+
             assert(size == sizeof(VIDEO_STREAM_CONFIG_CAPS));
             vcaps = new VIDEO_STREAM_CONFIG_CAPS;
 
-            for (int i=0; i<n; ++i)
+            for (int i = 0; i < n; ++i)
             {
                 AM_MEDIA_TYPE* type = nullptr;
+                VideoMode mode;
                 if (config->GetStreamCaps(i, &type, (BYTE*)vcaps) != S_OK)
                     goto nextformat;
 
@@ -227,7 +230,6 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
                     && !IsEqualGUID(type->formattype, FORMAT_VideoInfo2))
                     goto nextformat;
 
-                VideoMode mode;
                 mode.width = vcaps->MaxOutputSize.cx;
                 mode.height = vcaps->MaxOutputSize.cy;
                 mode.FPS = 1e7 / vcaps->MinFrameInterval;
