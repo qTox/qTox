@@ -26,6 +26,7 @@ ChatTextEdit::ChatTextEdit(QWidget *parent) :
 {
     retranslateUi();
     setAcceptRichText(false);
+    setAcceptDrops(false);
 
     Translator::registerHandler(std::bind(&ChatTextEdit::retranslateUi, this), this);
 }
