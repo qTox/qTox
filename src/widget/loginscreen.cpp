@@ -235,6 +235,7 @@ void LoginScreen::onLogin()
         {
             QMessageBox::critical(this, tr("Couldn't load this profile"),
                                   tr("Wrong password."));
+            ui->loginPassword->setFocus();
             ui->loginPassword->selectAll();
             return;
         }
