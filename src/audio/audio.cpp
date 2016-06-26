@@ -320,7 +320,7 @@ bool Audio::autoInitOutput()
 
 bool Audio::initInput(const QString& deviceName)
 {
-    if (deviceName.toLower() == QStringLiteral("none"))
+    if (!Settings::getInstance().getAudioInDevEnabled())
         return false;
 
     qDebug() << "Opening audio input" << deviceName;
@@ -363,7 +363,7 @@ bool Audio::initOutput(const QString& deviceName)
     outSources.clear();
 
     outputInitialized = false;
-    if (deviceName.toLower() == QStringLiteral("none"))
+    if (!Settings::getInstance().getAudioOutDevEnabled())
         return false;
 
     qDebug() << "Opening audio output" << deviceName;

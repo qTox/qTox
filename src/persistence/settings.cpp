@@ -242,7 +242,9 @@ void Settings::loadGlobal()
 
     s.beginGroup("Audio");
         inDev = s.value("inDev", "").toString();
+        audioInDevEnabled = s.value("audioInDevEnabled", true).toBool();
         outDev = s.value("outDev", "").toString();
+        audioOutDevEnabled = s.value("audioOutDevEnabled", true).toBool();
         audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
     s.endGroup();
@@ -478,7 +480,9 @@ void Settings::saveGlobal()
 
     s.beginGroup("Audio");
         s.setValue("inDev", inDev);
+        s.setValue("audioInDevEnabled", audioInDevEnabled);
         s.setValue("outDev", outDev);
+        s.setValue("audioOutDevEnabled", audioOutDevEnabled);
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
     s.endGroup();
@@ -1389,6 +1393,18 @@ void Settings::setInDev(const QString& deviceSpecifier)
     inDev = deviceSpecifier;
 }
 
+bool Settings::getAudioInDevEnabled() const
+{
+    QMutexLocker locker(&bigLock);
+    return audioInDevEnabled;
+}
+
+void Settings::setAudioInDevEnabled(bool enabled)
+{
+    QMutexLocker locker(&bigLock);
+    audioInDevEnabled = enabled;
+}
+
 qreal Settings::getAudioInGain() const
 {
     QMutexLocker locker{&bigLock};
@@ -1423,6 +1439,18 @@ void Settings::setOutDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
     outDev = deviceSpecifier;
+}
+
+bool Settings::getAudioOutDevEnabled() const
+{
+    QMutexLocker locker(&bigLock);
+    return audioOutDevEnabled;
+}
+
+void Settings::setAudioOutDevEnabled(bool enabled)
+{
+    QMutexLocker locker(&bigLock);
+    audioOutDevEnabled = enabled;
 }
 
 int Settings::getOutVolume() const
