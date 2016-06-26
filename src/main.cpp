@@ -167,9 +167,13 @@ int main(int argc, char *argv[])
     if (QFileInfo(logfile).size() > 1000000)
     {
         qDebug() << "Log file over 1MB, rotating...";
-		
+
+        // close old logfile (need for windows)
+        if(mainLogFilePtr)
+            fclose(mainLogFilePtr);
+
         QDir dir (logFileDir);
-		
+
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
             qDebug() << "Removed old log successfully";
@@ -178,10 +182,6 @@ int main(int argc, char *argv[])
 
         if(!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
             qCritical() << "Unable to move logs";
-
-        // close old logfile
-        if(mainLogFilePtr)
-            fclose(mainLogFilePtr);
 
         // open a new logfile
         mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
