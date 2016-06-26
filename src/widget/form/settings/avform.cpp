@@ -345,36 +345,42 @@ void AVForm::getVideoDevices()
 void AVForm::getAudioInDevices()
 {
     QStringList deviceNames;
-    deviceNames << tr("None") << Audio::inDeviceNames();
+    deviceNames << tr("Disabled") << Audio::inDeviceNames();
 
     bodyUI->inDevCombobox->blockSignals(true);
     bodyUI->inDevCombobox->clear();
     bodyUI->inDevCombobox->addItems(deviceNames);
     bodyUI->inDevCombobox->blockSignals(false);
 
-    int idx = deviceNames.indexOf(Settings::getInstance().getInDev());
-    bodyUI->inDevCombobox->setCurrentIndex(idx > 0 ? idx : 0);
+    int idx = Settings::getInstance().getAudioInDevEnabled()
+              ? deviceNames.indexOf(Settings::getInstance().getInDev())
+              : 0;
+    bodyUI->inDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
 }
 
 void AVForm::getAudioOutDevices()
 {
     QStringList deviceNames;
-    deviceNames << tr("None") << Audio::outDeviceNames();
+    deviceNames << tr("Disabled") << Audio::outDeviceNames();
 
     bodyUI->outDevCombobox->blockSignals(true);
     bodyUI->outDevCombobox->clear();
     bodyUI->outDevCombobox->addItems(deviceNames);
     bodyUI->outDevCombobox->blockSignals(false);
 
-    int idx = deviceNames.indexOf(Settings::getInstance().getOutDev());
-    bodyUI->outDevCombobox->setCurrentIndex(idx > 0 ? idx : 0);
+    int idx = Settings::getInstance().getAudioOutDevEnabled()
+              ? deviceNames.indexOf(Settings::getInstance().getOutDev())
+              : 0;
+    bodyUI->outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
 }
 
 void AVForm::onAudioInDevChanged(int deviceIndex)
 {
-    QString deviceName = deviceIndex > 0
-                         ? bodyUI->inDevCombobox->itemText(deviceIndex)
-                         : QStringLiteral("none");
+    Settings::getInstance().setAudioInDevEnabled(deviceIndex != 0);
+
+    QString deviceName;
+    if (deviceIndex > 0)
+        deviceName = bodyUI->inDevCombobox->itemText(deviceIndex);
 
     Settings::getInstance().setInDev(deviceName);
 
@@ -386,9 +392,11 @@ void AVForm::onAudioInDevChanged(int deviceIndex)
 
 void AVForm::onAudioOutDevChanged(int deviceIndex)
 {
-    QString deviceName = deviceIndex > 0
-                         ? bodyUI->outDevCombobox->itemText(deviceIndex)
-                         : QStringLiteral("none");
+    Settings::getInstance().setAudioOutDevEnabled(deviceIndex != 0);
+
+    QString deviceName;
+    if (deviceIndex > 0)
+        deviceName = bodyUI->outDevCombobox->itemText(deviceIndex);
 
     Settings::getInstance().setOutDev(deviceName);
 
