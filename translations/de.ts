@@ -318,13 +318,6 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1112,10 +1105,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Erneut verbinden</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Text-Formatierung (Markdown)</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Klartext</translation>
     </message>
@@ -1129,6 +1118,22 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1192,7 +1197,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählten Text zitieren</translation>
     </message>
 </context>
 <context>
@@ -1641,6 +1646,13 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
             <numerusform>Ungelesene Nachricht</numerusform>
             <numerusform>Ungelesene Nachrichten</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
