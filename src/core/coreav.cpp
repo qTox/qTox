@@ -134,7 +134,7 @@ bool CoreAV::answerCall(uint32_t friendNum)
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
-
+    //*/
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
