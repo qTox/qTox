@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>465</width>
-    <height>406</height>
+    <height>432</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -164,28 +164,28 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Default directory to save files:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="QPushButton" name="selectSaveDir">
        <property name="text">
         <string>Auto accept for this contact is disabled</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0" colspan="2">
+     <item row="3" column="0" colspan="2">
       <widget class="QCheckBox" name="autoacceptfile">
        <property name="text">
         <string>Auto accept file</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0" colspan="2">
+     <item row="2" column="0">
       <widget class="QCheckBox" name="autoacceptcall">
        <property name="text">
         <string>Auto accept call</string>
