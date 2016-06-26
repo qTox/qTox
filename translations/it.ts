@@ -68,7 +68,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume microfono</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -91,7 +91,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Come riportare un bug correttamente</translation>
     </message>
     <message>
         <source>report it</source>
@@ -104,7 +104,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>%1 è la versione dell&apos;aggiornamento</translation>
+        <translation>qTox sta scaricando l&apos;aggiornamento %1</translation>
     </message>
 </context>
 <context>
@@ -147,7 +147,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Scaricamento aggiornamento: %p%</translation>
     </message>
 </context>
 <context>
@@ -237,8 +237,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Ciao, sono %1.
-Permettimi di aggiungerti alla mia lista contatti.</translation>
+        <translation>Ciao, sono %1! Posso aggiungerti alla mia lista contatti?</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -262,7 +261,8 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox ha bisogno di utilizzare i DNS Tox, ma non può farlo attraverso un proxy.
+    Ignorare il proxy e la connessione a Internet direttamente?</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -310,13 +310,6 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Reimposta impostazioni di default</translation>
-    </message>
-</context>
-<context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -508,7 +501,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
-        <translation>Nessuna cronologia chat criptata trovata, o è stata corrotta.
+        <translation>Nessuna cronologia chat criptata trovata, o è corrotta.
 La cronologia sarà disabilitata!</translation>
     </message>
     <message>
@@ -537,7 +530,7 @@ Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation>Modulo</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -1091,30 +1084,42 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
+        <translation>La nuova preferenza non può caricare fino a quando si riavvia qTox.</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona preferenza.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo in chiaro</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra caratteri di formattazione</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Non mostrare i caratteri di formattazione</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation>Riproduci suono quando sei occupato</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1178,7 +1183,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Quota testo selezionato</translation>
     </message>
 </context>
 <context>
@@ -1245,7 +1250,7 @@ will be sent to them when they appear online to you.</source>
     <name>GroupInviteForm</name>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviato da &lt;b&gt;%1&lt;/b&gt; su %2.</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -1398,7 +1403,7 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registra Toxme</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1524,7 +1529,7 @@ Se incontri questo errore, riportalo agli sviluppatori.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
@@ -1538,7 +1543,9 @@ Se incontri questo errore, riportalo agli sviluppatori.</translation>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è stato selezionato nessuno profilo.
+
+È possibile crearne uno nuovo.</translation>
     </message>
     <message>
         <source>Profile already in use. Close other clients.</source>
@@ -1590,7 +1597,7 @@ You may want to create one.</source>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vedi</translation>
     </message>
     <message>
         <source>Window</source>
@@ -1621,9 +1628,16 @@ You may want to create one.</source>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Messaggi non letti</numerusform>
+            <numerusform>Messaggi non letti</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished">CAPS-LOCK ABILITATO</translation>
     </message>
 </context>
 <context>
@@ -1634,7 +1648,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Conferma</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
@@ -1856,11 +1870,11 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiunto con successo %1@% 2 al database. Salva la tua password</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore Toxme</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1901,7 +1915,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
+        <translation>Attenzione: Hai scelto un file che non contiene un profilo Tox; Questo file verrà ignorato.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1924,7 +1938,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Attenzione: hai scelto un file che non contiente un profilo Tox.\nQuesto file verrà ignorato.</translation>
+        <translation>Attenzione: hai scelto un file che non contiene un profilo Tox; Questo file verrà ignorato.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1994,8 +2008,7 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Ciao, sono %1.
-Permettimi di aggiungerti alla mia lista contatti.</translation>
+        <translation>Ciao, sono %1! Posso aggiungerti alla mia lista contatti?</translation>
     </message>
     <message>
         <source>Resizing</source>
@@ -2016,7 +2029,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Stai generando troppe richieste. Aspetta un&apos;ora e prova di nuovo</translation>
     </message>
     <message>
         <source>This name is already in use</source>
@@ -2061,7 +2074,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>Scrivania</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
@@ -2069,7 +2082,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore interno di ToxMe</translation>
     </message>
 </context>
 <context>
@@ -2096,7 +2109,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fare clic e trascinare per selezionare una regione. Premere &lt;b&gt; Spazio&lt;/ b&gt; per nascondere/mostrare la finestra qTox, o &lt;b&gt;Escape&lt;/ b&gt; per annullare.</translation>
     </message>
     <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
@@ -2216,7 +2229,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Impossibile avviare Toxcore con le tue impostazione proxy.\nqTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
+        <translation>Impossibile avviare Toxcore con le tue impostazione proxy. qTox non può funzionare correttamente, per favore modifica le impostazioni e riavvia il programma.</translation>
     </message>
     <message>
         <source>Add friend</source>
@@ -2323,7 +2336,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
+        <translation>toxcore non è stato in grado di avviarsi, l&apos;applicazione si chiuderà dopo aver chiuso questo messaggio.</translation>
     </message>
     <message>
         <source>Your name</source>
@@ -2353,8 +2366,8 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n Nuove Richieste di Amicizia</numerusform>
+            <numerusform>%n Nuove Richieste di Amicizia</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -2404,7 +2417,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation>Aggiungi contatto</translation>
+        <translation>Aggiungi contatto...</translation>
     </message>
     <message>
         <source>Next Conversation</source>
@@ -2417,7 +2430,7 @@ Permettimi di aggiungerti alla mia lista contatti.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra</translation>
     </message>
 </context>
 </TS>
