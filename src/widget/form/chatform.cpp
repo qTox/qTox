@@ -279,15 +279,15 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()),
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
+    /* AutoAcceptCall is set for this friend */
     if(Settings::getInstance().getAutoAcceptCall(f->getToxId()))
     {
         uint32_t friendId;
         friendId = f->getFriendID();
         qDebug() << "automatic call answer";
-
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
                                   Q_ARG(uint32_t, friendId));
-        onAvStart(f->getFriendID(),video);
+        onAvStart(friendId,video);
 
     }
     else
