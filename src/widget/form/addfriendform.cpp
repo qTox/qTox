@@ -113,6 +113,11 @@ void AddFriendForm::show(ContentLayout* contentLayout)
     head->show();
     setIdFromClipboard();
     toxId.setFocus();
+
+    // Fix #3421
+    // Needed to update tab after opening window
+    int index = tabWidget->currentIndex();
+    onCurrentChanged(index);
 }
 
 QString AddFriendForm::getMessage() const
