@@ -62,7 +62,7 @@ fi
 
 if [ ! -f "bin/OpenAL32.dll" ]; then
     pushd openal-soft-1.16.0/build
-    cmake -G "MSYS Makefiles" -DQT_QMAKE_EXECUTABLE=NOTFOUND -DCMAKE_BUILD_TYPE=Release -DALSOFT_REQUIRE_DSOUND=NO -DCMAKE_INSTALL_PREFIX=$QTOX_DIR/libs ..
+    CFLAGS="-D_TIMESPEC_DEFINED" cmake -G "MSYS Makefiles" -DQT_QMAKE_EXECUTABLE=NOTFOUND -DCMAKE_BUILD_TYPE=Release -DALSOFT_REQUIRE_DSOUND=NO -DCMAKE_INSTALL_PREFIX=$QTOX_DIR/libs ..
     make
     make install
     popd
