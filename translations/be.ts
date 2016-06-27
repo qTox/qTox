@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>%1p</source>
-        <translation type="unfinished"></translation>
+        <translation>%1p</translation>
     </message>
     <message>
         <source>Default resolution</source>
@@ -17,14 +17,14 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Адсутнічае</translation>
     </message>
 </context>
 <context>
     <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўдыё налады</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -44,11 +44,11 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Гучнасць</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налады відэа</translation>
     </message>
     <message>
         <source>Video device</source>
@@ -75,11 +75,11 @@ which may lead to problems with video calls.</source>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Аб праграме</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Перазапусціце qTox для ўстаноўкі версіі %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
@@ -109,7 +109,7 @@ which may lead to problems with video calls.</source>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
@@ -121,7 +121,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліцэнзія</translation>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
@@ -133,7 +133,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўтары</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -145,18 +145,18 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Дыялог</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Імя карыстальніка</translation>
     </message>
     <message>
         <source>status message</source>
@@ -164,7 +164,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыты ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -797,7 +797,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>None</source>
         <translatorcomment>Grundstil</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адсутнічае</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1076,7 +1076,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адсутнічае</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -1089,10 +1089,6 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text formatting (Markdown):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1109,6 +1105,22 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2000,7 +2012,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Адсутнічае</translation>
     </message>
     <message>
         <source>Desktop</source>
