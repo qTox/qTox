@@ -87,22 +87,19 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     if (!logFilePtr)
     {
         logBufferMutex->lock();
-        if(logBuffer)
-        {
+        if (logBuffer)
             logBuffer->append(LogMsgBytes);
-        }
+
         logBufferMutex->unlock();
     }
     else
     {
         logBufferMutex->lock();
-        if(logBuffer)
+        if (logBuffer)
         {
             // empty logBuffer to file
-            foreach(QByteArray msg, *logBuffer)
-            {
+            foreach (QByteArray msg, *logBuffer)
                 fwrite(msg.constData(), 1, msg.size(), logFilePtr);
-            }
 
             delete logBuffer;   // no longer needed
             logBuffer = nullptr;
@@ -169,7 +166,7 @@ int main(int argc, char *argv[])
         qDebug() << "Log file over 1MB, rotating...";
 
         // close old logfile (need for windows)
-        if(mainLogFilePtr)
+        if (mainLogFilePtr)
             fclose(mainLogFilePtr);
 
         QDir dir (logFileDir);
@@ -180,14 +177,14 @@ int main(int argc, char *argv[])
         else
             qWarning() << "Unable to remove old log file";
 
-        if(!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
+        if (!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
             qCritical() << "Unable to move logs";
 
         // open a new logfile
         mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
     }
 
-    if(!mainLogFilePtr)
+    if (!mainLogFilePtr)
         qCritical() << "Couldn't open logfile" << logfile;
 
     logFileFile.store(mainLogFilePtr);   // atomically set the logFile
@@ -231,19 +228,27 @@ int main(int argc, char *argv[])
         autoLogin = true;
     }
     else
+    {
         profileName = Settings::getInstance().getCurrentProfile();
+    }
 
     if (parser.positionalArguments().size() == 0)
+    {
         eventType = "activate";
+    }
     else
     {
         firstParam = parser.positionalArguments()[0];
         // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI and we exit
         // Otherwise we start a new qTox instance and process it ourselves
         if (firstParam.startsWith("tox:"))
+        {
             eventType = "uri";
+        }
         else if (firstParam.endsWith(".tox"))
+        {
             eventType = "save";
+        }
         else
         {
             qCritical() << "Invalid argument";
