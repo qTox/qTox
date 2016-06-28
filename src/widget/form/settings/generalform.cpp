@@ -35,6 +35,7 @@
 #include <QStyleFactory>
 #include <QTime>
 #include <QFileDialog>
+#include <QFont>
 #include <QStandardPaths>
 #include <QDebug>
 
@@ -109,6 +110,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
 
+    Settings& s = Settings::getInstance();
+
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
 
@@ -118,6 +121,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
 
+    bodyUI->txtChatFont->setCurrentFont(s.getChatMessageFont());
+    bodyUI->txtChatFontSize->setValue(s.getChatMessageFont().pixelSize());
     bodyUI->markdownComboBox->setCurrentIndex(Settings::getInstance().getMarkdownPreference());
     bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
 
@@ -570,4 +575,27 @@ void GeneralForm::retranslateUi()
     }
 
     bodyUI->styleBrowser->setItemText(0, tr("None"));
+}
+
+void GeneralForm::on_txtChatFont_currentFontChanged(const QFont& f)
+{
+    QFont tmpFont = f;
+    const int fontSize = bodyUI->txtChatFontSize->value();
+
+    if (tmpFont.pixelSize() != fontSize)
+        tmpFont.setPixelSize(fontSize);
+
+    Settings::getInstance().setChatMessageFont(tmpFont);
+}
+
+void GeneralForm::on_txtChatFontSize_valueChanged(int arg1)
+{
+    Settings& s = Settings::getInstance();
+    QFont tmpFont = s.getChatMessageFont();
+
+    if (tmpFont.pixelSize() != arg1)
+    {
+        tmpFont.setPixelSize(arg1);
+        s.setChatMessageFont(tmpFont);
+    }
 }
