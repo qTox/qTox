@@ -24,6 +24,7 @@
 #include "src/core/corestructs.h"
 #include "src/core/core.h"
 #include "src/widget/gui.h"
+#include "src/widget/style.h"
 #include "src/persistence/profilelocker.h"
 #include "src/persistence/settingsserializer.h"
 #include "src/nexus.h"
@@ -222,6 +223,12 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
+    s.endGroup();
+
+    s.beginGroup("Chat");
+    {
+        chatMessageFont = s.value("chatMessageFont", Style::getFont(Style::Big)).value<QFont>();
+    }
     s.endGroup();
 
     s.beginGroup("State");
@@ -452,6 +459,12 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+    s.endGroup();
+
+    s.beginGroup("Chat");
+    {
+        s.setValue("chatMessageFont", chatMessageFont);
+    }
     s.endGroup();
 
     s.beginGroup("State");
@@ -1132,6 +1145,18 @@ void Settings::setGlobalAutoAcceptDir(const QString& newValue)
 {
     QMutexLocker locker{&bigLock};
     globalAutoAcceptDir = newValue;
+}
+
+const QFont& Settings::getChatMessageFont() const
+{
+    QMutexLocker locker(&bigLock);
+    return chatMessageFont;
+}
+
+void Settings::setChatMessageFont(const QFont& font)
+{
+    QMutexLocker locker(&bigLock);
+    chatMessageFont = font;
 }
 
 void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)

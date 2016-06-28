@@ -21,6 +21,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include <QFont>
 #include <QHash>
 #include <QObject>
 #include <QPixmap>
@@ -224,6 +225,9 @@ public:
     void setGlobalAutoAcceptDir(const QString& dir);
 
     // ChatView
+    const QFont& getChatMessageFont() const;
+    void setChatMessageFont(const QFont& font);
+
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
 
@@ -415,6 +419,7 @@ private:
     bool showSystemTray;
 
     // ChatView
+    QFont chatMessageFont;
     MarkdownType markdownPreference;
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
