@@ -264,9 +264,11 @@ void ProfileForm::onAvatarClicked()
     };
 
     QString filename = QFileDialog::getOpenFileName(this,
-        tr("Choose a profile picture"),
-        QDir::homePath(),
-        Nexus::getSupportedImageFilter());
+                                                    tr("Choose a profile picture"),
+                                                    QDir::homePath(),
+                                                    Nexus::getSupportedImageFilter(),
+                                                    0,
+                                                    QFileDialog::DontUseNativeDialog);
     if (filename.isEmpty())
         return;
 
@@ -342,8 +344,10 @@ void ProfileForm::onExportClicked()
     QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Export profile", "save dialog title"),
-                    QDir::home().filePath(current),
-                    tr("Tox save file (*.tox)", "save dialog filter"));
+                                                QDir::home().filePath(current),
+                                                tr("Tox save file (*.tox)", "save dialog filter"),
+                                                0,
+                                                QFileDialog::DontUseNativeDialog);
     if (!path.isEmpty())
     {
         if (!Nexus::tryRemoveFile(path))
@@ -415,8 +419,10 @@ void ProfileForm::onSaveQrClicked()
     QString current = Nexus::getProfile()->getName() + ".png";
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Save", "save qr image"),
-                   QDir::home().filePath(current),
-                   tr("Save QrCode (*.png)", "save dialog filter"));
+                                                QDir::home().filePath(current),
+                                                tr("Save QrCode (*.png)", "save dialog filter"),
+                                                0,
+                                                QFileDialog::DontUseNativeDialog);
     if (!path.isEmpty())
     {
         if (!Nexus::tryRemoveFile(path))

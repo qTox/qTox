@@ -60,8 +60,10 @@ void AboutUser::onAutoAcceptClicked()
     }
     else if (ui->autoaccept->isChecked())
     {
-        dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
-                                                         "popup title"), dir);
+        dir = QFileDialog::getExistingDirectory(this,
+                                                tr("Choose an auto accept directory", "popup title"),
+                                                dir,
+                                                QFileDialog::DontUseNativeDialog);
         if(dir.isEmpty())
         {
             ui->autoaccept->setChecked(false);
@@ -77,8 +79,10 @@ void AboutUser::onAutoAcceptClicked()
 void AboutUser::onSelectDirClicked()
 {
     QString dir;
-    dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
-                                                     "popup title"), dir);
+    dir = QFileDialog::getExistingDirectory(this,
+                                            tr("Choose an auto accept directory", "popup title"),
+                                            dir,
+                                            QFileDialog::DontUseNativeDialog);
     ui->autoaccept->setChecked(true);
     Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
     Settings::getInstance().saveGlobal();
