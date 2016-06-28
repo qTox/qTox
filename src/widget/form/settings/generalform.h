@@ -74,6 +74,9 @@ private slots:
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
 
+    void on_txtChatFont_currentFontChanged(const QFont& f);
+    void on_txtChatFontSize_valueChanged(int arg1);
+
 private:
     void retranslateUi();
 
