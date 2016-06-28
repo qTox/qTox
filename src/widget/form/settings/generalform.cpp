@@ -113,74 +113,74 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     Settings& s = Settings::getInstance();
 
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
-    bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
+    bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
 
-    bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
+    bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
 
-    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
+    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));
 
     bodyUI->txtChatFont->setCurrentFont(s.getChatMessageFont());
     bodyUI->txtChatFontSize->setValue(s.getChatMessageFont().pixelSize());
-    bodyUI->markdownComboBox->setCurrentIndex(Settings::getInstance().getMarkdownPreference());
-    bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
+    bodyUI->markdownComboBox->setCurrentIndex(s.getMarkdownPreference());
+    bodyUI->cbAutorun->setChecked(s.getAutorun());
 
-    bool showSystemTray = Settings::getInstance().getShowSystemTray();
+    bool showSystemTray = s.getShowSystemTray();
 
     bodyUI->showSystemTray->setChecked(showSystemTray);
-    bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
+    bodyUI->startInTray->setChecked(s.getAutostartInTray());
     bodyUI->startInTray->setEnabled(showSystemTray);
-    bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
+    bodyUI->closeToTray->setChecked(s.getCloseToTray());
     bodyUI->closeToTray->setEnabled(showSystemTray);
-    bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
+    bodyUI->minimizeToTray->setChecked(s.getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
-    bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
+    bodyUI->lightTrayIcon->setChecked(s.getLightTrayIcon());
 
-    bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
-    bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
-    bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
-    bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
+    bodyUI->statusChanges->setChecked(s.getStatusChangeNotificationEnabled());
+    bodyUI->useEmoticons->setChecked(s.getUseEmoticons());
+    bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
+    bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
 
-    bool showWindow = Settings::getInstance().getShowWindow();
+    bool showWindow = s.getShowWindow();
 
     bodyUI->showWindow->setChecked(showWindow);
-    bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->showInFront->setChecked(s.getShowInFront());
     bodyUI->showInFront->setEnabled(showWindow);
 
-    bool notifySound = Settings::getInstance().getNotifySound();
+    bool notifySound = s.getNotifySound();
 
     bodyUI->notifySound->setChecked(notifySound);
-    bodyUI->busySound->setChecked(Settings::getInstance().getBusySound());
+    bodyUI->busySound->setChecked(s.getBusySound());
     bodyUI->busySound->setEnabled(notifySound);
-    bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
-    bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
-    bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
-    bodyUI->cbSeparateWindow->setChecked(Settings::getInstance().getSeparateWindow());
-    bodyUI->cbDontGroupWindows->setChecked(Settings::getInstance().getDontGroupWindows());
+    bodyUI->groupAlwaysNotify->setChecked(s.getGroupAlwaysNotify());
+    bodyUI->cbFauxOfflineMessaging->setChecked(s.getFauxOfflineMessaging());
+    bodyUI->cbCompactLayout->setChecked(s.getCompactLayout());
+    bodyUI->cbSeparateWindow->setChecked(s.getSeparateWindow());
+    bodyUI->cbDontGroupWindows->setChecked(s.getDontGroupWindows());
     bodyUI->cbDontGroupWindows->setEnabled(bodyUI->cbSeparateWindow->isChecked());
-    bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
+    bodyUI->cbGroupchatPosition->setChecked(s.getGroupchatPosition());
 
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
 
-    bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
+    bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(s.getSmileyPack()));
     reloadSmiles();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
-        bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
+    if (QStyleFactory::keys().contains(s.getStyle()))
+        bodyUI->styleBrowser->setCurrentText(s.getStyle());
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
 
     for (QString color : Style::getThemeColorNames())
         bodyUI->themeColorCBox->addItem(color);
 
-    bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
+    bodyUI->themeColorCBox->setCurrentIndex(s.getThemeColor());
 
-    bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
+    bodyUI->emoticonSize->setValue(s.getEmojiFontPointSize());
 
     QStringList timestamps;
     for (QString timestamp : timeFormats)
@@ -202,19 +202,19 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->dateFormats->addItems(datestamps);
 
-    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
+    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(s.getTimestampFormat(), QTime::currentTime().toString(s.getTimestampFormat())));
 
-    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getDateFormat(), QDate::currentDate().toString(Settings::getInstance().getDateFormat())));
+    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(s.getDateFormat(), QDate::currentDate().toString(s.getDateFormat())));
 
-    bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
+    bodyUI->autoAwaySpinBox->setValue(s.getAutoAwayTime());
 
-    bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
-    bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
-    int port = Settings::getInstance().getProxyPort();
+    bodyUI->cbEnableUDP->setChecked(!s.getForceTCP());
+    bodyUI->proxyAddr->setText(s.getProxyAddr());
+    int port = s.getProxyPort();
     if (port != -1)
         bodyUI->proxyPort->setValue(port);
 
-    bodyUI->proxyType->setCurrentIndex(static_cast<int>(Settings::getInstance().getProxyType()));
+    bodyUI->proxyType->setCurrentIndex(static_cast<int>(s.getProxyType()));
     onUseProxyUpdated();
 
     //general
