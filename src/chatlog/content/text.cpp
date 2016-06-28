@@ -31,10 +31,13 @@
 #include <QDesktopServices>
 #include <QTextFragment>
 
-Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText, const QColor c)
+Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
+    , defStyleSheet(QString::fromUtf8("body{font: '%1' %2px %3;}")
+                    .arg(font.family()).arg(font.pixelSize())
+                    .arg(font.bold() ? "bold" : QString()))
     , color(c)
 {
     setText(txt);
@@ -247,9 +250,14 @@ void Text::regenerate()
         doc->setDefaultFont(defFont);
 
         if (!elide)
+        {
+            doc->setDefaultStyleSheet(defStyleSheet);
             doc->setHtml(text);
+        }
         else
+        {
             doc->setPlainText(elidedText);
+        }
 
         // wrap mode
         QTextOption opt;
