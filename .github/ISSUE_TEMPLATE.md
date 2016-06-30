@@ -27,7 +27,7 @@ Reproducible: Always / Almost Always / Sometimes / Rarely / Couldn't Reproduce
 
 ----
 
-E.g., include log located in `~/.config/Tox/qTox/` / `%APPDATA\tox\`.
+E.g., include log located in `~/.cache/Tox/qTox/` / `%APPDATA\tox\`.
 To include it, rename it from `.log` to `.txt`, or zip it.
 
 Tip: use `v4l-info` and `v4l2-ctl --all` to get webcam info on Linux.
