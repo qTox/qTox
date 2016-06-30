@@ -1101,10 +1101,6 @@ will be sent to them when they appear online to you.</source>
         <translation>Тема</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Форматирование текста (Markdown):</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Обычный текст</translation>
     </message>
@@ -1119,6 +1115,22 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Play sound while Busy</source>
         <translation>Воспроизводить звук, когда Занят</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

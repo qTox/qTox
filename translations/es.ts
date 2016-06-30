@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_MX">
+<TS version="2.0" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -1093,10 +1093,6 @@ Hazlo sólo en caso de ser necesario.</translation>
         <translation>Puerto:</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Formato de texto (Markdown):</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Texto plano</translation>
     </message>
@@ -1111,6 +1107,22 @@ Hazlo sólo en caso de ser necesario.</translation>
     <message>
         <source>Play sound while Busy</source>
         <translation>Reproducir sonido en estado Ocupado</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
