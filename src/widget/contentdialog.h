@@ -20,10 +20,11 @@
 #ifndef CONTENTDIALOG_H
 #define CONTENTDIALOG_H
 
-#include "src/widget/tool/activatedialog.h"
 #include <tuple>
+
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatitemlayout.h"
+#include "src/widget/tool/activatedialog.h"
 
 template <typename K, typename V> class QHash;
 template <typename T> class QSet;
@@ -54,6 +55,8 @@ public:
     void ensureSplitterVisible();
 
     void cycleContacts(bool forward, bool loop = true);
+    void onVideoShow(QSize size);
+    void onVideoHide();
 
     static ContentDialog* current();
     static bool existsFriendWidget(int friendId, bool focus);
@@ -111,6 +114,9 @@ private:
     GenericChatroomWidget* activeChatroomWidget;
     GenericChatroomWidget* displayWidget = nullptr;
     SettingsWidget* settingsWidget;
+    QSize videoSurfaceSize;
+    int videoCount;
+
     static ContentDialog* currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;

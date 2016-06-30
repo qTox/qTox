@@ -19,33 +19,34 @@
 
 #include "genericchatform.h"
 
+#include <QDebug>
 #include <QFileDialog>
 #include <QHBoxLayout>
-#include <QDebug>
-#include <QShortcut>
 #include <QKeyEvent>
+#include <QPushButton>
+#include <QShortcut>
 #include <QSplitter>
 
-#include "src/persistence/smileypack.h"
-#include "src/widget/emoticonswidget.h"
-#include "src/widget/style.h"
-#include "src/widget/widget.h"
-#include "src/persistence/settings.h"
-#include "src/widget/tool/chattextedit.h"
-#include "src/widget/maskablepixmapwidget.h"
-#include "src/core/core.h"
-#include "src/grouplist.h"
-#include "src/group.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/group.h"
+#include "src/grouplist.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/smileypack.h"
+#include "src/video/genericnetcamview.h"
+#include "src/widget/contentdialog.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/emoticonswidget.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/chattextedit.h"
+#include "src/widget/tool/croppinglabel.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/tool/croppinglabel.h"
-#include <QPushButton>
-#include "src/video/genericnetcamview.h"
+#include "src/widget/widget.h"
 
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent, Qt::Window)
@@ -630,12 +631,21 @@ void GenericChatForm::showNetcam()
 
     bodySplitter->insertWidget(0, netcam);
     bodySplitter->setCollapsible(0, false);
+
+    QSize minSize = netcam->getSurfaceMinSize();
+    ContentDialog* current = ContentDialog::current();
+    if (current)
+        current->onVideoShow(minSize);
 }
 
 void GenericChatForm::hideNetcam()
 {
     if (!netcam)
         return;
+
+    ContentDialog* current = ContentDialog::current();
+    if (current)
+        current->onVideoHide();
 
     netcam->close();
     netcam->hide();
