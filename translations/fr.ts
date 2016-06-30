@@ -313,13 +313,6 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1095,10 +1088,6 @@ au lieu de se fermer.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Formatage du texte (Markdown) :</translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation>Sélectionner les préférence de Markdown.</translation>
     </message>
@@ -1117,6 +1106,22 @@ au lieu de se fermer.</translation>
     <message>
         <source>Play sound while Busy</source>
         <translation>Jouer un son en Occupé</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1627,6 +1632,13 @@ Vous souhaiteriez en créer un.</translation>
             <numerusform>%n message non-lu</numerusform>
             <numerusform>%n messages non-lus</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

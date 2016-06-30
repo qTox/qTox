@@ -311,13 +311,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1079,10 +1072,6 @@ desconectados serão enviadas assim que eles aparecerem contectados para você.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1113,6 +1102,22 @@ desconectados serão enviadas assim que eles aparecerem contectados para você.<
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1620,6 +1625,13 @@ You may want to create one.</source>
             <numerusform>Mensagem não lida</numerusform>
             <numerusform>Mensagens não lidas</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

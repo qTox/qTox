@@ -313,13 +313,6 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1099,10 +1092,6 @@ kui nad sulle nähtavaks muutuvad.</translation>
         <translation>Markdowni uus eelistus võidakse laadida alles qToxi taaskäivitamisel.</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Teksti vormindamine (Markdown):</translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation>Vali Markdowni eelistus.</translation>
     </message>
@@ -1121,6 +1110,22 @@ kui nad sulle nähtavaks muutuvad.</translation>
     <message>
         <source>Play sound while Busy</source>
         <translation>Olles hõivatud, mängi heli</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1631,6 +1636,13 @@ Võimalik, et peaksid selle looma.</translation>
             <numerusform>Lugemata sõnum</numerusform>
             <numerusform>Lugemata sõnumit</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

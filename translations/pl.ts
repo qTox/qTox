@@ -321,13 +321,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
@@ -1120,10 +1113,6 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <translation>Nowa konfiguracja Markdown zostanie załadowana po restarcie.</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Formatowanie tekstu (Markdown):</translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation>Wybierz konfigurację Markdown.</translation>
     </message>
@@ -1146,6 +1135,22 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1666,6 +1671,13 @@ Możesz otworzyć nowy.</translation>
             <numerusform>Nieprzeczytane wiadomości</numerusform>
             <numerusform>Nieprzeczytane wiadomości</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

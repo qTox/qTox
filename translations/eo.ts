@@ -308,13 +308,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -953,10 +946,6 @@ instead of closing itself.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1106,6 +1095,22 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1609,6 +1614,13 @@ You may want to create one.</source>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1054,10 +1054,6 @@ a rendszertálca helyett.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1107,6 +1103,22 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -313,13 +313,6 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
 </context>
 <context>
-    <name>CapsLockIndicator</name>
-    <message>
-        <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -1094,10 +1087,6 @@ bus nusiųstos jiems prisijungus.</translation>
         <translation>Markdown nustatymai bus pritaikyti perkrovus qTox.</translation>
     </message>
     <message>
-        <source>Text formatting (Markdown):</source>
-        <translation>Teksto formatavimas (Markdown):</translation>
-    </message>
-    <message>
         <source>Select Markdown preference.</source>
         <translation>Pasirinkite Markdown vaizdavimo tipą.</translation>
     </message>
@@ -1115,6 +1104,22 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Markdown format:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1628,6 +1633,13 @@ Plural:10–20,30,40,..</translatorcomment>
             <numerusform>Neperskaitytos žinutės</numerusform>
             <numerusform>Neperskaitytų žinučių</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
