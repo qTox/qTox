@@ -94,7 +94,8 @@ void AboutUser::onSelectDirClicked()
  */
 void AboutUser::onAcceptedClicked()
 {
-    Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
+    ToxId toxId = ToxId(ui->publicKey->text());
+    Settings::getInstance().setContactNote(toxId, ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
 }
 

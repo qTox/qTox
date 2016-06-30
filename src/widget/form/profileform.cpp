@@ -523,7 +523,7 @@ void ProfileForm::onRegisterButtonClicked()
     Core* oldCore = Core::getInstance();
 
     Toxme::ExecCode code = Toxme::ExecCode::Ok;
-    QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
+    QString response = Toxme::createAddress(code, server, ToxId(id), name, privacy, bio);
 
     Core* newCore = Core::getInstance();
     // Make sure the user didn't logout (or logout and login)
