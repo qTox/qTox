@@ -40,7 +40,7 @@ ToxCall::~ToxCall()
     audio.unsubscribeOutput(alSource);
 }
 
-const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
+ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
@@ -140,7 +140,7 @@ ToxFriendCall::~ToxFriendCall()
     }
 }
 
-const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
+ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
 {
     ToxCall::operator =(move(other));
     videoEnabled = other.videoEnabled;
@@ -174,7 +174,7 @@ ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
 {
 }
 
-const ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
+ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
 {
     ToxCall::operator =(move(other));
 

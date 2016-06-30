@@ -25,8 +25,8 @@ public:
      ToxCall(ToxCall&& other) noexcept;
 
      inline operator int() {return callId;}
-     const ToxCall& operator=(const ToxCall& other) = delete;
-     const ToxCall& operator=(ToxCall&& other) noexcept;
+     ToxCall& operator=(const ToxCall& other) = delete;
+     ToxCall& operator=(ToxCall&& other) noexcept;
 
 protected:
      QMetaObject::Connection audioInConn;
@@ -46,7 +46,7 @@ struct ToxFriendCall : public ToxCall
     ToxFriendCall(ToxFriendCall&& other) noexcept;
     ~ToxFriendCall();
 
-    const ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
+    ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
 
     bool videoEnabled; ///< True if our user asked for a video call, sending and recving
     bool nullVideoBitrate; ///< True if our video bitrate is zero, i.e. if the device is closed
@@ -70,7 +70,7 @@ struct ToxGroupCall : public ToxCall
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
 
-    const ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
+    ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
     // If you add something here, don't forget to override the ctors and move operators!
 };
