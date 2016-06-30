@@ -67,7 +67,8 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
-    , isTyping{false}
+    , screenshotGrabber(nullptr)
+    , isTyping(false)
 {
     Core* core = Core::getInstance();
     coreav = core->getAv();
@@ -208,7 +209,7 @@ void ChatForm::onAttachClicked()
             file.close();
             continue;
         }
-        long long filesize = file.size();
+        qint64 filesize = file.size();
         file.close();
         QFileInfo fi(path);
 
@@ -783,9 +784,14 @@ void ChatForm::onScreenshotClicked()
 
 void ChatForm::doScreenshot()
 {
-    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
-    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    if (!screenshotGrabber)
+        screenshotGrabber = new ScreenshotGrabber(this);
+
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken,
+            this, &ChatForm::onScreenshotTaken);
+
     screenshotGrabber->showGrabber();
+
     // Create dir for screenshots
     QDir(Settings::getInstance().getAppDataDirPath()).mkpath("screenshots");
 }
@@ -807,16 +813,21 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
+
+        delete screenshotGrabber;
+        screenshotGrabber = nullptr;
         return;
     }
 
     pixmap.save(&file, "PNG");
 
-    long long filesize = file.size();
+    qint64 filesize = file.size();
     file.close();
     QFileInfo fi(file);
 
     emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    delete screenshotGrabber;
+    screenshotGrabber = nullptr;
 }
 
 void ChatForm::onLoadHistory()
