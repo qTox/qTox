@@ -39,12 +39,17 @@ public:
         return tr("Advanced");
     }
 
-protected:
-    bool eventFilter(QObject *o, QEvent *e) final override;
-
 private slots:
+    // Portable
     void onMakeToxPortableUpdated();
     void resetToDefault();
+    // Connection
+    void onEnableIPv6Updated();
+    void onUDPUpdated();
+    void onProxyAddrEdited();
+    void onProxyPortEdited(int port);
+    void onUseProxyUpdated();
+    void onReconnectClicked();
 
 private:
     void retranslateUi();
