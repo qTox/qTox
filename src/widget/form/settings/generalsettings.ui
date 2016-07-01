@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1312</width>
-    <height>1098</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,11 +39,11 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1278</width>
-        <height>1382</height>
+        <width>1270</width>
+        <height>587</height>
        </rect>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
        <property name="spacing">
         <number>32</number>
        </property>
@@ -208,6 +208,55 @@ instead of closing itself.</string>
               </item>
              </layout>
             </item>
+            <item>
+             <widget class="QLabel" name="newMessageLabel">
+              <property name="text">
+               <string>On new message:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="leftMargin">
+               <number>40</number>
+              </property>
+              <item>
+               <widget class="QCheckBox" name="notifySound">
+                <property name="text">
+                 <string>Play sound</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <property name="leftMargin">
+                 <number>40</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="busySound">
+                  <property name="text">
+                   <string>Play sound while Busy</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="statusChanges">
+              <property name="text">
+               <string>Show contacts' status changes</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbFauxOfflineMessaging">
+              <property name="text">
+               <string>Faux offline messaging</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
           <item>
@@ -299,635 +348,17 @@ instead of closing itself.</string>
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="chatGroupBox">
-         <property name="title">
-          <string>Chat</string>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Base font:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QFontComboBox" name="txtChatFont"/>
-            </item>
-            <item row="0" column="2">
-             <widget class="QSpinBox" name="txtChatFontSize">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="suffix">
-               <string>px</string>
-              </property>
-              <property name="prefix">
-               <string>Size: </string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="textStyleLabel">
-              <property name="toolTip">
-               <string>New text styling preference may not load until qTox restarts.</string>
-              </property>
-              <property name="text">
-               <string>Text Style format:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="3">
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="3">
-             <spacer name="generalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="1" colspan="2">
-             <widget class="QComboBox" name="textStyleComboBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="toolTip">
-               <string>Select text styling preference.</string>
-              </property>
-              <property name="currentIndex">
-               <number>1</number>
-              </property>
-              <item>
-               <property name="text">
-                <string>Plaintext</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Show formatting characters</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>Don't show formatting characters</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_9">
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>On new message:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <property name="leftMargin">
-               <number>40</number>
-              </property>
-              <item>
-               <widget class="QCheckBox" name="notifySound">
-                <property name="toolTip">
-                 <string comment="toolTip for Notify sound setting">Play a sound when you recieve message.</string>
-                </property>
-                <property name="text">
-                 <string>Play sound</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_13">
-                <property name="leftMargin">
-                 <number>40</number>
-                </property>
-                <item>
-                 <widget class="QCheckBox" name="busySound">
-                  <property name="text">
-                   <string>Play sound while Busy</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="showWindow">
-                <property name="toolTip">
-                 <string comment="tooltip for Show window setting">Open qTox's window when you receive a new message and no window is open yet.</string>
-                </property>
-                <property name="text">
-                 <string>Open window</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_15">
-                <property name="leftMargin">
-                 <number>40</number>
-                </property>
-                <item>
-                 <widget class="QCheckBox" name="showInFront">
-                  <property name="toolTip">
-                   <string comment="toolTip for Focus window setting">Focus qTox when you receive message.</string>
-                  </property>
-                  <property name="text">
-                   <string>Focus window</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="statusChanges">
-            <property name="text">
-             <string>Show contacts' status changes</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="groupAlwaysNotify">
-            <property name="toolTip">
-             <string comment="toolTip for Group chat always notify">Always notify about new messages in groupchats.</string>
-            </property>
-            <property name="text">
-             <string>Group chats always notify</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbGroupchatPosition">
-            <property name="toolTip">
-             <string comment="toolTip for groupchat positioning">If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</string>
-            </property>
-            <property name="text">
-             <string>Place groupchats at top of friend list</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbFauxOfflineMessaging">
-            <property name="toolTip">
-             <string comment="toolTip for Faux offline messaging setting">Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</string>
-            </property>
-            <property name="text">
-             <string>Faux offline messaging</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="cbCompactLayout">
-            <property name="toolTip">
-             <string comment="toolTip for compact layout setting">Your contact list will be shown in compact mode.</string>
-            </property>
-            <property name="text">
-             <string>Compact contact list</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_11">
-            <item>
-             <widget class="QCheckBox" name="cbSeparateWindow">
-              <property name="text">
-               <string>Multiple windows mode</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_12">
-              <property name="leftMargin">
-               <number>40</number>
-              </property>
-              <item>
-               <widget class="QCheckBox" name="cbDontGroupWindows">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Open each chat in an individual window</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="themeGroup">
-         <property name="title">
-          <string>Theme</string>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QCheckBox" name="useEmoticons">
-            <property name="text">
-             <string>Use emoticons</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="formLayout">
-            <property name="fieldGrowthPolicy">
-             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="smileyPackLabel">
-              <property name="text">
-               <string extracomment="Text on smiley pack label">Smiley Pack:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="smileyPackBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>80</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0,0,0">
-              <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
-              </property>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile1">
-                <property name="toolTip">
-                 <string notr="true">:)</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile2">
-                <property name="toolTip">
-                 <string notr="true">;)</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile3">
-                <property name="toolTip">
-                 <string notr="true">:p</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile4">
-                <property name="toolTip">
-                 <string notr="true">:O</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignTop">
-               <widget class="QLabel" name="smile5">
-                <property name="toolTip">
-                 <string notr="true">:'(</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="emoticonSizeLabel">
-              <property name="text">
-               <string>Emoticon size:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSpinBox" name="emoticonSize">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="specialValueText">
-               <string/>
-              </property>
-              <property name="suffix">
-               <string> px</string>
-              </property>
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>2147483647</number>
-              </property>
-              <property name="value">
-               <number>25</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="styleLabel">
-              <property name="text">
-               <string>Style:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="styleBrowser">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="themeColorLabel">
-              <property name="text">
-               <string>Theme color:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QComboBox" name="themeColorCBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="timestampLabel">
-              <property name="text">
-               <string>Timestamp format:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QComboBox" name="timestamp">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="dateformatLabel">
-              <property name="text">
-               <string>Date format:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QComboBox" name="dateFormats"/>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="connectionGroup">
-         <property name="title">
-          <string>Connection Settings</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayoutProxy">
-          <property name="topMargin">
-           <number>9</number>
-          </property>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QCheckBox" name="cbEnableIPv6">
-              <property name="text">
-               <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="cbEnableUDP">
-              <property name="toolTip">
-               <string extracomment="force tcp checkbox tooltip">Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</string>
-              </property>
-              <property name="text">
-               <string extracomment="Text on checkbox to disable UDP">Enable UDP (recommended)</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="proxyLayout">
-            <item row="1" column="0">
-             <widget class="QLabel" name="proxyTypeLabel">
-              <property name="text">
-               <string>Proxy type:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QSpinBox" name="proxyPort">
-              <property name="minimum">
-               <number>0</number>
-              </property>
-              <property name="maximum">
-               <number>65535</number>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="proxyAddrLabel">
-              <property name="text">
-               <string extracomment="Text on proxy addr label">Address:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="proxyAddr"/>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="proxyPortLabel">
-              <property name="text">
-               <string extracomment="Text on proxy port label">Port:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1" colspan="3">
-             <widget class="QComboBox" name="proxyType">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <item>
-               <property name="text">
-                <string>None</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>SOCKS5</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>HTTP</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <spacer name="horizontalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="reconnectButton">
-              <property name="text">
-               <string comment="reconnect button">Reconnect</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -952,44 +383,9 @@ will be sent to them when they appear online to you.</string>
   <tabstop>cbAutorun</tabstop>
   <tabstop>checkUpdates</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
-  <tabstop>statusChanges</tabstop>
-  <tabstop>groupAlwaysNotify</tabstop>
-  <tabstop>cbGroupchatPosition</tabstop>
-  <tabstop>cbFauxOfflineMessaging</tabstop>
-  <tabstop>cbCompactLayout</tabstop>
-  <tabstop>cbSeparateWindow</tabstop>
-  <tabstop>useEmoticons</tabstop>
-  <tabstop>smileyPackBrowser</tabstop>
-  <tabstop>emoticonSize</tabstop>
-  <tabstop>styleBrowser</tabstop>
-  <tabstop>themeColorCBox</tabstop>
-  <tabstop>timestamp</tabstop>
-  <tabstop>dateFormats</tabstop>
-  <tabstop>cbEnableIPv6</tabstop>
-  <tabstop>cbEnableUDP</tabstop>
-  <tabstop>proxyType</tabstop>
-  <tabstop>proxyAddr</tabstop>
-  <tabstop>proxyPort</tabstop>
-  <tabstop>reconnectButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>showWindow</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>showInFront</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>329</x>
-     <y>349</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>451</x>
-     <y>349</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>showSystemTray</sender>
    <signal>toggled(bool)</signal>
@@ -1035,22 +431,6 @@ will be sent to them when they appear online to you.</string>
     <hint type="destinationlabel">
      <x>119</x>
      <y>177</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>notifySound</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>busySound</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>665</x>
-     <y>522</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>684</x>
-     <y>551</y>
     </hint>
    </hints>
   </connection>
