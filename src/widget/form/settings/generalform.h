@@ -40,52 +40,28 @@ public:
     }
 
 private slots:
-    void onEnableIPv6Updated();
     void onTranslationUpdated();
     void onAutorunUpdated();
     void onSetShowSystemTray();
     void onSetAutostartInTray();
     void onSetCloseToTray();
     void onSetLightTrayIcon();
-    void onSmileyBrowserIndexChanged(int index);
-    void onUDPUpdated();
-    void onProxyAddrEdited();
-    void onProxyPortEdited(int port);
-    void onUseProxyUpdated();
-    void onEmoticonSizeChanged();
-    void onStyleSelected(QString style);
-    void onTimestampSelected(int index);
-    void onDateFormatSelected(int index);
-    void onStyleUpdated();
-    void onSetStatusChange();
     void onAutoAwayChanged();
-    void onUseEmoticonsChange();
     void onSetMinimizeToTray();
-    void onReconnectClicked();
+    void onSetNotifySound();
+    void onSetBusySound();
+    void onSetStatusChange();
+    void onFauxOfflineMessaging();
+
     void onAutoAcceptFileChange();
     void onAutoSaveDirChange();
     void onCheckUpdateChanged();
-    void onShowWindowChanged();
-    void onSetShowInFront();
-    void onSetNotifySound();
-    void onSetBusySound();
-    void onSetGroupAlwaysNotify();
-    void onFauxOfflineMessaging();
-    void onCompactLayout();
-    void onSeparateWindowChanged();
-    void onDontGroupWindowsChanged();
-    void onGroupchatPositionChanged();
-    void onThemeColorChanged(int);
-
-    void on_txtChatFont_currentFontChanged(const QFont& f);
-    void on_txtChatFontSize_valueChanged(int px);
 
 private:
     void retranslateUi();
 
 private:
     Ui::GeneralSettings *bodyUI;
-    void reloadSmiles();
     SettingsWidget *parent;
 
 protected:
