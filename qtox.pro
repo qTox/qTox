@@ -28,11 +28,12 @@ FORMS    += \
     src/widget/form/profileform.ui \
     src/widget/form/loadhistorydialog.ui \
     src/widget/form/setpassworddialog.ui \
-    src/widget/form/settings/aboutsettings.ui \
-    src/widget/form/settings/advancedsettings.ui \
-    src/widget/form/settings/avform.ui \
     src/widget/form/settings/generalsettings.ui \
+    src/widget/form/settings/userinterfacesettings.ui \
     src/widget/form/settings/privacysettings.ui \
+    src/widget/form/settings/avform.ui \
+    src/widget/form/settings/advancedsettings.ui \
+    src/widget/form/settings/aboutsettings.ui \
     src/widget/form/removefrienddialog.ui \
     src/widget/about/aboutuser.ui
 
@@ -360,7 +361,8 @@ HEADERS  += \
     src/widget/about/aboutuser.h \
     src/widget/form/groupinviteform.h \
     src/widget/tool/profileimporter.h \
-    src/widget/passwordedit.h
+    src/widget/passwordedit.h \
+    src/widget/form/settings/userinterfaceform.h
 
 SOURCES += \
     src/ipc.cpp \
@@ -423,11 +425,13 @@ SOURCES += \
     src/video/groupnetcamview.cpp \
     src/video/netcamview.cpp \
     src/video/videosurface.cpp \
+    src/video/videomode.cpp \
     src/widget/form/addfriendform.cpp \
     src/widget/form/settingswidget.cpp \
     src/widget/form/settings/generalform.cpp \
     src/widget/form/settings/privacyform.cpp \
     src/widget/form/settings/avform.cpp \
+    src/widget/form/settings/userinterfaceform.cpp \
     src/widget/form/profileform.cpp \
     src/widget/form/filesform.cpp \
     src/widget/tool/chattextedit.cpp \
@@ -479,5 +483,4 @@ SOURCES += \
     src/widget/about/aboutuser.cpp \
     src/widget/form/groupinviteform.cpp \
     src/widget/tool/profileimporter.cpp \
-    src/widget/passwordedit.cpp \
-    src/video/videomode.cpp
+    src/widget/passwordedit.cpp
