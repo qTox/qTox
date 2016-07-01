@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Отсутствует</translation>
     </message>
 </context>
 <context>
