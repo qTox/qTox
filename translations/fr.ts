@@ -2404,7 +2404,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone's name in a group chat is empty</comment>
-        <translation type="unfinished">&lt;Vide&gt;</translation>
+        <translation>&lt;Vide&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
