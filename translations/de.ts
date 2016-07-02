@@ -16,8 +16,8 @@
         <translation>Standardauflösung</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Kein Gerät ausgewählt</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1110,31 +1110,32 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Formatierungszeichen anzeigen</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatierungszeichen nicht anzeigen</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Sound abspielen, wenn Besetzt</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Basis Schrift :</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>Pixel</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Größe: </translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Markdownformat:</translation>
     </message>
 </context>
 <context>
