@@ -91,6 +91,7 @@ Must be one of the following:
 * **test**: Adding missing tests
 * **chore**: Changes to the build process or auxiliary tools and libraries such
   as documentation generation
+* **tran**: Changes to the translation of the GUI
 
 ##### Revert
 If the commit reverts a previous commit, it should begin with `revert: `,
