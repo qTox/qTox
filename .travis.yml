@@ -5,13 +5,8 @@ os:
 - linux
 - osx
 script:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./verify-commit-messages.sh "$TRAVIS_COMMIT_RANGE"; fi
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then bash ./.travis/build-ubuntu_14_04.sh; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i ; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b ; fi
-before_deploy:
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d ; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg ; fi
+- bash ./.travis/travis.sh
+
 deploy:
   provider: releases
   api_key:

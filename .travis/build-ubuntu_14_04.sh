@@ -21,29 +21,31 @@ sudo add-apt-repository -y ppa:beineri/opt-qt532-trusty
 sudo apt-get update -qq
 
 # install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
-sudo apt-get install -y build-essential \
+sudo apt-get install -y \
+    automake \
+    autotools-dev \
+    build-essential \
+    check \
+    checkinstall \
+    libgdk-pixbuf2.0-dev \
+    libglib2.0-dev \
+    libgtk2.0-dev \
+    libopenal-dev \
+    libopus-dev \
+    libqrencode-dev \
+    libsqlcipher-dev \
+    libtool \
+    libvpx-dev \
+    libxss-dev qrencode \
     qt53base \
     qt53script \
     qt53svg \
     qt53tools \
     qt53xmlpatterns \
-    libopenal-dev \
-    libxss-dev qrencode \
-    libqrencode-dev \
-    libglib2.0-dev \
-    libgdk-pixbuf2.0-dev \
-    libgtk2.0-dev \
-    libsqlcipher-dev \
-    libtool \
-    autotools-dev \
-    automake \
-    checkinstall \
-    check \
-    libopus-dev \
-    libvpx-dev
+    pkg-config || yes
 
 # Qt
-source /opt/qt53/bin/qt53-env.sh
+source /opt/qt53/bin/qt53-env.sh || yes
 
 # ffmpeg
 if [ ! -e "libs" ]; then mkdir libs; fi
@@ -56,7 +58,40 @@ cd ../ffmpeg
 wget http://ffmpeg.org/releases/ffmpeg-2.8.5.tar.bz2
 tar xf ffmpeg*
 cd ffmpeg*
-./configure --prefix="$PREFIX_DIR" --enable-shared --disable-static --disable-programs --disable-protocols --disable-doc --disable-sdl --disable-avfilter --disable-avresample --disable-filters --disable-iconv --disable-network --disable-muxers --disable-postproc --disable-swresample --disable-swscale-alpha --disable-dct --disable-dwt --disable-lsp --disable-lzo --disable-mdct --disable-rdft --disable-fft --disable-faan --disable-vaapi --disable-vdpau --disable-zlib --disable-xlib --disable-bzlib --disable-lzma --disable-encoders --disable-yasm --enable-memalign-hack
+./configure --prefix="$PREFIX_DIR" \
+    --disable-avfilter \
+    --disable-avresample \
+    --disable-bzlib \
+    --disable-dct \
+    --disable-doc \
+    --disable-dwt \
+    --disable-encoders \
+    --disable-faan \
+    --disable-fft \
+    --disable-filters \
+    --disable-iconv \
+    --disable-lsp \
+    --disable-lzma \
+    --disable-lzo \
+    --disable-mdct \
+    --disable-muxers \
+    --disable-network \
+    --disable-postproc \
+    --disable-programs \
+    --disable-protocols \
+    --disable-rdft \
+    --disable-sdl \
+    --disable-static \
+    --disable-swresample \
+    --disable-swscale-alpha \
+    --disable-vaapi \
+    --disable-vdpau \
+    --disable-xlib \
+    --disable-yasm \
+    --disable-zlib \
+    --enable-shared \
+    --enable-memalign-hack
+
 make -j$(nproc)
 make install
 cd ../../
