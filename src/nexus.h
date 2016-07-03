@@ -45,7 +45,6 @@ class Nexus : public QObject
     Q_OBJECT
 public:
     void start(); ///< Sets up invariants and calls showLogin
-    void showLogin(); ///< Hides the man GUI, delete the profile, and shows the login screen
     /// Hides the login screen and shows the GUI for the given profile.
     /// Will delete the current GUI, if it exists.
     void showMainGUI();
@@ -59,7 +58,12 @@ public:
     static QString getSupportedImageFilter();
     static bool tryRemoveFile(const QString& filepath); ///< Dangerous way to find out if a path is writable
 
+public slots:
+    void showLogin(); ///< Hides the man GUI, delete the profile, and shows the login screen
+    void showLoginLater(); ///< Calls showLogin asynchronously, so we can safely logout from within the main GUI
+
 #ifdef Q_OS_MAC
+public:
     QMenuBar* globalMenuBar;
     QMenu* viewMenu;
     QMenu* windowMenu;
