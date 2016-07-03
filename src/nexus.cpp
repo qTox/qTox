@@ -258,6 +258,12 @@ bool Nexus::tryRemoveFile(const QString& filepath)
     return writable;
 }
 
+void Nexus::showLoginLater()
+{
+    GUI::setEnabled(false);
+    QMetaObject::invokeMethod(&getInstance(), "showLogin", Qt::QueuedConnection);
+}
+
 #ifdef Q_OS_MAC
 void Nexus::retranslateUi()
 {
