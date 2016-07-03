@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
@@ -127,8 +127,8 @@ which may lead to problems with video calls.</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Хэш коммита: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href="https://github.com/tux3/qTox/commit/$GIT_VERSION"&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Хэш коммита: &lt;a href="https://github.com/tux3/qTox/commit/$GIT_VERSION"&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
@@ -139,8 +139,8 @@ which may lead to problems with video calls.</source>
         <translation>Авторы</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Изначальный автор: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Полный список &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;авторов&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href="https://github.com/tux3"&gt;&lt;span style=" text-decoration: underline; color:#0000ff;"&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href="https://github.com/tux3/qTox/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#0000ff;"&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Изначальный автор: &lt;a href="https://github.com/tux3"&gt;&lt;span style=" text-decoration: underline; color:#0000ff;"&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Полный список &lt;a href="https://github.com/tux3/qTox/graphs/contributors"&gt;&lt;span style=" text-decoration: underline; color:#0000ff;"&gt;авторов&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -223,11 +223,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
+        <comment>Tox ID of the person you're sending a friend request to</comment>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+        <source>qTox needs to use the Tox DNS, but can't do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox необходимо использовать Tox DNS, но не может сделать это через прокси. 
     Игнорировать прокси и подключитесь к Интернету напрямую?</translation>
@@ -270,11 +270,11 @@ which may lead to problems with video calls.</source>
         <translation>Отклонить</translation>
     </message>
     <message>
-        <source>Couldn&apos;t add friend</source>
+        <source>Couldn't add friend</source>
         <translation>Невозможно добавить друга</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
+        <source>You can't add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Вы не можете добавить самого себя в друзья!</translation>
     </message>
@@ -307,8 +307,8 @@ which may lead to problems with video calls.</source>
         <translation>Портативный режим</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВНИМАНИЕ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;За исключением случая, когда вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;точно&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; знаете, что делаете, пожалуйста, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; меняйте здесь ничего. Изменения могут привести к неприятностям, и даже вызвать потерю данных (например, истории переписки).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" color:#ff0000;"&gt;Unless you &lt;/span&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;really&lt;/span&gt;&lt;span style=" color:#ff0000;"&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;not&lt;/span&gt;&lt;span style=" color:#ff0000;"&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;ВНИМАНИЕ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=" color:#ff0000;"&gt;За исключением случая, когда вы &lt;/span&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;точно&lt;/span&gt;&lt;span style=" color:#ff0000;"&gt; знаете, что делаете, пожалуйста, &lt;/span&gt;&lt;span style=" font-weight:600; color:#ff0000;"&gt;не&lt;/span&gt;&lt;span style=" color:#ff0000;"&gt; меняйте здесь ничего. Изменения могут привести к неприятностям, и даже вызвать потерю данных (например, истории переписки).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -322,7 +322,7 @@ which may lead to problems with video calls.</source>
         <translation>Отправить файл</translation>
     </message>
     <message>
-        <source>qTox wasn&apos;t able to open %1</source>
+        <source>qTox wasn't able to open %1</source>
         <translatorcomment>Паравозик не смог. Не сможешь и ты!</translatorcomment>
         <translation>qTox не смог открыть %1</translation>
     </message>
@@ -335,7 +335,7 @@ which may lead to problems with video calls.</source>
         <translation>Плохая идея</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
+        <source>You're trying to send a special (sequential) file, that's not going to work!</source>
         <translatorcomment>...передаёте последовательный файл и получаете te-le-fun-ken. И переводчик работает по другой линии. По линии «Библиотека».</translatorcomment>
         <translation>Вы пытаетесь отправить специальный (последовательный) файл. Это так не работает!</translation>
     </message>
@@ -396,7 +396,7 @@ which may lead to problems with video calls.</source>
         <translation>Включить звук</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
+        <source>Failed to send file "%1"</source>
         <translation>Не удалось отправить файл «%1»</translation>
     </message>
     <message>
@@ -405,7 +405,7 @@ which may lead to problems with video calls.</source>
         <translation>Не удалось открыть временный файл</translation>
     </message>
     <message>
-        <source>qTox wasn&apos;t able to save the screenshot</source>
+        <source>qTox wasn't able to save the screenshot</source>
         <translation>qTox не смог сохранить снимок экрана</translation>
     </message>
     <message>
@@ -473,7 +473,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Toxing on qTox</source>
         <translatorcomment>Как-то так. Может, можно ещё что-нибудь придумать?</translatorcomment>
-        <translation>Всем привет из qTox&apos;а</translation>
+        <translation>Всем привет из qTox'а</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -492,8 +492,8 @@ which may lead to problems with video calls.</source>
         <translation>/me предлагает дружбу.</translation>
     </message>
     <message>
-        <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me предлагает дружбу, &quot;%1&quot;</translation>
+        <source>/me offers friendship, "%1"</source>
+        <translation>/me предлагает дружбу, "%1"</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -511,7 +511,7 @@ History will be disabled!</source>
 История будет отключена!</translation>
     </message>
     <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
+        <source>Please enter the password for the chat history for the profile "%1".</source>
         <comment>used in load() when no hist pw set</comment>
         <translation>Пожалуйста, введите пароль для истории чата профиля «%1».</translation>
     </message>
@@ -524,7 +524,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
+        <comment>used only when pw set before load() doesn't work</comment>
         <translation>Пароль к истории чата не верен. Попробуете другой?</translation>
     </message>
     <message>
@@ -618,7 +618,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>FilesForm</name>
     <message>
         <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
+        <comment>"Headline" of the window</comment>
         <translation>Переданные файлы</translation>
     </message>
     <message>
@@ -719,8 +719,8 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>В новую группу</translation>
     </message>
     <message>
-        <source>Invite to group &apos;%1&apos;</source>
-        <translation>Пригласить в группу &apos;%1&apos;</translation>
+        <source>Invite to group '%1'</source>
+        <translation>Пригласить в группу '%1'</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -732,16 +732,16 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>В новый список</translation>
     </message>
     <message>
-        <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Переместить из списка &apos;%1&apos;</translation>
+        <source>Remove from circle '%1'</source>
+        <translation>Переместить из списка '%1'</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Поместить в список &quot;%1&quot;</translation>
+        <source>Move  to circle "%1"</source>
+        <translation>Поместить в список "%1"</translation>
     </message>
     <message>
         <source>Set alias...</source>
-        <translatorcomment>Может &quot;отображаемое имя&quot;?; Можно даже &apos;элиас&apos; :)</translatorcomment>
+        <translatorcomment>Может "отображаемое имя"?; Можно даже 'элиас' :)</translatorcomment>
         <translation>Установить псевдоним...</translation>
     </message>
     <message>
@@ -811,7 +811,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Идёт звонок</translation>
     </message>
     <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
+        <source>You can't disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation>Нельзя отключиться пока идёт звонок!</translation>
     </message>
@@ -1008,9 +1008,9 @@ instead of system taskbar.</source>
         <translation>Проигрывать звук при получении нового сообщения.</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <source>Open qTox's window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Открывать окно qTox&apos;s, когда вы получили новое сообщение и ещё ни одного окна открыто не было.</translation>
+        <translation>Открывать окно qTox's, когда вы получили новое сообщение и ещё ни одного окна открыто не было.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -1025,7 +1025,7 @@ instead of system taskbar.</source>
         <translation>Выбор отображения разметки.</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation>Если отмечено, групповые беседы будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
     </message>
@@ -1093,7 +1093,7 @@ will be sent to them when they appear online to you.</source>
         <translation>Запускать свёрнутым в трей</translation>
     </message>
     <message>
-        <source>Show contacts&apos; status changes</source>
+        <source>Show contacts' status changes</source>
         <translation>Показывать изменения статусов контактов</translation>
     </message>
     <message>
@@ -1109,7 +1109,7 @@ will be sent to them when they appear online to you.</source>
         <translation>Отображать символы форматирования</translation>
     </message>
     <message>
-        <source>Don&apos;t show formatting characters</source>
+        <source>Don't show formatting characters</source>
         <translation>Не отображать символы форматирования</translation>
     </message>
     <message>
@@ -1118,19 +1118,19 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Основной шрифт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображение разметки:</translation>
     </message>
 </context>
 <context>
@@ -1215,7 +1215,7 @@ will be sent to them when they appear online to you.</source>
     <name>Group</name>
     <message>
         <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <comment>Placeholder when someone's name in a group chat is empty</comment>
         <translation>&lt;Пусто&gt;</translation>
     </message>
 </context>
@@ -1357,8 +1357,8 @@ Share it with your friends to communicate.</source>
         <translation>Профиль</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Текущее расположение профиля:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+        <source>&lt;p&gt;&lt;a href="file:///Dir_Path"&gt;&lt;span style=" text-decoration: NONE; color:#000000;"&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
+        <translation>&lt;p&gt;&lt;a href="file:///Dir_Path"&gt;&lt;span style=" text-decoration: NONE; color:#000000;"&gt;Текущее расположение профиля:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1497,7 +1497,7 @@ Profile does not contain your history.</source>
         <translation>Новый профиль</translation>
     </message>
     <message>
-        <source>Couldn&apos;t create a new profile</source>
+        <source>Couldn't create a new profile</source>
         <translation>Невозможно создать новый профиль</translation>
     </message>
     <message>
@@ -1509,7 +1509,7 @@ Profile does not contain your history.</source>
         <translation>Пароль должен быть длиной не менее 6 символов.</translation>
     </message>
     <message>
-        <source>The passwords you&apos;ve entered are different.
+        <source>The passwords you've entered are different.
 Please make sure to enter same password twice.</source>
         <translation>Введенные пароли не совпадают.
 Пожалуйста, проверьте что введенные пароли идентичны.</translation>
@@ -1519,13 +1519,13 @@ Please make sure to enter same password twice.</source>
         <translation>Профиль с таким именем уже существует.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
+        <source>Unknown error: Couldn't create a new profile.
 If you encountered this error, please report it.</source>
         <translation>Неизвестная ошибка: невозможно создать новый профиль.
 Пожалуйста, сообщите об этой проблеме.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t load this profile</source>
+        <source>Couldn't load this profile</source>
         <translation>Невозможно загрузить данный профиль</translation>
     </message>
     <message>
@@ -1541,7 +1541,7 @@ If you encountered this error, please report it.</source>
         <translation>Неверный пароль.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t load profile</source>
+        <source>Couldn't load profile</source>
         <translation>Невозможно загрузить профиль</translation>
     </message>
     <message>
@@ -1557,7 +1557,7 @@ You may want to create one.</source>
         <translation>Импорт</translation>
     </message>
     <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <source>Password protected profiles can't be automatically loaded.</source>
         <translation>Профили защищенные паролем не могут быть загружены автоматически.</translation>
     </message>
 </context>
@@ -1722,9 +1722,9 @@ Save format changes are possible, which may result in data loss.</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>Rename &quot;%1&quot;</source>
+        <source>Rename "%1"</source>
         <comment>renaming a profile</comment>
-        <translation>Переименовать &quot;%1&quot;</translation>
+        <translation>Переименовать "%1"</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
@@ -1754,7 +1754,7 @@ Please use another image.</source>
         <translation>Профиль уже существует</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
+        <source>A profile named "%1" already exists.</source>
         <comment>rename confirm text</comment>
         <translation>Профиль с именем «%1» уже существует.</translation>
     </message>
@@ -1764,7 +1764,7 @@ Please use another image.</source>
         <translation>Не удалось переименовать</translation>
     </message>
     <message>
-        <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
+        <source>Couldn't rename the profile to "%1"</source>
         <translation>Не удалось переименовать профиль в «%1»</translation>
     </message>
     <message>
@@ -1933,7 +1933,7 @@ Share it with your friends to communicate.</source>
         <translation>Профиль уже существует</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <source>A profile named "%1" already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
     </message>
@@ -1961,7 +1961,7 @@ It will be installed when qTox restarts.</source>
         <translation>Выбран не файл Tox</translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
+        <source>Warning: you've chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
         <translation>Внимание: вы выбрали не файл Tox; игнорирование.</translation>
     </message>
@@ -1971,7 +1971,7 @@ It will be installed when qTox restarts.</source>
         <translation>Профиль уже существует</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <source>A profile named "%1" already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
     </message>
@@ -2042,11 +2042,11 @@ It will be installed when qTox restarts.</source>
         <translation>Рабочий стол</translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
+        <source>Server doesn't support Toxme</source>
         <translation>Сервер не поддерживает Toxme</translation>
     </message>
     <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <source>You're making too many requests. Wait an hour and try again</source>
         <translation>Вы делаете слишком много запросов. Подождите один час и повторите попытку</translation>
     </message>
     <message>
@@ -2058,7 +2058,7 @@ It will be installed when qTox restarts.</source>
         <translation>Этот Tox ID уже зарегистрирован под другим именем</translation>
     </message>
     <message>
-        <source>Please don&apos;t use a space in your name</source>
+        <source>Please don't use a space in your name</source>
         <translation>Пожалуйста, не используйте пробелы в вашем имени</translation>
     </message>
     <message>
@@ -2066,7 +2066,7 @@ It will be installed when qTox restarts.</source>
         <translation>Неверный пароль</translation>
     </message>
     <message>
-        <source>You can&apos;t use this name</source>
+        <source>You can't use this name</source>
         <translation>Нельзя использовать это имя</translation>
     </message>
     <message>
@@ -2086,7 +2086,7 @@ It will be installed when qTox restarts.</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <source>qTox couldn't open your chat logs, they will be disabled.</source>
         <translation>qTox не может загрузить историю переписки, она будет отключена.</translation>
     </message>
     <message>
@@ -2105,8 +2105,8 @@ It will be installed when qTox restarts.</source>
         <translation>Удалить друга</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы действительно хотите удалить &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; из вашего списка контактов?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=" font-weight:600;"&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы действительно хотите удалить &lt;span style=" font-weight:600;"&gt;&amp;lt;name&amp;gt;&lt;/span&gt; из вашего списка контактов?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2153,7 +2153,7 @@ It will be installed when qTox restarts.</source>
         <translation>Пароль слишком короткий</translation>
     </message>
     <message>
-        <source>The password doesn&apos;t match.</source>
+        <source>The password doesn't match.</source>
         <translation>Пароли не совпадают.</translation>
     </message>
 </context>
@@ -2218,7 +2218,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <comment>Don&apos;t send a friend request</comment>
+        <comment>Don't send a friend request</comment>
         <translation>Отмена</translation>
     </message>
 </context>
@@ -2230,18 +2230,18 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Online</source>
-        <comment>Button to set your status to &apos;Online&apos;</comment>
+        <comment>Button to set your status to 'Online'</comment>
         <translation>В сети</translation>
     </message>
     <message>
         <source>Away</source>
-        <comment>Button to set your status to &apos;Away&apos;</comment>
+        <comment>Button to set your status to 'Away'</comment>
         <translatorcomment>Вероятно, это не столь долгое путешествие</translatorcomment>
         <translation>Отошёл</translation>
     </message>
     <message>
         <source>Busy</source>
-        <comment>Button to set your status to &apos;Busy&apos;</comment>
+        <comment>Button to set your status to 'Busy'</comment>
         <translation>Занят</translation>
     </message>
     <message>
@@ -2267,7 +2267,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <comment>Placeholder when someone's name in a group chat is empty</comment>
         <translation>&lt;Пусто&gt;</translation>
     </message>
     <message>
@@ -2399,7 +2399,7 @@ It will be installed when qTox restarts.</source>
         <translation>Профиль</translation>
     </message>
     <message>
-        <source>Couldn&apos;t request friendship</source>
+        <source>Couldn't request friendship</source>
         <translation>Не удалось запросить добавление в друзья</translation>
     </message>
     <message>
@@ -2424,7 +2424,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <comment>e.g. "Dubslow is now online"</comment>
         <translation>%1 сейчас %2</translation>
     </message>
     <message>
