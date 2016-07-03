@@ -380,7 +380,7 @@ void ProfileForm::onDeleteClicked()
             GUI::showError(tr("Files could not be deleted!", "deletion failed title"), message);
         }
 
-        nexus.showLogin();
+        nexus.showLoginLater();
     }
 }
 
@@ -388,7 +388,7 @@ void ProfileForm::onLogoutClicked()
 {
     Nexus& nexus = Nexus::getInstance();
     Settings::getInstance().saveGlobal();
-    nexus.showLogin();
+    nexus.showLoginLater();
 }
 
 void ProfileForm::setPasswordButtonsText()
