@@ -85,8 +85,8 @@ Must be one of the following:
 * **docs**: Documentation only changes
 * **style**: Changes that do not affect the meaning of the code (white-space,
   formatting, etc), but change the style to a more appropriate one
-* **refactor**: A code change that only improves code readability 
-  and reduced complexity, without changing any functionality
+* **refactor**: A code change that only improves code readability
+  and reduces complexity, without changing any functionality
 * **perf**: A code change that improves performance
 * **revert**: Reverts a previous commit
 * **test**: Adding missing tests
