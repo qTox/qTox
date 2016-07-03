@@ -77,6 +77,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
+    void onFriendStatusChanged(uint32_t friendId, Status status);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();

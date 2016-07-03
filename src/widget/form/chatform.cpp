@@ -114,6 +114,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
@@ -516,13 +517,10 @@ void ChatForm::enableCallButtons()
         disableCallButtonsTimer->start(1500); // 1.5sec
         qDebug() << "timer started!!";
     }
-
 }
 
 void ChatForm::disableCallButtons()
 {
-    qDebug() << "disableCallButtons";
-
     // Prevents race enable / disable / onEnable, when it should be disabled
     if (disableCallButtonsTimer)
     {
@@ -552,7 +550,6 @@ void ChatForm::disableCallButtons()
 
 void ChatForm::onEnableCallButtons()
 {
-    qDebug() << "onEnableCallButtons";
     audioInputFlag = false;
     audioOutputFlag = false;
 
@@ -568,9 +565,12 @@ void ChatForm::onEnableCallButtons()
     connect(videoButton, SIGNAL(clicked()),
             this, SLOT(onVideoCallTriggered()));
 
-    disableCallButtonsTimer->stop();
-    delete disableCallButtonsTimer;
-    disableCallButtonsTimer = nullptr;
+    if (disableCallButtonsTimer != nullptr)
+    {
+        disableCallButtonsTimer->stop();
+        delete disableCallButtonsTimer;
+        disableCallButtonsTimer = nullptr;
+    }
 }
 
 void ChatForm::onMicMuteToggle()
@@ -619,6 +619,15 @@ void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
         return;
 
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
+}
+
+void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
+{
+    // Disable call buttons if friend is offline
+    if(friendId == f->getFriendID() && status == Status::Offline)
+        disableCallButtons();
+    else
+        onEnableCallButtons();
 }
 
 void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
@@ -915,6 +924,12 @@ void ChatForm::setFriendTyping(bool isTyping)
 void ChatForm::show(ContentLayout* contentLayout)
 {
     GenericChatForm::show(contentLayout);
+
+    // Disable call buttons if friend is offline
+    if(f->getStatus() == Status::Offline)
+        disableCallButtons();
+    else
+        onEnableCallButtons();
 
     if (callConfirm)
         callConfirm->show();
