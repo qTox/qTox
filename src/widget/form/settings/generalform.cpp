@@ -121,8 +121,9 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));
 
-    bodyUI->txtChatFont->setCurrentFont(s.getChatMessageFont());
-    bodyUI->txtChatFontSize->setValue(s.getChatMessageFont().pixelSize());
+    const QFont chatBaseFont = s.getChatMessageFont();
+    bodyUI->txtChatFontSize->setValue(QFontInfo(chatBaseFont).pixelSize());
+    bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
     bodyUI->markdownComboBox->setCurrentIndex(s.getMarkdownPreference());
     bodyUI->cbAutorun->setChecked(s.getAutorun());
 
