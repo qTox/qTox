@@ -16,7 +16,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

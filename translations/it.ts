@@ -12,11 +12,11 @@
         <translation>Risoluzione di default</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Nessuno</translation>
+        <source>%1p</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1p</source>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

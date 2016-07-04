@@ -8,16 +8,16 @@
         <translation>Varsayılan çözünürlük</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Hiçbiri</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translatorcomment>Hata olabilir.</translatorcomment>
         <translation>Ses/Görüntü</translation>
     </message>
     <message>
         <source>%1p</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

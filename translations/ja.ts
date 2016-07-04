@@ -12,12 +12,12 @@
         <translation type="unfinished">ウィンドウの解像度（初期値）</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished">なし</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translation type="unfinished">音声/ビデオ</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
