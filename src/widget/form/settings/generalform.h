@@ -75,7 +75,7 @@ private slots:
     void onThemeColorChanged(int);
 
     void on_txtChatFont_currentFontChanged(const QFont& f);
-    void on_txtChatFontSize_valueChanged(int arg1);
+    void on_txtChatFontSize_valueChanged(int px);
 
 private:
     void retranslateUi();
