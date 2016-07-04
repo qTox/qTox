@@ -16,8 +16,8 @@
         <translation>Alapértelmezett felbontás</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Nincs</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

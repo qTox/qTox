@@ -16,8 +16,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Адсутнічае</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

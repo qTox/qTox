@@ -8,16 +8,16 @@
         <translation>Vaikelahutus</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Puudub</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translation>Heli/Video</translation>
     </message>
     <message>
         <source>%1p</source>
         <translation>%1p</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -12,12 +12,12 @@
         <translation>Résolution par défaut</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
         <source>%1p</source>
         <translation>%1p</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -166,7 +166,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation>Clé publique:</translation>
+        <translation>Clé publique :</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -203,7 +203,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Choisir un dossier de téléchargement</translation>
+        <translation>Choisir un dossier pour les fichiers téléchargés automatiquement</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -211,7 +211,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation>L&apos;historique de la dicussion avec %1 a été effacé!</translation>
+        <translation>L&apos;historique de la dicussion avec %1 a été effacé !</translation>
     </message>
 </context>
 <context>
@@ -266,7 +266,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox a besoin du DNS de Tox, mais il ne peut pas le faire à travers un proxy.
-    Enlevez le proxy et connectez vous à internet directement?</translation>
+    Enlevez le proxy et connectez vous à internet directement ?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -1085,7 +1085,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les nouvelles préférences Markdown peuvent ne pas être chargées avant le redémarrage de qTox.</translation>
     </message>
     <message>
         <source>Select Markdown preference.</source>
@@ -1109,19 +1109,19 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Police de base :</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>pixels</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Taille : </translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatage Markdown :</translation>
     </message>
 </context>
 <context>
@@ -1184,7 +1184,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Citer le texte sélectionné</translation>
     </message>
 </context>
 <context>
@@ -1638,7 +1638,7 @@ Vous souhaiteriez en créer un.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>MAJUSCULES ACTIVÉES</translation>
     </message>
 </context>
 <context>
@@ -1841,12 +1841,12 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation>Les fichiers suivant n&apos;ont pas pu être supprimés:</translation>
+        <translation>Les fichiers suivants n&apos;ont pas pu être supprimés :</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation>Veuillez les supprimer manuellement</translation>
+        <translation>Veuillez les supprimer manuellement.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
@@ -1893,7 +1893,7 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Choix du mot de passe pour le profil</translation>
     </message>
 </context>
 <context>
@@ -2404,7 +2404,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished">&lt;Vide&gt;</translation>
+        <translation>&lt;Vide&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
@@ -2431,7 +2431,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher</translation>
     </message>
 </context>
 </TS>

@@ -12,11 +12,11 @@
         <translation>Standardopløsning</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Ingen</translation>
+        <source>%1p</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1p</source>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

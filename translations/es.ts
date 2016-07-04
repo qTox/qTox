@@ -16,8 +16,8 @@
         <translation>Resolución por defecto</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Ninguno</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

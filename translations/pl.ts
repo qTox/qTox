@@ -16,8 +16,8 @@
         <translation>%1p</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Brak</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

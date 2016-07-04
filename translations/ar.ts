@@ -8,16 +8,16 @@
         <translation>الأبعاد الطبيعية</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>لا شيئ</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translation>صوت/فيديو</translation>
     </message>
     <message>
         <source>%1p</source>
         <translation>%1p</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

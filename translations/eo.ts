@@ -12,11 +12,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
+        <source>Audio/Video</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Audio/Video</source>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

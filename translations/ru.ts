@@ -12,12 +12,12 @@
         <translation>Разрешение по умолчанию</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Отсутствует</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translation>Аудио/Видео</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1118,19 +1118,19 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Основной шрифт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображение разметки:</translation>
     </message>
 </context>
 <context>
