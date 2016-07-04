@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiviert</translation>
     </message>
 </context>
 <context>
@@ -1110,8 +1110,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation>
-Formatierungszeichen anzeigen</translation>
+        <translation>Formatierungszeichen anzeigen</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
@@ -1119,15 +1118,16 @@ Formatierungszeichen anzeigen</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Sound abspielen, wenn Besetzt</translation>
+        <translation>Auch Ton abspielen während man „beschäftigt“ ist</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation>Basis Schrift :</translation>
+        <translation>Schriftart:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>Pixel</translation>
+        <translatorcomment>Keine Übersetzung notwendig</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Size: </source>
@@ -1135,7 +1135,7 @@ Formatierungszeichen anzeigen</translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation>Markdownformat:</translation>
+        <translation>Markdown-Format:</translation>
     </message>
 </context>
 <context>
@@ -1653,7 +1653,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>Feststelltaste aktiviert</translation>
     </message>
 </context>
 <context>
@@ -1903,12 +1903,12 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Passwort ändern</translation>
+        <translation>Passwort ändern</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profil mit Passwort schützen</translation>
     </message>
 </context>
 <context>
@@ -2094,11 +2094,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Problem mit HTTPS-Verbindung.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Interner ToxMe-Fehler.</translation>
     </message>
 </context>
 <context>
@@ -2448,7 +2448,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Öffnen</translation>
     </message>
 </context>
 </TS>
