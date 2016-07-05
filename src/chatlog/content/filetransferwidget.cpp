@@ -478,7 +478,10 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         {
             QString path = QFileDialog::getSaveFileName(parentWidget(),
                                                         tr("Save a file", "Title of the file saving dialog"),
-                                                        Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName);
+                                                        Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName,
+                                                        0,
+                                                        0,
+                                                        QFileDialog::DontUseNativeDialog);
             acceptTransfer(path);
         }
     }

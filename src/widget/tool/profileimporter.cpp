@@ -36,11 +36,12 @@ ProfileImporter::ProfileImporter(QWidget *parent) : QWidget(parent)
 
 bool ProfileImporter::importProfile()
 {
-    QString path = QFileDialog::getOpenFileName( this,
+    QString path = QFileDialog::getOpenFileName(this,
                                                 tr("Import profile", "import dialog title"),
                                                 QDir::homePath(),
-                                                tr("Tox save file (*.tox)", "import dialog filter") );
-
+                                                tr("Tox save file (*.tox)", "import dialog filter"),
+                                                0,
+                                                QFileDialog::DontUseNativeDialog);
     if (path.isEmpty())
          return false;
 

@@ -379,8 +379,8 @@ void GeneralForm::onAutoSaveDirChange()
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0,
                                                           tr("Choose an auto accept directory", "popup title"),  //opens in home directory
-                                                             QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
-                                                          );
+                                                          QDir::homePath(),
+                                                          QFileDialog::DontUseNativeDialog);
     if (directory.isEmpty())  // cancel was pressed
         directory = previousDir;
 

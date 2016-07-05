@@ -187,7 +187,11 @@ void ChatForm::onTextEditChanged()
 void ChatForm::onAttachClicked()
 {
     QStringList paths = QFileDialog::getOpenFileNames(this,
-                                                      tr("Send a file"));
+                                                      tr("Send a file"),
+                                                      QDir::homePath(),
+                                                      0,
+                                                      0,
+                                                      QFileDialog::DontUseNativeDialog);
     if (paths.isEmpty())
         return;
 
