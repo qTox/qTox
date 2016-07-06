@@ -50,6 +50,14 @@ git config --global alias.logs 'log --show-signature'
 
 - **always** test PR that is being merged.
 - **always** GPG-sign PR that you're merging.
+- **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
+  
+  You don't have to use it, but then you're running into risk of breaking
+  travis build of master & other PRs, since it verifies all commit messages,
+  indlucing merge messages.
+  
+  Risk, that can be avoided when one doesn't type manually merge message :wink:
+- **might want** to use [`test-pr.sh`].
   
   Commits that are about to be merged don't have to be signed, but merge-commit
   **must** be signed. To simplify process, and ensure that things are done
@@ -91,3 +99,4 @@ git config --global alias.logs 'log --show-signature'
 
 [commit message format]: /CONTRIBUTING.md#commit-message-format
 [`merge-pr.sh`]: /merge-pr.sh
+[`test-pr.sh`]: /test-pr.sh
