@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="lt_LT">
+<TS version="2.1" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -17,7 +17,15 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Išjungta</translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation>Leisti bandomąjį signalą keičiant garsumą.</translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation>Slankikliu galite nustatyti įvesties įrenginio signalo stiprumą nuo %1dB iki %2dB.</translation>
     </message>
 </context>
 <context>
@@ -28,7 +36,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Šliaužikliu nustatykite garsiakalbių garsumą.</translation>
+        <translation>Slankikliu galite nustatyti garsiakalbių garsumą.</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -1092,7 +1100,7 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Neformatuotas tekstas</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
@@ -1104,23 +1112,23 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Net jei įjungta būsena „Užsiėmęs“</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Standartinis šriftas:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Dydis:</translation>
     </message>
     <message>
         <source>Markdown format:</source>
-        <translation type="unfinished"></translation>
+        <translation>„Markdown“ nustatymai:</translation>
     </message>
 </context>
 <context>
@@ -1183,7 +1191,7 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Cituoti pažymėtą tekstą</translation>
     </message>
 </context>
 <context>
@@ -1639,7 +1647,7 @@ Plural:10–20,30,40,..</translatorcomment>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>ĮJUNGTAS „CAPS LOCK“</translation>
     </message>
 </context>
 <context>
@@ -1890,12 +1898,12 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Pakeisti slaptažodį</translation>
+        <translation>Pakeisti slaptažodį</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti profilio slaptažodį</translation>
     </message>
 </context>
 <context>
@@ -2081,11 +2089,11 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko sudaryti HTTPS ryšio</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidinė „ToxMe“ klaida</translation>
     </message>
 </context>
 <context>
@@ -2435,7 +2443,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fokusuoti langą</translation>
     </message>
 </context>
 </TS>
