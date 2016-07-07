@@ -45,12 +45,12 @@ public:
     static Profile* createProfile(QString name, QString password);
     ~Profile();
 
-    Core* getCore();
+    Core* getCore() const;
     QString getName() const;
 
     void startCore(); ///< Starts the Core thread
     void restartCore(); ///< Delete core and restart a new one
-    bool isNewProfile();
+    bool isNewProfile() const;
     bool isEncrypted() const; ///< Returns true if we have a password set (doesn't check the actual file on disk)
     bool checkPassword(); ///< Checks whether the password is valid
     QString getPassword() const;
@@ -61,19 +61,19 @@ public:
     void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
     void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.
 
-    QPixmap loadAvatar(); ///< Get our avatar from cache
-    QPixmap loadAvatar(const QString& ownerId); ///< Get a contact's avatar from cache
-    QByteArray loadAvatarData(const QString& ownerId); ///< Get a contact's avatar from cache
-    QByteArray loadAvatarData(const QString& ownerId, const QString& password); ///< Get a contact's avatar from cache, with a specified profile password.
+    QPixmap loadAvatar() const; ///< Get our avatar from cache
+    QPixmap loadAvatar(const QString& ownerId) const; ///< Get a contact's avatar from cache
+    QByteArray loadAvatarData(const QString& ownerId) const; ///< Get a contact's avatar from cache
+    QByteArray loadAvatarData(const QString& ownerId, const QString& password) const; ///< Get a contact's avatar from cache, with a specified profile password.
     void saveAvatar(QByteArray pic, const QString& ownerId); ///< Save an avatar to cache
-    QByteArray getAvatarHash(const QString& ownerId); ///< Get the tox hash of a cached avatar
+    QByteArray getAvatarHash(const QString& ownerId) const; ///< Get the tox hash of a cached avatar
     void removeAvatar(const QString& ownerId); ///< Removes a cached avatar
     void removeAvatar(); ///< Removes our own avatar
 
     /// Returns true if the history is enabled in the settings, and loaded successfully for this profile
-    bool isHistoryEnabled();
+    bool isHistoryEnabled() const;
     /// May return a nullptr if the history failed to load
-    History* getHistory();
+    History* getHistory() const;
 
     /// Removes the profile permanently
     /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
@@ -102,7 +102,7 @@ private:
     static void importProfile(QString name);
     /// Gets the path of the avatar file cached by this profile and corresponding to this owner ID
     /// If forceUnencrypted, we return the path to the plaintext file even if we're an encrypted profile
-    QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
+    QString avatarPath(const QString& ownerId, bool forceUnencrypted = false) const;
 
 private:
     Core* core;

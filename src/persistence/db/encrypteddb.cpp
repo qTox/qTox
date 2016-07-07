@@ -183,13 +183,9 @@ bool EncryptedDb::check(const TOX_PASS_KEY &passkey, const QString &fname)
     return state;
 }
 
-bool EncryptedDb::checkCmd(const QString &cmd)
+bool EncryptedDb::checkCmd(const QString &cmd) const
 {
-    if (cmd.startsWith("INSERT", Qt::CaseInsensitive) || cmd.startsWith("UPDATE", Qt::CaseInsensitive)
-            || cmd.startsWith("DELETE", Qt::CaseInsensitive))
-    {
-        return true;
-    }
-
-    return false;
+    return cmd.startsWith("INSERT", Qt::CaseInsensitive)
+            || cmd.startsWith("UPDATE", Qt::CaseInsensitive)
+            || cmd.startsWith("DELETE", Qt::CaseInsensitive);
 }

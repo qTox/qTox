@@ -165,7 +165,7 @@ void ChatLog::updateSceneRect()
     setSceneRect(calculateSceneRect());
 }
 
-void ChatLog::layout(int start, int end, qreal width)
+void ChatLog::layout(int start, int end, qreal width) const
 {
     if (lines.empty())
         return;
@@ -347,7 +347,7 @@ qreal ChatLog::useableWidth() const
     return width() - verticalScrollBar()->sizeHint().width() - margins.right() - margins.left();
 }
 
-void ChatLog::reposition(int start, int end, qreal deltaY)
+void ChatLog::reposition(int start, int end, qreal deltaY) const
 {
     if (lines.isEmpty())
         return;
@@ -537,7 +537,7 @@ ChatLine::Ptr ChatLog::getTypingNotification() const
     return typingNotification;
 }
 
-QVector<ChatLine::Ptr> ChatLog::getLines()
+QVector<ChatLine::Ptr> ChatLog::getLines() const
 {
     return lines;
 }
@@ -753,7 +753,7 @@ QRectF ChatLog::calculateSceneRect() const
     return QRectF(-margins.left(), -margins.top(), useableWidth(), bottom + margins.bottom() + margins.top());
 }
 
-void ChatLog::onSelectionTimerTimeout()
+void ChatLog::onSelectionTimerTimeout() const
 {
     const int scrollSpeed = 10;
 

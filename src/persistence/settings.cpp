@@ -600,7 +600,7 @@ uint32_t Settings::makeProfileId(const QString& profile)
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
-QString Settings::getSettingsDirPath()
+QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
@@ -619,7 +619,7 @@ QString Settings::getSettingsDirPath()
 #endif
 }
 
-QString Settings::getAppDataDirPath()
+QString Settings::getAppDataDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
@@ -640,7 +640,7 @@ QString Settings::getAppDataDirPath()
 #endif
 }
 
-QString Settings::getAppCacheDirPath()
+QString Settings::getAppCacheDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
@@ -1846,7 +1846,7 @@ void Settings::setAutoLogin(bool state)
     autoLogin = state;
 }
 
-void Settings::createPersonal(QString basename)
+void Settings::createPersonal(QString basename) const
 {
     QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
     qDebug() << "Creating new profile settings in " << path;
@@ -1862,7 +1862,7 @@ void Settings::createPersonal(QString basename)
     ps.endGroup();
 }
 
-void Settings::createSettingsDir()
+void Settings::createSettingsDir() const
 {
     QString dir = Settings::getSettingsDirPath();
     QDir directory(dir);

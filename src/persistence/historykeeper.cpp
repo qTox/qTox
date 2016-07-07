@@ -172,7 +172,7 @@ QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessages()
     return res;
 }
 
-QString HistoryKeeper::unWrapMessage(const QString &str)
+QString HistoryKeeper::unWrapMessage(const QString &str) const
 {
     QString unWrappedMessage(str);
     unWrappedMessage.replace("''", "'");

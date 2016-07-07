@@ -55,7 +55,6 @@ QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& 
     return dataStream.operator >>((uint8_t&)tag);
 }
 
-
 QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
 {
     unsigned char num3;
@@ -563,7 +562,7 @@ void SettingsSerializer::removeGroup(int group)
     groups.removeAt(group);
 }
 
-void SettingsSerializer::writePackedVariant(QDataStream& stream, const QVariant& v)
+void SettingsSerializer::writePackedVariant(QDataStream& stream, const QVariant& v) const
 {
     assert(v.canConvert(QVariant::String));
     QString str = v.toString();

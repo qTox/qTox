@@ -39,7 +39,8 @@ ChatMessage::ChatMessage()
 
 }
 
-ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage, MessageType type, bool isMe, const QDateTime &date)
+ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QString &rawMessage,
+                                                MessageType type, bool isMe, const QDateTime &date)
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 

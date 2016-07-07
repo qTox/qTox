@@ -160,7 +160,7 @@ bool SmileyPack::load(const QString& filename)
     return true;
 }
 
-QString SmileyPack::smileyfied(QString msg)
+QString SmileyPack::smileyfied(QString msg) const
 {
     QMutexLocker locker(&loadingMutex);
 
@@ -191,7 +191,7 @@ QList<QStringList> SmileyPack::getEmoticons() const
     return emoticons;
 }
 
-QString SmileyPack::getAsRichText(const QString &key)
+QString SmileyPack::getAsRichText(const QString &key) const
 {
     return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
 }

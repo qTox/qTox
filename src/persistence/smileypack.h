@@ -41,9 +41,9 @@ public:
     static QList<QPair<QString, QString> > listSmileyPacks(const QStringList& paths = SMILEYPACK_SEARCH_PATHS);
     static bool isValid(const QString& filename);
 
-    QString smileyfied(QString msg);
+    QString smileyfied(QString msg) const;
     QList<QStringList> getEmoticons() const;
-    QString getAsRichText(const QString& key);
+    QString getAsRichText(const QString& key) const;
     QIcon getAsIcon(const QString& key);
 
 private slots:

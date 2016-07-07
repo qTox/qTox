@@ -109,7 +109,7 @@ FileTransferWidget::~FileTransferWidget()
     delete ui;
 }
 
-void FileTransferWidget::autoAcceptTransfer(const QString &path)
+void FileTransferWidget::autoAcceptTransfer(const QString &path) const
 {
     QString filepath;
     int number = 0;
@@ -132,7 +132,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
         qWarning() << "Cannot write to " << filepath;
 }
 
-void FileTransferWidget::acceptTransfer(const QString &filepath)
+void FileTransferWidget::acceptTransfer(const QString &filepath) const
 {
     if (filepath.isEmpty())
         return;
@@ -385,7 +385,7 @@ void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
         onFileTransferCancelled(file);
 }
 
-QString FileTransferWidget::getHumanReadableSize(qint64 size)
+QString FileTransferWidget::getHumanReadableSize(qint64 size) const
 {
     static const char* suffix[] = {"B","kiB","MiB","GiB","TiB"};
     int exp = 0;
@@ -455,7 +455,7 @@ void FileTransferWidget::setupButtons()
     }
 }
 
-void FileTransferWidget::handleButton(QPushButton *btn)
+void FileTransferWidget::handleButton(QPushButton *btn) const
 {
     if (fileInfo.direction == ToxFile::SENDING)
     {
@@ -528,17 +528,17 @@ void FileTransferWidget::showPreview(const QString &filename)
     }
 }
 
-void FileTransferWidget::onTopButtonClicked()
+void FileTransferWidget::onTopButtonClicked() const
 {
     handleButton(ui->topButton);
 }
 
-void FileTransferWidget::onBottomButtonClicked()
+void FileTransferWidget::onBottomButtonClicked() const
 {
     handleButton(ui->bottomButton);
 }
 
-void FileTransferWidget::onPreviewButtonClicked()
+void FileTransferWidget::onPreviewButtonClicked() const
 {
     handleButton(ui->previewButton);
 }
@@ -563,7 +563,8 @@ QPixmap FileTransferWidget::scaleCropIntoSquare(const QPixmap &source, const int
     // Only one dimension will be bigger after Qt::KeepAspectRatioByExpanding
     if (result.width() > targetSize)
         return result.copy((result.width() - targetSize) / 2, 0, targetSize, targetSize);
-    else if (result.height() > targetSize)
+
+    if (result.height() > targetSize)
         return result.copy(0, (result.height() - targetSize) / 2, targetSize, targetSize);
 
     // Picture was rectangle in the first place, no cropping

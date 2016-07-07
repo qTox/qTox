@@ -76,7 +76,7 @@ public:
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
 
-    int getColumnCount();
+    int getColumnCount() const;
     int getRow() const;
 
     ChatLineContent* getContent(int col) const;

@@ -118,7 +118,7 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
-int ChatLine::getColumnCount()
+int ChatLine::getColumnCount() const
 {
     return content.size();
 }

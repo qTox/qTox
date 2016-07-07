@@ -41,7 +41,7 @@ class FileTransferWidget : public QWidget
 public:
     explicit FileTransferWidget(QWidget *parent, ToxFile file);
     virtual ~FileTransferWidget();
-    void autoAcceptTransfer(const QString& path);
+    void autoAcceptTransfer(const QString& path) const;
 
 protected slots:
     void onFileTransferInfo(ToxFile file);
@@ -54,12 +54,12 @@ protected slots:
     void fileTransferBrokenUnbroken(ToxFile file, bool broken);
 
 protected:
-    QString getHumanReadableSize(qint64 size);
+    QString getHumanReadableSize(qint64 size) const;
     void hideWidgets();
     void setupButtons();
-    void handleButton(QPushButton* btn);
+    void handleButton(QPushButton* btn) const;
     void showPreview(const QString& filename);
-    void acceptTransfer(const QString& filepath);
+    void acceptTransfer(const QString& filepath) const;
     void setBackgroundColor(const QColor& c, bool whiteFont);
     void setButtonColor(const QColor& c);
 
@@ -68,9 +68,9 @@ protected:
     virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
-    void onTopButtonClicked();
-    void onBottomButtonClicked();
-    void onPreviewButtonClicked();
+    void onTopButtonClicked() const;
+    void onBottomButtonClicked() const;
+    void onPreviewButtonClicked() const;
 
 private:
     static QPixmap scaleCropIntoSquare(const QPixmap &source, int targetSize);

@@ -27,7 +27,7 @@ History::~History()
     db.sync();
 }
 
-bool History::isValid()
+bool History::isValid() const
 {
     return db.isOpen();
 }

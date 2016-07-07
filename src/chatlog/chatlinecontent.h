@@ -44,10 +44,9 @@ public:
     virtual void selectionDoubleClick(QPointF scenePos);
     virtual void selectionFocusChanged(bool focusIn);
     virtual bool isOverSelection(QPointF scenePos) const;
+
     virtual QString getSelectedText() const;
-
     virtual QString getText() const;
-
     virtual qreal getAscent() const;
 
     virtual QRectF boundingRect() const = 0;

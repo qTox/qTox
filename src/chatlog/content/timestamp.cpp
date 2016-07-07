@@ -25,7 +25,7 @@ Timestamp::Timestamp(const QDateTime &time, const QString &format, const QFont &
     this->time = time;
 }
 
-QDateTime Timestamp::getTime()
+QDateTime Timestamp::getTime() const
 {
     return time;
 }

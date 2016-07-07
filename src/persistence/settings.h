@@ -44,12 +44,12 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void destroyInstance();
-    QString getSettingsDirPath(); ///< The returned path ends with a directory separator
-    QString getAppDataDirPath(); ///< The returned path ends with a directory separator
-    QString getAppCacheDirPath(); ///< The returned path ends with a directory separator
+    QString getSettingsDirPath() const; ///< The returned path ends with a directory separator
+    QString getAppDataDirPath() const; ///< The returned path ends with a directory separator
+    QString getAppCacheDirPath() const; ///< The returned path ends with a directory separator
 
-    void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
-    void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
+    void createSettingsDir() const; ///< Creates a path to the settings dir, if it doesn't already exist
+    void createPersonal(QString basename) const; ///< Write a default personal .ini settings file for a profile
 
     void savePersonal(); ///< Asynchronous, saves the current profile
     void savePersonal(Profile *profile); ///< Asynchronous
@@ -120,6 +120,7 @@ public:
     // Toxme
     void deleteToxme();
     void setToxme(QString name, QString server, QString bio, bool priv, QString pass = "");
+
     QString getToxmeInfo() const;
     void setToxmeInfo(QString info);
 
@@ -132,8 +133,8 @@ public:
     QString getToxmePass() const;
     void setToxmePass(const QString &pass);
     
-    void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
+    void setAutoSaveEnabled(bool newValue);
 
     bool getForceTCP() const;
     void setForceTCP(bool newValue);
@@ -314,10 +315,11 @@ public:
     void setAutoLogin(bool state);
 
     int getCircleCount() const;
+    void setCircleName(int id, const QString &name);
+    QString getCircleName(int id) const;
     int addCircle(const QString &name = QString());
     int removeCircle(int id);
-    QString getCircleName(int id) const;
-    void setCircleName(int id, const QString &name);
+
     bool getCircleExpanded(int id) const;
     void setCircleExpanded(int id, bool expanded);
 
