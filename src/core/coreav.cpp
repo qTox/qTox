@@ -171,7 +171,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     qDebug() << QString("Starting call with %1").arg(friendNum);
-    if(calls.contains(friendNum))
+    if (calls.contains(friendNum))
     {
         qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
         return false;
@@ -545,12 +545,13 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         return;
     }
 
-    if(!self->calls.contains(friendNum))
+    if (!self->calls.contains(friendNum))
     {
         qWarning() << QString("stateCallback called, but call %1 is already dead").arg(friendNum);
         self->threadSwitchLock.clear(std::memory_order_release);
         return;
     }
+
     ToxFriendCall& call = self->calls[friendNum];
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR)

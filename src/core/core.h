@@ -115,7 +115,7 @@ public slots:
      int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
-    void sendFile(uint32_t friendId, QString Filename, QString FilePath, long long filesize);
+    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
     void cancelFileSend(uint32_t friendId, uint32_t fileNum);
     void cancelFileRecv(uint32_t friendId, uint32_t fileNum);

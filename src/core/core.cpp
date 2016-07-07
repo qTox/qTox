@@ -618,7 +618,7 @@ int Core::sendAction(uint32_t friendId, const QString &action)
 void Core::sendTyping(uint32_t friendId, bool typing)
 {
     bool ret = tox_self_set_typing(tox, friendId, typing, nullptr);
-    if (ret == false)
+    if (!ret)
         emit failedToSetTyping(typing);
 }
 
@@ -656,9 +656,9 @@ void Core::changeGroupTitle(int groupId, const QString& title)
         emit groupTitleChanged(groupId, getUsername(), title);
 }
 
-void Core::sendFile(uint32_t friendId, QString Filename, QString FilePath, long long filesize)
+void Core::sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize)
 {
-    CoreFile::sendFile(this, friendId, Filename, FilePath, filesize);
+    CoreFile::sendFile(this, friendId, filename, filePath, filesize);
 }
 
 void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
@@ -701,15 +701,14 @@ void Core::removeFriend(uint32_t friendId, bool fake)
     if (!isReady() || fake)
         return;
 
-    if (tox_friend_delete(tox, friendId, nullptr) == false)
+    if (!tox_friend_delete(tox, friendId, nullptr))
     {
         emit failedToRemoveFriend(friendId);
+        return;
     }
-    else
-    {
-        profile.saveToxSave();
-        emit friendRemoved(friendId);
-    }
+
+    profile.saveToxSave();
+    emit friendRemoved(friendId);
 }
 
 void Core::removeGroup(int groupId, bool fake)
@@ -741,16 +740,15 @@ void Core::setUsername(const QString& username)
 
     CString cUsername(username);
 
-    if (tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr) == false)
+    if (!tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr))
     {
         emit failedToSetUsername(username);
+        return;
     }
-    else
-    {
-        emit usernameSet(username);
-        if (ready)
-            profile.saveToxSave();
-    }
+
+    emit usernameSet(username);
+    if (ready)
+        profile.saveToxSave();
 }
 
 void Core::setAvatar(const QByteArray& data)
@@ -817,16 +815,15 @@ void Core::setStatusMessage(const QString& message)
 
     CString cMessage(message);
 
-    if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false)
+    if (!tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr))
     {
         emit failedToSetStatusMessage(message);
+        return;
     }
-    else
-    {
-        if (ready)
-            profile.saveToxSave();
-        emit statusMessageSet(message);
-    }
+
+    if (ready)
+        profile.saveToxSave();
+    emit statusMessageSet(message);
 }
 
 void Core::setStatus(Status status)
@@ -1188,7 +1185,7 @@ QString Core::getPeerName(const ToxId& id) const
         return name;
 
     uint8_t* cname = new uint8_t[nameSize<TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
-    if (tox_friend_get_name(tox, friendId, cname, nullptr) == false)
+    if (!tox_friend_get_name(tox, friendId, cname, nullptr))
     {
         qWarning() << "getPeerName: Can't get name of friend "+QString().setNum(friendId);
         delete[] cname;
