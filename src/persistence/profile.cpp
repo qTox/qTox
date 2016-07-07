@@ -328,7 +328,7 @@ void Profile::saveToxSave(QByteArray data)
     saveFile.write(data);
 
     // check if everything got written
-    if(saveFile.flush())
+    if (saveFile.flush())
     {
         saveFile.commit();
         newProfile = false;
@@ -511,23 +511,23 @@ QVector<QString> Profile::remove()
 
     QVector<QString> ret;
 
-    if(!profileMain.remove() && profileMain.exists())
+    if (!profileMain.remove() && profileMain.exists())
     {
         ret.push_back(profileMain.fileName());
         qWarning() << "Could not remove file " << profileMain.fileName();
     }
-    if(!profileConfig.remove() && profileConfig.exists())
+    if (!profileConfig.remove() && profileConfig.exists())
     {
         ret.push_back(profileConfig.fileName());
         qWarning() << "Could not remove file " << profileConfig.fileName();
     }
 
-    if(!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
+    if (!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
     {
         ret.push_back(historyLegacyUnencrypted.fileName());
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
-    if(!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
+    if (!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
     {
         ret.push_back(historyLegacyEncrypted.fileName());
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
@@ -535,7 +535,7 @@ QVector<QString> Profile::remove()
 
     if (history)
     {
-        if(!history->remove() && QFile::exists(History::getDbPath(name)))
+        if (!history->remove() && QFile::exists(History::getDbPath(name)))
         {
             ret.push_back(History::getDbPath(name));
             qWarning() << "Could not remove file " << History::getDbPath(name);

@@ -28,7 +28,10 @@ public:
     virtual ~GenericForm() {}
 
     virtual QString getFormName() = 0;
-    QPixmap getFormIcon() {return formIcon;}
+    QPixmap getFormIcon()
+    {
+        return formIcon;
+    }
 
 protected:
     QPixmap formIcon;

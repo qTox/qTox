@@ -97,7 +97,7 @@ static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsig
     vfve.height = h;
     vfve.width = w;
 
-    while(!ioctl(fd, VIDIOC_ENUM_FRAMEINTERVALS, &vfve)) {
+    while (!ioctl(fd, VIDIOC_ENUM_FRAMEINTERVALS, &vfve)) {
         int rate;
         switch (vfve.type) {
         case V4L2_FRMSIZE_TYPE_DISCRETE:
@@ -128,13 +128,15 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
     v4l2_fmtdesc vfd{};
     vfd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-    while(!ioctl(fd, VIDIOC_ENUM_FMT, &vfd)) {
+    while (!ioctl(fd, VIDIOC_ENUM_FMT, &vfd))
+    {
         vfd.index++;
 
         v4l2_frmsizeenum vfse{};
         vfse.pixel_format = vfd.pixelformat;
 
-        while(!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse)) {
+        while (!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse))
+        {
             VideoMode mode;
             mode.pixel_format = vfse.pixel_format;
             switch (vfse.type) {
@@ -150,6 +152,7 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
             default:
                 continue;
             }
+
             QVector<unsigned short> rates = getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
             for (unsigned short rate : rates)
             {

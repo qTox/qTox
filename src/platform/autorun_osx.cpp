@@ -36,16 +36,8 @@ bool Platform::setAutorun(bool on)
     autoRun.setValue("Label","chat.tox.qtox.autorun");
     autoRun.setValue("Program", qtoxDir);
 
-    if (on)
-    {
-        autoRun.setValue("RunAtLoad",true);
-        state = true;
-    }
-    else
-    {
-        autoRun.setValue("RunAtLoad",false);
-        state = false;
-    }
+    state = on;
+    autoRun.setValue("RunAtLoad", state);
 }
 
 bool Platform::getAutorun()

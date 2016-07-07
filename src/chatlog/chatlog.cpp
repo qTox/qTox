@@ -69,20 +69,29 @@ ChatLog::ChatLog(QWidget* parent)
     copyAction->setIcon(QIcon::fromTheme("edit-copy"));
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
-    connect(copyAction, &QAction::triggered, this, [this]() { copySelectedText(); });
+    connect(copyAction, &QAction::triggered, this, [this]()
+    {
+        copySelectedText();
+    });
     addAction(copyAction);
 
 #ifdef Q_OS_LINUX
     // Ctrl+Insert shortcut
     QShortcut* copyCtrlInsShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Insert), this);
-    connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]() { copySelectedText(); });
+    connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]()
+    {
+        copySelectedText();
+    });
 #endif
 
     // select all action (ie. Ctrl+A)
     selectAllAction = new QAction(this);
     selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
     selectAllAction->setShortcut(QKeySequence::SelectAll);
-    connect(selectAllAction, &QAction::triggered, this, [this]() { selectAll(); });
+    connect(selectAllAction, &QAction::triggered, this, [this]()
+    {
+        selectAll();
+    });
     addAction(selectAllAction);
 
     // This timer is used to scroll the view while the user is

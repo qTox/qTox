@@ -203,9 +203,8 @@ void ScreenGrabberChooserRectItem::mousePressHandle(int x, int y, QGraphicsScene
     Q_UNUSED(x);
     Q_UNUSED(y);
 
-    if(event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton)
         this->state = HandleResizing;
-
 }
 
 void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneMouseEvent* event)
@@ -221,13 +220,13 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
     bool increaseX = ((x < 0) == (delta.x() < 0));
     bool increaseY = ((y < 0) == (delta.y() < 0));
 
-    if((delta.x() < 0 && increaseX) || (delta.x() >= 0 && !increaseX))
+    if ((delta.x() < 0 && increaseX) || (delta.x() >= 0 && !increaseX))
     {
         moveBy(delta.x(), 0);
         delta.rx() *= -1;
     }
 
-    if((delta.y() < 0 && increaseY) || (delta.y() >= 0 && !increaseY))
+    if ((delta.y() < 0 && increaseY) || (delta.y() >= 0 && !increaseY))
     {
         moveBy(0, delta.y());
         delta.ry() *= -1;

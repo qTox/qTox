@@ -183,14 +183,10 @@ void GenericChatroomWidget::reloadTheme()
 
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-    if(event->button() == Qt::LeftButton)
-    {
+    if (event->button() == Qt::LeftButton)
         emit chatroomWidgetClicked(this);
-    }
     else
-    {
         event->ignore();
-    }
 }
 
 void GenericChatroomWidget::enterEvent(QEvent*)
