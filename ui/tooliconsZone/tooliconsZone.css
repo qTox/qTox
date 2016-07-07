@@ -1,0 +1,23 @@
+QPushButton
+{
+    background-color: @themeDark;
+    border: none;
+}
+
+QPushButton:hover
+{
+    background-color: @themeMediumDark;
+    border: none;
+}
+
+QPushButton:checked
+{
+    background-color: @themeMedium;
+    border: none;
+}
+
+QPushButton:pressed
+{
+    background-color: @themeMediumLight;
+    border: none;
+}

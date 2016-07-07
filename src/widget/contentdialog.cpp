@@ -59,7 +59,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     boxLayout->setSpacing(0);
 
     splitter = new QSplitter(this);
-    setStyleSheet("QSplitter{color: rgb(255, 255, 255);background-color: rgb(255, 255, 255);alternate-background-color: rgb(255, 255, 255);border-color: rgb(255, 255, 255);gridline-color: rgb(255, 255, 255);selection-color: rgb(255, 255, 255);selection-background-color: rgb(255, 255, 255);}QSplitter:handle{color: rgb(255, 255, 255);background-color: rgb(255, 255, 255);}");
+    setStyleSheet(Style::getStylesheet(":/ui/contentDialog/contentDialog.css"));
     splitter->setHandleWidth(6);
 
     QWidget *friendWidget = new QWidget();
@@ -455,7 +455,7 @@ void ContentDialog::updateTitleAndStatusIcon(const QString& username)
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
 
         // it's null when it's a groupchat
-        if(displayWidget->getFriend() == nullptr)
+        if (displayWidget->getFriend() == nullptr)
         {
             setWindowIcon(QIcon(":/img/group.svg"));
             return;
@@ -611,7 +611,7 @@ void ContentDialog::moveEvent(QMoveEvent* event)
 
 void ContentDialog::keyPressEvent(QKeyEvent* event)
 {
-    if(event->key() != Qt::Key_Escape)
+    if (event->key() != Qt::Key_Escape)
         QDialog::keyPressEvent(event); // Ignore escape keyboard shortcut.
 }
 

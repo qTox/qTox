@@ -212,10 +212,10 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         // PS3-Cam protection, everything above 60fps makes no sense
-        if(mode.FPS > 60)
+        if (mode.FPS > 60)
             continue;
 
-        for(auto iter = idealModes.begin(); iter != idealModes.end(); ++iter)
+        for (auto iter = idealModes.begin(); iter != idealModes.end(); ++iter)
         {
             int res = iter->first;
             VideoMode idealMode = iter->second;

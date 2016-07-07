@@ -254,52 +254,25 @@ void CategoryWidget::onCompactChanged(bool _compact)
     topLayout->setSpacing(0);
     topLayout->setMargin(0);
 
-    (void)_compact;
+    Q_UNUSED(_compact);
     setCompact(true);
 
-    if (true)
-    {
-        nameLabel->minimizeMaximumWidth();
+    nameLabel->minimizeMaximumWidth();
 
-        mainLayout = nullptr;
+    mainLayout = nullptr;
 
-        container->setFixedHeight(25);
-        container->setLayout(topLayout);
+    container->setFixedHeight(25);
+    container->setLayout(topLayout);
 
-        topLayout->addSpacing(18);
-        topLayout->addWidget(&statusPic);
-        topLayout->addSpacing(5);
-        topLayout->addWidget(nameLabel, 100);
-        topLayout->addWidget(lineFrame, 1);
-        topLayout->addSpacing(5);
-        topLayout->addWidget(statusLabel);
-        topLayout->addSpacing(5);
-        topLayout->activate();
-    }
-    /*else
-    {
-        nameLabel->setMaximumWidth(QWIDGETSIZE_MAX);
-
-        mainLayout = new QVBoxLayout();
-        mainLayout->setSpacing(0);
-        mainLayout->setContentsMargins(20, 0, 20, 0);
-
-        container->setFixedHeight(25);
-        container->setLayout(mainLayout);
-
-        topLayout->addWidget(&statusPic);
-        topLayout->addSpacing(10);
-        topLayout->addWidget(nameLabel, 1);
-        topLayout->addSpacing(5);
-        topLayout->addWidget(statusLabel);
-        topLayout->activate();
-
-        mainLayout->addStretch();
-        mainLayout->addLayout(topLayout);
-        mainLayout->addWidget(lineFrame);
-        mainLayout->addStretch();
-        mainLayout->activate();
-    }*/
+    topLayout->addSpacing(18);
+    topLayout->addWidget(&statusPic);
+    topLayout->addSpacing(5);
+    topLayout->addWidget(nameLabel, 100);
+    topLayout->addWidget(lineFrame, 1);
+    topLayout->addSpacing(5);
+    topLayout->addWidget(statusLabel);
+    topLayout->addSpacing(5);
+    topLayout->activate();
 
     Style::repolish(this);
 }
