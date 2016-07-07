@@ -46,14 +46,14 @@ public:
 
     const ToxAV* getToxAv() const;
 
-    bool anyActiveCalls(); ///< true is any calls are currently active (note: a call about to start is not yet active)
-    bool isCallVideoEnabled(uint32_t friendNum);
+    bool anyActiveCalls() const; ///< true is any calls are currently active (note: a call about to start is not yet active)
+    bool isCallVideoEnabled(uint32_t friendNum) const;
     /// Returns false only on error, but not if there's nothing to send
     bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
 
-    VideoSource* getVideoSourceFromCall(int callNumber); ///< Get a call's video source
+    VideoSource* getVideoSourceFromCall(int callNumber) const; ///< Get a call's video source
     void invalidateCallSources(); ///< Forces to regenerate each call's audio sources
     void sendNoVideo(); ///< Signal to all peers that we're not sending video anymore. The next frame sent cancels this.
 

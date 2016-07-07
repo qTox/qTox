@@ -34,7 +34,7 @@ public:
     explicit CString(const CString& cstr);
     ~CString();
 
-    uint8_t* data();
+    uint8_t* data() const;
     uint16_t size() const;
 
     static QString toString(const uint8_t* cMessage, const uint16_t cMessageSize);

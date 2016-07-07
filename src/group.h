@@ -45,8 +45,8 @@ public:
     QStringList getPeerList() const;
     bool isSelfPeerNumber(int peernumber) const;
 
-    GroupChatForm *getChatForm();
-    GroupWidget *getGroupWidget();
+    GroupChatForm *getChatForm() const;
+    GroupWidget *getGroupWidget() const;
 
     void setEventFlag(int f);
     int getEventFlag() const;

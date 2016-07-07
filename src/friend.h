@@ -46,7 +46,7 @@ public:
     bool hasAlias() const;
 
     void setStatusMessage(QString message);
-    QString getStatusMessage();
+    QString getStatusMessage() const;
 
     void setEventFlag(int f);
     int getEventFlag() const;
@@ -57,7 +57,7 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm *getChatForm();
+    ChatForm *getChatForm() const;
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 

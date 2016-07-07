@@ -13,8 +13,12 @@ public:
     explicit IndexedList() = default;
 
     // Qt
-    inline bool isEmpty() { return v.empty(); }
-    bool contains(int i) { return std::find_if(begin(), end(), [i](T& t){return (int)t == i;}) != end(); }
+    inline bool isEmpty() const { return v.empty(); }
+    bool contains(int i) const
+    {
+        const_iterator it = std::find_if(begin(), end(), [i](const T& t){ return (int)t == i;});
+        return it != end();
+    }
     void remove(int i) { v.erase(std::remove_if(begin(), end(), [i](T& t){return (int)t == i;}), end()); }
     T& operator[](int i)
     {

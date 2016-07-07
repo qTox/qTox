@@ -113,7 +113,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     return res;
 }
 
-void Core::checkEncryptedHistory()
+void Core::checkEncryptedHistory() const
 {
     QString path = HistoryKeeper::getHistoryPath();
     bool exists = QFile::exists(path) && QFile(path).size()>0;
