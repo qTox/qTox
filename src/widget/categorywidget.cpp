@@ -158,9 +158,8 @@ void CategoryWidget::search(const QString &searchString, bool updateAll, bool hi
 bool CategoryWidget::cycleContacts(bool forward)
 {
     if (listLayout->friendTotalCount() == 0)
-    {
         return false;
-    }
+
     if (forward)
     {
         if (listLayout->getLayoutOnline()->count() != 0)

@@ -49,7 +49,7 @@ public:
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
-    OfflineMsgEngine* getOfflineMsgEngine();
+    OfflineMsgEngine* getOfflineMsgEngine() const;
 
     virtual void show(ContentLayout* contentLayout) final override;
 

@@ -72,10 +72,11 @@ int FriendListLayout::indexOfFriendWidget(GenericChatItemWidget* widget, bool on
 {
     if (online)
         return friendOnlineLayout.indexOfSortedWidget(widget);
+
     return friendOfflineLayout.indexOfSortedWidget(widget);
 }
 
-void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
+void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget) const
 {
     while (friendOnlineLayout.getLayout()->count() != 0)
     {
@@ -108,7 +109,7 @@ bool FriendListLayout::hasChatrooms() const
     return !(friendOfflineLayout.getLayout()->isEmpty() && friendOnlineLayout.getLayout()->isEmpty());
 }
 
-void FriendListLayout::searchChatrooms(const QString& searchString, bool hideOnline, bool hideOffline)
+void FriendListLayout::searchChatrooms(const QString& searchString, bool hideOnline, bool hideOffline) const
 {
     friendOnlineLayout.search(searchString, hideOnline);
     friendOfflineLayout.search(searchString, hideOffline);

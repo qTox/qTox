@@ -67,23 +67,23 @@ signals:
 
 public slots:
     void onSelfAvatarLoaded(const QPixmap &pic);
-    void onLogoutClicked();
+    void onLogoutClicked() const;
 
 private slots:
     void setPasswordButtonsText();
     void setToxId(const QString& id);
     void copyIdClicked();
-    void onUserNameEdited();
-    void onStatusMessageEdited();
+    void onUserNameEdited() const;
+    void onStatusMessageEdited() const;
     void onRenameClicked();
     void onExportClicked();
-    void onDeleteClicked();
-    void onCopyQrClicked();
+    void onDeleteClicked() const;
+    void onCopyQrClicked() const;
     void onSaveQrClicked();
-    void onDeletePassClicked();
-    void onChangePassClicked();
+    void onDeletePassClicked() const;
+    void onChangePassClicked() const;
     void onAvatarClicked();
-    void showProfilePictureContextMenu(const QPoint &point);
+    void showProfilePictureContextMenu(const QPoint &point) const;
     void onRegisterButtonClicked();
 
 private:

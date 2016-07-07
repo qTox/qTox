@@ -46,7 +46,7 @@ signals:
 #endif
 
 private slots:
-    void onAutoLoginToggled(int state);
+    void onAutoLoginToggled(int state) const;
     void onLoginUsernameSelected(const QString& name);
     void onPasswordEdited();
     // Buttons to change page
@@ -59,9 +59,6 @@ private slots:
 
 private:
     void retranslateUi();
-    void showCapsIndicator();
-    void hideCapsIndicator();
-    void checkCapsLock();
 
 private:
     Ui::LoginScreen *ui;

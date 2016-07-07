@@ -32,12 +32,14 @@ public:
     void addFriendWidget(FriendWidget* widget, Status s);
     void removeFriendWidget(FriendWidget* widget, Status s);
     int indexOfFriendWidget(GenericChatItemWidget* widget, bool online) const;
-    void moveFriendWidgets(FriendListWidget* listWidget);
+    void moveFriendWidgets(FriendListWidget* listWidget) const;
     int friendOnlineCount() const;
     int friendTotalCount() const;
 
     bool hasChatrooms() const;
-    void searchChatrooms(const QString& searchString, bool hideOnline = false, bool hideOffline = false);
+    void searchChatrooms(const QString& searchString,
+                         bool hideOnline = false,
+                         bool hideOffline = false) const;
 
     QLayout* getLayoutOnline() const;
     QLayout* getLayoutOffline() const;

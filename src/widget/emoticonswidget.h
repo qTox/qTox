@@ -36,7 +36,7 @@ signals:
 private slots:
     void onSmileyClicked();
     void onPageButtonClicked();
-    void PageButtonsUpdate();
+    void pageButtonsUpdate();
 
 protected:
     void mouseReleaseEvent(QMouseEvent *ev) final override;

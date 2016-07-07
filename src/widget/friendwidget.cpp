@@ -420,7 +420,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
     }
 }
 
-void FriendWidget::setAlias(const QString& _alias)
+void FriendWidget::setAlias(const QString& _alias) const
 {
     QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
     Friend* f = FriendList::findFriend(friendId);

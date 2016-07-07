@@ -103,8 +103,8 @@ SystemTrayIcon::~SystemTrayIcon()
 QString SystemTrayIcon::extractIconToFile(QIcon icon, QString name)
 {
     QString iconPath;
-    (void) icon;
-    (void) name;
+    Q_UNUSED(icon);
+    Q_UNUSED(name);
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     iconPath = Settings::getInstance().getSettingsDirPath()+"/"+name+".png";
     QSize iconSize = icon.actualSize(QSize{64,64});

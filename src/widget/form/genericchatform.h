@@ -64,7 +64,7 @@ public:
 
     void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
     void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
-    bool isEmpty();
+    bool isEmpty() const;
 
     ChatLog* getChatLog() const;
     QDate getLatestDate() const;
@@ -82,8 +82,8 @@ protected slots:
     void onChatContextMenuRequested(QPoint pos);
     void onEmoteButtonClicked();
     void onEmoteInsertRequested(QString str);
-    void onSaveLogClicked();
-    void onCopyLogClicked();
+    void onSaveLogClicked() const;
+    void onCopyLogClicked() const;
     void clearChatArea(bool);
     void clearChatArea();
     void onSelectAllClicked();
@@ -100,7 +100,7 @@ protected:
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
-    QString resolveToxId(const ToxId &id);
+    QString resolveToxId(const ToxId &id) const;
     void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;

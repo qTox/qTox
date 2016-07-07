@@ -58,77 +58,53 @@ void GUI::clearContacts()
 void GUI::setEnabled(bool state)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._setEnabled(state);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_setEnabled", Qt::BlockingQueuedConnection,
                                   Q_ARG(bool, state));
-    }
 }
 
 void GUI::setWindowTitle(const QString& title)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._setWindowTitle(title);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_setWindowTitle", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title));
-    }
 }
 
 void GUI::reloadTheme()
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._reloadTheme();
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_reloadTheme", Qt::BlockingQueuedConnection);
-    }
 }
 
 void GUI::showUpdateDownloadProgress()
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._showUpdateDownloadProgress();
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_showUpdateDownloadProgress", Qt::BlockingQueuedConnection);
-    }
 }
 
 void GUI::showInfo(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._showInfo(title, msg);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
                         Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
-    }
 }
 
 void GUI::showWarning(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         getInstance()._showWarning(title, msg);
-    }
     else
-    {
         QMetaObject::invokeMethod(&getInstance(), "_showWarning", Qt::BlockingQueuedConnection,
                         Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
-    }
 }
 
 void GUI::showError(const QString& title, const QString& msg)
@@ -154,19 +130,15 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
                       bool yesno)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         return getInstance()._askQuestion(title, msg, defaultAns, warning, yesno);
-    }
-    else
-    {
-        bool ret;
-        QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning),
-                                  Q_ARG(bool, yesno));
-        return ret;
-    }
+
+    bool ret;
+    QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(bool, ret),
+                              Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                              Q_ARG(bool, defaultAns), Q_ARG(bool, warning),
+                              Q_ARG(bool, yesno));
+    return ret;
 }
 
 bool GUI::askQuestion(const QString& title, const QString& msg,
@@ -174,18 +146,14 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
                       bool defaultAns, bool warning)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         return getInstance()._askQuestion(title, msg, button1, button2, defaultAns, warning);
-    }
-    else
-    {
-        bool ret;
-        QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
-        return ret;
-    }
+
+    bool ret;
+    QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(bool, ret),
+                              Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
+                              Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
+    return ret;
 }
 
 QString GUI::itemInputDialog(QWidget * parent, const QString & title,
@@ -195,46 +163,38 @@ QString GUI::itemInputDialog(QWidget * parent, const QString & title,
                     Qt::InputMethodHints hints)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         return getInstance()._itemInputDialog(parent, title, label, items, current, editable, ok, flags, hints);
-    }
-    else
-    {
-        QString r;
-        QMetaObject::invokeMethod(&getInstance(), "_itemInputDialog", Qt::BlockingQueuedConnection,
-                    Q_RETURN_ARG(QString, r),
-                    Q_ARG(QWidget*, parent), Q_ARG(const QString&, title),
-                    Q_ARG(const QString&,label), Q_ARG(const QStringList&, items),
-                    Q_ARG(int, current), Q_ARG(bool, editable), Q_ARG(bool*, ok),
-                    Q_ARG(Qt::WindowFlags, flags), Q_ARG(Qt::InputMethodHints, hints));
-        return r;
-    }
+
+    QString r;
+    QMetaObject::invokeMethod(&getInstance(), "_itemInputDialog", Qt::BlockingQueuedConnection,
+                Q_RETURN_ARG(QString, r),
+                Q_ARG(QWidget*, parent), Q_ARG(const QString&, title),
+                Q_ARG(const QString&,label), Q_ARG(const QStringList&, items),
+                Q_ARG(int, current), Q_ARG(bool, editable), Q_ARG(bool*, ok),
+                Q_ARG(Qt::WindowFlags, flags), Q_ARG(Qt::InputMethodHints, hints));
+    return r;
 }
 
 QString GUI::passwordDialog(const QString& cancel, const QString& body)
 {
     if (QThread::currentThread() == qApp->thread())
-    {
         return getInstance()._passwordDialog(cancel, body);
-    }
-    else
-    {
-        QString r;
-        QMetaObject::invokeMethod(&getInstance(), "_passwordDialog", Qt::BlockingQueuedConnection,
-                        Q_RETURN_ARG(QString, r),
-                        Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
-        return r;
-    }
+
+    QString r;
+    QMetaObject::invokeMethod(&getInstance(), "_passwordDialog", Qt::BlockingQueuedConnection,
+                    Q_RETURN_ARG(QString, r),
+                    Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
+    return r;
 }
 
 // Private implementations
 
-void GUI::_clearContacts()
+void GUI::_clearContacts() const
 {
     Nexus::getDesktopGUI()->clearContactsList();
 }
 
-void GUI::_setEnabled(bool state)
+void GUI::_setEnabled(bool state) const
 {
     Nexus::getDesktopGUI()->setEnabled(state);
 }
@@ -247,34 +207,34 @@ void GUI::_setWindowTitle(const QString& title)
         getMainWidget()->setWindowTitle("qTox - " +title);
 }
 
-void GUI::_reloadTheme()
+void GUI::_reloadTheme() const
 {
     Nexus::getDesktopGUI()->reloadTheme();
 }
 
-void GUI::_showInfo(const QString& title, const QString& msg)
+void GUI::_showInfo(const QString& title, const QString& msg) const
 {
     QMessageBox::information(getMainWidget(), title, msg);
 }
 
-void GUI::_showWarning(const QString& title, const QString& msg)
+void GUI::_showWarning(const QString& title, const QString& msg) const
 {
     QMessageBox::warning(getMainWidget(), title, msg);
 }
 
-void GUI::_showError(const QString& title, const QString& msg)
+void GUI::_showError(const QString& title, const QString& msg) const
 {
     QMessageBox::critical(getMainWidget(), title, msg);
 }
 
-void GUI::_showUpdateDownloadProgress()
+void GUI::_showUpdateDownloadProgress() const
 {
     Nexus::getDesktopGUI()->showUpdateDownloadProgress();
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
                        bool defaultAns, bool warning,
-                       bool yesno)
+                       bool yesno) const
 {
     QMessageBox::StandardButton positiveButton = yesno ? QMessageBox::Yes : QMessageBox::Ok;
     QMessageBox::StandardButton negativeButton = yesno ? QMessageBox::No : QMessageBox::Cancel;
@@ -289,7 +249,7 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
                        const QString& button1, const QString& button2,
-                       bool defaultAns, bool warning)
+                       bool defaultAns, bool warning) const
 {
     QMessageBox box(warning ? QMessageBox::Warning : QMessageBox::Question,
         title, msg, QMessageBox::NoButton, getMainWidget());
@@ -306,12 +266,12 @@ QString GUI::_itemInputDialog(QWidget * parent, const QString & title,
                               const QString & label, const QStringList & items,
                               int current, bool editable, bool * ok,
                               Qt::WindowFlags flags,
-                              Qt::InputMethodHints hints)
+                              Qt::InputMethodHints hints) const
 {
     return QInputDialog::getItem(parent, title, label, items, current, editable, ok, flags, hints);
 }
 
-QString GUI::_passwordDialog(const QString& cancel, const QString& body)
+QString GUI::_passwordDialog(const QString& cancel, const QString& body) const
 {
     // we use a hack. It is considered that closing the dialog without explicitly clicking
     // disable history is confusing. But we can't distinguish between clicking the cancel
@@ -342,10 +302,14 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
             cancel->setDefault(true);
         }
         else
+        {
             qWarning() << "PasswordDialog: Missing button!";
+        }
     }
     else
+    {
         qWarning() << "PasswordDialog: No QDialogButtonBox!";
+    }
 
     // using similar code, set QLabels to wrap
     for (auto* label : dialog.findChildren<QLabel*>())
@@ -356,14 +320,10 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
         int val = dialog.exec();
         if (val == QDialog::Accepted)
             return QString();
-        else
-        {
-            ret = dialog.textValue();
-            if (!ret.isEmpty())
-                return ret;
-        }
-        dialog.setTextValue("");
-        dialog.setLabelText(body + "\n\n" + tr("You must enter a non-empty password:"));
+
+        ret = dialog.textValue();
+        if (!ret.isEmpty())
+            return ret;
     }
 }
 

@@ -92,7 +92,7 @@ void AboutUser::onSelectDirClicked()
  * @brief AboutUser::onAcceptedClicked When users clicks the bottom OK button,
  *          save all settings
  */
-void AboutUser::onAcceptedClicked()
+void AboutUser::onAcceptedClicked() const
 {
     Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
     Settings::getInstance().saveGlobal();

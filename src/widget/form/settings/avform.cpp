@@ -498,7 +498,7 @@ void AVForm::onAudioOutDevChanged(int deviceIndex)
     bodyUI->playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
 
-void AVForm::onPlaybackValueChanged(int value)
+void AVForm::onPlaybackValueChanged(int value) const
 {
     Settings::getInstance().setOutVolume(value);
 
@@ -512,7 +512,7 @@ void AVForm::onPlaybackValueChanged(int value)
     }
 }
 
-void AVForm::onMicrophoneValueChanged(int value)
+void AVForm::onMicrophoneValueChanged(int value) const
 {
     const qreal dB = value / 10.0;
 

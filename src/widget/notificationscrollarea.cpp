@@ -129,7 +129,7 @@ void NotificationScrollArea::findNextWidget()
 {
     int value = 0;
     GenericChatroomWidget* next = nullptr;
-    QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
+    QHash<GenericChatroomWidget*, Visibility>::const_iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
     for (; i != trackedWidgets.end(); ++i)
@@ -164,7 +164,7 @@ void NotificationScrollArea::findPreviousWidget()
 {
     int value = 0;
     GenericChatroomWidget* next = nullptr;
-    QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
+    QHash<GenericChatroomWidget*, Visibility>::const_iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
     for (; i != trackedWidgets.end(); ++i)

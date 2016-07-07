@@ -113,7 +113,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
     }
 }
 
-bool GenericChatroomWidget::isActive()
+bool GenericChatroomWidget::isActive() const
 {
     return active;
 }

@@ -61,8 +61,8 @@ private slots:
     // audio
     void onAudioInDevChanged(int deviceIndex);
     void onAudioOutDevChanged(int deviceIndex);
-    void onPlaybackValueChanged(int value);
-    void onMicrophoneValueChanged(int value);
+    void onPlaybackValueChanged(int value) const;
+    void onMicrophoneValueChanged(int value) const;
 
     // camera
     void onVideoDevChanged(int index);

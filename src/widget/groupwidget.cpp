@@ -151,14 +151,14 @@ void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
-    if (g)
-    {
-        int peersCount = g->getPeersCount();
-        if (peersCount == 1)
-            statusMessageLabel->setText(tr("1 user in chat"));
-        else
-            statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
-    }
+    if (!g)
+        return;
+
+    int peersCount = g->getPeersCount();
+    if (peersCount == 1)
+        statusMessageLabel->setText(tr("1 user in chat"));
+    else
+        statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
 }
 
 void GroupWidget::setAsActiveChatroom()
@@ -211,7 +211,7 @@ Group* GroupWidget::getGroup() const
 
 bool GroupWidget::chatFormIsSet(bool focus) const
 {
-    (void)focus;
+    Q_UNUSED(focus);
     Group* g = GroupList::findGroup(groupId);
     return ContentDialog::existsGroupWidget(groupId, focus) || g->getChatForm()->isVisible();
 }
@@ -264,12 +264,12 @@ void GroupWidget::setName(const QString& name)
 void GroupWidget::retranslateUi()
 {
     Group* g = GroupList::findGroup(groupId);
-    if (g)
-    {
-        int peersCount = g->getPeersCount();
-        if (peersCount == 1)
-            statusMessageLabel->setText(tr("1 user in chat"));
-        else
-            statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
-    }
+    if (!g)
+        return;
+
+    int peersCount = g->getPeersCount();
+    if (peersCount == 1)
+        statusMessageLabel->setText(tr("1 user in chat"));
+    else
+        statusMessageLabel->setText(tr("%1 users in chat").arg(peersCount));
 }

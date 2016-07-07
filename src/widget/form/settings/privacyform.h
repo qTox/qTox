@@ -38,9 +38,9 @@ public:
     }
 
 private slots:
-    void onEnableLoggingUpdated();
-    void onTypingNotificationEnabledUpdated();
-    void setNospam();
+    void onEnableLoggingUpdated() const;
+    void onTypingNotificationEnabledUpdated() const;
+    void setNospam() const;
     void generateRandomNospam();
     void onNospamEdit();
     virtual void showEvent(QShowEvent*) final override;

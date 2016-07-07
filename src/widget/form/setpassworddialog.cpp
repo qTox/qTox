@@ -105,7 +105,7 @@ int SetPasswordDialog::getPasswordStrength(QString pass)
     return score;
 }
 
-QString SetPasswordDialog::getPassword()
+QString SetPasswordDialog::getPassword() const
 {
     return ui->passwordlineEdit->text();
 }
