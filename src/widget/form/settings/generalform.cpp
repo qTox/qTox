@@ -355,11 +355,13 @@ void GeneralForm::onEmoticonSizeChanged()
 void GeneralForm::onTimestampSelected(int index)
 {
     Settings::getInstance().setTimestampFormat(timeFormats.at(index));
+    Translator::translate();
 }
 
 void GeneralForm::onDateFormatSelected(int index)
 {
     Settings::getInstance().setDateFormat(dateFormats.at(index));
+    Translator::translate();
 }
 
 void GeneralForm::onAutoAwayChanged()
