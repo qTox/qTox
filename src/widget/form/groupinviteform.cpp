@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QWindow>
 #include "ui_mainwindow.h"
+#include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
 #include "src/nexus.h"
@@ -107,8 +108,10 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     CroppingLabel* groupLabel = new CroppingLabel(this);
     groupLabels.insert(groupLabel);
     QString name = Nexus::getCore()->getFriendUsername(friendId);
-    QString time = QDateTime::currentDateTime().toString();
-    groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(name, time));
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString date = currentDateTime.toString(Settings::getInstance().getDateFormat());
+    QString time = currentDateTime.toString(Settings::getInstance().getTimestampFormat());
+    groupLabel->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name, date, time));
     groupLayout->addWidget(groupLabel);
 
     QPushButton* acceptButton = new QPushButton(this);
@@ -206,8 +209,11 @@ void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
     GroupInvite invite = groupInvites.at(index);
 
     QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
-    QString date = invite.time.toString();
-    label->setText(tr("Invited by <b>%1</b> on %2.").arg(name, date));
+
+    QString date = invite.time.toString(Settings::getInstance().getDateFormat());
+    QString time = invite.time.toString(Settings::getInstance().getTimestampFormat());
+
+    label->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name, date, time));
 }
 
 void GroupInviteForm::retranslateAcceptButton(QPushButton* acceptButton)
