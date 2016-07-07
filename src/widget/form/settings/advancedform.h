@@ -34,7 +34,10 @@ class AdvancedForm : public GenericForm
 public:
     AdvancedForm();
     ~AdvancedForm();
-    virtual QString getFormName() final override {return tr("Advanced");}
+    virtual QString getFormName() final override
+    {
+        return tr("Advanced");
+    }
 
 protected:
     bool eventFilter(QObject *o, QEvent *e) final override;

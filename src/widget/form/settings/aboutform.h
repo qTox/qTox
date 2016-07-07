@@ -35,7 +35,10 @@ class AboutForm  : public GenericForm
 public:
     AboutForm();
     ~AboutForm();
-    virtual QString getFormName() final override {return tr("About");}
+    virtual QString getFormName() final override
+    {
+        return tr("About");
+    }
 
 protected:
 

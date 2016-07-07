@@ -32,7 +32,10 @@ class PrivacyForm : public GenericForm
 public:
     PrivacyForm();
     ~PrivacyForm();
-    virtual QString getFormName() final override {return tr("Privacy");}
+    virtual QString getFormName() final override
+    {
+        return tr("Privacy");
+    }
 
 private slots:
     void onEnableLoggingUpdated();

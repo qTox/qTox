@@ -555,7 +555,7 @@ void Widget::moveEvent(QMoveEvent *event)
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
+    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray())
     {
         event->ignore();
         this->hide();
@@ -1012,7 +1012,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
-    if(f->getFriendWidget()->isActive())
+    if (f->getFriendWidget()->isActive())
         setWindowTitle(f->getFriendWidget()->getTitle());
 
     ContentDialog::updateFriendStatus(friendId);
@@ -1334,7 +1334,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    if(addFriendForm->addFriendRequest(userId, message))
+    if (addFriendForm->addFriendRequest(userId, message))
     {
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
@@ -1973,7 +1973,7 @@ void Widget::clearAllReceipts()
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
-    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
+    ui->tooliconsZone->setStyleSheet(Style::getStylesheet(":/ui/tooliconsZone/tooliconsZone.css"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));

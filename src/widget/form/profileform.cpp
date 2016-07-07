@@ -370,11 +370,11 @@ void ProfileForm::onDeleteClicked()
 
         QVector<QString> manualDeleteFiles = nexus.getProfile()->remove();
 
-        if(!manualDeleteFiles.empty())
+        if (!manualDeleteFiles.empty())
         {
             QString message = tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
 
-            for(auto& file : manualDeleteFiles)
+            for (auto& file : manualDeleteFiles)
             {
                 message = message + file + "\n";
             }
