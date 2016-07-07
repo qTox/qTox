@@ -95,25 +95,24 @@ void osx::migrateProfiles()
                                       + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox");
     QDir dir;
 
-    if (checkDir.exists() && checkDir.isDir())
-    {
-        qDebug() << "OS X: Old settings directory detected migrating to default";
-        if( !dir.rename(oldPath, newPath) )
-        {
-            qDebug() << "OS X: Profile migration failed. ~/Library/Application Support/Tox already exists. Using alternate migration method.";
-            QString OSXMigrater = "../Resources/OSX-Migrater.sh" ;
-            QProcess::execute(OSXMigrater);
-            QMessageBox MigrateProfile;
-            MigrateProfile.setIcon(QMessageBox::Information);
-            MigrateProfile.setWindowModality(Qt::ApplicationModal);
-            MigrateProfile.setText("Alternate profile migration method used.");
-            MigrateProfile.setInformativeText("It has been detected that your profiles \nwhere migrated to the new settings directory; \nusing the alternate migration method. \n\nA backup can be found in your: \n/Users/[USER]/.Tox-Backup[DATE-TIME] \n\nJust in case. \r\n");
-            MigrateProfile.exec();
-        }
-    }
-    else
+    if (!checkDir.exists() || !checkDir.isDir())
     {
         qDebug() << "OS X: Old settings directory not detected";
+        return;
+    }
+
+    qDebug() << "OS X: Old settings directory detected migrating to default";
+    if (!dir.rename(oldPath, newPath))
+    {
+        qDebug() << "OS X: Profile migration failed. ~/Library/Application Support/Tox already exists. Using alternate migration method.";
+        QString OSXMigrater = "../Resources/OSX-Migrater.sh" ;
+        QProcess::execute(OSXMigrater);
+        QMessageBox MigrateProfile;
+        MigrateProfile.setIcon(QMessageBox::Information);
+        MigrateProfile.setWindowModality(Qt::ApplicationModal);
+        MigrateProfile.setText("Alternate profile migration method used.");
+        MigrateProfile.setInformativeText("It has been detected that your profiles \nwhere migrated to the new settings directory; \nusing the alternate migration method. \n\nA backup can be found in your: \n/Users/[USER]/.Tox-Backup[DATE-TIME] \n\nJust in case. \r\n");
+        MigrateProfile.exec();
     }
 }
 // End migrateProfiles() compatibility code
