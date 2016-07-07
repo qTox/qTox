@@ -312,7 +312,7 @@ bool RawDatabase::remove()
 }
 
 
-QString RawDatabase::deriveKey(QString password)
+QString RawDatabase::deriveKey(const QString &password)
 {
     if (password.isEmpty())
         return {};

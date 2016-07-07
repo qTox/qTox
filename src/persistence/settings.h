@@ -130,7 +130,7 @@ public:
     void setToxmePriv(bool priv);
     
     QString getToxmePass() const;
-    void setToxmePass(QString pass);
+    void setToxmePass(const QString &pass);
     
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
@@ -354,7 +354,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
 private slots:
-    void savePersonal(QString profileName, QString password);
+    void savePersonal(QString profileName, const QString &password);
 
 private:
     bool loaded;

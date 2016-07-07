@@ -72,7 +72,7 @@ QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
     return dataStream;
 }
 
-SettingsSerializer::SettingsSerializer(QString filePath, QString password)
+SettingsSerializer::SettingsSerializer(QString filePath, const QString &password)
     : path{filePath}, password{password},
       group{-1}, array{-1}, arrayIndex{-1}
 {

@@ -509,7 +509,7 @@ void Settings::savePersonal(Profile* profile)
     savePersonal(profile->getName(), profile->getPassword());
 }
 
-void Settings::savePersonal(QString profileName, QString password)
+void Settings::savePersonal(QString profileName, const QString &password)
 {
     if (QThread::currentThread() != settingsThread)
         return (void) QMetaObject::invokeMethod(&getInstance(), "savePersonal",
@@ -941,7 +941,7 @@ QString Settings::getToxmePass() const
     return toxmePass;
 }
 
-void Settings::setToxmePass(QString pass)
+void Settings::setToxmePass(const QString &pass)
 {
     QMutexLocker locker{&bigLock};
     toxmePass = pass;

@@ -89,7 +89,7 @@ protected slots:
 
 protected:
     /// Derives a 256bit key from the password and returns it hex-encoded
-    static QString deriveKey(QString password);
+    static QString deriveKey(const QString &password);
     /// Extracts a variant from one column of a result row depending on the column type
     static QVariant extractData(sqlite3_stmt* stmt, int col);
 
