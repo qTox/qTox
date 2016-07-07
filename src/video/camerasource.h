@@ -55,7 +55,7 @@ public:
     void open(const QString& deviceName);
     void open(const QString& deviceName, VideoMode mode);
     void close(); ///< Equivalent to opening the source with the video device "none". Stops streaming.
-    bool isOpen();
+    bool isOpen() const;
 
     // VideoSource interface
     virtual bool subscribe() override;
