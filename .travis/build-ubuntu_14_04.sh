@@ -15,6 +15,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# stop as soon as one of steps will fail
+set -e -o pipefail
 
 # Qt 5.3, since that's the lowest supported version
 sudo add-apt-repository -y ppa:beineri/opt-qt532-trusty
