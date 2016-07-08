@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1270</width>
-        <height>1468</height>
+        <width>1278</width>
+        <height>1382</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -336,12 +336,12 @@ instead of closing itself.</string>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QLabel" name="transLabel_2">
+             <widget class="QLabel" name="textStyleLabel">
               <property name="toolTip">
-               <string>New Markdown preference may not load until qTox restarts.</string>
+               <string>New text styling preference may not load until qTox restarts.</string>
               </property>
               <property name="text">
-               <string>Markdown format:</string>
+               <string>Text Style format:</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -375,7 +375,7 @@ instead of closing itself.</string>
              </spacer>
             </item>
             <item row="1" column="1" colspan="2">
-             <widget class="QComboBox" name="markdownComboBox">
+             <widget class="QComboBox" name="textStyleComboBox">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -383,7 +383,10 @@ instead of closing itself.</string>
                </sizepolicy>
               </property>
               <property name="toolTip">
-               <string>Select Markdown preference.</string>
+               <string>Select text styling preference.</string>
+              </property>
+              <property name="currentIndex">
+               <number>1</number>
               </property>
               <item>
                <property name="text">

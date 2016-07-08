@@ -220,15 +220,15 @@ Videochats and file transfers are currently unsupported in groupchats.
 ## Message Styling
 
 Similar to other messaging applications, qTox supports stylized text formatting.
-Formatting follows
-[Markdown syntax](https://daringfireball.net/projects/markdown/syntax), thus:
 
-* For **Bold**, surround text in double asterisks or underscores: `**text**`
-  or `__text__`
-* For **Italics**, surround text in single asterisks or underscores: `*text*`
-  or `_text_`
-* For **Strikethrough**, surround text in single tilde's: `~text~`
-* For **Underline**, surround text in single dashes: `-text-`
+* For **Bold**, surround text in single or double asterisks: `*text*`
+ or `**text**`
+* For **Italics**, surround text in single or double forward slashes: `/text/`
+ or `//text//`
+* For **Strikethrough**, surround text in single or double tilde's: `~text~`
+ or `~~text~~`
+* For **Underline**, surround text in single or double underscores: `_text_`
+ or `__text__`
 * For **Code**, surround your code in in single backticks: `` `text` ``
 
 Additionally, qTox supports three modes of Markdown parsing:

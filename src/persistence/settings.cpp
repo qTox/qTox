@@ -182,7 +182,7 @@ void Settings::loadGlobal()
         separateWindow = s.value("separateWindow", false).toBool();
         dontGroupWindows = s.value("dontGroupWindows", true).toBool();
         groupchatPosition = s.value("groupchatPosition", true).toBool();
-        markdownPreference = static_cast<MarkdownType>(s.value("markdownPreference", 1).toInt());
+        stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -434,7 +434,7 @@ void Settings::saveGlobal()
         s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
-        s.setValue("markdownPreference", static_cast<int>(markdownPreference));
+        s.setValue("stylePreference", static_cast<int>(stylePreference));
     s.endGroup();
 
     s.beginGroup("Advanced");
@@ -1249,16 +1249,16 @@ void Settings::setDateFormat(const QString &format)
     dateFormat = format;
 }
 
-MarkdownType Settings::getMarkdownPreference() const
+StyleType Settings::getStylePreference() const
 {
     QMutexLocker locker{&bigLock};
-    return markdownPreference;
+    return stylePreference;
 }
 
-void Settings::setMarkdownPreference(MarkdownType newValue)
+void Settings::setStylePreference(StyleType newValue)
 {
     QMutexLocker locker{&bigLock};
-    markdownPreference = newValue;
+    stylePreference = newValue;
 }
 
 QByteArray Settings::getWindowGeometry() const
