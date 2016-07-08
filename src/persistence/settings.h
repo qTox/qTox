@@ -149,6 +149,8 @@ public:
     void loadPersonal();
     void loadPersonal(Profile *profile);
 
+    void resetToDefault();
+
     struct Request
     {
         QString address;
