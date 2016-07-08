@@ -63,9 +63,6 @@ private:
     SettingsWidget* parent;
     Ui::UserInterfaceSettings *bodyUI;
     void reloadSmiles();
-
-protected:
-    bool eventFilter(QObject *o, QEvent *e) final override;
 };
 
 #endif

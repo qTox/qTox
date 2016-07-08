@@ -20,7 +20,10 @@
 #include "advancedform.h"
 #include "ui_advancedsettings.h"
 
+#include <QDir>
 #include <QMessageBox>
+#include <QProcess>
+#include <QApplication>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -29,6 +32,7 @@
 #include "src/persistence/settings.h"
 #include "src/persistence/db/plaindb.h"
 #include "src/persistence/profile.h"
+#include "src/widget/gui.h"
 #include "src/widget/translator.h"
 
 AdvancedForm::AdvancedForm()
@@ -65,9 +69,7 @@ AdvancedForm::AdvancedForm()
     connect(bodyUI->proxyPort, valueChanged, this, &AdvancedForm::onProxyPortEdited);
     connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &AdvancedForm::onReconnectClicked);
 
-    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
-        cb->installEventFilter(this);
-
+    eventsInit();
     Translator::registerHandler(std::bind(&AdvancedForm::retranslateUi, this), this);
 }
 
@@ -84,6 +86,16 @@ void AdvancedForm::onMakeToxPortableUpdated()
 
 void AdvancedForm::resetToDefault()
 {
+    const QString titile = tr("Reset settings");
+    bool result = GUI::askQuestion(titile,
+                                   tr("All settings will be reset to default. Are you sure?"),
+                                   tr("Yes"), tr("No"));
+
+    if (!result)
+        return;
+
+    Settings::getInstance().resetToDefault();
+    GUI::showInfo(titile, "Changes will take effect after restart");
 }
 
 void AdvancedForm::onEnableIPv6Updated()
