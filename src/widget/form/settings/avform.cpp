@@ -78,11 +78,7 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-        cb->installEventFilter(this);
-        cb->setFocusPolicy(Qt::StrongFocus);
-    }
+    eventsInit();
 
     QDesktopWidget *desktop = QApplication::desktop();
     connect(desktop, &QDesktopWidget::resized, this, &AVForm::rescanDevices);
@@ -565,18 +561,6 @@ void AVForm::killVideoSurface()
     camVideoSurface->close();
     delete camVideoSurface;
     camVideoSurface = nullptr;
-}
-
-bool AVForm::eventFilter(QObject *o, QEvent *e)
-{
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ||
-          qobject_cast<QSlider*>(o)))
-    {
-        e->ignore();
-        return true;
-    }
-    return QWidget::eventFilter(o, e);
 }
 
 void AVForm::retranslateUi()

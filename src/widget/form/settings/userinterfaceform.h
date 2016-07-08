@@ -63,9 +63,6 @@ private:
     QList<QLabel*> smileLabels;
     SettingsWidget* parent;
     Ui::UserInterfaceSettings *bodyUI;
-
-protected:
-    bool eventFilter(QObject *o, QEvent *e) final override;
 };
 
 #endif

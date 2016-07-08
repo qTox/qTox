@@ -164,30 +164,12 @@ GeneralForm::GeneralForm(SettingsWidget *myParent)
     connect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
 
-    // prevent stealing mouse wheel scroll
-    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially changing theme/skin/icons etc.
-    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
-    for (QComboBox *cb : findChildren<QComboBox*>())
-    {
-        cb->installEventFilter(this);
-        cb->setFocusPolicy(Qt::StrongFocus);
-    }
-
-    for (QSpinBox *sp : findChildren<QSpinBox*>())
-    {
-        sp->installEventFilter(this);
-        sp->setFocusPolicy(Qt::WheelFocus);
-    }
-
-    for (QCheckBox *cb : findChildren<QCheckBox*>()) // this one is to allow scrolling on checkboxes
-        cb->installEventFilter(this);
-
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
 #endif
 
+    eventsInit();
     Translator::registerHandler(std::bind(&GeneralForm::retranslateUi, this), this);
 }
 
@@ -285,17 +267,6 @@ void GeneralForm::onAutoSaveDirChange()
 void GeneralForm::onCheckUpdateChanged()
 {
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
-}
-
-bool GeneralForm::eventFilter(QObject *o, QEvent *e)
-{
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QCheckBox*>(o)))
-    {
-        e->ignore();
-        return true;
-    }
-    return QWidget::eventFilter(o, e);
 }
 
 void GeneralForm::retranslateUi()
