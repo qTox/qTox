@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="bg_BG">
+<TS version="2.0" language="bg_BG">
 <context>
     <name>AVForm</name>
     <message>
@@ -143,7 +143,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Основател на проекта: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Вижте пълен лист с &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;сътрудници&lt;/span&gt;&lt;/a&gt; в Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Основател на проекта: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Вижте пълен лист със &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;сътрудници&lt;/span&gt;&lt;/a&gt; в Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -223,7 +223,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ИД</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>Message</source>
@@ -1056,14 +1056,6 @@ instead of system taskbar.</source>
         <translation>Отвори прозорец</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Новите Markdown настройки може да не се заредят, докато не се рестартира qTox.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Изберете Markdown настройки.</translation>
-    </message>
-    <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation>Ако е маркирано, групови чатове ще се поставят най-отгоре на листа с приятели, а ако не е маркирано ще се поставят под приятелите, които са онлайн.</translation>
@@ -1125,8 +1117,16 @@ will be sent to them when they appear online to you.</source>
         <translation>Размер: </translation>
     </message>
     <message>
-        <source>Markdown format:</source>
-        <translation>Формат на markdown:</translation>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1255,10 +1255,6 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Поканен от &lt;b&gt;%1&lt;/b&gt; в %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Групи</translation>
     </message>
@@ -1277,6 +1273,10 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Decline</source>
         <translation>Затвори</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1315,7 +1315,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ИД-ент</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1326,7 +1326,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation>Вашия Tox ИД-ент (Кликнете върху него, за да го копирате)</translation>
+        <translation>Вашия Tox ID (Кликнете върху него, за да го копирате)</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -1392,7 +1392,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register</source>
-        <translation>Регистрирай</translation>
+        <translation>Регистрирай се</translation>
     </message>
     <message>
         <source>Your password</source>
@@ -1408,7 +1408,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Текущо местоположение на профила: Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Местоположение на профила: Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1432,7 +1432,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Remove password</source>
-        <translation>Премахни парола</translation>
+        <translation>Премахни паролата</translation>
     </message>
     <message>
         <source>Change password</source>
