@@ -63,9 +63,6 @@ private:
 private:
     Ui::GeneralSettings *bodyUI;
     SettingsWidget *parent;
-
-protected:
-    bool eventFilter(QObject *o, QEvent *e) final override;
 };
 
 #endif

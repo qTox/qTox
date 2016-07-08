@@ -391,6 +391,20 @@ void Settings::loadPersonal(Profile* profile)
     ps.endGroup();
 }
 
+void Settings::resetToDefault()
+{
+    // To stop saving
+    loaded = false;
+
+    // Remove file with profile settings
+    QDir dir(getSettingsDirPath());
+    Profile *profile = Nexus::getProfile();
+    QString localPath = dir.filePath(profile->getName() + ".ini");
+    QFile local(localPath);
+    if (local.exists())
+        local.remove();
+}
+
 /**
  * @brief Asynchronous, saves the global settings.
  */
@@ -400,6 +414,9 @@ void Settings::saveGlobal()
         return (void) QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
 
     QMutexLocker locker{&bigLock};
+    if (!loaded)
+        return;
+
     QString path = getSettingsDirPath() + globalSettingsFile;
     qDebug() << "Saving global settings at " + path;
 
@@ -542,6 +559,8 @@ void Settings::savePersonal(QString profileName, const QString &password)
                                                 Q_ARG(QString, profileName), Q_ARG(QString, password));
 
     QMutexLocker locker{&bigLock};
+    if (!loaded)
+        return;
 
     QString path = getSettingsDirPath() + profileName + ".ini";
 
