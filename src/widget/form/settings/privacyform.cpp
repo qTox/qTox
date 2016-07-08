@@ -51,6 +51,7 @@ PrivacyForm::PrivacyForm()
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
 
+    eventsInit();
     Translator::registerHandler(std::bind(&PrivacyForm::retranslateUi, this), this);
 }
 

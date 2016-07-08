@@ -47,6 +47,7 @@ AboutForm::AboutForm()
     progressTimer->setSingleShot(false);
     connect(progressTimer, &QTimer::timeout, this, &AboutForm::showUpdateProgress);
 
+    eventsInit();
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
 }
 

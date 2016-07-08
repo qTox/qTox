@@ -432,6 +432,7 @@ SOURCES += \
     src/widget/form/settings/privacyform.cpp \
     src/widget/form/settings/avform.cpp \
     src/widget/form/settings/userinterfaceform.cpp \
+    src/widget/form/settings/genericsettings.cpp \
     src/widget/form/profileform.cpp \
     src/widget/form/filesform.cpp \
     src/widget/tool/chattextedit.cpp \
