@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>359</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,30 +36,39 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>380</width>
-        <height>280</height>
+        <width>378</width>
+        <height>337</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QCheckBox" name="cbTypingNotification">
-         <property name="toolTip">
-          <string comment="tooltip for typing notifications setting">Your friends will be able to see when you are typing.</string>
+        <widget class="QGroupBox" name="verticalGroupBox">
+         <property name="title">
+          <string>Privacy</string>
          </property>
-         <property name="text">
-          <string>Send typing notifications</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="cbKeepHistory">
-         <property name="toolTip">
-          <string comment="toolTip for Keep History setting">Chat history keeping is still in development.
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QCheckBox" name="cbTypingNotification">
+            <property name="toolTip">
+             <string comment="tooltip for typing notifications setting">Your friends will be able to see when you are typing.</string>
+            </property>
+            <property name="text">
+             <string>Send typing notifications</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbKeepHistory">
+            <property name="toolTip">
+             <string comment="toolTip for Keep History setting">Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</string>
-         </property>
-         <property name="text">
-          <string>Keep chat history</string>
-         </property>
+            </property>
+            <property name="text">
+             <string>Keep chat history</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item alignment="Qt::AlignTop">
