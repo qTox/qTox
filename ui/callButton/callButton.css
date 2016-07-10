@@ -13,7 +13,6 @@ QPushButton#green
 QPushButton#green:hover
 {
     background-color: #79c76f;
-    cursor: pointer;
 }
 
 QPushButton#green:pressed
@@ -82,3 +81,7 @@ QPushButton:focus
     outline: none;
 }
 
+QPushButton:hover
+{
+    cursor: pointer;
+}
