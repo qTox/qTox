@@ -61,6 +61,9 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
 
     switch(type)
     {
+    case NORMAL:
+        text = wrapDiv(text, "msg");
+        break;
     case ACTION:
         senderText = "*";
         text = wrapDiv(QString("%1 %2").arg(sender.toHtmlEscaped(), text), "action");
@@ -69,8 +72,6 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     case ALERT:
         text = wrapDiv(text, "alert");
         break;
-    default:
-        text = wrapDiv(text, "msg");
     }
 
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)

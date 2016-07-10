@@ -29,9 +29,6 @@
 CustomTextDocument::CustomTextDocument(QObject *parent)
     : QTextDocument(parent)
 {
-    static QString css = Style::getStylesheet(":ui/chatArea/innerStyle.css");
-
-    setDefaultStyleSheet(css);
     setUndoRedoEnabled(false);
     setUseDesignMetrics(false);
 }
