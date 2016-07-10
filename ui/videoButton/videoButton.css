@@ -80,3 +80,8 @@ QPushButton:focus
 {
     outline: none;
 }
+
+QPushButton:hover
+{
+    cursor: pointer;
+}
