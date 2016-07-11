@@ -36,7 +36,7 @@ namespace Db { enum class syncType; }
 
 enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 
-enum MarkdownType {NONE, WITH_CHARS, WITHOUT_CHARS};
+enum StyleType {NONE, WITH_CHARS, WITHOUT_CHARS};
 
 class Settings : public QObject
 {
@@ -212,8 +212,8 @@ public:
     int getThemeColor() const;
     void setThemeColor(const int& value);
 
-    MarkdownType getMarkdownPreference() const;
-    void setMarkdownPreference(MarkdownType newValue);
+    StyleType getStylePreference() const;
+    void setStylePreference(StyleType newValue);
 
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
@@ -426,7 +426,7 @@ private:
 
     // ChatView
     QFont chatMessageFont;
-    MarkdownType markdownPreference;
+    StyleType stylePreference;
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;

@@ -124,7 +124,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     const QFont chatBaseFont = s.getChatMessageFont();
     bodyUI->txtChatFontSize->setValue(QFontInfo(chatBaseFont).pixelSize());
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
-    bodyUI->markdownComboBox->setCurrentIndex(s.getMarkdownPreference());
+    bodyUI->textStyleComboBox->setCurrentIndex(s.getStylePreference());
     bodyUI->cbAutorun->setChecked(s.getAutorun());
 
     bool showSystemTray = s.getShowSystemTray();
@@ -233,7 +233,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
     connect(bodyUI->busySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetBusySound);
-    connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
+    connect(bodyUI->textStyleComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onStyleUpdated);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -396,9 +396,9 @@ void GeneralForm::onUseEmoticonsChange()
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 }
 
-void GeneralForm::onMarkdownUpdated()
+void GeneralForm::onStyleUpdated()
 {
-    Settings::getInstance().setMarkdownPreference(static_cast<MarkdownType>(bodyUI->markdownComboBox->currentIndex()));
+    Settings::getInstance().setStylePreference(static_cast<StyleType>(bodyUI->textStyleComboBox->currentIndex()));
 }
 
 void GeneralForm::onSetStatusChange()
