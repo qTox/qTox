@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakázáno</translation>
     </message>
 </context>
 <context>
@@ -1070,14 +1070,6 @@ se opět připojí.</translation>
         <translation type="unfinished">Otevřít okno</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Multiple windows mode</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1116,10 +1108,18 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Size: </source>
+        <translation>Velikost: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown format:</source>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1249,10 +1249,6 @@ se opět připojí.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation type="unfinished">Skupiny</translation>
     </message>
@@ -1270,6 +1266,10 @@ se opět připojí.</translation>
     </message>
     <message>
         <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
