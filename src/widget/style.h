@@ -59,10 +59,10 @@ public:
     };
 
     static QStringList getThemeColorNames();
-    static QString getStylesheet(const QString& filename);
+    static QString getStylesheet(const QString& filename, const QFont& baseFont = QFont());
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
-    static QString resolve(QString qss);
+    static QString resolve(QString qss, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
     static void setThemeColor(int color);
     static void setThemeColor(const QColor &color); ///< Pass an invalid QColor to reset to defaults
