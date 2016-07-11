@@ -27,14 +27,14 @@ class QTextDocument;
 class DocumentCache
 {
 public:
-    ~DocumentCache();
     static DocumentCache& getInstance();
 
     QTextDocument* pop();
     void push(QTextDocument* doc);
 
-protected:
-    DocumentCache() {}
+private:
+    DocumentCache() = default;
+    ~DocumentCache();
     DocumentCache(DocumentCache&) = delete;
     DocumentCache& operator=(const DocumentCache&) = delete;
 
