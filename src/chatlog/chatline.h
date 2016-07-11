@@ -21,9 +21,9 @@
 #define CHATLINE_H
 
 #include <memory>
-#include <vector>
 #include <QPointF>
 #include <QRectF>
+#include <QVector>
 
 class ChatLog;
 class ChatLineContent;
@@ -101,8 +101,8 @@ protected:
 
 private:
     int row = -1;
-    std::vector<ChatLineContent*> content;
-    std::vector<ColumnFormat> format;
+    QVector<ChatLineContent*> content;
+    QVector<ColumnFormat> format;
     qreal width = 100.0;
     qreal columnSpacing = 15.0;
     QRectF bbox;

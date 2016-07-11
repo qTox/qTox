@@ -176,7 +176,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal fixedWidth = (content.size()-1) * columnSpacing;
     qreal varWidth = 0.0; // used for normalisation
 
-    for (size_t i = 0; i < format.size(); ++i)
+    for (int i = 0; i < format.size(); ++i)
     {
         if (format[i].policy == ColumnFormat::FixedSize)
             fixedWidth += format[i].size;
@@ -191,9 +191,9 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
     qreal maxVOffset = 0.0;
     qreal xOffset = 0.0;
-    qreal xPos[content.size()];
+    QVector<qreal> xPos(content.size());
 
-    for (size_t i = 0; i < content.size(); ++i)
+    for (int i = 0; i < content.size(); ++i)
     {
         // calculate the effective width of the current column
         qreal width;
@@ -210,14 +210,14 @@ void ChatLine::layout(qreal w, QPointF scenePos)
 
         switch(format[i].hAlign)
         {
-            case ColumnFormat::Right:
-                xAlign = width - content[i]->boundingRect().width();
-                break;
-            case ColumnFormat::Center:
-                xAlign = (width - content[i]->boundingRect().width()) / 2.0;
-                break;
-            default:
-                break;
+        case ColumnFormat::Left:
+            break;
+        case ColumnFormat::Right:
+            xAlign = width - content[i]->boundingRect().width();
+            break;
+        case ColumnFormat::Center:
+            xAlign = (width - content[i]->boundingRect().width()) / 2.0;
+            break;
         }
 
         // reposition
@@ -227,7 +227,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         maxVOffset = qMax(maxVOffset, content[i]->getAscent());
     }
 
-    for (size_t i = 0; i < content.size(); ++i)
+    for (int i = 0; i < content.size(); ++i)
     {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass
