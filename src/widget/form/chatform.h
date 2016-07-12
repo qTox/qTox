@@ -54,8 +54,9 @@ public:
     virtual void show(ContentLayout* contentLayout) final override;
 
 signals:
-    void sendFile(uint32_t friendId, QString, QString, long long);
+    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
     void aliasChanged(const QString& alias);
+    void remoteFileDropped(const QString& url);
 
 public slots:
     void startFileSend(ToxFile file);
@@ -88,6 +89,7 @@ private slots:
     void doScreenshot();
     void onMessageInserted();
     void onCopyStatusMessage();
+    void onRemoteFileDropped(const QString &url);
 
 private:
     void retranslateUi();
@@ -125,6 +127,7 @@ private:
     void disableCallButtons();
     bool isTyping;
     void SendMessageStr(QString msg);
+    QString downloadFile(QString url);
 };
 
 #endif // CHATFORM_H

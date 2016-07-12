@@ -64,6 +64,11 @@
 #include "src/video/camerasource.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include <QMimeDatabase>
+#include <QMimeType>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QTemporaryDir>
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
@@ -117,6 +122,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
+    connect(this, &ChatForm::remoteFileDropped, this, &ChatForm::onRemoteFileDropped, Qt::QueuedConnection);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
         if(!statusMessageLabel->text().isEmpty())
@@ -657,6 +663,70 @@ void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
         ev->acceptProposedAction();
 }
 
+QString ChatForm::downloadFile(QString url) {
+    QNetworkAccessManager netman;
+    netman.setProxy(Settings::getInstance().getProxy());
+    QNetworkRequest request{url};
+    QNetworkReply* reply = netman.get(request);
+
+    while (!reply->isFinished())
+    {
+        QThread::msleep(1);
+        qApp->processEvents();
+    }
+
+    QByteArray result = reply->readAll();
+    delete reply;
+
+    QMimeType type = QMimeDatabase().mimeTypeForData(result);
+    QString fileName;
+
+    QTemporaryFile tmpFile;
+    if (!tmpFile.open()) {
+        QMessageBox::information(this, tr("Temporary file"),
+                              tr("Can't create temporary file."));
+        return "";
+    }
+    fileName = tmpFile.fileName() + '.' + type.preferredSuffix();
+    tmpFile.close();
+
+    QFile *file = new QFile(fileName);
+
+    if (!file->open(QIODevice::WriteOnly))
+    {
+        QMessageBox::information(this, tr("File download"),
+                      tr("Unable to save the file %1: %2.")
+                      .arg(fileName, file->errorString()));
+        delete file;
+        return "";
+    }
+
+    file->write(result);
+    file->close();
+    return fileName;
+}
+
+void ChatForm::onRemoteFileDropped(const QString &url)
+{
+    QString path = downloadFile(url);
+    QFileInfo info(path);
+    if (f == nullptr)
+    {
+        qWarning() << "freind is null";
+        return;
+    }
+
+    uint32_t id = f->getFriendID();
+    Core *core = Core::getInstance();
+    if (core == nullptr)
+    {
+        qWarning() << "core is null. (User not logged?)";
+        return;
+    }
+
+    core->sendFile(id, info.fileName(), info.absoluteFilePath(), info.size());
+}
+
 void ChatForm::dropEvent(QDropEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
@@ -666,20 +736,15 @@ void ChatForm::dropEvent(QDropEvent *ev)
             QFileInfo info(url.path());
 
             QFile file(info.absoluteFilePath());
-            if (url.isValid() && !url.isLocalFile() && (url.toString().length() < TOX_MAX_MESSAGE_LENGTH))
-            {
-                SendMessageStr(url.toString());
-                continue;
+            if (url.isValid() && !url.isLocalFile()) {
+                emit remoteFileDropped(url.toString());
+                return;
             }
+
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
-                info.setFile(url.toLocalFile());
-                file.setFileName(info.absoluteFilePath());
-                if (!file.exists() || !file.open(QIODevice::ReadOnly))
-                {
-                    QMessageBox::warning(this, tr("Unable to open"), tr("qTox wasn't able to open %1").arg(info.fileName()));
-                    continue;
-                }
+                QMessageBox::warning(this, tr("Unable to open"), tr("qTox wasn't able to open %1").arg(info.fileName()));
+                continue;
             }
             if (file.isSequential())
             {
