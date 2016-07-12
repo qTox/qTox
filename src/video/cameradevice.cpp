@@ -317,7 +317,17 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     if (idesktopFormat)
     {
         if (idesktopFormat->name == QString("x11grab"))
-            devices.push_back(QPair<QString,QString>{"x11grab#:0", QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
+        {
+            QString dev = "x11grab#";
+            QByteArray display = qgetenv("DISPLAY");
+
+            if (display.isNull())
+                dev += ":0";
+            else
+                dev += display.constData();
+
+            devices.push_back(QPair<QString,QString>{dev, QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
+        }
         if (idesktopFormat->name == QString("gdigrab"))
             devices.push_back(QPair<QString,QString>{"gdigrab#desktop", QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
     }
