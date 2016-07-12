@@ -8,16 +8,24 @@
         <translation>Аўдыя/Відэа</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation>%1p</translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Агаданая распазнавальнасць</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished">Адключаны</translation>
+        <translation>Адключаны</translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -28,15 +36,15 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Выкарыстоўвайце паўзунок для ўсталявання гучнасці дынамікаў.</translation>
+        <translation>Выкарыстоўвайце паўзунок для ўсталявання гучнасці дынамікаў.</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Прылада прайгравання</translation>
+        <translation>Прылада прайгравання</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Прылада захопу</translation>
+        <translation>Прылада захопу</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -92,7 +100,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished">Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Github&apos;бе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, %3, згодна з указаннямі ў атыкуле %2 нашай вікі.</translation>
+        <translation>Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Githubʼбе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, %3, згодна з указаннямі ў артыкуле %2 нашай вікі.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -101,12 +109,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Writing Useful Bug Reports</source>
         <translatorcomment>Original-Titel, deshalb auf Englisch</translatorcomment>
-        <translation type="unfinished">«Напісанне карысных справаздач аб хібах»</translation>
+        <translation>«Напісанне карысных справаздач аб хібах»</translation>
     </message>
     <message>
         <source>report it</source>
         <translatorcomment>Unnötig, wird nicht verwendet!</translatorcomment>
-        <translation type="unfinished">паведаміце аб гэтым</translation>
+        <translation>паведаміце аб гэтым</translation>
     </message>
 </context>
 <context>
@@ -121,7 +129,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation type="unfinished">Пампаванне абнаўлення: %p%</translation>
+        <translation>Пампаванне абнаўлення: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -129,7 +137,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished">Хэш фіксавання: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <translation>Хэш фіксавання: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
@@ -141,7 +149,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Арыгінальна аўтар: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Глядзіце поўны спіс &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;удзельнікаў&lt;/span&gt;&lt;/a&gt; на Гітхабе&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Арыгінальны аўтар: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Глядзіце поўны спіс &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;удзельнікаў&lt;/span&gt;&lt;/a&gt; на Гітхабе&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -180,7 +188,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Агаданы каталог для захавання файлаў:</translation>
+        <translation>Агаданы каталог для захоўвання файлаў:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -254,7 +262,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished">%1 тут! А можа адкажаце мне?</translation>
+        <translation>%1 тут! Можа адкажаце мне?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -291,7 +299,7 @@ which may lead to problems with video calls.</source>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished">Пашыраныя</translation>
+        <translation>Пашыраныя</translation>
     </message>
 </context>
 <context>
@@ -307,7 +315,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВАЖНАЯ ЗАЎВАГА&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Пакуль вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;на самай справе&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; не ведаце, што вы робіце, калі ласка, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; змяняйце тут нічога. Змены зробленыя тут могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад гісторыі.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВАЖНАЯ ЗАЎВАГА&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Пакуль вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;на самай справе&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; не ведаце, што вы робіце, калі ласка, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; змяняйце тут нічога. Змены зробленыя тут могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -338,7 +346,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation type="unfinished">Вы спрабуеце адправіць адмысловы (паслядоўны) файл, але гэта не спрацуе!</translation>
+        <translation>Вы спрабуеце адправіць адмысловы (паслядоўны) файл, але гэта не спрацуе!</translation>
     </message>
     <message>
         <source>Accept video call</source>
@@ -439,7 +447,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>pending</source>
-        <translation type="unfinished">чаканне</translation>
+        <translation>чаканне</translation>
     </message>
 </context>
 <context>
@@ -470,7 +478,7 @@ which may lead to problems with video calls.</source>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>Карыстаю qTox</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -486,11 +494,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>/me offers friendship.</source>
-        <translation type="unfinished"></translation>
+        <translation>/me прапаноўвае сяброўства.</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me прапаноўвае сяброўства, «%1»</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -516,7 +524,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>
+Адключэнне гісторыі чату пакіне зашыфрованую гісторыю некранутай, але і недаступнай. Калі вы пазней успоніце пароль, вы можаце ўключыць шыфраванне на ўкладцы прыватнасці з правільным паролем, для выкарыстання гісторыі.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -803,7 +812,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>None</source>
         <translatorcomment>Grundstil</translatorcomment>
-        <translation type="unfinished">Адсутнічае</translation>
+        <translation>Адсутнічае</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -892,7 +901,7 @@ instead of system taskbar.</source>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы можаце ўсталяваць гэта для кожнага сябра асобна, пстрыкнуўшы правай кнопкай па ім.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -953,11 +962,12 @@ instead of system taskbar.</source>
         <source>Messages you are trying to send to your friends when they are not online
 will be sent to them when they appear online to you.</source>
         <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Паведамленні, якія вы спрабуеце адправіць сябрам па-за сеткай,
+будуць дасланы пасля таго як яны зʼявяцца ў сеціве.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Па-засеткавы абмен паведамленнямі</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
@@ -1046,7 +1056,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Адключэнне дазваляе, напрыклад, выкарыстоўваць Tox паверх Tor. Але гэта павялічвае нагрузку на сетку Tox. Адключайце толькі, калі гэта неабходна.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -1074,7 +1084,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Адсутнічае</translation>
+        <translation>Адсутнічае</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -1103,7 +1113,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Прайграць гук, калі заняты</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -1119,15 +1129,15 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Новы стыль тэксту будзе загружаны пасля перазагрузкі qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Фармат тэксту:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберыце стыль тэксту.</translation>
     </message>
 </context>
 <context>
@@ -1226,7 +1236,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished">%1 карыстальніка ў чаце</translation>
+        <translation>%1 карыстальніка ў чаце</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1277,14 +1287,14 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрошаны &lt;b&gt;%1&lt;/b&gt; у «%2» а %3.</translation>
     </message>
 </context>
 <context>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
-        <translation type="unfinished">%1 карыстальніка ў чаце</translation>
+        <translation>%1 карыстальніка ў чаце</translation>
     </message>
     <message>
         <source>Set title...</source>
@@ -1345,7 +1355,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Бягучае размяшчэнне профілю:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1411,7 +1421,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Рэгістрацыя Toxme</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1427,11 +1437,11 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished">Схаваць маё імя з публічнага спісу</translation>
+        <translation>Схаваць маё імя з публічнага спісу</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Рэгістрацыя</translation>
     </message>
     <message>
         <source>Your password</source>
@@ -1469,7 +1479,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation>Надзейнасць пароля: %p%</translation>
+        <translation>Надзейнасць: %p%</translation>
     </message>
     <message>
         <source>Create Profile</source>
@@ -1501,7 +1511,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation>Імя карыстальніка не можа баць пустое.</translation>
+        <translation>Імя карыстальніка не можа быць пустое.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
@@ -1647,7 +1657,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>УКЛЮЧАНЫ CAPS-LOCK</translation>
     </message>
 </context>
 <context>
@@ -1696,7 +1706,8 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished"></translation>
+        <translation>«СпамуНе» — гэта частка вашага ідэнтыфікатара, якая можа быць зменена.
+Калі вы пачалі атрымліваць спам з запытамі сяброўства, змяніце значэнне «СпамуНе».</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -1706,200 +1717,202 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Захоўванне гісторыі чату знаходзіцца ў распрацоўцы.
+Магчымы змены фармату захоўвання, якія могуць прывесці да страты дадзеных.</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберыце выяву профілю</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Памылка</translation>
+        <translation>Памылка</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Перайменаваць «%1»</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася адкрыць гэты файл.</translation>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Бягучы профіль: </translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Выдаліць</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася прачытаць гэтую выяву.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
 Please use another image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Прадастаўленае выява занадта вялікая.
+Калі ласка, выкарыстайце іншую выяву.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль ужо існуе</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль з назвай «%1» ужо існуе.</translation>
     </message>
     <message>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Немагчыма перайменаваць</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не ўдалося перайменаваць профіль у «%1»</translation>
     </message>
     <message>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Экспартаваць профіль</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished">Размяшчэнне не даступна для запісу</translation>
+        <translation>Размяшчэнне недаступна для запісу</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished">У вас няма дазволу на запіс у гэта размяшчэнне. Выберыце іншае, або адмяніць дыялог захавання.</translation>
+        <translation>У вас няма дазволу на запіс у гэта размяшчэнне. Выберыце іншае, або адмяніце дыялог захавання.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася скапіяваць файл</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл, які вы абралі, не можа быць запісаны.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Сапраўды выдаліць профіль?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Няма чаго выдаляць</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш профіль не мае пароля!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Сапраўды выдаліць пароль?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы ўпэўнены, што хочаце выдаліць свой пароль?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Калі ласка, увядзіце новы пароль.</translation>
     </message>
     <message>
         <source>User Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Профіль карыстальніка</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation type="unfinished">Гэта звязка сімвалаў гаворыць іншым кліентам як звязацца з вамі.
+        <translation>Гэта звязка сімвалаў гаворыць іншым кліентам як звязацца з вамі.
 Падзяліцеся гэтым з сябрамі каб камунікаваць.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы ўпэўнены, што хочаце выдаліць гэты профіль?</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation type="unfinished"></translation>
+        <translation>Захаваць</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Захаваць QR-код (*.png)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Наступныя файлы не могуць быць выдаленыя:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
         <comment>deletion failed text part 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Калі ласка, выдаліце іх уручную.</translation>
     </message>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файлы, якія не могуць быць выдаленыя!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ідзе рэгістрацыя</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ідзе абнаўленне</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выканана!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Улікоўка %1@%2 паспяхова абноўлена</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Улікоўка %1@%2 паспяхова дададзена. Захавайце свой пароль</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Памылка Toxme</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Рэгістрацыя</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Абнавіць</translation>
+        <translation>Абнавіць</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Змяніць пароль</translation>
+        <translation>Змяніць пароль</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Усталяваць пароль профіля</translation>
     </message>
 </context>
 <context>
@@ -1907,140 +1920,141 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Імпартаваць профіль</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ігнараванне не-Tox файлаў</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Увага: Вы выбралі файл, які не зʼяўляецца файлам Tox; ён ігнаруецца.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль ужо існуе</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль з назвай «%1» ужо існуе. Вы хочаце выдаліць яго?</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія %1, %2</translation>
     </message>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation type="unfinished">Абнавіць</translation>
+        <translation>Абнавіць</translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Даступна абнаўленне. Вы хочаце загрузіць яго зараз?
+Яно будзе ўсталявана пасля перазапуску qTox.</translation>
     </message>
     <message>
         <source>Resizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Змена памеру</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox URI для разбору</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускае новы экзэмпляр і загружае указаны профіль.</translation>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished"></translation>
+        <translation>профіль</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Агаданы</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Сіні</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Аліўкавы</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Чырвоны</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Фіялетавы</translation>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
+        <translation>Уваходзячы выклік…</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ігнараванне не-Tox файлаў</translation>
     </message>
     <message>
         <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Увага: Вы выбралі файл, які не зʼяўляецца файлам Tox; ён ігнаруецца.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль ужо існуе</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Профіль з назвай «%1» ужо існуе. Вы хочаце сцерці яго?</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Профіль імпартаваны</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1.tox паспяхова імпартаваны</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished">%1 тут! А можа адкажаце мне?</translation>
+        <translation>%1 тут! Можа адкажаце мне?</translation>
     </message>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished">Адсутнічае</translation>
+        <translation>Адсутнічае</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>Працоўны стол</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер не падтрымлівае Toxme</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы зрабілі занадта шмат запытаў. Пачакайце адну гадзіну і паспрабуце зноў</translation>
     </message>
     <message>
         <source>This name is already in use</source>
@@ -2048,31 +2062,31 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
+        <translation>Гэты ідэнтыфікатар Tox ужо зарэгістраваны пад іншым імем</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Калі ласка, не выкарыстоўвайце прабелы ў вашым імені</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Няправільны пароль</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы не можаце скарыстаць гэта імя</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Імя не знойдзена</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ідэнтыфікатар Tox не адпраўлены</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Такі карыстальнік не існуе</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2080,34 +2094,34 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox не можа адкрыць гісторыю чату, яна будзе адключана.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Праблема з злучэннем HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Унутраная памылка ToxMe</translation>
     </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Выдаліць сябра</translation>
+        <translation>Выдаліць сябра</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы сапраўды хочаце выдаліць &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;імя&amp;gt;&lt;/span&gt; з вашага спісу кантактаў?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Таксама выдаліць гісторыю чату</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Выдаліць</translation>
     </message>
 </context>
 <context>
@@ -2127,34 +2141,34 @@ It will be installed when qTox restarts.</source>
     <name>SetPasswordDialog</name>
     <message>
         <source>Set your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Задайце ваш пароль</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation type="unfinished">Пацвердзіць:</translation>
+        <translation>Паўтор:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished">Пароль:</translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
-        <translation type="unfinished">Надзейнасць пароля: %p%</translation>
+        <translation>Надзейнасць: %p%</translation>
     </message>
     <message>
         <source>The password is too short</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль занадта кароткі</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль не супадае.</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Круг #%1</translation>
     </message>
 </context>
 <context>
@@ -2162,27 +2176,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>The connection timed out</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished"></translation>
+        <translation>Таймаут злучэння</translation>
     </message>
     <message>
         <source>This address does not exist</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гэты адрас не існуе</translation>
     </message>
     <message>
         <source>Error while looking up DNS</source>
         <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation type="unfinished"></translation>
+        <translation>Памылка пры праглядзе DNS</translation>
     </message>
     <message>
         <source>No text record found</source>
         <comment>Error with the DNS</comment>
-        <translation type="unfinished"></translation>
+        <translation>Не знойдзена тэкставых запісаў</translation>
     </message>
     <message>
         <source>Unexpected number of values in text record</source>
         <comment>Error with the DNS</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нечаканая колькасць значэнняў у тэкставым запісу</translation>
     </message>
 </context>
 <context>
@@ -2190,29 +2204,29 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished">Дадаць сябра</translation>
+        <translation>Дадаць сябра</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы хочаце дадаць %1 сябрам?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished">Ідэнтыфікатар карыстальніка:</translation>
+        <translation>Ідэнтыфікатар карыстальніка:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished">Паведамленне запыту сяброўства:</translation>
+        <translation>Паведамленне запыту сяброўства:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Адправіць</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Адмяніць</translation>
     </message>
 </context>
 <context>
@@ -2220,94 +2234,94 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished">У сеціве</translation>
+        <translation>У сеціве</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished">Адышоў</translation>
+        <translation>Адышоў</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished">Заняты</translation>
+        <translation>Заняты</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася запусціць toxcore. Праграма будзе завершана пасля закрыцця гэтага паведамлення.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася запусціць toxcore з вашымі настаўленнямі проксі. qTox не можа працаваць. Калі ласка, змяніце вашы настаўленні і перазапусціце яго.</translation>
     </message>
     <message>
         <source>Add friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Дадаць сябра</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Змяніць профіль</translation>
     </message>
     <message>
         <source>Change Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Змяніць стан</translation>
     </message>
     <message>
         <source>Log out</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйсці</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Змяніць</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished">Выйсці</translation>
+        <translation>Выйсці</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выхад</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтр…</translation>
     </message>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Кантакты</translation>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation type="unfinished"></translation>
+        <translation>Дадаць кантакт…</translation>
     </message>
     <message>
         <source>Next Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступная гутарка</translation>
     </message>
     <message>
         <source>Previous Conversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Папярэдняя гутарка</translation>
     </message>
     <message>
         <source>File transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Перадачы файлаў</translation>
     </message>
     <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выканальны файл</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вы просіце, каб qTox адкрыў выканальны файл. Выканальныя файлы патынцыйна могуць нанесці шкоду вашаму камп’ютару. Вы сапраўды хочаце адкрыць гэты файл?</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2315,126 +2329,126 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished">Профіль</translation>
+        <translation>Профіль</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася запытаць сяброўства</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>адышоў</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>заняты</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>па-за сеткай</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>у сеціве</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 цяпер %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 змяніў назву на «%2»</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Стан</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished">Ваша імя</translation>
+        <translation>Ваша імя</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished">Ваш стан</translation>
+        <translation>Ваш стан</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">Запрашэнні ў групу</translation>
+        <translation>Запрашэнні ў групу</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished">&lt;Пустое&gt;</translation>
+        <translation>&lt;Пустое&gt;</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася адправіць паведамленне</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ставарыць новую групу…</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
+        <translation>Дадаць новы круг…</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новы запыт сяброўства</numerusform>
+            <numerusform>%n новыя запыты сяброўства</numerusform>
+            <numerusform>%n новых запытаў сяброўства</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новае запрашэнне ў групу</numerusform>
+            <numerusform>%n новых запрашэння ў групу</numerusform>
+            <numerusform>%n новых запрашэнняў у групу</numerusform>
         </translation>
     </message>
     <message>
         <source>By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Па імені</translation>
     </message>
     <message>
         <source>By Activity</source>
-        <translation type="unfinished"></translation>
+        <translation>Па аўктыўнасці</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Усе</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">У сеціве</translation>
+        <translation>У сеціве</translation>
     </message>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished">Па-за сецівам</translation>
+        <translation>Па-за сецівам</translation>
     </message>
     <message>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Сябры</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Групы</translation>
+        <translation>Групы</translation>
     </message>
     <message>
         <source>Search Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукаць кантакты</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Групавы чат № %1</translation>
     </message>
     <message>
         <source>Show</source>
