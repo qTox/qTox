@@ -12,11 +12,19 @@
         <translation>Domyślna rozdzielczość</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation>%1p</translation>
+        <source>Disabled</source>
+        <translation>Zablokowane</translation>
     </message>
     <message>
-        <source>Disabled</source>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -167,7 +175,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">Opis</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -179,7 +187,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">Historia używanych aliasów</translation>
+        <translation>HISTORIA ALIASÓW</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1127,31 +1135,31 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Odtwórz dźwięk dla statusu Zajęty</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Podstawowa czcionka:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmiar: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nowe ustawienia stylu tekstu mogą załadować się dopiero po ponownym uruchomianiu programu qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Format stylu tekstu:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wybierz preferencję stylowania tekstu.</translation>
     </message>
 </context>
 <context>
@@ -1215,7 +1223,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Cytuj wybrany tekst</translation>
     </message>
 </context>
 <context>
@@ -1303,7 +1311,7 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zaproszony przez &lt;b&gt;%1&lt;/b&gt; na %2 o %3.</translation>
     </message>
 </context>
 <context>
@@ -1677,7 +1685,7 @@ Możesz otworzyć nowy.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>CAPS LOCK WŁĄCZONY</translation>
     </message>
 </context>
 <context>
@@ -1933,12 +1941,12 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Zmień hasło</translation>
+        <translation>Zmień hasło</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw hasło profilu</translation>
     </message>
 </context>
 <context>
@@ -2129,11 +2137,11 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation type="unfinished"></translation>
+        <translation>Problem z połączeniem HTTPS</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation type="unfinished"></translation>
+        <translation>Wewnętrzny błąd ToxMe</translation>
     </message>
 </context>
 <context>
@@ -2465,7 +2473,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n nowe zaproszenie do przyjaciół</numerusform>
             <numerusform>%n nowe zaproszenia do przyjaciół</numerusform>
             <numerusform>%n nowe zaproszenie do przyjaciół</numerusform>
@@ -2492,7 +2500,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż</translation>
     </message>
 </context>
 </TS>
