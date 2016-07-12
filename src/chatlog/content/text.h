@@ -29,8 +29,6 @@ class QTextDocument;
 class Text : public ChatLineContent
 {
 public:
-    // txt: may contain html code
-    // rawText: does not contain html code
     Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false, const QString& rawText = QString(), const QColor c = Qt::black);
     virtual ~Text();
 
@@ -75,7 +73,6 @@ private:
     QTextDocument* doc = nullptr;
     QString text;
     QString rawText;
-    QString elidedText;
     QString selectedText;
     QSizeF size;
     bool keepInMemory = false;

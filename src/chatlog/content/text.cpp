@@ -62,12 +62,6 @@ void Text::setWidth(qreal w)
     width = w;
     dirty = true;
 
-    if (elide)
-    {
-        QFontMetrics metrics = QFontMetrics(defFont);
-        elidedText = metrics.elidedText(text, Qt::ElideRight, width);
-    }
-
     regenerate();
 }
 
@@ -256,6 +250,9 @@ void Text::regenerate()
         }
         else
         {
+            QFontMetrics metrics = QFontMetrics(defFont);
+            QString elidedText = metrics.elidedText(rawText, Qt::ElideRight,
+                                                    qRound(width));
             doc->setPlainText(elidedText);
         }
 
