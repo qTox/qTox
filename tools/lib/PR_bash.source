@@ -104,8 +104,7 @@ get_sources() {
 
 # check whether to sign
 merge() {
-    local signed="$@"
-    git merge --no-ff $signed $PR -m "Merge pull request #$PR
+    "${@}" --no-ff $PR -m "Merge pull request #$PR
 $OPT_MSG
 $(git shortlog master..$PR)"
 }

@@ -55,7 +55,7 @@ main() {
     add_remote
     get_sources
 
-    merge "-S" \
+    merge git merge -S \
         && after_merge_msg $merge_branch \
         || after_merge_failure_msg $merge_branch
 }

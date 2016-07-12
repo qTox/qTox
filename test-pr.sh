@@ -54,8 +54,9 @@ main() {
     add_remote "https"
     get_sources
 
-    merge "--no-gpg-sign" \
-        && after_merge_msg $merge_branch \
-        || after_merge_failure_msg $merge_branch
+    merge git -c user.email='<>' -c user.name='qTox testing' \
+        merge --no-gpg-sign \
+            && after_merge_msg $merge_branch \
+            || after_merge_failure_msg $merge_branch
 }
 main
