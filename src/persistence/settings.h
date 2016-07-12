@@ -330,6 +330,7 @@ public:
     void clearUnreadFriendRequests();
     void removeFriendRequest(int index);
     void readFriendRequest(int index);
+    void deleteFriendRequest(const QString &id);
 
     // Assume all widgets have unique names
     // Don't use it to save every single thing you want to save, use it

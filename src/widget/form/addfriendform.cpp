@@ -230,16 +230,7 @@ void AddFriendForm::setIdFromClipboard()
 
 void AddFriendForm::deleteFriendRequest(const QString& toxId)
 {
-    int size = Settings::getInstance().getFriendRequestSize();
-    for (int i = 0; i < size; i++)
-    {
-        Settings::Request request = Settings::getInstance().getFriendRequest(i);
-        if (ToxId(toxId) == ToxId(request.address))
-        {
-            Settings::getInstance().removeFriendRequest(i);
-            return;
-        }
-    }
+    Settings::getInstance().deleteFriendRequest(toxId);
 }
 
 void AddFriendForm::onFriendRequestAccepted()

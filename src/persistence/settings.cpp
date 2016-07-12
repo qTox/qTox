@@ -1786,6 +1786,16 @@ Settings::Request Settings::getFriendRequest(int index) const
     return friendRequests.at(index);
 }
 
+void Settings::deleteFriendRequest(const QString &stringId)
+{
+    QMutexLocker locker{&bigLock};
+    ToxId id(stringId);
+    std::remove_if(friendRequests.begin(), friendRequests.end(), [id](const Request &request)
+    {
+        return ToxId(request.address) == id;
+    });
+}
+
 int Settings::getFriendRequestSize() const
 {
     QMutexLocker locker{&bigLock};
