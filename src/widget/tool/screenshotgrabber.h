@@ -52,6 +52,7 @@ public slots:
 
 signals:
     void screenshotTaken(const QPixmap &pixmap);
+    void regionChosen(QRect region);
     void rejected();
 
 private:

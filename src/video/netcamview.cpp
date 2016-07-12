@@ -84,12 +84,8 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
             videoSurface->setAvatar(pixmap);
     });
 
-    VideoMode videoMode;
-    QSize videoSize = Settings::getInstance().getCamVideoRes();
-    videoMode.width = videoSize.width();
-    videoMode.height = videoSize.height();
+    QRect videoSize = Settings::getInstance().getCamVideoRes();
     qDebug() << "SIZER" << videoSize;
-    videoMode.FPS = Settings::getInstance().getCamVideoFPS();
 }
 
 NetCamView::~NetCamView()

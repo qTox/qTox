@@ -90,25 +90,25 @@ QImage VideoFrame::toQImage(QSize size)
 
 vpx_image *VideoFrame::toVpxImage()
 {
-    // libvpx doesn't provide a clean way to reuse an existing external buffer
-    // so we'll manually fill-in the vpx_image fields and hope for the best.
-    vpx_image* img = new vpx_image;
-    memset(img, 0, sizeof(vpx_image));
+    vpx_image* img = vpx_img_alloc(nullptr, VPX_IMG_FMT_I420, width, height, 0);
 
     if (!convertToYUV420())
         return img;
 
-    img->w = img->d_w = width;
-    img->h = img->d_h = height;
-    img->fmt = VPX_IMG_FMT_I420;
-    img->planes[0] = frameYUV420->data[0];
-    img->planes[1] = frameYUV420->data[1];
-    img->planes[2] = frameYUV420->data[2];
-    img->planes[3] = nullptr;
-    img->stride[0] = frameYUV420->linesize[0];
-    img->stride[1] = frameYUV420->linesize[1];
-    img->stride[2] = frameYUV420->linesize[2];
-    img->stride[3] = frameYUV420->linesize[3];
+    for (int i = 0; i < 3; i++)
+    {
+        int dstStride = img->stride[i];
+        int srcStride = frameYUV420->linesize[i];
+        int minStride = std::min(dstStride, srcStride);
+        int size = (i == 0) ? img->d_h : img->d_h / 2;
+
+        for (int j = 0; j < size; j++)
+        {
+            uint8_t *dst = img->planes[i] + dstStride * j;
+            uint8_t *src = frameYUV420->data[i] + srcStride * j;
+            memcpy(dst, src, minStride);
+        }
+    }
     return img;
 }
 

@@ -28,6 +28,7 @@ extern "C" {
 #include <QtConcurrent/QtConcurrentRun>
 #include <memory>
 #include <functional>
+#include "src/persistence/settings.h"
 #include "camerasource.h"
 #include "cameradevice.h"
 #include "videoframe.h"
@@ -35,7 +36,7 @@ extern "C" {
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceName{"none"}, device{nullptr}, mode(VideoMode{0,0,0,0}),
+    : deviceName{"none"}, device{nullptr}, mode(VideoMode()),
       cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
       _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
@@ -67,7 +68,15 @@ void CameraSource::open()
 
 void CameraSource::open(const QString& deviceName)
 {
-    open(deviceName, VideoMode{0,0,0,0});
+    bool isScreen = CameraDevice::isScreen(deviceName);
+    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
+    if (!isScreen)
+    {
+        mode = VideoMode(Settings::getInstance().getCamVideoRes());
+        mode.FPS = Settings::getInstance().getCamVideoFPS();
+    }
+
+    open(deviceName, mode);
 }
 
 void CameraSource::open(const QString& DeviceName, VideoMode Mode)
@@ -206,7 +215,7 @@ void CameraSource::unsubscribe()
 
 bool CameraSource::openDevice()
 {
-    qDebug() << "Opening device "<<deviceName;
+    qDebug() << "Opening device " << deviceName;
 
     if (device)
     {
@@ -216,10 +225,8 @@ bool CameraSource::openDevice()
 
     // We need to create a new CameraDevice
     AVCodec* codec;
-    if (mode)
-        device = CameraDevice::open(deviceName, mode);
-    else
-        device = CameraDevice::open(deviceName);
+    device = CameraDevice::open(deviceName, mode);
+
     if (!device)
     {
         qWarning() << "Failed to open device!";
@@ -240,25 +247,36 @@ bool CameraSource::openDevice()
             break;
         }
     }
+
     if (videoStreamIndex == -1)
+    {
+        qWarning() << "Video stream not found";
         return false;
+    }
 
     // Get a pointer to the codec context for the video stream
     cctxOrig = device->context->streams[videoStreamIndex]->codec;
     codec = avcodec_find_decoder(cctxOrig->codec_id);
     if(!codec)
+    {
+        qWarning() << "Codec not found";
         return false;
+    }
 
     // Copy context, since we apparently aren't allowed to use the original
     cctx = avcodec_alloc_context3(codec);
     if(avcodec_copy_context(cctx, cctxOrig) != 0)
+    {
+        qWarning() << "Can't copy context";
         return false;
+    }
 
     cctx->refcounted_frames = 1;
 
     // Open codec
     if(avcodec_open2(cctx, codec, nullptr)<0)
     {
+        qWarning() << "Can't open codec";
         avcodec_free_context(&cctx);
         return false;
     }
@@ -288,6 +306,7 @@ void CameraSource::closeDevice()
         std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
         if (!vframe)
             continue;
+
         vframe->releaseFrame();
     }
     freelist.clear();
@@ -311,14 +330,15 @@ void CameraSource::stream()
         AVFrame* frame = av_frame_alloc();
         if (!frame)
             return;
+
         frame->opaque = nullptr;
 
         AVPacket packet;
-        if (av_read_frame(device->context, &packet)<0)
+        if (av_read_frame(device->context, &packet) < 0)
             return;
 
         // Only keep packets from the right stream;
-        if (packet.stream_index==videoStreamIndex)
+        if (packet.stream_index == videoStreamIndex)
         {
             // Decode video frame
             int frameFinished;
@@ -340,7 +360,8 @@ void CameraSource::stream()
       av_packet_unref(&packet);
     };
 
-    forever {
+    forever
+    {
         biglock.lock();
 
         // When a thread makes device null, it releases it, so we acquire here
@@ -357,6 +378,7 @@ void CameraSource::stream()
         biglock.unlock();
         while (streamBlocker)
             QThread::yieldCurrentThread();
+
         QThread::yieldCurrentThread();
     }
 }

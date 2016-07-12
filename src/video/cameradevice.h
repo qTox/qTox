@@ -42,14 +42,11 @@ class CameraDevice
 {
 public:
     /// Opens a device, creating a new one if needed
-    /// Returns a nullptr if the device couldn't be opened
-    static CameraDevice* open(QString devName);
-    /// Opens a device, creating a new one if needed
     /// If the device is alreay open in another mode, the mode
     /// will be ignored and the existing device is used
     /// If the mode does not exist, a new device can't be opened
     /// Returns a nullptr if the device couldn't be opened
-    static CameraDevice* open(QString devName, VideoMode mode);
+    static CameraDevice* open(QString devName, VideoMode mode = VideoMode());
     void open(); ///< Opens the device again. Never fails
     bool close(); ///< Closes the device. Never fails. If returns true, "this" becomes invalid
 
@@ -69,11 +66,15 @@ public:
     /// or the system default.
     static QString getDefaultDeviceName();
 
+    /// Checks if a device name specifies a display
+    static bool isScreen(const QString &devName);
+
 private:
     CameraDevice(const QString &devName, AVFormatContext *context);
     static CameraDevice* open(QString devName, AVDictionary** options);
     static bool getDefaultInputFormat(); ///< Sets CameraDevice::iformat, returns success/failure
     static QVector<QPair<QString, QString> > getRawDeviceListGeneric(); ///< Uses avdevice_list_devices
+    static QVector<VideoMode> getScreenModes(); ///< Returns avaliable screen modes with offset
 
 public:
     const QString devName; ///< Short name of the device
