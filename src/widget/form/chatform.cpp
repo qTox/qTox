@@ -100,7 +100,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    chatWidget->setMinimumHeight(160);
+    chatWidget->setMinimumHeight(50);
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));

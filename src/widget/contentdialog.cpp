@@ -18,6 +18,14 @@
 */
 
 #include "contentdialog.h"
+
+#include <QBoxLayout>
+#include <QDragEnterEvent>
+#include <QGuiApplication>
+#include <QMimeData>
+#include <QShortcut>
+#include <QSplitter>
+
 #include "contentlayout.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
@@ -34,12 +42,6 @@
 #include "src/widget/friendlistlayout.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/translator.h"
-#include <QBoxLayout>
-#include <QSplitter>
-#include <QGuiApplication>
-#include <QDragEnterEvent>
-#include <QMimeData>
-#include <QShortcut>
 
 ContentDialog* ContentDialog::currentDialog = nullptr;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
@@ -49,6 +51,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , activeChatroomWidget(nullptr)
     , settingsWidget(settingsWidget)
+    , videoSurfaceSize(QSize())
+    , videoCount(0)
 {
     QVBoxLayout* boxLayout = new QVBoxLayout(this);
     boxLayout->setMargin(0);
@@ -358,6 +362,28 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
 
         return;
     }
+}
+
+void ContentDialog::onVideoShow(QSize size)
+{
+    videoCount++;
+    if (videoCount > 1)
+        return;
+
+    videoSurfaceSize = size;
+    QSize minSize = minimumSize();
+    setMinimumSize(minSize + videoSurfaceSize);
+}
+
+void ContentDialog::onVideoHide()
+{
+    videoCount--;
+    if (videoCount > 0)
+        return;
+
+    QSize minSize = minimumSize();
+    setMinimumSize(minSize - videoSurfaceSize);
+    videoSurfaceSize = QSize();
 }
 
 ContentDialog* ContentDialog::current()
