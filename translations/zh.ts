@@ -918,14 +918,6 @@ instead of system taskbar.</source>
         <translation>打开窗口</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>重启 qTox 后新的 Markdown 设置生效。</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>选择 Markdown 设置。</translation>
-    </message>
-    <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
         <translation>一直向我提示所有群聊新消息</translation>
@@ -1116,7 +1108,15 @@ will be sent to them when they appear online to you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown format:</source>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1246,10 +1246,6 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>%1 在 %2 邀请</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>群组</translation>
     </message>
@@ -1268,6 +1264,10 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Decline</source>
         <translation>拒绝</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

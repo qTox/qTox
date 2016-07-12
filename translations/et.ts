@@ -1088,14 +1088,6 @@ kui nad sulle nähtavaks muutuvad.</translation>
         <translation>Ühendu uuesti</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Markdowni uus eelistus võidakse laadida alles qToxi taaskäivitamisel.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Vali Markdowni eelistus.</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Lihttekst</translation>
     </message>
@@ -1124,7 +1116,15 @@ kui nad sulle nähtavaks muutuvad.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown format:</source>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1254,10 +1254,6 @@ kui nad sulle nähtavaks muutuvad.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Kutsus &lt;b&gt;%1&lt;/b&gt;  %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Grupid</translation>
     </message>
@@ -1276,6 +1272,10 @@ kui nad sulle nähtavaks muutuvad.</translation>
     <message>
         <source>Decline</source>
         <translation>Keeldu</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

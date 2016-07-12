@@ -930,10 +930,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <translation>Poner ventana en foco</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Puede que necesites reiniciar qTox para activar la nueva configuración de Markdown.</translation>
-    </message>
-    <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
         <translation>Tu lista de amigos se mostrará en modo compacto.</translation>
@@ -984,10 +980,6 @@ en lugar de la barra de tareas del sistema.</translation>
     <message>
         <source>Place groupchats at top of friend list</source>
         <translation>Poner chats grupales al comienzo de la lista de amigos</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Seleccionar preferencia de Markdown.</translation>
     </message>
     <message>
         <source>Messages you are trying to send to your friends when they are not online
@@ -1121,7 +1113,15 @@ Hazlo sólo en caso de ser necesario.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown format:</source>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1251,10 +1251,6 @@ Hazlo sólo en caso de ser necesario.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Invitado por &lt;b&gt;%1&lt;/b&gt; en %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Grupos</translation>
     </message>
@@ -1273,6 +1269,10 @@ Hazlo sólo en caso de ser necesario.</translation>
     <message>
         <source>Decline</source>
         <translation>Declinar</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

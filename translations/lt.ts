@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="lt_LT">
+<TS version="2.0" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -18,14 +18,6 @@
     <message>
         <source>Disabled</source>
         <translation>Išjungta</translation>
-    </message>
-    <message>
-        <source>Play a test sound while changing the output volume.</source>
-        <translation>Leisti bandomąjį signalą keičiant garsumą.</translation>
-    </message>
-    <message>
-        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Slankikliu galite nustatyti įvesties įrenginio signalo stiprumą nuo %1dB iki %2dB.</translation>
     </message>
 </context>
 <context>
@@ -1091,14 +1083,6 @@ bus nusiųstos jiems prisijungus.</translation>
         <translation>Prisijungti iš naujo</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Markdown nustatymai bus pritaikyti perkrovus qTox.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Pasirinkite Markdown vaizdavimo tipą.</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Neformatuotas tekstas</translation>
     </message>
@@ -1127,8 +1111,16 @@ bus nusiųstos jiems prisijungus.</translation>
         <translation>Dydis:</translation>
     </message>
     <message>
-        <source>Markdown format:</source>
-        <translation>„Markdown“ nustatymai:</translation>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1257,10 +1249,6 @@ bus nusiųstos jiems prisijungus.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt; pakvietė %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Grupės</translation>
     </message>
@@ -1279,6 +1267,10 @@ bus nusiųstos jiems prisijungus.</translation>
     <message>
         <source>Decline</source>
         <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

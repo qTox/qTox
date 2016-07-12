@@ -1084,14 +1084,6 @@ au lieu de se fermer.</translation>
         <translation>Désactiver ceci permet par exemple d&apos;utiliser Tox à travers Tor, mais ce n&apos;est à utiliser que si nécessaire, car cela ralenti le réseau Tox.</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Les nouvelles préférences Markdown peuvent ne pas être chargées avant le redémarrage de qTox.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Sélectionner les préférence de Markdown.</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Texte en clair</translation>
     </message>
@@ -1120,8 +1112,16 @@ au lieu de se fermer.</translation>
         <translation>Taille : </translation>
     </message>
     <message>
-        <source>Markdown format:</source>
-        <translation>Formatage Markdown :</translation>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1250,10 +1250,6 @@ au lieu de se fermer.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Vous êtes invité par &lt;b&gt;%1&lt;/b&gt; dans %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Groupes</translation>
     </message>
@@ -1272,6 +1268,10 @@ au lieu de se fermer.</translation>
     <message>
         <source>Decline</source>
         <translation>Décliner</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

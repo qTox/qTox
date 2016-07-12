@@ -1083,14 +1083,6 @@ will be sent to them when they appear online to you.</source>
         <translation>Riconnetti</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>La nuova preferenza non può caricare fino a quando si riavvia qTox.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Seleziona preferenza.</translation>
-    </message>
-    <message>
         <source>Plaintext</source>
         <translation>Testo in chiaro</translation>
     </message>
@@ -1119,7 +1111,15 @@ will be sent to them when they appear online to you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Markdown format:</source>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1249,10 +1249,6 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Inviato da &lt;b&gt;%1&lt;/b&gt; su %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Gruppi</translation>
     </message>
@@ -1271,6 +1267,10 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Decline</source>
         <translation>Rifiuta</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

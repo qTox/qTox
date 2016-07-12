@@ -1017,14 +1017,6 @@ instead of system taskbar.</source>
         <translation>Открыть окно</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Для изменения отображения разметки необходимо перезапустить qTox.</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Выбор отображения разметки.</translation>
-    </message>
-    <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation>Если отмечено, групповые беседы будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
@@ -1129,8 +1121,16 @@ will be sent to them when they appear online to you.</source>
         <translation>Размер: </translation>
     </message>
     <message>
-        <source>Markdown format:</source>
-        <translation>Отображение разметки:</translation>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1259,10 +1259,6 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Приглашен пользователем &lt;b&gt;%1&lt;/b&gt; в %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Группы</translation>
     </message>
@@ -1281,6 +1277,10 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Decline</source>
         <translation>Отклонить</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

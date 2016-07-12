@@ -1010,10 +1010,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Standardordner für Dateien:</translation>
     </message>
     <message>
-        <source>Select Markdown preference.</source>
-        <translation>Wähle Markdown-Einstellungen.</translation>
-    </message>
-    <message>
         <source>Theme</source>
         <translation>Aussehen</translation>
     </message>
@@ -1075,10 +1071,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>IPv6 aktivieren (Empfohlen)</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Änderungen an den Markdown-Einstellungen werden erst nach einem Neustart von qTox wirksam.</translation>
-    </message>
-    <message>
         <source>Proxy type:</source>
         <translation>Proxy-Typ:</translation>
     </message>
@@ -1134,8 +1126,16 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Größe: </translation>
     </message>
     <message>
-        <source>Markdown format:</source>
-        <translation>Markdown-Format:</translation>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1264,10 +1264,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Gruppen</translation>
     </message>
@@ -1286,6 +1282,10 @@ werden übertragen, sobald ihr beide online seid.</translation>
     <message>
         <source>Decline</source>
         <translation>Ablehnen</translation>
+    </message>
+    <message>
+        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
