@@ -12,31 +12,39 @@
         <translation>Standartinė raiška</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation>%1p</translation>
-    </message>
-    <message>
         <source>Disabled</source>
         <translation>Išjungta</translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Garso įrenginiai</translation>
+        <translation>Garso nustatymai</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Slankikliu galite nustatyti garsiakalbių garsumą.</translation>
+        <translation>Slinktuku galite nustatyti garsiakalbių garsį.</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Išvesties įrenginys</translation>
+        <translation>Atkūrimo įrenginys</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Garsumas</translation>
+        <translation>Garsis</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -44,7 +52,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation>Garsumas</translation>
+        <translation>Stiprinimas</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -52,7 +60,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Vaizdą įrašymo įrenginys</translation>
+        <translation>Vaizdo įrenginys</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -69,10 +77,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Nustatykite vaizdo kameros skiriamąją gebą.
-Kuo didesnė vertė, tuo geresnę vaizdo kokybę matys Jūsų kontaktai.
+        <translation>Nustatykite vaizdo kameros raišką.
+Kuo didesnė reikšmė, tuo geresnę vaizdo kokybę matys jūsų kontaktai.
 Geresnei vaizdo kokybei atitinkamai reikia geresnio interneto ryšio.
-Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambučiais.</translation>
+Jeigu jūsų interneto ryšys yra per prastas, turėsite keblumų su aukštesnės kokybės
+vaizdo skambučiais.</translation>
     </message>
 </context>
 <context>
@@ -83,16 +92,16 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Paleiskite qTox iš naujo, kad būtų įdiegta versija: %1</translation>
+        <translation>Paleiskite qTox iš naujo, kad būtų įdiegta versija %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>qTox siunčia programos atnaujinimą: %1</translation>
+        <translation>qTox atsisiunčia programos atnaujinimą: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Visų žinomų problemų sąrašą galite rasti mūsų Github %1. Jei radote problemą ar saugumo spragą qTox programoje, prašome %3 pagal gaires mūsų viki straipsnyje „%2“.</translation>
+        <translation>Visų žinomų problemų sąrašą galite rasti mūsų Github %1. Jeigu qTox programoje radote problemą ar saugumo spragą, prašome %3 pagal gaires mūsų viki straipsnyje „%2“.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -119,7 +128,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation>Siunčiamas atnaujinimas: %p%</translation>
+        <translation>Atsiunčiamas atnaujinimas: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -139,7 +148,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github portale&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github svetainėje&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -182,7 +191,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Iš šio kontakto failai automatiškai nepriimami</translation>
+        <translation>Nuo šio kontakto failai automatiškai nepriimami</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -203,11 +212,11 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Pasirinkite priimamų failų katalogą</translation>
+        <translation>Pasirinkite katalogą priimamiems failams</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation>Pokalbių žurnalas išvalytas</translation>
+        <translation>Žurnalas išvalytas</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
@@ -252,7 +261,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Čia %1! Gal susirašinėjam per Tox?</translation>
+        <translation>Čia %1! Gal bendraujame per Tox?</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -309,7 +318,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Atstatyti pradinius nustatymus</translation>
+        <translation>Atstatyti numatytuosius nustatymus</translation>
     </message>
 </context>
 <context>
@@ -348,15 +357,15 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 skambina</translation>
+        <translation>Skambina %1</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Nutraukti vaizdo pokalbį</translation>
+        <translation>Užbaigti vaizdo pokalbį</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Nutraukti pokalbį</translation>
+        <translation>Užbaigti pokalbį</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -401,7 +410,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Nepavyko sukurti laikino failo</translation>
+        <translation>Nepavyko atverti laikinojo failo</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
@@ -436,14 +445,14 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>pending</source>
-        <translation>dar nenusiųsta</translation>
+        <translation>dar neišsiųsta</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Įveskite čia savo žinutę...</translation>
+        <translation>Įrašykite čia savo žinutę...</translation>
     </message>
 </context>
 <context>
@@ -502,7 +511,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
         <translation>Užšifruoto pokalbių žurnalo rasti nepavyko, arba failas yra sugadintas.
-Žurnalas išjungtas!</translation>
+Žurnalas bus išjungtas!</translation>
     </message>
     <message>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
@@ -513,7 +522,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Bet kada galite vėl įjungti šifravimą nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
+        <translation>
+Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Bet kada galite vėl įjungti šifravimą nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -751,7 +761,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Away</source>
-        <translation>Pasitraukęs</translation>
+        <translation>Pasišalinęs</translation>
     </message>
     <message>
         <source>Busy</source>
@@ -887,11 +897,11 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Jūsų būsena po nustatyto laiko automatiškai bus pakeista į „pasitraukęs“.</translation>
+        <translation>Jūsų būsena po nustatyto laiko automatiškai bus pakeista į „Pasišalinęs“.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Automatiškai „pasitraukęs“ po („0“ išjungia):</translation>
+        <translation>Automatiškai „pasišalinęs“ po („0“ išjungia):</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -960,7 +970,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl atžymėkite tik tada, kai reikia.</translation>
+        <translation>Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1108,7 +1118,7 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation>Dydis:</translation>
+        <translation>Dydis: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
@@ -2258,7 +2268,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Pasitraukęs</translation>
+        <translation>Pasišalinęs</translation>
     </message>
     <message>
         <source>Busy</source>
@@ -2369,7 +2379,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>pasitraukęs (-usi)</translation>
+        <translation>pasišalinęs (-usi)</translation>
     </message>
     <message>
         <source>busy</source>
