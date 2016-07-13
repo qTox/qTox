@@ -63,21 +63,24 @@ public:
 
     qreal minInputGain() const;
     void setMinInputGain(qreal dB);
+
     qreal maxInputGain() const;
     void setMaxInputGain(qreal dB);
+
     qreal inputGain() const;
     void setInputGain(qreal dB);
 
     void reinitInput(const QString& inDevDesc);
     bool reinitOutput(const QString& outDevDesc);
 
-    bool isInputReady() const;
     bool isOutputReady() const;
 
     static QStringList outDeviceNames();
     static QStringList inDeviceNames();
+
     void subscribeOutput(ALuint& sid);
     void unsubscribeOutput(ALuint& sid);
+
     void subscribeInput();
     void unsubscribeInput();
 

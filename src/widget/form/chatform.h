@@ -92,6 +92,12 @@ private slots:
 private:
     void retranslateUi();
     void showOutgoingCall(bool video);
+    void startCounter();
+    void stopCounter();
+    QString secondsToDHMS(quint32 duration);
+    void enableCallButtons();
+    void disableCallButtons();
+    void SendMessageStr(QString msg);
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
@@ -117,14 +123,8 @@ private:
 
     ScreenshotGrabber* screenshotGrabber;
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    void startCounter();
-    void stopCounter();
-    QString secondsToDHMS(quint32 duration);
     CallConfirmWidget *callConfirm;
-    void enableCallButtons();
-    void disableCallButtons();
     bool isTyping;
-    void SendMessageStr(QString msg);
 };
 
 #endif // CHATFORM_H

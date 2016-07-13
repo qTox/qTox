@@ -137,8 +137,9 @@ CameraSource::~CameraSource()
 
     if (device)
     {
-        for(int i = 0; i < subscriptions; i++)
+        for (int i = 0; i < subscriptions; i++)
             device->close();
+
         device = nullptr;
     }
 
@@ -241,7 +242,7 @@ bool CameraSource::openDevice()
     // Find the first video stream
     for (unsigned i = 0; i < device->context->nb_streams; i++)
     {
-        if(device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+        if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
         {
             videoStreamIndex = i;
             break;
@@ -257,7 +258,7 @@ bool CameraSource::openDevice()
     // Get a pointer to the codec context for the video stream
     cctxOrig = device->context->streams[videoStreamIndex]->codec;
     codec = avcodec_find_decoder(cctxOrig->codec_id);
-    if(!codec)
+    if (!codec)
     {
         qWarning() << "Codec not found";
         return false;
@@ -265,7 +266,7 @@ bool CameraSource::openDevice()
 
     // Copy context, since we apparently aren't allowed to use the original
     cctx = avcodec_alloc_context3(codec);
-    if(avcodec_copy_context(cctx, cctxOrig) != 0)
+    if (avcodec_copy_context(cctx, cctxOrig) != 0)
     {
         qWarning() << "Can't copy context";
         return false;
@@ -274,7 +275,7 @@ bool CameraSource::openDevice()
     cctx->refcounted_frames = 1;
 
     // Open codec
-    if(avcodec_open2(cctx, codec, nullptr)<0)
+    if (avcodec_open2(cctx, codec, nullptr)<0)
     {
         qWarning() << "Can't open codec";
         avcodec_free_context(&cctx);

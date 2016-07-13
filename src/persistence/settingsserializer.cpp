@@ -283,7 +283,7 @@ void SettingsSerializer::save()
     f.write(data);
 
     // check if everything got written
-    if(f.flush())
+    if (f.flush())
     {
         f.commit();
     }
@@ -412,10 +412,10 @@ void SettingsSerializer::readIni()
         // Add all keys
         if (!s.group().isEmpty())
             beginGroup(s.group());
+
         for (QString k : s.childKeys())
         {
             setValue(k, s.value(k));
-            //qDebug() << "Read key "<<k<<" in group "<<group<<":\""<<groups[group]<<"\"";
         }
 
         // Add all groups
@@ -492,7 +492,6 @@ void SettingsSerializer::readIni()
         groupsToKill.append(v.group);
         arrays.append(a);
         values.removeAt(i);
-        //qDebug() << "Found array"<<a.name<<"in group"<<a.group<<"size"<<a.size;
     }
 
     // Associate each array's values with the array
@@ -514,7 +513,6 @@ void SettingsSerializer::readIni()
             if (!ok)
                 continue;
             groupsToKill.append(g);
-            //qDebug() << "Found element"<<groupArrayIndex<<"of array"<<a.name;
 
             if (groupArrayIndex > a.size)
                 a.size = groupArrayIndex;
@@ -530,7 +528,6 @@ void SettingsSerializer::readIni()
                 v.array = ai;
                 v.arrayIndex = groupArrayIndex;
                 a.values.append(vi);
-                //qDebug() << "Found key"<<v.key<<"at index"<<groupArrayIndex<<"of array"<<a.name;
             }
         }
     }
@@ -541,7 +538,7 @@ void SettingsSerializer::readIni()
     {
         if (groupSizes[g])
             continue;
-        //qDebug() << "Removing spurious array group"<<g<<groupSizes[g];
+
         removeGroup(g);
     }
 

@@ -243,7 +243,7 @@ void GenericChatForm::showFileMenu()
 
 void GenericChatForm::hideFileMenu()
 {
-    if(fileFlyout->isShown() || fileFlyout->isBeingShown())
+    if (fileFlyout->isShown() || fileFlyout->isBeingShown())
         fileFlyout->animateHide();
 }
 
@@ -470,17 +470,13 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
 {
     Friend *f = FriendList::findFriend(id);
     if (f)
-    {
         return f->getDisplayedName();
-    }
-    else
+
+    for (Group *it : GroupList::getAllGroups())
     {
-        for (auto it : GroupList::getAllGroups())
-        {
-            QString res = it->resolveToxId(id);
-            if (res.size())
-                return res;
-        }
+        QString res = it->resolveToxId(id);
+        if (res.size())
+            return res;
     }
 
     return QString();

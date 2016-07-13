@@ -189,14 +189,13 @@ void Nexus::showMainGUI()
     connect(core, &Core::groupNamelistChanged,       widget, &Widget::onGroupNamelistChanged);
     connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
     connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
-    connect(core, &Core::emptyGroupCreated, widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
+    connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
+    connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
+    connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
 
-    connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
-
-    connect(widget, &Widget::statusSet, core, &Core::setStatus);
-    connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
+    connect(widget, &Widget::statusSet,             core, &Core::setStatus);
+    connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
@@ -221,6 +220,7 @@ Core* Nexus::getCore()
     Nexus& nexus = getInstance();
     if (!nexus.profile)
         return nullptr;
+
     return nexus.profile->getCore();
 }
 

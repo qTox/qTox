@@ -186,10 +186,9 @@ void GroupInviteForm::deleteInviteButtons(QWidget* widget)
 void GroupInviteForm::retranslateUi()
 {
     headLabel->setText(tr("Groups"));
-    if(createButton)
-    {
+    if (createButton)
         createButton->setText(tr("Create new group"));
-    }
+
     inviteBox->setTitle(tr("Group invites"));
 
     for (QPushButton* acceptButton : acceptButtons)

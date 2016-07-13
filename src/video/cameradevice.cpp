@@ -194,13 +194,14 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 #endif
     else if (mode)
     {
-        qWarning() << "Video mode-setting not implemented for input "<<iformat->name;
-        (void)mode;
+        qWarning() << "Video mode-setting not implemented for input " << iformat->name;
+        Q_UNUSED(mode);
     }
 
     CameraDevice* dev = open(devName, &options);
     if (options)
         av_dict_free(&options);
+
     return dev;
 }
 
@@ -367,6 +368,8 @@ QVector<VideoMode> CameraDevice::getScreenModes()
 
 QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 {
+    Q_UNUSED(devName);
+
     if (!iformat);
     else if (isScreen(devName))
         return getScreenModes();
@@ -385,7 +388,6 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     else
         qWarning() << "Video mode listing not implemented for input "<<iformat->name;
 
-    (void)devName;
     return {};
 }
 

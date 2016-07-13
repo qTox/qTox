@@ -583,15 +583,6 @@ void Audio::doCapture()
 }
 
 /**
-Returns true if the input device is open and suscribed to
-*/
-bool Audio::isInputReady() const
-{
-    QMutexLocker locker(&audioLock);
-    return alInDev && inSubscriptions;
-}
-
-/**
 Returns true if the output device is open
 */
 bool Audio::isOutputReady() const

@@ -119,7 +119,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
-        if(!statusMessageLabel->text().isEmpty())
+        if (!statusMessageLabel->text().isEmpty())
         {
             QWidget* sender = static_cast<QWidget*>(this->sender());
 
@@ -580,7 +580,7 @@ void ChatForm::onEnableCallButtons()
 
 void ChatForm::onMicMuteToggle()
 {
-    if (audioInputFlag == true)
+    if (audioInputFlag)
     {
         coreav->micMuteToggle(f->getFriendID());
         if (micButton->objectName() == "red")
@@ -600,7 +600,7 @@ void ChatForm::onMicMuteToggle()
 
 void ChatForm::onVolMuteToggle()
 {
-    if (audioOutputFlag == true)
+    if (audioOutputFlag)
     {
         coreav->volMuteToggle(f->getFriendID());
         if (volButton->objectName() == "red")

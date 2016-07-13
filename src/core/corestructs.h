@@ -36,7 +36,7 @@ struct ToxFile
     };
 
     ToxFile()=default;
-    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString FilePath, FileDirection Direction);
+    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath, FileDirection Direction);
     ~ToxFile(){}
 
     bool operator==(const ToxFile& other) const;
