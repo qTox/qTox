@@ -48,12 +48,12 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
     path.addRoundedRect(gradientRect, 2.0, 2.0);
     painter.fillPath(path, gradient);
 
-    float slice = w / 5.f;
-    int padding = slice / 2;
+    const float slice = w / 5.f;
+    const int padding = qRound(slice / 2);
 
     for (int i = 0; i < 5; ++i)
     {
-        float pos = slice * i + padding;
+        int pos = qRound(slice * i + padding);
         painter.drawLine(pos, 2, pos, h - 4);
     }
 }
@@ -77,6 +77,7 @@ void MicFeedbackWidget::hideEvent(QHideEvent*)
 
 void MicFeedbackWidget::onGainMetered(qreal value)
 {
+    Q_UNUSED(value);
 #if 0
     current = value;
     update();

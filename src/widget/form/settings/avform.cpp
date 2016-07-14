@@ -38,8 +38,8 @@
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
 #endif
 
-AVForm::AVForm() :
-    GenericForm(QPixmap(":/img/settings/av.png"))
+AVForm::AVForm()
+    : GenericForm(QPixmap(":/img/settings/av.png"))
     , subscribedToAudioIn(false)
     , camVideoSurface(nullptr)
     , camera(CameraSource::getInstance())
@@ -69,8 +69,7 @@ AVForm::AVForm() :
 
     microphoneSlider->setToolTip(
                 tr("Use slider to set the gain of your input device ranging"
-                   " from %1dB to %2dB.")
-                .arg(audio.minInputGain())
+                   " from %1dB to %2dB.").arg(audio.minInputGain())
                 .arg(audio.maxInputGain()));
     microphoneSlider->setMinimum(qRound(audio.minInputGain()) * 10);
     microphoneSlider->setMaximum(qRound(audio.maxInputGain()) * 10);
@@ -136,7 +135,7 @@ void AVForm::open(const QString &devName, const VideoMode &mode)
 {
     QRect rect = mode.toRect();
     Settings::getInstance().setCamVideoRes(rect);
-    Settings::getInstance().setCamVideoFPS(mode.FPS);
+    Settings::getInstance().setCamVideoFPS(static_cast<quint16>(mode.FPS));
     camera.open(devName, mode);
 }
 
@@ -244,7 +243,7 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
                 }
 
                 bool better = CameraDevice::betterPixelFormat(mode.pixel_format, best.pixel_format);
-                if (mode.FPS == best.FPS && better)
+                if (mode.FPS >= best.FPS && better)
                     bestModeInds[res] = i;
             }
         }
@@ -291,14 +290,14 @@ void AVForm::fillCameraModesComboBox()
 int AVForm::searchPreferredIndex()
 {
     QRect prefRes = Settings::getInstance().getCamVideoRes();
-    unsigned short prefFPS = Settings::getInstance().getCamVideoFPS();
+    quint16 prefFPS = Settings::getInstance().getCamVideoFPS();
 
     for (int i = 0; i < videoModes.size(); i++)
     {
         VideoMode mode = videoModes[i];
         if (mode.width == prefRes.width()
                 && mode.height == prefRes.height()
-                && mode.FPS == prefFPS)
+                && static_cast<quint16>(mode.FPS) == prefFPS)
             return i;
     }
 
@@ -314,7 +313,9 @@ void AVForm::fillScreenModesComboBox()
     {
         VideoMode mode = videoModes[i];
         QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
-        qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.x, mode.y, mode.FPS, pixelFormat.toStdString().c_str());
+        qDebug("%dx%d+%d,%d FPS: %f, pixel format: %s\n", mode.width,
+               mode.height, mode.x, mode.y, mode.FPS,
+               pixelFormat.toStdString().c_str());
 
         QString name;
         if (mode.width && mode.height)
@@ -544,7 +545,8 @@ void AVForm::killVideoSurface()
 bool AVForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) || qobject_cast<QSlider*>(o)))
+         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ||
+          qobject_cast<QSlider*>(o)))
     {
         e->ignore();
         return true;
