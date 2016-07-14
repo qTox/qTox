@@ -322,7 +322,7 @@ void AVForm::fillScreenModesComboBox()
 
         QString name;
         if (mode.width && mode.height)
-            name = QString("Screen %1").arg(i + 1);
+            name = tr("Screen %1").arg(i + 1);
         else
             name = tr("Select region");
 
