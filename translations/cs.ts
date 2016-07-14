@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přehrát testovací zvuk při změne hlasitosti výstupu.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -25,6 +25,10 @@
     </message>
     <message>
         <source>Select region</source>
+        <translation>Zvolit oblast</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -107,7 +111,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Restartujte qTox pro instalaci verze %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
@@ -151,7 +155,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation type="unfinished"></translation>
+        <translation>Používáte qTox verzi $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
