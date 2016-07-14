@@ -47,6 +47,7 @@ AVForm::AVForm()
     setupUi(this);
 
     const Audio& audio = Audio::getInstance();
+    const Settings& s = Settings::getInstance();
 
     btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
@@ -65,6 +66,7 @@ AVForm::AVForm()
     });
 
     playbackSlider->setTracking(false);
+    playbackSlider->setValue(s.getOutVolume());
     playbackSlider->installEventFilter(this);
 
     microphoneSlider->setToolTip(
