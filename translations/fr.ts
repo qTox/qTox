@@ -12,11 +12,19 @@
         <translation>Résolution par défaut</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation>%1p</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disabled</source>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

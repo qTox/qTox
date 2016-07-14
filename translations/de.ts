@@ -8,16 +8,24 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Standardauflösung</translation>
     </message>
     <message>
         <source>Disabled</source>
         <translation>Deaktiviert</translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
