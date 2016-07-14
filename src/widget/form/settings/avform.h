@@ -23,17 +23,16 @@
 #include <QObject>
 #include <QString>
 #include <QList>
+
 #include "genericsettings.h"
+#include "ui_avform.h"
 #include "src/video/videomode.h"
 
-namespace Ui {
-class AVSettings;
-}
 
 class CameraSource;
 class VideoSurface;
 
-class AVForm : public GenericForm
+class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
@@ -61,7 +60,7 @@ private slots:
     // audio
     void onAudioInDevChanged(int deviceIndex);
     void onAudioOutDevChanged(int deviceIndex);
-    void onPlaybackValueChanged(int value);
+    void on_playbackSlider_valueChanged(int value);
     void onMicrophoneValueChanged(int value);
 
     // camera
@@ -80,7 +79,6 @@ private:
     void open(const QString &devName, const VideoMode &mode);
 
 private:
-    Ui::AVSettings *bodyUI;
     bool subscribedToAudioIn;
     bool mPlayTestSound;
     VideoSurface *camVideoSurface;

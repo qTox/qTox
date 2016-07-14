@@ -31,7 +31,7 @@ FORMS    += \
     src/widget/form/setpassworddialog.ui \
     src/widget/form/settings/aboutsettings.ui \
     src/widget/form/settings/advancedsettings.ui \
-    src/widget/form/settings/avsettings.ui \
+    src/widget/form/settings/avform.ui \
     src/widget/form/settings/generalsettings.ui \
     src/widget/form/settings/privacysettings.ui \
     src/widget/form/removefrienddialog.ui \

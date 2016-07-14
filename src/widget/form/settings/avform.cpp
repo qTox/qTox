@@ -18,7 +18,7 @@
 */
 
 #include "avform.h"
-#include "ui_avsettings.h"
+
 #include "src/audio/audio.h"
 #include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
@@ -44,46 +44,43 @@ AVForm::AVForm() :
     , camVideoSurface(nullptr)
     , camera(CameraSource::getInstance())
 {
-    bodyUI = new Ui::AVSettings;
-    bodyUI->setupUi(this);
+    setupUi(this);
 
     const Audio& audio = Audio::getInstance();
 
-    bodyUI->btnPlayTestSound->setToolTip(
+    btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
     auto qcbxIndexChangedInt = static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged);
 
-    connect(bodyUI->inDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioInDevChanged);
-    connect(bodyUI->outDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioOutDevChanged);
-    connect(bodyUI->videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
-    connect(bodyUI->videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
-    connect(bodyUI->rescanButton, &QPushButton::clicked, this, [=]()
+    connect(inDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioInDevChanged);
+    connect(outDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioOutDevChanged);
+    connect(videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
+    connect(videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
+    connect(rescanButton, &QPushButton::clicked, this, [=]()
     {
         getAudioInDevices();
         getAudioOutDevices();
         getVideoDevices();
     });
 
-    bodyUI->playbackSlider->setTracking(false);
-    bodyUI->playbackSlider->installEventFilter(this);
-    connect(bodyUI->playbackSlider, &QSlider::valueChanged,
-            this, &AVForm::onPlaybackValueChanged);
+    playbackSlider->setTracking(false);
+    playbackSlider->installEventFilter(this);
 
-    bodyUI->microphoneSlider->setToolTip(
+    microphoneSlider->setToolTip(
                 tr("Use slider to set the gain of your input device ranging"
                    " from %1dB to %2dB.")
                 .arg(audio.minInputGain())
                 .arg(audio.maxInputGain()));
-    bodyUI->microphoneSlider->setMinimum(qRound(audio.minInputGain()) * 10);
-    bodyUI->microphoneSlider->setMaximum(qRound(audio.maxInputGain()) * 10);
-    bodyUI->microphoneSlider->setTickPosition(QSlider::TicksBothSides);
-    bodyUI->microphoneSlider->setTickInterval(
-                (qAbs(bodyUI->microphoneSlider->minimum()) +
-                 bodyUI->microphoneSlider->maximum()) / 4);
-    bodyUI->microphoneSlider->setTracking(false);
-    bodyUI->microphoneSlider->installEventFilter(this);
-    connect(bodyUI->microphoneSlider, &QSlider::valueChanged,
+    microphoneSlider->setMinimum(qRound(audio.minInputGain()) * 10);
+    microphoneSlider->setMaximum(qRound(audio.maxInputGain()) * 10);
+    microphoneSlider->setTickPosition(QSlider::TicksBothSides);
+    microphoneSlider->setTickInterval(
+                (qAbs(microphoneSlider->minimum()) +
+                 microphoneSlider->maximum()) / 4);
+    microphoneSlider->setTracking(false);
+    microphoneSlider->installEventFilter(this);
+    connect(microphoneSlider, &QSlider::valueChanged,
             this, &AVForm::onMicrophoneValueChanged);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
@@ -99,7 +96,6 @@ AVForm::~AVForm()
 {
     killVideoSurface();
     Translator::unregister(this);
-    delete bodyUI;
 }
 
 void AVForm::hideEvent(QHideEvent* event)
@@ -151,7 +147,7 @@ void AVForm::onVideoModesIndexChanged(int index)
         qWarning() << "Invalid mode index";
         return;
     }
-    int devIndex = bodyUI->videoDevCombobox->currentIndex();
+    int devIndex = videoDevCombobox->currentIndex();
     if (devIndex < 0 || devIndex >= videoDeviceList.size())
     {
         qWarning() << "Invalid device index";
@@ -267,8 +263,8 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
 
 void AVForm::fillCameraModesComboBox()
 {
-    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
-    bodyUI->videoModescomboBox->clear();
+    bool previouslyBlocked = videoModescomboBox->blockSignals(true);
+    videoModescomboBox->clear();
 
     for(int i = 0; i < videoModes.size(); i++)
     {
@@ -283,13 +279,13 @@ void AVForm::fillCameraModesComboBox()
         else
             str += tr("Default resolution");
 
-        bodyUI->videoModescomboBox->addItem(str);
+        videoModescomboBox->addItem(str);
     }
 
     if (videoModes.isEmpty())
-        bodyUI->videoModescomboBox->addItem(tr("Default resolution"));
+        videoModescomboBox->addItem(tr("Default resolution"));
 
-    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+    videoModescomboBox->blockSignals(previouslyBlocked);
 }
 
 int AVForm::searchPreferredIndex()
@@ -311,8 +307,8 @@ int AVForm::searchPreferredIndex()
 
 void AVForm::fillScreenModesComboBox()
 {
-    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
-    bodyUI->videoModescomboBox->clear();
+    bool previouslyBlocked = videoModescomboBox->blockSignals(true);
+    videoModescomboBox->clear();
 
     for(int i = 0; i < videoModes.size(); i++)
     {
@@ -326,10 +322,10 @@ void AVForm::fillScreenModesComboBox()
         else
             name = tr("Select region");
 
-        bodyUI->videoModescomboBox->addItem(name);
+        videoModescomboBox->addItem(name);
     }
 
-    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+    videoModescomboBox->blockSignals(previouslyBlocked);
 }
 
 void AVForm::updateVideoModes(int curIndex)
@@ -363,7 +359,7 @@ void AVForm::updateVideoModes(int curIndex)
     int preferedIndex = searchPreferredIndex();
     if (preferedIndex != -1)
     {
-        bodyUI->videoModescomboBox->setCurrentIndex(preferedIndex);
+        videoModescomboBox->setCurrentIndex(preferedIndex);
         return;
     }
 
@@ -373,7 +369,7 @@ void AVForm::updateVideoModes(int curIndex)
         VideoMode mode(rect);
 
         Settings::getInstance().setScreenGrabbed(true);
-        bodyUI->videoModescomboBox->setCurrentIndex(videoModes.size() - 1);
+        videoModescomboBox->setCurrentIndex(videoModes.size() - 1);
         open(devName, mode);
         return;
     }
@@ -384,7 +380,7 @@ void AVForm::updateVideoModes(int curIndex)
     // If we picked the lowest resolution, the quality would be awful
     // but if we picked the largest, FPS would be bad and thus quality bad too.
     int mid = (videoModes.size() - 1) / 2;
-    bodyUI->videoModescomboBox->setCurrentIndex(mid);
+    videoModescomboBox->setCurrentIndex(mid);
 }
 
 void AVForm::onVideoDevChanged(int index)
@@ -398,14 +394,14 @@ void AVForm::onVideoDevChanged(int index)
     Settings::getInstance().setScreenGrabbed(false);
     QString dev = videoDeviceList[index].first;
     Settings::getInstance().setVideoDev(dev);
-    bool previouslyBlocked = bodyUI->videoModescomboBox->blockSignals(true);
+    bool previouslyBlocked = videoModescomboBox->blockSignals(true);
     updateVideoModes(index);
-    bodyUI->videoModescomboBox->blockSignals(previouslyBlocked);
+    videoModescomboBox->blockSignals(previouslyBlocked);
 
     if (Settings::getInstance().getScreenGrabbed())
         return;
 
-    int modeIndex = bodyUI->videoModescomboBox->currentIndex();
+    int modeIndex = videoModescomboBox->currentIndex();
     VideoMode mode = VideoMode();
     if (0 < modeIndex && modeIndex < videoModes.size())
         mode = videoModes[modeIndex];
@@ -421,16 +417,16 @@ void AVForm::getVideoDevices()
     int videoDevIndex = 0;
     videoDeviceList = CameraDevice::getDeviceList();
     //prevent currentIndexChanged to be fired while adding items
-    bodyUI->videoDevCombobox->blockSignals(true);
-    bodyUI->videoDevCombobox->clear();
+    videoDevCombobox->blockSignals(true);
+    videoDevCombobox->clear();
     for (QPair<QString, QString> device : videoDeviceList)
     {
-        bodyUI->videoDevCombobox->addItem(device.second);
+        videoDevCombobox->addItem(device.second);
         if (device.first == settingsInDev)
-            videoDevIndex = bodyUI->videoDevCombobox->count()-1;
+            videoDevIndex = videoDevCombobox->count()-1;
     }
-    bodyUI->videoDevCombobox->setCurrentIndex(videoDevIndex);
-    bodyUI->videoDevCombobox->blockSignals(false);
+    videoDevCombobox->setCurrentIndex(videoDevIndex);
+    videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
 }
 
@@ -439,15 +435,15 @@ void AVForm::getAudioInDevices()
     QStringList deviceNames;
     deviceNames << tr("Disabled") << Audio::inDeviceNames();
 
-    bodyUI->inDevCombobox->blockSignals(true);
-    bodyUI->inDevCombobox->clear();
-    bodyUI->inDevCombobox->addItems(deviceNames);
-    bodyUI->inDevCombobox->blockSignals(false);
+    inDevCombobox->blockSignals(true);
+    inDevCombobox->clear();
+    inDevCombobox->addItems(deviceNames);
+    inDevCombobox->blockSignals(false);
 
     int idx = Settings::getInstance().getAudioInDevEnabled()
               ? deviceNames.indexOf(Settings::getInstance().getInDev())
               : 0;
-    bodyUI->inDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    inDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
 }
 
 void AVForm::getAudioOutDevices()
@@ -455,15 +451,15 @@ void AVForm::getAudioOutDevices()
     QStringList deviceNames;
     deviceNames << tr("Disabled") << Audio::outDeviceNames();
 
-    bodyUI->outDevCombobox->blockSignals(true);
-    bodyUI->outDevCombobox->clear();
-    bodyUI->outDevCombobox->addItems(deviceNames);
-    bodyUI->outDevCombobox->blockSignals(false);
+    outDevCombobox->blockSignals(true);
+    outDevCombobox->clear();
+    outDevCombobox->addItems(deviceNames);
+    outDevCombobox->blockSignals(false);
 
     int idx = Settings::getInstance().getAudioOutDevEnabled()
               ? deviceNames.indexOf(Settings::getInstance().getOutDev())
               : 0;
-    bodyUI->outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
 }
 
 void AVForm::onAudioInDevChanged(int deviceIndex)
@@ -472,14 +468,14 @@ void AVForm::onAudioInDevChanged(int deviceIndex)
 
     QString deviceName;
     if (deviceIndex > 0)
-        deviceName = bodyUI->inDevCombobox->itemText(deviceIndex);
+        deviceName = inDevCombobox->itemText(deviceIndex);
 
     Settings::getInstance().setInDev(deviceName);
 
     Audio& audio = Audio::getInstance();
     audio.reinitInput(deviceName);
-    bodyUI->microphoneSlider->setEnabled(deviceIndex > 0);
-    bodyUI->microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
+    microphoneSlider->setEnabled(deviceIndex > 0);
+    microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
 }
 
 void AVForm::onAudioOutDevChanged(int deviceIndex)
@@ -488,22 +484,23 @@ void AVForm::onAudioOutDevChanged(int deviceIndex)
 
     QString deviceName;
     if (deviceIndex > 0)
-        deviceName = bodyUI->outDevCombobox->itemText(deviceIndex);
+        deviceName = outDevCombobox->itemText(deviceIndex);
 
     Settings::getInstance().setOutDev(deviceName);
 
     Audio& audio = Audio::getInstance();
     audio.reinitOutput(deviceName);
-    bodyUI->playbackSlider->setEnabled(deviceIndex > 0);
-    bodyUI->playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
+    playbackSlider->setEnabled(deviceIndex > 0);
+    playbackSlider->setSliderPosition(qRound(audio.outputVolume() * 100.0));
 }
 
-void AVForm::onPlaybackValueChanged(int value)
+void AVForm::on_playbackSlider_valueChanged(int value)
 {
     Settings::getInstance().setOutVolume(value);
 
     Audio& audio = Audio::getInstance();
-    if (audio.isOutputReady()) {
+    if (audio.isOutputReady())
+    {
         const qreal percentage = value / 100.0;
         audio.setOutputVolume(percentage);
 
@@ -524,11 +521,11 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
-    camVideoSurface = new VideoSurface(QPixmap(), bodyUI->CamFrame);
+    camVideoSurface = new VideoSurface(QPixmap(), CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
     camVideoSurface->setSource(&camera);
-    bodyUI->gridLayout->addWidget(camVideoSurface, 0, 0, 1, 1);
+    gridLayout->addWidget(camVideoSurface, 0, 0, 1, 1);
 }
 
 void AVForm::killVideoSurface()
@@ -536,7 +533,7 @@ void AVForm::killVideoSurface()
     if (!camVideoSurface)
         return;
     QLayoutItem *child;
-    while ((child = bodyUI->gridLayout->takeAt(0)) != 0)
+    while ((child = gridLayout->takeAt(0)) != 0)
         delete child;
 
     camVideoSurface->close();
@@ -557,7 +554,7 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 
 void AVForm::retranslateUi()
 {
-    bodyUI->retranslateUi(this);
+    Ui::AVForm::retranslateUi(this);
 }
 
 void AVForm::on_btnPlayTestSound_clicked(bool checked)
