@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
@@ -25,6 +25,10 @@
     </message>
     <message>
         <source>Select region</source>
+        <translation>Sélectionner une région</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1279,7 +1283,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invité par &lt;b&gt;%1&lt;/b&gt; le %2 à %3.</translation>
     </message>
 </context>
 <context>
@@ -1432,7 +1436,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>S&apos;incrire</translation>
+        <translation>S&apos;inscrire</translation>
     </message>
     <message>
         <source>Your password</source>
