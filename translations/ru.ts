@@ -17,14 +17,18 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Проигрывать тестовый звук во время настройки громкости.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используйте ползунок для установки уровня записи от %1dB до %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
+        <translation>Выбрать область экрана</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1130,15 +1134,15 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат текстовых сообщений:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите формат текстовых сообщений.</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1292,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приглашение от &lt;b&gt;%1&lt;/b&gt; в %2 %3.</translation>
     </message>
 </context>
 <context>
