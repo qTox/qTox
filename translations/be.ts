@@ -17,14 +17,18 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Прайграць тэставы гук пры змяненні гучнасці.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выкарыстоўваць паўзунок для змянення ўзмацнення вашай прылады запісу ў дыяпазоне ад %1 дБ да %2 дБ.</translation>
     </message>
     <message>
         <source>Select region</source>
+        <translation>Выбраць рэгіён</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -44,7 +48,7 @@
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Прылада захопу</translation>
+        <translation>Прылада запісу</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -77,7 +81,7 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Усталяваць распазнавальнасць вашай камеры.
-Чым больш высокія значэнні, тым лепшую якасць відэа вашыя сябры могуць атрымаць.
+Чым больш высокія значэнні зададзены, тым лепшую якасць відэа вашыя сябры могуць атрымаць.
 Але звярніце ўвагу, што з лепшай якасцю відэа патрабуецца лепшае падключэнне да Інтэрнэту.
 Часам вашага падключэння будзе недастаткова, каб справіцца з больш высокай якасцю відэа,
 што можа прывесці да праблем з відэавыклікам.</translation>
@@ -100,7 +104,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Githubʼбе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, %3, згодна з указаннямі ў артыкуле %2 нашай вікі.</translation>
+        <translation>Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Гітхабе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, %3, згодна з указаннямі ў артыкуле %2 нашай вікі.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -238,7 +242,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox&apos;у неабходна выкарыстоўваць Tox DNS, але гэта немагчыма праз проксі.
+        <translation>qTox неабходна выкарыстоўваць Tox DNS, але гэта немагчыма праз проксі.
 Ігнараваць проксі і злучыцца з Інтэрнетам непасрэдна?</translation>
     </message>
     <message>
@@ -307,7 +311,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Захаваць налады ў рабочы каталог замест звычайнага канфігурацыйнвага каталога</translation>
+        <translation>Захаваць налады ў працоўны каталог замест звычайнага канфігурацыйнага каталога</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -315,7 +319,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВАЖНАЯ ЗАЎВАГА&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Пакуль вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;на самай справе&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; не ведаце, што вы робіце, калі ласка, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; змяняйце тут нічога. Змены зробленыя тут могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВАЖНАЯ ЗАЎВАГА&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Пакуль вы &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;на самай справе&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; не ведаце, што вы робіце, калі ласка, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; змяняйце тут нічога. Змены, зробленыя тут, могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
@@ -416,7 +420,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
         <translatorcomment>laut Duden ist Screenshot schon deutsch</translatorcomment>
-        <translation>qTox&apos;у не ўдалося захаваць скрыншот</translation>
+        <translation>qTox не ўдалося захаваць скрыншот</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -454,7 +458,7 @@ which may lead to problems with video calls.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Надрукуй сваё паведамленне тут...</translation>
+        <translation>Надрукуйце сваё паведамленне тут...</translation>
     </message>
 </context>
 <context>
@@ -582,7 +586,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>У вас няма дазволу на запіс у гэта размяшчэнне. Выберыце іншае, або адмяніць дыялог захавання.</translation>
+        <translation>У вас няма дазволу на запіс у гэта размяшчэнне. Выберыце іншае, або адмяніце дыялог захавання.</translation>
     </message>
     <message>
         <source>Resuming...</source>
@@ -745,7 +749,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Set alias...</source>
-        <translation>Усталяваць псеўданімы…</translation>
+        <translation>Усталяваць псеўданім…</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
@@ -896,7 +900,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation>Задаць, дзе будуць захоўвацца файлы.</translation>
+        <translation>Усталюйце, дзе будуць захоўвацца файлы.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
@@ -981,16 +985,16 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Калі ўключаны, групавыя чаты будуць размешчаны наверсе спісу кантактаў, інкш яны будуць размешчаны ніжэй сяброў у сеціве.</translation>
+        <translation>Калі ўключаны, групавыя чаты будуць размешчаны наверсе спісу кантактаў, інакш яны будуць размешчаны ніжэй сяброў у сеціве.</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Запуск qTox&apos;у пры запуску аперацыйнай сістэмы (бягучы профіль).</translation>
+        <translation>Запуск qTox пры запуску аперацыйнай сістэмы (бягучы профіль).</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Адкрыць акно qTox&apos;у калі вы атрымліваеце новае паведамленне і вакно не адкрыта.</translation>
+        <translation>Адкрыць акно qTox, калі вы атрымліваеце новае паведамленне і вакно не адкрыта.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -1113,7 +1117,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Прайграць гук, калі заняты</translation>
+        <translation>Прайграваць гук, калі заняты</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -1355,7 +1359,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Бягучае размяшчэнне профілю:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Размяшчэнне бягучага профілю:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1456,11 +1460,11 @@ Profile does not contain your history.</source>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Дыялог загрузкі гісторыі</translation>
+        <translation>Загрузка гісторыі</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation>Загрузіць гісторыю з:</translation>
+        <translation>Загрузіць гісторыю пачынаючы з:</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1524,7 @@ Profile does not contain your history.</source>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>Пароль, якія вы ўвялі, розныя.
+        <translation>Паролі, якія вы ўвялі, розныя.
 Калі ласка, ўвядзіце адзін і той жа пароль двойчы.</translation>
     </message>
     <message>
@@ -1595,7 +1599,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Праглядзець завершаная перадачы файлаў</translation>
+        <translation>Праглядзець завершаныя перадачы файлаў</translation>
     </message>
     <message>
         <source>Change your settings</source>
@@ -1920,7 +1924,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation>Імпартаваць профіль</translation>
+        <translation>Імпарт профілю</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -2321,7 +2325,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation>Вы просіце, каб qTox адкрыў выканальны файл. Выканальныя файлы патынцыйна могуць нанесці шкоду вашаму камп’ютару. Вы сапраўды хочаце адкрыць гэты файл?</translation>
+        <translation>Вы просіце, каб qTox адкрыў выканальны файл. Выканальныя файлы патэнцыйна могуць нанесці шкоду вашаму камп’ютару. Вы сапраўды хочаце адкрыць гэты файл?</translation>
     </message>
     <message>
         <source>Settings</source>
