@@ -56,18 +56,17 @@ private:
     void retranslateUi();
 
 private slots:
-
     // audio
-    void onAudioInDevChanged(int deviceIndex);
-    void onAudioOutDevChanged(int deviceIndex);
+    void on_inDevCombobox_currentIndexChanged(int deviceIndex);
+    void on_outDevCombobox_currentIndexChanged(int deviceIndex);
     void on_playbackSlider_valueChanged(int value);
-    void onMicrophoneValueChanged(int value);
+    void on_btnPlayTestSound_clicked(bool checked);
+    void on_microphoneSlider_valueChanged(int value);
 
     // camera
-    void onVideoDevChanged(int index);
-    void onVideoModesIndexChanged(int index);
+    void on_videoDevCombobox_currentIndexChanged(int index);
+    void on_videoModescomboBox_currentIndexChanged(int index);
 
-    void on_btnPlayTestSound_clicked(bool checked);
 
 protected:
     void updateVideoModes(int curIndex);

@@ -52,12 +52,6 @@ AVForm::AVForm()
     btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
-    auto qcbxIndexChangedInt = static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged);
-
-    connect(inDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioInDevChanged);
-    connect(outDevCombobox, qcbxIndexChangedInt, this, &AVForm::onAudioOutDevChanged);
-    connect(videoDevCombobox, qcbxIndexChangedInt, this, &AVForm::onVideoDevChanged);
-    connect(videoModescomboBox, qcbxIndexChangedInt, this, &AVForm::onVideoModesIndexChanged);
     connect(rescanButton, &QPushButton::clicked, this, [=]()
     {
         getAudioInDevices();
@@ -81,8 +75,6 @@ AVForm::AVForm()
                  microphoneSlider->maximum()) / 4);
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
-    connect(microphoneSlider, &QSlider::valueChanged,
-            this, &AVForm::onMicrophoneValueChanged);
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -141,7 +133,7 @@ void AVForm::open(const QString &devName, const VideoMode &mode)
     camera.open(devName, mode);
 }
 
-void AVForm::onVideoModesIndexChanged(int index)
+void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
     if (index < 0 || index >= videoModes.size())
     {
@@ -386,7 +378,7 @@ void AVForm::updateVideoModes(int curIndex)
     videoModescomboBox->setCurrentIndex(mid);
 }
 
-void AVForm::onVideoDevChanged(int index)
+void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 {
     if (index < 0 || index >= videoDeviceList.size())
     {
@@ -465,7 +457,7 @@ void AVForm::getAudioOutDevices()
     outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
 }
 
-void AVForm::onAudioInDevChanged(int deviceIndex)
+void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
 {
     Settings::getInstance().setAudioInDevEnabled(deviceIndex != 0);
 
@@ -481,7 +473,7 @@ void AVForm::onAudioInDevChanged(int deviceIndex)
     microphoneSlider->setSliderPosition(qRound(audio.inputGain() * 10.0));
 }
 
-void AVForm::onAudioOutDevChanged(int deviceIndex)
+void AVForm::on_outDevCombobox_currentIndexChanged(int deviceIndex)
 {
     Settings::getInstance().setAudioOutDevEnabled(deviceIndex != 0);
 
@@ -512,7 +504,12 @@ void AVForm::on_playbackSlider_valueChanged(int value)
     }
 }
 
-void AVForm::onMicrophoneValueChanged(int value)
+void AVForm::on_btnPlayTestSound_clicked(bool checked)
+{
+    mPlayTestSound = checked;
+}
+
+void AVForm::on_microphoneSlider_valueChanged(int value)
 {
     const qreal dB = value / 10.0;
 
@@ -559,9 +556,4 @@ bool AVForm::eventFilter(QObject *o, QEvent *e)
 void AVForm::retranslateUi()
 {
     Ui::AVForm::retranslateUi(this);
-}
-
-void AVForm::on_btnPlayTestSound_clicked(bool checked)
-{
-    mPlayTestSound = checked;
 }
