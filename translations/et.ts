@@ -1117,7 +1117,7 @@ kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Peamine kirjatüüp:</translation>
+        <translation>Aluskirjatüüp:</translation>
     </message>
     <message>
         <source>px</source>
@@ -1129,15 +1129,15 @@ kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Uued teksti väljanägemist puudutavad eelistused ei pruugi aktiveeruda enne, kui qTox uuesti käivitatakse.</translation>
+        <translation>Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox käivitatakse uuesti.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksti kujunduse vorming:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vali teksti kujunduse eelistus.</translation>
     </message>
 </context>
 <context>
