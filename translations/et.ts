@@ -13,18 +13,22 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Välja lülitatud</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Väljundsignaali muutmisel mängi prooviheli.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasuta liugurit, et määrata oma sisendseadme võimendus skaalal %1dB kuni %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
+        <translation>Vali ala</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1113,19 +1117,19 @@ kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Peamine kirjatüüp:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Suurus: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uued teksti väljanägemist puudutavad eelistused ei pruugi aktiveeruda enne, kui qTox uuesti käivitatakse.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -1283,7 +1287,7 @@ kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutse esitas &lt;b&gt;%1&lt;/b&gt;, kui oli %2 kl. %3.</translation>
     </message>
 </context>
 <context>
@@ -1650,7 +1654,7 @@ Võimalik, et peaksid selle looma.</translation>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>SUURTÄHED ON AKTIVEERITUD</translation>
     </message>
 </context>
 <context>
@@ -2444,7 +2448,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kuva</translation>
     </message>
 </context>
 </TS>
