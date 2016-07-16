@@ -106,12 +106,12 @@ void CoreAV::process()
     iterateTimer->start(toxav_iteration_interval(toxav));
 }
 
-bool CoreAV::anyActiveCalls()
+bool CoreAV::anyActiveCalls() const
 {
     return !calls.isEmpty();
 }
 
-bool CoreAV::isCallVideoEnabled(uint32_t friendNum)
+bool CoreAV::isCallVideoEnabled(uint32_t friendNum) const
 {
     assert(calls.contains(friendNum));
     return calls[friendNum].videoEnabled;
@@ -378,7 +378,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
                           sample_rate);
 }
 
-VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
+VideoSource *CoreAV::getVideoSourceFromCall(int friendNum) const
 {
     if (!calls.contains(friendNum))
     {

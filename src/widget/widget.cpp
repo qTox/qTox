@@ -601,7 +601,7 @@ void Widget::resizeEvent(QResizeEvent *event)
     emit resized();
 }
 
-QString Widget::getUsername()
+QString Widget::getUsername() const
 {
     return Nexus::getCore()->getUsername();
 }
@@ -1396,7 +1396,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
-    contactListWidget->reDraw();
+    contactListWidget->redraw();
 }
 
 void Widget::removeFriend(int friendId)
@@ -1434,7 +1434,7 @@ ContentDialog* Widget::createContentDialog() const
     return contentDialog;
 }
 
-ContentLayout* Widget::createContentDialog(DialogType type)
+ContentLayout* Widget::createContentDialog(DialogType type) const
 {
     class Dialog : public ActivateDialog
     {
@@ -1638,7 +1638,7 @@ void Widget::removeGroup(Group* g, bool fake)
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
         onAddClicked();
 
-    contactListWidget->reDraw();
+    contactListWidget->redraw();
 }
 
 void Widget::removeGroup(int groupId)
@@ -1918,7 +1918,7 @@ void Widget::onSplitterMoved(int pos, int index)
     saveSplitterGeometry();
 }
 
-void Widget::cycleContacts(bool forward)
+void Widget::cycleContacts(bool forward) const
 {
     contactListWidget->cycleContacts(activeChatroomWidget, forward);
 }
@@ -1986,7 +1986,7 @@ void Widget::reloadTheme()
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
     ui->statusButton->setStyleSheet(Style::getStylesheet(":/ui/statusButton/statusButton.css"));
-    contactListWidget->reDraw();
+    contactListWidget->redraw();
 
     for (Friend* f : FriendList::getAllFriends())
         f->getFriendWidget()->reloadTheme();
@@ -1995,12 +1995,12 @@ void Widget::reloadTheme()
         g->getGroupWidget()->reloadTheme();
 }
 
-void Widget::nextContact()
+void Widget::nextContact() const
 {
     cycleContacts(true);
 }
 
-void Widget::previousContact()
+void Widget::previousContact() const
 {
     cycleContacts(false);
 }
@@ -2094,7 +2094,7 @@ void Widget::searchContacts()
 
     updateFilterText();
 
-    contactListWidget->reDraw();
+    contactListWidget->redraw();
 }
 
 void Widget::changeDisplayMode()

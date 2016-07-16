@@ -221,20 +221,18 @@ IPC::IPCEvent *IPC::fetchEvent()
 bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg)
 {
     bool result = false;
-    if (QThread::currentThread() != qApp->thread())
-    {
-        QMetaObject::invokeMethod(this, "runEventHandler",
-                                  Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, result),
-                                  Q_ARG(IPCEventHandler, handler),
-                                  Q_ARG(const QByteArray&, arg));
-        return result;
-    }
-    else
+    if (QThread::currentThread() == qApp->thread())
     {
         result = handler(arg);
         return result;
     }
+
+    QMetaObject::invokeMethod(this, "runEventHandler",
+                              Qt::BlockingQueuedConnection,
+                              Q_RETURN_ARG(bool, result),
+                              Q_ARG(IPCEventHandler, handler),
+                              Q_ARG(const QByteArray&, arg));
+    return result;
 }
 
 void IPC::processEvents()

@@ -113,7 +113,7 @@ ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString
     resize(300, 200);
 }
 
-QString ToxURIDialog::getRequestMessage()
+QString ToxURIDialog::getRequestMessage() const
 {
     return messageEdit->toPlainText();
 }

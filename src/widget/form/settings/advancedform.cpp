@@ -49,7 +49,7 @@ AdvancedForm::~AdvancedForm()
     delete bodyUI;
 }
 
-void AdvancedForm::onMakeToxPortableUpdated()
+void AdvancedForm::onMakeToxPortableUpdated() const
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }

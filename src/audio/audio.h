@@ -93,10 +93,10 @@ public:
                          unsigned channels, int sampleRate);
 
 signals:
-    void groupAudioPlayed(int group, int peer, unsigned short volume);
+    void groupAudioPlayed(int group, int peer, unsigned short volume) const;
     /// When there are input subscribers, we regularly emit captured audio frames with this signal
     /// Always connect with a blocking queued connection or a lambda, or the behavior is undefined
-    void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
+    void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate) const;
 
 private:
     Audio();

@@ -31,7 +31,6 @@ private:
 
 private:
     QAction* action;
-
     static EventHandler* eventHandler;
 };
 #endif // PASSWORDEDIT_H

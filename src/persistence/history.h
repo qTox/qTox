@@ -39,7 +39,7 @@ public:
     History(const QString& profileName, const QString& password, const HistoryKeeper& oldHistory);
     ~History();
     /// Checks if the database was opened successfully
-    bool isValid();
+    bool isValid() const;
     /// Imports messages from the old history file
     void import(const HistoryKeeper& oldHistory);
     /// Changes the database password, will encrypt or decrypt if necessary

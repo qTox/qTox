@@ -64,15 +64,13 @@ public:
     ~Widget();
     void init();
     void setCentralWidget(QWidget *widget, const QString &widgetName);
-    QString getUsername();
-    Camera* getCamera();
+    QString getUsername() const;
     static Widget* getInstance();
     void showUpdateDownloadProgress(); ///< Switches to the About settings page
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
-    bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
     void updateScroll(GenericChatroomWidget *widget);
@@ -88,7 +86,7 @@ public:
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
-    ContentLayout* createContentDialog(DialogType type);
+    ContentLayout* createContentDialog(DialogType type) const;
 
     static void confirmExecutableOpen(const QFileInfo &file);
 
@@ -144,8 +142,8 @@ public slots:
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void onGroupSendResult(int groupId, const QString& message, int result);
     void onFriendTypingChanged(int friendId, bool isTyping);
-    void nextContact();
-    void previousContact();
+    void nextContact() const;
+    void previousContact() const;
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -222,7 +220,7 @@ private:
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
-    void cycleContacts(bool forward);
+    void cycleContacts(bool forward) const;
     void searchContacts();
     void changeDisplayMode();
     void updateFilterText();

@@ -32,7 +32,7 @@ LoadHistoryDialog::~LoadHistoryDialog()
     delete ui;
 }
 
-QDateTime LoadHistoryDialog::getFromDate()
+QDateTime LoadHistoryDialog::getFromDate() const
 {
     QDateTime res(ui->fromDate->selectedDate());
     if (res.date().month() != ui->fromDate->monthShown() || res.date().year() != ui->fromDate->yearShown())

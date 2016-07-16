@@ -33,12 +33,12 @@ public:
     explicit QRWidget(QWidget *parent = 0);
     ~QRWidget();
     void setQRData(const QString& data);
-    QImage* getImage();
-    bool saveImage(QString path);
+    QImage* getImage() const;
+    bool saveImage(QString path) const;
 
 private:
+    void paintImage() const;
     QString data;
-    void paintImage();
     QImage* image;
     QSize size;
 };

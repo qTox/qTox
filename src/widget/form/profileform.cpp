@@ -195,7 +195,7 @@ bool ProfileForm::eventFilter(QObject *object, QEvent *event)
     return false;
 }
 
-void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
+void ProfileForm::showProfilePictureContextMenu(const QPoint &point) const
 {
     QPoint pos = profilePicture->mapToGlobal(point);
 
@@ -225,12 +225,12 @@ void ProfileForm::copyIdClicked()
     timer.start();
 }
 
-void ProfileForm::onUserNameEdited()
+void ProfileForm::onUserNameEdited() const
 {
     Core::getInstance()->setUsername(bodyUI->userName->text());
 }
 
-void ProfileForm::onStatusMessageEdited()
+void ProfileForm::onStatusMessageEdited() const
 {
     Core::getInstance()->setStatusMessage(bodyUI->statusMessage->text());
 }
@@ -360,7 +360,7 @@ void ProfileForm::onExportClicked()
     }
 }
 
-void ProfileForm::onDeleteClicked()
+void ProfileForm::onDeleteClicked() const
 {
     if (GUI::askQuestion(
                 tr("Really delete profile?", "deletion confirmation title"),
@@ -375,9 +375,7 @@ void ProfileForm::onDeleteClicked()
             QString message = tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
 
             for (auto& file : manualDeleteFiles)
-            {
                 message = message + file + "\n";
-            }
 
             message = message + "\n" + tr("Please manually remove them.", "deletion failed text part 2");
 
@@ -388,7 +386,7 @@ void ProfileForm::onDeleteClicked()
     }
 }
 
-void ProfileForm::onLogoutClicked()
+void ProfileForm::onLogoutClicked() const
 {
     Nexus& nexus = Nexus::getInstance();
     Settings::getInstance().saveGlobal();
@@ -409,7 +407,7 @@ void ProfileForm::setPasswordButtonsText()
     }
 }
 
-void ProfileForm::onCopyQrClicked()
+void ProfileForm::onCopyQrClicked() const
 {
     QApplication::clipboard()->setImage(*qr->getImage());
 }
@@ -430,12 +428,13 @@ void ProfileForm::onSaveQrClicked()
             GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
             return;
         }
+
         if (!qr->saveImage(path))
             GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
     }
 }
 
-void ProfileForm::onDeletePassClicked()
+void ProfileForm::onDeletePassClicked() const
 {
     Profile* pro = Nexus::getProfile();
     if (!pro->isEncrypted())
@@ -451,7 +450,7 @@ void ProfileForm::onDeletePassClicked()
     Nexus::getProfile()->setPassword(QString());
 }
 
-void ProfileForm::onChangePassClicked()
+void ProfileForm::onChangePassClicked() const
 {
     SetPasswordDialog* dialog = new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
     int r = dialog->exec();

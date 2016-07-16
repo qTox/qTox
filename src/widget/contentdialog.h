@@ -49,8 +49,8 @@ public:
     GroupWidget* addGroup(int groupId, const QString& name);
     void removeFriend(int friendId);
     void removeGroup(int groupId);
-    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
-    bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
+    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget) const;
+    bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget) const;
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
 
@@ -97,11 +97,11 @@ private slots:
 
 private:
     void retranslateUi();
-    void saveDialogGeometry();
-    void saveSplitterState();
+    void saveDialogGeometry() const;
+    void saveSplitterState() const;
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list) const;
     static bool existsWidget(int id, bool focus, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     static void updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     static bool isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);

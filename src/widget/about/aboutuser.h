@@ -23,7 +23,7 @@ private:
     ToxId toxId;
 
 private slots:
-    void onAcceptedClicked();
+    void onAcceptedClicked() const;
     void onAutoAcceptClicked();
     void onSelectDirClicked();
     void onRemoveHistoryClicked();

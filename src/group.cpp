@@ -126,12 +126,12 @@ int Group::getPeersCount() const
     return nPeers;
 }
 
-GroupChatForm *Group::getChatForm()
+GroupChatForm *Group::getChatForm() const
 {
     return chatForm;
 }
 
-GroupWidget *Group::getGroupWidget()
+GroupWidget *Group::getGroupWidget() const
 {
     return widget;
 }

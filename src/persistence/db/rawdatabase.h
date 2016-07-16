@@ -52,7 +52,7 @@ public:
     /// Otherwise we will use toxencryptsave to derive a key and encrypt the database
     RawDatabase(const QString& path, const QString& password);
     ~RawDatabase();
-    bool isOpen(); ///< Returns true if the database was opened successfully
+    bool isOpen() const; ///< Returns true if the database was opened successfully
     /// Executes a SQL transaction synchronously.
     /// Returns whether the transaction was successful.
     bool execNow(const QString& statement);

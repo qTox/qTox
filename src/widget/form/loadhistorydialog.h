@@ -35,7 +35,7 @@ public:
     explicit LoadHistoryDialog(QWidget *parent = 0);
     ~LoadHistoryDialog();
 
-    QDateTime getFromDate();
+    QDateTime getFromDate() const;
 
 private:
     Ui::LoadHistoryDialog *ui;

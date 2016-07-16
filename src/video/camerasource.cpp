@@ -108,7 +108,7 @@ void CameraSource::close()
     open("none");
 }
 
-bool CameraSource::isOpen()
+bool CameraSource::isOpen() const
 {
     return _isOpen;
 }

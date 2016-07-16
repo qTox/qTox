@@ -47,7 +47,7 @@ class Core : public QObject
 public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance(); ///< Returns the global widget's Core instance
-    CoreAV* getAv();
+    CoreAV* getAv() const;
     ~Core();
 
     static const QString TOX_EXT;
@@ -85,7 +85,7 @@ public:
     static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
     static QByteArray decryptData(const QByteArray& data); ///< Uses the default profile's key
 
-    bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
+    bool isReady() const; ///< Most of the API shouldn't be used until Core is ready, call start() first
 
 public slots:
     void start(); ///< Initializes the core, must be called before anything else
@@ -93,7 +93,7 @@ public slots:
     void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
     void bootstrapDht(); ///< Connects us to the Tox network
 
-    QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
+    QByteArray getToxSaveData() const; ///< Returns the unencrypted tox save data
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -108,11 +108,11 @@ public slots:
     void setStatusMessage(const QString& message);
     void setAvatar(const QByteArray& data);
 
-     int sendMessage(uint32_t friendId, const QString& message);
+    int sendMessage(uint32_t friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
     void changeGroupTitle(int groupId, const QString& title);
-     int sendAction(uint32_t friendId, const QString& action);
+    int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
@@ -126,70 +126,69 @@ public slots:
 
     void setNospam(uint32_t nospam);
 
-
 signals:
-    void connected();
-    void disconnected();
+    void connected() const;
+    void disconnected() const;
 
-    void friendRequestReceived(const QString& userId, const QString& message);
-    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
+    void friendRequestReceived(const QString& userId, const QString& message) const;
+    void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction) const;
 
-    void friendAdded(uint32_t friendId, const QString& userId);
-    void friendshipChanged(uint32_t friendId);
+    void friendAdded(uint32_t friendId, const QString& userId) const;
+    void friendshipChanged(uint32_t friendId) const;
 
-    void friendStatusChanged(uint32_t friendId, Status status);
-    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
-    void friendUsernameChanged(uint32_t friendId, const QString& username);
-    void friendTypingChanged(uint32_t friendId, bool isTyping);
-    void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
-    void friendAvatarRemoved(uint32_t friendId);
+    void friendStatusChanged(uint32_t friendId, Status status) const;
+    void friendStatusMessageChanged(uint32_t friendId, const QString& message) const;
+    void friendUsernameChanged(uint32_t friendId, const QString& username) const;
+    void friendTypingChanged(uint32_t friendId, bool isTyping) const;
+    void friendAvatarChanged(uint32_t friendId, const QPixmap& pic) const;
+    void friendAvatarRemoved(uint32_t friendId) const;
 
-    void friendRemoved(uint32_t friendId);
+    void friendRemoved(uint32_t friendId) const;
 
-    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
+    void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime) const;
 
-    void emptyGroupCreated(int groupnumber);
-    void groupInviteReceived(uint32_t friendId, uint8_t type, QByteArray publicKey);
-    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
-    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
-    void groupTitleChanged(int groupnumber, const QString& author, const QString& title);
-    void groupPeerAudioPlaying(int groupnumber, int peernumber);
+    void emptyGroupCreated(int groupnumber) const;
+    void groupInviteReceived(uint32_t friendId, uint8_t type, QByteArray publicKey) const;
+    void groupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction) const;
+    void groupNamelistChanged(int groupnumber, int peernumber, uint8_t change) const;
+    void groupTitleChanged(int groupnumber, const QString& author, const QString& title) const;
+    void groupPeerAudioPlaying(int groupnumber, int peernumber) const;
 
-    void usernameSet(const QString& username);
-    void statusMessageSet(const QString& message);
-    void statusSet(Status status);
-    void idSet(const QString& id);
-    void selfAvatarChanged(const QPixmap& pic);
+    void usernameSet(const QString& username) const;
+    void statusMessageSet(const QString& message) const;
+    void statusSet(Status status) const;
+    void idSet(const QString& id) const;
+    void selfAvatarChanged(const QPixmap& pic) const;
 
-    void messageSentResult(uint32_t friendId, const QString& message, int messageId);
-    void groupSentResult(int groupId, const QString& message, int result);
-    void actionSentResult(uint32_t friendId, const QString& action, int success);
+    void messageSentResult(uint32_t friendId, const QString& message, int messageId) const;
+    void groupSentResult(int groupId, const QString& message, int result) const;
+    void actionSentResult(uint32_t friendId, const QString& action, int success) const;
 
-    void receiptRecieved(int friedId, int receipt);
+    void receiptRecieved(int friedId, int receipt) const;
 
-    void failedToAddFriend(const QString& userId, const QString& errorInfo = QString());
-    void failedToRemoveFriend(uint32_t friendId);
-    void failedToSetUsername(const QString& username);
-    void failedToSetStatusMessage(const QString& message);
-    void failedToSetStatus(Status status);
-    void failedToSetTyping(bool typing);
+    void failedToAddFriend(const QString& userId, const QString& errorInfo = QString()) const;
+    void failedToRemoveFriend(uint32_t friendId) const;
+    void failedToSetUsername(const QString& username) const;
+    void failedToSetStatusMessage(const QString& message) const;
+    void failedToSetStatus(Status status) const;
+    void failedToSetTyping(bool typing) const;
 
-    void failedToStart();
-    void badProxy();
+    void failedToStart() const;
+    void badProxy() const;
 
-    void fileSendStarted(ToxFile file);
-    void fileReceiveRequested(ToxFile file);
-    void fileTransferAccepted(ToxFile file);
-    void fileTransferCancelled(ToxFile file);
-    void fileTransferFinished(ToxFile file);
-    void fileUploadFinished(const QString& path);
-    void fileDownloadFinished(const QString& path);
-    void fileTransferPaused(ToxFile file);
-    void fileTransferInfo(ToxFile file);
-    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused);
-    void fileTransferBrokenUnbroken(ToxFile file, bool broken);
+    void fileSendStarted(ToxFile file) const;
+    void fileReceiveRequested(ToxFile file) const;
+    void fileTransferAccepted(ToxFile file) const;
+    void fileTransferCancelled(ToxFile file) const;
+    void fileTransferFinished(ToxFile file) const;
+    void fileUploadFinished(const QString& path) const;
+    void fileDownloadFinished(const QString& path) const;
+    void fileTransferPaused(ToxFile file) const;
+    void fileTransferInfo(ToxFile file) const;
+    void fileTransferRemotePausedUnpaused(ToxFile file, bool paused) const;
+    void fileTransferBrokenUnbroken(ToxFile file, bool broken) const;
 
-    void fileSendFailed(uint32_t friendId, const QString& fname);
+    void fileSendFailed(uint32_t friendId, const QString& fname) const;
 
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
@@ -214,14 +213,12 @@ private:
                                    const uint8_t* title, uint8_t len, void* _core);
     static void onReadReceiptCallback(Tox *tox, uint32_t friendId, uint32_t receipt, void *core);
 
-    bool checkConnection();
+    bool checkConnection() const;
 
-    void checkEncryptedHistory();
+    void checkEncryptedHistory() const;
     void makeTox(QByteArray savedata);
-    void loadFriends();
-
-    void checkLastOnline(uint32_t friendId);
-
+    void loadFriends() const;
+    void checkLastOnline(uint32_t friendId) const;
     void deadifyTox();
 
 private slots:

@@ -35,7 +35,7 @@ CData::~CData()
     delete[] cData;
 }
 
-uint8_t* CData::data()
+uint8_t* CData::data() const
 {
     return cData;
 }

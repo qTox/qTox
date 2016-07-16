@@ -55,12 +55,15 @@ public:
     void addCircleWidget(int id);
     void addCircleWidget(FriendWidget* widget = nullptr);
     void removeCircleWidget(CircleWidget* widget);
-    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
+    void searchChatrooms(const QString &searchString,
+                         bool hideOnline = false,
+                         bool hideOffline = false,
+                         bool hideGroups = false) const;
 
-    void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
+    void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward) const;
 
     void updateActivityDate(const QDate& date);
-    void reDraw();
+    void redraw();
 
 signals:
     void onCompactChanged(bool compact);
@@ -82,6 +85,7 @@ private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
+private:
     Mode mode;
     bool groupsOnTop;
     FriendListLayout* listLayout;

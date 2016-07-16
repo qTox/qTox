@@ -50,7 +50,7 @@ public:
         QString installpath; ///< Local path including the file name. May be relative to qtox-updater or absolute
         uint64_t size; ///< Size in bytes of the file
 
-        bool operator==(const UpdateFileMeta& other)
+        bool operator==(const UpdateFileMeta& other) const
         {
             return (size == other.size
                     && id == other.id && installpath == other.installpath

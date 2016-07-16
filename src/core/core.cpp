@@ -109,7 +109,7 @@ Core* Core::getInstance()
     return Nexus::getCore();
 }
 
-CoreAV *Core::getAv()
+CoreAV *Core::getAv() const
 {
     return av;
 }
@@ -359,7 +359,7 @@ void Core::process()
     toxTimer->start(sleeptime);
 }
 
-bool Core::checkConnection()
+bool Core::checkConnection() const
 {
     static bool isConnected = false;
     //static int count = 0;
@@ -867,7 +867,7 @@ QString Core::sanitize(QString name)
     return name;
 }
 
-QByteArray Core::getToxSaveData()
+QByteArray Core::getToxSaveData() const
 {
     uint32_t fileSize = tox_get_savedata_size(tox);
     QByteArray data;
@@ -876,7 +876,7 @@ QByteArray Core::getToxSaveData()
     return data;
 }
 
-void Core::loadFriends()
+void Core::loadFriends() const
 {
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);
     if (friendCount > 0)
@@ -919,7 +919,8 @@ void Core::loadFriends()
     }
 }
 
-void Core::checkLastOnline(uint32_t friendId) {
+void Core::checkLastOnline(uint32_t friendId) const
+{
     const uint64_t lastOnline = tox_friend_get_last_online(tox, friendId, nullptr);
     if (lastOnline != std::numeric_limits<uint64_t>::max())
         emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
@@ -1197,7 +1198,7 @@ QString Core::getPeerName(const ToxId& id) const
     return name;
 }
 
-bool Core::isReady()
+bool Core::isReady() const
 {
     return av && av->getToxAv() && tox && ready;
 }

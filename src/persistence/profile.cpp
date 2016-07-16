@@ -203,6 +203,7 @@ void Profile::scanProfiles()
     {
         if (!inifiles.contains(toxfile))
             Settings::getInstance().createPersonal(toxfile);
+
         profiles.append(toxfile);
     }
 }
@@ -212,7 +213,7 @@ QVector<QString> Profile::getProfiles()
     return profiles;
 }
 
-Core* Profile::getCore()
+Core* Profile::getCore() const
 {
     return core;
 }
@@ -227,7 +228,7 @@ void Profile::startCore()
     coreThread->start();
 }
 
-bool Profile::isNewProfile()
+bool Profile::isNewProfile() const
 {
     return newProfile;
 }
@@ -340,7 +341,7 @@ void Profile::saveToxSave(QByteArray data)
     }
 }
 
-QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
+QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted) const
 {
     if (password.isEmpty() || forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
@@ -357,24 +358,24 @@ QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
-QPixmap Profile::loadAvatar()
+QPixmap Profile::loadAvatar() const
 {
     return loadAvatar(core->getSelfId().publicKey);
 }
 
-QPixmap Profile::loadAvatar(const QString &ownerId)
+QPixmap Profile::loadAvatar(const QString &ownerId) const
 {
     QPixmap pic;
     pic.loadFromData(loadAvatarData(ownerId));
     return pic;
 }
 
-QByteArray Profile::loadAvatarData(const QString &ownerId)
+QByteArray Profile::loadAvatarData(const QString &ownerId) const
 {
   return loadAvatarData(ownerId, password);
 }
 
-QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &password)
+QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &password) const
 {
     QString path = avatarPath(ownerId);
     bool encrypted = !password.isEmpty();
@@ -425,7 +426,7 @@ void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
     }
 }
 
-QByteArray Profile::getAvatarHash(const QString &ownerId)
+QByteArray Profile::getAvatarHash(const QString &ownerId) const
 {
     QByteArray pic = loadAvatarData(ownerId);
     QByteArray avatarHash(TOX_HASH_LENGTH, 0);
@@ -438,12 +439,12 @@ void Profile::removeAvatar()
     removeAvatar(core->getSelfId().publicKey);
 }
 
-bool Profile::isHistoryEnabled()
+bool Profile::isHistoryEnabled() const
 {
     return Settings::getInstance().getEnableLogging() && history;
 }
 
-History *Profile::getHistory()
+History *Profile::getHistory() const
 {
     return history.get();
 }
@@ -493,7 +494,7 @@ QVector<QString> Profile::remove()
     isRemoved = true;
 
     qDebug() << "Removing profile" << name;
-    for (int i=0; i<profiles.size(); i++)
+    for (int i = 0; i < profiles.size(); i++)
     {
         if (profiles[i] == name)
         {

@@ -89,7 +89,7 @@ void RawDatabase::close()
         qWarning() << "Error closing database:"<<sqlite3_errmsg(sqlite);
 }
 
-bool RawDatabase::isOpen()
+bool RawDatabase::isOpen() const
 {
     // We don't need thread safety since only the ctor/dtor can write this pointer
     return sqlite != nullptr;

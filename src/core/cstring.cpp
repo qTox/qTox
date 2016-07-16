@@ -45,7 +45,7 @@ CString::~CString()
     delete[] cString;
 }
 
-uint8_t* CString::data()
+uint8_t* CString::data() const
 {
     return cString;
 }

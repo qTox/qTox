@@ -43,18 +43,18 @@ public:
 
 public:
     /// Tries to map a text string to a ToxId struct, will query Tox DNS records if necessary
-    static ToxId resolveToxAddress(const QString& address, bool silent=true);
-    static QString queryTox3(const tox3_server& server, const QString& record, bool silent=true); ///< Record should look like user@domain.tld, will *NOT* fallback on queryTox1 anymore
+    static ToxId resolveToxAddress(const QString& address, bool silent = true);
+    static QString queryTox3(const tox3_server& server, const QString& record, bool silent = true); ///< Record should look like user@domain.tld, will *NOT* fallback on queryTox1 anymore
 
 protected:
     static void showWarning(const QString& message);
-    ToxDNS()=default;
+    ToxDNS() = default;
 
 private:
     /// Try to fetch the first entry of the given TXT record
     /// Returns an empty object on failure. May block for up to ~3s
     /// May display message boxes on error if silent if false
-    static QByteArray fetchLastTextRecord(const QString& record, bool silent=true);
+    static QByteArray fetchLastTextRecord(const QString& record, bool silent = true);
 
 public:
     static const tox3_server pinnedServers[4];

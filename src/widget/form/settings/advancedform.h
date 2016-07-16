@@ -43,7 +43,7 @@ protected:
     bool eventFilter(QObject *o, QEvent *e) final override;
 
 private slots:
-    void onMakeToxPortableUpdated();
+    void onMakeToxPortableUpdated() const;
     void resetToDefault();
 
 private:

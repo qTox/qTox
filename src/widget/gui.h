@@ -88,26 +88,26 @@ private:
 
     // Private implementation, those must be called from the GUI thread
 private slots:
-    void _clearContacts();
-    void _setEnabled(bool state);
+    void _clearContacts() const;
+    void _setEnabled(bool state) const;
     void _setWindowTitle(const QString& title);
-    void _reloadTheme();
-    void _showInfo(const QString& title, const QString& msg);
-    void _showWarning(const QString& title, const QString& msg);
-    void _showError(const QString& title, const QString& msg);
-    void _showUpdateDownloadProgress();
+    void _reloadTheme() const;
+    void _showInfo(const QString& title, const QString& msg) const;
+    void _showWarning(const QString& title, const QString& msg) const;
+    void _showError(const QString& title, const QString& msg) const;
+    void _showUpdateDownloadProgress() const;
     bool _askQuestion(const QString& title, const QString& msg,
                       bool defaultAns = false, bool warning = true,
-                      bool yesno = true);
+                      bool yesno = true) const;
     bool _askQuestion(const QString& title, const QString& msg,
                       const QString& button1, const QString& button2,
-                      bool defaultAns = false, bool warning = true);
+                      bool defaultAns = false, bool warning = true) const;
     QString _itemInputDialog(QWidget * parent, const QString & title,
                         const QString & label, const QStringList & items,
                         int current = 0, bool editable = true, bool * ok = 0,
                         Qt::WindowFlags flags = 0,
-                        Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
-    QString _passwordDialog(const QString& cancel, const QString& body);
+                        Qt::InputMethodHints inputMethodHints = Qt::ImhNone) const;
+    QString _passwordDialog(const QString& cancel, const QString& body) const;
 };
 
 #endif // GUI_H

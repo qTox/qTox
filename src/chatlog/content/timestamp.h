@@ -27,7 +27,7 @@ class Timestamp : public Text
 {
 public:
     Timestamp(const QDateTime& time, const QString& format, const QFont& font);
-    QDateTime getTime();
+    QDateTime getTime() const;
 
 private:
     QDateTime time;

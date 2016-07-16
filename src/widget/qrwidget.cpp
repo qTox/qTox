@@ -52,7 +52,7 @@ void QRWidget::setQRData(const QString& data)
     paintImage();
 }
 
-QImage* QRWidget::getImage()
+QImage* QRWidget::getImage() const
 {
     return image;
 }
@@ -62,13 +62,13 @@ QImage* QRWidget::getImage()
  * @param path Full path to the file with extension.
  * @return indicate if saving was successful.
  */
-bool QRWidget::saveImage(QString path)
+bool QRWidget::saveImage(QString path) const
 {
     return image->save(path, 0, 75); //0 - image format same as file extension, 75-quality, png file is ~6.3kb
 }
 
 //http://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
-void QRWidget::paintImage()
+void QRWidget::paintImage() const
 {
     QPainter painter(image);
     //NOTE: I have hardcoded some parameters here that would make more sense as variables.

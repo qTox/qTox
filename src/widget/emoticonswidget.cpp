@@ -165,29 +165,23 @@ void EmoticonsWidget::wheelEvent (QWheelEvent *e)
 {
     if (e->orientation() == Qt::Vertical)
     {
-     if (e->delta() < 0 )
-     {
-        stack.setCurrentIndex(stack.currentIndex()+1);
-     }
-     else
-     {
-            stack.setCurrentIndex(stack.currentIndex()-1);
-     }
-    emit PageButtonsUpdate();
+        if (e->delta() < 0)
+            stack.setCurrentIndex(stack.currentIndex() + 1);
+        else
+            stack.setCurrentIndex(stack.currentIndex() - 1);
 
+        emit pageButtonsUpdate();
     }
 }
 
-void EmoticonsWidget::PageButtonsUpdate()
+void EmoticonsWidget::pageButtonsUpdate()
 {
     QList<QRadioButton*> pageButtons = this->findChildren<QRadioButton*>(QString());
     QRadioButton *t_pageButton;
     foreach (t_pageButton,pageButtons)
     {
-       if ( t_pageButton->property("pageIndex").toInt()==stack.currentIndex())
-           t_pageButton->setChecked(true);
-       else
-           t_pageButton->setChecked(false);
+        bool checked = t_pageButton->property("pageIndex").toInt() == stack.currentIndex();
+        t_pageButton->setChecked(checked);
     }
 }
 

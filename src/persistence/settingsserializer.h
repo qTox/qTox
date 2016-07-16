@@ -95,7 +95,7 @@ private:
     void readIni();
     void removeValue(const QString& key);
     void removeGroup(int group); ///< The group must be empty
-    void writePackedVariant(QDataStream& dataStream, const QVariant& v);
+    void writePackedVariant(QDataStream& dataStream, const QVariant& v) const;
 
 private:
     QString path;

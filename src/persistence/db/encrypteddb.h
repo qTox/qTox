@@ -38,7 +38,7 @@ public:
 private:
     bool pullFileContent(const QString& fname, QByteArray &buf);
     void appendToEncrypted(const QString &sql);
-    bool checkCmd(const QString &cmd);
+    bool checkCmd(const QString &cmd) const;
 
     QFile encrFile;
     QString fileName;

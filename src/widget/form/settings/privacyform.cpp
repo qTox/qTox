@@ -54,7 +54,7 @@ PrivacyForm::~PrivacyForm()
     delete bodyUI;
 }
 
-void PrivacyForm::onEnableLoggingUpdated()
+void PrivacyForm::onEnableLoggingUpdated() const
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     Widget::getInstance()->clearAllReceipts();
@@ -70,12 +70,12 @@ void PrivacyForm::onEnableLoggingUpdated()
     }
 }
 
-void PrivacyForm::onTypingNotificationEnabledUpdated()
+void PrivacyForm::onTypingNotificationEnabledUpdated() const
 {
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
-void PrivacyForm::setNospam()
+void PrivacyForm::setNospam() const
 {
     QString newNospam = bodyUI->nospamLineEdit->text();
 

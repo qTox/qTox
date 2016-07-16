@@ -80,7 +80,7 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
         layout->removeWidget(widget);
 }
 
-void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
+void GenericChatItemLayout::search(const QString &searchString, bool hideAll)  const
 {
     for (int index = 0; index < layout->count(); ++index)
     {

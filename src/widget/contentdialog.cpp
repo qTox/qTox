@@ -211,7 +211,6 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
 void ContentDialog::removeFriend(int friendId)
 {
     auto iter = friendList.find(friendId);
-
     if (iter == friendList.end())
         return;
 
@@ -277,12 +276,12 @@ void ContentDialog::removeGroup(int groupId)
     }
 }
 
-bool ContentDialog::hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget)
+bool ContentDialog::hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget) const
 {
     return hasWidget(friendId, chatroomWidget, friendList);
 }
 
-bool ContentDialog::hasGroupWidget(int groupId, GenericChatroomWidget *chatroomWidget)
+bool ContentDialog::hasGroupWidget(int groupId, GenericChatroomWidget *chatroomWidget) const
 {
     return hasWidget(groupId, chatroomWidget, groupList);
 }
@@ -690,17 +689,17 @@ void ContentDialog::retranslateUi()
     updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
-void ContentDialog::saveDialogGeometry()
+void ContentDialog::saveDialogGeometry() const
 {
     Settings::getInstance().setDialogGeometry(saveGeometry());
 }
 
-void ContentDialog::saveSplitterState()
+void ContentDialog::saveSplitterState() const
 {
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
 }
 
-bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list)
+bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list) const
 {
     auto iter = list.find(id);
 

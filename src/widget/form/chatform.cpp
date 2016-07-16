@@ -671,6 +671,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
                 SendMessageStr(url.toString());
                 continue;
             }
+
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
                 info.setFile(url.toLocalFile());
@@ -681,12 +682,14 @@ void ChatForm::dropEvent(QDropEvent *ev)
                     continue;
                 }
             }
+
             if (file.isSequential())
             {
                 QMessageBox::critical(0, tr("Bad idea"), tr("You're trying to send a special (sequential) file, that's not going to work!"));
                 file.close();
                 continue;
             }
+
             file.close();
 
             if (info.exists())
@@ -760,10 +763,8 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         prevId = authorId;
         prevMsgDateTime = msgDateTime;
 
-        if (needSending)
+        if (needSending && processUndelivered)
         {
-            if (processUndelivered)
-            {
                 int rec;
                 if (!isAction)
                     rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
@@ -771,7 +772,6 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
 
                 getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
-            }
         }
         historyMessages.append(msg);
     }
@@ -869,9 +869,7 @@ void ChatForm::onCopyStatusMessage()
     QClipboard* clipboard = QApplication::clipboard();
 
     if (clipboard)
-    {
         clipboard->setText(text, QClipboard::Clipboard);
-    }
 }
 
 void ChatForm::startCounter()
@@ -966,7 +964,7 @@ void ChatForm::hideEvent(QHideEvent* event)
     GenericChatForm::hideEvent(event);
 }
 
-OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
+OfflineMsgEngine *ChatForm::getOfflineMsgEngine() const
 {
     return offlineEngine;
 }

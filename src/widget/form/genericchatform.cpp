@@ -234,9 +234,8 @@ void GenericChatForm::adjustFileMenuPosition()
 
 void GenericChatForm::showFileMenu()
 {
-    if (!fileFlyout->isShown() && !fileFlyout->isBeingShown()) {
+    if (!fileFlyout->isShown() && !fileFlyout->isBeingShown())
         adjustFileMenuPosition();
-    }
 
     fileFlyout->animateShow();
 }
@@ -247,7 +246,7 @@ void GenericChatForm::hideFileMenu()
         fileFlyout->animateHide();
 }
 
-bool GenericChatForm::isEmpty()
+bool GenericChatForm::isEmpty() const
 {
     return chatWidget->isEmpty();
 }
@@ -393,7 +392,7 @@ void GenericChatForm::onEmoteInsertRequested(QString str)
     msgEdit->setFocus(); // refocus so that we can continue typing
 }
 
-void GenericChatForm::onSaveLogClicked()
+void GenericChatForm::onSaveLogClicked() const
 {
     QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"));
     if (path.isEmpty())
@@ -426,7 +425,7 @@ void GenericChatForm::onSaveLogClicked()
     file.close();
 }
 
-void GenericChatForm::onCopyLogClicked()
+void GenericChatForm::onCopyLogClicked() const
 {
     chatWidget->copySelectedText();
 }
@@ -466,7 +465,7 @@ void GenericChatForm::onSelectAllClicked()
     chatWidget->selectAll();
 }
 
-QString GenericChatForm::resolveToxId(const ToxId &id)
+QString GenericChatForm::resolveToxId(const ToxId &id) const
 {
     Friend *f = FriendList::findFriend(id);
     if (f)

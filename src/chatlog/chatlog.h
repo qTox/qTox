@@ -60,26 +60,26 @@ public:
     bool hasTextToBeCopied() const;
 
     ChatLine::Ptr getTypingNotification() const;
-    QVector<ChatLine::Ptr> getLines();
+    QVector<ChatLine::Ptr> getLines() const;
     ChatLine::Ptr getLatestLine() const;
     // repetition interval sender name (sec)
     const uint repNameAfter = 5*60;
 
 signals:
-    void selectionChanged();
+    void selectionChanged() const;
 
 protected:
     QRectF calculateSceneRect() const;
     QRect getVisibleRect() const;
     ChatLineContent* getContentFromPos(QPointF scenePos) const;
 
-    void layout(int start, int end, qreal width);
+    void layout(int start, int end, qreal width) const;
     bool isOverSelection(QPointF scenePos) const;
     bool stickToBottom() const;
 
     qreal useableWidth() const;
 
-    void reposition(int start, int end, qreal deltaY);
+    void reposition(int start, int end, qreal deltaY) const;
     void updateSceneRect();
     void checkVisibility();
     void scrollToBottom();
@@ -102,7 +102,7 @@ protected:
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
 
 private slots:
-    void onSelectionTimerTimeout();
+    void onSelectionTimerTimeout() const;
     void onWorkerTimeout();
 
 private:

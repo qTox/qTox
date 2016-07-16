@@ -27,14 +27,14 @@ class QString;
 class CData
 {
 public:
-    uint8_t* data();
+    uint8_t* data() const;
     uint16_t size() const;
 
 protected:
     explicit CData(const QString& data, uint16_t byteSize);
-    CData(const CData& other)=delete;
+    CData(const CData& other) = delete;
     virtual ~CData();
-    CData& operator=(const CData& other)=delete;
+    CData& operator=(const CData& other) = delete;
 
     static QString toString(const uint8_t* cData, const uint16_t cDataSize);
 

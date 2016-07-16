@@ -252,7 +252,7 @@ void LoginScreen::onPasswordEdited()
     ui->passStrengthMeter->setValue(SetPasswordDialog::getPasswordStrength(ui->newPass->text()));
 }
 
-void LoginScreen::onAutoLoginToggled(int state)
+void LoginScreen::onAutoLoginToggled(int state) const
 {
     Qt::CheckState cstate = static_cast<Qt::CheckState>(state);
     if (cstate == Qt::CheckState::Unchecked)
