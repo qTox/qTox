@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Выкарыстоўваць паўзунок для змянення ўзмацнення вашай прылады запісу ў дыяпазоне ад %1 дБ да %2 дБ.</translation>
+        <translation>Карыстайцеся паўзунком для змянення ўзмацнення вашай прылады запісу ў дыяпазоне ад %1 дБ да %2 дБ.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Экран %1</translation>
     </message>
 </context>
 <context>
@@ -40,7 +40,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Выкарыстоўвайце паўзунок для ўсталявання гучнасці дынамікаў.</translation>
+        <translation>Карыстайцеся паўзунком для ўсталявання гучнасці дынамікаў.</translation>
     </message>
     <message>
         <source>Playback device</source>
