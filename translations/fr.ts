@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Écran %1</translation>
     </message>
 </context>
 <context>
