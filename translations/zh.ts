@@ -27,6 +27,10 @@
         <source>Select region</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Screen %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AVSettings</name>
