@@ -111,7 +111,7 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString date = currentDateTime.toString(Settings::getInstance().getDateFormat());
     QString time = currentDateTime.toString(Settings::getInstance().getTimestampFormat());
-    groupLabel->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name, date, time));
+    groupLabel->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name.toHtmlEscaped(), date, time));
     groupLayout->addWidget(groupLabel);
 
     QPushButton* acceptButton = new QPushButton(this);
@@ -212,7 +212,7 @@ void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
     QString date = invite.time.toString(Settings::getInstance().getDateFormat());
     QString time = invite.time.toString(Settings::getInstance().getTimestampFormat());
 
-    label->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name, date, time));
+    label->setText(tr("Invited by <b>%1</b> on %2 at %3.").arg(name.toHtmlEscaped(), date, time));
 }
 
 void GroupInviteForm::retranslateAcceptButton(QPushButton* acceptButton)
