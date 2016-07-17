@@ -249,6 +249,7 @@ HEADERS  += \
     src/ipc.h \
     src/nexus.h \
     src/audio/audio.h \
+    src/audio/devices.h \
     src/chatlog/chatlog.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
@@ -371,6 +372,7 @@ SOURCES += \
     src/main.cpp \
     src/nexus.cpp \
     src/audio/audio.cpp \
+    src/audio/devices.cpp \
     src/core/cdata.cpp \
     src/core/cstring.cpp \
     src/core/core.cpp \
