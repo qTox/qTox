@@ -797,8 +797,9 @@ void ChatForm::onScreenshotClicked()
 
 void ChatForm::doScreenshot()
 {
-    if (!screenshotGrabber)
-        screenshotGrabber = new ScreenshotGrabber(this);
+    // FIXME: don't keep ScreenshotGrabber in memory; this was done to fix a crash
+    delete screenshotGrabber;
+    screenshotGrabber = new ScreenshotGrabber(this);
 
     connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken,
             this, &ChatForm::onScreenshotTaken);
@@ -826,9 +827,6 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
-
-        delete screenshotGrabber;
-        screenshotGrabber = nullptr;
         return;
     }
 
@@ -839,8 +837,6 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
     QFileInfo fi(file);
 
     emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
-    delete screenshotGrabber;
-    screenshotGrabber = nullptr;
 }
 
 void ChatForm::onLoadHistory()
