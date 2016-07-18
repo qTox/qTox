@@ -42,6 +42,13 @@ public:
 public:
     bool isValid() const;
     QString name() const;
+    quint32 inputChannels() const;
+    quint32 outputChannels() const;
+    quint32 duplexChannels() const;
+    bool isOutput() const;
+    bool isDefaultOutput() const;
+    bool isInput() const;
+    bool isDefaultInput() const;
 
 private:
     PrivatePtr d;
