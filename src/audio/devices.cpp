@@ -101,6 +101,68 @@ QString Device::name() const
 }
 
 /**
+The maximum input channels the audio device supports.
+*/
+quint32 Device::inputChannels() const
+{
+    return d->info.inputChannels;
+}
+
+/**
+The maximum output channels the audio device supports.
+*/
+quint32 Device::outputChannels() const
+{
+    return d->info.outputChannels;
+}
+
+/**
+The maximum simultaneous input/output channels the audio device supports.
+*/
+quint32 Device::duplexChannels() const
+{
+    return d->info.duplexChannels;
+}
+
+/**
+Convenience method.
+
+@return true, if outputChannels() > 0
+*/
+bool Device::isOutput() const
+{
+    return d->info.outputChannels > 0;
+}
+
+/**
+@brief Returns, if this is the default audio output device.
+@return true, if this is the default output device
+*/
+bool Device::isDefaultOutput() const
+{
+    return d->info.isDefaultOutput;
+}
+
+/**
+Convenience method.
+
+@return true, if inputChannels() > 0
+*/
+bool Device::isInput() const
+{
+    return d->info.inputChannels > 0;
+}
+
+/**
+@brief Returns, if this is the default audio input device.
+@return true, if this is the default input device
+*/
+bool Device::isDefaultInput() const
+{
+    return d->info.isDefaultOutput;
+}
+
+/**
 Returns the singleton instance.
 */
 Devices& Devices::self()
