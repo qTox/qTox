@@ -18,6 +18,7 @@ apt_install() {
         libqrencode-dev
         libqt5opengl5-dev
         libqt5svg5-dev
+        librtaudio-dev
         libsodium-dev
         libsqlcipher-dev
         libtool
@@ -80,6 +81,7 @@ dnf_install() {
         qt-creator
         qt-devel
         qt-doc
+        rtaudio-devel
         sqlite
         sqlite-devel
     )

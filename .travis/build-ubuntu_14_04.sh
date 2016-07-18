@@ -35,6 +35,7 @@ sudo apt-get install -y \
     libopenal-dev \
     libopus-dev \
     libqrencode-dev \
+    librtaudio-dev \
     libsqlcipher-dev \
     libtool \
     libvpx-dev \
