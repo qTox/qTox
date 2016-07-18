@@ -24,24 +24,29 @@
 
 #include <RtAudio.h>
 
-#include <QTimer>
-
 namespace qTox {
 namespace Audio {
 
 /**
 @class Device
 @brief Representation of a physical audio device.
+
+@class StreamContext
+@brief Stream context.
 */
 
 /**
-@class Devices
-@brief Audio device manager.
+This callback outputs a warning on RtAudio errors.
 */
+static void cb_rtaudio_error(RtAudioError::Type type, const std::string& message)
+{
+    Q_UNUSED(type);
+    qWarning() << "RtAudio:" << QString::fromStdString(message);
+}
+
 
 /**
 @internal
-
 @brief Private implementation of the Device class.
 
 Encapsulates RtAudio::DeviceInfo and provides access to the physical audio
@@ -59,31 +64,162 @@ public:
     RtAudio::DeviceInfo info;
 };
 
-class Devices::Private
+/**
+@internal
+@brief Private implementation of the StreamContext class.
+*/
+class StreamContext::Private : public QSharedData
 {
-public:
-    Private() = default;
+    friend class StreamContext;
 
-    int count()
+public:
+    Private(RtAudio::StreamParameters* inputParms = nullptr,
+            RtAudio::StreamParameters* outputParams = nullptr,
+            RtAudio::StreamOptions* options = nullptr)
+        : format(RTAUDIO_SINT16)
+        , sampleRate(44100)
+        , bufferFrames(256)
+        , inParams(inputParms)
+        , outParams(outputParams)
+        , opts(options)
     {
-        return static_cast<int>(audio.getDeviceCount());
+        audio.showWarnings(true);
     }
 
-public:
+    bool open()
+    {
+        if (audio.isStreamOpen())
+            return true;
+
+        // TODO: implement and assign callbacks
+        audio.openStream(outParams, inParams, format, sampleRate,
+                         &bufferFrames, nullptr, nullptr, opts,
+                         &cb_rtaudio_error);
+
+        return audio.isStreamOpen();
+    }
+
+    void close()
+    {
+        if (!audio.isStreamOpen())
+            return;
+
+        audio.closeStream();
+    }
+
+    bool start()
+    {
+        if (!open())
+            return false;
+
+        audio.startStream();
+
+        return audio.isStreamRunning();
+    }
+
+    bool stop()
+    {
+        if (!audio.isStreamRunning())
+            return true;
+
+        audio.stopStream();
+
+        return !audio.isStreamRunning();
+    }
+
+private:
     RtAudio audio;
 
-    QVector<Device::PrivatePtr> activeDevices;
+    RtAudioFormat   format;
+    unsigned int    sampleRate;
+    unsigned int    bufferFrames;
+
+    RtAudio::StreamParameters*  inParams;
+    RtAudio::StreamParameters*  outParams;
+    RtAudio::StreamOptions*     opts;
 };
 
-Device::Device(Private* dev)
-    : d(dev)
+/**
+@brief Creates an audio stream context.
+@param[in] inputDevice      the input device index; -1 == no input
+@param[in] outputDevice     the output device index; -1 == no output
+@return the created StreamContext or a null object, if creation failed
+
+The created StreamContext has 1 (mono) or 2 (stereo) channels, depending on the
+devices' capabilities. A device in qTox cannot have more than two channels.
+*/
+StreamContext create(int inputDevice, int outputDevice)
 {
+    if (inputDevice < 0 && outputDevice < 0)
+        return nullptr;
+
+    RtAudio audio;
+    RtAudio::StreamParameters* inParams = nullptr;
+    RtAudio::StreamParameters* outParams = nullptr;
+
+    if (inputDevice >= 0)
+    {
+        unsigned int devId = static_cast<quint32>(inputDevice);
+        RtAudio::DeviceInfo info = audio.getDeviceInfo(devId);
+        inParams = new RtAudio::StreamParameters();
+        (*inParams).deviceId = devId;
+        (*inParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
+        (*inParams).firstChannel = 0;
+    }
+
+    if (outputDevice >= 0)
+    {
+        unsigned int devId = static_cast<quint32>(outputDevice);
+        RtAudio::DeviceInfo info = audio.getDeviceInfo(devId);
+        outParams = new RtAudio::StreamParameters();
+        (*outParams).deviceId = devId;
+        (*outParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
+        (*outParams).firstChannel = 0;
+    }
+
+    return new StreamContext::Private(inParams, outParams);
 }
 
-Device& Device::operator=(Device& other)
+/**
+@brief Creates a list of all available audio input and output devices.
+@return the list of available audio devices
+*/
+Device::List Device::availableDevices()
 {
-    d = other.d;
-    return *this;
+    RtAudio audio;
+    List devices;
+
+    for (unsigned int i = 0; i < audio.getDeviceCount(); i++)
+    {
+        devices << new Device::Private(audio.getDeviceInfo(i));
+    }
+
+    return devices;
+}
+
+/**
+@brief  Searches the available audio devices for deviceName and returns the
+        index.
+@param[in] deviceName   the device name
+@return the device index or -1, if not found
+*/
+int Device::find(const QString& deviceName)
+{
+    RtAudio audio;
+    std::string name = deviceName.toStdString();
+
+    for (unsigned int i = 0; i < audio.getDeviceCount(); i++)
+    {
+        if (name == audio.getDeviceInfo(i).name)
+            return static_cast<int>(i);
+    }
+
+    return -1;
+}
+
+Device::Device(Private* p)
+    : d(p)
+{
 }
 
 bool Device::isValid() const
@@ -162,23 +298,36 @@ bool Device::isDefaultInput() const
     return d->info.isDefaultOutput;
 }
 
+StreamContext::StreamContext(StreamContext::Private* p)
+    : d(p)
+{
+}
+
 /**
-Returns the singleton instance.
+@brief Opens the stream for reading and writing.
+@return
 */
-Devices& Devices::self()
+bool StreamContext::open()
 {
-    static Devices instance;
-    return instance;
+    return d->open();
 }
 
-Devices::Devices()
-    : d(new Private)
+/**
+Closes the audio stream.
+*/
+void StreamContext::close()
 {
+    d->close();
 }
 
-Devices::~Devices()
+bool StreamContext::isOpen() const
 {
-    delete d;
+    return d->audio.isStreamOpen();
+}
+
+bool StreamContext::isRunning() const
+{
+    return d->audio.isStreamRunning();
 }
 
 }
