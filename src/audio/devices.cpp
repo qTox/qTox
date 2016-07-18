@@ -29,6 +29,24 @@
 namespace qTox {
 namespace Audio {
 
+/**
+@class Device
+@brief Representation of a physical audio device.
+*/
+
+/**
+@class Devices
+@brief Audio device manager.
+*/
+
+/**
+@internal
+
+@brief Private implementation of the Device class.
+
+Encapsulates RtAudio::DeviceInfo and provides access to the physical audio
+device.
+*/
 class Device::Private : public QSharedData
 {
 public:
@@ -73,6 +91,10 @@ bool Device::isValid() const
     return d->info.probed;
 }
 
+/**
+@brief Returns a QString representation of the audio device name.
+@return the device name
+*/
 QString Device::name() const
 {
     return QString::fromStdString(d->info.name);
