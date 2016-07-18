@@ -26,18 +26,35 @@
 namespace qTox {
 namespace Audio {
 
+enum class Format
+{
+    SINT8   = 0x01,
+    SINT16  = 0x02,
+    SINT24  = 0x04,
+    SINT32  = 0x08,
+    FLOAT32 = 0x10,
+    FLOAT64 = 0x20
+};
+
 class Device
 {
     class Private;
 
 public:
+    typedef QVector<Device> List;
     typedef QExplicitlySharedDataPointer<Private> PrivatePtr;
 
 public:
-    Device(Private* dev);
+    static List availableDevices();
+    static int find(const QString& name);
+
+public:
+    Device(Private* p = nullptr);
+    Device(const Device&) = default;
     Device(Device&&) = default;
 
-    Device& operator=(Device& other);
+    Device& operator=(const Device&) = default;
+    Device& operator=(Device&&) = default;
 
 public:
     bool isValid() const;
@@ -54,26 +71,44 @@ private:
     PrivatePtr d;
 };
 
-class Devices : public QObject
+class StreamContext
 {
-    Q_OBJECT
 public:
-    static Devices& self();
-    inline static Devices& getInstance()
+    class Private;
+
+    typedef QExplicitlySharedDataPointer<Private> PrivatePtr;
+
+public:
+    static StreamContext create(int inputDevice = -1, int outputDevice = -1);
+
+public:
+    StreamContext(Private* p);
+    StreamContext(StreamContext&&) = default;
+
+    StreamContext& operator=(const StreamContext&) = default;
+    StreamContext& operator=(StreamContext&&) = default;
+
+    inline bool isNull() const
     {
-        return self();
+        return d;
     }
 
-private:
-    Devices();
-    ~Devices();
+    bool open();
+    void close();
+
+    void start();
+    void stop();
+
+    bool isOpen() const;
+    bool isRunning() const;
 
 private:
-    class Private;
-    Private* d;
+    PrivatePtr d;
 };
 
 }
 }
+
+Q_DECLARE_METATYPE(qTox::Audio::Device)
 
 #endif
