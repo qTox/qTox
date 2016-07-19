@@ -327,6 +327,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
             else
                 dev += display.constData();
 
+            qDebug() << "Screen device is " << dev;
             devices.push_back(QPair<QString,QString>{dev, QObject::tr("Desktop", "Desktop as a camera input for screen sharing")});
         }
         if (idesktopFormat->name == QString("gdigrab"))
@@ -340,17 +341,28 @@ QString CameraDevice::getDefaultDeviceName()
 {
     QString defaultdev = Settings::getInstance().getVideoDev();
 
+    qDebug() << "getDefaultDeviceName" << defaultdev;
     if (!getDefaultInputFormat())
         return defaultdev;
 
     QVector<QPair<QString, QString>> devlist = getDeviceList();
     for (const QPair<QString,QString>& device : devlist)
+    {
+        qDebug() << device.first;
         if (defaultdev == device.first)
+        {
+            qDebug() << "found" << device.first;
             return defaultdev;
+        }
+    }
 
     if (devlist.isEmpty())
+    {
+        qDebug() << "devlist is empty";
         return defaultdev;
+    }
 
+    qDebug() << "return first element";
     return devlist[0].first;
 }
 

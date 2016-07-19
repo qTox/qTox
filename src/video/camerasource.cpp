@@ -84,6 +84,7 @@ void CameraSource::open(const QString& DeviceName, VideoMode Mode)
     streamBlocker = true;
     QMutexLocker l{&biglock};
 
+    qDebug() << "open" << DeviceName << Mode.toRect();
     if (DeviceName == deviceName && Mode == mode)
     {
         streamBlocker = false;
