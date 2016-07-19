@@ -54,13 +54,15 @@ device.
 */
 class Device::Private : public QSharedData
 {
+    friend class Device;
+
 public:
     Private(const RtAudio::DeviceInfo& devInfo)
         : info(devInfo)
     {
     }
 
-public:
+private:
     RtAudio::DeviceInfo info;
 };
 
@@ -128,8 +130,7 @@ public:
     }
 
 private:
-    RtAudio audio;
-
+    RtAudio         audio;
     RtAudioFormat   format;
     unsigned int    sampleRate;
     unsigned int    bufferFrames;
@@ -148,36 +149,28 @@ private:
 The created StreamContext has 1 (mono) or 2 (stereo) channels, depending on the
 devices' capabilities. A device in qTox cannot have more than two channels.
 */
-StreamContext create(int inputDevice, int outputDevice)
+StreamContext::StreamContext(int inputDevice, int outputDevice)
+    : d(new Private())
 {
-    if (inputDevice < 0 && outputDevice < 0)
-        return nullptr;
-
-    RtAudio audio;
-    RtAudio::StreamParameters* inParams = nullptr;
-    RtAudio::StreamParameters* outParams = nullptr;
-
     if (inputDevice >= 0)
     {
         unsigned int devId = static_cast<quint32>(inputDevice);
-        RtAudio::DeviceInfo info = audio.getDeviceInfo(devId);
-        inParams = new RtAudio::StreamParameters();
-        (*inParams).deviceId = devId;
-        (*inParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
-        (*inParams).firstChannel = 0;
+        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
+        d->inParams = new RtAudio::StreamParameters();
+        (*d->inParams).deviceId = devId;
+        (*d->inParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
+        (*d->inParams).firstChannel = 0;
     }
 
     if (outputDevice >= 0)
     {
         unsigned int devId = static_cast<quint32>(outputDevice);
-        RtAudio::DeviceInfo info = audio.getDeviceInfo(devId);
-        outParams = new RtAudio::StreamParameters();
-        (*outParams).deviceId = devId;
-        (*outParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
-        (*outParams).firstChannel = 0;
+        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
+        d->outParams = new RtAudio::StreamParameters();
+        (*d->outParams).deviceId = devId;
+        (*d->outParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
+        (*d->outParams).firstChannel = 0;
     }
-
-    return new StreamContext::Private(inParams, outParams);
 }
 
 /**
@@ -191,7 +184,7 @@ Device::List Device::availableDevices()
 
     for (unsigned int i = 0; i < audio.getDeviceCount(); i++)
     {
-        devices << new Device::Private(audio.getDeviceInfo(i));
+        devices << new Private(audio.getDeviceInfo(i));
     }
 
     return devices;
@@ -217,14 +210,46 @@ int Device::find(const QString& deviceName)
     return -1;
 }
 
+Device::Device()
+    : d(nullptr)
+{
+
+}
+
 Device::Device(Private* p)
     : d(p)
 {
 }
 
+Device::Device(const Device& other)
+    : d(other.d)
+{
+}
+
+Device::Device(Device&& other)
+    : d(std::move(other.d))
+{
+}
+
+Device::~Device()
+{
+}
+
+Device& Device::operator=(const Device& other)
+{
+    d = other.d;
+    return *this;
+}
+
+Device& Device::operator=(Device&& other)
+{
+    d = std::move(other.d);
+    return *this;
+}
+
 bool Device::isValid() const
 {
-    return d->info.probed;
+    return d && d->info.probed;
 }
 
 /**
@@ -241,7 +266,7 @@ The maximum input channels the audio device supports.
 */
 quint32 Device::inputChannels() const
 {
-    return d->info.inputChannels;
+    return d ? d->info.inputChannels : 0;
 }
 
 /**
@@ -249,7 +274,7 @@ The maximum output channels the audio device supports.
 */
 quint32 Device::outputChannels() const
 {
-    return d->info.outputChannels;
+    return d ? d->info.outputChannels : 0;
 }
 
 /**
@@ -257,7 +282,7 @@ The maximum simultaneous input/output channels the audio device supports.
 */
 quint32 Device::duplexChannels() const
 {
-    return d->info.duplexChannels;
+    return d ? d->info.duplexChannels : 0;
 }
 
 /**
@@ -267,7 +292,7 @@ Convenience method.
 */
 bool Device::isOutput() const
 {
-    return d->info.outputChannels > 0;
+    return d ? d->info.outputChannels > 0 : false;
 }
 
 /**
@@ -276,7 +301,7 @@ bool Device::isOutput() const
 */
 bool Device::isDefaultOutput() const
 {
-    return d->info.isDefaultOutput;
+    return d ? d->info.isDefaultOutput : false;
 }
 
 /**
@@ -286,7 +311,7 @@ Convenience method.
 */
 bool Device::isInput() const
 {
-    return d->info.inputChannels > 0;
+    return d ? d->info.inputChannels > 0 : false;
 }
 
 /**
@@ -295,12 +320,38 @@ bool Device::isInput() const
 */
 bool Device::isDefaultInput() const
 {
-    return d->info.isDefaultOutput;
+    return d ? d->info.isDefaultOutput : false;
 }
 
 StreamContext::StreamContext(StreamContext::Private* p)
     : d(p)
 {
+}
+
+StreamContext::StreamContext(const StreamContext& other)
+    : d(other.d)
+{
+}
+
+StreamContext::StreamContext(StreamContext&& other)
+    : d(std::move(other.d))
+{
+}
+
+StreamContext::~StreamContext()
+{
+}
+
+StreamContext& StreamContext::operator=(const StreamContext& other)
+{
+    d = other.d;
+    return *this;
+}
+
+StreamContext& StreamContext::operator=(StreamContext&& other)
+{
+    d = std::move(other.d);
+    return *this;
 }
 
 /**
@@ -309,7 +360,7 @@ StreamContext::StreamContext(StreamContext::Private* p)
 */
 bool StreamContext::open()
 {
-    return d->open();
+    return d ? d->open() : false;
 }
 
 /**
@@ -317,17 +368,18 @@ Closes the audio stream.
 */
 void StreamContext::close()
 {
-    d->close();
+    if (d)
+        d->close();
 }
 
 bool StreamContext::isOpen() const
 {
-    return d->audio.isStreamOpen();
+    return d ? d->audio.isStreamOpen() : false;
 }
 
 bool StreamContext::isRunning() const
 {
-    return d->audio.isStreamRunning();
+    return d ? d->audio.isStreamRunning() : false;
 }
 
 }
