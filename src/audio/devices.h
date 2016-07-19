@@ -42,21 +42,27 @@ class Device
 
 public:
     typedef QVector<Device> List;
-    typedef QExplicitlySharedDataPointer<Private> PrivatePtr;
 
 public:
     static List availableDevices();
     static int find(const QString& name);
 
 public:
-    Device(Private* p = nullptr);
-    Device(const Device&) = default;
-    Device(Device&&) = default;
+    Device();
+    Device(Private* p);
+    Device(const Device& other);
+    Device(Device&& other);
+    ~Device();
 
-    Device& operator=(const Device&) = default;
-    Device& operator=(Device&&) = default;
+    Device& operator=(const Device& other);
+    Device& operator=(Device&& other);
 
 public:
+    inline bool isNull() const
+    {
+        return !d;
+    }
+
     bool isValid() const;
     QString name() const;
     quint32 inputChannels() const;
@@ -68,29 +74,26 @@ public:
     bool isDefaultInput() const;
 
 private:
-    PrivatePtr d;
+    QExplicitlySharedDataPointer<Private> d;
 };
 
 class StreamContext
 {
-public:
     class Private;
 
-    typedef QExplicitlySharedDataPointer<Private> PrivatePtr;
-
 public:
-    static StreamContext create(int inputDevice = -1, int outputDevice = -1);
-
-public:
+    explicit StreamContext(int inputDevice = -1, int outputDevice = -1);
     StreamContext(Private* p);
-    StreamContext(StreamContext&&) = default;
+    StreamContext(const StreamContext& other);
+    StreamContext(StreamContext&& other);
+    ~StreamContext();
 
-    StreamContext& operator=(const StreamContext&) = default;
-    StreamContext& operator=(StreamContext&&) = default;
+    StreamContext& operator=(const StreamContext& other);
+    StreamContext& operator=(StreamContext&& other);
 
     inline bool isNull() const
     {
-        return d;
+        return !d;
     }
 
     bool open();
@@ -103,7 +106,7 @@ public:
     bool isRunning() const;
 
 private:
-    PrivatePtr d;
+    QExplicitlySharedDataPointer<Private> d;
 };
 
 }
