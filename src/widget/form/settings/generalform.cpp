@@ -66,6 +66,7 @@ static QStringList locales = {"ar",
                               "fi",
                               "sv",
                               "tr",
+                              "ug",
                               "uk",
                               "zh"};
 static QStringList langs = {"Arabic",
@@ -95,6 +96,7 @@ static QStringList langs = {"Arabic",
                             "Suomi",
                             "Svenska",
                             "Türkçe",
+                            "ئۇيغۇرچە",
                             "Українська",
                             "简体中文"};
 
