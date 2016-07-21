@@ -820,22 +820,22 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 
     QFile file(filepath);
 
-    if (!file.open(QFile::ReadWrite))
+    if (file.open(QFile::ReadWrite))
+    {
+        pixmap.save(&file, "PNG");
+
+        qint64 filesize = file.size();
+        file.close();
+        QFileInfo fi(file);
+
+        emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    }
+    else
     {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
-
-        return;
     }
-
-    pixmap.save(&file, "PNG");
-
-    qint64 filesize = file.size();
-    file.close();
-    QFileInfo fi(file);
-
-    emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
 }
 
 void ChatForm::onLoadHistory()
