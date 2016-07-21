@@ -35,14 +35,13 @@
 #include "toolboxgraphicsitem.h"
 #include "src/widget/widget.h"
 
-ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
-    : QObject(parent)
+ScreenshotGrabber::ScreenshotGrabber()
+    : QObject()
     , mKeysBlocked(false)
     , scene(0)
     , mQToxVisible(true)
 {
     window = new QGraphicsView (scene); // Top-level widget
-    window->setAttribute(Qt::WA_DeleteOnClose);
     window->setWindowFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     window->setContentsMargins(0, 0, 0, 0);
     window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -71,6 +70,7 @@ void ScreenshotGrabber::reInit()
 ScreenshotGrabber::~ScreenshotGrabber()
 {
     delete scene;
+    delete window;
 }
 
 bool ScreenshotGrabber::eventFilter(QObject* object, QEvent* event)
@@ -134,9 +134,10 @@ void ScreenshotGrabber::acceptRegion()
     emit regionChosen(rect);
     qDebug() << "Screenshot accepted, chosen region" << rect;
     QPixmap pixmap = this->screenGrab.copy(rect);
-    this->window->close();
     restoreHiddenWindows();
     emit screenshotTaken(pixmap);
+
+    deleteLater();
 }
 
 void ScreenshotGrabber::setupScene()
@@ -210,9 +211,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
 
 void ScreenshotGrabber::reject()
 {
-    qDebug() << "Rejected screenshot";
-    this->window->close();
     restoreHiddenWindows();
+    deleteLater();
 }
 
 QPixmap ScreenshotGrabber::grabScreen()
