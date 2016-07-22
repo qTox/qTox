@@ -69,6 +69,25 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
+!contains(DISABLE_QTKEYCHAIN, YES) {
+    DEFINES += QTOX_QTKEYCHAIN
+}
+
+contains(DEFINES, QTOX_QTKEYCHAIN) {
+    LIBS += -lqt5keychain
+    HEADERS += src/widget/passwordstorage.h
+    SOURCES += src/widget/passwordstorage.cpp
+    macx {
+        # Locating QtKeychain on Mac OS X installed with brew
+        QTKEYCHAIN_CELLAR_LIB_LIST = $$files(/usr/local/Cellar/qtkeychain/*/lib/qt5keychain.dylib)
+        QTKEYCHAIN_CELLAR_LIB_FIRST = $$first(QTKEYCHAIN_CELLAR_LIB_LIST)
+        QTKEYCHAIN_CELLAR_PREFIX = $$replace(QTKEYCHAIN_CELLAR_LIB_FIRST, /lib/qt5keychain.dylib, )
+        message("Cellar's QtKeychain prefix is" $$QTKEYCHAIN_CELLAR_PREFIX)
+        LIBS += -L$$QTKEYCHAIN_CELLAR_PREFIX/lib
+        INCLUDEPATH += $$QTKEYCHAIN_CELLAR_PREFIX/include
+    }
+}
+
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
 } else {

@@ -34,6 +34,9 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/net/toxme.h"
+#ifdef QTOX_QTKEYCHAIN
+#include "src/widget/passwordstorage.h"
+#endif
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>
@@ -448,6 +451,10 @@ void ProfileForm::onDeletePassClicked()
                       tr("Are you sure you want to delete your password?","deletion confirmation text")))
         return;
 
+#ifdef QTOX_QTKEYCHAIN
+    if (Settings::getInstance().getPasswordFromKeychain())
+        deletePassword(Nexus::getProfile()->getName());
+#endif // QTOX_QTKEYCHAIN
     Nexus::getProfile()->setPassword(QString());
 }
 
@@ -459,6 +466,10 @@ void ProfileForm::onChangePassClicked()
         return;
 
     QString newPass = dialog->getPassword();
+#ifdef QTOX_QTKEYCHAIN
+    if (Settings::getInstance().getPasswordFromKeychain())
+        storePassword(Nexus::getProfile()->getName(), newPass);
+#endif // QTOX_QTKEYCHAIN
     Nexus::getProfile()->setPassword(newPass);
 }
 
@@ -554,3 +565,44 @@ void ProfileForm::onRegisterButtonClicked()
         bodyUI->toxmeUpdateButton->setText(tr("Update"));
     }
 }
+
+#ifdef QTOX_QTKEYCHAIN
+void ProfileForm::storePassword(const QString& profileName, const QString& password)
+{
+    bodyUI->changePassButton->setEnabled(false);
+    bodyUI->deletePassButton->setEnabled(false);
+    QKeychain::Job *job = new WriteToXPasswordJob(profileName,password,this);
+    connect(job, &WriteToXPasswordJob::finished, this, &ProfileForm::onStorePasswordFinished);
+    job->start();
+}
+
+void ProfileForm::deletePassword(const QString& profileName)
+{
+    bodyUI->changePassButton->setEnabled(false);
+    bodyUI->deletePassButton->setEnabled(false);
+    QKeychain::Job *job = new DeleteToXPasswordJob(profileName,this);
+    connect(job, &DeleteToXPasswordJob::finished, this, &ProfileForm::onDeletePasswordFinished);
+    job->start();
+}
+
+void ProfileForm::onStorePasswordFinished(){
+    bodyUI->changePassButton->setEnabled(true);
+    bodyUI->deletePassButton->setEnabled(true);
+    WriteToXPasswordJob *job = static_cast<WriteToXPasswordJob*>(sender());
+    if (job->error())
+        GUI::showWarning(tr("Storing password in keychain failed", "Title of QtKeychain error message"),
+                         tr("Storing the password in keychain failed: %1", "Text of QtKeychain error message")
+                           .arg(job->errorString()));
+}
+
+void ProfileForm::onDeletePasswordFinished(){
+    bodyUI->changePassButton->setEnabled(true);
+    bodyUI->deletePassButton->setEnabled(true);
+    DeleteToXPasswordJob *job = static_cast<DeleteToXPasswordJob*>(sender());
+    if (job->error())
+        GUI::showWarning(tr("Deleting password from keychain failed", "Title of QtKeychain error message"),
+                         tr("Deleting the password from keychain failed: %1", "Text of QtKeychain error message")
+                           .arg(job->errorString()));
+}
+
+#endif // QTOX_QTKEYCHAIN

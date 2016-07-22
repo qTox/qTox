@@ -139,6 +139,9 @@ void Settings::loadGlobal()
     s.beginGroup("Login");
     {
         autoLogin = s.value("autoLogin", false).toBool();
+#ifdef QTOX_QTKEYCHAIN
+        storePasswordInKeychain = s.value("storePasswordInKeychain", false).toBool();
+#endif // QTOX_QTKEYCHAIN
     }
     s.endGroup();
 
@@ -489,6 +492,9 @@ void Settings::saveGlobal()
     s.beginGroup("Login");
     {
         s.setValue("autoLogin", autoLogin);
+#ifdef QTOX_QTKEYCHAIN
+        s.setValue("storePasswordInKeychain", storePasswordInKeychain);
+#endif // QTOX_QTKEYCHAIN
     }
     s.endGroup();
 
@@ -2317,6 +2323,18 @@ void Settings::setAutoLogin(bool state)
         emit autoLoginChanged(autoLogin);
     }
 }
+
+#ifdef QTOX_QTKEYCHAIN
+bool Settings::getPasswordFromKeychain() const {
+    QMutexLocker locker{&bigLock};
+    return storePasswordInKeychain;
+}
+
+void Settings::setPasswordInKeychain(bool newValue) {
+    QMutexLocker locker{&bigLock};
+    storePasswordInKeychain = newValue;
+}
+#endif // QTOX_QTKEYCHAIN
 
 /**
  * @brief Write a default personal .ini settings file for a profile.

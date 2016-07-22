@@ -26,6 +26,9 @@
 
 #include "src/core/core.h"
 #include "src/core/recursivesignalblocker.h"
+#ifdef QTOX_QTKEYCHAIN
+#include "src/widget/passwordstorage.h"
+#endif // QTOX_QTKEYCHAIN
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"
@@ -46,6 +49,14 @@ PrivacyForm::PrivacyForm()
     const RecursiveSignalBlocker signalBlocker(this);
 
     eventsInit();
+
+// TODO refactor into eventsInit()?
+#ifdef QTOX_QTKEYCHAIN
+    connect(bodyUI->pbClearKeychain, &QPushButton::clicked, this, &PrivacyForm::deletePassword);
+#else // QTOX_QTKEYCHAIN
+    bodyUI->pbClearKeychain->hide();
+#endif // QTOX_QTKEYCHAIN
+
     Translator::registerHandler(std::bind(&PrivacyForm::retranslateUi, this), this);
 }
 
@@ -92,6 +103,9 @@ void PrivacyForm::showEvent(QShowEvent*)
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
+#ifndef QTOX_QTKEYCHAIN
+    bodyUI->pbClearKeychain->setVisible(false);
+#endif // not QTOX_QTKEYCHAIN
 }
 
 void PrivacyForm::on_randomNosapamButton_clicked()
@@ -118,6 +132,22 @@ void PrivacyForm::on_nospamLineEdit_textChanged()
         bodyUI->nospamLineEdit->setCursorPosition(curs);
     };
 }
+
+#ifdef QTOX_QTKEYCHAIN
+void PrivacyForm::deletePassword()
+{
+    QKeychain::Job *job = new DeleteToXPasswordJob(Nexus::getProfile()->getName(), this);
+    connect(job, &DeleteToXPasswordJob::finished, this, &PrivacyForm::onDeletePasswordFinished);
+    job->start();
+}
+
+void PrivacyForm::onDeletePasswordFinished()
+{
+    DeleteToXPasswordJob *job = static_cast<DeleteToXPasswordJob*>(sender());
+    if (job->error())
+        GUI::showWarning(tr("Deleting password failed", "Title of QtKeychain error message"), tr("Deleting the password failed: %1", "text of QtKeychain error message").arg(job->errorString()));
+}
+#endif // QTOX_QTKEYCHAIN
 
 void PrivacyForm::retranslateUi()
 {

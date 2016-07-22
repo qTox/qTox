@@ -51,6 +51,18 @@ sudo apt-get install -y --force-yes \
 # Qt
 source /opt/qt53/bin/qt53-env.sh || yes
 
+# QtKeychain
+QTKEYCHAIN_VERSION=0.6.2
+wget https://github.com/frankosterfeld/qtkeychain/archive/v${QTKEYCHAIN_VERSION}.tar.gz -O QtKeychain-${QTKEYCHAIN_VERSION}.tar.gz
+tar xf QtKeychain-${QTKEYCHAIN_VERSION}.tar.gz
+cd qtkeychain-${QTKEYCHAIN_VERSION}
+cmake -DCMAKE_INSTALL_PREFIX:PATH="/usr/local"
+make -j$(nproc)
+# Translations get installed into Qt5's directory structure,
+# thus root/sudo permissions necessary
+sudo make install
+cd ..
+
 # ffmpeg
 if [ ! -e "libs" ]; then mkdir libs; fi
 if [ ! -e "ffmpeg" ]; then mkdir ffmpeg; fi
@@ -127,7 +139,7 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
 # first build qTox without support for optional dependencies
 echo '*** BUILDING "MINIMAL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES DISABLE_QTKEYCHAIN=YES
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
 make -j10
 # clean it up, and build normal version

@@ -104,6 +104,9 @@ function install() {
 		fcho "Installing homebrew ..."
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
+	fcho "Adding ownCloud's repository"
+	# ...  to get 'qtkeychain'
+	brew tap owncloud/owncloud
 	if [[ $TRAVIS != true ]]; then
 		fcho "Updating brew formulas ..."
 		brew update
@@ -158,7 +161,7 @@ function install() {
 		fcho "Updating brew formulas ..."
 		brew update > /dev/null
 	fi
-	brew install ffmpeg qrencode qt5 sqlcipher
+	brew install ffmpeg qrencode qt5 sqlcipher qtkeychain
 
 	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
