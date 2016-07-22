@@ -137,6 +137,9 @@ void Settings::loadGlobal()
     s.setIniCodec("UTF-8");
     s.beginGroup("Login");
         autoLogin = s.value("autoLogin", false).toBool();
+#ifdef QTOX_QTKEYCHAIN
+        securelyStorePassword = s.value("securelyStorePassword", false).toBool();
+#endif // QTOX_QTKEYCHAIN
     s.endGroup();
 
     s.beginGroup("DHT Server");
@@ -410,6 +413,9 @@ void Settings::saveGlobal()
 
     s.beginGroup("Login");
         s.setValue("autoLogin", autoLogin);
+#ifdef QTOX_QTKEYCHAIN
+        s.setValue("securelyStorePassword", securelyStorePassword);
+#endif // QTOX_QTKEYCHAIN
     s.endGroup();
 
     s.beginGroup("DHT Server");
@@ -2199,6 +2205,18 @@ void Settings::setAutoLogin(bool state)
         emit autoLoginChanged(autoLogin);
     }
 }
+
+#ifdef QTOX_QTKEYCHAIN
+bool Settings::getSecurelyStorePassword() const {
+    QMutexLocker locker{&bigLock};
+    return securelyStorePassword;
+}
+
+void Settings::setSecurelyStorePassword(bool newValue) {
+    QMutexLocker locker{&bigLock};
+    securelyStorePassword = newValue;
+}
+#endif // QTOX_QTKEYCHAIN
 
 /**
 @brief Write a default personal .ini settings file for a profile.

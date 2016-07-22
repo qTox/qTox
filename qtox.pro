@@ -68,6 +68,23 @@ contains(DISABLE_PLATFORM_EXT, YES) {
     DEFINES += QTOX_PLATFORM_EXT
 }
 
+contains(DISABLE_QTKEYCHAIN, YES) {
+    # QtKeychain support disabled
+} else {
+    DEFINES += QTOX_QTKEYCHAIN
+}
+
+contains(DEFINES, QTOX_QTKEYCHAIN) {
+    LIBS += -lqt5keychain
+    HEADERS += src/widget/passwordstorage.h
+    SOURCES += src/widget/passwordstorage.cpp
+    macx {
+        # Locating QtKeychain on Mac OS X installed with brew
+        LIBS += -L/usr/local/Cellar/qtkeychain/0.6.2/lib/
+        INCLUDEPATH += /usr/local/Cellar/qtkeychain/0.6.2/include/
+    }
+}
+
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
 } else {

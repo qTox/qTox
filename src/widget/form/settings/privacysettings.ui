@@ -62,6 +62,16 @@ Save format changes are possible, which may result in data loss.</string>
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pbClearSecurePasswordStorage">
+         <property name="toolTip">
+          <string>Clear this profile's password from the operating system's or desktop environment's secure password storage</string>
+         </property>
+         <property name="text">
+          <string>Clear Password from Secure Storage</string>
+         </property>
+        </widget>
+       </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="nospamGroup">
          <property name="toolTip">

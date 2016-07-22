@@ -56,12 +56,21 @@ private slots:
     void onCreateNewProfile();
     void onLogin();
     void onImportProfile();
+#ifdef QTOX_QTKEYCHAIN
+    void onSecurelyStorePasswordToggled(int state);
+    void onStorePasswordFinished();
+    void onPasswordRecalled();
+#endif // QTOX_QTKEYCHAIN
 
 private:
     void retranslateUi();
     void showCapsIndicator();
     void hideCapsIndicator();
     void checkCapsLock();
+#ifdef QTOX_QTKEYCHAIN
+    void recallPassword(const QString &profileName);
+    void storePassword(const QString &profileName, const QString &password);
+#endif // QTOX_QTKEYCHAIN
 
 private:
     Ui::LoginScreen *ui;

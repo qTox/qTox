@@ -22,6 +22,13 @@
 
 #include "src/core/core.h"
 #include <src/core/recursivesignalblocker.h>
+//#include "src/widget/widget.h"
+//#include "src/widget/gui.h"
+//#include "src/widget/form/setpassworddialog.h"
+//#include "src/widget/translator.h"
+#ifdef QTOX_QTKEYCHAIN
+#include "src/widget/passwordstorage.h"
+#endif // QTOX_QTKEYCHAIN
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"
@@ -50,6 +57,11 @@ PrivacyForm::PrivacyForm()
     connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
     connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
     connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
+#ifdef QTOX_QTKEYCHAIN
+    connect(bodyUI->pbClearSecurePasswordStorage, &QPushButton::clicked, this, &PrivacyForm::deletePassword);
+#else // QTOX_QTKEYCHAIN
+    bodyUI->pbClearSecurePasswordStorage->hide();
+#endif // QTOX_QTKEYCHAIN
 
     Translator::registerHandler(std::bind(&PrivacyForm::retranslateUi, this), this);
 }
@@ -81,6 +93,22 @@ void PrivacyForm::onTypingNotificationEnabledUpdated()
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
+#ifdef QTOX_QTKEYCHAIN
+void PrivacyForm::deletePassword()
+{
+    QKeychain::Job *job = new DeleteToXPasswordJob(Nexus::getProfile()->getName(), this);
+    connect(job, &DeleteToXPasswordJob::finished, this, &PrivacyForm::onDeletePasswordFinished);
+    job->start();
+}
+
+void PrivacyForm::onDeletePasswordFinished()
+{
+    DeleteToXPasswordJob *job = static_cast<DeleteToXPasswordJob*>(sender());
+    if (job->error())
+        GUI::showWarning(tr("Deleting password failed", "Title of QtKeychain error message"), tr("Deleting the password failed: %1", "text of QtKeychain error message").arg(job->errorString()));
+}
+#endif // QTOX_QTKEYCHAIN
+
 void PrivacyForm::setNospam()
 {
     QString newNospam = bodyUI->nospamLineEdit->text();
@@ -97,6 +125,9 @@ void PrivacyForm::showEvent(QShowEvent*)
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
+#ifndef QTOX_QTKEYCHAIN
+    bodyUI->pbClearSecurePasswordStorage->setVisible(false);
+#endif // not QTOX_QTKEYCHAIN
 }
 
 void PrivacyForm::generateRandomNospam()
