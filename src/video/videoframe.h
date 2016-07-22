@@ -37,9 +37,18 @@ extern "C"{
 #include <unordered_map>
 
 /**
- * @brief A simple structure to represent a ToxAV frame.
+ * @brief A simple structure to represent a ToxYUV video frame (corresponds to a frame encoded
+ * under format: AV_PIX_FMT_YUV420P [FFmpeg] or VPX_IMG_FMT_I420 [WebM]).
+ *
+ * This structure exists for convenience and code clarity when ferrying YUV420 frames from one
+ * source to another. The buffers pointed to by the struct should not be owned by the struct nor
+ * should they be freed from the struct, instead this struct functions only as a simple alias to a
+ * more complicated frame container like AVFrame.
+ *
+ * The creation of this structure was done to replace existing code which mis-used vpx_image
+ * structs when passing frame data to toxcore.
  */
-struct ToxAVFrame
+struct ToxYUVFrame
 {
 public:
     const std::uint16_t width;
@@ -217,7 +226,7 @@ public:
      * @return a ToxAVFrame structure that represents this VideoFrame, sharing it's buffers or an
      * empty structure if this VideoFrame is no longer valid.
      */
-    ToxAVFrame toToxAVFrame(QSize frameSize = {0, 0});
+    ToxYUVFrame toToxAVFrame(QSize frameSize = {0, 0});
 
     /**
      * @brief Data alignment parameter used to populate AVFrame buffers.
