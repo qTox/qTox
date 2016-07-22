@@ -85,11 +85,19 @@ private slots:
     void onAvatarClicked();
     void showProfilePictureContextMenu(const QPoint &point);
     void onRegisterButtonClicked();
+#ifdef QTOX_QTKEYCHAIN
+    void onStorePasswordFinished();
+    void onDeletePasswordFinished();
+#endif // QTOX_QTKEYCHAIN
 
 private:
     void showExistingToxme();
     void retranslateUi();
     void prFileLabelUpdate();
+#ifdef QTOX_QTKEYCHAIN
+    void storePassword(const QString& profileName, const QString& password);
+    void deletePassword(const QString& profileName);
+#endif // QTOX_QTKEYCHAIN
 
 private:
     bool eventFilter(QObject *object, QEvent *event);

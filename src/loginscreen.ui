@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>410</width>
-    <height>200</height>
+    <height>221</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>410</width>
-    <height>200</height>
+    <height>221</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>415</width>
-    <height>200</height>
+    <height>221</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,7 @@
      <x>160</x>
      <y>0</y>
      <width>250</width>
-     <height>200</height>
+     <height>221</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -155,7 +155,7 @@
            </property>
           </widget>
          </item>
-         <item row="9" column="0" colspan="2">
+         <item row="10" column="0" colspan="2">
           <layout class="QHBoxLayout" name="horizontalLayout">
            <item>
             <spacer name="horizontalSpacer">
@@ -204,6 +204,13 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="9" column="0" colspan="2">
+          <widget class="QCheckBox" name="storePasswordInKeychain2CB">
+           <property name="text">
+            <string>Store password in keychain</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -303,6 +310,13 @@
            </property>
            <property name="text">
             <string>Load automatically</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="storePasswordInKeychain1CB">
+           <property name="text">
+            <string>Store password in keychain</string>
            </property>
           </widget>
          </item>
