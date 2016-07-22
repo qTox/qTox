@@ -471,6 +471,11 @@ public:
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
 
+#ifdef QTOX_QTKEYCHAIN
+    bool getPasswordFromKeychain() const;
+    void setPasswordInKeychain(bool newValue);
+#endif // QTOX_QTKEYCHAIN
+
     int getCircleCount() const;
     int addCircle(const QString& name = QString());
     int removeCircle(int id);
@@ -525,6 +530,10 @@ private:
     bool dontShowDhtDialog;
 
     bool autoLogin;
+#ifdef QTOX_QTKEYCHAIN
+    bool storePasswordInKeychain;
+#endif // QTOX_QTKEYCHAIN
+
     bool fauxOfflineMessaging;
     bool compactLayout;
     bool groupchatPosition;

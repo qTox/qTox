@@ -40,6 +40,10 @@ public:
 private slots:
     void onEnableLoggingUpdated();
     void onTypingNotificationEnabledUpdated();
+#ifdef QTOX_QTKEYCHAIN
+    void deletePassword();
+    void onDeletePasswordFinished();
+#endif // QTOX_QTKEYCHAIN
     void setNospam();
     void generateRandomNospam();
     void onNospamEdit();

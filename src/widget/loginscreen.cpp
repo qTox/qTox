@@ -28,6 +28,10 @@
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/profileimporter.h"
+#ifdef QTOX_QTKEYCHAIN
+#include "src/widget/gui.h"
+#include "src/widget/passwordstorage.h"
+#endif
 #include <QMessageBox>
 #include <QToolButton>
 #include <QDebug>
@@ -56,6 +60,13 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
+#ifdef QTOX_QTKEYCHAIN
+    connect(ui->storePasswordInKeychain1CB, &QCheckBox::stateChanged, this, &LoginScreen::onStorePasswordInKeychainToggle);
+    connect(ui->storePasswordInKeychain2CB, &QCheckBox::stateChanged, this, &LoginScreen::onStorePasswordInKeychainToggle);
+#else // QTOX_QTKEYCHAIN
+    ui->storePasswordInKeychain1CB->hide();
+    ui->storePasswordInKeychain2CB->hide();
+#endif // QTOX_QTKEYCHAIN
     connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset();
@@ -100,12 +111,28 @@ void LoginScreen::reset()
     else
     {
         ui->stackedWidget->setCurrentIndex(1);
+#ifdef QTOX_QTKEYCHAIN
+        if (!lastUsed.isEmpty() && Settings::getInstance().getPasswordFromKeychain())
+            recallPassword(lastUsed);
+        else
+            ui->loginPassword->setFocus();
+#else // QTOX_QTKEYCHAIN
         ui->loginPassword->setFocus();
+#endif // QTOX_QTKEYCHAIN
     }
 
     ui->autoLoginCB->blockSignals(true);
     ui->autoLoginCB->setChecked(Settings::getInstance().getAutoLogin());
     ui->autoLoginCB->blockSignals(false);
+#ifdef QTOX_QTKEYCHAIN
+    const bool doStorePasswordInKeychain = Settings::getInstance().getPasswordFromKeychain();
+    ui->storePasswordInKeychain1CB->blockSignals(true);
+    ui->storePasswordInKeychain1CB->setChecked(doStorePasswordInKeychain);
+    ui->storePasswordInKeychain1CB->blockSignals(false);
+    ui->storePasswordInKeychain2CB->blockSignals(true);
+    ui->storePasswordInKeychain2CB->setChecked(doStorePasswordInKeychain);
+    ui->storePasswordInKeychain2CB->blockSignals(false);
+#endif // QTOX_QTKEYCHAIN
 }
 
 bool LoginScreen::event(QEvent* event)
@@ -173,6 +200,11 @@ void LoginScreen::onCreateNewProfile()
         return;
     }
 
+#ifdef QTOX_QTKEYCHAIN
+    if (Settings::getInstance().getPasswordFromKeychain())
+        storePassword(name, pass);
+#endif // QTOX_QTKEYCHAIN
+
     Nexus& nexus = Nexus::getInstance();
 
     nexus.setProfile(profile);
@@ -189,10 +221,18 @@ void LoginScreen::onLoginUsernameSelected(const QString &name)
     {
         ui->loginPasswordLabel->show();
         ui->loginPassword->show();
+#ifdef QTOX_QTKEYCHAIN
+        if (Settings::getInstance().getPasswordFromKeychain())
+            recallPassword(name);
+        else {
+#endif // QTOX_QTKEYCHAIN
         // there is no way to do autologin if profile is encrypted, and
         // visible option confuses users into thinking that it is possible,
         // thus hide it
         ui->autoLoginCB->hide();
+#ifdef QTOX_QTKEYCHAIN
+        }
+#endif // QTOX_QTKEYCHAIN
     }
     else
     {
@@ -243,6 +283,11 @@ void LoginScreen::onLogin()
         }
     }
 
+#ifdef QTOX_QTKEYCHAIN
+    if (Settings::getInstance().getPasswordFromKeychain())
+        storePassword(name, pass);
+#endif // QTOX_QTKEYCHAIN
+
     Nexus& nexus = Nexus::getInstance();
 
     nexus.setProfile(profile);
@@ -279,3 +324,49 @@ void LoginScreen::onImportProfile()
 
     delete pi;
 }
+
+#ifdef QTOX_QTKEYCHAIN
+void LoginScreen::onStorePasswordInKeychainToggle(int state)
+{
+    const Qt::CheckState cstate = static_cast<Qt::CheckState>(state);
+    Settings::getInstance().setPasswordInKeychain(cstate == Qt::CheckState::Checked);
+    Settings::getInstance().saveGlobal();
+
+    ui->storePasswordInKeychain1CB->blockSignals(true);
+    ui->storePasswordInKeychain1CB->setChecked(cstate);
+    ui->storePasswordInKeychain1CB->blockSignals(false);
+    ui->storePasswordInKeychain2CB->blockSignals(true);
+    ui->storePasswordInKeychain2CB->setChecked(cstate);
+    ui->storePasswordInKeychain2CB->blockSignals(false);
+}
+
+void LoginScreen::onPasswordRecalled()
+{
+    ReadToXPasswordJob *job = static_cast<ReadToXPasswordJob*>(sender());
+    if (!job->error())
+        ui->loginPassword->setText(job->password());
+    ui->loginPassword->setEnabled(true);
+    ui->loginPassword->setFocus();
+}
+
+void LoginScreen::onStorePasswordFinished(){
+    WriteToXPasswordJob *job = static_cast<WriteToXPasswordJob*>(sender());
+    if (job->error())
+        GUI::showWarning(tr("Storing password in keychain failed", "Title of QtKeychain error message"), tr("Storing the password in keychain failed: %1", "text of QtKeychain error message").arg(job->errorString()));
+}
+
+void LoginScreen::recallPassword(const QString& profileName)
+{
+    ui->loginPassword->setEnabled(false);
+    QKeychain::Job *job = new ReadToXPasswordJob(profileName, this);
+    connect(job, &ReadToXPasswordJob::finished, this, &LoginScreen::onPasswordRecalled);
+    job->start();
+}
+
+void LoginScreen::storePassword(const QString& profileName, const QString& password)
+{
+    QKeychain::Job *job = new WriteToXPasswordJob(profileName, password, this);
+    connect(job, &WriteToXPasswordJob::finished, this, &LoginScreen::onStorePasswordFinished);
+    job->start();
+}
+#endif // QTOX_QTKEYCHAIN
