@@ -185,7 +185,7 @@ QImage VideoFrame::toQImage(QSize frameSize)
     return toGenericObject(frameSize, AV_PIX_FMT_RGB24, false, converter, QImage {});
 }
 
-ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
+ToxYUVFrame VideoFrame::toToxAVFrame(QSize frameSize)
 {
     if(frameSize.width() == 0 && frameSize.height() == 0)
     {
@@ -193,9 +193,9 @@ ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
     }
 
     // Converter function (constructs ToxAVFrame out of AVFrame*)
-    const std::function<ToxAVFrame(AVFrame* const)> converter = [&](AVFrame* const frame)
+    const std::function<ToxYUVFrame(AVFrame* const)> converter = [&](AVFrame* const frame)
     {
-        ToxAVFrame ret
+        ToxYUVFrame ret
         {
             static_cast<std::uint16_t>(frameSize.width()),
             static_cast<std::uint16_t>(frameSize.height()),
@@ -205,7 +205,7 @@ ToxAVFrame VideoFrame::toToxAVFrame(QSize frameSize)
         return ret;
     };
 
-    return toGenericObject(frameSize, AV_PIX_FMT_YUV420P, true, converter, ToxAVFrame {0, 0, nullptr, nullptr, nullptr});
+    return toGenericObject(frameSize, AV_PIX_FMT_YUV420P, true, converter, ToxYUVFrame {0, 0, nullptr, nullptr, nullptr});
 }
 
 AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned)

@@ -359,7 +359,7 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
     }
 
     // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
-    ToxAVFrame frame = vframe->toToxAVFrame();
+    ToxYUVFrame frame = vframe->toToxAVFrame();
 
     if(frame.width == 0 || frame.height == 0)
     {
