@@ -39,6 +39,8 @@ Qt:
 * Provide **screenshots** for UI related changes.
 * Keep your git commit history **clean** and **precise**. Commits like
   `xxx fixup` should not appear.
+* Commit message should state not only what has been changed, but also why a
+  change is needed.
 * If your commit fixes a reported issue (for example #4134), add the following
   message to the commit `Fixes #4134.`.
   [Here is an example](https://github.com/tux3/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
