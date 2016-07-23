@@ -29,6 +29,7 @@
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 
+#include <QtConcurrent/QtConcurrent>
 #include <QDebug>
 #include <QShowEvent>
 #include <map>
@@ -113,8 +114,8 @@ void AVForm::showEvent(QShowEvent* event)
 {
     getAudioOutDevices();
     getAudioInDevices();
-    createVideoSurface();
     getVideoDevices();
+    createVideoSurface();
 
     if (!subscribedToAudioIn) {
         // TODO: this should not be done in show/hide events
@@ -521,6 +522,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
+
     camVideoSurface = new VideoSurface(QPixmap(), CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
@@ -532,12 +534,16 @@ void AVForm::killVideoSurface()
 {
     if (!camVideoSurface)
         return;
+
     QLayoutItem *child;
     while ((child = gridLayout->takeAt(0)) != 0)
         delete child;
 
     camVideoSurface->close();
-    delete camVideoSurface;
+    QtConcurrent::run([this]()
+    {
+        delete camVideoSurface;
+    });
     camVideoSurface = nullptr;
 }
 
