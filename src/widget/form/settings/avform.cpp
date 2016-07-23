@@ -187,7 +187,7 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     // Identify the best resolutions available for the supposed XXXXp resolutions.
     std::map<int, VideoMode> idealModes;
     idealModes[120] = VideoMode(160, 120);
-    idealModes[240] = VideoMode(460, 240);
+    idealModes[240] = VideoMode(430, 240);
     idealModes[360] = VideoMode(640, 360);
     idealModes[480] = VideoMode(854, 480);
     idealModes[720] = VideoMode(1280, 720);
@@ -247,7 +247,10 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     for (auto it = bestModeInds.rbegin(); it != bestModeInds.rend(); ++it)
     {
         VideoMode mode = allVideoModes[it->second];
-        auto result = std::find(newVideoModes.begin(), newVideoModes.end(), mode);
+        int size = getModeSize(mode);
+        auto result = std::find_if(newVideoModes.cbegin(), newVideoModes.cend(),
+                                   [size](VideoMode mode) { return getModeSize(mode) == size; });
+
         if (result == newVideoModes.end())
             newVideoModes.push_back(mode);
     }
@@ -423,6 +426,11 @@ void AVForm::getVideoDevices()
     videoDevCombobox->setCurrentIndex(videoDevIndex);
     videoDevCombobox->blockSignals(false);
     updateVideoModes(videoDevIndex);
+}
+
+int AVForm::getModeSize(VideoMode mode)
+{
+    return qRound(mode.height / 120.0) ;
 }
 
 void AVForm::getAudioInDevices()
