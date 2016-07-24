@@ -59,6 +59,7 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
         av_frame_free(&avframe);
         return;
     }
+    avframe->opaque = buf;
 
     uint8_t** data = avframe->data;
     int* linesize = avframe->linesize;
@@ -81,7 +82,6 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 
     vframe = std::make_shared<VideoFrame>(avframe);
 
-    av_free(buf);
     emit frameAvailable(vframe);
 }
 
