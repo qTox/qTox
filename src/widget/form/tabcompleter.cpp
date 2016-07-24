@@ -62,7 +62,10 @@ void TabCompleter::buildCompletionList()
     for (auto name : group->getPeerList())
     {
         if (regex.indexIn(name) > -1)
-            completionMap[name.toLower()] = name;
+        {
+            SortableString lower = SortableString(name.toLower());
+            completionMap[lower] = name;
+        }
     }
 
     nextCompletion = completionMap.begin();

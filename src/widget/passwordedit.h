@@ -7,7 +7,7 @@
 class PasswordEdit : public QLineEdit
 {
 public:
-    PasswordEdit(QWidget *parent);
+    explicit PasswordEdit(QWidget *parent);
     ~PasswordEdit();
 
 protected:

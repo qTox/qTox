@@ -41,9 +41,9 @@ class ToxId
 public:
     ToxId(); ///< The default constructor. Creates an empty Tox ID.
     ToxId(const ToxId& other); ///< The copy constructor.
-    ToxId(const QString& id); ///< Create a Tox ID from QString.
-                              /// If the given id is not a valid Tox ID, then:
-                              /// publicKey == id and noSpam == "" == checkSum.
+    explicit ToxId(const QString& id); ///< Create a Tox ID from QString.
+                                       /// If the given id is not a valid Tox ID, then:
+                                       /// publicKey == id and noSpam == "" == checkSum.
 
     bool operator==(const ToxId& other) const; ///< Compares only publicKey.
     bool operator!=(const ToxId& other) const; ///< Compares only publicKey.
