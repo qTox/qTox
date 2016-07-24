@@ -121,7 +121,6 @@ private:
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
-    ScreenshotGrabber* screenshotGrabber;
     QHash<uint, FileTransferInstance*> ftransWidgets;
     CallConfirmWidget *callConfirm;
     bool isTyping;

@@ -39,7 +39,7 @@ class ScreenshotGrabber : public QObject
     Q_OBJECT
 public:
 
-    explicit ScreenshotGrabber(QObject* parent);
+    ScreenshotGrabber();
     ~ScreenshotGrabber() override;
 
     bool eventFilter(QObject* object, QEvent* event) override;
