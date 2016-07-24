@@ -49,8 +49,8 @@ AdvancedForm::AdvancedForm()
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->cbEnableUDP->setChecked(!s.getForceTCP());
     bodyUI->proxyAddr->setText(s.getProxyAddr());
-    int port = s.getProxyPort();
-    if (port != -1)
+    quint16 port = s.getProxyPort();
+    if (port > 0)
         bodyUI->proxyPort->setValue(port);
 
     bodyUI->proxyType->setCurrentIndex(static_cast<int>(s.getProxyType()));
@@ -116,7 +116,7 @@ void AdvancedForm::onProxyAddrEdited()
 void AdvancedForm::onProxyPortEdited(int port)
 {
     if (port <= 0)
-        port = -1;
+        port = 0;
 
     Settings::getInstance().setProxyPort(port);
 }
