@@ -100,7 +100,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>يمكن الاطلاع على قائمة بجميع المشاكل المعروفة لدينا في٪ 1 في موقع جيتهوب (Github). إذا اكتشفت خلل أو ثغرة أمنية في qTox، يرجى مراجعة  3٪ وفقا للمبادئ التوجيهية ٪ 2 في مقالنا بالويكي.</translation>
+        <translation>يمكن الاطلاع على قائمة بجميع المشاكل المعروفة لدينا في %1 في موقع جيتهوب (Github). إذا اكتشفت خلل أو ثغرة أمنية في qTox، يرجى مراجعة  %3 وفقا للمبادئ التوجيهية %2 في مقالنا بالويكي.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
