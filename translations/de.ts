@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="de_DE" sourcelanguage="en_US">
+<TS version="2.1" language="de_DE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -102,7 +102,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
+        <translation type="unfinished">Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, %3 bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -115,8 +115,8 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>report it</source>
-        <translatorcomment>Unnötig, wird nicht verwendet!</translatorcomment>
-        <translation></translation>
+        <translatorcomment>Linktext für Bugreport</translatorcomment>
+        <translation type="unfinished">melde sie</translation>
     </message>
 </context>
 <context>
