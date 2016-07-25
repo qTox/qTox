@@ -31,48 +31,37 @@
         <source>Screen %1</source>
         <translation>Экран %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Аўдыяналады</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Карыстайцеся паўзунком для ўсталявання гучнасці дынамікаў.</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Прылада прайгравання</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Прылада запісу</translation>
+        <translation type="unfinished">Аўдыяналады</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Узмацненне</translation>
+        <translation type="unfinished">Узмацненне</translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">Прылада прайгравання</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Карыстайцеся паўзунком для ўсталявання гучнасці дынамікаў.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Прылада запісу</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Гучнасць</translation>
+        <translation type="unfinished">Гучнасць</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Відэаналады</translation>
+        <translation type="unfinished">Відэаналады</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Відэапрылада</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Распазнавальнасць</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Перасканаваць прылады</translation>
+        <translation type="unfinished">Відэапрылада</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -80,11 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Усталяваць распазнавальнасць вашай камеры.
+        <translation type="unfinished">Усталяваць распазнавальнасць вашай камеры.
 Чым больш высокія значэнні зададзены, тым лепшую якасць відэа вашыя сябры могуць атрымаць.
 Але звярніце ўвагу, што з лепшай якасцю відэа патрабуецца лепшае падключэнне да Інтэрнэту.
 Часам вашага падключэння будзе недастаткова, каб справіцца з больш высокай якасцю відэа,
 што можа прывесці да праблем з відэавыклікам.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Распазнавальнасць</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Перасканаваць прылады</translation>
     </message>
 </context>
 <context>
@@ -200,7 +197,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation>Аўтаматычна прынятыя файлы</translation>
+        <translation>Аўтаматычна прымаць файлы</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
@@ -1951,6 +1948,46 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation>Профіль з назвай «%1» ужо існуе. Вы хочаце выдаліць яго?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Профіль імпартаваны</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox паспяхова імпартаваны</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Адмяніць</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2008,34 +2045,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Incoming call...</source>
         <translation>Уваходзячы выклік…</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ігнараванне не-Tox файлаў</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Увага: Вы выбралі файл, які не зʼяўляецца файлам Tox; ён ігнаруецца.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Профіль ужо існуе</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Профіль з назвай «%1» ужо існуе. Вы хочаце сцерці яго?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Профіль імпартаваны</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox паспяхова імпартаваны</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
