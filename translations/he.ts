@@ -1930,6 +1930,14 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QApplication</name>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation>RTL</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
