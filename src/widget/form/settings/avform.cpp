@@ -30,6 +30,7 @@
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 
+#include <QScreen>
 #include <QDebug>
 #include <QShowEvent>
 #include <map>
@@ -170,6 +171,12 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
             VideoMode mode(region);
             mode.width = mode.width / 2 * 2;
             mode.height = mode.height / 2 * 2;
+
+            // Need, if virtual screen origin is top left angle of primary screen
+            QRect screen = QApplication::primaryScreen()->virtualGeometry();
+            qDebug() << screen;
+            mode.x += screen.x();
+            mode.y += screen.y();
 
             Settings::getInstance().setScreenRegion(mode.toRect());
             Settings::getInstance().setScreenGrabbed(true);
