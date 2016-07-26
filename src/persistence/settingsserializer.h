@@ -25,21 +25,15 @@
 #include <QString>
 #include <QDataStream>
 
-/// Serializes a QSettings's data in an (optionally) encrypted binary format
-/// SettingsSerializer can detect regular .ini files and serialized ones,
-/// it will read both regular and serialized .ini, but only save in serialized format.
-/// The file is encrypted with the current profile's password, if any.
-/// The file is only written to disk if save() is called, the destructor does not save to disk
-/// All member functions are reentrant, but not thread safe.
 class SettingsSerializer
 {
 public:
     SettingsSerializer(QString filePath, const QString &password=QString());
 
-    static bool isSerializedFormat(QString filePath); ///< Check if the file is serialized settings. False on error.
+    static bool isSerializedFormat(QString filePath);
 
-    void load(); ///< Loads the settings from file
-    void save(); ///< Saves the current settings back to file
+    void load();
+    void save();
 
     void beginGroup(const QString &prefix);
     void endGroup();
@@ -55,15 +49,10 @@ public:
 private:
     enum class RecordTag : uint8_t
     {
-        /// Followed by a QString key then a QVariant value
         Value=0,
-        /// Followed by a QString group name
         GroupStart=1,
-        /// Followed by a QString array name and a vuint array size
         ArrayStart=2,
-        /// Followed by a vuint array index, a QString key then a QVariant value
         ArrayValue=3,
-        /// Not followed by any data
         ArrayEnd=4,
     };
     friend QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
@@ -94,7 +83,7 @@ private:
     void readSerialized();
     void readIni();
     void removeValue(const QString& key);
-    void removeGroup(int group); ///< The group must be empty
+    void removeGroup(int group);
     void writePackedVariant(QDataStream& dataStream, const QVariant& v);
 
 private:
@@ -104,7 +93,7 @@ private:
     QVector<QString> groups;
     QVector<Array> arrays;
     QVector<Value> values;
-    static const char magic[]; ///< Little endian ASCII "QTOX" magic
+    static const char magic[];
 };
 
 #endif // SETTINGSSERIALIZER_H

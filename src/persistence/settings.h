@@ -44,15 +44,15 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void destroyInstance();
-    QString getSettingsDirPath(); ///< The returned path ends with a directory separator
-    QString getAppDataDirPath(); ///< The returned path ends with a directory separator
-    QString getAppCacheDirPath(); ///< The returned path ends with a directory separator
+    QString getSettingsDirPath();
+    QString getAppDataDirPath();
+    QString getAppCacheDirPath();
 
-    void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
-    void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
+    void createSettingsDir();
+    void createPersonal(QString basename);
 
-    void savePersonal(); ///< Asynchronous, saves the current profile
-    void savePersonal(Profile *profile); ///< Asynchronous
+    void savePersonal();
+    void savePersonal(Profile *profile);
 
     void loadGlobal();
     void loadPersonal();
@@ -67,8 +67,8 @@ public:
 
 
 public slots:
-    void saveGlobal(); ///< Asynchronous
-    void sync(); ///< Waits for all asynchronous operations to complete
+    void saveGlobal();
+    void sync();
 
 signals:
     void dhtServerListChanged();
@@ -76,7 +76,6 @@ signals:
     void emojiFontChanged();
 
 public:
-    // Getter/setters
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
@@ -329,10 +328,6 @@ public:
     void removeFriendRequest(int index);
     void readFriendRequest(int index);
 
-    // Assume all widgets have unique names
-    // Don't use it to save every single thing you want to save, use it
-    // for some general purpose widgets, such as MainWindows or Splitters,
-    // which have widget->saveX() and widget->loadX() methods.
     QByteArray getWidgetData(const QString& uniqueName) const;
     void setWidgetData(const QString& uniqueName, const QByteArray& data);
 
@@ -401,7 +396,7 @@ private:
     uint32_t currentProfileId;
 
     // Toxme Info
-    QString toxmeInfo; // name@server
+    QString toxmeInfo;
     QString toxmeBio;
     bool toxmePriv;
     QString toxmePass;

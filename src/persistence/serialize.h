@@ -25,9 +25,6 @@
 #include <QByteArray>
 #include <QString>
 
-/// Most of those functions are unsafe unless otherwise specified
-/// Do not use them on untrusted data (e.g. check a signature first)
-
 QByteArray doubleToData(double num);
 QByteArray floatToData(float num);
 float dataToFloat(QByteArray data);

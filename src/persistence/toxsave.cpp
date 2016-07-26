@@ -33,6 +33,12 @@ bool toxSaveEventHandler(const QByteArray& eventData)
     return true;
 }
 
+/**
+@brief Import new profile.
+@note Will wait until the core is ready first.
+@param path Path to .tox file.
+@return True if import success, false, otherwise.
+*/
 bool handleToxSave(const QString& path)
 {
     Core* core = Core::getInstance();
@@ -59,7 +65,7 @@ bool handleToxSave(const QString& path)
         return false;
     }
 
-    QString profilePath = Settings::getInstance().getSettingsDirPath()+profile+Core::TOX_EXT;
+    QString profilePath = Settings::getInstance().getSettingsDirPath() + profile + Core::TOX_EXT;
 
     if (QFileInfo(profilePath).exists() && !GUI::askQuestion(QObject::tr("Profile already exists", "import confirm title"),
             QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))

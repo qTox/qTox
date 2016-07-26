@@ -17,8 +17,13 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "src/persistence/serialize.h"
+
+/**
+@file serialize.cpp
+Most of functions in this file are unsafe unless otherwise specified.
+@warning Do not use them on untrusted data (e.g. check a signature first).
+*/
 
 QByteArray doubleToData(double num)
 {
