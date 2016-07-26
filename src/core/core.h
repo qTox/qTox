@@ -79,6 +79,10 @@ public:
     ToxId getSelfId() const; ///< Returns our Tox ID
     QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
 
+    QVector<ToxDevice> getDeviceList() const; ///< Return a list of names and public keys for our devices
+    bool addDevice(QString name, QByteArray pk); ///< Add a device we want to sync with
+    bool removeDevice(QByteArray pk); ///< Permanently remove and blacklist a device in the list
+
     static std::unique_ptr<TOX_PASS_KEY> createPasskey(const QString &password, uint8_t* salt = nullptr);
     static QByteArray encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey);
     static QByteArray encryptData(const QByteArray& data); ///< Uses the default profile's key
