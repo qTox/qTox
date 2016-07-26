@@ -31,6 +31,11 @@
 #include <QMouseEvent>
 #include <QShortcut>
 
+/**
+@var ChatLog::repNameAfter
+@brief repetition interval sender name (sec)
+*/
+
 template<class T>
 T clamp(T x, T min, T max)
 {
