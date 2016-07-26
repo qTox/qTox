@@ -23,8 +23,6 @@
 
 #include <QDialog>
 
-/// Shows a dialog asking whether or not to add this tox address as a friend
-/// Will wait until the core is ready first
 bool handleToxURI(const QString& toxURI);
 
 // Internals

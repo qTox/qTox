@@ -29,6 +29,22 @@
 
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
+/**
+@class ToxDNS
+@brief Handles tox1 and tox3 DNS queries.
+*/
+
+/**
+@struct tox3_server
+@brief Represents a tox3 server.
+
+@var const char* tox3_server::name
+@brief Hostname of the server, e.g. toxme.se.
+
+@var uint8_t* tox3_server::pubkey
+@brief Public key of the tox3 server, usually 256bit long.
+*/
+
 const ToxDNS::tox3_server ToxDNS::pinnedServers[]
 {
     {"toxme.se", (uint8_t[32]){0x5D, 0x72, 0xC5, 0x17, 0xDF, 0x6A, 0xEC, 0x54, 0xF1, 0xE9, 0x77, 0xA6, 0xB6, 0xF2, 0x59, 0x14,
@@ -50,10 +66,14 @@ void ToxDNS::showWarning(const QString &message)
     warning.exec();
 }
 
+/**
+@brief Try to fetch the first entry of the given TXT record.
+@param record Record to search.
+@param silent May display message boxes on error if silent is false.
+@return An empty object on failure. May block for up to ~3s.
+*/
 QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
 {
-    QByteArray result;
-
     QDnsLookup dns;
     dns.setType(QDnsLookup::TXT);
     dns.setName(record);
@@ -71,7 +91,7 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
         if (!silent)
             showWarning(tr("The connection timed out","The DNS gives the Tox ID associated to toxme.se addresses"));
 
-        return result;
+        return QByteArray();
     }
 
     if (dns.error() == QDnsLookup::NotFoundError)
@@ -79,14 +99,14 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
         if (!silent)
             showWarning(tr("This address does not exist","The DNS gives the Tox ID associated to toxme.se addresses"));
 
-        return result;
+        return QByteArray();
     }
     else if (dns.error() != QDnsLookup::NoError)
     {
         if (!silent)
             showWarning(tr("Error while looking up DNS","The DNS gives the Tox ID associated to toxme.se addresses"));
 
-        return result;
+        return QByteArray();
     }
 
     const QList<QDnsTextRecord> textRecords = dns.textRecords();
@@ -95,7 +115,7 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
         if (!silent)
             showWarning(tr("No text record found", "Error with the DNS"));
 
-        return result;
+        return QByteArray();
     }
 
     const QList<QByteArray> textRecordValues = textRecords.last().values();
@@ -104,13 +124,20 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
         if (!silent)
             showWarning(tr("Unexpected number of values in text record", "Error with the DNS"));
 
-        return result;
+        return QByteArray();
     }
 
-    result = textRecordValues.first();
-    return result;
+    return textRecordValues.first();
 }
 
+/**
+@brief Send query to DNS to find Tox Id.
+@note Will *NOT* fallback on queryTox1 anymore.
+@param server Server to sending query.
+@param record Should look like user@domain.tld.
+@param silent If true, there will be no output on error.
+@return Tox Id string.
+*/
 QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool silent)
 {
     QByteArray nameData = record.left(record.indexOf('@')).toUtf8(), id, realRecord;
@@ -190,44 +217,40 @@ fallbackOnTox1:
     return toxIdStr;
 }
 
+/**
+@brief Tries to map a text string to a ToxId struct, will query Tox DNS records if necessary.
+@param address Adress to search for Tox ID.
+@param silent If true, there will be no output on error.
+@return Found Tox Id.
+*/
 ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
 {
-    ToxId toxId;
-
     if (address.isEmpty())
-    {
-        return toxId;
-    }
-    else if (ToxId::isToxId(address))
-    {
-        toxId = ToxId(address);
-        return toxId;
-    }
-    else
-    {
-        // If we're querying one of our pinned server, do a toxdns3 request directly
-        QString servname = address.mid(address.indexOf('@')+1);
-        for (const ToxDNS::tox3_server& pin : ToxDNS::pinnedServers)
-        {
-            if (servname == pin.name)
-            {
-                toxId = ToxId(queryTox3(pin, address, silent));
-                return toxId;
-            }
-        }
+        return ToxId();
 
-        // Otherwise try toxdns3 if we can get a pubkey or fallback to toxdns1
-        QByteArray pubkey = fetchLastTextRecord("_tox."+servname, true);
-        if (!pubkey.isEmpty())
-        {
-            pubkey = QByteArray::fromHex(pubkey);
+    if (ToxId::isToxId(address))
+        return ToxId(address);
 
-            QByteArray servnameData = servname.toUtf8();
-            ToxDNS::tox3_server server;
-            server.name = servnameData.data();
-            server.pubkey = (uint8_t*)pubkey.data();
-            toxId = ToxId(queryTox3(server, address, silent));
-        }
-        return toxId;
+    // If we're querying one of our pinned servers, do a toxdns3 request directly
+    QString servname = address.mid(address.indexOf('@')+1);
+    for (const ToxDNS::tox3_server& pin : ToxDNS::pinnedServers)
+    {
+        if (servname == pin.name)
+            return ToxId(queryTox3(pin, address, silent));
     }
+
+    // Otherwise try toxdns3 if we can get a pubkey or fallback to toxdns1
+    QByteArray pubkey = fetchLastTextRecord("_tox."+servname, true);
+    if (!pubkey.isEmpty())
+    {
+        pubkey = QByteArray::fromHex(pubkey);
+
+        QByteArray servnameData = servname.toUtf8();
+        ToxDNS::tox3_server server;
+        server.name = servnameData.data();
+        server.pubkey = (uint8_t*)pubkey.data();
+        return ToxId(queryTox3(server, address, silent));
+    }
+
+    return ToxId();
 }
