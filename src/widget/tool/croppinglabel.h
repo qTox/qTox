@@ -35,7 +35,7 @@ public:
     void setEdlideMode(Qt::TextElideMode elide);
 
     void setText(const QString& text);
-    QString fullText(); ///< Returns the un-cropped text
+    QString fullText();
 
 
 public slots:

@@ -26,10 +26,13 @@
 #include <QMenu>
 #include "src/core/corestructs.h"
 #include "src/chatlog/chatmessage.h"
-#include "../../core/toxid.h"
+#include "src/core/toxid.h"
 
-// Spacing in px inserted when the author of the last message changes
-#define AUTHOR_CHANGE_SPACING 5 // why the hell is this a thing? surely the different font is enough?
+/**
+Spacing in px inserted when the author of the last message changes
+@note Why the hell is this a thing? surely the different font is enough?
+*/
+#define AUTHOR_CHANGE_SPACING 5
 
 class QLabel;
 class QVBoxLayout;

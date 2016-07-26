@@ -67,16 +67,16 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
 }
 
 /**
- * @brief Delete notification bar to visible elements on scroll area
- */
+@brief Delete notification bar from visible elements on scroll area
+*/
 void NotificationScrollArea::updateVisualTracking() {
     updateTracking(nullptr);
 }
 
 /**
- * @brief Delete notification bar from visible elements and widget on scroll area
- * @param widget Chatroom widget to remove from tracked widgets
- */
+@brief Delete notification bar from visible elements and widget on scroll area
+@param widget Chatroom widget to remove from tracked widgets
+*/
 void NotificationScrollArea::updateTracking(GenericChatroomWidget *widget)
 {
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();

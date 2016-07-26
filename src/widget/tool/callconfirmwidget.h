@@ -30,9 +30,6 @@ class QPaintEvent;
 class QShowEvent;
 class Friend;
 
-/// This is a widget with dialog buttons to accept/reject a call
-/// It tracks the position of another widget called the anchor
-/// and looks like a bubble at the bottom of that widget.
 class CallConfirmWidget final : public QWidget
 {
     Q_OBJECT
@@ -44,7 +41,7 @@ signals:
     void rejected();
 
 public slots:
-    void reposition(); ///< Recalculate our positions to track the anchor
+    void reposition();
 
 protected:
     virtual void paintEvent(QPaintEvent* event) final override;
@@ -53,8 +50,8 @@ protected:
     virtual bool eventFilter(QObject *, QEvent* event) final override;
 
 private:
-    const QWidget* anchor; ///< The widget we're going to be tracking
-    const Friend& f; ///< The friend on whose chat form we should appear
+    const QWidget* anchor;
+    const Friend& f;
 
     QRect mainRect;
     QPolygon spikePoly;
@@ -62,8 +59,8 @@ private:
 
     const int rectW, rectH;
     const int spikeW, spikeH;
-    const int roundedFactor; ///< By how much are the corners of the main rect rounded
-    const qreal rectRatio; ///< Used to correct the rounding factors on non-square rects
+    const int roundedFactor;
+    const qreal rectRatio;
 };
 
 #endif // CALLCONFIRMWIDGET_H
