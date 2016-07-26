@@ -64,14 +64,11 @@ public:
     struct IPCMemory
     {
         uint64_t globalId;
-        // When last event was posted
         time_t lastEvent;
-        // When processEvents() ran last time
         time_t lastProcessed;
         IPCEvent events[IPC::EVENT_QUEUE_SIZE];
     };
 
-    // dest: Settings::getCurrentProfileId() or 0 (main instance).
     time_t postEvent(const QString& name, const QByteArray &data=QByteArray(), uint32_t dest=0);
     bool isCurrentOwner();
     void registerEventHandler(const QString& name, IPCEventHandler handler);
@@ -84,7 +81,6 @@ protected slots:
 protected:
     IPCMemory* global();
     bool runEventHandler(IPCEventHandler handler, const QByteArray& arg);
-    // Only called when global memory IS LOCKED, returns 0 if no evnts present
     IPCEvent* fetchEvent();
 
     QTimer timer;

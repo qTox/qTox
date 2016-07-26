@@ -51,6 +51,12 @@ std::unique_ptr<TOX_PASS_KEY> Core::createPasskey(const QString& password, uint8
     return encryptionKey;
 }
 
+/**
+@brief Encrypts data.
+@note Uses the default profile's key.
+@param data Data to encrypt.
+@return Encrypted data.
+*/
 QByteArray Core::encryptData(const QByteArray &data)
 {
     return encryptData(data, Nexus::getProfile()->getPasskey());
@@ -68,6 +74,12 @@ QByteArray Core::encryptData(const QByteArray& data, const TOX_PASS_KEY& encrypt
     return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
 }
 
+/**
+@brief Decrypts data.
+@note Uses the default profile's key.
+@param data Data to decrypt.
+@return Decrypted data.
+*/
 QByteArray Core::decryptData(const QByteArray &data)
 {
     return decryptData(data, Nexus::getProfile()->getPasskey());

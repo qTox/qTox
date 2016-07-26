@@ -51,6 +51,9 @@ Friend::~Friend()
     delete widget;
 }
 
+/**
+@brief Loads the friend's chat history if enabled
+*/
 void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())

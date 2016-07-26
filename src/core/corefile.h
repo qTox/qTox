@@ -35,8 +35,6 @@
 struct Tox;
 class Core;
 
-/// Implements Core's file transfer callbacks
-/// Avoids polluting core.h with private internal callbacks
 class CoreFile
 {
     friend class Core;
@@ -57,8 +55,6 @@ private:
     static ToxFile *findFile(uint32_t friendId, uint32_t fileId);
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
-    /// Returns the maximum amount of time in ms that Core should wait between two
-    /// tox_iterate calls to get good file transfer performances
     static unsigned corefileIterationInterval();
 
 private:

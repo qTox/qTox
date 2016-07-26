@@ -43,6 +43,14 @@
 #include <QSignalMapper>
 #endif
 
+/**
+@class Nexus
+
+This class is in charge of connecting various systems together
+and forwarding signals appropriately to the right objects,
+it is in charge of starting the GUI and the Core.
+*/
+
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
 static Nexus* nexus{nullptr};
@@ -66,6 +74,11 @@ Nexus::~Nexus()
 #endif
 }
 
+/**
+Sets up invariants and calls showLogin
+Hides the login screen and shows the GUI for the given profile.
+Will delete the current GUI, if it exists.
+*/
 void Nexus::start()
 {
     qDebug() << "Starting up";
@@ -131,6 +144,9 @@ void Nexus::start()
         showLogin();
 }
 
+/**
+@brief Hides the main GUI, delete the profile, and shows the login screen
+*/
 void Nexus::showLogin()
 {
     delete widget;
@@ -201,6 +217,9 @@ void Nexus::showMainGUI()
     profile->startCore();
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 Nexus& Nexus::getInstance()
 {
     if (!nexus)
@@ -215,6 +234,10 @@ void Nexus::destroyInstance()
     nexus = nullptr;
 }
 
+/**
+@brief Get core instance.
+@return nullptr if not started, core instance otherwise.
+*/
 Core* Nexus::getCore()
 {
     Nexus& nexus = getInstance();
@@ -224,11 +247,19 @@ Core* Nexus::getCore()
     return nexus.profile->getCore();
 }
 
+/**
+@brief Get current user profile.
+@return nullptr if not started, profile otherwise.
+*/
 Profile* Nexus::getProfile()
 {
     return getInstance().profile;
 }
 
+/**
+@brief Unload the current profile, if any, and replaces it.
+@param profile Profile to set.
+*/
 void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
@@ -236,6 +267,10 @@ void Nexus::setProfile(Profile* profile)
         Settings::getInstance().loadPersonal(profile);
 }
 
+/**
+@brief Get desktop GUI widget.
+@return nullptr if not started, desktop widget otherwise.
+*/
 Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
@@ -250,6 +285,11 @@ QString Nexus::getSupportedImageFilter()
   return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }
 
+/**
+@brief Dangerous way to find out if a path is writable.
+@param filepath Path to file which should be deleted.
+@return True, if file writeable, false otherwise.
+*/
 bool Nexus::tryRemoveFile(const QString& filepath)
 {
     QFile tmp(filepath);
@@ -258,6 +298,9 @@ bool Nexus::tryRemoveFile(const QString& filepath)
     return writable;
 }
 
+/**
+@brief Calls showLogin asynchronously, so we can safely logout from within the main GUI
+*/
 void Nexus::showLoginLater()
 {
     GUI::setEnabled(false);
