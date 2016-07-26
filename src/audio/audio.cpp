@@ -33,8 +33,6 @@
 #include <cassert>
 
 /**
-@internal
-
 @class Audio::Private
 
 @brief Encapsulates private audio framework from public qTox Audio API.
@@ -88,7 +86,28 @@ private:
 };
 
 /**
-Returns the singleton instance.
+@class Audio
+
+@fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
+
+When there are input subscribers, we regularly emit captured audio frames with this signal
+Always connect with a blocking queued connection lambda, else the behaviour is undefined
+
+@var Audio::AUDIO_SAMPLE_RATE
+@brief The next best Opus would take is 24k
+
+@var Audio::AUDIO_FRAME_DURATION
+@brief In milliseconds
+
+@var Audio::AUDIO_FRAME_SAMPLE_COUNT
+@brief Frame sample count
+
+@var Audio::AUDIO_CHANNELS
+@brief Ideally, we'd auto-detect, but that's a sane default
+*/
+
+/**
+@brief Returns the singleton instance.
 */
 Audio& Audio::getInstance()
 {
@@ -150,7 +169,7 @@ void Audio::checkAlcError(ALCdevice *device) noexcept
 }
 
 /**
-Returns the current output volume (between 0 and 1)
+@brief Returns the current output volume (between 0 and 1)
 */
 qreal Audio::outputVolume() const
 {
@@ -168,7 +187,7 @@ qreal Audio::outputVolume() const
 }
 
 /**
-Set the master output volume.
+@brief Set the master output volume.
 
 @param[in] volume   the master volume (between 0 and 1)
 */
@@ -238,7 +257,7 @@ qreal Audio::inputGain() const
 }
 
 /**
-Set the input gain dB level.
+@brief Set the input gain dB level.
 */
 void Audio::setInputGain(qreal dB)
 {
@@ -299,7 +318,7 @@ void Audio::unsubscribeInput()
 }
 
 /**
-Initialize audio input device, if not initialized.
+@brief Initialize audio input device, if not initialized.
 
 @return true, if device was initialized; false otherwise
 */
@@ -309,7 +328,7 @@ bool Audio::autoInitInput()
 }
 
 /**
-Initialize audio output device, if not initialized.
+@brief Initialize audio output device, if not initialized.
 
 @return true, if device was initialized; false otherwise
 */
@@ -354,9 +373,7 @@ bool Audio::initInput(const QString& deviceName)
 }
 
 /**
-@internal
-
-Open an audio output device
+@brief Open an audio output device
 */
 bool Audio::initOutput(const QString& deviceName)
 {
@@ -409,7 +426,7 @@ bool Audio::initOutput(const QString& deviceName)
 }
 
 /**
-Play a 44100Hz mono 16bit PCM sound from a file
+@brief Play a 44100Hz mono 16bit PCM sound from a file
 */
 void Audio::playMono16Sound(const QString& path)
 {
@@ -419,7 +436,7 @@ void Audio::playMono16Sound(const QString& path)
 }
 
 /**
-Play a 44100Hz mono 16bit PCM sound
+@brief Play a 44100Hz mono 16bit PCM sound
 */
 void Audio::playMono16Sound(const QByteArray& data)
 {
@@ -488,9 +505,7 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 }
 
 /**
-@internal
-
-Close active audio input device.
+@brief Close active audio input device.
 */
 void Audio::cleanupInput()
 {
@@ -506,9 +521,7 @@ void Audio::cleanupInput()
 }
 
 /**
-@internal
-
-Close active audio output device
+@brief Close active audio output device
 */
 void Audio::cleanupOutput()
 {
@@ -540,6 +553,9 @@ void Audio::cleanupOutput()
     }
 }
 
+/**
+@brief Called after a mono16 sound stopped playing
+*/
 void Audio::playMono16SoundCleanup()
 {
     QMutexLocker locker(&audioLock);
@@ -554,6 +570,9 @@ void Audio::playMono16SoundCleanup()
     }
 }
 
+/**
+@brief Called on the captureTimer events to capture audio
+*/
 void Audio::doCapture()
 {
     QMutexLocker lock(&audioLock);
@@ -583,7 +602,7 @@ void Audio::doCapture()
 }
 
 /**
-Returns true if the output device is open
+@brief Returns true if the output device is open
 */
 bool Audio::isOutputReady() const
 {

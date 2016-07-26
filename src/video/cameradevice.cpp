@@ -38,6 +38,28 @@ extern "C" {
 #include "src/platform/camera/avfoundation.h"
 #endif
 
+/**
+@class CameraDevice
+
+Maintains an FFmpeg context for open camera devices,
+takes care of sharing the context accross users and closing
+the camera device when not in use. The device can be opened
+recursively, and must then be closed recursively
+*/
+
+
+/**
+@var const QString CameraDevice::devName
+@brief Short name of the device
+
+@var AVFormatContext* CameraDevice::context
+@brief Context of the open device, must always be valid
+
+@var std::atomic_int CameraDevice::refcount;
+@brief Number of times the device was opened
+*/
+
+
 QHash<QString, CameraDevice*> CameraDevice::openDevices;
 QMutex CameraDevice::openDeviceLock, CameraDevice::iformatLock;
 AVInputFormat* CameraDevice::iformat{nullptr};
@@ -103,6 +125,18 @@ out:
     return dev;
 }
 
+/**
+@brief Opens a device.
+
+Opens a device, creating a new one if needed
+If the device is alreay open in another mode, the mode
+will be ignored and the existing device is used
+If the mode does not exist, a new device can't be opened.
+
+@param devName Device name to open.
+@param mode Mode of device to open.
+@return CameraDevice if the device could be opened, nullptr otherwise.
+*/
 CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 {
     if (!getDefaultInputFormat())
@@ -205,11 +239,20 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
     return dev;
 }
 
+/**
+@brief Opens the device again. Never fails
+*/
 void CameraDevice::open()
 {
     ++refcount;
 }
 
+/**
+@brief Closes the device. Never fails.
+@note If returns true, "this" becomes invalid.
+@return True, if device finally deleted (closed last reference),
+false otherwise (if other references exist).
+*/
 bool CameraDevice::close()
 {
     if (--refcount > 0)
@@ -223,6 +266,11 @@ bool CameraDevice::close()
     return true;
 }
 
+/**
+@brief Get raw device list
+@note Uses avdevice_list_devices
+@return Raw device list
+*/
 QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
 {
     QVector<QPair<QString, QString>> devices;
@@ -234,11 +282,13 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     AVFormatContext *s;
     if (!(s = avformat_alloc_context()))
         return devices;
+
     if (!iformat->priv_class || !AV_IS_INPUT_DEVICE(iformat->priv_class->category))
     {
         avformat_free_context(s);
         return devices;
     }
+
     s->iformat = iformat;
     if (s->iformat->priv_data_size > 0)
     {
@@ -280,7 +330,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
 
     // Convert the list to a QVector
     devices.resize(devlist->nb_devices);
-    for (int i=0; i<devlist->nb_devices; i++)
+    for (int i = 0; i < devlist->nb_devices; i++)
     {
         AVDeviceInfo* dev = devlist->devices[i];
         devices[i].first = dev->device_name;
@@ -290,6 +340,11 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
     return devices;
 }
 
+/**
+@brief Get device list with desciption
+@return A list of device names and descriptions.
+The names are the first part of the pair and can be passed to open(QString).
+*/
 QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
 {
     QVector<QPair<QString, QString>> devices;
@@ -336,6 +391,11 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     return devices;
 }
 
+/**
+@brief Get the default device name.
+@return The short name of the default device
+This is either the device in the settings or the system default.
+*/
 QString CameraDevice::getDefaultDeviceName()
 {
     QString defaultdev = Settings::getInstance().getVideoDev();
@@ -354,11 +414,20 @@ QString CameraDevice::getDefaultDeviceName()
     return devlist[0].first;
 }
 
+/**
+@brief Checks if a device name specifies a display.
+@param devName Device name to check.
+@return True, if device is screen, false otherwise.
+*/
 bool CameraDevice::isScreen(const QString &devName)
 {
     return devName.startsWith("x11grab") || devName.startsWith("gdigrab");
 }
 
+/**
+@brief Get list of resolutions and position of screens
+@return Vector of avaliable screen modes with offset
+*/
 QVector<VideoMode> CameraDevice::getScreenModes()
 {
     QList<QScreen*> screens = QApplication::screens();
@@ -376,6 +445,11 @@ QVector<VideoMode> CameraDevice::getScreenModes()
     return result;
 }
 
+/**
+@brief Get the list of video modes for a device.
+@param devName Device name to get nodes from.
+@return Vector of available modes for the device.
+*/
 QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
 {
     Q_UNUSED(devName);
@@ -401,6 +475,11 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     return {};
 }
 
+/**
+@brief Get the name of the pixel format of a video mode.
+@param pixel_format Pixel format to get the name from.
+@return Name of the pixel format.
+*/
 QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
 {
 #ifdef Q_OS_LINUX
@@ -410,6 +489,13 @@ QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
 #endif
 }
 
+/**
+@brief Compare two pixel formats.
+@param a First pixel format to compare.
+@param b Second pixel format to compare.
+@return True if we prefer format a to b,
+false otherwise (such as if there's no preference).
+*/
 bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
 {
 #ifdef Q_OS_LINUX
@@ -419,6 +505,10 @@ bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
 #endif
 }
 
+/**
+@brief Sets CameraDevice::iformat to default.
+@return True if success, false if failure.
+*/
 bool CameraDevice::getDefaultInputFormat()
 {
     QMutexLocker locker(&iformatLock);

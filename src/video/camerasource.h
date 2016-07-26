@@ -31,17 +31,6 @@
 class CameraDevice;
 struct AVCodecContext;
 
-/**
- * This class is a wrapper to share a camera's captured video frames
- * It allows objects to suscribe and unsuscribe to the stream, starting
- * the camera and streaming new video frames only when needed.
- * This is a singleton, since we can only capture from one
- * camera at the same time without thread-safety issues.
- * The source is lazy in the sense that it will only keep the video
- * device open as long as there are subscribers, the source can be
- * open but the device closed if there are zero subscribers.
- **/
-
 class CameraSource : public VideoSource
 {
     Q_OBJECT
@@ -49,12 +38,10 @@ class CameraSource : public VideoSource
 public:
     static CameraSource& getInstance();
     static void destroyInstance();
-    /// Opens the source for the camera device in argument, in the settings, or the system default
-    /// If a device is already open, the source will seamlessly switch to the new device
     void open();
     void open(const QString& deviceName);
     void open(const QString& deviceName, VideoMode mode);
-    void close(); ///< Equivalent to opening the source with the video device "none". Stops streaming.
+    void close();
     bool isOpen();
 
     // VideoSource interface
@@ -67,34 +54,24 @@ signals:
 private:
     CameraSource();
     ~CameraSource();
-    /// Blocking. Decodes video stream and emits new frames.
-    /// Designed to run in its own thread.
     void stream();
-    /// All VideoFrames must be deleted or released before we can close the device
-    /// or the device will forcibly free them, and then ~VideoFrame() will double free.
-    /// In theory very careful coding from our users could ensure all VideoFrames
-    /// die before unsubscribing, even the ones currently in flight in the metatype system.
-    /// But that's just asking for trouble and mysterious crashes, so we'll just
-    /// maintain a freelist and have all VideoFrames tell us when they die so we can forget them.
     void freelistCallback(int freelistIndex);
-    /// Get the index of a free slot in the freelist
-    /// Callers must hold the freelistLock
     int getFreelistSlotLockless();
-    bool openDevice(); ///< Callers must own the biglock. Actually opens the video device and starts streaming.
-    void closeDevice(); ///< Callers must own the biglock. Actually closes the video device and stops streaming.
+    bool openDevice();
+    void closeDevice();
 
 private:
-    QVector<std::weak_ptr<VideoFrame>> freelist; ///< Frames that need freeing before we can safely close the device
-    QFuture<void> streamFuture; ///< Future of the streaming thread
-    QString deviceName; ///< Short name of the device for CameraDevice's open(QString)
-    CameraDevice* device; ///< Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
-    VideoMode mode; ///< What mode we tried to open the device in, all zeros means default mode
-    AVCodecContext* cctx, *cctxOrig; ///< Codec context of the camera's selected video stream
-    int videoStreamIndex; ///< A camera can have multiple streams, this is the one we're decoding
-    QMutex biglock, freelistLock; ///< True when locked. Faster than mutexes for video decoding.
+    QVector<std::weak_ptr<VideoFrame>> freelist;
+    QFuture<void> streamFuture;
+    QString deviceName;
+    CameraDevice* device;
+    VideoMode mode;
+    AVCodecContext* cctx, *cctxOrig;
+    int videoStreamIndex;
+    QMutex biglock, freelistLock;
     std::atomic_bool _isOpen;
-    std::atomic_bool streamBlocker; ///< Holds the streaming thread still when true
-    std::atomic_int subscriptions; ///< Remember how many times we subscribed for RAII
+    std::atomic_bool streamBlocker;
+    std::atomic_int subscriptions;
 
     static CameraSource* instance;
 };

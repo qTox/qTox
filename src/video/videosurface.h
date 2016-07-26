@@ -35,7 +35,7 @@ public:
     ~VideoSurface();
 
     bool isExpanding() const;
-    void setSource(VideoSource* src); //NULL is a valid option
+    void setSource(VideoSource* src);
     QRect getBoundingRect() const;
     float getRatio() const;
     void setAvatar(const QPixmap& pixmap);
@@ -65,7 +65,7 @@ private:
     QRect boundingRect;
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
-    std::atomic_bool frameLock; ///< Fast lock for lastFrame
+    std::atomic_bool frameLock;
     uint8_t hasSubscribed;
     QPixmap avatar;
     float ratio;
