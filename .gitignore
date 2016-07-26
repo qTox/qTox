@@ -12,3 +12,4 @@ build-*-Release
 build-*-Profile
 build-*-Debug
 .DS_Store
+doc/html/*
