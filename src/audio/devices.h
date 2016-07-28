@@ -20,6 +20,8 @@
 #ifndef QTOX_AUDIO_H
 #define QTOX_AUDIO_H
 
+#include <functional>
+
 #include <QObject>
 #include <QSharedData>
 
@@ -36,9 +38,24 @@ enum class Format
     FLOAT64 = 0x20
 };
 
+static inline quint8 formatSize(Format fmt)
+{
+    switch (fmt)
+    {
+    case Format::SINT8: return 1;
+    case Format::SINT16: return 2;
+    case Format::SINT24: return 3;
+    case Format::SINT32:
+    case Format::FLOAT32: return 4;
+    case Format::FLOAT64: return 8;
+    }
+}
+
 class Device
 {
     class Private;
+
+    friend class StreamContext;
 
 public:
     typedef QVector<Device> List;
@@ -48,8 +65,7 @@ public:
     static int find(const QString& name);
 
 public:
-    Device();
-    Device(Private* p);
+    Device(Private* p = nullptr);
     Device(const Device& other);
     Device(Device&& other);
     ~Device();
@@ -79,11 +95,11 @@ private:
 
 class StreamContext
 {
+public:
     class Private;
 
 public:
-    explicit StreamContext(int inputDevice = -1, int outputDevice = -1);
-    StreamContext(Private* p);
+    StreamContext();
     StreamContext(const StreamContext& other);
     StreamContext(StreamContext&& other);
     ~StreamContext();
@@ -96,11 +112,22 @@ public:
         return !d;
     }
 
+    int inputDeviceId() const;
+    Device inputDevie() const;
+    void setInputDevice(int deviceId = -1);
+    void removeInputDevice();
+
+    int outputDeviceId() const;
+    Device outputDevice() const;
+    void setOutputDevice(int deviceId = -1);
+    void removeOutputDevice();
+
     bool open();
     void close();
 
-    void start();
-    void stop();
+    bool abort();
+    bool start();
+    bool stop();
 
     bool isOpen() const;
     bool isRunning() const;
