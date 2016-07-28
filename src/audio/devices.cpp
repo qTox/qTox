@@ -28,6 +28,19 @@ namespace qTox {
 namespace Audio {
 
 /**
+@enum Format
+@brief Describes the data format of audio buffers.
+@value SINT8    8 bit signed integer
+@value SINT16   16 bit signed integer
+@value SINT24   24 bit signes integer
+@value SINT32   32 bit signed integer
+@value FLOAT32  32 bit float
+@value FLOAT64  64 bit float
+
+@fn         quint8 formatSize(Format fmt)
+@brief      Returns the byte size of the @a Format type.
+@param[in]  fmt     the format type
+
 @class Device
 @brief Representation of a physical audio device.
 
@@ -38,12 +51,11 @@ namespace Audio {
 /**
 This callback outputs a warning on RtAudio errors.
 */
-static void cb_rtaudio_error(RtAudioError::Type type, const std::string& message)
+void cb_rtaudio_error(RtAudioError::Type type, const std::string& message)
 {
     Q_UNUSED(type);
     qWarning() << "RtAudio:" << QString::fromStdString(message);
 }
-
 
 /**
 @internal
@@ -75,17 +87,23 @@ class StreamContext::Private : public QSharedData
     friend class StreamContext;
 
 public:
-    Private(RtAudio::StreamParameters* inputParms = nullptr,
-            RtAudio::StreamParameters* outputParams = nullptr,
-            RtAudio::StreamOptions* options = nullptr)
+    Private()
         : format(RTAUDIO_SINT16)
         , sampleRate(44100)
-        , bufferFrames(256)
-        , inParams(inputParms)
-        , outParams(outputParams)
-        , opts(options)
+        , opts(nullptr)
+        , playthrough(false)
+        , inParams(nullptr)
+        , inFrames(256)
+        , playbackBuffer(nullptr)
+        , outParams(nullptr)
     {
         audio.showWarnings(true);
+    }
+
+    ~Private()
+    {
+        delete inParams;
+        delete outParams;
     }
 
     bool open()
@@ -103,10 +121,18 @@ public:
 
     void close()
     {
-        if (!audio.isStreamOpen())
-            return;
+        if (audio.isStreamOpen())
+            audio.closeStream();
+    }
 
-        audio.closeStream();
+    bool abort()
+    {
+        if (!audio.isStreamRunning())
+            return true;
+
+        audio.abortStream();
+
+        return !audio.isStreamRunning();
     }
 
     bool start()
@@ -129,49 +155,53 @@ public:
         return !audio.isStreamRunning();
     }
 
+    void destroyInParams()
+    {
+        close();
+
+        delete inParams;
+        inParams = nullptr;
+    }
+
+    void destroyOutParams()
+    {
+        close();
+
+        delete outParams;
+        outParams = nullptr;
+    }
+
+    /**
+    @internal
+    @brief Restores the stream's open/running state.
+    @param[in] wasOpen      the previous "open" state
+    @param[in] wasRunning   the previous "running" state
+    */
+    void restore(bool wasOpen, bool wasRunning)
+    {
+        if (wasOpen)
+        {
+            open();
+
+            if (wasRunning)
+                start();
+        }
+    }
+
 private:
-    RtAudio         audio;
-    RtAudioFormat   format;
-    unsigned int    sampleRate;
-    unsigned int    bufferFrames;
+    RtAudio                     audio;
+    RtAudioFormat               format;
+    unsigned int                sampleRate;
+    RtAudio::StreamOptions*     opts;
+    bool                        playthrough;
 
     RtAudio::StreamParameters*  inParams;
+    unsigned int                inFrames;
+    char*                       playbackBuffer;
+    RecordFunc                  evInput;
+
     RtAudio::StreamParameters*  outParams;
-    RtAudio::StreamOptions*     opts;
 };
-
-/**
-@brief Creates an audio stream context.
-@param[in] inputDevice      the input device index; -1 == no input
-@param[in] outputDevice     the output device index; -1 == no output
-@return the created StreamContext or a null object, if creation failed
-
-The created StreamContext has 1 (mono) or 2 (stereo) channels, depending on the
-devices' capabilities. A device in qTox cannot have more than two channels.
-*/
-StreamContext::StreamContext(int inputDevice, int outputDevice)
-    : d(new Private())
-{
-    if (inputDevice >= 0)
-    {
-        unsigned int devId = static_cast<quint32>(inputDevice);
-        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
-        d->inParams = new RtAudio::StreamParameters();
-        (*d->inParams).deviceId = devId;
-        (*d->inParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
-        (*d->inParams).firstChannel = 0;
-    }
-
-    if (outputDevice >= 0)
-    {
-        unsigned int devId = static_cast<quint32>(outputDevice);
-        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
-        d->outParams = new RtAudio::StreamParameters();
-        (*d->outParams).deviceId = devId;
-        (*d->outParams).nChannels = (info.inputChannels > 1) ? 2 : 1;
-        (*d->outParams).firstChannel = 0;
-    }
-}
 
 /**
 @brief Creates a list of all available audio input and output devices.
@@ -210,12 +240,6 @@ int Device::find(const QString& deviceName)
     return -1;
 }
 
-Device::Device()
-    : d(nullptr)
-{
-
-}
-
 Device::Device(Private* p)
     : d(p)
 {
@@ -247,6 +271,10 @@ Device& Device::operator=(Device&& other)
     return *this;
 }
 
+/**
+@brief Returns the "probed" state of the audio device.
+@return true when the device was successfully probed; false otherwise
+*/
 bool Device::isValid() const
 {
     return d && d->info.probed;
@@ -286,8 +314,7 @@ quint32 Device::duplexChannels() const
 }
 
 /**
-Convenience method.
-
+@brief Convenience method.
 @return true, if outputChannels() > 0
 */
 bool Device::isOutput() const
@@ -305,8 +332,7 @@ bool Device::isDefaultOutput() const
 }
 
 /**
-Convenience method.
-
+@brief Convenience method.
 @return true, if inputChannels() > 0
 */
 bool Device::isInput() const
@@ -323,8 +349,17 @@ bool Device::isDefaultInput() const
     return d ? d->info.isDefaultOutput : false;
 }
 
-StreamContext::StreamContext(StreamContext::Private* p)
-    : d(p)
+/**
+@brief Creates an audio stream context.
+@param[in] inputDevice      the input device index; -1 == no input
+@param[in] outputDevice     the output device index; -1 == no output
+@return the created StreamContext or a null object, if creation failed
+
+The created StreamContext has a maximum of 2 (stereo) channels, depending on the
+devices' capabilities. A device in qTox cannot have more than two channels.
+*/
+StreamContext::StreamContext()
+    : d(new Private())
 {
 }
 
@@ -355,6 +390,139 @@ StreamContext& StreamContext::operator=(StreamContext&& other)
 }
 
 /**
+@brief Returns the StreamContext input device id.
+@return the input device id or -1, if no device was assigned
+*/
+int StreamContext::inputDeviceId() const
+{
+    return (d && d->inParams) ? static_cast<int>((*d->inParams).deviceId) : -1;
+}
+
+/**
+@brief Returns the StreamContext input device.
+@return the input @a Device or a null @a Device, if none was assigned
+*/
+Device StreamContext::inputDevie() const
+{
+    return d && d->inParams
+            ? new Device::Private(d->audio.getDeviceInfo((*d->inParams).deviceId))
+            : nullptr;
+}
+
+/**
+@brief Initializes the input device for the StreamContext.
+@param[in] deviceId the input device id; -1 for default device
+*/
+void StreamContext::setInputDevice(int deviceId)
+{
+    if (!d)
+        return;
+
+    const bool wasOpen = d->audio.isStreamOpen();
+    const bool wasRunning = d->audio.isStreamRunning();
+    d->destroyInParams();
+
+    if (deviceId < 0)
+        deviceId = static_cast<int>(d->audio.getDefaultInputDevice());
+
+    if (deviceId >= 0)
+    {
+        unsigned int devId = static_cast<quint32>(deviceId);
+        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
+        d->inParams = new RtAudio::StreamParameters();
+        (*d->inParams).deviceId = devId;
+        (*d->inParams).nChannels = 1; //qMin<unsigned int>(info.inputChannels, 2);
+        (*d->inParams).firstChannel = 0;
+    }
+
+    d->restore(wasOpen, wasRunning);
+}
+
+/**
+@brief  Removes the StreamContext input device.
+@note   The input device is destroyed and the stream is restored to it's
+        previous open/running state.
+*/
+void StreamContext::removeInputDevice()
+{
+    if (!d)
+        return;
+
+    const bool wasOpen = d->audio.isStreamOpen();
+    const bool wasRunning = d->audio.isStreamRunning();
+
+    d->destroyInParams();
+    d->restore(wasOpen, wasRunning);
+}
+
+/**
+@brief Returns the StreamContext output device id.
+@return the input device id or -1, if no device was assigned
+*/
+int StreamContext::outputDeviceId() const
+{
+    return (d && d->outParams) ? static_cast<int>((*d->outParams).deviceId) : -1;
+}
+
+/**
+@brief Returns the StreamContext output device.
+@return the output @a Device or a null @a Device, if none was assigned
+*/
+Device StreamContext::outputDevice() const
+{
+
+    return d && d->outParams
+            ? new Device::Private(d->audio.getDeviceInfo((*d->outParams).deviceId))
+            : nullptr;
+}
+
+/**
+@brief Sets the output device for the StreamContext.
+@param[in] deviceId     the output device id
+*/
+void StreamContext::setOutputDevice(int deviceId)
+{
+    if (!d)
+        return;
+
+    const bool wasOpen = d->audio.isStreamOpen();
+    const bool wasRunning = d->audio.isStreamRunning();
+    d->destroyOutParams();
+
+    if (deviceId < 0)
+        deviceId = static_cast<int>(d->audio.getDefaultOutputDevice());
+
+    if (deviceId >= 0)
+    {
+        unsigned int devId = static_cast<quint32>(deviceId);
+        RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
+        d->outParams = new RtAudio::StreamParameters();
+        (*d->outParams).deviceId = devId;
+        (*d->outParams).nChannels = 1; //qMin<unsigned int>(info.inputChannels, 2);
+        (*d->outParams).firstChannel = 0;
+    }
+
+    d->restore(wasOpen, wasRunning);
+}
+
+/**
+@brief  Removes the StreamContext input device.
+@note   The input device is destroyed and the stream is restored to it's
+        previous open/running state.
+*/
+void StreamContext::removeOutputDevice()
+{
+    if (!d)
+        return;
+
+    const bool wasOpen = d->audio.isStreamOpen();
+    const bool wasRunning = d->audio.isStreamRunning();
+
+    d->destroyOutParams();
+    d->restore(wasOpen, wasRunning);
+}
+
+/**
 @brief Opens the stream for reading and writing.
 @return
 */
@@ -370,6 +538,30 @@ void StreamContext::close()
 {
     if (d)
         d->close();
+}
+
+/**
+Aborts a stream immediately.
+*/
+bool StreamContext::abort()
+{
+    return d ? d->abort() : false;
+}
+
+/**
+Starts recording or playback on the stream.
+*/
+bool StreamContext::start()
+{
+    return d ? d->start() : false;
+}
+
+/**
+Waits for the streamed buffers to drain and stops playback afterwards.
+*/
+bool StreamContext::stop()
+{
+    return d ? d->stop() : false;
 }
 
 bool StreamContext::isOpen() const
