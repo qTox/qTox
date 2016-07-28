@@ -119,26 +119,26 @@ public:
         Q_UNUSED(streamTime);
         Q_UNUSED(status);
 
+        int ret = 1;
         const Private* p = static_cast<StreamContext::Private*>(userData);
 
-        if (inBuffer && p->inParams)
+        if (p->inParams && nFrames > 0)
         {
             if (p->evInput)
             {
                 quint8 channels = static_cast<quint8>((*p->inParams).nChannels);
-                size_t bytes = nFrames * channels * 2;
-                p->evInput(inBuffer, Format::SINT16, bytes,
-                           channels, p->sampleRate);
+                ret = p->evInput(inBuffer, Format::SINT16, nFrames,
+                                 channels, p->sampleRate);
             }
         }
 
-        if (outBuffer && p->outParams)
+        if (p->outParams)
         {
             if (p->playbackBuffer)
                 memcpy(outBuffer, p->playbackBuffer, nFrames);
         }
 
-        return 1;
+        return ret;
     }
 
 public:
@@ -231,7 +231,7 @@ public:
         if (audio.isStreamRunning())
             audio.abortStream();
 
-        delete playbackBuffer;
+        delete[] playbackBuffer;
         playbackBuffer = nullptr;
         inFrames = 0;
     }
