@@ -119,7 +119,11 @@ public:
             return !d;
         }
 
+        quint32 sampleRate() const;
+        void setSampleRate(quint32 hz);
 
+        quint32 frameCount() const;
+        void setFrameCount(quint32 frames);
 
         int inputDeviceId() const;
         Device inputDevie() const;

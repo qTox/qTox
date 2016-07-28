@@ -455,6 +455,59 @@ Audio::StreamContext& Audio::StreamContext::operator=(StreamContext&& other)
 }
 
 /**
+@brief  The current sample rate.
+@return the sample rate in Hz.
+*/
+quint32 Audio::StreamContext::sampleRate() const
+{
+    return d ? d->sampleRate : 0;
+}
+
+/**
+@brief Sets the sample rate for the stream context.
+
+@note An open stream will be closed by this method.
+*/
+void Audio::StreamContext::setSampleRate(quint32 hz)
+{
+    if (!d)
+        return;
+
+    if (hz != d->sampleRate)
+    {
+        d->close();
+        d->sampleRate = hz;
+    }
+}
+
+/**
+@brief Returns the current frame count.
+@return The StreamContext's (input) frame count.
+*/
+quint32 Audio::StreamContext::frameCount() const
+{
+    return d ? d->inFrames : 0;
+}
+
+/**
+@brief  Sets the frame count (for internal frame buffer) for input.
+@note   Can only be set for an input or playthrough (duplex) StreamContext.
+*/
+void Audio::StreamContext::setFrameCount(quint32 frames)
+{
+    if (!d || frames == d->inFrames)
+        return;
+
+    Q_ASSERT_X(d->inParams, __func__,
+               "Frame count can only be set within an input context.");
+
+    Q_ASSERT_X(!d->audio.isStreamRunning(), __func__,
+               "Frame count cannot be set on an active stream.");
+
+    d->inFrames = frames;
+}
+
+/**
 @brief Returns the StreamContext input device id.
 @return the input device id or -1, if no device was assigned
 */
