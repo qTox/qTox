@@ -136,7 +136,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     } );
 
     setAcceptDrops(true);
-
+    disableCallButtons();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
 }
@@ -628,10 +628,17 @@ void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
 void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
 {
     // Disable call buttons if friend is offline
-    if(friendId == f->getFriendID() && status == Status::Offline)
+    if(friendId != f->getFriendID())
+        return;
+
+    Status old = oldStatus.value(friendId, Status::Offline);
+
+    if (old != Status::Offline && status == Status::Offline)
         disableCallButtons();
-    else
-        onEnableCallButtons();
+    else if (old == Status::Offline && status != Status::Offline)
+        enableCallButtons();
+
+    oldStatus[friendId] = status;
 }
 
 void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
@@ -934,12 +941,6 @@ void ChatForm::setFriendTyping(bool isTyping)
 void ChatForm::show(ContentLayout* contentLayout)
 {
     GenericChatForm::show(contentLayout);
-
-    // Disable call buttons if friend is offline
-    if(f->getStatus() == Status::Offline)
-        disableCallButtons();
-    else
-        onEnableCallButtons();
 
     if (callConfirm)
         callConfirm->show();
