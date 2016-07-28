@@ -20,6 +20,7 @@
 #include "devices.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QVector>
 
 #include <RtAudio.h>
@@ -40,6 +41,9 @@ namespace Audio {
 @fn         quint8 formatSize(Format fmt)
 @brief      Returns the byte size of the @a Format type.
 @param[in]  fmt     the format type
+
+@typedef    RecordFunc
+@brief      Defines an event callback, when data was recorded.
 
 @class Device
 @brief Representation of a physical audio device.
@@ -87,6 +91,41 @@ class StreamContext::Private : public QSharedData
     friend class StreamContext;
 
 public:
+    /**
+    This callback handles playback and recording of audio buffers.
+    */
+    static int cb_rtaudio_playback(void* outBuffer, void* inBuffer,
+                                   unsigned int nFrames,
+                                   double streamTime,
+                                   RtAudioStreamStatus status,
+                                   void *userData)
+    {
+        Q_UNUSED(streamTime);
+        Q_UNUSED(status);
+
+        const Private* p = static_cast<StreamContext::Private*>(userData);
+
+        if (inBuffer && p->inParams)
+        {
+            if (p->evInput)
+            {
+                quint8 channels = static_cast<quint8>((*p->inParams).nChannels);
+                size_t bytes = nFrames * channels * 2;
+                p->evInput(inBuffer, Format::SINT16, bytes,
+                           channels, p->sampleRate);
+            }
+        }
+
+        if (outBuffer && p->outParams)
+        {
+            if (p->playbackBuffer)
+                memcpy(outBuffer, p->playbackBuffer, nFrames);
+        }
+
+        return 1;
+    }
+
+public:
     Private()
         : format(RTAUDIO_SINT16)
         , sampleRate(44100)
@@ -102,6 +141,7 @@ public:
 
     ~Private()
     {
+        resetPlayback();
         delete inParams;
         delete outParams;
     }
@@ -111,10 +151,11 @@ public:
         if (audio.isStreamOpen())
             return true;
 
-        // TODO: implement and assign callbacks
-        audio.openStream(outParams, inParams, format, sampleRate,
-                         &bufferFrames, nullptr, nullptr, opts,
-                         &cb_rtaudio_error);
+        if (!(inParams || outParams))
+            return false;
+
+        audio.openStream(outParams, inParams, format, sampleRate, &inFrames,
+                         cb_rtaudio_playback, this, opts, cb_rtaudio_error);
 
         return audio.isStreamOpen();
     }
@@ -127,10 +168,7 @@ public:
 
     bool abort()
     {
-        if (!audio.isStreamRunning())
-            return true;
-
-        audio.abortStream();
+        resetPlayback();
 
         return !audio.isStreamRunning();
     }
@@ -151,6 +189,7 @@ public:
             return true;
 
         audio.stopStream();
+        resetPlayback();
 
         return !audio.isStreamRunning();
     }
@@ -169,6 +208,16 @@ public:
 
         delete outParams;
         outParams = nullptr;
+    }
+
+    void resetPlayback()
+    {
+        if (audio.isStreamRunning())
+            audio.abortStream();
+
+        delete playbackBuffer;
+        playbackBuffer = nullptr;
+        inFrames = 0;
     }
 
     /**
@@ -564,6 +613,50 @@ bool StreamContext::stop()
     return d ? d->stop() : false;
 }
 
+void StreamContext::playback(char* pcm, Format fmt, quint32 frames,
+                             quint8 channels, quint32 sampleRate)
+{
+    // TODO: map the number of channels (currently assuming input == output)
+    Q_UNUSED(channels);
+
+    if (!d)
+        return;
+
+    if (sampleRate != d->sampleRate)
+    {
+        d->close();
+        d->sampleRate = sampleRate;
+    }
+    else
+    {
+        d->resetPlayback();
+    }
+
+    d->format = static_cast<RtAudioFormat>(fmt);
+    d->inFrames = frames;
+    d->playbackBuffer = pcm;
+
+    d->start();
+}
+
+void StreamContext::playback(const QString& fileName)
+{
+    QFile f(fileName);
+    if (f.open(QFile::ReadOnly))
+    {
+        char* data = new char[f.size()];
+        f.read(data, f.size());
+        Format fmt = Format::SINT16;
+        quint32 frames = static_cast<quint32>(f.size()) / formatSize(fmt);
+
+        playback(data, fmt, frames, 1, 44100);
+    }
+    else
+    {
+        qWarning() << "Could not open audio file for playback:" << fileName;
+    }
+}
+
 bool StreamContext::isOpen() const
 {
     return d ? d->audio.isStreamOpen() : false;
@@ -572,6 +665,14 @@ bool StreamContext::isOpen() const
 bool StreamContext::isRunning() const
 {
     return d ? d->audio.isStreamRunning() : false;
+}
+
+void StreamContext::onRecorded(RecordFunc event)
+{
+    if (!d)
+        return;
+
+    d->evInput = event;
 }
 
 }
