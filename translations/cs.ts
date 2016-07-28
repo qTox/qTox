@@ -29,34 +29,39 @@
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrazovka %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Nastavení zvuku</translation>
+        <translation type="unfinished">Nastavení zvuku</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Použijte posuvník pro nastavení hlasitosti reproduktorů.</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Nahrávací zařízení</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Přehrávací zařízení</translation>
+        <translation type="unfinished">Přehrávací zařízení</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Použijte posuvník pro nastavení hlasitosti reproduktorů.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Nahrávací zařízení</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Hlasitost</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Nastavení videa</translation>
+        <translation type="unfinished">Nastavení videa</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Video zařízení</translation>
+        <translation type="unfinished">Video zařízení</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,7 +69,7 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Nastavení rozlišení vaší kamery
+        <translation type="unfinished">Nastavení rozlišení vaší kamery
 Čím vyšší hodnota je nastavena v tím lepší kvalitě vás uvidí ostatní.
 Poznámka čím vyšší kvalita je nastavena tím vyšší jsou nároky na internetové spojení.
 Rychlost vašeho připojení nemusí být vždy dostačující pro vyšší kvalitu videa,což 
@@ -72,19 +77,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Rozlišení</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Hlasitost</translation>
+        <translation type="unfinished">Rozlišení</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Znovu načíst zařízení</translation>
+        <translation type="unfinished">Znovu načíst zařízení</translation>
     </message>
 </context>
 <context>
@@ -1937,6 +1934,46 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
         <comment>import confirm text</comment>
         <translation type="unfinished">Profil jménem &quot;%1&quot; již existuje. Chcete ho vymazat ?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil přidán</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1. tox byl úspěšně přidán</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Zrušit</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1971,34 +2008,6 @@ Bude nainstalována po restartu qTox.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Jsem %1 ! Napíšeš mi ?</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ignorovat soubory které nejsou Tox</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Varování:pro uložení jste vybrali soubor který není Tox kompatibilní, ignoruji.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profil už existuje</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profil jménem &quot;%1&quot; již existuje. Chcete ho vymazat ?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil přidán</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1. tox byl úspěšně přidán</translation>
     </message>
     <message>
         <source>Default</source>
