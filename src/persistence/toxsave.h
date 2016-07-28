@@ -23,7 +23,6 @@
 class QString;
 class QByteArray;
 
-/// Will wait until the core is ready first
 bool handleToxSave(const QString& path);
 
 // Internals

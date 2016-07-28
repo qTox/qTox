@@ -25,6 +25,19 @@
 #include <random>
 #include <unistd.h>
 
+/**
+@var time_t IPC::lastEvent
+@brief When last event was posted.
+
+@var time_t IPC::lastProcessed
+@brief When processEvents() ran last time
+*/
+
+/**
+@class IPC
+@brief Inter-process communication
+*/
+
 IPC::IPC()
     : globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
 {
@@ -84,13 +97,23 @@ IPC::~IPC()
     }
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 IPC& IPC::getInstance()
 {
     static IPC instance;
     return instance;
 }
 
-time_t IPC::postEvent(const QString &name, const QByteArray& data/*=QByteArray()*/, uint32_t dest/*=0*/)
+/**
+@brief Post IPC event.
+@param name Name to set in IPC event.
+@param data Data to set in IPC event (default QByteArray()).
+@param dest Settings::getCurrentProfileId() or 0 (main instance, default).
+@return Time the event finished.
+*/
+time_t IPC::postEvent(const QString &name, const QByteArray& data, uint32_t dest)
 {
     QByteArray binName = name.toUtf8();
     if (binName.length() > (int32_t)sizeof(IPCEvent::name))
@@ -101,7 +124,7 @@ time_t IPC::postEvent(const QString &name, const QByteArray& data/*=QByteArray()
 
     if (globalMemory.lock())
     {
-        IPCEvent* evt = 0;
+        IPCEvent* evt = nullptr;
         IPCMemory* mem = global();
         time_t result = 0;
 
@@ -195,6 +218,10 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
     return result;
 }
 
+/**
+@brief Only called when global memory IS LOCKED.
+@return nullptr if no evnts present, IPC event otherwise
+*/
 IPC::IPCEvent *IPC::fetchEvent()
 {
     IPCMemory* mem = global();
@@ -209,32 +236,28 @@ IPC::IPCEvent *IPC::fetchEvent()
             (!evt->processed && difftime(time(0), evt->posted) > EVENT_GC_TIMEOUT))
             memset(evt, 0, sizeof(IPCEvent));
 
-        if (evt->posted && !evt->processed && evt->sender != getpid())
-        {
-            if (evt->dest == Settings::getInstance().getCurrentProfileId() || (evt->dest == 0 && isCurrentOwner()))
-                return evt;
-        }
+        if (evt->posted && !evt->processed && evt->sender != getpid()
+                && (evt->dest == Settings::getInstance().getCurrentProfileId()
+                    || (evt->dest == 0 && isCurrentOwner())))
+            return evt;
     }
-    return 0;
+
+    return nullptr;
 }
 
 bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg)
 {
     bool result = false;
-    if (QThread::currentThread() != qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread())
+        result = handler(arg);
+    else
         QMetaObject::invokeMethod(this, "runEventHandler",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, result),
                                   Q_ARG(IPCEventHandler, handler),
                                   Q_ARG(const QByteArray&, arg));
-        return result;
-    }
-    else
-    {
-        result = handler(arg);
-        return result;
-    }
+
+    return result;
 }
 
 void IPC::processEvents()

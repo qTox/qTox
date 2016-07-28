@@ -33,6 +33,9 @@ QTranslator* Translator::translator{nullptr};
 QVector<Translator::Callback> Translator::callbacks;
 QMutex Translator::lock;
 
+/**
+@brief Loads the translations according to the settings or locale.
+*/
 void Translator::translate()
 {
     QMutexLocker locker{&lock};
@@ -76,12 +79,21 @@ void Translator::translate()
         pair.second();
 }
 
+/**
+@brief Register a function to be called when the UI needs to be retranslated.
+@param f Function, wich will called.
+@param owner Widget to retanslate.
+ */
 void Translator::registerHandler(std::function<void()> f, void *owner)
 {
     QMutexLocker locker{&lock};
     callbacks.push_back({owner, f});
 }
 
+/**
+@brief Unregisters all handlers of an owner.
+@param owner Owner to unregister.
+*/
 void Translator::unregister(void *owner)
 {
     QMutexLocker locker{&lock};

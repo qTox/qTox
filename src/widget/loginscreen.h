@@ -36,7 +36,7 @@ class LoginScreen : public QWidget
 public:
     explicit LoginScreen(QWidget *parent = 0);
     ~LoginScreen();
-    void reset(); ///< Resets the UI, clears all fields
+    void reset();
 
     bool event(QEvent* event) final override;
 

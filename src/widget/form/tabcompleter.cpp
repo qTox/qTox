@@ -20,15 +20,21 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* This file was taken from the Quassel IRC client source (src/uisupport), and
-   was greatly simplified for use in qTox. */
+/**
+@file tabcompleter.h
+@file tabcompleter.cpp
+These files were taken from the Quassel IRC client source (src/uisupport), and
+was greatly simplified for use in qTox.
+*/
 
 #include "tabcompleter.h"
+
+#include <QRegExp>
+#include <QKeyEvent>
+
 #include "src/core/core.h"
 #include "src/group.h"
 #include "src/widget/tool/chattextedit.h"
-#include <QRegExp>
-#include <QKeyEvent>
 
 const QString TabCompleter::nickSuffix = QString(": ");
 

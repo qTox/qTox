@@ -21,8 +21,6 @@
 #ifndef QRWIDGET_H
 #define QRWIDGET_H
 
-// https://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
-
 #include <QWidget>
 
 class QRWidget : public QWidget

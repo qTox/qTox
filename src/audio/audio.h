@@ -42,13 +42,6 @@
 #include <AL/alext.h>
 #endif
 
-
-// Public default audio settings
-static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000; ///< The next best Opus would take is 24k
-static constexpr uint32_t AUDIO_FRAME_DURATION = 20; ///< In milliseconds
-static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
-static constexpr uint32_t AUDIO_CHANNELS = 2; ///< Ideally, we'd auto-detect, but that's a sane default
-
 class Audio : public QObject
 {
     Q_OBJECT
@@ -92,10 +85,15 @@ public:
     void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
                          unsigned channels, int sampleRate);
 
+public:
+    // Public default audio settings
+    static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
+    static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
+    static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+    static constexpr uint32_t AUDIO_CHANNELS = 2;
+
 signals:
     void groupAudioPlayed(int group, int peer, unsigned short volume);
-    /// When there are input subscribers, we regularly emit captured audio frames with this signal
-    /// Always connect with a blocking queued connection or a lambda, or the behavior is undefined
     void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
 
 private:
@@ -111,11 +109,8 @@ private:
     bool initOutput(const QString& outDevDescr);
     void cleanupInput();
     void cleanupOutput();
-    /// Called after a mono16 sound stopped playing
     void playMono16SoundCleanup();
-    /// Called on the captureTimer events to capture audio
     void doCapture();
-
 
 private:
     Private* d;

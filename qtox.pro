@@ -472,4 +472,5 @@ SOURCES += \
     src/widget/about/aboutuser.cpp \
     src/widget/form/groupinviteform.cpp \
     src/widget/tool/profileimporter.cpp \
-    src/widget/passwordedit.cpp
+    src/widget/passwordedit.cpp \
+    src/video/videomode.cpp

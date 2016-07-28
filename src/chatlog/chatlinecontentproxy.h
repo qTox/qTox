@@ -28,7 +28,6 @@ class FileTransferWidget;
 class ChatLineContentProxy : public ChatLineContent
 {
 public:
-    // Type tag to avoid dynamic_cast of contained QWidget*
     enum ChatLineContentProxyType
     {
         GenericType,

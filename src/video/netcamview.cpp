@@ -35,6 +35,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
     , friendId{friendId}
+    , e(false)
 {
     QString id = FriendList::findFriend(friendId)->getToxId().toString();
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);

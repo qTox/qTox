@@ -44,6 +44,12 @@ bool toxURIEventHandler(const QByteArray& eventData)
     return true;
 }
 
+/**
+@brief Shows a dialog asking whether or not to add this tox address as a friend.
+@note Will wait until the core is ready first.
+@param toxURI Tox URI to try to add.
+@return True, if tox URI is correct, false otherwise.
+*/
 bool handleToxURI(const QString &toxURI)
 {
     Core* core = Core::getInstance();
@@ -75,6 +81,7 @@ bool handleToxURI(const QString &toxURI)
                         .arg(Nexus::getCore()->getUsername()));
     if (dialog.exec() == QDialog::Accepted)
         Core::getInstance()->requestFriendship(toxId, dialog.getRequestMessage());
+
     return true;
 }
 

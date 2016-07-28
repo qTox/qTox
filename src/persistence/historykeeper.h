@@ -27,12 +27,6 @@
 #include <QMutex>
 #include <tox/toxencryptsave.h>
 
-/**
- * THIS IS A LEGACY CLASS KEPT FOR BACKWARDS COMPATIBILITY
- * DO NOT USE!
- * See the History class instead
- */
-
 class Profile;
 class GenericDdInterface;
 namespace Db { enum class syncType; }

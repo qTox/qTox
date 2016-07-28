@@ -197,6 +197,57 @@ QObject notToMentionThatWeUseCamelCase;
 
 E.g. https://github.com/tux3/qTox/blob/master/src/misc/flowlayout.cpp
 
+## Documentaion
+
+If you added a new function, also add a doxygen comment before the implementation.
+If you changed an old function, make sure the doxygen comment is still correct.
+If it doesn't exist add it.
+
+Don't put docs in .h files, if there is a corresponding .cpp file.
+
+### Documentation style
+
+```C++
+/*...license info...*/
+#include "blabla.h"
+
+/**
+I can be briefly described as well!
+*/
+static void method()
+{
+      // I'm just a little example.
+}
+
+/**
+@class OurClass
+@brief Exists for some reason...!?
+
+Longer description
+*/
+
+/**
+@enum OurClass::OurEnum
+@brief The brief description line.
+
+@var EnumValue1
+means something
+
+@var EnumValue2
+means something else
+
+Optional long description
+*/
+
+/**
+@fn OurClass::somethingHappened(const QString &happened)
+@param[in] happened    tells what has happened...
+@brief This signal is emitted when something has happened in the class.
+
+Here's an optional longer description of what the signal additionally does.
+*/
+```
+
 ## No translatable HTML tags
 
 Do not put HTML in UI files, or inside `tr()`. Instead, you can put put it in

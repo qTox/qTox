@@ -32,9 +32,9 @@ protected:
      QMetaObject::Connection audioInConn;
 
 public:
-    uint32_t callId; ///< Could be a friendNum or groupNum, must uniquely identify the call. Do not modify!
+    uint32_t callId;
     quint32 alSource;
-    bool inactive; ///< True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
+    bool inactive;
     bool muteMic;
     bool muteVol;
 };
@@ -48,10 +48,10 @@ struct ToxFriendCall : public ToxCall
 
     ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
 
-    bool videoEnabled; ///< True if our user asked for a video call, sending and recving
-    bool nullVideoBitrate; ///< True if our video bitrate is zero, i.e. if the device is closed
+    bool videoEnabled;
+    bool nullVideoBitrate;
     CoreVideoSource* videoSource;
-    TOXAV_FRIEND_CALL_STATE state; ///< State of the peer (not ours!)
+    TOXAV_FRIEND_CALL_STATE state;
 
     void startTimeout();
     void stopTimeout();

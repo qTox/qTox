@@ -85,7 +85,7 @@ private:
     QTextEdit message;
     QVBoxLayout layout, headLayout;
     QWidget *head, *main;
-    QString lastUsername; // Cached username so we can retranslate the invite message
+    QString lastUsername;
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;
     QList<QPushButton*> acceptButtons;

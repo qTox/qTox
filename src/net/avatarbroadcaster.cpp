@@ -23,6 +23,14 @@
 #include <QObject>
 #include <QDebug>
 
+/**
+@class AvatarBroadcaster
+
+Takes care of broadcasting avatar changes to our friends in a smart way
+Cache a copy of our current avatar and friends who have received it
+so we don't spam avatar transfers to a friend who already has it.
+*/
+
 QByteArray AvatarBroadcaster::avatarData;
 QMap<uint32_t, bool> AvatarBroadcaster::friendsSentTo;
 
@@ -32,10 +40,15 @@ static auto autoBroadcast = [](uint32_t friendId, Status)
     AvatarBroadcaster::sendAvatarTo(friendId);
 };
 
+/**
+@brief Set our current avatar.
+@param data Byte array on avater.
+*/
 void AvatarBroadcaster::setAvatar(QByteArray data)
 {
     if (avatarData == data)
         return;
+
     avatarData = data;
     friendsSentTo.clear();
 
@@ -44,6 +57,10 @@ void AvatarBroadcaster::setAvatar(QByteArray data)
         sendAvatarTo(friendId);
 }
 
+/**
+@brief Send our current avatar to this friend, if not already sent
+@param friendId Id of friend to send avatar.
+*/
 void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
 {
     if (friendsSentTo.contains(friendId) && friendsSentTo[friendId])
@@ -54,6 +71,10 @@ void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
     friendsSentTo[friendId] = true;
 }
 
+/**
+@brief Setup auto broadcast sending avatar.
+@param state If true, we automatically broadcast our avatar to friends when they come online.
+*/
 void AvatarBroadcaster::enableAutoBroadcast(bool state)
 {
     QObject::disconnect(autoBroadcastConn);

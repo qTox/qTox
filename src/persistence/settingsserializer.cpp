@@ -28,8 +28,37 @@
 #include <memory>
 #include <cassert>
 
+/**
+@class SettingsSerializer
+@brief Serializes a QSettings's data in an (optionally) encrypted binary format.
+SettingsSerializer can detect regular .ini files and serialized ones,
+it will read both regular and serialized .ini, but only save in serialized format.
+The file is encrypted with the current profile's password, if any.
+The file is only written to disk if save() is called, the destructor does not save to disk
+All member functions are reentrant, but not thread safe.
+
+@enum SettingsSerializer::RecordTag
+@var Value
+Followed by a QString key then a QVariant value
+@var GroupStart
+Followed by a QString group name
+@var ArrayStart
+Followed by a QString array name and a vuint array size
+@var ArrayValue
+Followed by a vuint array index, a QString key then a QVariant value
+@var ArrayEnd
+Not followed by any data
+*/
+enum class RecordTag : uint8_t
+{
+
+};
 using namespace std;
 
+/**
+@var static const char magic[];
+@brief Little endian ASCII "QTOX" magic
+*/
 const char SettingsSerializer::magic[] = {0x51,0x54,0x4F,0x58};
 
 QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag)
@@ -199,6 +228,11 @@ SettingsSerializer::Value* SettingsSerializer::findValue(const QString& key)
     return const_cast<Value*>(const_cast<const SettingsSerializer*>(this)->findValue(key));
 }
 
+/**
+@brief Checks if the file is serialized settings.
+@param filePath Path to file to check.
+@return False on error, true otherwise.
+*/
 bool SettingsSerializer::isSerializedFormat(QString filePath)
 {
     QFile f(filePath);
@@ -210,6 +244,9 @@ bool SettingsSerializer::isSerializedFormat(QString filePath)
     return !memcmp(fmagic, magic, 4) || tox_is_data_encrypted((uint8_t*)fmagic);
 }
 
+/**
+@brief Loads the settings from file.
+*/
 void SettingsSerializer::load()
 {
     if (isSerializedFormat(path))
@@ -218,6 +255,9 @@ void SettingsSerializer::load()
         readIni();
 }
 
+/**
+@brief Saves the current settings back to file
+*/
 void SettingsSerializer::save()
 {
     QSaveFile f(path);
@@ -545,6 +585,11 @@ void SettingsSerializer::readIni()
     group = array = -1;
 }
 
+/**
+@brief Remove group.
+@note The group must be empty.
+@param group ID of group to remove.
+ */
 void SettingsSerializer::removeGroup(int group)
 {
     assert(group<groups.size());

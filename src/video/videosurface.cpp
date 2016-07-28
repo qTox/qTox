@@ -30,6 +30,11 @@
 #include <QLabel>
 #include <QDebug>
 
+/**
+@var std::atomic_bool VideoSurface::frameLock
+@brief Fast lock for lastFrame.
+*/
+
 float getSizeRatio(const QSize size)
 {
     return size.width() / static_cast<float>(size.height());
@@ -63,6 +68,13 @@ bool VideoSurface::isExpanding() const
     return expanding;
 }
 
+/**
+@brief Update source.
+@note nullptr is a valid option.
+@param src source to set.
+
+Unsubscribe from old source and subscribe to new.
+*/
 void VideoSurface::setSource(VideoSource *src)
 {
     if (source == src)

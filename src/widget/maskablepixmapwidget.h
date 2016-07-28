@@ -42,8 +42,8 @@ protected:
     virtual void mousePressEvent(QMouseEvent *) final override;
 
 private:
-    QPixmap pixmap, mask, unscaled; // a lot of memory...
-    QPixmap* renderTarget = nullptr; // pointer to dynamically call the constructor
+    QPixmap pixmap, mask, unscaled;
+    QPixmap* renderTarget;
     QSize size;
     QString maskName;
     bool clickable;
