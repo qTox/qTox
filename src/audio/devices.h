@@ -51,6 +51,9 @@ static inline quint8 formatSize(Format fmt)
     }
 }
 
+typedef std::function<int (const void* pcm, Format fmt, size_t size,
+                           quint8 channels, quint32 sampleRate)> RecordFunc;
+
 class Device
 {
     class Private;
@@ -131,6 +134,13 @@ public:
 
     bool isOpen() const;
     bool isRunning() const;
+
+    void playback(char* pcm, Format fmt, quint32 frames, quint8 channels,
+                  quint32 sampleRate);
+    void playback(const QString& fileName);
+
+public:
+    void onRecorded(RecordFunc event);
 
 private:
     QExplicitlySharedDataPointer<Private> d;
