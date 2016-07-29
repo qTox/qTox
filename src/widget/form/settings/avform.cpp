@@ -30,8 +30,9 @@
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 
-#include <QScreen>
+#include <QDesktopWidget>
 #include <QDebug>
+#include <QScreen>
 #include <QShowEvent>
 #include <map>
 
@@ -57,12 +58,7 @@ AVForm::AVForm()
     btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
-    connect(rescanButton, &QPushButton::clicked, this, [=]()
-    {
-        getAudioInDevices();
-        getAudioOutDevices();
-        getVideoDevices();
-    });
+    connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
 
     playbackSlider->setTracking(false);
     playbackSlider->setValue(s.getOutVolume());
@@ -86,6 +82,10 @@ AVForm::AVForm()
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    connect(desktop, &QDesktopWidget::resized, this, &AVForm::rescanDevices);
+    connect(desktop, &QDesktopWidget::screenCountChanged, this, &AVForm::rescanDevices);
 
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
@@ -136,6 +136,13 @@ void AVForm::open(const QString &devName, const VideoMode &mode)
     Settings::getInstance().setCamVideoRes(rect);
     Settings::getInstance().setCamVideoFPS(static_cast<quint16>(mode.FPS));
     camera.open(devName, mode);
+}
+
+void AVForm::rescanDevices()
+{
+    getAudioInDevices();
+    getAudioOutDevices();
+    getVideoDevices();
 }
 
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)

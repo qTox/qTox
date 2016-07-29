@@ -68,6 +68,7 @@ private slots:
     void on_videoDevCombobox_currentIndexChanged(int index);
     void on_videoModescomboBox_currentIndexChanged(int index);
 
+    void rescanDevices();
 
 protected:
     void updateVideoModes(int curIndex);
