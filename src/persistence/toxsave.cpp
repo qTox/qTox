@@ -67,9 +67,16 @@ bool handleToxSave(const QString& path)
 
     QString profilePath = Settings::getInstance().getSettingsDirPath() + profile + Core::TOX_EXT;
 
-    if (QFileInfo(profilePath).exists() && !GUI::askQuestion(QObject::tr("Profile already exists", "import confirm title"),
-            QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile)))
-        return false;
+    if (QFileInfo(profilePath).exists())
+    {
+        QString title = QObject::tr("Profile already exists", "import confirm title");
+        QString message = QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
+        bool erase = GUI::askQuestion(title, message);
+        if (!erase)
+            return false;
+
+        QFile(profilePath).remove();
+    }
 
     QFile::copy(path, profilePath);
     // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...

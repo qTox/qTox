@@ -61,26 +61,17 @@ bool ProfileImporter::importProfile()
 
      if (QFileInfo(profilePath).exists())
      {
-         QMessageBox::StandardButton reply;
-         reply = QMessageBox::warning( this,
-                                      tr("Profile already exists", "import confirm title"),
-                                      tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile),
-                                      QMessageBox::Yes | QMessageBox::No);
+         QString title = QObject::tr("Profile already exists", "import confirm title");
+         QString message = QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
+         bool erase = GUI::askQuestion(title, message);
 
-        if (reply == QMessageBox::Yes)
-        {
-            QFile::copy(path, profilePath);
-            return true; //import successfull
-        }
-        else
-        {
-            return false; //import canelled
-        }
+         if (!erase)
+             return false; //import canelled
+
+         QFile(profilePath).remove();
      }
-     else
-     {
-         QFile::copy(path, profilePath);
-         return true; //import successfull
-     }
+
+     QFile::copy(path, profilePath);
+     return true; //import successfull
 
 }
