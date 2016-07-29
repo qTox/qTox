@@ -234,6 +234,11 @@ macx {
         src/platform/camera/avfoundation.mm
 }
 
+macx {
+    INCLUDEPATH += /usr/local/include
+    LIBPATH += /usr/local/lib
+}
+
 RESOURCES += res.qrc \
     smileys/smileys.qrc
 

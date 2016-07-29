@@ -16,5 +16,6 @@ then
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
-    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
+    # Disabled due to error: hdiutil: create failed - Resource busy
+    #bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
 fi

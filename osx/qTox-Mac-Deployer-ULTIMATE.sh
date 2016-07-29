@@ -21,6 +21,8 @@
 
 # Use: ./qTox-Mac-Deployer-ULTIMATE.sh -h
 
+set -e
+
 # Your home DIR really (Most of this happens in it) {DONT USE: ~ }
 SUBGIT="" #Change this to define a 'sub' git folder e.g. "-Patch"
 			#Applys to $QTOX_DIR, $BUILD_DIR, and $DEPLOY_DIR folders for organization puropses
@@ -61,19 +63,21 @@ function build_toxcore() {
 	echo "Starting Toxcore build and install"
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
-	
+
 	local LS_DIR="/usr/local/Cellar/libsodium/"
 	#Figure out latest version
 	local LS_VER=($(ls ${LS_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 	local LS_DIR_VER="${LS_DIR}/${LS_VER[1]}"
-	
-	sleep 3
-	
+
+	if [[ $TRAVIS != true ]]; then
+		sleep 3
+	fi
+
 	autoreconf -if
-	
+
 	#Make sure the correct version of libsodium is used
 	./configure --with-libsodium-headers="${LS_DIR_VER}/include/" --with-libsodium-libs="${LS_DIR_VER}/lib/" --prefix="${LIB_INSTALL_PREFIX}"
-	
+
 	make clean &> /dev/null
 	fcho "Compiling toxcore."
 	make > /dev/null || exit 1
@@ -88,37 +92,32 @@ function install() {
 	if [[ $TRAVIS = true ]]; then #travis check
 		echo "Oh... It's just Travis...."
 	else
-	read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
+		read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
 	fi
-		
+
+	#fcho "Installing x-code Command line tools ..."
+	#xcode-select --install
+
 	if [[ -e /usr/local/bin/brew ]]; then
 		fcho "Homebrew already installed!"
 	else
 		fcho "Installing homebrew ..."
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
-	fcho "Updating brew formulas ..."
-	if [[ $TRAVIS = true ]]; then
-		brew update > /dev/null
-	else
+	if [[ $TRAVIS != true ]]; then
+		fcho "Updating brew formulas ..."
 		brew update
 	fi
 	fcho "Getting home brew formulas ..."
-	sleep 3
 	if [[ $TRAVIS != true ]]; then #travis check
-		brew install wget libtool automake
+		sleep 3
+		brew install git wget libtool autoconf automake
 	fi
-	brew install git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
-	
-	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
-	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
-	
-	fcho "Installing x-code Command line tools ..."
-	xcode-select --install
-	
+	brew install check libvpx opus libsodium
+
 	fcho "Starting git repo checks ..."
-	
-	cd $MAIN_DIR # just in case
+
+	#cd $MAIN_DIR # just in case
 	# Toxcore
 	if [[ -e $TOX_DIR/.git/index ]]; then # Check if this exists
 		fcho "Toxcore git repo already in place !"
@@ -126,7 +125,7 @@ function install() {
 		git pull
 	else
 		fcho "Cloning Toxcore git ... "
-		git clone https://github.com/irungentoo/toxcore.git
+		git clone --depth=1 https://github.com/irungentoo/toxcore
 	fi
 	# qTox
 	if [[ $TRAVIS = true ]]; then #travis check
@@ -141,7 +140,7 @@ function install() {
 			git clone https://github.com/tux3/qTox.git
 		fi
 	fi
-	
+
 	# toxcore build
 	if [[ $TRAVIS = true ]]; then #travis check
 		build_toxcore
@@ -150,11 +149,20 @@ function install() {
 		read -r -p "Would you like to install toxcore now? [y/N] " response
 		if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 			build_toxcore
-			
 		else
-		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
+			fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
 	fi
+
+	if [[ $TRAVIS = true ]]; then
+		fcho "Updating brew formulas ..."
+		brew update > /dev/null
+	fi
+	brew install ffmpeg qrencode qt5 sqlcipher
+
+	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
+	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
+
 	# put required by qTox libs/headers in `libs/`
 	cd "${QTOX_DIR}"
 	sudo ./bootstrap-osx.sh
@@ -162,7 +170,7 @@ function install() {
 
 function update() {
 	fcho "------------------------------"
-	fcho "Starting update process ..."	
+	fcho "Starting update process ..."
 	#First update Toxcore from git
 	cd $TOXCORE_DIR
 	fcho "Now in ${PWD}"
@@ -172,9 +180,9 @@ function update() {
 	if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 		build_toxcore
 	else
-	    fcho "Moving on!"
+		fcho "Moving on!"
 	fi
-	
+
 	#Now let's update qTox!
 	cd $QTOX_DIR
 	fcho "Now in ${PWD}"
@@ -185,15 +193,15 @@ function update() {
 		fcho "Starting OSX bootstrap ..."
 		sudo ./bootstrap-osx.sh
 	else
-	    fcho "Moving on!"
+		fcho "Moving on!"
 	fi
 }
 
 function build() {
 	fcho "------------------------------"
 	fcho "Starting build process ..."
-	rm -r $BUILD_DIR
-	rm -r $DEPLOY_DIR
+	rm -rf $BUILD_DIR
+	rm -rf $DEPLOY_DIR
 	mkdir $BUILD_DIR
 	cd $BUILD_DIR
 	fcho "Now working in ${PWD}"
@@ -220,10 +228,10 @@ function deploy() {
 function bootstrap() {
 	fcho "------------------------------"
 	fcho "starting bootstrap process ..."
-	
+
 	#Toxcore
 	build_toxcore
-	
+
 	#Boot Strap
 	fcho "Running: sudo ${QTOX_DIR_VER}/bootstrap-osx.sh"
 	cd $QTOX_DIR
