@@ -25,8 +25,8 @@
 
 struct VideoMode
 {
-    unsigned short width, height;
-    unsigned short x, y;
+    int width, height;
+    int x, y;
     float FPS;
     uint32_t pixel_format;
 
