@@ -354,7 +354,7 @@ void Widget::init()
     ui->transferButton->setCheckable(true);
     ui->settingsButton->setCheckable(true);
 
-    if (contentLayout != nullptr)
+    if (contentLayout)
     {
         onAddClicked();
     }
@@ -707,7 +707,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
             size = ui->mainSplitter->widget(1)->size();
         }
 
-        if (contentLayout != nullptr)
+        if (contentLayout)
         {
             contentLayout->clear();
             contentLayout->parentWidget()->setParent(0); // Remove from splitter.
@@ -1526,7 +1526,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     Nexus::getCore()->removeFriend(f->getFriendId(), fake);
 
     delete f;
-    if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
+    if (contentLayout && contentLayout->mainHead->layout()->isEmpty())
     {
         onAddClicked();
     }
@@ -1814,7 +1814,7 @@ void Widget::removeGroup(Group* g, bool fake)
 
     Nexus::getCore()->removeGroup(groupId, fake);
     delete g;
-    if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
+    if (contentLayout && contentLayout->mainHead->layout()->isEmpty())
     {
         onAddClicked();
     }
@@ -2232,12 +2232,11 @@ QString Widget::getStatusIconPath(Status status)
     case Status::Busy:
         return ":/img/status/dot_busy.svg";
     case Status::Offline:
-    default:
         return ":/img/status/dot_offline.svg";
     }
 }
 
-inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
+inline QIcon Widget::prepareIcon(QString path, int w, int h)
 {
 #ifdef Q_OS_LINUX
 
