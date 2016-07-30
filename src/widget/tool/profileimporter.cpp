@@ -45,33 +45,32 @@ bool ProfileImporter::importProfile()
     if (path.isEmpty())
          return false;
 
-     QFileInfo info(path);
-     QString profile = info.completeBaseName();
+    QFileInfo info(path);
+    QString profile = info.completeBaseName();
 
-     if (info.suffix() != "tox")
-     {
-         QMessageBox::warning( this,
-                              tr("Ignoring non-Tox file", "popup title"),
-                              tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"),
-                              QMessageBox::Ok);
-         return false; //ingore importing non-tox file
-     }
+    if (info.suffix() != "tox")
+    {
+        QMessageBox::warning(this,
+                             tr("Ignoring non-Tox file", "popup title"),
+                             tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"),
+                             QMessageBox::Ok);
+        return false; //ingore importing non-tox file
+    }
 
-     QString profilePath = QDir(Settings::getInstance().getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
+    QString profilePath = QDir(Settings::getInstance().getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
-     if (QFileInfo(profilePath).exists())
-     {
-         QString title = QObject::tr("Profile already exists", "import confirm title");
-         QString message = QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
-         bool erase = GUI::askQuestion(title, message);
+    if (QFileInfo(profilePath).exists())
+    {
+        QString title = QObject::tr("Profile already exists", "import confirm title");
+        QString message = QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
+        bool erase = GUI::askQuestion(title, message);
 
-         if (!erase)
-             return false; //import canelled
+        if (!erase)
+            return false; //import canelled
 
-         QFile(profilePath).remove();
-     }
+        QFile(profilePath).remove();
+    }
 
-     QFile::copy(path, profilePath);
-     return true; //import successfull
-
+    QFile::copy(path, profilePath);
+    return true; //import successfull
 }
