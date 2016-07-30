@@ -354,7 +354,11 @@ void AVForm::updateVideoModes(int curIndex)
     int preferedIndex = searchPreferredIndex();
     if (preferedIndex != -1)
     {
+        Settings::getInstance().setScreenGrabbed(false);
+        videoModescomboBox->blockSignals(true);
         videoModescomboBox->setCurrentIndex(preferedIndex);
+        videoModescomboBox->blockSignals(false);
+        open(devName, videoModes[preferedIndex]);
         return;
     }
 
