@@ -256,7 +256,7 @@ private:
 
     QSplitter *centralLayout;
     QPoint dragPosition;
-    ContentLayout* contentLayout;
+    QPointer<ContentLayout> contentLayout;
     AddFriendForm *addFriendForm;
     GroupInviteForm* groupInviteForm;
     ProfileForm *profileForm;
