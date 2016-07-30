@@ -145,8 +145,8 @@ public:
     ProxyType getProxyType() const;
     void setProxyType(int newValue);
 
-    int getProxyPort() const;
-    void setProxyPort(int newValue);
+    quint16 getProxyPort() const;
+    void setProxyPort(quint16 newValue);
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
@@ -390,7 +390,7 @@ private:
 
     ProxyType proxyType;
     QString proxyAddr;
-    int proxyPort;
+    quint16 proxyPort;
 
     QString currentProfile;
     uint32_t currentProfileId;

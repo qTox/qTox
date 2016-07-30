@@ -27,21 +27,23 @@
 
 QByteArray doubleToData(double num);
 QByteArray floatToData(float num);
-float dataToFloat(QByteArray data);
-QByteArray stringToData(QString str);
+float dataToFloat(const QByteArray& data);
+QByteArray stringToData(const QString& str);
 QString dataToString(QByteArray data);
 float dataToRangedSingle(float min, float max, int numberOfBits, QByteArray data);
 QByteArray rangedSingleToData(float value, float min, float max, int numberOfBits);
-uint8_t dataToUint8(QByteArray data);
-uint16_t dataToUint16(QByteArray data);
-uint32_t dataToUint32(QByteArray data);
-uint64_t dataToUint64(QByteArray data);
+uint8_t dataToUint8(const QByteArray& data);
+uint16_t dataToUint16(const QByteArray& data);
+uint32_t dataToUint32(const QByteArray& data);
+uint64_t dataToUint64(const QByteArray& data);
+int dataToVInt(const QByteArray& data);
 size_t dataToVUint(const QByteArray& data);
 unsigned getVUint32Size(QByteArray data);
 QByteArray uint8ToData(uint8_t num);
 QByteArray uint16ToData(uint16_t num);
 QByteArray uint32ToData(uint32_t num);
 QByteArray uint64ToData(uint64_t num);
+QByteArray vintToData(int num);
 QByteArray vuintToData(size_t num);
 
 #endif // SERIALIZE_H
