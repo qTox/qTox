@@ -28,6 +28,7 @@ class ProfileImporter : public QWidget
 
 public:
     explicit ProfileImporter(QWidget *parent = 0);
+    bool importProfile(const QString &path);
     bool importProfile();
 
 signals:

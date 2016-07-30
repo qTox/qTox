@@ -42,18 +42,29 @@ bool ProfileImporter::importProfile()
                                                 tr("Tox save file (*.tox)", "import dialog filter"),
                                                 0,
                                                 QFileDialog::DontUseNativeDialog);
+
+    importProfile(path);
+}
+
+bool ProfileImporter::importProfile(const QString &path)
+{
     if (path.isEmpty())
          return false;
 
     QFileInfo info(path);
+    if (!info.exists())
+    {
+        GUI::showWarning(tr("File doesn't exist"),
+                         tr("Profile doesn't exist"));
+        return false;
+    }
+
     QString profile = info.completeBaseName();
 
     if (info.suffix() != "tox")
     {
-        QMessageBox::warning(this,
-                             tr("Ignoring non-Tox file", "popup title"),
-                             tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"),
-                             QMessageBox::Ok);
+        GUI::showWarning(tr("Ignoring non-Tox file", "popup title"),
+                         tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"));
         return false; //ingore importing non-tox file
     }
 
@@ -61,8 +72,8 @@ bool ProfileImporter::importProfile()
 
     if (QFileInfo(profilePath).exists())
     {
-        QString title = QObject::tr("Profile already exists", "import confirm title");
-        QString message = QObject::tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
+        QString title = tr("Profile already exists", "import confirm title");
+        QString message = tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
         bool erase = GUI::askQuestion(title, message);
 
         if (!erase)
@@ -72,5 +83,9 @@ bool ProfileImporter::importProfile()
     }
 
     QFile::copy(path, profilePath);
+    // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...
+    // such a thing would simplify other code as well I believe
+    GUI::showInfo(tr("Profile imported"),
+                  tr("%1.tox was successfully imported").arg(profile));
     return true; //import successfull
 }
