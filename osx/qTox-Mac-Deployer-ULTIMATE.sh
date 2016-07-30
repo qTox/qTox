@@ -61,19 +61,19 @@ function build_toxcore() {
 	echo "Starting Toxcore build and install"
 	cd $TOXCORE_DIR
 	echo "Now working in: ${PWD}"
-	
+
 	local LS_DIR="/usr/local/Cellar/libsodium/"
 	#Figure out latest version
 	local LS_VER=($(ls ${LS_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 	local LS_DIR_VER="${LS_DIR}/${LS_VER[1]}"
-	
+
 	sleep 3
-	
+
 	autoreconf -if
-	
+
 	#Make sure the correct version of libsodium is used
 	./configure --with-libsodium-headers="${LS_DIR_VER}/include/" --with-libsodium-libs="${LS_DIR_VER}/lib/" --prefix="${LIB_INSTALL_PREFIX}"
-	
+
 	make clean &> /dev/null
 	fcho "Compiling toxcore."
 	make > /dev/null || exit 1
@@ -90,7 +90,11 @@ function install() {
 	else
 	read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
 	fi
-		
+
+    # NOTE: `xcode` needs to be before `brew`, otherwise things break -.-"
+	fcho "Installing x-code Command line tools ..."
+	xcode-select --install
+
 	if [[ -e /usr/local/bin/brew ]]; then
 		fcho "Homebrew already installed!"
 	else
@@ -109,15 +113,12 @@ function install() {
 		brew install wget libtool automake
 	fi
 	brew install git ffmpeg qrencode autoconf check qt5 libvpx opus sqlcipher libsodium
-	
+
 	QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 	QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
-	
-	fcho "Installing x-code Command line tools ..."
-	xcode-select --install
-	
+
 	fcho "Starting git repo checks ..."
-	
+
 	cd $MAIN_DIR # just in case
 	# Toxcore
 	if [[ -e $TOX_DIR/.git/index ]]; then # Check if this exists
@@ -141,7 +142,7 @@ function install() {
 			git clone https://github.com/tux3/qTox.git
 		fi
 	fi
-	
+
 	# toxcore build
 	if [[ $TRAVIS = true ]]; then #travis check
 		build_toxcore
@@ -150,7 +151,7 @@ function install() {
 		read -r -p "Would you like to install toxcore now? [y/N] " response
 		if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]; then
 			build_toxcore
-			
+
 		else
 		    fcho "You can simply use the -u command and say [Yes/n] when prompted"
 		fi
@@ -162,7 +163,7 @@ function install() {
 
 function update() {
 	fcho "------------------------------"
-	fcho "Starting update process ..."	
+	fcho "Starting update process ..."
 	#First update Toxcore from git
 	cd $TOXCORE_DIR
 	fcho "Now in ${PWD}"
@@ -174,7 +175,7 @@ function update() {
 	else
 	    fcho "Moving on!"
 	fi
-	
+
 	#Now let's update qTox!
 	cd $QTOX_DIR
 	fcho "Now in ${PWD}"
@@ -220,10 +221,10 @@ function deploy() {
 function bootstrap() {
 	fcho "------------------------------"
 	fcho "starting bootstrap process ..."
-	
+
 	#Toxcore
 	build_toxcore
-	
+
 	#Boot Strap
 	fcho "Running: sudo ${QTOX_DIR_VER}/bootstrap-osx.sh"
 	cd $QTOX_DIR
