@@ -1150,7 +1150,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
 
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled())
-        profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
+        profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? ChatForm::ACTION_PREFIX + f->getDisplayedName() + " " + message : message,
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);

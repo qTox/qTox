@@ -60,7 +60,7 @@ private:
 
     struct Value
     {
-        Value() : group{-2},array{-2},key{QString()},value{}{}
+        Value() : group{-2},array{-2},arrayIndex{-2},key{QString()},value{}{}
         Value(qint64 group, qint64 array, qint64 arrayIndex, QString key, QVariant value)
             : group{group}, array{array}, arrayIndex{arrayIndex}, key{key}, value{value} {}
         qint64 group;

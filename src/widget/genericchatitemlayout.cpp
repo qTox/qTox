@@ -41,7 +41,7 @@ void GenericChatItemLayout::addSortedWidget(GenericChatItemWidget* widget, int s
 
 int GenericChatItemLayout::indexOfSortedWidget(GenericChatItemWidget* widget) const
 {
-    if (layout->count() == 0)
+    if (layout->isEmpty())
         return -1;
 
     int index = indexOfClosestSortedWidget(widget);
