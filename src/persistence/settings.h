@@ -41,6 +41,21 @@ enum StyleType {NONE, WITH_CHARS, WITHOUT_CHARS};
 class Settings : public QObject
 {
     Q_OBJECT
+
+    // general
+    Q_PROPERTY(bool compactLayout READ getCompactLayout WRITE setCompactLayout
+               NOTIFY compactLayoutChanged FINAL)
+    Q_PROPERTY(bool showSystemTray READ getShowSystemTray
+               WRITE setShowSystemTray NOTIFY showSystemTrayChanged FINAL)
+
+    // gui
+    Q_PROPERTY(bool separateWindow READ getSeparateWindow
+               WRITE setSeparateWindow NOTIFY separateWindowChanged FINAL)
+
+    // chat
+    Q_PROPERTY(bool groupchatPosition READ getGroupchatPosition
+               WRITE setGroupchatPosition NOTIFY groupchatPositionChanged FINAL)
+
 public:
     static Settings& getInstance();
     static void destroyInstance();
@@ -71,9 +86,20 @@ public slots:
     void sync();
 
 signals:
+    // general
     void dhtServerListChanged();
+
+    // gui
+    void separateWindowChanged(bool enabled);
+    void showSystemTrayChanged(bool enabled);
+
+    // friends
+    void compactLayoutChanged(bool enabled);
+
+    // chat
     void smileyPackChanged();
     void emojiFontChanged();
+    void groupchatPositionChanged(bool enabled);
 
 public:
     const QList<DhtServer>& getDhtServerList() const;
