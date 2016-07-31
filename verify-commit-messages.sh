@@ -31,7 +31,7 @@ echo "" # ← formatting
 
 # Conform, /OR ELSE/.
 if git log --format=format:'%s' "$ARG" | \
-    grep -v -E '^((feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.+\))?:.{1,68})|(Merge pull request #[[:digit:]]{1,10})$'
+    grep -v -E '^((feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.{,12}\))?:.{1,68})|(Merge pull request #[[:digit:]]{1,10})$'
 then
     echo ""
     echo "Above ↑ commits don't conform to commit message format:"
