@@ -105,6 +105,8 @@ The scope could be anything specifying place of the commit change. For example
 `$location`, `$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`,
 `ngView`, etc.
 
+Since people were abusing legth of the scope, it's limited to 12 characters.
+
 #### Subject
 The subject contains succinct description of the change:
 
