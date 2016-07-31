@@ -80,7 +80,7 @@ QVector<QPair<QString,QString>> DirectShow::getDeviceList()
         devIdString = wcharToUtf8(olestr);
 
         // replace ':' with '_' since FFmpeg uses : to delimitate sources
-        for (unsigned i = 0; i < strlen(devIdString); i++)
+        for (size_t i = 0; i < strlen(devIdString); i++)
             if (devIdString[i] == ':')
                 devIdString[i] = '_';
 
@@ -146,7 +146,7 @@ static IBaseFilter* getDevFilter(QString devName)
         devIdString = wcharToUtf8(olestr);
 
         // replace ':' with '_' since FFmpeg uses : to delimitate sources
-        for (unsigned i = 0; i < strlen(devIdString); i++)
+        for (size_t i = 0; i < strlen(devIdString); i++)
             if (devIdString[i] == ':')
                 devIdString[i] = '_';
 

@@ -53,6 +53,8 @@ public:
 
     virtual void show(ContentLayout* contentLayout) final override;
 
+    static const QString ACTION_PREFIX;
+
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
     void aliasChanged(const QString& alias);
@@ -108,6 +110,7 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
+
     CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;

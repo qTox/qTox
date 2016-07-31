@@ -351,7 +351,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
     windowMenu->addSeparator();
 
     QAction* dockLast;
-    if (dockMenu->actions().count() != 0)
+    if (!dockMenu->actions().isEmpty())
         dockLast = dockMenu->actions().first();
     else
         dockLast = nullptr;

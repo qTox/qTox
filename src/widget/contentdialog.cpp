@@ -328,9 +328,9 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
     if (!loop && index == currentLayout->count() - 1)
     {
         bool groupsOnTop = Settings::getInstance().getGroupchatPosition();
-        bool offlineEmpty = friendLayout->getLayoutOffline()->count() == 0;
-        bool onlineEmpty = offlineEmpty && ((friendLayout->getLayoutOnline()->count() == 0 && groupsOnTop) || !groupsOnTop);
-        bool groupsEmpty = offlineEmpty && ((groupLayout.getLayout()->count() == 0 && !groupsOnTop) || groupsOnTop);
+        bool offlineEmpty = friendLayout->getLayoutOffline()->isEmpty();
+        bool onlineEmpty = offlineEmpty && (friendLayout->getLayoutOnline()->isEmpty() || !groupsOnTop);
+        bool groupsEmpty = offlineEmpty && (groupLayout.getLayout()->isEmpty() || groupsOnTop);
 
         if ((currentLayout == friendLayout->getLayoutOffline())
             || (currentLayout == friendLayout->getLayoutOnline() && groupsEmpty)

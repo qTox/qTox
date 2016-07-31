@@ -29,6 +29,7 @@
 #include "src/widget/style.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/translator.h"
+#include "src/widget/form/chatform.h"
 #include "src/video/groupnetcamview.h"
 #include <QDebug>
 #include <QTimer>
@@ -153,9 +154,9 @@ void GroupChatForm::onSendTriggered()
 
     if (group->getPeersCount() != 1)
     {
-        if (msg.startsWith("/me ", Qt::CaseInsensitive))
+        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
         {
-            msg = msg.right(msg.length() - 4);
+            msg.remove(0, ChatForm::ACTION_PREFIX.length());
             emit sendAction(group->getGroupId(), msg);
         }
         else
@@ -165,8 +166,8 @@ void GroupChatForm::onSendTriggered()
     }
     else
     {
-        if (msg.startsWith("/me ", Qt::CaseInsensitive))
-            addSelfMessage(msg.right(msg.length() - 4), true, QDateTime::currentDateTime(), true);
+        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
+            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), true, QDateTime::currentDateTime(), true);
         else
             addSelfMessage(msg, false, QDateTime::currentDateTime(), true);
     }
