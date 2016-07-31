@@ -11,24 +11,37 @@ public:
     explicit IndexedList() = default;
 
     // Qt
-    bool isEmpty()
+    inline bool isEmpty()
     {
         return v.empty();
     }
 
-    bool contains(int i)
+    template <typename cmp_type>
+    bool contains(cmp_type i)
     {
-        return std::find_if(begin(), end(), [i](T& t){return (int)t == i;}) != end();
+        return std::find_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        }) != end();
     }
 
-    void remove(int i)
+    template <typename cmp_type>
+    void remove(cmp_type i)
     {
-        v.erase(std::remove_if(begin(), end(), [i](T& t){return (int)t == i;}), end());
+        v.erase(std::remove_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        }), end());
     }
 
-    T &operator[](int i)
+    template <typename cmp_type>
+    T& operator[](cmp_type i)
     {
-        iterator it = std::find_if(begin(), end(), [i](T& t){return (int)t == i;});
+        iterator it = std::find_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        });
+
         if (it == end())
             it = insert({});
 
@@ -44,34 +57,32 @@ public:
     {
         return v.begin();
     }
-    inline const_iterator begin() const
-    {
-        return v.begin();
-    }
+
     inline const_iterator cbegin() const
     {
         return v.cbegin();
     }
+
     inline iterator end()
     {
         return v.end();
     }
-    inline const_iterator end() const
-    {
-        return v.end();
-    }
+
     inline const_iterator cend() const
     {
         return v.cend();
     }
+
     inline iterator erase(iterator pos)
     {
         return v.erase(pos);
     }
+
     inline iterator erase(iterator first, iterator last)
     {
         return v.erase(first, last);
     }
+
     inline iterator insert(T&& value)
     {
         v.push_back(std::move(value));
