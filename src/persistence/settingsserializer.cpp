@@ -53,8 +53,6 @@ enum class RecordTag : uint8_t
 {
 
 };
-using namespace std;
-
 /**
 @var static const char magic[];
 @brief Little endian ASCII "QTOX" magic
@@ -68,7 +66,7 @@ QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::Reco
 
 QDataStream& writeStream(QDataStream& dataStream, const QByteArray& data)
 {
-    QByteArray size = vuintToData(data.size());
+    QByteArray size = vintToData(data.size());
     dataStream.writeRawData(size.data(), size.size());
     dataStream.writeRawData(data.data(), data.size());
     return dataStream;
@@ -81,18 +79,18 @@ QDataStream& writeStream(QDataStream& dataStream, const QString& str)
 
 QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& tag)
 {
-    return dataStream.operator >>((uint8_t&)tag);
+    return dataStream >> reinterpret_cast<quint8&>(tag) ;
 }
 
 
 QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
 {
-    unsigned char num3;
-    size_t num = 0;
+    char num3;
+    int num = 0;
     int num2 = 0;
     do
     {
-        dataStream.readRawData((char*)&num3, 1);
+        dataStream.readRawData(&num3, 1);
         num |= (num3 & 0x7f) << num2;
         num2 += 7;
     } while ((num3 & 0x80) != 0);
@@ -130,10 +128,15 @@ void SettingsSerializer::endGroup()
 
 int SettingsSerializer::beginReadArray(const QString &prefix)
 {
-    auto index = find_if(begin(arrays), end(arrays), [=](const Array& a){return a.name==prefix;});
-    if (index != end(arrays))
+    auto index = std::find_if(std::begin(arrays), std::end(arrays),
+                              [=](const Array& a)
     {
-        array = index-begin(arrays);
+        return a.name==prefix;
+    });
+
+    if (index != std::end(arrays))
+    {
+        array = static_cast<int>(index - std::begin(arrays));
         arrayIndex = -1;
         return index->size;
     }
@@ -148,20 +151,25 @@ int SettingsSerializer::beginReadArray(const QString &prefix)
 
 void SettingsSerializer::beginWriteArray(const QString &prefix, int size)
 {
-    auto index = find_if(begin(arrays), end(arrays), [=](const Array& a){return a.name==prefix;});
-    if (index != end(arrays))
+    auto index = std::find_if(std::begin(arrays), std::end(arrays),
+                              [=](const Array& a)
     {
-        array = index-begin(arrays);
+        return a.name==prefix;
+    });
+
+    if (index != std::end(arrays))
+    {
+        array = static_cast<int>(index - std::begin(arrays));
         arrayIndex = -1;
         if (size > 0)
-            index->size = max(index->size, (quint64)size);
+            index->size = std::max(index->size, size);
     }
     else
     {
         if (size < 0)
             size = 0;
         array = arrays.size();
-        arrays.push_back({group, (uint64_t)size, prefix, {}});
+        arrays.push_back({group, size, prefix, {}});
         arrayIndex = -1;
     }
 }
@@ -171,7 +179,7 @@ void SettingsSerializer::endArray()
     array = -1;
 }
 
-void SettingsSerializer::setArrayIndex(unsigned i)
+void SettingsSerializer::setArrayIndex(int i)
 {
     arrayIndex = i;
 }
@@ -209,9 +217,13 @@ const SettingsSerializer::Value* SettingsSerializer::findValue(const QString& ke
         {
             if (a.group != group)
                 continue;
+
             for (int vi : a.values)
-                if (values[vi].arrayIndex == arrayIndex && values[vi].key == key)
-                    return &values[vi];
+            {
+                const Value& v = values[vi];
+                if (v.arrayIndex == arrayIndex && v.key == key)
+                    return &v;
+            }
         }
     }
     else
@@ -241,7 +253,7 @@ bool SettingsSerializer::isSerializedFormat(QString filePath)
     char fmagic[8];
     if (f.read(fmagic, sizeof(fmagic)) != sizeof(fmagic))
         return false;
-    return !memcmp(fmagic, magic, 4) || tox_is_data_encrypted((uint8_t*)fmagic);
+    return !memcmp(fmagic, magic, 4) || tox_is_data_encrypted(reinterpret_cast<uint8_t*>(fmagic));
 }
 
 /**
@@ -289,14 +301,15 @@ void SettingsSerializer::save()
                 continue;
             writeStream(stream, RecordTag::ArrayStart);
             writeStream(stream, a.name.toUtf8());
-            writeStream(stream, vuintToData(a.size));
+            writeStream(stream, vintToData(a.size));
 
-            for (uint64_t vi : a.values)
+            for (int vi : a.values)
             {
+                const Value& v = values[vi];
                 writeStream(stream, RecordTag::ArrayValue);
-                writeStream(stream, vuintToData(values[vi].arrayIndex));
-                writeStream(stream, values[vi].key.toUtf8());
-                writePackedVariant(stream, values[vi].value);
+                writeStream(stream, vintToData(values[vi].arrayIndex));
+                writeStream(stream, v.key.toUtf8());
+                writePackedVariant(stream, v.value);
             }
             writeStream(stream, RecordTag::ArrayEnd);
         }
@@ -346,7 +359,7 @@ void SettingsSerializer::readSerialized()
     f.close();
 
     // Decrypt
-    if (tox_is_data_encrypted((uint8_t*)data.data()))
+    if (tox_is_data_encrypted(reinterpret_cast<uint8_t*>(data.data())))
     {
         if (password.isEmpty())
         {
@@ -413,8 +426,8 @@ void SettingsSerializer::readSerialized()
                 qWarning("The personal save file is corrupted!");
                 return;
             }
-            quint64 size = dataToVUint(sizeData);
-            arrays[array].size = max(size, arrays[array].size);
+            int size = dataToVInt(sizeData);
+            arrays[array].size = qMax(size, arrays[array].size);
         }
         else if (tag == RecordTag::ArrayValue)
         {
@@ -425,8 +438,7 @@ void SettingsSerializer::readSerialized()
                 qWarning("The personal save file is corrupted!");
                 return;
             }
-            quint64 index = dataToVUint(indexData);
-            setArrayIndex(index);
+            setArrayIndex(dataToVInt(indexData));
             QByteArray key;
             QByteArray value;
             readStream(stream, key);
@@ -488,12 +500,12 @@ void SettingsSerializer::readIni()
 
     // Find groups that only have 1 key
     std::unique_ptr<int[]> groupSizes{new int[groups.size()]};
-    memset(groupSizes.get(), 0, groups.size()*sizeof(int));
+    memset(groupSizes.get(), 0, static_cast<size_t>(groups.size()) * sizeof(int));
     for (const Value& v : values)
     {
         if (v.group < 0 || v.group > groups.size())
             continue;
-        groupSizes[v.group]++;
+        groupSizes[static_cast<size_t>(v.group)]++;
     }
 
     // Find arrays, remove their size key from the values, and add them to `arrays`
@@ -503,7 +515,7 @@ void SettingsSerializer::readIni()
         const Value& v = values[i];
         if (v.group < 0 || v.group > groups.size())
             continue;
-        if (groupSizes[v.group] != 1)
+        if (groupSizes[static_cast<size_t>(v.group)] != 1)
             continue;
         if (v.key != "size")
             continue;
@@ -512,24 +524,24 @@ void SettingsSerializer::readIni()
 
         Array a;
         a.size = v.value.toInt();
-        int slashIndex = groups[v.group].lastIndexOf('/');
+        int slashIndex = groups[static_cast<int>(v.group)].lastIndexOf('/');
         if (slashIndex == -1)
         {
             a.group = -1;
-            a.name = groups[v.group];
+            a.name = groups[static_cast<int>(v.group)];
             a.size = v.value.toInt();
         }
         else
         {
             a.group = -1;
             for (int i=0; i<groups.size(); i++)
-                if (groups[i] == groups[v.group].left(slashIndex))
+                if (groups[i] == groups[static_cast<int>(v.group)].left(slashIndex))
                     a.group = i;
-            a.name = groups[v.group].mid(slashIndex+1);
+            a.name = groups[static_cast<int>(v.group)].mid(slashIndex+1);
 
         }
-        groupSizes[v.group]--;
-        groupsToKill.append(v.group);
+        groupSizes[static_cast<size_t>(v.group)]--;
+        groupsToKill.append(static_cast<int>(v.group));
         arrays.append(a);
         values.removeAt(i);
     }
@@ -540,7 +552,7 @@ void SettingsSerializer::readIni()
         Array& a = arrays[ai];
         QString arrayPrefix;
         if (a.group != -1)
-            arrayPrefix += groups[a.group]+'/';
+            arrayPrefix += groups[static_cast<int>(a.group)]+'/';
         arrayPrefix += a.name+'/';
 
         // Find groups which represent each array index
@@ -549,7 +561,7 @@ void SettingsSerializer::readIni()
             if (!groups[g].startsWith(arrayPrefix))
                 continue;
             bool ok;
-            quint64 groupArrayIndex = groups[g].mid(arrayPrefix.size()).toInt(&ok);
+            int groupArrayIndex = groups[g].mid(arrayPrefix.size()).toInt(&ok);
             if (!ok)
                 continue;
             groupsToKill.append(g);
@@ -558,12 +570,12 @@ void SettingsSerializer::readIni()
                 a.size = groupArrayIndex;
 
             // Associate the values for this array index
-            for (int vi=values.size()-1; vi>=0; vi--)
+            for (int vi = values.size() - 1; vi >= 0; vi--)
             {
                 Value& v = values[vi];
                 if (v.group != g)
                     continue;
-                groupSizes[g]--;
+                groupSizes[static_cast<size_t>(g)]--;
                 v.group = a.group;
                 v.array = ai;
                 v.arrayIndex = groupArrayIndex;
@@ -573,10 +585,12 @@ void SettingsSerializer::readIni()
     }
 
     // Clean up spurious array element groups
-    sort(begin(groupsToKill), end(groupsToKill), std::greater_equal<int>());
+    std::sort(std::begin(groupsToKill), std::end(groupsToKill),
+         std::greater_equal<int>());
+
     for (int g : groupsToKill)
     {
-        if (groupSizes[g])
+        if (groupSizes[static_cast<size_t>(g)])
             continue;
 
         removeGroup(g);

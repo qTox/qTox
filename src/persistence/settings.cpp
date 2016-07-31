@@ -47,8 +47,6 @@
 #include <QThread>
 #include <QNetworkProxy>
 
-#define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
-
 /**
 @var QHash<QString, QByteArray> Settings::widgetSettings
 @brief Assume all widgets have unique names
@@ -154,7 +152,7 @@ void Settings::loadGlobal()
                 server.name = s.value("name").toString();
                 server.userId = s.value("userId").toString();
                 server.address = s.value("address").toString();
-                server.port = s.value("port").toInt();
+                server.port = static_cast<quint16>(s.value("port").toUInt());
                 dhtServerList << server;
             }
             s.endArray();
@@ -168,14 +166,14 @@ void Settings::loadGlobal()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         translation = s.value("translation", "en").toString();
-        showSystemTray = s.value("showSystemTray", SHOW_SYSTEM_TRAY_DEFAULT).toBool();
+        showSystemTray = s.value("showSystemTray", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
-        proxyPort = s.value("proxyPort", 0).toInt();
+        proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
         if (currentProfile.isEmpty())
         {
             currentProfile = s.value("currentProfile", "").toString();
@@ -268,7 +266,7 @@ void Settings::loadGlobal()
         camVideoRes = s.value("camVideoRes", QRect()).toRect();
         screenRegion = s.value("screenRegion", QRect()).toRect();
         screenGrabbed = s.value("screenGrabbed", false).toBool();
-        camVideoFPS = s.value("camVideoFPS", 0).toUInt();
+        camVideoFPS = static_cast<quint16>(s.value("camVideoFPS", 0).toUInt());
     s.endGroup();
 
     // Read the embedded DHT bootstrap nodes list if needed
@@ -285,7 +283,7 @@ void Settings::loadGlobal()
                 server.name = rcs.value("name").toString();
                 server.userId = rcs.value("userId").toString();
                 server.address = rcs.value("address").toString();
-                server.port = rcs.value("port").toInt();
+                server.port = static_cast<quint16>(rcs.value("port").toUInt());
                 dhtServerList << server;
             }
             rcs.endArray();
@@ -620,7 +618,7 @@ void Settings::savePersonal(QString profileName, const QString &password)
 uint32_t Settings::makeProfileId(const QString& profile)
 {
     QByteArray data = QCryptographicHash::hash(profile.toUtf8(), QCryptographicHash::Md5);
-    const uint32_t* dwords = (uint32_t*)data.constData();
+    const uint32_t* dwords = reinterpret_cast<const uint32_t*>(data.constData());
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
@@ -925,7 +923,7 @@ void Settings::deleteToxme()
 {
     setToxmeInfo("");
     setToxmeBio("");
-    setToxmePriv("");
+    setToxmePriv(false);
     setToxmePass("");
 }
 
@@ -1016,7 +1014,9 @@ QNetworkProxy Settings::getProxy() const
         default:
             proxy.setType(QNetworkProxy::NoProxy);
             qWarning() << "Invalid Proxy type, setting to NoProxy";
+            break;
     }
+
     proxy.setHostName(Settings::getProxyAddr());
     proxy.setPort(Settings::getProxyPort());
     return proxy;
@@ -1049,13 +1049,13 @@ void Settings::setProxyAddr(const QString& newValue)
     proxyAddr = newValue;
 }
 
-int Settings::getProxyPort() const
+quint16 Settings::getProxyPort() const
 {
     QMutexLocker locker{&bigLock};
     return proxyPort;
 }
 
-void Settings::setProxyPort(int newValue)
+void Settings::setProxyPort(quint16 newValue)
 {
     QMutexLocker locker{&bigLock};
     proxyPort = newValue;

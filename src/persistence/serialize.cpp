@@ -67,18 +67,19 @@ float dataToFloat(QByteArray data)
 }
 
 // Converts a string into PNet string data
-QByteArray stringToData(QString str)
+QByteArray stringToData(const QString& str)
 {
     QByteArray data(4,0);
     // Write the size in a Uint of variable lenght (8-32 bits)
     int i=0;
-    uint num1 = (uint)str.toUtf8().size();
+    int num1 = str.toUtf8().size();
     while (num1 >= 0x80)
     {
-        data[i] = (unsigned char)(num1 | 0x80); i++;
+        data[i] = static_cast<char>(num1 | 0x80);
+        i++;
         num1 = num1 >> 7;
     }
-    data[i]=num1;
+    data[i] = static_cast<char>(num1);
     data.resize(i+1);
     data+=str.toUtf8();
     return data;
@@ -86,24 +87,24 @@ QByteArray stringToData(QString str)
 
 QString dataToString(QByteArray data)
 {
-    // Variable UInt32
-    unsigned char num3;
-    int num = 0;
+    char num3;
+    int strlen = 0;
     int num2 = 0;
     int i=0;
     do
     {
-        num3 = data[i]; i++;
-        num |= (num3 & 0x7f) << num2;
+        num3 = data[i++];
+        strlen |= (num3 & 0x7f) << num2;
         num2 += 7;
     } while ((num3 & 0x80) != 0);
-    unsigned int strlen = (uint) num;
 
-    if (!strlen)
+    if (strlen <= 0)
         return QString();
 
-    data = data.right(data.size()-i); // Remove the strlen
+    // Remove the strlen
+    data.remove(0, i - 1);
     data.truncate(strlen);
+
     return QString(data);
 }
 
@@ -113,35 +114,35 @@ float dataToRangedSingle(float min, float max, int numberOfBits, QByteArray data
     uint value=0;
     if (numberOfBits <= 8)
     {
-        endvalue = (uchar)data[0];
+        endvalue = static_cast<uchar>(data[0]);
         goto done;
     }
-    value = (uchar)data[0];
+    value = static_cast<uchar>(data[0]);
     numberOfBits -= 8;
     if (numberOfBits <= 8)
     {
-        endvalue = (value | ((uint) ((uchar)data[1]) << 8));
+        endvalue = value | (static_cast<uint>(data[1]) << 8);
         goto done;
     }
-    value |= (uint) (((uchar)data[1]) << 8);
+    value |= static_cast<uint>(data[1]) << 8;
     numberOfBits -= 8;
     if (numberOfBits <= 8)
     {
-        uint num2 = (uint) (((uchar)data[2]) << 0x10);
+        uint num2 = static_cast<uint>(data[2]) << 0x10;
         endvalue = (value | num2);
         goto done;
     }
-    value |= (uint) (((uchar)data[2]) << 0x10);
+    value |= static_cast<uint>(data[2]) << 0x10;
     numberOfBits -= 8;
-    endvalue =  (value | ((uint) (((uchar)data[3]) << 0x18)));
+    endvalue = value | (static_cast<uint>(data[3]) << 0x18);
     goto done;
 
     done:
 
     float num = max - min;
-    int num2 = (((int) 1) << numberOfBits) - 1;
+    int num2 = (static_cast<int>(1) << numberOfBits) - 1;
     float num3 = endvalue;
-    float num4 = num3 / ((float) num2);
+    float num4 = num3 / num2;
     return (min + (num4 * num));
 }
 
@@ -150,75 +151,90 @@ QByteArray rangedSingleToData(float value, float min, float max, int numberOfBit
     QByteArray data;
     float num = max - min;
     float num2 = (value - min) / num;
-    int num3 = (((int) 1) << numberOfBits) - 1;
-    uint source = num3 * num2;
+    int num3 = (static_cast<int>(1) << numberOfBits) - 1;
+    uint source = static_cast<uint>(num3 * num2);
 
     if (numberOfBits <= 8)
     {
-        data += (unsigned char)source;
+        data += static_cast<char>(source);
         return data;
     }
-    data += (unsigned char)source;
+    data += static_cast<char>(source);
     numberOfBits -= 8;
     if (numberOfBits <= 8)
     {
-        data += (unsigned char)(source>>8);
+        data += static_cast<char>(source >> 8);
         return data;
     }
-    data += (unsigned char)(source>>8);
+    data += static_cast<char>(source >> 8);
     numberOfBits -= 8;
     if (numberOfBits <= 8)
     {
-        data += (unsigned char)(source>>16);
+        data += static_cast<char>(source >> 16);
         return data;
     }
-    data += (unsigned char)(source>>16);
-    data += (unsigned char)(source>>24);
+    data += static_cast<char>(source >> 16);
+    data += static_cast<char>(source >> 24);
 
     return data;
 }
 
-uint8_t dataToUint8(QByteArray data)
+uint8_t dataToUint8(const QByteArray& data)
 {
-    return (uint8_t)data[0];
+    return static_cast<uint8_t>(data[0]);
 }
 
-uint16_t dataToUint16(QByteArray data)
+uint16_t dataToUint16(const QByteArray& data)
 {
-    return ((uint16_t)(uint8_t)data[0])
-            +(((uint16_t)(uint8_t)data[1])<<8);
+    return static_cast<uint16_t>(data[0])
+            | static_cast<uint16_t>(data[1] << 8);
 }
 
-uint32_t dataToUint32(QByteArray data)
+uint32_t dataToUint32(const QByteArray& data)
 {
-    return ((uint32_t)(uint8_t)data[0])
-            +(((uint32_t)(uint8_t)data[1])<<8)
-            +(((uint32_t)(uint8_t)data[2])<<16)
-            +(((uint32_t)(uint8_t)data[3])<<24);
+    return static_cast<uint32_t>(data[0])
+            | (static_cast<uint32_t>(data[1]) << 8)
+            | (static_cast<uint32_t>(data[2]) << 16)
+            | (static_cast<uint32_t>(data[3]) << 24);
 }
 
-uint64_t dataToUint64(QByteArray data)
+uint64_t dataToUint64(const QByteArray& data)
 {
-    return ((uint64_t)(uint8_t)data[0])
-            +(((uint64_t)(uint8_t)data[1])<<8)
-            +(((uint64_t)(uint8_t)data[2])<<16)
-            +(((uint64_t)(uint8_t)data[3])<<24)
-            +(((uint64_t)(uint8_t)data[4])<<32)
-            +(((uint64_t)(uint8_t)data[5])<<40)
-            +(((uint64_t)(uint8_t)data[6])<<48)
-            +(((uint64_t)(uint8_t)data[7])<<56);
+    return static_cast<uint64_t>(data[0])
+            | (static_cast<uint64_t>(data[1]) << 8)
+            | (static_cast<uint64_t>(data[2]) << 16)
+            | (static_cast<uint64_t>(data[3]) << 24)
+            | (static_cast<uint64_t>(data[4]) << 32)
+            | (static_cast<uint64_t>(data[5]) << 40)
+            | (static_cast<uint64_t>(data[6]) << 48)
+            | (static_cast<uint64_t>(data[7]) << 56);
+}
+
+int dataToVInt(const QByteArray& data)
+{
+    char num3;
+    int num = 0;
+    int num2 = 0;
+    int i=0;
+    do
+    {
+        num3 = data[i++];
+        num |= static_cast<int>(num3 & 0x7f) << num2;
+        num2 += 7;
+    } while ((num3 & 0x80) != 0);
+    return num;
 }
 
 size_t dataToVUint(const QByteArray& data)
 {
-    unsigned char num3;
+    char num3;
     size_t num = 0;
     int num2 = 0;
     int i=0;
     do
     {
-        num3 = data[i]; i++;
-        num |= (num3 & 0x7f) << num2;
+        num3 = data[i++];
+        num |= static_cast<size_t>(num3 & 0x7f) << num2;
         num2 += 7;
     } while ((num3 & 0x80) != 0);
     return num;
@@ -227,52 +243,66 @@ size_t dataToVUint(const QByteArray& data)
 unsigned getVUint32Size(QByteArray data)
 {
     unsigned lensize=0;
-    {
-        unsigned char num3;
-        do {
-            num3 = data[lensize];
-            lensize++;
-        } while ((num3 & 0x80) != 0);
-    }
+
+    char num3;
+    do {
+        num3 = data[lensize];
+        lensize++;
+    } while ((num3 & 0x80) != 0);
+
     return lensize;
 }
 
 QByteArray uint8ToData(uint8_t num)
 {
-    QByteArray data(1,0);
-    data[0] = (uint8_t)num;
-    return data;
+    return QByteArray(1, static_cast<char>(num));
 }
 
 QByteArray uint16ToData(uint16_t num)
 {
     QByteArray data(2,0);
-    data[0] = (uint8_t)(num & 0xFF);
-    data[1] = (uint8_t)((num>>8) & 0xFF);
+    data[0] = static_cast<char>(num & 0xFF);
+    data[1] = static_cast<char>((num>>8) & 0xFF);
     return data;
 }
 
 QByteArray uint32ToData(uint32_t num)
 {
     QByteArray data(4,0);
-    data[0] = (uint8_t)(num & 0xFF);
-    data[1] = (uint8_t)((num>>8) & 0xFF);
-    data[2] = (uint8_t)((num>>16) & 0xFF);
-    data[3] = (uint8_t)((num>>24) & 0xFF);
+    data[0] = static_cast<char>(num & 0xFF);
+    data[1] = static_cast<char>((num>>8) & 0xFF);
+    data[2] = static_cast<char>((num>>16) & 0xFF);
+    data[3] = static_cast<char>((num>>24) & 0xFF);
     return data;
 }
 
 QByteArray uint64ToData(uint64_t num)
 {
     QByteArray data(8,0);
-    data[0] = (uint8_t)(num & 0xFF);
-    data[1] = (uint8_t)((num>>8) & 0xFF);
-    data[2] = (uint8_t)((num>>16) & 0xFF);
-    data[3] = (uint8_t)((num>>24) & 0xFF);
-    data[4] = (uint8_t)((num>>32) & 0xFF);
-    data[5] = (uint8_t)((num>>40) & 0xFF);
-    data[6] = (uint8_t)((num>>48) & 0xFF);
-    data[7] = (uint8_t)((num>>56) & 0xFF);
+    data[0] = static_cast<char>(num & 0xFF);
+    data[1] = static_cast<char>((num>>8) & 0xFF);
+    data[2] = static_cast<char>((num>>16) & 0xFF);
+    data[3] = static_cast<char>((num>>24) & 0xFF);
+    data[4] = static_cast<char>((num>>32) & 0xFF);
+    data[5] = static_cast<char>((num>>40) & 0xFF);
+    data[6] = static_cast<char>((num>>48) & 0xFF);
+    data[7] = static_cast<char>((num>>56) & 0xFF);
+    return data;
+}
+
+QByteArray vintToData(int num)
+{
+    QByteArray data(sizeof(int), 0);
+    // Write the size in a Uint of variable lenght (8-32 bits)
+    int i=0;
+    while (num >= 0x80)
+    {
+        data[i] = static_cast<char>(num | 0x80);
+        i++;
+        num = num >> 7;
+    }
+    data[i] = static_cast<char>(num);
+    data.resize(i+1);
     return data;
 }
 
@@ -283,10 +313,11 @@ QByteArray vuintToData(size_t num)
     int i=0;
     while (num >= 0x80)
     {
-        data[i] = (unsigned char)(num | 0x80); i++;
+        data[i] = static_cast<char>(num | 0x80);
+        i++;
         num = num >> 7;
     }
-    data[i]=num;
+    data[i] = static_cast<char>(num);
     data.resize(i+1);
     return data;
 }

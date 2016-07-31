@@ -41,7 +41,7 @@ public:
     int beginReadArray(const QString &prefix);
     void beginWriteArray(const QString &prefix, int size = -1);
     void endArray();
-    void setArrayIndex(unsigned i);
+    void setArrayIndex(int i);
 
     void setValue(const QString &key, const QVariant &value);
     QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
@@ -61,10 +61,11 @@ private:
     struct Value
     {
         Value() : group{-2},array{-2},key{QString()},value{}{}
-        Value(qint64 group, qint64 array, qint64 arrayIndex, QString key, QVariant value)
+        Value(qint64 group, qint64 array, int arrayIndex, QString key, QVariant value)
             : group{group}, array{array}, arrayIndex{arrayIndex}, key{key}, value{value} {}
         qint64 group;
-        qint64 array, arrayIndex;
+        qint64 array;
+        int arrayIndex;
         QString key;
         QVariant value;
     };
@@ -72,9 +73,9 @@ private:
     struct Array
     {
         qint64 group;
-        quint64 size;
+        int size;
         QString name;
-        QVector<quint64> values;
+        QVector<int> values;
     };
 
 private:
