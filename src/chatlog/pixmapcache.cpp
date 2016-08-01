@@ -36,8 +36,8 @@ QPixmap PixmapCache::get(const QString &filename, QSize size)
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 PixmapCache &PixmapCache::getInstance()
 {
     static PixmapCache instance;
