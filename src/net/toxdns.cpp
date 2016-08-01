@@ -30,20 +30,20 @@
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
 /**
-@class ToxDNS
-@brief Handles tox1 and tox3 DNS queries.
-*/
+ * @class ToxDNS
+ * @brief Handles tox1 and tox3 DNS queries.
+ */
 
 /**
-@struct tox3_server
-@brief Represents a tox3 server.
-
-@var const char* tox3_server::name
-@brief Hostname of the server, e.g. toxme.se.
-
-@var uint8_t* tox3_server::pubkey
-@brief Public key of the tox3 server, usually 256bit long.
-*/
+ * @struct tox3_server
+ * @brief Represents a tox3 server.
+ *
+ * @var const char* tox3_server::name
+ * @brief Hostname of the server, e.g. toxme.se.
+ *
+ * @var uint8_t* tox3_server::pubkey
+ * @brief Public key of the tox3 server, usually 256bit long.
+ */
 
 const ToxDNS::tox3_server ToxDNS::pinnedServers[]
 {
@@ -67,11 +67,11 @@ void ToxDNS::showWarning(const QString &message)
 }
 
 /**
-@brief Try to fetch the first entry of the given TXT record.
-@param record Record to search.
-@param silent May display message boxes on error if silent is false.
-@return An empty object on failure. May block for up to ~3s.
-*/
+ * @brief Try to fetch the first entry of the given TXT record.
+ * @param record Record to search.
+ * @param silent May display message boxes on error if silent is false.
+ * @return An empty object on failure. May block for up to ~3s.
+ */
 QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
 {
     QDnsLookup dns;
@@ -131,13 +131,13 @@ QByteArray ToxDNS::fetchLastTextRecord(const QString& record, bool silent)
 }
 
 /**
-@brief Send query to DNS to find Tox Id.
-@note Will *NOT* fallback on queryTox1 anymore.
-@param server Server to sending query.
-@param record Should look like user@domain.tld.
-@param silent If true, there will be no output on error.
-@return Tox Id string.
-*/
+ * @brief Send query to DNS to find Tox Id.
+ * @note Will *NOT* fallback on queryTox1 anymore.
+ * @param server Server to sending query.
+ * @param record Should look like user@domain.tld.
+ * @param silent If true, there will be no output on error.
+ * @return Tox Id string.
+ */
 QString ToxDNS::queryTox3(const tox3_server& server, const QString &record, bool silent)
 {
     QByteArray nameData = record.left(record.indexOf('@')).toUtf8(), id, realRecord;
@@ -218,11 +218,11 @@ fallbackOnTox1:
 }
 
 /**
-@brief Tries to map a text string to a ToxId struct, will query Tox DNS records if necessary.
-@param address Adress to search for Tox ID.
-@param silent If true, there will be no output on error.
-@return Found Tox Id.
-*/
+ * @brief Tries to map a text string to a ToxId struct, will query Tox DNS records if necessary.
+ * @param address Adress to search for Tox ID.
+ * @param silent If true, there will be no output on error.
+ * @return Found Tox Id.
+ */
 ToxId ToxDNS::resolveToxAddress(const QString &address, bool silent)
 {
     if (address.isEmpty())

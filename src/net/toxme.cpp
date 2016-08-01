@@ -31,12 +31,12 @@
 #include <ctime>
 
 /**
-@class Toxme
-@brief This class implements a client for the toxme.se API
-
-@note The class is thread safe
-@note May process events while waiting for blocking calls
-*/
+ * @class Toxme
+ * @brief This class implements a client for the toxme.se API
+ *
+ * @note The class is thread safe
+ * @note May process events while waiting for blocking calls
+ */
 
 QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error)
 {
@@ -145,10 +145,10 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
 }
 
 /**
-@brief Converts a toxme address to a Tox ID.
-@param address Toxme address.
-@return Found ToxId (an empty ID on error).
-*/
+ * @brief Converts a toxme address to a Tox ID.
+ * @param address Toxme address.
+ * @return Found ToxId (an empty ID on error).
+ */
 ToxId Toxme::lookup(QString address)
 {
     // JSON injection ?
@@ -218,15 +218,15 @@ Toxme::ExecCode Toxme::extractError(QString json)
 }
 
 /**
-@brief Creates a new toxme address associated with a Tox ID.
-@param[out] code Tox error code @see getErrorMessage.
-@param[in] server Create toxme account on this server.
-@param[in] id ToxId of current user.
-@param[in] address Create toxme account with this adress.
-@param[in] keepPrivate If true, the address will not be published on toxme site.
-@param[in] bio A short optional description of yourself if you want to publish your address.
-@return password on success, else sets code parameter and returns an empty QString.
-*/
+ * @brief Creates a new toxme address associated with a Tox ID.
+ * @param[out] code Tox error code @see getErrorMessage.
+ * @param[in] server Create toxme account on this server.
+ * @param[in] id ToxId of current user.
+ * @param[in] address Create toxme account with this adress.
+ * @param[in] keepPrivate If true, the address will not be published on toxme site.
+ * @param[in] bio A short optional description of yourself if you want to publish your address.
+ * @return password on success, else sets code parameter and returns an empty QString.
+ */
 QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString address,
                              bool keepPrivate, QString bio)
 {
@@ -295,11 +295,11 @@ QString Toxme::getPass(QString json, ExecCode &code) {
 }
 
 /**
-@brief Deletes the address associated with your current Tox ID.
-@param server Server to delete the address from.
-@param id ToxId to delete.
-@return Status code returned from server.
-*/
+ * @brief Deletes the address associated with your current Tox ID.
+ * @param server Server to delete the address from.
+ * @param id ToxId to delete.
+ * @return Status code returned from server.
+ */
 Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
 {
     const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
@@ -318,10 +318,10 @@ Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
 }
 
 /**
-@brief Return string of the corresponding error code
-@param errorCode Code to get error message
-@return Source error message
-*/
+ * @brief Return string of the corresponding error code
+ * @param errorCode Code to get error message
+ * @return Source error message
+ */
 QString Toxme::getErrorMessage(int errorCode)
 {
     switch (errorCode) {
@@ -365,10 +365,10 @@ QString Toxme::getErrorMessage(int errorCode)
 }
 
 /**
-@brief Return translated error message
-@param errorCode Code to translate
-@return Translated Toxme error message
-*/
+ * @brief Return translated error message
+ * @param errorCode Code to translate
+ * @return Translated Toxme error message
+ */
 QString Toxme::translateErrorMessage(int errorCode)
 {
     switch (errorCode) {
