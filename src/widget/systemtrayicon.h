@@ -38,6 +38,7 @@ public:
     void hide();
     void setVisible(bool);
     void setIcon(QIcon &icon);
+    SystrayBackendType backend() const;
 
 signals:
     void activated(QSystemTrayIcon::ActivationReason);
