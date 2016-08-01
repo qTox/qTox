@@ -48,15 +48,15 @@
 #include <QNetworkProxy>
 
 /**
-@var QHash<QString, QByteArray> Settings::widgetSettings
-@brief Assume all widgets have unique names
-@warning Don't use it to save every single thing you want to save, use it
-for some general purpose widgets, such as MainWindows or Splitters,
-which have widget->saveX() and widget->loadX() methods.
-
-@var QString Settings::toxmeInfo
-@brief Toxme info like name@server
-*/
+ * @var QHash<QString, QByteArray> Settings::widgetSettings
+ * @brief Assume all widgets have unique names
+ * @warning Don't use it to save every single thing you want to save, use it
+ * for some general purpose widgets, such as MainWindows or Splitters,
+ * which have widget->saveX() and widget->loadX() methods.
+ *
+ * @var QString Settings::toxmeInfo
+ * @brief Toxme info like name@server
+ */
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
@@ -83,8 +83,8 @@ Settings::~Settings()
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 Settings& Settings::getInstance()
 {
     if (!settings)
@@ -392,8 +392,8 @@ void Settings::loadPersonal(Profile* profile)
 }
 
 /**
-@brief Asynchronous, saves the global settings.
-*/
+ * @brief Asynchronous, saves the global settings.
+ */
 void Settings::saveGlobal()
 {
     if (QThread::currentThread() != settingsThread)
@@ -514,17 +514,17 @@ void Settings::saveGlobal()
 }
 
 /**
-@brief Asynchronous, saves the current profile.
-*/
+ * @brief Asynchronous, saves the current profile.
+ */
 void Settings::savePersonal()
 {
     savePersonal(Nexus::getProfile());
 }
 
 /**
-@brief Asynchronous, saves the profile.
-@param profile Profile to save.
-*/
+ * @brief Asynchronous, saves the profile.
+ * @param profile Profile to save.
+ */
 void Settings::savePersonal(Profile* profile)
 {
     if (!profile)
@@ -623,9 +623,9 @@ uint32_t Settings::makeProfileId(const QString& profile)
 }
 
 /**
-@brief Get path to directory, where the settings files are stored.
-@return Path to settings directory, ends with a directory separator.
-*/
+ * @brief Get path to directory, where the settings files are stored.
+ * @return Path to settings directory, ends with a directory separator.
+ */
 QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
@@ -646,9 +646,9 @@ QString Settings::getSettingsDirPath() const
 }
 
 /**
-@brief Get path to directory, where the application data are stored.
-@return Path to application data, ends with a directory separator.
-*/
+ * @brief Get path to directory, where the application data are stored.
+ * @return Path to application data, ends with a directory separator.
+ */
 QString Settings::getAppDataDirPath() const
 {
     QMutexLocker locker{&bigLock};
@@ -671,9 +671,9 @@ QString Settings::getAppDataDirPath() const
 }
 
 /**
-@brief Get path to directory, where the application cache are stored.
-@return Path to application cache, ends with a directory separator.
-*/
+ * @brief Get path to directory, where the application cache are stored.
+ * @return Path to application cache, ends with a directory separator.
+ */
 QString Settings::getAppCacheDirPath() const
 {
     QMutexLocker locker{&bigLock};
@@ -2201,10 +2201,10 @@ void Settings::setAutoLogin(bool state)
 }
 
 /**
-@brief Write a default personal .ini settings file for a profile.
-@param basename Filename without extension to save settings.
-@example If basename is "profile", settings will be saved in profile.ini
-*/
+ * @brief Write a default personal .ini settings file for a profile.
+ * @param basename Filename without extension to save settings.
+ * @example If basename is "profile", settings will be saved in profile.ini
+ */
 void Settings::createPersonal(QString basename)
 {
     QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
@@ -2222,8 +2222,8 @@ void Settings::createPersonal(QString basename)
 }
 
 /**
-@brief Creates a path to the settings dir, if it doesn't already exist
-*/
+ * @brief Creates a path to the settings dir, if it doesn't already exist
+ */
 void Settings::createSettingsDir()
 {
     QString dir = Settings::getSettingsDirPath();
@@ -2233,8 +2233,8 @@ void Settings::createSettingsDir()
 }
 
 /**
-@brief Waits for all asynchronous operations to complete
-*/
+ * @brief Waits for all asynchronous operations to complete
+ */
 void Settings::sync()
 {
     if (QThread::currentThread() != settingsThread)
