@@ -26,11 +26,11 @@
 class VideoFrame;
 
 /**
-@brief An abstract source of video frames
-
-When it has at least one subscriber the source will emit new video frames
-Subscribing is recursive, multiple users can subscribe to the same VideoSource
-*/
+ * @brief An abstract source of video frames
+ *
+ * When it has at least one subscriber the source will emit new video frames
+ * Subscribing is recursive, multiple users can subscribe to the same VideoSource
+ */
 class VideoSource : public QObject
 {
     Q_OBJECT
@@ -38,24 +38,24 @@ class VideoSource : public QObject
 public:
     virtual ~VideoSource() = default;
     /**
-    If subscribe sucessfully opens the source, it will start emitting frameAvailable signals.
-    */
+     * If subscribe sucessfully opens the source, it will start emitting frameAvailable signals.
+     */
     virtual bool subscribe() = 0;
     /**
-    Stop emitting frameAvailable signals, and free associated resources if necessary.
-    */
+     * Stop emitting frameAvailable signals, and free associated resources if necessary.
+     */
     virtual void unsubscribe() = 0;
 
 signals:
     /**
-    Emitted when new frame available to use.
-    @param frame New frame.
-    */
+     * Emitted when new frame available to use.
+     * @param frame New frame.
+     */
     void frameAvailable(std::shared_ptr<VideoFrame> frame);
     /**
-    Emitted when the source is stopped for an indefinite amount of time,
-    but might restart sending frames again later
-    */
+     * Emitted when the source is stopped for an indefinite amount of time,
+     * but might restart sending frames again later
+     */
     void sourceStopped();
 };
 

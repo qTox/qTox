@@ -31,15 +31,15 @@ extern "C" {
 #include "camerasource.h"
 
 /**
-@class VideoFrame
-
-VideoFrame takes ownership of an AVFrame* and allows fast conversions to other formats
-Ownership of all video frame buffers is kept by the VideoFrame, even after conversion
-All references to the frame data become invalid when the VideoFrame is deleted
-We try to avoid pixel format conversions as much as possible, at the cost of some memory
-All methods are thread-safe. If provided freelistCallback will be called by the destructor,
-unless releaseFrame was called in between.
-*/
+ * @class VideoFrame
+ *
+ * VideoFrame takes ownership of an AVFrame* and allows fast conversions to other formats
+ * Ownership of all video frame buffers is kept by the VideoFrame, even after conversion
+ * All references to the frame data become invalid when the VideoFrame is deleted
+ * We try to avoid pixel format conversions as much as possible, at the cost of some memory
+ * All methods are thread-safe. If provided freelistCallback will be called by the destructor,
+ * unless releaseFrame was called in between.
+ */
 
 VideoFrame::VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback)
     : freelistCallback{freelistCallback},
@@ -82,9 +82,9 @@ VideoFrame::VideoFrame(AVFrame* frame)
 }
 
 /**
-@brief VideoFrame constructor. Disable copy.
-@note Use a shared_ptr if you need copies.
-*/
+ * @brief VideoFrame constructor. Disable copy.
+ * @note Use a shared_ptr if you need copies.
+ */
 VideoFrame::~VideoFrame()
 {
     if (freelistCallback)
@@ -94,10 +94,10 @@ VideoFrame::~VideoFrame()
 }
 
 /**
-@brief Converts the VideoFrame to a QImage that shares our internal video buffer.
-@param size Size of resulting image.
-@return Converted image to RGB24 color model.
-*/
+ * @brief Converts the VideoFrame to a QImage that shares our internal video buffer.
+ * @param size Size of resulting image.
+ * @return Converted image to RGB24 color model.
+ */
 QImage VideoFrame::toQImage(QSize size)
 {
     if (!convertToRGB24(size))
@@ -109,10 +109,10 @@ QImage VideoFrame::toQImage(QSize size)
 }
 
 /**
-@brief Converts the VideoFrame to a vpx_image_t.
-Converts the VideoFrame to a vpx_image_t that shares our internal video buffer.
-@return Converted image to vpx_image format.
-*/
+ * @brief Converts the VideoFrame to a vpx_image_t.
+ * Converts the VideoFrame to a vpx_image_t that shares our internal video buffer.
+ * @return Converted image to vpx_image format.
+ */
 vpx_image *VideoFrame::toVpxImage()
 {
     vpx_image* img = vpx_img_alloc(nullptr, VPX_IMG_FMT_I420, width, height, 0);
@@ -266,11 +266,11 @@ bool VideoFrame::convertToYUV420()
 }
 
 /**
-@brief Frees all frame memory.
-
-Frees all internal buffers and frame data, removes the freelistCallback
-This makes all converted objects that shares our internal buffers invalid.
-*/
+ * @brief Frees all frame memory.
+ *
+ * Frees all internal buffers and frame data, removes the freelistCallback
+ * This makes all converted objects that shares our internal buffers invalid.
+ */
 void VideoFrame::releaseFrame()
 {
     QMutexLocker locker(&biglock);
@@ -301,9 +301,9 @@ void VideoFrame::releaseFrameLockless()
 }
 
 /**
-@brief Return the size of the original frame
-@return The size of the original frame
-*/
+ * @brief Return the size of the original frame
+ * @return The size of the original frame
+ */
 QSize VideoFrame::getSize()
 {
     return {width, height};
