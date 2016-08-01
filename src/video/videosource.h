@@ -27,7 +27,6 @@
 
 class VideoFrame;
 
-
 class VideoSource : public QObject
 {
     Q_OBJECT
@@ -64,7 +63,7 @@ signals:
      */
     void sourceStopped();
 private:
-    /// Used to manage a global ID for all VideoSources
+    // Used to manage a global ID for all VideoSources
     static AtomicIDType sourceIDs;
 };
 
