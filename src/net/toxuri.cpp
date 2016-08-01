@@ -45,11 +45,11 @@ bool toxURIEventHandler(const QByteArray& eventData)
 }
 
 /**
-@brief Shows a dialog asking whether or not to add this tox address as a friend.
-@note Will wait until the core is ready first.
-@param toxURI Tox URI to try to add.
-@return True, if tox URI is correct, false otherwise.
-*/
+ * @brief Shows a dialog asking whether or not to add this tox address as a friend.
+ * @note Will wait until the core is ready first.
+ * @param toxURI Tox URI to try to add.
+ * @return True, if tox URI is correct, false otherwise.
+ */
 bool handleToxURI(const QString &toxURI)
 {
     Core* core = Core::getInstance();
