@@ -50,8 +50,10 @@ AboutForm::AboutForm()
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
 }
 
-//to-do: when we finally have stable releases: build-in a way to tell
-//nightly builds from stable releases.
+/**
+ * @todo when we finally have stable releases: build-in a way to tell
+ * nightly builds from stable releases.
+ */
 void AboutForm::replaceVersions()
 {
     QString TOXCORE_VERSION = QString::number(TOX_VERSION_MAJOR) + "." +
