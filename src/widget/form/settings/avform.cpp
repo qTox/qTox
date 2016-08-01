@@ -94,7 +94,7 @@ AVForm::~AVForm()
 void AVForm::hideEvent(QHideEvent* event)
 {
     if (subscribedToAudioIn) {
-        // TODO: this should not be done in show/hide events
+        /// @todo this should not be done in show/hide events
         Audio::getInstance().unsubscribeInput();
         subscribedToAudioIn = false;
     }
@@ -117,7 +117,7 @@ void AVForm::showEvent(QShowEvent* event)
     getVideoDevices();
 
     if (!subscribedToAudioIn) {
-        // TODO: this should not be done in show/hide events
+        /// @todo this should not be done in show/hide events
         Audio::getInstance().subscribeInput();
         subscribedToAudioIn = true;
     }
