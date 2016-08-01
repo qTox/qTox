@@ -267,7 +267,7 @@ void Core::start()
     if (!id.isEmpty())
         emit idSet(id);
 
-    /// TODO: NOTE: This is a backwards compatibility check,
+    /// @todo NOTE: This is a backwards compatibility check,
     /// once most people have been upgraded away from the old HistoryKeeper, remove this
     if (Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
