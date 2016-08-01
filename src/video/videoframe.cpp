@@ -36,9 +36,8 @@ extern "C"{
  *
  * The creation of this structure was done to replace existing code which mis-used vpx_image
  * structs when passing frame data to toxcore.
- */
-
-/**
+ *
+ *
  * @class VideoFrame
  * @brief An ownernship and management class for AVFrames.
  *
@@ -57,19 +56,17 @@ extern "C"{
  *
  * Frame alignment is an important concept because ToxAV does not support frames with linesizes not
  * directly equal to the width.
- */
-
-/**
+ *
+ *
  * @var dataAlignment
  * @brief Data alignment parameter used to populate AVFrame buffers.
  *
- * This field is public in effort to standardized the data alignment parameter for all AVFrame
+ * This field is public in effort to standardize the data alignment parameter for all AVFrame
  * allocations.
  *
  * It's currently set to 32-byte alignment for AVX2 support.
- */
-
-/**
+ *
+ *
  * @class FrameBufferKey
  * @brief A class representing a structure that stores frame properties to be used as the key
  * value for a std::unordered_map.
