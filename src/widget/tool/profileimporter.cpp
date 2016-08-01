@@ -42,45 +42,50 @@ bool ProfileImporter::importProfile()
                                                 tr("Tox save file (*.tox)", "import dialog filter"),
                                                 0,
                                                 QFileDialog::DontUseNativeDialog);
+
+    importProfile(path);
+}
+
+bool ProfileImporter::importProfile(const QString &path)
+{
     if (path.isEmpty())
          return false;
 
-     QFileInfo info(path);
-     QString profile = info.completeBaseName();
+    QFileInfo info(path);
+    if (!info.exists())
+    {
+        GUI::showWarning(tr("File doesn't exist"),
+                         tr("Profile doesn't exist"));
+        return false;
+    }
 
-     if (info.suffix() != "tox")
-     {
-         QMessageBox::warning( this,
-                              tr("Ignoring non-Tox file", "popup title"),
-                              tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"),
-                              QMessageBox::Ok);
-         return false; //ingore importing non-tox file
-     }
+    QString profile = info.completeBaseName();
 
-     QString profilePath = QDir(Settings::getInstance().getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
+    if (info.suffix() != "tox")
+    {
+        GUI::showWarning(tr("Ignoring non-Tox file", "popup title"),
+                         tr("Warning: You have chosen a file that is not a Tox save file; ignoring.", "popup text"));
+        return false; //ingore importing non-tox file
+    }
 
-     if (QFileInfo(profilePath).exists())
-     {
-         QMessageBox::StandardButton reply;
-         reply = QMessageBox::warning( this,
-                                      tr("Profile already exists", "import confirm title"),
-                                      tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile),
-                                      QMessageBox::Yes | QMessageBox::No);
+    QString profilePath = QDir(Settings::getInstance().getSettingsDirPath()).filePath(profile + Core::TOX_EXT);
 
-        if (reply == QMessageBox::Yes)
-        {
-            QFile::copy(path, profilePath);
-            return true; //import successfull
-        }
-        else
-        {
+    if (QFileInfo(profilePath).exists())
+    {
+        QString title = tr("Profile already exists", "import confirm title");
+        QString message = tr("A profile named \"%1\" already exists. Do you want to erase it?", "import confirm text").arg(profile);
+        bool erase = GUI::askQuestion(title, message);
+
+        if (!erase)
             return false; //import canelled
-        }
-     }
-     else
-     {
-         QFile::copy(path, profilePath);
-         return true; //import successfull
-     }
 
+        QFile(profilePath).remove();
+    }
+
+    QFile::copy(path, profilePath);
+    // no good way to update the ui from here... maybe we need a Widget:refreshUi() function...
+    // such a thing would simplify other code as well I believe
+    GUI::showInfo(tr("Profile imported"),
+                  tr("%1.tox was successfully imported").arg(profile));
+    return true; //import successfull
 }
