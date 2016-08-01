@@ -20,18 +20,18 @@
 #include "videomode.h"
 
 /**
-@struct VideoMode
-@brief Describes a video mode supported by a device.
-
-@var unsigned short VideoMode::width, VideoMode::height
-@brief Displayed video resolution (NOT frame resolution).
-
-@var unsigned short VideoMode::x, VideoMode::y
-@brief Coordinates of upper-left corner.
-
-@var float VideoMode::FPS
-@brief Frames per second supported by the device at this resolution
-*/
+ * @struct VideoMode
+ * @brief Describes a video mode supported by a device.
+ *
+ * @var unsigned short VideoMode::width, VideoMode::height
+ * @brief Displayed video resolution (NOT frame resolution).
+ *
+ * @var unsigned short VideoMode::x, VideoMode::y
+ * @brief Coordinates of upper-left corner.
+ *
+ * @var float VideoMode::FPS
+ * @brief Frames per second supported by the device at this resolution
+ */
 
 VideoMode::VideoMode(int width, int height, int x, int y, int FPS, int format) :
     width(width), height(height), x(x), y(y),
@@ -67,8 +67,8 @@ uint32_t VideoMode::norm(const VideoMode &other) const
 }
 
 /**
-@brief All zeros means a default/unspecified mode
-*/
+ * @brief All zeros means a default/unspecified mode
+ */
 VideoMode::operator bool() const
 {
     return width || height || FPS;
