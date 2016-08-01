@@ -77,14 +77,14 @@ int FriendListLayout::indexOfFriendWidget(GenericChatItemWidget* widget, bool on
 
 void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
 {
-    while (friendOnlineLayout.getLayout()->count() != 0)
+    while (!friendOnlineLayout.getLayout()->isEmpty())
     {
         QWidget* getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(getWidget);
         listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
     }
-    while (friendOfflineLayout.getLayout()->count() != 0)
+    while (!friendOfflineLayout.getLayout()->isEmpty())
     {
         QWidget* getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
 

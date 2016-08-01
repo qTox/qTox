@@ -925,7 +925,7 @@ void Settings::deleteToxme()
 {
     setToxmeInfo("");
     setToxmeBio("");
-    setToxmePriv("");
+    setToxmePriv(false);
     setToxmePass("");
 }
 

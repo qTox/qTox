@@ -65,6 +65,8 @@
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 
+const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
+
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
     , isTyping(false)
@@ -751,7 +753,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         // Show each messages
         ToxId authorId = ToxId(it.sender);
         QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isSelf() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
-        bool isAction = it.message.startsWith("/me ", Qt::CaseInsensitive);
+        bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
         bool needSending = !it.isSent && authorId.isSelf();
 
         ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
@@ -972,9 +974,9 @@ void ChatForm::SendMessageStr(QString msg)
     if (msg.isEmpty())
         return;
 
-    bool isAction = msg.startsWith("/me ", Qt::CaseInsensitive);
+    bool isAction = msg.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
     if (isAction)
-        msg = msg = msg.right(msg.length() - 4);
+        msg.remove(0, ACTION_PREFIX.length());
 
     QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
@@ -984,7 +986,7 @@ void ChatForm::SendMessageStr(QString msg)
         QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
         QString qt_msg_hist = qt_msg;
         if (isAction)
-            qt_msg_hist = "/me " + qt_msg;
+            qt_msg_hist = ACTION_PREFIX + qt_msg;
 
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
