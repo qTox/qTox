@@ -811,12 +811,9 @@ void Widget::confirmExecutableOpen(const QFileInfo &file)
 
         // The user wants to run this file, so make it executable and run it
         QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
-        QProcess::startDetached(file.filePath());
     }
-    else
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
-    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
 }
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
