@@ -26,17 +26,17 @@
 #include <unistd.h>
 
 /**
-@var time_t IPC::lastEvent
-@brief When last event was posted.
-
-@var time_t IPC::lastProcessed
-@brief When processEvents() ran last time
-*/
+ * @var time_t IPC::lastEvent
+ * @brief When last event was posted.
+ *
+ * @var time_t IPC::lastProcessed
+ * @brief When processEvents() ran last time
+ */
 
 /**
-@class IPC
-@brief Inter-process communication
-*/
+ * @class IPC
+ * @brief Inter-process communication
+ */
 
 IPC::IPC()
     : globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
@@ -98,8 +98,8 @@ IPC::~IPC()
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 IPC& IPC::getInstance()
 {
     static IPC instance;
@@ -107,12 +107,12 @@ IPC& IPC::getInstance()
 }
 
 /**
-@brief Post IPC event.
-@param name Name to set in IPC event.
-@param data Data to set in IPC event (default QByteArray()).
-@param dest Settings::getCurrentProfileId() or 0 (main instance, default).
-@return Time the event finished.
-*/
+ * @brief Post IPC event.
+ * @param name Name to set in IPC event.
+ * @param data Data to set in IPC event (default QByteArray()).
+ * @param dest Settings::getCurrentProfileId() or 0 (main instance, default).
+ * @return Time the event finished.
+ */
 time_t IPC::postEvent(const QString &name, const QByteArray& data, uint32_t dest)
 {
     QByteArray binName = name.toUtf8();
@@ -219,9 +219,9 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
 }
 
 /**
-@brief Only called when global memory IS LOCKED.
-@return nullptr if no evnts present, IPC event otherwise
-*/
+ * @brief Only called when global memory IS LOCKED.
+ * @return nullptr if no evnts present, IPC event otherwise
+ */
 IPC::IPCEvent *IPC::fetchEvent()
 {
     IPCMemory* mem = global();
