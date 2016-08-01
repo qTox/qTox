@@ -125,13 +125,13 @@ public:
 
     QString getToxmeBio() const;
     void setToxmeBio(QString bio);
-    
+
     bool getToxmePriv() const;
     void setToxmePriv(bool priv);
-    
+
     QString getToxmePass() const;
     void setToxmePass(const QString &pass);
-    
+
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
@@ -193,6 +193,9 @@ public:
 
     int getOutVolume() const;
     void setOutVolume(int volume);
+
+    QString getAvatarsPath() const;
+    void setAvatarsPath(const QString& path);
 
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
@@ -429,6 +432,7 @@ private:
     QByteArray dialogSettingsGeometry;
     QString style;
     bool showSystemTray;
+    QString avatarsPath;
 
     // ChatView
     QFont chatMessageFont;
