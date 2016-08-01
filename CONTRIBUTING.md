@@ -214,40 +214,40 @@ Don't put docs in .h files, if there is a corresponding .cpp file.
 #include "blabla.h"
 
 /**
-I can be briefly described as well!
-*/
+ * I can be briefly described as well!
+ */
 static void method()
 {
       // I'm just a little example.
 }
 
 /**
-@class OurClass
-@brief Exists for some reason...!?
-
-Longer description
-*/
-
-/**
-@enum OurClass::OurEnum
-@brief The brief description line.
-
-@var EnumValue1
-means something
-
-@var EnumValue2
-means something else
-
-Optional long description
-*/
+ * @class OurClass
+ * @brief Exists for some reason...!?
+ * 
+ * Longer description
+ */
 
 /**
-@fn OurClass::somethingHappened(const QString &happened)
-@param[in] happened    tells what has happened...
-@brief This signal is emitted when something has happened in the class.
+ * @enum OurClass::OurEnum
+ * @brief The brief description line.
+ * 
+ * @var EnumValue1
+ * means something
+ * 
+ * @var EnumValue2
+ * means something else
+ * 
+ * Optional long description
+ */
 
-Here's an optional longer description of what the signal additionally does.
-*/
+/**
+ * @fn OurClass::somethingHappened(const QString &happened)
+ * @param[in] happened    tells what has happened...
+ * @brief This signal is emitted when something has happened in the class.
+ * 
+ * Here's an optional longer description of what the signal additionally does.
+ */
 ```
 
 ## No translatable HTML tags
