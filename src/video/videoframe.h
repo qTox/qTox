@@ -36,18 +36,6 @@ extern "C"{
 #include <memory>
 #include <unordered_map>
 
-/**
- * @brief A simple structure to represent a ToxYUV video frame (corresponds to a frame encoded
- * under format: AV_PIX_FMT_YUV420P [FFmpeg] or VPX_IMG_FMT_I420 [WebM]).
- *
- * This structure exists for convenience and code clarity when ferrying YUV420 frames from one
- * source to another. The buffers pointed to by the struct should not be owned by the struct nor
- * should they be freed from the struct, instead this struct functions only as a simple alias to a
- * more complicated frame container like AVFrame.
- *
- * The creation of this structure was done to replace existing code which mis-used vpx_image
- * structs when passing frame data to toxcore.
- */
 struct ToxYUVFrame
 {
 public:
@@ -59,25 +47,6 @@ public:
     const uint8_t* v;
 };
 
-/**
- * @brief An ownernship and management class for AVFrames.
- *
- * VideoFrame takes ownership of an AVFrame* and allows fast conversions to other formats.
- * Ownership of all video frame buffers is kept by the VideoFrame, even after conversion. All
- * references to the frame data become invalid when the VideoFrame is deleted. We try to avoid
- * pixel format conversions as much as possible, at the cost of some memory.
- *
- * Every function in this class is thread safe apart from concurrent construction and deletion of
- * the object.
- *
- * This class uses the phrase "frame alignment" to specify the property that each frame's width is
- * equal to it's maximum linesize. Note: this is NOT "data alignment" which specifies how allocated
- * buffers are aligned in memory. Though internally the two are related, unless otherwise specified
- * all instances of the term "alignment" exposed from public functions refer to frame alignment.
- *
- * Frame alignment is an important concept because ToxAV does not support frames with linesizes not
- * directly equal to the width.
- */
 class VideoFrame
 {
 public:
@@ -86,20 +55,9 @@ public:
     using AtomicIDType = std::atomic_uint_fast64_t;
 
 public:
-    /**
-     * @brief Constructs a new instance of a VideoFrame, sourced by a given AVFrame pointer.
-     * @param sourceID the VideoSource's ID to track the frame under.
-     * @param sourceFrame the source AVFrame pointer to use, must be valid.
-     * @param dimensions the dimensions of the AVFrame, obtained from the AVFrame if not given.
-     * @param pixFmt the pixel format of the AVFrame, obtained from the AVFrame if not given.
-     * @param freeSourceFrame whether to free the source frame buffers or not.
-     */
     VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt, bool freeSourceFrame = false);
     VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame = false);
 
-    /**
-     * Destructor for VideoFrame.
-     */
     ~VideoFrame();
 
     // Copy/Move operations are disabled for the VideoFrame, encapsulate with a std::shared_ptr to manage.
@@ -110,58 +68,16 @@ public:
     const VideoFrame& operator=(const VideoFrame& other) = delete;
     const VideoFrame& operator=(VideoFrame&& other) = delete;
 
-    /**
-     * @brief Returns the validity of this VideoFrame.
-     *
-     * A VideoFrame is valid if it manages at least one AVFrame. A VideoFrame can be invalidated
-     * by calling releaseFrame() on it.
-     *
-     * @return true if the VideoFrame is valid, false otherwise.
-     */
     bool isValid();
 
-    /**
-     * @brief Causes the VideoFrame class to maintain an internal reference for the frame.
-     *
-     * The internal reference is managed via a std::weak_ptr such that it doesn't inhibit
-     * destruction of the object once all external references are no longer reachable.
-     *
-     * @return a std::shared_ptr holding a reference to this frame.
-     */
     std::shared_ptr<VideoFrame> trackFrame();
-
-    /**
-     * @brief Untracks all the frames for the given VideoSource, releasing them if specified.
-     *
-     * This function causes all internally tracked frames for the given VideoSource to be dropped.
-     * If the releaseFrames option is set to true, the frames are sequentially released on the
-     * caller's thread in an unspecified order.
-     *
-     * @param sourceID the ID of the VideoSource to untrack frames from.
-     * @param releaseFrames true to release the frames as necessary, false otherwise. Defaults to
-     * false.
-     */
     static void untrackFrames(const IDType& sourceID, bool releaseFrames = false);
 
-    /**
-     * @brief Releases all frames managed by this VideoFrame and invalidates it.
-     */
     void releaseFrame();
 
-    /**
-     * @brief Retrieves an AVFrame derived from the source based on the given parameters.
-     *
-     * If a given frame does not exist, this function will perform appropriate conversions to
-     * return a frame that fulfills the given parameters.
-     *
-     * @param frameSize the dimensions of the frame to get. If frame size is 0, defaults to source
-     * frame size.
-     * @param pixelFormat the desired pixel format of the frame.
-     * @param requireAligned true if the returned frame must be frame aligned, false if not.
-     * @return a pointer to a AVFrame with the given parameters or nullptr if the VideoFrame is no
-     * longer valid.
-     */
     const AVFrame* getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned);
+    QImage toQImage(QSize frameSize = {0, 0});
+    ToxYUVFrame toToxAVFrame(QSize frameSize = {0, 0});
 
     /**
      * @brief Returns the ID for the given frame.
@@ -202,57 +118,11 @@ public:
         return sourcePixelFormat;
     }
 
-    /**
-     * @brief Converts this VideoFrame to a QImage that shares this VideoFrame's buffer.
-     *
-     * The VideoFrame will be scaled into the RGB24 pixel format along with the given
-     * dimension.
-     *
-     * @param frameSize the given frame size of QImage to generate. If frame size is 0, defaults to
-     * source frame size.
-     * @return a QImage that represents this VideoFrame, sharing it's buffers or a null image if
-     * this VideoFrame is no longer valid.
-     */
-    QImage toQImage(QSize frameSize = {0, 0});
-
-    /**
-     * @brief Converts this VideoFrame to a ToxAVFrame that shares this VideoFrame's buffer.
-     *
-     * The given ToxAVFrame will be frame aligned under a pixel format of planar YUV with a chroma
-     * subsampling format of 4:2:0 (i.e. AV_PIX_FMT_YUV420P).
-     *
-     * @param frameSize the given frame size of ToxAVFrame to generate. If frame size is 0, defaults
-     * to source frame size.
-     * @return a ToxAVFrame structure that represents this VideoFrame, sharing it's buffers or an
-     * empty structure if this VideoFrame is no longer valid.
-     */
-    ToxYUVFrame toToxAVFrame(QSize frameSize = {0, 0});
-
-    /**
-     * @brief Data alignment parameter used to populate AVFrame buffers.
-     *
-     * This field is public in effort to standardized the data alignment parameter for all AVFrame
-     * allocations.
-     *
-     * It's currently set to 32-byte alignment for AVX2 support.
-     */
     static constexpr int dataAlignment = 32;
 
 private:
-    /**
-     * @brief A class representing a structure that stores frame properties to be used as the key
-     * value for a std::unordered_map.
-     */
     class FrameBufferKey{
     public:
-        /**
-         * @brief Constructs a new FrameBufferKey with the given attributes.
-         *
-         * @param width the width of the frame.
-         * @param height the height of the frame.
-         * @param pixFmt the pixel format of the frame.
-         * @param lineAligned whether the linesize matches the width of the image.
-         */
         FrameBufferKey(const int width, const int height, const int pixFmt, const bool lineAligned);
 
         // Explictly state default constructor/destructor
@@ -349,51 +219,10 @@ private:
         return {frameSize.width(), frameSize.height(), pixFmt, frameAligned};
     }
 
-    /**
-     * @brief Retrieves an AVFrame derived from the source based on the given parameters without
-     * obtaining a lock.
-     *
-     * This function is not thread-safe and must be called from a thread-safe context.
-     *
-     * Note: this function differs from getAVFrame() in that it returns a nullptr if no frame was
-     * found.
-     *
-     * @param dimensions the dimensions of the frame.
-     * @param pixelFormat the desired pixel format of the frame.
-     * @param requireAligned true if the frame must be frame aligned, false otherwise.
-     * @return a pointer to a AVFrame with the given parameters or nullptr if no such frame was
-     * found.
-     */
     AVFrame* retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
-
-    /**
-     * @brief Generates an AVFrame based on the given specifications.
-     *
-     * This function is not thread-safe and must be called from a thread-safe context.
-     *
-     * @param dimensions the required dimensions for the frame.
-     * @param pixelFormat the required pixel format for the frame.
-     * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
-     * @return an AVFrame with the given specifications.
-     */
     AVFrame* generateAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
-
-    /**
-     * @brief Stores a given AVFrame within the frameBuffer map.
-     *
-     * This function is not thread-safe and must be called from a thread-safe context.
-     *
-     * @param frame the given frame to store.
-     * @param dimensions the dimensions of the frame.
-     * @param pixelFormat the pixel format of the frame.
-     */
     void storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat);
 
-    /**
-     * @brief Releases all frames within the frame buffer.
-     *
-     * This function is not thread-safe and must be called from a thread-safe context.
-     */
     void deleteFrameBuffer();
 
     /**
