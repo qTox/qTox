@@ -106,6 +106,7 @@ private slots:
 
 private:
     void retranslateUi();
+    bool isActiveFileTransfer(ChatLine::Ptr l);
 
 private:
     enum SelectionMode {
