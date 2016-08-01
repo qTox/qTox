@@ -42,9 +42,9 @@
 #include <QScrollArea>
 
 /**
-@var QString AddFriendForm::lastUsername
-@brief Cached username so we can retranslate the invite message
-*/
+ * @var QString AddFriendForm::lastUsername
+ * @brief Cached username so we can retranslate the invite message
+ */
 
 AddFriendForm::AddFriendForm()
 {

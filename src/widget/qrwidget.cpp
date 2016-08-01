@@ -32,9 +32,9 @@
 #endif
 
 /**
-@file qrwidget.cpp
-@link https://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
-*/
+ * @file qrwidget.cpp
+ * @link https://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
+ */
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
 //Note: The encoding fails with empty string so I just default to something else.
@@ -63,10 +63,10 @@ QImage* QRWidget::getImage()
 }
 
 /**
-@brief QRWidget::saveImage
-@param path Full path to the file with extension.
-@return indicate if saving was successful.
-*/
+ * @brief QRWidget::saveImage
+ * @param path Full path to the file with extension.
+ * @return indicate if saving was successful.
+ */
 bool QRWidget::saveImage(QString path)
 {
     return image->save(path, 0, 75); //0 - image format same as file extension, 75-quality, png file is ~6.3kb

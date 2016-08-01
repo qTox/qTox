@@ -21,9 +21,9 @@
 #include <QPainter>
 
 /**
-@var QPixmap* MaskablePixmapWidget::renderTarget
-@brief pointer to dynamically call the constructor.
-*/
+ * @var QPixmap* MaskablePixmapWidget::renderTarget
+ * @brief pointer to dynamically call the constructor.
+ */
 
 MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
     : QWidget(parent)

@@ -36,18 +36,18 @@
 #include "src/persistence/db/encrypteddb.h"
 
 /**
-@class HistoryKeeper
-@brief THIS IS A LEGACY CLASS KEPT FOR BACKWARDS COMPATIBILITY
-@deprecated See the History class instead
-@warning DO NOT USE!
-*/
+ * @class HistoryKeeper
+ * @brief THIS IS A LEGACY CLASS KEPT FOR BACKWARDS COMPATIBILITY
+ * @deprecated See the History class instead
+ * @warning DO NOT USE!
+ */
 
 static HistoryKeeper *historyInstance = nullptr;
 QMutex HistoryKeeper::historyMutex;
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 HistoryKeeper *HistoryKeeper::getInstance(const Profile& profile)
 {
     historyMutex.lock();

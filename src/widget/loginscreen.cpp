@@ -72,8 +72,8 @@ LoginScreen::~LoginScreen()
 }
 
 /**
-@brief Resets the UI, clears all fields.
-*/
+ * @brief Resets the UI, clears all fields.
+ */
 void LoginScreen::reset()
 {
     ui->newUsername->clear();

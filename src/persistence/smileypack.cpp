@@ -36,21 +36,21 @@
 #include <QtConcurrent/QtConcurrentRun>
 
 /**
-@class SmileyPack
-@brief Maps emoticons to smileys.
-
-@var QHash<QString, QString> SmileyPack::filenameTable
-@brief Matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
-
-@var QHash<QString, QIcon> SmileyPack::iconCache
-@brief representation of a smiley ie. "happy.png" -> data
-
-@var QList<QStringList> SmileyPack::emoticons
-@brief {{ ":)", ":-)" }, {":(", ...}, ... }
-
-@var QString SmileyPack::path
-@brief directory containing the cfg and image files
-*/
+ * @class SmileyPack
+ * @brief Maps emoticons to smileys.
+ *
+ * @var QHash<QString, QString> SmileyPack::filenameTable
+ * @brief Matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
+ *
+ * @var QHash<QString, QIcon> SmileyPack::iconCache
+ * @brief representation of a smiley ie. "happy.png" -> data
+ *
+ * @var QList<QStringList> SmileyPack::emoticons
+ * @brief {{ ":)", ":-)" }, {":(", ...}, ... }
+ *
+ * @var QString SmileyPack::path
+ * @brief directory containing the cfg and image files
+ */
 
 SmileyPack::SmileyPack()
 {
@@ -60,8 +60,8 @@ SmileyPack::SmileyPack()
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 SmileyPack& SmileyPack::getInstance()
 {
     static SmileyPack smileyPack;
@@ -113,11 +113,11 @@ bool SmileyPack::isValid(const QString &filename)
 }
 
 /**
-@brief Load smile pack
-@note The caller must lock loadingMutex and should run it in a thread
-@param filename Filename of smilepack.
-@return False if cannot open file, true otherwise.
-*/
+ * @brief Load smile pack
+ * @note The caller must lock loadingMutex and should run it in a thread
+ * @param filename Filename of smilepack.
+ * @return False if cannot open file, true otherwise.
+ */
 bool SmileyPack::load(const QString& filename)
 {
     // discard old data

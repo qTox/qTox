@@ -538,8 +538,8 @@ Widget::~Widget()
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 Widget* Widget::getInstance()
 {
     if (!instance)
@@ -549,8 +549,8 @@ Widget* Widget::getInstance()
 }
 
 /**
-@brief Switches to the About settings page.
-*/
+ * @brief Switches to the About settings page.
+ */
 void Widget::showUpdateDownloadProgress()
 {
     settingsWidget->showAbout();
@@ -1708,8 +1708,8 @@ void Widget::onEmptyGroupCreated(int groupId)
 }
 
 /**
-@brief Used to reset the blinking icon.
-*/
+ * @brief Used to reset the blinking icon.
+ */
 void Widget::resetIcon() {
     eventIcon = false;
     eventFlag = false;
