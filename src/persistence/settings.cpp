@@ -223,6 +223,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
+		avatarsPath = s.value("avatarsPath",QDir::homePath()).toString();
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -1431,6 +1432,18 @@ void Settings::setVideoDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
     videoDev = deviceSpecifier;
+}
+
+QString Settings::getAvatarsPath() const
+{
+    QMutexLocker locker{&bigLock};
+    return avatarsPath;
+}
+
+void Settings::setAvatarsPath(const QString& path)
+{
+    QMutexLocker locker{&bigLock};
+    avatarsPath = path;
 }
 
 QString Settings::getOutDev() const
