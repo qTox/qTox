@@ -130,7 +130,8 @@ int main(int argc, char *argv[])
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
 #if defined(Q_OS_OSX)
-    //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
+    /// @todo Add setting to enable this feature.
+    //osx::moveToAppFolder();
     osx::migrateProfiles();
 #endif
 
