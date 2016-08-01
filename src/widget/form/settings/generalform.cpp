@@ -267,10 +267,10 @@ GeneralForm::GeneralForm(SettingsWidget *myParent)
     connect(bodyUI->cbDontGroupWindows, &QCheckBox::stateChanged, this, &GeneralForm::onDontGroupWindowsChanged);
     connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &GeneralForm::onGroupchatPositionChanged);
 
-    // prevent stealing mouse wheel scroll
-    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially changing theme/skin/icons etc.
-    // @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
+    /// prevent stealing mouse wheel scroll
+    /// scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
+    /// you can scroll through general settings without accidentially changing theme/skin/icons etc.
+    /// @see GeneralForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
     for (QComboBox *cb : findChildren<QComboBox*>())
     {
         cb->installEventFilter(this);

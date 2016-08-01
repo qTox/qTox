@@ -24,12 +24,12 @@
 #include <QDebug>
 
 /**
-@class ProfileLocker
-@brief Locks a Tox profile so that multiple instances can not use the same profile.
-Only one lock can be acquired at the same time, which means
-that there is little need for manually unlocking.
-The current lock will expire if you exit or acquire a new one.
-*/
+ * @class ProfileLocker
+ * @brief Locks a Tox profile so that multiple instances can not use the same profile.
+ * Only one lock can be acquired at the same time, which means
+ * that there is little need for manually unlocking.
+ * The current lock will expire if you exit or acquire a new one.
+ */
 
 using namespace std;
 
@@ -42,13 +42,13 @@ QString ProfileLocker::lockPathFromName(const QString& name)
 }
 
 /**
-@brief Checks if a profile is currently locked by *another* instance.
-If we own the lock, we consider it lockable.
-There is no guarantee that the result will still be valid by the
-time it is returned, this is provided on a best effort basis.
-@param profile Profile name to check.
-@return True, if profile locked, false otherwise.
-*/
+ * @brief Checks if a profile is currently locked by *another* instance.
+ * If we own the lock, we consider it lockable.
+ * There is no guarantee that the result will still be valid by the
+ * time it is returned, this is provided on a best effort basis.
+ * @param profile Profile name to check.
+ * @return True, if profile locked, false otherwise.
+ */
 bool ProfileLocker::isLockable(QString profile)
 {
     // If we already have the lock, it's definitely lockable
@@ -60,10 +60,10 @@ bool ProfileLocker::isLockable(QString profile)
 }
 
 /**
-@brief Tries to acquire the lock on a profile, will not block.
-@param profile Profile to lock.
-@return Returns true if we already own the lock.
-*/
+ * @brief Tries to acquire the lock on a profile, will not block.
+ * @param profile Profile to lock.
+ * @return Returns true if we already own the lock.
+ */
 bool ProfileLocker::lock(QString profile)
 {
     if (lockfile && curLockName == profile)
@@ -84,8 +84,8 @@ bool ProfileLocker::lock(QString profile)
 }
 
 /**
-@brief Releases the lock on the current profile.
-*/
+ * @brief Releases the lock on the current profile.
+ */
 void ProfileLocker::unlock()
 {
     if (!lockfile)
@@ -98,11 +98,11 @@ void ProfileLocker::unlock()
 }
 
 /**
-@brief Check that we actually own the lock.
-In case the file was deleted on disk, restore it.
-If we can't get a lock, exit qTox immediately.
-If we never had a lock in the first place, exit immediately.
-*/
+ * @brief Check that we actually own the lock.
+ * In case the file was deleted on disk, restore it.
+ * If we can't get a lock, exit qTox immediately.
+ * If we never had a lock in the first place, exit immediately.
+ */
 void ProfileLocker::assertLock()
 {
     if (!lockfile)
@@ -128,8 +128,8 @@ void ProfileLocker::assertLock()
 }
 
 /**
-@brief Print an error then exit immediately.
-*/
+ * @brief Print an error then exit immediately.
+ */
 void ProfileLocker::deathByBrokenLock()
 {
     qCritical() << "Lock is *BROKEN*, exiting immediately";
@@ -137,18 +137,18 @@ void ProfileLocker::deathByBrokenLock()
 }
 
 /**
-@brief Chacks, that profile locked.
-@return Returns true if we're currently holding a lock.
-*/
+ * @brief Chacks, that profile locked.
+ * @return Returns true if we're currently holding a lock.
+ */
 bool ProfileLocker::hasLock()
 {
     return lockfile.operator bool();
 }
 
 /**
-@brief Get current locked profile name.
-@return Return the name of the currently loaded profile, a null string if there is none.
-*/
+ * @brief Get current locked profile name.
+ * @return Return the name of the currently loaded profile, a null string if there is none.
+ */
 QString ProfileLocker::getCurLockName()
 {
     if (lockfile)

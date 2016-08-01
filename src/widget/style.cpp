@@ -32,29 +32,29 @@
 #include <QPainter>
 
 /**
-@enum Style::Font
-
-@var ExtraBig
-@brief [SystemDefault + 2]px, bold
-
-@var Big
-@brief [SystemDefault]px
-
-@var BigBold
-@brief [SystemDefault]px, bold
-
-@var Medium
-@brief [SystemDefault - 1]px
-
-@var MediumBold
-@brief [SystemDefault - 1]px, bold
-
-@var Small
-@brief [SystemDefault - 2]px
-
-@var SmallLight
-@brief [SystemDefault - 2]px, light
-*/
+ * @enum Style::Font
+ *
+ * @var ExtraBig
+ * @brief [SystemDefault + 2]px, bold
+ *
+ * @var Big
+ * @brief [SystemDefault]px
+ *
+ * @var BigBold
+ * @brief [SystemDefault]px, bold
+ *
+ * @var Medium
+ * @brief [SystemDefault - 1]px
+ *
+ * @var MediumBold
+ * @brief [SystemDefault - 1]px, bold
+ *
+ * @var Small
+ * @brief [SystemDefault - 2]px
+ *
+ * @var SmallLight
+ * @brief [SystemDefault - 2]px, light
+ */
 
 // helper functions
 QFont appFont(int pixelSize, int weight)
@@ -207,11 +207,11 @@ void Style::setThemeColor(int color)
 }
 
 /**
-@brief Set theme color.
-@param color Color to set.
-
-Pass an invalid QColor to reset to defaults.
-*/
+ * @brief Set theme color.
+ * @param color Color to set.
+ *
+ * Pass an invalid QColor to reset to defaults.
+ */
 void Style::setThemeColor(const QColor &color)
 {
     if (!color.isValid())
@@ -237,8 +237,8 @@ void Style::setThemeColor(const QColor &color)
 }
 
 /**
-@brief Reloads some CCS
-*/
+ * @brief Reloads some CCS
+ */
 void Style::applyTheme()
 {
     GUI::reloadTheme();
