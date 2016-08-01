@@ -26,23 +26,23 @@ extern "C" {
 #include "videoframe.h"
 
 /**
-@class CoreVideoSource
-@brief A VideoSource that emits frames received by Core.
-*/
+ * @class CoreVideoSource
+ * @brief A VideoSource that emits frames received by Core.
+ */
 
 /**
-@var std::atomic_int subscribers
-@brief Number of suscribers
-
-@var std::atomic_bool deleteOnClose
-@brief If true, self-delete after the last suscriber is gone
-*/
+ * @var std::atomic_int subscribers
+ * @brief Number of suscribers
+ *
+ * @var std::atomic_bool deleteOnClose
+ * @brief If true, self-delete after the last suscriber is gone
+ */
 
 /**
-@brief CoreVideoSource constructor.
-@note Only CoreAV should create a CoreVideoSource since
-only CoreAV can push images to it.
-*/
+ * @brief CoreVideoSource constructor.
+ * @note Only CoreAV should create a CoreVideoSource since
+ * only CoreAV can push images to it.
+ */
 CoreVideoSource::CoreVideoSource()
     : subscribers{0}, deleteOnClose{false},
     stopped{false}
@@ -50,9 +50,9 @@ CoreVideoSource::CoreVideoSource()
 }
 
 /**
-@brief Makes a copy of the vpx_image_t and emits it as a new VideoFrame.
-@param vpxframe Frame to copy.
-*/
+ * @brief Makes a copy of the vpx_image_t and emits it as a new VideoFrame.
+ * @param vpxframe Frame to copy.
+ */
 void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 {
     if (stopped)
@@ -127,9 +127,9 @@ void CoreVideoSource::unsubscribe()
 }
 
 /**
-@brief Setup delete on close
-@param If true, self-delete after the last suscriber is gone
-*/
+ * @brief Setup delete on close
+ * @param If true, self-delete after the last suscriber is gone
+ */
 void CoreVideoSource::setDeleteOnClose(bool newstate)
 {
     QMutexLocker locker(&biglock);
@@ -137,11 +137,11 @@ void CoreVideoSource::setDeleteOnClose(bool newstate)
 }
 
 /**
-@brief Stopping the source.
-@see The callers in CoreAV for the rationale
-
-Stopping the source will block any pushFrame calls from doing anything
-*/
+ * @brief Stopping the source.
+ * @see The callers in CoreAV for the rationale
+ *
+ * Stopping the source will block any pushFrame calls from doing anything
+ */
 void CoreVideoSource::stopSource()
 {
     QMutexLocker locker(&biglock);

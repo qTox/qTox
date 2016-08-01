@@ -25,6 +25,7 @@ extern "C"{
 }
 
 /**
+<<<<<<< c05d0f91224909f32c6a1da4a0c55ad92dd0637c
  * @struct ToxYUVFrame
  * @brief A simple structure to represent a ToxYUV video frame (corresponds to a frame encoded
  * under format: AV_PIX_FMT_YUV420P [FFmpeg] or VPX_IMG_FMT_I420 [WebM]).
