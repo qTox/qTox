@@ -32,24 +32,24 @@
 #include <QPalette>
 
 /**
-@class CallConfirmWidget
-@brief This is a widget with dialog buttons to accept/reject a call
-
-It tracks the position of another widget called the anchor
-and looks like a bubble at the bottom of that widget.
-
-@var const QWidget* CallConfirmWidget::anchor
-@brief The widget we're going to be tracking
-
-@var const Friend& CallConfirmWidget::f
-@brief The friend on whose chat form we should appear
-
-@var const int CallConfirmWidget::roundedFactor
-@brief By how much are the corners of the main rect rounded
-
-@var const qreal CallConfirmWidget::rectRatio
-@brief Used to correct the rounding factors on non-square rects
-*/
+ * @class CallConfirmWidget
+ * @brief This is a widget with dialog buttons to accept/reject a call
+ *
+ * It tracks the position of another widget called the anchor
+ * and looks like a bubble at the bottom of that widget.
+ *
+ * @var const QWidget* CallConfirmWidget::anchor
+ * @brief The widget we're going to be tracking
+ *
+ * @var const Friend& CallConfirmWidget::f
+ * @brief The friend on whose chat form we should appear
+ *
+ * @var const int CallConfirmWidget::roundedFactor
+ * @brief By how much are the corners of the main rect rounded
+ *
+ * @var const qreal CallConfirmWidget::rectRatio
+ * @brief Used to correct the rounding factors on non-square rects
+ */
 
 CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
     QWidget(), anchor(Anchor), f(f),
@@ -96,8 +96,8 @@ CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
 }
 
 /**
-@brief Recalculate our positions to track the anchor
-*/
+ * @brief Recalculate our positions to track the anchor
+ */
 void CallConfirmWidget::reposition()
 {
     if (parentWidget())
