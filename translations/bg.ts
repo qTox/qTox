@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="bg_BG">
+<TS version="2.1" language="bg_BG">
 <context>
     <name>AVForm</name>
     <message>
@@ -17,46 +17,51 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пусни тестов звук докато променяш силата на звука.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ползвайте слайдера за да зададете силата на входното ви устройство варираща от %1dB до %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Избери регион</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AVSettings</name>
-    <message>
-        <source>Video Settings</source>
-        <translation>Видео настройки</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Резолюция</translation>
+        <translation>Екран %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Настройки за звука</translation>
+        <translation type="unfinished">Настройки за звука</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Използвайте слайдера за да зададете силата на звука.</translation>
+        <source>Gain</source>
+        <translation type="unfinished">Сила на записващо устройство</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Устройство за възпроизвеждане</translation>
+        <translation type="unfinished">Устройство за възпроизвеждане</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Използвайте слайдера за да зададете силата на звука.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Устройство за запис</translation>
+        <translation type="unfinished">Устройство за запис</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Сила на възпроизвеждане</translation>
+    </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished">Видео настройки</translation>
+    </message>
+    <message>
+        <source>Video device</source>
+        <translation type="unfinished">Видео устройство</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,27 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Задайте резолюцията на вашата камера.
+        <translation type="unfinished">Задайте резолюцията на вашата камера.
 Колкото са по-големи стойностите, толкова по-добро качество на видеото вашите приятели може да получат.
 Имайте предвид, че с по-добро качество на видеото е нужна и по-бърза връзка.
 Понякога вашата връзка може да не е достатъчно добра за да се справи с по-добро качество на видеото,
 което може да доведе до проблеми с видео обажданията.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation>Сила на записващо устройство</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Сила на възпроизвеждане</translation>
-    </message>
-    <message>
-        <source>Video device</source>
-        <translation>Видео устройство</translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Резолюция</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Повторно сканиране</translation>
+        <translation type="unfinished">Повторно сканиране</translation>
     </message>
 </context>
 <context>
@@ -1130,15 +1127,15 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Новите предпочитания за стил на текста може да не се заредят, докато не рестартирате qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Формат на стил на текста:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Изберете предпочитания за стил на тескта.</translation>
     </message>
 </context>
 <context>
@@ -1288,7 +1285,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поканен от &lt;b&gt;%1&lt;/b&gt; на %2 в %3.</translation>
     </message>
 </context>
 <context>
@@ -1943,6 +1940,25 @@ Share it with your friends to communicate.</source>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
         <translation>Профил с име &quot;%1&quot; вече съществува. Искате ли да го изтриете?</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отложи</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
