@@ -31,22 +31,22 @@
 #include <memory>
 
 /**
-@class CoreFile
-@brief Implements Core's file transfer callbacks.
-
-Avoids polluting core.h with private internal callbacks.
-*/
+ * @class CoreFile
+ * @brief Implements Core's file transfer callbacks.
+ *
+ * Avoids polluting core.h with private internal callbacks.
+ */
 
 QMutex CoreFile::fileSendMutex;
 QHash<uint64_t, ToxFile> CoreFile::fileMap;
 using namespace std;
 
 /**
-@brief Get corefile iteration interval.
-
-tox_iterate calls to get good file transfer performances
-@return The maximum amount of time in ms that Core should wait between two tox_iterate() calls.
-*/
+ * @brief Get corefile iteration interval.
+ *
+ * tox_iterate calls to get good file transfer performances
+ * @return The maximum amount of time in ms that Core should wait between two tox_iterate() calls.
+ */
 unsigned CoreFile::corefileIterationInterval()
 {
     /// Sleep at most 1000ms if we have no FT, 10 for user FTs, 50 for the rest (avatars, ...)
