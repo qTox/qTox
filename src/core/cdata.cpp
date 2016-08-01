@@ -22,8 +22,6 @@
 #include <QString>
 #include <tox/tox.h>
 
-// CData
-
 CData::CData(const QString &data, uint16_t byteSize)
 {
     cData = new uint8_t[byteSize+1];
@@ -57,9 +55,6 @@ uint16_t CData::fromString(const QString& data, uint8_t* cData)
     return arr.size();
 }
 
-
-// CUserId
-
 const uint16_t CUserId::SIZE{TOX_PUBLIC_KEY_SIZE};
 
 CUserId::CUserId(const QString &userId) :
@@ -73,8 +68,6 @@ QString CUserId::toString(const uint8_t* cUserId)
     return CData::toString(cUserId, SIZE);
 }
 
-
-// CFriendAddress
 
 const uint16_t CFriendAddress::SIZE{TOX_ADDRESS_SIZE};
 
