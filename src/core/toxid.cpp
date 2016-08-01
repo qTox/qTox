@@ -31,44 +31,44 @@
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
 /**
-@class ToxId
-@brief This class represents a Tox ID.
-
-An ID is composed of 32 bytes long public key, 4 bytes long NoSpam
-and 2 bytes long checksum.
-
-e.g.
-@code
-| C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30 | C8BA3AB9 | BEB9
-|                                                                 /           |
-|                                                                /    NoSpam  | Checksum
-|           Public Key (PK), 32 bytes, 64 characters            /    4 bytes  |  2 bytes
-|                                                              |  8 characters|  4 characters
-@endcode
-*/
+ * @class ToxId
+ * @brief This class represents a Tox ID.
+ *
+ * An ID is composed of 32 bytes long public key, 4 bytes long NoSpam
+ * and 2 bytes long checksum.
+ *
+ * e.g.
+ * @code
+ * | C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30 | C8BA3AB9 | BEB9
+ * |                                                                 /           |
+ * |                                                                /    NoSpam  | Checksum
+ * |           Public Key (PK), 32 bytes, 64 characters            /    4 bytes  |  2 bytes
+ * |                                                              |  8 characters|  4 characters
+ * @endcode
+ */
 
 /**
-@brief The default constructor. Creates an empty Tox ID.
-*/
+ * @brief The default constructor. Creates an empty Tox ID.
+ */
 ToxId::ToxId()
 : publicKey(), noSpam(), checkSum()
 {}
 
 /**
-@brief The copy constructor.
-@param other ToxId to copy
-*/
+ * @brief The copy constructor.
+ * @param other ToxId to copy
+ */
 ToxId::ToxId(const ToxId &other)
 : publicKey(other.publicKey), noSpam(other.noSpam), checkSum(other.checkSum)
 {}
 
 /**
-@brief Create a Tox ID from QString.
-
-If the given id is not a valid Tox ID, then:
-publicKey == id and noSpam == "" == checkSum.
-
-@param id Tox ID string to convert to ToxId object
+ * @brief Create a Tox ID from QString.
+ *
+ * If the given id is not a valid Tox ID, then:
+ * publicKey == id and noSpam == "" == checkSum.
+ *
+ * @param id Tox ID string to convert to ToxId object
  */
 ToxId::ToxId(const QString &id)
 {
@@ -85,47 +85,47 @@ ToxId::ToxId(const QString &id)
 }
 
 /**
-@brief Compares, that public key equals.
-@param other Tox ID to compare.
-@return True if both Tox ID have same public keys, false otherwise.
-*/
+ * @brief Compares, that public key equals.
+ * @param other Tox ID to compare.
+ * @return True if both Tox ID have same public keys, false otherwise.
+ */
 bool ToxId::operator==(const ToxId& other) const
 {
     return publicKey == other.publicKey;
 }
 
 /**
-@brief Compares, that only public key not equals.
-@param other Tox ID to compare.
-@return True if both Tox ID have different public keys, false otherwise.
-*/
+ * @brief Compares, that only public key not equals.
+ * @param other Tox ID to compare.
+ * @return True if both Tox ID have different public keys, false otherwise.
+ */
 bool ToxId::operator!=(const ToxId &other) const
 {
     return publicKey != other.publicKey;
 }
 
 /**
-@brief Check, that the current user ID is the active user ID
-@return True if this Tox ID is equals to
-the Tox ID of the currently active profile.
-*/
+ * @brief Check, that the current user ID is the active user ID
+ * @return True if this Tox ID is equals to
+ * the Tox ID of the currently active profile.
+ */
 bool ToxId::isSelf() const
 {
     return *this == Core::getInstance()->getSelfId();
 }
 
 /**
-@brief Returns Tox ID converted to QString.
-@return The Tox ID as QString.
-*/
+ * @brief Returns Tox ID converted to QString.
+ * @return The Tox ID as QString.
+ */
 QString ToxId::toString() const
 {
     return publicKey + noSpam + checkSum;
 }
 
 /**
-@brief Clears all elements of the Tox ID.
-*/
+ * @brief Clears all elements of the Tox ID.
+ */
 void ToxId::clear()
 {
     publicKey.clear();
@@ -134,10 +134,10 @@ void ToxId::clear()
 }
 
 /**
-@brief Check, that id is a valid Tox ID.
-@param id Tox ID to check.
-@return True if id is a valid Tox ID, false otherwise.
-*/
+ * @brief Check, that id is a valid Tox ID.
+ * @param id Tox ID to check.
+ * @return True if id is a valid Tox ID, false otherwise.
+ */
 bool ToxId::isToxId(const QString &id)
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
