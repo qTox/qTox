@@ -38,12 +38,12 @@
 #include <QtAlgorithms>
 
 /**
-@var QList<QLabel*> GroupChatForm::peerLabels
-@brief Maps peernumbers to the QLabels in namesListLayout.
-
-@var QMap<int, QTimer*> GroupChatForm::peerAudioTimers
-@brief Timeout = peer stopped sending audio.
-*/
+ * @var QList<QLabel*> GroupChatForm::peerLabels
+ * @brief Maps peernumbers to the QLabels in namesListLayout.
+ *
+ * @var QMap<int, QTimer*> GroupChatForm::peerAudioTimers
+ * @brief Timeout = peer stopped sending audio.
+ */
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
