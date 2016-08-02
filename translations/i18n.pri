@@ -18,6 +18,7 @@ TRANSLATIONS = \
     translations/hu.ts \
     translations/it.ts \
     translations/ja.ts \
+    translations/jbo.ts \
     translations/nl.ts \
     translations/no_nb.ts \
     translations/lt.ts \
