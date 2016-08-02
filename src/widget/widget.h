@@ -232,6 +232,8 @@ private:
     static bool filterOffline(FilterCriteria filter);
     void retranslateUi();
     void focusChatInput();
+    void showForm(QWidget* contentWidget, const QString& title = QString(),
+                  ActiveToolMenuButton activeButton = ActiveToolMenuButton::None);
 
 private:
     static Widget *instance;

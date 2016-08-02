@@ -75,6 +75,7 @@
 #include <QProcess>
 #include <QSvgRenderer>
 #include <QWindow>
+#include <QDesktopWidget>
 #include <tox/tox.h>
 
 #ifdef Q_OS_MAC
@@ -2332,5 +2333,67 @@ void Widget::focusChatInput()
             f->getChatForm()->focusInput();
         else if (Group* g = activeChatroomWidget->getGroup())
             g->getChatForm()->focusInput();
+    }
+}
+
+/**
+ * @brief       Shows a widget "detached" or as "embedded widget".
+ * @param[in]   contentWidget   the widget to show
+ * @param[in]   title           the title in "embedded" mode
+ * @param[in]   activeButton    the active tool button in "embedded" mode
+ *
+ * Depending on the mode, the widget is shown detached from the main window or
+ * embedded in the main window's splitter.
+ */
+void Widget::showForm(QWidget* contentWidget, const QString& title,
+                      Widget::ActiveToolMenuButton activeButton)
+{
+    Q_ASSERT(contentWidget != this);
+
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        setWindowTitle(QString());
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
+
+        // detach the content widget
+        setMinimumWidth(ui->tooliconsZone->sizeHint().width());
+        contentWidget->setParent(nullptr);
+        contentWidget->showNormal();
+
+        resize(width() - contentWidget->width(), height());
+
+        // move the content widget attached to top-right / top-left
+        int cwRight = frameGeometry().right() + contentWidget->width();
+        int dw = QApplication::desktop()->width();
+
+        QPoint newPos(0, geometry().top());
+        newPos.rx() = cwRight > dw
+                   ? geometry().left() - contentWidget->width()
+                   : geometry().right();
+
+        contentWidget->move(newPos);
+        contentWidget->resize(contentWidget->width(), height());
+    }
+    else
+    {
+        setMinimumWidth(ui->tooliconsZone->sizeHint().width() +
+                        contentWidget->minimumWidth());
+
+        QList<int> sizes = ui->mainSplitter->sizes();
+        QWidget* w = ui->mainSplitter->widget(1);
+
+        if (w && w != contentWidget)
+            w->close();
+
+        if (sizes.count() < 2)
+            sizes << contentWidget->width();
+
+        ui->mainSplitter->insertWidget(1, contentWidget);
+
+        // restore splitter widths
+        ui->mainSplitter->setSizes(sizes);
+
+        setWindowTitle(title);
+        setActiveToolMenuButton(activeButton);
     }
 }
