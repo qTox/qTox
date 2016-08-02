@@ -90,7 +90,7 @@ QReadWriteLock VideoFrame::refsLock {};
  * @param freeSourceFrame whether to free the source frame buffers or not.
  */
 VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt, bool freeSourceFrame)
-    : frameID(frameIDs.fetch_add(std::memory_order_relaxed)),
+    : frameID(frameIDs++),
       sourceID(sourceID),
       sourceDimensions(dimensions),
       sourcePixelFormat(pixFmt),
@@ -483,6 +483,11 @@ void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int
  */
 void VideoFrame::deleteFrameBuffer()
 {
+    // An empty framebuffer represents a frame that's already been freed
+    if(frameBuffer.empty()){
+        return;
+    }
+
     for(const auto& frameIterator : frameBuffer)
     {
         AVFrame* frame = frameIterator.second;
