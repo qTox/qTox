@@ -31,29 +31,29 @@
 
 #define PIXELS_TO_ACT 7
 
-class GenericChatroomWidget;
-class FriendWidget;
-class Group;
+class AddFriendForm;
+class ContentDialog;
+class ContentLayout;
+class CircleWidget;
+class FilesForm;
 class Friend;
-class QSplitter;
-class VideoSurface;
-class QMenu;
+class FriendListWidget;
+class FriendWidget;
+class GenericChatroomWidget;
+class Group;
+class GroupInviteForm;
 class Core;
 class Camera;
-class FriendListWidget;
 class MaskablePixmapWidget;
-class QTimer;
-class SystemTrayIcon;
-class FilesForm;
 class ProfileForm;
-class SettingsWidget;
-class AddFriendForm;
-class GroupInviteForm;
-class CircleWidget;
 class QActionGroup;
-class ContentLayout;
-class ContentDialog;
+class QMenu;
 class QPushButton;
+class QSplitter;
+class QTimer;
+class SettingsWidget;
+class SystemTrayIcon;
+class VideoSurface;
 
 class Widget final : public QMainWindow, private Ui::MainWindow
 {
@@ -202,7 +202,7 @@ private:
         None,
     };
 
-    enum FilterCriteria
+    enum class FilterCriteria
     {
         All=0,
         Online,
@@ -224,14 +224,16 @@ private:
     void searchContacts();
     void changeDisplayMode();
     void updateFilterText();
-    int getFilterCriteria() const;
-    static bool filterGroups(int index);
-    static bool filterOnline(int index);
-    static bool filterOffline(int index);
+    FilterCriteria getFilterCriteria() const;
+    static bool filterGroups(FilterCriteria filter);
+    static bool filterOnline(FilterCriteria filter);
+    static bool filterOffline(FilterCriteria filter);
     void retranslateUi();
     void focusChatInput();
 
 private:
+    static Widget *instance;
+
     SystemTrayIcon *icon = nullptr;
     QMenu *trayMenu;
     QAction *statusOnline;
@@ -257,12 +259,11 @@ private:
     QSplitter *centralLayout;
     QPoint dragPosition;
     QPointer<ContentLayout> contentLayout;
-    AddFriendForm *addFriendForm;
-    GroupInviteForm* groupInviteForm;
-    ProfileForm *profileForm;
+    QPointer<AddFriendForm> addFriendForm;
+    QPointer<GroupInviteForm> groupInviteForm;
+    QPointer<ProfileForm> profileForm;
     QPointer<SettingsWidget> settingsWidget;
-    FilesForm *filesForm;
-    static Widget *instance;
+    QPointer<FilesForm> filesForm;
     GenericChatroomWidget *activeChatroomWidget;
     FriendListWidget *contactListWidget;
     MaskablePixmapWidget *profilePicture;
