@@ -65,6 +65,7 @@ private:
     VideoMode mode;
     AVCodecContext* cctx, *cctxOrig;
     int videoStreamIndex;
+    QMutex biglock;
     std::atomic_bool _isOpen;
     std::atomic_bool streamBlocker;
     std::atomic_int subscriptions;
