@@ -43,7 +43,7 @@ bool ProfileImporter::importProfile()
                                                 0,
                                                 QFileDialog::DontUseNativeDialog);
 
-    importProfile(path);
+    return importProfile(path);
 }
 
 bool ProfileImporter::importProfile(const QString &path)
