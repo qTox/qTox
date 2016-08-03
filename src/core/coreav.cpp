@@ -360,7 +360,6 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         call.nullVideoBitrate = false;
     }
 
-    // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
     ToxYUVFrame frame = vframe->toToxAVFrame();
 
     if(frame.width == 0 || frame.height == 0)
