@@ -3,7 +3,7 @@
 ###################
 !define APP_NAME "qTox"
 !define COMP_NAME "Tox"
-!define WEB_SITE "https://github.com/tux3/qTox"
+!define WEB_SITE "https://github.com/qTox/qTox"
 !define VERSION "1.0.0.0"
 !define DESCRIPTION "qTox Installer"
 !define COPYRIGHT "The Tox Project"
@@ -227,7 +227,7 @@ FunctionEnd
 !define MUI_FINISHPAGE_RUN_FUNCTION Launch_qTox_without_Admin
 !define MUI_FINISHPAGE_RUN
 !define MUI_FINISHPAGE_LINK "Find qTox on GitHub"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/tux3/qTox"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/qTox/qTox"
 !insertmacro MUI_PAGE_FINISH
 
 Function Launch_qTox_without_Admin

@@ -61,18 +61,18 @@ void AboutForm::replaceVersions()
                    " If you discover a bug or security vulnerability within"
                    " qTox, please %3 according to the guidelines in our %2"
                    " wiki article.")
-                .arg(QString::fromUtf8("<a href=\"https://github.com/tux3/qTox/"
+                .arg(QString::fromUtf8("<a href=\"https://github.com/qTox/qTox/"
                                        "issues\""
                                        " style=\"text-decoration: underline;"
                                        " color:#0000ff;\">%1</a>")
                      .arg(tr("bug-tracker")))
-                .arg(QString::fromUtf8("<a href=\"https://github.com/tux3/qTox/"
+                .arg(QString::fromUtf8("<a href=\"https://github.com/qTox/qTox/"
                                        "wiki/Writing-Useful-Bug-Reports\""
                                        " style=\"text-decoration: underline;"
                                        " color:#0000ff;\">%1</a>")
                      .arg(tr("Writing Useful Bug Reports")))
                 .arg(QStringLiteral(
-                         "<a href=\"https://github.com/tux3/qTox/issues"
+                         "<a href=\"https://github.com/qTox/qTox/issues"
                          "/new?body=%23%23%23%23%23+Brief+Description%0A%0AOS"
                          "%3A+Windows+%2F+OS+X+%2F+Linux+(include+version+and"
                          "%2For+distro)%0AqTox+version%3A+") +

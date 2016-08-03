@@ -46,7 +46,7 @@ QPushButton#green:pressed
 }
 
 /**
-  Uncomment this after https://github.com/tux3/qTox/pull/1640
+  Uncomment this after https://github.com/qTox/qTox/pull/1640
   is merged!
 QComboBox:down-arrow {
     image: url(ui/css/down_arrow.png);

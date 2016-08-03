@@ -39,7 +39,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // permanently disables maximize button https://github.com/tux3/qTox/issues/1973
+    // permanently disables maximize button https://github.com/qTox/qTox/issues/1973
     this->setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(this->size());
 

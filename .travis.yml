@@ -14,6 +14,6 @@ deploy:
   file: "./qTox.dmg"
   on:
     condition: $TRAVIS_OS_NAME == osx
-    repo: tux3/qTox
+    repo: qTox/qTox
     tags: true
   skip_cleanup: true
