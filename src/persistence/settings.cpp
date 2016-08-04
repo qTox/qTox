@@ -1480,7 +1480,12 @@ QString Settings::getAvatarsPath() const
 void Settings::setAvatarsPath(const QString& path)
 {
     QMutexLocker locker{&bigLock};
-    avatarsPath = path;
+    QDir dir(path);
+
+    if (dir.exists())
+        avatarsPath = path;
+    else
+        avatarsPath = QDir::homePath();
 }
 
 QString Settings::getOutDev() const
