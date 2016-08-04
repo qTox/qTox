@@ -135,6 +135,10 @@ VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, 
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
+
+    default:{
+        sourceFrame->color_range = AVCOL_RANGE_UNSPECIFIED;
+    }
     }
 
     frameBuffer[sourceFrameKey] = sourceFrame;
