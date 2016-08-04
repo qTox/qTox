@@ -59,7 +59,7 @@ public:
 	void reloadTheme();
 
 public slots:
-	void compactChange(bool compact);
+    void compactLayoutChanged(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
@@ -74,7 +74,6 @@ protected:
 protected:
     QColor lastColor;
     QHBoxLayout* mainLayout = nullptr;
-    QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
 	bool active;

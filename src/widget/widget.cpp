@@ -907,7 +907,7 @@ void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
     if (contentLayout != nullptr)
         contentLayout->clear();
 
-    if (activeChatroomWidget != nullptr)
+    if (activeChatroomWidget)
         activeChatroomWidget->setAsInactiveChatroom();
 
     activeChatroomWidget = chatroomWidget;
@@ -970,14 +970,15 @@ void Widget::addFriend(int friendId, const QString &userId)
     if (chatDate > activityDate && chatDate.isValid())
         s.setFriendActivity(newfriend->getToxId(), chatDate);
 
-    contactListWidget->addFriendWidget(newfriend->getFriendWidget(), Status::Offline, Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
+    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),
+                                       Status::Offline, s.getFriendCircleID(newfriend->getToxId()));
 
     const Settings& s = Settings::getInstance();
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(&s, &Settings::compactLayoutChanged, newfriend->getFriendWidget(),
-            &GenericChatroomWidget::compactChange);
+            &GenericChatroomWidget::compactLayoutChanged);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -1122,6 +1123,8 @@ void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
 {
+    const Settings& s = Settings::getInstance();
+
     widget->resetEventFlags();
     widget->updateStatusLight();
 
@@ -1452,9 +1455,9 @@ void Widget::updateScroll(GenericChatroomWidget *widget) {
 }
 
 
-ContentDialog* Widget::createContentDialog() const
+ContentDialog* Widget::createContentDialog()
 {
-    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    ContentDialog* contentDialog = new ContentDialog(this);
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
@@ -1470,12 +1473,12 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     {
     public:
         explicit Dialog(DialogType type)
-            : ActivateDialog()
+            : ActivateDialog(this)
             , type(type)
         {
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
-            Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
             retranslateUi();
+            Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
 
             connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
         }
@@ -1486,7 +1489,6 @@ ContentLayout* Widget::createContentDialog(DialogType type)
         }
 
     public slots:
-
         void retranslateUi()
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
@@ -1709,7 +1711,7 @@ Group *Widget::createGroup(int groupId)
     contactListWidget->activateWindow();
 
     connect(&Settings::getInstance(), &Settings::compactLayoutChanged,
-            newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
+            newgroup->getGroupWidget(), &GenericChatroomWidget::compactLayoutChanged);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
