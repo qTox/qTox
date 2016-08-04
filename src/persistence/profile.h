@@ -32,76 +32,54 @@
 class Core;
 class QThread;
 
-/// Manages user profiles
 class Profile
 {
 public:
-    /// Locks and loads an existing profile and create the associate Core* instance
-    /// Returns a nullptr on error, for example if the profile is already in use
     static Profile* loadProfile(QString name, const QString &password = QString());
-    /// Creates a new profile and the associated Core* instance
-    /// If password is not empty, the profile will be encrypted
-    /// Returns a nullptr on error, for example if the profile already exists
     static Profile* createProfile(QString name, QString password);
     ~Profile();
 
     Core* getCore();
     QString getName() const;
 
-    void startCore(); ///< Starts the Core thread
-    void restartCore(); ///< Delete core and restart a new one
+    void startCore();
+    void restartCore();
     bool isNewProfile();
-    bool isEncrypted() const; ///< Returns true if we have a password set (doesn't check the actual file on disk)
-    bool checkPassword(); ///< Checks whether the password is valid
+    bool isEncrypted() const;
+    bool checkPassword();
     QString getPassword() const;
-    void setPassword(const QString &newPassword); ///< Changes the encryption password and re-saves everything with it
+    void setPassword(const QString &newPassword);
     const TOX_PASS_KEY& getPasskey() const;
 
-    QByteArray loadToxSave(); ///< Loads the profile's .tox save from file, unencrypted
-    void saveToxSave(); ///< Saves the profile's .tox save, encrypted if needed. Invalid on deleted profiles.
-    void saveToxSave(QByteArray data); ///< Write the .tox save, encrypted if needed. Invalid on deleted profiles.
+    QByteArray loadToxSave();
+    void saveToxSave();
+    void saveToxSave(QByteArray data);
 
-    QPixmap loadAvatar(); ///< Get our avatar from cache
-    QPixmap loadAvatar(const QString& ownerId); ///< Get a contact's avatar from cache
-    QByteArray loadAvatarData(const QString& ownerId); ///< Get a contact's avatar from cache
-    QByteArray loadAvatarData(const QString& ownerId, const QString& password); ///< Get a contact's avatar from cache, with a specified profile password.
-    void saveAvatar(QByteArray pic, const QString& ownerId); ///< Save an avatar to cache
-    QByteArray getAvatarHash(const QString& ownerId); ///< Get the tox hash of a cached avatar
-    void removeAvatar(const QString& ownerId); ///< Removes a cached avatar
-    void removeAvatar(); ///< Removes our own avatar
+    QPixmap loadAvatar();
+    QPixmap loadAvatar(const QString& ownerId);
+    QByteArray loadAvatarData(const QString& ownerId);
+    QByteArray loadAvatarData(const QString& ownerId, const QString& password);
+    void saveAvatar(QByteArray pic, const QString& ownerId);
+    QByteArray getAvatarHash(const QString& ownerId);
+    void removeAvatar(const QString& ownerId);
+    void removeAvatar();
 
-    /// Returns true if the history is enabled in the settings, and loaded successfully for this profile
     bool isHistoryEnabled();
-    /// May return a nullptr if the history failed to load
     History* getHistory();
 
-    /// Removes the profile permanently
-    /// It is invalid to call loadToxSave or saveToxSave on a deleted profile
-    /// Updates the profiles vector
-    /// Returns a vector of filenames that could not be removed.
     QVector<QString> remove();
 
-    /// Tries to rename the profile
     bool rename(QString newName);
 
-    /// Scan for profile, automatically importing them if needed
-    /// NOT thread-safe
     static void scanProfiles();
     static QVector<QString> getProfiles();
 
     static bool exists(QString name);
-    static bool isEncrypted(QString name); ///< Returns false on error. Checks the actual file on disk.
+    static bool isEncrypted(QString name);
 
 private:
     Profile(QString name, const QString &password, bool newProfile);
-    /// Lists all the files in the config dir with a given extension
-    /// Pass the raw extension, e.g. "jpeg" not ".jpeg".
     static QVector<QString> getFilesByExt(QString extension);
-    /// Creates a .ini file for the given .tox profile
-    /// Only pass the basename, without extension
-    static void importProfile(QString name);
-    /// Gets the path of the avatar file cached by this profile and corresponding to this owner ID
-    /// If forceUnencrypted, we return the path to the plaintext file even if we're an encrypted profile
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
 private:
@@ -110,11 +88,9 @@ private:
     QString name, password;
     TOX_PASS_KEY passkey;
     std::unique_ptr<History> history;
-    bool newProfile; ///< True if this is a newly created profile, with no .tox save file yet.
-    bool isRemoved; ///< True if the profile has been removed by remove()
+    bool newProfile;
+    bool isRemoved;
     static QVector<QString> profiles;
-    /// How much data we need to read to check if the file is encrypted
-    /// Must be >= TOX_ENC_SAVE_MAGIC_LENGTH (8), which isn't publicly defined
     static constexpr int encryptHeaderSize = 8;
 };
 

@@ -1,11 +1,9 @@
 #ifndef CORESTRUCTS_H
 #define CORESTRUCTS_H
 
-// Some headers use Core structs but don't need to include all of core.h
-// They should include this file directly instead to reduce compilation times
-
 #include <QString>
 #include <memory>
+
 class QFile;
 class QTimer;
 
@@ -35,7 +33,7 @@ struct ToxFile
         RECEIVING
     };
 
-    ToxFile()=default;
+    ToxFile() = default;
     ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath, FileDirection Direction);
     ~ToxFile(){}
 
@@ -45,7 +43,7 @@ struct ToxFile
     void setFilePath(QString path);
     bool open(bool write);
 
-    uint8_t fileKind; ///< Data file (default) or avatar
+    uint8_t fileKind;
     uint32_t fileNum;
     uint32_t friendId;
     QByteArray fileName;

@@ -192,10 +192,9 @@ void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
 }
 
 /**
- * @internal
- *
- * Align the tooltip centred at top of screen with the mouse cursor.
- */
+@internal
+@brief Align the tooltip centered at top of screen with the mouse cursor.
+*/
 void ScreenshotGrabber::adjustTooltipPosition()
 {
     QRect recGL = QGuiApplication::primaryScreen()->virtualGeometry();

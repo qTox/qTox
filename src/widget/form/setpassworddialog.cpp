@@ -19,6 +19,8 @@
 
 #include "setpassworddialog.h"
 #include "ui_setpassworddialog.h"
+
+#include <QApplication>
 #include <QPushButton>
 
 const double SetPasswordDialog::reasonablePasswordLength = 8.;
@@ -34,7 +36,11 @@ SetPasswordDialog::SetPasswordDialog(QString body, QString extraButton, QWidget*
     connect(ui->repasswordlineEdit, SIGNAL(textChanged(QString)), this, SLOT(onPasswordEdit()));
 
     ui->body->setText(body + "\n\n");
-    ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+    QPushButton *ok = ui->buttonBox->button(QDialogButtonBox::Ok);
+    ok->setEnabled(false);
+    ok->setText(QApplication::tr("Ok"));
+    QPushButton *cancel = ui->buttonBox->button(QDialogButtonBox::Cancel);
+    cancel->setText(QApplication::tr("Cancel"));
 
     if (!extraButton.isEmpty())
     {

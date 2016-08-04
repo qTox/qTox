@@ -47,7 +47,16 @@
 #include <QThread>
 #include <QNetworkProxy>
 
-#define SHOW_SYSTEM_TRAY_DEFAULT (bool) true
+/**
+@var QHash<QString, QByteArray> Settings::widgetSettings
+@brief Assume all widgets have unique names
+@warning Don't use it to save every single thing you want to save, use it
+for some general purpose widgets, such as MainWindows or Splitters,
+which have widget->saveX() and widget->loadX() methods.
+
+@var QString Settings::toxmeInfo
+@brief Toxme info like name@server
+*/
 
 const QString Settings::globalSettingsFile = "qtox.ini";
 Settings* Settings::settings{nullptr};
@@ -73,6 +82,9 @@ Settings::~Settings()
     delete settingsThread;
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 Settings& Settings::getInstance()
 {
     if (!settings)
@@ -140,7 +152,7 @@ void Settings::loadGlobal()
                 server.name = s.value("name").toString();
                 server.userId = s.value("userId").toString();
                 server.address = s.value("address").toString();
-                server.port = s.value("port").toInt();
+                server.port = static_cast<quint16>(s.value("port").toUInt());
                 dhtServerList << server;
             }
             s.endArray();
@@ -154,14 +166,14 @@ void Settings::loadGlobal()
     s.beginGroup("General");
         enableIPv6 = s.value("enableIPv6", true).toBool();
         translation = s.value("translation", "en").toString();
-        showSystemTray = s.value("showSystemTray", SHOW_SYSTEM_TRAY_DEFAULT).toBool();
+        showSystemTray = s.value("showSystemTray", true).toBool();
         makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();
         forceTCP = s.value("forceTCP", false).toBool();
         setProxyType(s.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt());
         proxyAddr = s.value("proxyAddr", "").toString();
-        proxyPort = s.value("proxyPort", 0).toInt();
+        proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
         if (currentProfile.isEmpty())
         {
             currentProfile = s.value("currentProfile", "").toString();
@@ -255,7 +267,7 @@ void Settings::loadGlobal()
         camVideoRes = s.value("camVideoRes", QRect()).toRect();
         screenRegion = s.value("screenRegion", QRect()).toRect();
         screenGrabbed = s.value("screenGrabbed", false).toBool();
-        camVideoFPS = s.value("camVideoFPS", 0).toUInt();
+        camVideoFPS = static_cast<quint16>(s.value("camVideoFPS", 0).toUInt());
     s.endGroup();
 
     // Read the embedded DHT bootstrap nodes list if needed
@@ -272,7 +284,7 @@ void Settings::loadGlobal()
                 server.name = rcs.value("name").toString();
                 server.userId = rcs.value("userId").toString();
                 server.address = rcs.value("address").toString();
-                server.port = rcs.value("port").toInt();
+                server.port = static_cast<quint16>(rcs.value("port").toUInt());
                 dhtServerList << server;
             }
             rcs.endArray();
@@ -380,6 +392,9 @@ void Settings::loadPersonal(Profile* profile)
     ps.endGroup();
 }
 
+/**
+@brief Asynchronous, saves the global settings.
+*/
 void Settings::saveGlobal()
 {
     if (QThread::currentThread() != settingsThread)
@@ -499,11 +514,18 @@ void Settings::saveGlobal()
     s.endGroup();
 }
 
+/**
+@brief Asynchronous, saves the current profile.
+*/
 void Settings::savePersonal()
 {
     savePersonal(Nexus::getProfile());
 }
 
+/**
+@brief Asynchronous, saves the profile.
+@param profile Profile to save.
+*/
 void Settings::savePersonal(Profile* profile)
 {
     if (!profile)
@@ -597,10 +619,14 @@ void Settings::savePersonal(QString profileName, const QString &password)
 uint32_t Settings::makeProfileId(const QString& profile)
 {
     QByteArray data = QCryptographicHash::hash(profile.toUtf8(), QCryptographicHash::Md5);
-    const uint32_t* dwords = (uint32_t*)data.constData();
+    const uint32_t* dwords = reinterpret_cast<const uint32_t*>(data.constData());
     return dwords[0] ^ dwords[1] ^ dwords[2] ^ dwords[3];
 }
 
+/**
+@brief Get path to directory, where the settings files are stored.
+@return Path to settings directory, ends with a directory separator.
+*/
 QString Settings::getSettingsDirPath()
 {
     QMutexLocker locker{&bigLock};
@@ -620,6 +646,10 @@ QString Settings::getSettingsDirPath()
 #endif
 }
 
+/**
+@brief Get path to directory, where the application data are stored.
+@return Path to application data, ends with a directory separator.
+*/
 QString Settings::getAppDataDirPath()
 {
     QMutexLocker locker{&bigLock};
@@ -641,6 +671,10 @@ QString Settings::getAppDataDirPath()
 #endif
 }
 
+/**
+@brief Get path to directory, where the application cache are stored.
+@return Path to application cache, ends with a directory separator.
+*/
 QString Settings::getAppCacheDirPath()
 {
     QMutexLocker locker{&bigLock};
@@ -890,7 +924,7 @@ void Settings::deleteToxme()
 {
     setToxmeInfo("");
     setToxmeBio("");
-    setToxmePriv("");
+    setToxmePriv(false);
     setToxmePass("");
 }
 
@@ -981,7 +1015,9 @@ QNetworkProxy Settings::getProxy() const
         default:
             proxy.setType(QNetworkProxy::NoProxy);
             qWarning() << "Invalid Proxy type, setting to NoProxy";
+            break;
     }
+
     proxy.setHostName(Settings::getProxyAddr());
     proxy.setPort(Settings::getProxyPort());
     return proxy;
@@ -1014,13 +1050,13 @@ void Settings::setProxyAddr(const QString& newValue)
     proxyAddr = newValue;
 }
 
-int Settings::getProxyPort() const
+quint16 Settings::getProxyPort() const
 {
     QMutexLocker locker{&bigLock};
     return proxyPort;
 }
 
-void Settings::setProxyPort(int newValue)
+void Settings::setProxyPort(quint16 newValue)
 {
     QMutexLocker locker{&bigLock};
     proxyPort = newValue;
@@ -1859,6 +1895,11 @@ void Settings::setAutoLogin(bool state)
     autoLogin = state;
 }
 
+/**
+@brief Write a default personal .ini settings file for a profile.
+@param basename Filename without extension to save settings.
+@example If basename is "profile", settings will be saved in profile.ini
+*/
 void Settings::createPersonal(QString basename)
 {
     QString path = getSettingsDirPath() + QDir::separator() + basename + ".ini";
@@ -1875,6 +1916,9 @@ void Settings::createPersonal(QString basename)
     ps.endGroup();
 }
 
+/**
+@brief Creates a path to the settings dir, if it doesn't already exist
+*/
 void Settings::createSettingsDir()
 {
     QString dir = Settings::getSettingsDirPath();
@@ -1883,6 +1927,9 @@ void Settings::createSettingsDir()
         qCritical() << "Error while creating directory " << dir;
 }
 
+/**
+@brief Waits for all asynchronous operations to complete
+*/
 void Settings::sync()
 {
     if (QThread::currentThread() != settingsThread)

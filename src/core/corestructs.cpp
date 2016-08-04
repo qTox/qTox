@@ -6,6 +6,18 @@
 
 #define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
+/**
+@file corestructs.h
+@brief Some headers use Core structs but don't need to include all of core.h
+
+They should include this file directly instead to reduce compilation times
+*/
+
+/**
+@var uint8_t ToxFile::fileKind
+@brief Data file (default) or avatar
+*/
+
 ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath, FileDirection Direction)
     : fileKind{TOX_FILE_KIND_DATA}, fileNum(fileNum), friendId(friendId), fileName{filename},
       filePath{filePath}, file{new QFile(filePath)}, bytesSent{0}, filesize{0},

@@ -67,7 +67,7 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
-    void showUpdateDownloadProgress(); ///< Switches to the About settings page
+    void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound=true);
@@ -106,7 +106,6 @@ public:
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
-    // Used to reset the blinking icon
     void resetIcon();
 
 public slots:

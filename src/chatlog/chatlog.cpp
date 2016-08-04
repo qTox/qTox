@@ -20,6 +20,8 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
+#include "chatlinecontentproxy.h"
+#include "content/filetransferwidget.h"
 #include "src/widget/translator.h"
 
 #include <QDebug>
@@ -30,6 +32,11 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QShortcut>
+
+/**
+@var ChatLog::repNameAfter
+@brief repetition interval sender name (sec)
+*/
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -555,11 +562,20 @@ void ChatLog::clear()
 {
     clearSelection();
 
+    QVector<ChatLine::Ptr> savedLines;
+
     for (ChatLine::Ptr l : lines)
-        l->removeFromScene();
+    {
+        if (isActiveFileTransfer(l))
+            savedLines.push_back(l);
+        else
+            l->removeFromScene();
+    }
 
     lines.clear();
     visibleLines.clear();
+    for (ChatLine::Ptr l : savedLines)
+        insertChatlineAtBottom(l);
 
     updateSceneRect();
 }
@@ -844,4 +860,23 @@ void ChatLog::retranslateUi()
 {
     copyAction->setText(tr("Copy"));
     selectAllAction->setText(tr("Select all"));
+}
+
+bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
+{
+    int count = l->getColumnCount();
+    for (int i = 0; i < count; i++)
+    {
+        ChatLineContent *content = l->getContent(i);
+        ChatLineContentProxy *proxy = dynamic_cast<ChatLineContentProxy*>(content);
+        if (!proxy)
+            continue;
+
+        QWidget *widget = proxy->getWidget();
+        FileTransferWidget *transferWidget = dynamic_cast<FileTransferWidget*>(widget);
+        if (transferWidget && transferWidget->isActive())
+            return true;
+    }
+
+    return false;
 }

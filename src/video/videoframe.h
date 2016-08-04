@@ -28,12 +28,6 @@ struct AVFrame;
 struct AVCodecContext;
 struct vpx_image;
 
-/// VideoFrame takes ownership of an AVFrame* and allows fast conversions to other formats
-/// Ownership of all video frame buffers is kept by the VideoFrame, even after conversion
-/// All references to the frame data become invalid when the VideoFrame is deleted
-/// We try to avoid pixel format conversions as much as possible, at the cost of some memory
-/// All methods are thread-safe. If provided freelistCallback will be called by the destructor,
-/// unless releaseFrame was called in between.
 class VideoFrame
 {
 public:
@@ -42,17 +36,11 @@ public:
     VideoFrame(AVFrame* frame, int w, int h, int fmt, std::function<void()> freelistCallback);
     ~VideoFrame();
 
-    /// Return the size of the original frame
     QSize getSize();
 
-    /// Frees all internal buffers and frame data, removes the freelistCallback
-    /// This makes all converted objects that shares our internal buffers invalid
     void releaseFrame();
 
-    /// Converts the VideoFrame to a QImage that shares our internal video buffer
     QImage toQImage(QSize size = QSize());
-    /// Converts the VideoFrame to a vpx_image_t that shares our internal video buffer
-    /// Free it with operator delete, NOT vpx_img_free
     vpx_image* toVpxImage();
 
 protected:
@@ -61,7 +49,6 @@ protected:
     void releaseFrameLockless();
 
 private:
-    // Disable copy. Use a shared_ptr if you need copies.
     VideoFrame(const VideoFrame& other)=delete;
     VideoFrame& operator=(const VideoFrame& other)=delete;
 

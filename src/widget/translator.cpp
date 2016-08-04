@@ -33,6 +33,9 @@ QTranslator* Translator::translator{nullptr};
 QVector<Translator::Callback> Translator::callbacks;
 QMutex Translator::lock;
 
+/**
+@brief Loads the translations according to the settings or locale.
+*/
 void Translator::translate()
 {
     QMutexLocker locker{&lock};
@@ -55,7 +58,8 @@ void Translator::translate()
             // system menu translation
             QTranslator *qtTranslator = new QTranslator();
             QString s_locale = "qt_"+locale;
-            if (qtTranslator->load(s_locale, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+            QString location = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+            if (qtTranslator->load(s_locale, location))
             {
                 QApplication::installTranslator(qtTranslator);
                 qDebug() << "System translation loaded" << locale;
@@ -72,16 +76,35 @@ void Translator::translate()
         QCoreApplication::installTranslator(translator);
     }
 
+    // After the language is changed from RTL to LTR, the layout direction isn't
+    // always restored
+    const QString direction = QApplication::tr("LTR",
+                 "Translate this string to the string 'RTL' in"
+                 " right-to-left languages (for example Hebrew and"
+                 " Arabic) to get proper widget layout");
+
+    QGuiApplication::setLayoutDirection(
+                direction == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
+
     for (auto pair : callbacks)
         pair.second();
 }
 
+/**
+@brief Register a function to be called when the UI needs to be retranslated.
+@param f Function, wich will called.
+@param owner Widget to retanslate.
+ */
 void Translator::registerHandler(std::function<void()> f, void *owner)
 {
     QMutexLocker locker{&lock};
     callbacks.push_back({owner, f});
 }
 
+/**
+@brief Unregisters all handlers of an owner.
+@param owner Owner to unregister.
+*/
 void Translator::unregister(void *owner)
 {
     QMutexLocker locker{&lock};

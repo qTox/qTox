@@ -55,7 +55,7 @@ private:
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
     int friendId;
-    bool e = false;
+    bool e;
     QVector<QMetaObject::Connection> connections;
 };
 

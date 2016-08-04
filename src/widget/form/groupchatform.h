@@ -61,8 +61,8 @@ private:
 
 private:
     Group* group;
-    QList<QLabel*> peerLabels; // maps peernumbers to the QLabels in namesListLayout
-    QMap<int, QTimer*> peerAudioTimers; // timeout = peer stopped sending audio
+    QList<QLabel*> peerLabels;
+    QMap<int, QTimer*> peerAudioTimers;
     FlowLayout* namesListLayout;
     QLabel *nusersLabel;
     TabCompleter* tabber;

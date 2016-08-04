@@ -22,6 +22,7 @@
 #include "widget.h"
 #include "src/nexus.h"
 #include <assert.h>
+#include <QApplication>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDialogButtonBox>
@@ -31,6 +32,17 @@
 #include <QPushButton>
 #include <QThread>
 
+/**
+@class GUI
+@brief Abstracts the GUI from the target backend (DesktopGUI, ...)
+
+All the functions exposed here are thread-safe.
+Prefer calling this class to calling a GUI backend directly.
+
+@fn void GUI::resized()
+@brief Emitted when the GUI is resized on supported platforms.
+*/
+
 GUI::GUI(QObject *parent) :
     QObject(parent)
 {
@@ -39,6 +51,9 @@ GUI::GUI(QObject *parent) :
     connect(Nexus::getDesktopGUI(), &Widget::resized, this, &GUI::resized);
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 GUI& GUI::getInstance()
 {
     static GUI gui;
@@ -47,6 +62,9 @@ GUI& GUI::getInstance()
 
 // Implementation of the public clean interface
 
+/**
+@brief Clear the GUI's contact list.
+*/
 void GUI::clearContacts()
 {
     if (QThread::currentThread() == qApp->thread())
@@ -55,6 +73,11 @@ void GUI::clearContacts()
         QMetaObject::invokeMethod(&getInstance(), "_clearContacts", Qt::BlockingQueuedConnection);
 }
 
+/**
+@brief Will enable or disable the GUI.
+@note A disabled GUI can't be interacted with by the user.
+@param state Enable/disable GUI.
+*/
 void GUI::setEnabled(bool state)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -68,6 +91,12 @@ void GUI::setEnabled(bool state)
     }
 }
 
+/**
+@brief Change the title of the main window.
+@param title Titile to set.
+
+This is usually always visible to the user.
+*/
 void GUI::setWindowTitle(const QString& title)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -81,6 +110,9 @@ void GUI::setWindowTitle(const QString& title)
     }
 }
 
+/**
+@brief Reloads the application theme and redraw the window.
+*/
 void GUI::reloadTheme()
 {
     if (QThread::currentThread() == qApp->thread())
@@ -93,6 +125,9 @@ void GUI::reloadTheme()
     }
 }
 
+/**
+@brief Optionally switches to a view of the qTox update being downloaded.
+*/
 void GUI::showUpdateDownloadProgress()
 {
     if (QThread::currentThread() == qApp->thread())
@@ -105,6 +140,11 @@ void GUI::showUpdateDownloadProgress()
     }
 }
 
+/**
+@brief Show some text to the user.
+@param title Title of information window.
+@param msg Text in information window.
+*/
 void GUI::showInfo(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -118,6 +158,11 @@ void GUI::showInfo(const QString& title, const QString& msg)
     }
 }
 
+/**
+@brief Show a warning to the user
+@param title Title of warning window.
+@param msg Text in warning window.
+*/
 void GUI::showWarning(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -131,6 +176,11 @@ void GUI::showWarning(const QString& title, const QString& msg)
     }
 }
 
+/**
+@brief Show an error to the user.
+@param title Title of error window.
+@param msg Text in error window.
+*/
 void GUI::showError(const QString& title, const QString& msg)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -149,6 +199,15 @@ void GUI::showError(const QString& title, const QString& msg)
     }
 }
 
+/**
+@brief Asks the user a question with Ok/Cancel or Yes/No buttons.
+@param title Title of question window.
+@param msg Text in question window.
+@param defaultAns If is true, default was positive answer. Negative otherwise.
+@param warning If is true, we will use a special warning style.
+@param yesno Show "Yes" and "No" buttons.
+@return True if the answer is positive, false otherwise.
+*/
 bool GUI::askQuestion(const QString& title, const QString& msg,
                       bool defaultAns, bool warning,
                       bool yesno)
@@ -169,6 +228,18 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
     }
 }
 
+/**
+@brief Asks the user a question.
+
+The text for the displayed buttons can be specified.
+@param title Title of question window.
+@param msg Text in question window.
+@param button1 Text of positive button.
+@param button2 Text of negative button.
+@param defaultAns If is true, default was positive answer. Negative otherwise.
+@param warning If is true, we will use a special warning style.
+@return True if the answer is positive, false otherwise.
+*/
 bool GUI::askQuestion(const QString& title, const QString& msg,
                       const QString& button1, const QString& button2,
                       bool defaultAns, bool warning)
@@ -188,6 +259,21 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
     }
 }
 
+/**
+@brief Asks the user to input text and returns the answer.
+
+The interface is equivalent to QInputDialog::getItem()
+@param parent Is the dialog's parent widget
+@param title Is the text which is displayed in the title bar of the dialog.
+@param label Is the text which is shown to the user (it should say what should be entered).
+@param items Is the string list which is inserted into the combobox.
+@param current Is the number of the item which should be the current item.
+@param editable If is true the user can enter their own text, otherwise the user may only select one of the existing items.
+@param ok If is nonnull will be set to true if the user pressed OK and to false if the user pressed Cancel.
+@param flags The dialog will uses to widget flags.
+@param hints Is the input method hints that will be used if the combobox is editable and an input method is active.
+@return This function returns the text of the current item, or if editable is true, the current text of the combobox.
+*/
 QString GUI::itemInputDialog(QWidget * parent, const QString & title,
                     const QString & label, const QStringList & items,
                     int current, bool editable, bool * ok,
@@ -211,6 +297,12 @@ QString GUI::itemInputDialog(QWidget * parent, const QString & title,
     }
 }
 
+/**
+@brief Asks the user to answer a password.
+@param cancel Is the text on the cancel button.
+@param body Is descriptive text that will be shown to the user.
+@return Entered password.
+*/
 QString GUI::passwordDialog(const QString& cancel, const QString& body)
 {
     if (QThread::currentThread() == qApp->thread())
@@ -244,7 +336,7 @@ void GUI::_setWindowTitle(const QString& title)
     if (title.isEmpty())
         getMainWidget()->setWindowTitle("qTox");
     else
-        getMainWidget()->setWindowTitle("qTox - " +title);
+        getMainWidget()->setWindowTitle("qTox - " + title);
 }
 
 void GUI::_reloadTheme()
@@ -254,17 +346,23 @@ void GUI::_reloadTheme()
 
 void GUI::_showInfo(const QString& title, const QString& msg)
 {
-    QMessageBox::information(getMainWidget(), title, msg);
+    QMessageBox messageBox(QMessageBox::Information, title, msg, QMessageBox::Ok, getMainWidget());
+    messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
+    messageBox.exec();
 }
 
 void GUI::_showWarning(const QString& title, const QString& msg)
 {
-    QMessageBox::warning(getMainWidget(), title, msg);
+    QMessageBox messageBox(QMessageBox::Warning, title, msg, QMessageBox::Ok, getMainWidget());
+    messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
+    messageBox.exec();
 }
 
 void GUI::_showError(const QString& title, const QString& msg)
 {
-    QMessageBox::critical(getMainWidget(), title, msg);
+    QMessageBox messageBox(QMessageBox::Critical, title, msg, QMessageBox::Ok, getMainWidget());
+    messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
+    messageBox.exec();
 }
 
 void GUI::_showUpdateDownloadProgress()
@@ -276,23 +374,18 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
                        bool defaultAns, bool warning,
                        bool yesno)
 {
-    QMessageBox::StandardButton positiveButton = yesno ? QMessageBox::Yes : QMessageBox::Ok;
-    QMessageBox::StandardButton negativeButton = yesno ? QMessageBox::No : QMessageBox::Cancel;
+    QString positiveButton = yesno ? QApplication::tr("Yes") : QApplication::tr("Ok");
+    QString negativeButton = yesno ? QApplication::tr("No") : QApplication::tr("Cancel");
 
-    QMessageBox::StandardButton defButton = defaultAns ? positiveButton : negativeButton;
-
-    if (warning)
-        return QMessageBox::warning(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
-    else
-        return QMessageBox::question(getMainWidget(), title, msg, positiveButton | negativeButton, defButton) == positiveButton;
+    return _askQuestion(title, msg, positiveButton, negativeButton, defaultAns, warning);
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
                        const QString& button1, const QString& button2,
                        bool defaultAns, bool warning)
 {
-    QMessageBox box(warning ? QMessageBox::Warning : QMessageBox::Question,
-        title, msg, QMessageBox::NoButton, getMainWidget());
+    QMessageBox::Icon icon = warning ? QMessageBox::Warning : QMessageBox::Question;
+    QMessageBox box(icon, title, msg, QMessageBox::NoButton, getMainWidget());
     QPushButton* pushButton1 = box.addButton(button1, QMessageBox::AcceptRole);
     QPushButton* pushButton2 = box.addButton(button2, QMessageBox::RejectRole);
     box.setDefaultButton(defaultAns ? pushButton1 : pushButton2);
@@ -338,14 +431,20 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
         {
             ok->setAutoDefault(false);
             ok->setDefault(false);
+            ok->setText(QApplication::tr("Ok"));
             cancel->setAutoDefault(true);
             cancel->setDefault(true);
+            cancel->setText(QApplication::tr("Cancel"));
         }
         else
+        {
             qWarning() << "PasswordDialog: Missing button!";
+        }
     }
     else
+    {
         qWarning() << "PasswordDialog: No QDialogButtonBox!";
+    }
 
     // using similar code, set QLabels to wrap
     for (auto* label : dialog.findChildren<QLabel*>())
@@ -356,12 +455,11 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
         int val = dialog.exec();
         if (val == QDialog::Accepted)
             return QString();
-        else
-        {
-            ret = dialog.textValue();
-            if (!ret.isEmpty())
-                return ret;
-        }
+
+        ret = dialog.textValue();
+        if (!ret.isEmpty())
+            return ret;
+
         dialog.setTextValue("");
         dialog.setLabelText(body + "\n\n" + tr("You must enter a non-empty password:"));
     }
@@ -369,6 +467,10 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
 
 // Other
 
+/**
+@brief Get the main widget.
+@return The main QWidget* of the application
+*/
 QWidget* GUI::getMainWidget()
 {
     QWidget* maingui{nullptr};

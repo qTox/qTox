@@ -14,6 +14,60 @@
 
 #include <sqlcipher/sqlite3.h>
 
+/**
+@class RawDatabase
+@brief Implements a low level RAII interface to a SQLCipher (SQlite3) database.
+
+Thread-safe, does all database operations on a worker thread.
+The queries must not contain transaction commands (BEGIN/COMMIT/...) or the behavior is undefined.
+
+@var QMutex RawDatabase::transactionsMutex;
+@brief Protects pendingTransactions
+*/
+
+/**
+@class Query
+@brief A query to be executed by the database.
+
+Can be composed of one or more SQL statements in the query,
+optional BLOB parameters to be bound, and callbacks fired when the query is executed
+Calling any database method from a query callback is undefined behavior.
+
+@var QByteArray RawDatabase::Query::query
+@brief UTF-8 query string
+
+@var QVector<QByteArray> RawDatabase::Query::blobs
+@brief Bound data blobs
+
+@var std::function<void(int64_t)> RawDatabase::Query::insertCallback
+@brief Called after execution with the last insert rowid
+
+@var std::function<void(const QVector<QVariant>&)> RawDatabase::Query::rowCallback
+@brief Called during execution for each row
+
+@var QVector<sqlite3_stmt*> RawDatabase::Query::statements
+@brief Statements to be compiled from the query
+*/
+
+/**
+@struct Transaction
+@brief SQL transactions to be processed.
+
+A transaction is made of queries, which can have bound BLOBs.
+
+@var std::atomic_bool* RawDatabase::Transaction::success = nullptr;
+@brief If not a nullptr, the result of the transaction will be set
+
+@var std::atomic_bool* RawDatabase::Transaction::done = nullptr;
+@brief If not a nullptr, will be set to true when the transaction has been executed
+*/
+
+/**
+@brief Tries to open a database.
+@param path Path to database.
+@param password If empty, the database will be opened unencrypted.
+Otherwise we will use toxencryptsave to derive a key and encrypt the database.
+*/
 RawDatabase::RawDatabase(const QString &path, const QString& password)
     : workerThread{new QThread}, path{path}, currentHexKey{deriveKey(password)}
 {
@@ -33,6 +87,12 @@ RawDatabase::~RawDatabase()
         workerThread->wait(50);
 }
 
+/**
+@brief Tries to open the database with the given (possibly empty) key.
+@param path Path to database.
+@param hexKey Hex representation of the key in string.
+@return True if success, false otherwise.
+*/
 bool RawDatabase::open(const QString& path, const QString &hexKey)
 {
     if (QThread::currentThread() != workerThread.get())
@@ -75,6 +135,9 @@ bool RawDatabase::open(const QString& path, const QString &hexKey)
     return true;
 }
 
+/**
+@brief Close the database and free its associated resources.
+*/
 void RawDatabase::close()
 {
     if (QThread::currentThread() != workerThread.get())
@@ -89,22 +152,41 @@ void RawDatabase::close()
         qWarning() << "Error closing database:"<<sqlite3_errmsg(sqlite);
 }
 
+/**
+@brief Checks, that the database is open.
+@return True if the database was opened successfully.
+*/
 bool RawDatabase::isOpen()
 {
     // We don't need thread safety since only the ctor/dtor can write this pointer
     return sqlite != nullptr;
 }
 
+/**
+@brief Executes a SQL transaction synchronously.
+@param statement Statement to execute.
+@return Whether the transaction was successful.
+*/
 bool RawDatabase::execNow(const QString& statement)
 {
     return execNow(Query{statement});
 }
 
+/**
+@brief Executes a SQL transaction synchronously.
+@param statement Statement to execute.
+@return Whether the transaction was successful.
+*/
 bool RawDatabase::execNow(const RawDatabase::Query &statement)
 {
     return execNow(QVector<Query>{statement});
 }
 
+/**
+@brief Executes a SQL transaction synchronously.
+@param statements List of statements to execute.
+@return Whether the transaction was successful.
+*/
 bool RawDatabase::execNow(const QVector<RawDatabase::Query> &statements)
 {
     if (!sqlite)
@@ -134,6 +216,10 @@ bool RawDatabase::execNow(const QVector<RawDatabase::Query> &statements)
     return success.load(std::memory_order_acquire);
 }
 
+/**
+@brief Executes a SQL transaction asynchronously.
+@param statement Statement to execute.
+*/
 void RawDatabase::execLater(const QString &statement)
 {
     execLater(Query{statement});
@@ -162,11 +248,20 @@ void RawDatabase::execLater(const QVector<RawDatabase::Query> &statements)
     QMetaObject::invokeMethod(this, "process");
 }
 
+/**
+@brief Waits until all the pending transactions are executed.
+*/
 void RawDatabase::sync()
 {
     QMetaObject::invokeMethod(this, "process", Qt::BlockingQueuedConnection);
 }
 
+/**
+@brief Changes the database password, encrypting or decrypting if necessary.
+@param password If password is empty, the database will be decrypted.
+@return True if success, false otherwise.
+@note Will process all transactions before changing the password.
+*/
 bool RawDatabase::setPassword(const QString& password)
 {
     if (!sqlite)
@@ -260,6 +355,13 @@ bool RawDatabase::setPassword(const QString& password)
     return true;
 }
 
+/**
+@brief Moves the database file on disk to match the new path.
+@param newPath Path to move database file.
+@return True if success, false otherwise.
+
+@note Will process all transactions before renaming
+*/
 bool RawDatabase::rename(const QString &newPath)
 {
     if (!sqlite)
@@ -291,6 +393,11 @@ bool RawDatabase::rename(const QString &newPath)
     return open(path, currentHexKey);
 }
 
+/**
+@brief Deletes the on disk database file after closing it.
+@note Will process all transactions before deletings.
+@return True if success, false otherwise.
+*/
 bool RawDatabase::remove()
 {
     if (!sqlite)
@@ -311,7 +418,11 @@ bool RawDatabase::remove()
     return QFile::remove(path);
 }
 
-
+/**
+@brief Derives a 256bit key from the password and returns it hex-encoded
+@param password Password to decrypt database
+@return String representation of key
+*/
 QString RawDatabase::deriveKey(const QString &password)
 {
     if (password.isEmpty())
@@ -327,6 +438,12 @@ QString RawDatabase::deriveKey(const QString &password)
     return QByteArray((char*)key.key, 32).toHex();
 }
 
+/**
+@brief Implements the actual processing of pending transactions.
+Unqueues, compiles, binds and executes queries, then notifies of results
+
+@warning MUST only be called from the worker thread
+*/
 void RawDatabase::process()
 {
     assert(QThread::currentThread() == workerThread.get());
@@ -460,6 +577,12 @@ void RawDatabase::process()
     }
 }
 
+/**
+@brief Extracts a variant from one column of a result row depending on the column type.
+@param stmt Statement to execute.
+@param col Number of column to extract.
+@return Extracted data.
+*/
 QVariant RawDatabase::extractData(sqlite3_stmt *stmt, int col)
 {
     int type = sqlite3_column_type(stmt, col);

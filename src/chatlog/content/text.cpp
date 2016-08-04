@@ -243,17 +243,17 @@ void Text::regenerate()
     {
         doc->setDefaultFont(defFont);
 
-        if (!elide)
+        if (elide)
         {
-            doc->setDefaultStyleSheet(defStyleSheet);
-            doc->setHtml(text);
+            QFontMetrics metrics = QFontMetrics(defFont);
+            QString elidedText = metrics.elidedText(text, Qt::ElideRight, qRound(width));
+
+            doc->setPlainText(elidedText);
         }
         else
         {
-            QFontMetrics metrics = QFontMetrics(defFont);
-            QString elidedText = metrics.elidedText(rawText, Qt::ElideRight,
-                                                    qRound(width));
-            doc->setPlainText(elidedText);
+            doc->setDefaultStyleSheet(defStyleSheet);
+            doc->setHtml(text);
         }
 
         // wrap mode

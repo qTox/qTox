@@ -57,10 +57,6 @@ private:
     QHash<int, int64_t> receipts;
     QMap<int64_t, MsgPtr> undeliveredMsgs;
 
-    // timeout after which faux offline messages get to be re-sent
-    // originally was 2s, but since that was causing lots of duplicated
-    // messages on receiving end, make qTox be more lazy about re-sending
-    // should be 20s
     static const int offlineTimeout;
 };
 

@@ -30,9 +30,6 @@
 
 class QNetworkAccessManager;
 
-/// This class implements a client for the toxme.se API
-/// The class is thread safe
-/// May process events while waiting for blocking calls
 class Toxme
 {
 public:
@@ -45,22 +42,15 @@ public:
         NoPassword = 4
     };
 
-    /// Converts a toxme.se address to a Tox ID, returns an empty ID on error
     static ToxId lookup(QString address);
-    /// Creates a new toxme.se address associated with a Tox ID.
-    /// If keepPrivate, the address will not be published on toxme.se
-    /// The bio is a short optional description of yourself if you want to publish your address.
-    /// If it passed without error, return password, else return errorCode in QString
     static QString createAddress(ExecCode &code, QString server, ToxId id, QString address,
                               bool keepPrivate=true, QString bio=QString());
-    /// Deletes the address associated with your current Tox ID
     static ExecCode deleteAddress(QString server, ToxId id);
-    /// Return string of the corresponding error code
     static QString getErrorMessage(int errorCode);
     static QString translateErrorMessage(int errorCode);
 
 private:
-    Toxme()=delete;
+    Toxme() = delete;
     static QByteArray makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error);
     static QByteArray prepareEncryptedJson(QString url, int action, QString payload);
     static QByteArray getServerPubkey(QString url, QNetworkReply::NetworkError &error);

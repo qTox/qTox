@@ -122,6 +122,7 @@ private:
     QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
+    QMap<uint32_t, Status> oldStatus;
     CallConfirmWidget *callConfirm;
     bool isTyping;
 };

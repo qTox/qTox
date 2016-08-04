@@ -23,36 +23,20 @@
 
 #include <QString>
 
-/*
- * This class represents a Tox ID.
- *  An ID is composed of 32 bytes long public key, 4 bytes long NoSpam
- *  and 2 bytes long checksum.
- *
- *  e.g.
- *
- *  | C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30 | C8BA3AB9 | BEB9
- *  |                                                                 /           |
- *  |                                                                /    NoSpam  | Checksum
- *  |           Public Key (PK), 32 bytes, 64 characters            /    4 bytes  |  2 bytes
- *  |                                                              |  8 characters|  4 characters
- */
 class ToxId
 {
 public:
-    ToxId(); ///< The default constructor. Creates an empty Tox ID.
-    ToxId(const ToxId& other); ///< The copy constructor.
-    explicit ToxId(const QString& id); ///< Create a Tox ID from QString.
-                                       /// If the given id is not a valid Tox ID, then:
-                                       /// publicKey == id and noSpam == "" == checkSum.
+    ToxId();
+    ToxId(const ToxId& other);
+    explicit ToxId(const QString& id);
 
-    bool operator==(const ToxId& other) const; ///< Compares only publicKey.
-    bool operator!=(const ToxId& other) const; ///< Compares only publicKey.
-    bool isSelf() const; ///< Returns true if this Tox ID is equals to
-                                  /// the Tox ID of the currently active profile.
-    QString toString() const; ///< Returns the Tox ID as QString.
-    void clear(); ///< Clears all elements of the Tox ID.
+    bool operator==(const ToxId& other) const;
+    bool operator!=(const ToxId& other) const;
+    bool isSelf() const;
+    QString toString() const;
+    void clear();
 
-    static bool isToxId(const QString& id); ///< Returns true if id is a valid Tox ID.
+    static bool isToxId(const QString& id);
 
 public:
     QString publicKey;

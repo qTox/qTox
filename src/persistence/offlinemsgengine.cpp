@@ -26,6 +26,15 @@
 #include <QMutexLocker>
 #include <QTimer>
 
+/**
+@var static const int OfflineMsgEngine::offlineTimeout
+@brief timeout after which faux offline messages get to be re-sent.
+Originally was 2s, but since that was causing lots of duplicated
+messages on receiving end, make qTox be more lazy about re-sending
+should be 20s.
+*/
+
+
 const int OfflineMsgEngine::offlineTimeout = 20000;
 QMutex OfflineMsgEngine::globalMutex;
 

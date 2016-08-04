@@ -151,6 +151,10 @@ void CroppingLabel::showTextEdit()
     textEdit->setFocusPolicy(Qt::ClickFocus);
 }
 
+/**
+@brief Get original full text.
+@return The un-cropped text.
+*/
 QString CroppingLabel::fullText()
 {
     return origText;

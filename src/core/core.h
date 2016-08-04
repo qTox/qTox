@@ -46,7 +46,7 @@ class Core : public QObject
     Q_OBJECT
 public:
     explicit Core(QThread* coreThread, Profile& profile);
-    static Core* getInstance(); ///< Returns the global widget's Core instance
+    static Core* getInstance();
     CoreAV* getAv();
     ~Core();
 
@@ -59,41 +59,42 @@ public:
 
     QString getPeerName(const ToxId& id) const;
 
-    QVector<uint32_t> getFriendList() const; ///< Returns the list of friendIds in our friendlist, an empty list on error
-    int getGroupNumberPeers(int groupId) const; ///< Return the number of peers in the group chat on success, or -1 on failure
-    QString getGroupPeerName(int groupId, int peerId) const; ///< Get the name of a peer of a group
-    ToxId getGroupPeerToxId(int groupId, int peerId) const; ///< Get the public key of a peer of a group
-    QList<QString> getGroupPeerNames(int groupId) const; ///< Get the names of the peers of a group
-    QString getFriendAddress(uint32_t friendNumber) const; ///< Get the full address if known, or public key of a friend
-    QString getFriendPublicKey(uint32_t friendNumber) const; ///< Get the public key part of the ToxID only
-    QString getFriendUsername(uint32_t friendNumber) const; ///< Get the username of a friend
-    bool isFriendOnline(uint32_t friendId) const; ///< Check if a friend is online. Unknown friends are considered offline.
-    bool hasFriendWithAddress(const QString &addr) const; ///< Check if we have a friend by address
-    bool hasFriendWithPublicKey(const QString &pubkey) const; ///< Check if we have a friend by public key
-    int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const; ///< Accept a groupchat invite
-    void quitGroupChat(int groupId) const; ///< Quit a groupchat
+    QVector<uint32_t> getFriendList() const;
+    int getGroupNumberPeers(int groupId) const;
+    QString getGroupPeerName(int groupId, int peerId) const;
+    ToxId getGroupPeerToxId(int groupId, int peerId) const;
+    QList<QString> getGroupPeerNames(int groupId) const;
+    QString getFriendAddress(uint32_t friendNumber) const;
+    QString getFriendPublicKey(uint32_t friendNumber) const;
+    QString getFriendUsername(uint32_t friendNumber) const;
 
-    QString getUsername() const; ///< Returns our username, or an empty string on failure
-    Status getStatus() const; ///< Returns our user status
-    QString getStatusMessage() const; ///< Returns our status message, or an empty string on failure
-    ToxId getSelfId() const; ///< Returns our Tox ID
-    QPair<QByteArray, QByteArray> getKeypair() const; ///< Returns our public and private keys
+    bool isFriendOnline(uint32_t friendId) const;
+    bool hasFriendWithAddress(const QString &addr) const;
+    bool hasFriendWithPublicKey(const QString &pubkey) const;
+    int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
+    void quitGroupChat(int groupId) const;
+
+    QString getUsername() const;
+    Status getStatus() const;
+    QString getStatusMessage() const;
+    ToxId getSelfId() const;
+    QPair<QByteArray, QByteArray> getKeypair() const;
 
     static std::unique_ptr<TOX_PASS_KEY> createPasskey(const QString &password, uint8_t* salt = nullptr);
     static QByteArray encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey);
-    static QByteArray encryptData(const QByteArray& data); ///< Uses the default profile's key
+    static QByteArray encryptData(const QByteArray& data);
     static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
-    static QByteArray decryptData(const QByteArray& data); ///< Uses the default profile's key
+    static QByteArray decryptData(const QByteArray& data);
 
-    bool isReady(); ///< Most of the API shouldn't be used until Core is ready, call start() first
+    bool isReady();
 
 public slots:
-    void start(); ///< Initializes the core, must be called before anything else
-    void reset(); ///< Reinitialized the core. Must be called from the Core thread, with the GUI thread ready to process events.
-    void process(); ///< Processes toxcore events and ensure we stay connected, called by its own timer
-    void bootstrapDht(); ///< Connects us to the Tox network
+    void start();
+    void reset();
+    void process();
+    void bootstrapDht();
 
-    QByteArray getToxSaveData(); ///< Returns the unencrypted tox save data
+    QByteArray getToxSaveData();
 
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
@@ -225,7 +226,7 @@ private:
     void deadifyTox();
 
 private slots:
-    void killTimers(bool onlyStop); ///< Must only be called from the Core thread
+    void killTimers(bool onlyStop);
 
 private:
     Tox* tox;

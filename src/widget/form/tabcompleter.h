@@ -20,18 +20,13 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* This file was taken from the Quassel IRC client source (src/uisupport), and
-   was greatly simplified for use in qTox. */
-
 #ifndef TABCOMPLETER_H
 #define TABCOMPLETER_H
 
 #include <QString>
 #include <QMap>
-#include <QObject> // I'm really confused why I need this
-
-class ChatTextEdit;
-class Group;
+#include "src/group.h"
+#include "src/widget/tool/chattextedit.h"
 
 class TabCompleter : public QObject
 {

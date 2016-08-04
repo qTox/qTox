@@ -89,9 +89,8 @@ void AboutUser::onSelectDirClicked()
 }
 
 /**
- * @brief AboutUser::onAcceptedClicked When users clicks the bottom OK button,
- *          save all settings
- */
+@brief Called when user clicks the bottom OK button, save all settings
+*/
 void AboutUser::onAcceptedClicked()
 {
     ToxId toxId = ToxId(ui->publicKey->text());
