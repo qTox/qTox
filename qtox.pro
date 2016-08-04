@@ -273,6 +273,7 @@ HEADERS  += \
     src/core/cstring.h \
     src/core/toxid.h \
     src/core/indexedlist.h \
+    src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
     src/net/toxuri.h \
     src/net/toxdns.h \
@@ -378,6 +379,7 @@ SOURCES += \
     src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
+    src/core/recursivesignalblocker.cpp \
     src/core/toxid.cpp \
     src/core/toxcall.cpp \
     src/chatlog/chatlog.cpp \
