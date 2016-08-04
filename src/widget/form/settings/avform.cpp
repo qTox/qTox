@@ -281,7 +281,7 @@ void AVForm::fillCameraModesComboBox()
         qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         if (mode.height && mode.width)
-            str += QString("%1p").arg(getModeSize(mode));
+            str += QString("%1p").arg(mode.height);
         else
             str += tr("Default resolution");
 
