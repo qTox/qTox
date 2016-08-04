@@ -75,6 +75,7 @@
 #include <QProcess>
 #include <QSvgRenderer>
 #include <QWindow>
+#include <QDesktopWidget>
 #include <tox/tox.h>
 
 #ifdef Q_OS_MAC
@@ -549,6 +550,18 @@ Widget* Widget::getInstance()
         instance = new Widget();
 
     return instance;
+}
+
+QSize Widget::minimumSizeHint() const
+{
+    QSize size(300, 480);
+
+    if (contentWidget)
+        size.rwidth() = ui->mainSplitter->minimumWidth();
+    else
+        size.rwidth() = ui->tooliconsZone->minimumSize().width();
+
+    return size;
 }
 
 /**
@@ -2054,6 +2067,8 @@ QString Widget::getStatusIconPath(Status status)
     case Status::Offline:
         return ":/img/status/dot_offline.svg";
     }
+
+    return QString();
 }
 
 inline QIcon Widget::prepareIcon(QString path, int w, int h)
@@ -2333,4 +2348,77 @@ void Widget::focusChatInput()
         else if (Group* g = activeChatroomWidget->getGroup())
             g->getChatForm()->focusInput();
     }
+}
+
+/**
+ * @brief       Shows a widget "detached" or as "embedded widget".
+ * @param[in]   contentWidget   the widget to show
+ * @param[in]   title           the title in "embedded" mode
+ * @param[in]   activeButton    the active tool button in "embedded" mode
+ *
+ * Depending on the mode, the widget is shown detached from the main window or
+ * embedded in the main window's splitter.
+ */
+void Widget::showContentWidget(QWidget* widget, const QString& title,
+                               Widget::ActiveToolMenuButton activeButton)
+{
+    Q_ASSERT(widget != this);
+
+    QWidget* prevWidget = contentWidget;
+
+    if (!widget)
+    {
+        setMinimumWidth(minimumSizeHint().width());
+        return;
+    }
+
+    const int dw = QApplication::desktop()->width();
+
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        contentWidget = nullptr;
+        setWindowTitle(QString());
+
+        // detach the content widget
+        widget->setParent(nullptr);
+        widget->showNormal();
+        setMinimumWidth(minimumSizeHint().width());
+
+        resize(width() - widget->width(), height());
+
+        // move the content widget attached to top-right / top-left
+        QPoint newPos(0, geometry().top());
+        newPos.rx() = frameGeometry().right() + widget->width() > dw
+                   ? geometry().left() - widget->width()
+                   : geometry().right();
+
+        widget->setGeometry(newPos.x(), newPos.y(),
+                                   widget->width(), height());
+    }
+    else
+    {
+        contentWidget = widget;
+
+        if (prevWidget && prevWidget != contentWidget)
+            prevWidget->close();
+
+        setWindowTitle(title);
+        setActiveToolMenuButton(activeButton);
+
+        QList<int> sizes = ui->mainSplitter->sizes();
+
+        ui->mainSplitter->insertWidget(1, contentWidget);
+        sizes << contentWidget->minimumSizeHint().width();
+        setMinimumWidth(minimumSizeHint().width());
+
+        if (frameGeometry().right() >= dw)
+        {
+            // reverse splitter positions, depending on the desktop edge
+            ui->mainSplitter->insertWidget(0, contentWidget);
+            std::reverse(sizes.begin(), sizes.end());
+        }
+
+        // restore splitter pos
+        ui->mainSplitter->setSizes(sizes);
+   }
 }
