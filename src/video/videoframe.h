@@ -299,7 +299,7 @@ private:
 
     // Source frame
     const QRect sourceDimensions;
-    const int sourcePixelFormat;
+    int sourcePixelFormat;
     const FrameBufferKey sourceFrameKey;
     const bool freeSourceFrame;
 

@@ -93,7 +93,6 @@ VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, 
     : frameID(frameIDs++),
       sourceID(sourceID),
       sourceDimensions(dimensions),
-      sourcePixelFormat(pixFmt),
       sourceFrameKey(getFrameKey(dimensions.size(), pixFmt, sourceFrame->linesize[0])),
       freeSourceFrame(freeSourceFrame)
 {
@@ -103,40 +102,41 @@ VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, 
     {
     case AV_PIX_FMT_YUVJ420P:
     {
-        pixFmt = AV_PIX_FMT_YUV420P;
+        sourcePixelFormat = AV_PIX_FMT_YUV420P;
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
 
     case AV_PIX_FMT_YUVJ411P:
     {
-        pixFmt = AV_PIX_FMT_YUV411P;
+        sourcePixelFormat = AV_PIX_FMT_YUV411P;
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
 
     case AV_PIX_FMT_YUVJ422P:
     {
-        pixFmt = AV_PIX_FMT_YUV422P;
+        sourcePixelFormat = AV_PIX_FMT_YUV422P;
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
 
     case AV_PIX_FMT_YUVJ444P:
     {
-        pixFmt = AV_PIX_FMT_YUV444P;
+        sourcePixelFormat = AV_PIX_FMT_YUV444P;
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
 
     case AV_PIX_FMT_YUVJ440P:
     {
-        pixFmt = AV_PIX_FMT_YUV440P;
+        sourcePixelFormat = AV_PIX_FMT_YUV440P;
         sourceFrame->color_range = AVCOL_RANGE_MPEG;
         break;
     }
 
     default:{
+        sourcePixelFormat = pixFmt;
         sourceFrame->color_range = AVCOL_RANGE_UNSPECIFIED;
     }
     }
