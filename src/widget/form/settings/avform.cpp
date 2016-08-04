@@ -247,12 +247,22 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     for (auto it = bestModeInds.rbegin(); it != bestModeInds.rend(); ++it)
     {
         VideoMode mode = allVideoModes[it->second];
-        int size = getModeSize(mode);
-        auto result = std::find_if(newVideoModes.cbegin(), newVideoModes.cend(),
-                                   [size](VideoMode mode) { return getModeSize(mode) == size; });
 
-        if (result == newVideoModes.end())
+        if(newVideoModes.empty())
+        {
             newVideoModes.push_back(mode);
+        }
+        else
+        {
+            int size = getModeSize(mode);
+            auto result = std::find_if(newVideoModes.cbegin(), newVideoModes.cend(),
+                                       [size](VideoMode mode) { return getModeSize(mode) == size; });
+
+            if(result == newVideoModes.end())
+            {
+                newVideoModes.push_back(mode);
+            }
+        }
     }
     allVideoModes = newVideoModes;
 }
