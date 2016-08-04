@@ -235,7 +235,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
-		avatarsPath = s.value("avatarsPath",QDir::homePath()).toString();
+        avatarsPath = s.value("avatarsPath",QDir::homePath()).toString();
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -479,6 +479,7 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("avatarsPath", avatarsPath);
     s.endGroup();
 
     s.beginGroup("Chat");
