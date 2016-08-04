@@ -23,7 +23,8 @@ extern "C" {
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
 }
-#include <QMutexLocker>
+#include <QWriteLocker>
+#include <QReadLocker>
 #include <QDebug>
 #include <QtConcurrent/QtConcurrentRun>
 #include <memory>
@@ -138,12 +139,10 @@ void CameraSource::open(const QString& deviceName)
 
 void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 {
-    streamBlocker = true;
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (DeviceName == deviceName && Mode == mode)
     {
-        streamBlocker = false;
         return;
     }
 
@@ -156,8 +155,6 @@ void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 
     if (subscriptions && _isOpen)
         openDevice();
-
-    streamBlocker = false;
 }
 
 /**
@@ -177,10 +174,12 @@ bool CameraSource::isOpen()
 
 CameraSource::~CameraSource()
 {
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
+    {
         return;
+    }
 
     // Free all remaining VideoFrame
     VideoFrame::untrackFrames(id, true);
@@ -198,9 +197,7 @@ CameraSource::~CameraSource()
         device = nullptr;
     }
 
-    // Memfence so the stream thread sees a nullptr device
-    std::atomic_thread_fence(std::memory_order_release);
-    l.unlock();
+    locker.unlock();
 
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
@@ -209,7 +206,7 @@ CameraSource::~CameraSource()
 
 bool CameraSource::subscribe()
 {
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
     {
@@ -228,18 +225,13 @@ bool CameraSource::subscribe()
         device = nullptr;
         cctx = cctxOrig = nullptr;
         videoStreamIndex = -1;
-        // Memfence so the stream thread sees a nullptr device
-        std::atomic_thread_fence(std::memory_order_release);
         return false;
     }
-
 }
 
 void CameraSource::unsubscribe()
 {
-    streamBlocker = true;
-    QMutexLocker l{&biglock};
-    streamBlocker = false;
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
     {
@@ -256,11 +248,6 @@ void CameraSource::unsubscribe()
     if (subscriptions - 1 == 0)
     {
         closeDevice();
-        l.unlock();
-
-        // Synchronize with our stream thread
-        while (streamFuture.isRunning())
-            QThread::yieldCurrentThread();
     }
     else
     {
@@ -362,7 +349,7 @@ bool CameraSource::openDevice()
 */
 void CameraSource::closeDevice()
 {
-    qDebug() << "Closing device "<<deviceName;
+    qDebug() << "Closing device " << deviceName;
 
     // Free all remaining VideoFrame
     VideoFrame::untrackFrames(id, true);
@@ -374,8 +361,6 @@ void CameraSource::closeDevice()
     cctxOrig = nullptr;
     while (device && !device->close()) {}
     device = nullptr;
-    // Memfence so the stream thread sees a nullptr device
-    std::atomic_thread_fence(std::memory_order_release);
 }
 
 /**
@@ -413,23 +398,14 @@ void CameraSource::stream()
 
     forever
     {
-        biglock.lock();
+        QReadLocker locker{&streamMutex};
 
-        // When a thread makes device null, it releases it, so we acquire here
-        std::atomic_thread_fence(std::memory_order_acquire);
-        if (!device)
+        // Exit if device is no longer valid
+        if(!device)
         {
-            biglock.unlock();
-            return;
+            break;
         }
 
         streamLoop();
-
-        // Give a chance to other functions to pick up the lock if needed
-        biglock.unlock();
-        while (streamBlocker)
-            QThread::yieldCurrentThread();
-
-        QThread::yieldCurrentThread();
     }
 }

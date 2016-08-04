@@ -24,6 +24,7 @@
 #include <QString>
 #include <QFuture>
 #include <QVector>
+#include <QReadWriteLock>
 #include <atomic>
 #include "src/video/videosource.h"
 #include "src/video/videomode.h"
@@ -65,7 +66,7 @@ private:
     VideoMode mode;
     AVCodecContext* cctx, *cctxOrig;
     int videoStreamIndex;
-    QMutex biglock;
+    QReadWriteLock streamMutex;
     std::atomic_bool _isOpen;
     std::atomic_bool streamBlocker;
     std::atomic_int subscriptions;
