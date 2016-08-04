@@ -93,7 +93,7 @@ void AboutForm::replaceVersions()
                                     "%0A(links%2C+images%2C+etc+go+here)%0A%0A"
                                     "----%0A%0AMore+information+on+how+to+"
                                     "write+good+bug+reports+in+the+wiki%3A+"
-                                    "https%3A%2F%2Fgithub.com%2Ftux3%2FqTox%2F"
+                                    "https%3A%2F%2Fgithub.com%2FqTox%2FqTox%2F"
                                     "wiki%2FWriting-Useful-Bug-Reports.%0A%0A"
                                     "Please+remove+any+unnecessary+template+"
                                     "section+before+submitting.\""
