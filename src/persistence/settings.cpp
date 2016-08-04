@@ -235,7 +235,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
-        avatarsPath = s.value("avatarsPath",QDir::homePath()).toString();
+        setAvatarsPath(QDir::homePath());
     s.endGroup();
 
     s.beginGroup("Chat");
