@@ -136,9 +136,9 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void destroyInstance();
-    QString getSettingsDirPath();
-    QString getAppDataDirPath();
-    QString getAppCacheDirPath();
+    QString getSettingsDirPath() const;
+    QString getAppDataDirPath() const;
+    QString getAppCacheDirPath() const;
 
     void createSettingsDir();
     void createPersonal(QString basename);
