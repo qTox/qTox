@@ -38,7 +38,7 @@ public:
     using AtomicIDType = std::atomic_uint_fast64_t;
 
 public:
-    VideoSource() : id(sourceIDs.fetch_add(std::memory_order_relaxed)){}
+    VideoSource() : id(sourceIDs++){}
 
     virtual ~VideoSource() = default;
     /**

@@ -97,6 +97,46 @@ VideoFrame::VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, 
       sourceFrameKey(getFrameKey(dimensions.size(), pixFmt, sourceFrame->linesize[0])),
       freeSourceFrame(freeSourceFrame)
 {
+
+    // We override the pixel format in the case a deprecated one is used
+    switch(pixFmt)
+    {
+    case AV_PIX_FMT_YUVJ420P:
+    {
+        pixFmt = AV_PIX_FMT_YUV420P;
+        sourceFrame->color_range = AVCOL_RANGE_MPEG;
+        break;
+    }
+
+    case AV_PIX_FMT_YUVJ411P:
+    {
+        pixFmt = AV_PIX_FMT_YUV411P;
+        sourceFrame->color_range = AVCOL_RANGE_MPEG;
+        break;
+    }
+
+    case AV_PIX_FMT_YUVJ422P:
+    {
+        pixFmt = AV_PIX_FMT_YUV422P;
+        sourceFrame->color_range = AVCOL_RANGE_MPEG;
+        break;
+    }
+
+    case AV_PIX_FMT_YUVJ444P:
+    {
+        pixFmt = AV_PIX_FMT_YUV444P;
+        sourceFrame->color_range = AVCOL_RANGE_MPEG;
+        break;
+    }
+
+    case AV_PIX_FMT_YUVJ440P:
+    {
+        pixFmt = AV_PIX_FMT_YUV440P;
+        sourceFrame->color_range = AVCOL_RANGE_MPEG;
+        break;
+    }
+    }
+
     frameBuffer[sourceFrameKey] = sourceFrame;
 }
 
