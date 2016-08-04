@@ -103,7 +103,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>&lt;a href=&quot;https://github.com/tux3/qtox&quot;&gt;https://github.com/tux3/qtox&lt;/a&gt;</string>
+    <string>&lt;a href=&quot;https://github.com/qTox/qtox&quot;&gt;https://github.com/qTox/qtox&lt;/a&gt;</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

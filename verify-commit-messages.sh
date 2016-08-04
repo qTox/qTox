@@ -35,7 +35,7 @@ if git log --format=format:'%s' "$ARG" | \
 then
     echo ""
     echo "Above ↑ commits don't conform to commit message format:"
-    echo "https://github.com/tux3/qTox/blob/master/CONTRIBUTING.md#commit-message-format"
+    echo "https://github.com/qTox/qTox/blob/master/CONTRIBUTING.md#commit-message-format"
     echo ""
     echo "Pls fix."
     echo ""

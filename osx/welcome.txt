@@ -1,6 +1,6 @@
 Welcome to the qTox for OS X internal nightly installer!
 
-Please report all bugs to https://github.com/tux3/qTox
+Please report all bugs to https://github.com/qTox/qTox
 
 ########################################################
 ##         WARNING: Install me to your user ONLY       

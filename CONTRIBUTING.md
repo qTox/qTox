@@ -3,7 +3,7 @@
 ### Must read
 * If you aren't sure, you can ask on the
   [**IRC channel**](https://webchat.freenode.net/?channels=qtox) or read our
-  [**wiki**](https://github.com/tux3/qTox/wiki) first.
+  [**wiki**](https://github.com/qTox/qTox/wiki) first.
 * Do a quick **search**. Others might have already reported the issue.
 * Write in **English**!
 * Provide **version** information (you can find version numbers in menu
@@ -43,7 +43,7 @@ Qt:
   change is needed.
 * If your commit fixes a reported issue (for example #4134), add the following
   message to the commit `Fixes #4134.`.
-  [Here is an example](https://github.com/tux3/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
+  [Here is an example](https://github.com/qTox/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
 
 ### Good to know
 * **Search** the pull request history! Others might have already implemented
@@ -197,7 +197,7 @@ uint8_t* array = new uint8_t[count];
 QObject notToMentionThatWeUseCamelCase;
 ```
 
-E.g. https://github.com/tux3/qTox/blob/master/src/misc/flowlayout.cpp
+E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
 ## Documentaion
 

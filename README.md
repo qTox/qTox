@@ -3,11 +3,11 @@ qTox
 
  [**User Manual**](/doc/user_manual_en.md) **|**
  [**Install**](/INSTALL.md) **|**
- [**Contribute**](https://github.com/tux3/qTox/wiki#contributing) **|**
- [**Report bugs**](https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports) **|**
+ [**Contribute**](https://github.com/qTox/qTox/wiki#contributing) **|**
+ [**Report bugs**](https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports) **|**
  [**Translate**](/translations/README.md) **|**
  [**Jenkins builds**](https://build.tox.chat/) **|**
- [**Keyboard shortcuts**](https://github.com/tux3/qTox/wiki/Keyboard-shortcuts) **|**
+ [**Keyboard shortcuts**](https://github.com/qTox/qTox/wiki/Keyboard-shortcuts) **|**
  [**Mailing list**](https://lists.tox.chat) **|**
  **IRC Channel:** [#qtox@freenode]
 
@@ -25,7 +25,7 @@ running on all major platforms.**
   - [**CentOS, Debian, Fedora, openSUSE, Ubuntu**](https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox)
   - [other](/INSTALL.md#linux)
 * **Mac**:
-  - [**Experimental download**](https://github.com/tux3/qTox/releases/latest)
+  - [**Experimental download**](https://github.com/qTox/qTox/releases/latest)
 * **FreeBSD**:
   - [**Port**](/INSTALL.md#freebsd-easy)
 <br/>
@@ -80,7 +80,7 @@ Currently they are:
 * @tux3
 * @zetok
 
-[![Build Status](https://travis-ci.org/tux3/qTox.svg?branch=master)](https://travis-ci.org/tux3/qTox)
+[![Build Status](https://travis-ci.org/qTox/qTox.svg?branch=master)](https://travis-ci.org/qTox/qTox)
 
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox

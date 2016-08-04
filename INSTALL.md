@@ -171,7 +171,7 @@ Afterwards open a new terminal, change to a directory of your choice and clone
 the repository:
 ```bash
 cd /home/user/qTox
-git clone https://github.com/tux3/qTox.git qTox
+git clone https://github.com/qTox/qTox.git qTox
 ```
 
 The following steps assumes that you cloned the repository at `/home/user/qTox`.
@@ -444,7 +444,7 @@ Next, install
 
 Then, clone qTox:
 ```bash
-git clone https://github.com/tux3/qTox``
+git clone https://github.com/qTox/qTox
 ```
 
 Finally, copy all required files. Whenever you update your brew packages, you
@@ -547,7 +547,7 @@ by installer automatically.
 
 ### Cloning the Repository
 
-Clone the repository (https://github.com/tux3/qTox.git) with your preferred  Git
+Clone the repository (https://github.com/qTox/qTox.git) with your preferred  Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task
 (you may need to add the path to the `git.exe` system variable Path). The
 following steps assume that you cloned the repository at `C:\qTox`. If you

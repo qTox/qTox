@@ -4,7 +4,7 @@
 VERSION_UPSTREAM="1.0"
 VERSION_PACKAGE="1"
 PACKAGENAME="qtox"
-UPSTREAM_URL="https://github.com/tux3/qTox/archive/master.tar.gz"
+UPSTREAM_URL="https://github.com/qTox/qTox/archive/master.tar.gz"
 
 # Make some vars for convenience
 VERNAME=$PACKAGENAME"_"$VERSION_UPSTREAM

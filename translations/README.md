@@ -4,7 +4,7 @@ Translating qTox should be easy & straightforward for anyone using
 [**Weblate**](https://hosted.weblate.org/projects/tox/qtox/).
 
 Though if you're interested in doing it manually, there's a [wiki page]
-(https://github.com/tux3/qTox/wiki/Translating) for it.
+(https://github.com/qTox/qTox/wiki/Translating) for it.
 
 
 Overall translation: [![Translation status](https://hosted.weblate.org/widgets/tox/-/svg-badge.svg)](https://hosted.weblate.org/engage/tox/?utm_source=widget)

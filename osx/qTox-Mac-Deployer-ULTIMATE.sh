@@ -137,7 +137,7 @@ function install() {
 			git pull
 		else
 			fcho "Cloning qTox git ... "
-			git clone https://github.com/tux3/qTox.git
+			git clone https://github.com/qTox/qTox.git
 		fi
 	fi
 
@@ -260,7 +260,7 @@ function helpme() {
 	echo "-b  | --build     -- Builds qTox in: ${BUILD_DIR}"
 	echo "-d  | --deploy    -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
 	echo "-bs | --bootstrap -- Performs bootstrap steps."
-	fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/tux3/qTox"
+	fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/qTox/qTox"
 	exit 0
 }
 
