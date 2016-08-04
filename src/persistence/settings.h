@@ -41,6 +41,98 @@ enum StyleType {NONE, WITH_CHARS, WITHOUT_CHARS};
 class Settings : public QObject
 {
     Q_OBJECT
+
+    // general
+    Q_PROPERTY(bool compactLayout READ getCompactLayout WRITE setCompactLayout
+               NOTIFY compactLayoutChanged FINAL)
+    Q_PROPERTY(bool autorun READ getAutorun WRITE setAutorun
+               NOTIFY autorunChanged FINAL)
+
+    // GUI
+    Q_PROPERTY(bool separateWindow READ getSeparateWindow
+               WRITE setSeparateWindow NOTIFY separateWindowChanged FINAL)
+    Q_PROPERTY(QString smileyPack READ getSmileyPack WRITE setSmileyPack
+               NOTIFY smileyPackChanged FINAL)
+    Q_PROPERTY(int emojiFontPointSize READ getEmojiFontPointSize
+               WRITE setEmojiFontPointSize NOTIFY emojiFontPointSizeChanged
+               FINAL)
+    Q_PROPERTY(bool minimizeOnClose READ getMinimizeOnClose
+               WRITE setMinimizeOnClose NOTIFY minimizeOnCloseChanged FINAL)
+    Q_PROPERTY(QByteArray windowGeometry READ getWindowGeometry
+               WRITE setWindowGeometry NOTIFY windowGeometryChanged FINAL)
+    Q_PROPERTY(QByteArray windowState READ getWindowState WRITE setWindowState
+               NOTIFY windowStateChanged FINAL)
+    Q_PROPERTY(QByteArray splitterState READ getSplitterState
+               WRITE setSplitterState NOTIFY splitterStateChanged FINAL)
+    Q_PROPERTY(QByteArray dialogGeometry READ getDialogGeometry
+               WRITE setDialogGeometry NOTIFY dialogGeometryChanged FINAL)
+    Q_PROPERTY(QByteArray dialogSplitterState READ getDialogSplitterState
+               WRITE setDialogSplitterState NOTIFY dialogSplitterStateChanged
+               FINAL)
+    Q_PROPERTY(QByteArray dialogSettingsGeometry READ getDialogSettingsGeometry
+               WRITE setDialogSettingsGeometry
+               NOTIFY dialogSettingsGeometryChanged FINAL)
+    Q_PROPERTY(QString style READ getStyle WRITE setStyle NOTIFY styleChanged
+               FINAL)
+    Q_PROPERTY(bool showSystemTray READ getShowSystemTray
+               WRITE setShowSystemTray NOTIFY showSystemTrayChanged FINAL)
+
+    // ChatView
+    Q_PROPERTY(bool groupchatPosition READ getGroupchatPosition
+               WRITE setGroupchatPosition NOTIFY groupchatPositionChanged FINAL)
+    Q_PROPERTY(QFont chatMessageFont READ getChatMessageFont
+               WRITE setChatMessageFont NOTIFY chatMessageFontChanged FINAL)
+    //Q_PROPERTY(StyleType stylePreference READ WRITE NOTIFY FINAL)
+    Q_PROPERTY(int firstColumnHandlePos READ getFirstColumnHandlePos
+               WRITE setFirstColumnHandlePos
+               NOTIFY firstColumnHandlePosChanged FINAL)
+    Q_PROPERTY(int secondColumnHandlePosFromRight
+               READ getSecondColumnHandlePosFromRight
+               WRITE setSecondColumnHandlePosFromRight
+               NOTIFY secondColumnHandlePosFromRightChanged FINAL)
+    Q_PROPERTY(QString timestampFormat READ getTimestampFormat
+               WRITE setTimestampFormat NOTIFY timestampFormatChanged FINAL)
+    Q_PROPERTY(QString dateFormat READ getDateFormat WRITE setDateFormat
+               NOTIFY dateFormatChanged FINAL)
+    Q_PROPERTY(bool statusChangeNotificationEnabled
+               READ getStatusChangeNotificationEnabled
+               WRITE setStatusChangeNotificationEnabled
+               NOTIFY statusChangeNotificationEnabledChanged FINAL)
+
+    // Privacy
+    Q_PROPERTY(bool typingNotification READ getTypingNotification
+               WRITE setTypingNotification NOTIFY typingNotificationChanged
+               FINAL)
+    //Q_PROPERTY(Db::syncType dbSyncType READ WRITE NOTIFY FINAL);
+
+    // Audio
+    Q_PROPERTY(QString inDev READ getInDev WRITE setInDev
+               NOTIFY inDevChanged FINAL)
+    Q_PROPERTY(bool audioInDevEnabled READ getAudioInDevEnabled
+               WRITE setAudioInDevEnabled NOTIFY audioInDevEnabledChanged FINAL)
+    Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel
+               WRITE setAudioInGainDecibel NOTIFY audioInGainDecibelChanged
+               FINAL)
+    Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev
+               NOTIFY outDevChanged FINAL)
+    Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled
+               WRITE setAudioOutDevEnabled NOTIFY audioOutDevEnabledChanged
+               FINAL)
+    Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume
+               NOTIFY outVolumeChanged FINAL)
+
+    // Video
+    Q_PROPERTY(QString videoDev READ getVideoDev WRITE setVideoDev
+               NOTIFY videoDevChanged FINAL)
+    Q_PROPERTY(QRect camVideoRes READ getCamVideoRes WRITE setCamVideoRes
+               NOTIFY camVideoResChanged FINAL)
+    Q_PROPERTY(QRect screenRegion READ getScreenRegion WRITE setScreenRegion
+               NOTIFY screenRegionChanged FINAL)
+    Q_PROPERTY(bool screenGrabbed READ getScreenGrabbed WRITE setScreenGrabbed
+               NOTIFY screenGrabbedChanged FINAL)
+    Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS
+               WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
+
 public:
     static Settings& getInstance();
     static void destroyInstance();
@@ -71,9 +163,85 @@ public slots:
     void sync();
 
 signals:
-    void dhtServerListChanged();
-    void smileyPackChanged();
-    void emojiFontChanged();
+    // General
+    void enableIPv6Changed(bool enabled);
+    void forceTCPChanged(bool enabled);
+    void proxyTypeChanged(ProxyType type);
+    void proxyAddressChanged(const QString& address);
+    void proxyPortChanged(quint16 port);
+    void dhtServerListChanged(const QList<DhtServer>& servers);
+    void autorunChanged(bool enabled);
+    void autoSaveEnabledChanged(bool enabled);
+    void autostartInTrayChanged(bool enabled);
+    void showInFrontChanged(bool enabled);
+    void closeToTrayChanged(bool enabled);
+    void lightTrayIconChanged(bool enabled);
+    void minimizeToTrayChanged(bool enabled);
+    void showWindowChanged(bool enabled);
+    void makeToxPortableChanged(bool enabled);
+    void busySoundChanged(bool enabled);
+    void notifySoundChanged(bool enabled);
+    void groupAlwaysNotifyChanged(bool enabled);
+    void translationChanged(const QString& translation);
+    void toxmeInfoChanged(const QString& info);
+    void toxmeBioChanged(const QString& bio);
+    void toxmePrivChanged(bool priv);
+    void currentProfileChanged(const QString& profile);
+    void currentProfileIdChanged(quint32 id);
+    void enableLoggingChanged(bool enabled);
+    void autoAwayTimeChanged(int minutes);
+    void globalAutoAcceptDirChanged(const QString& path);
+    void checkUpdatesChanged(bool enabled);
+    void widgetDataChanged(const QString& key);
+
+    // GUI
+    void autoLoginChanged(bool enabled);
+    void separateWindowChanged(bool enabled);
+    void showSystemTrayChanged(bool enabled);
+    bool minimizeOnCloseChanged(bool enabled);
+    void windowGeometryChanged(const QByteArray& rect);
+    void windowStateChanged(const QByteArray& state);
+    void splitterStateChanged(const QByteArray& state);
+    void dialogGeometryChanged(const QByteArray& rect);
+    void dialogSplitterStateChanged(const QByteArray& state);
+    void dialogSettingsGeometryChanged(const QByteArray& rect);
+    void styleChanged(const QString& style);
+    void themeColorChanged(int color);
+    void compactLayoutChanged(bool enabled);
+
+    // ChatView
+    void useEmoticonsChanged(bool enabled);
+    void smileyPackChanged(const QString& name);
+    void emojiFontPointSizeChanged(int size);
+    void dontGroupWindowsChanged(bool enabled);
+    void groupchatPositionChanged(bool enabled);
+    void chatMessageFontChanged(const QFont& font);
+    void stylePreferenceChanged(StyleType type);
+    void firstColumnHandlePosChanged(int pos);
+    void secondColumnHandlePosFromRightChanged(int pos);
+    void timestampFormatChanged(const QString& format);
+    void dateFormatChanged(const QString& format);
+    void statusChangeNotificationEnabledChanged(bool enabled);
+    void fauxOfflineMessagingChanged(bool enabled);
+
+    // Privacy
+    void typingNotificationChanged(bool enabled);
+    void dbSyncTypeChanged(Db::syncType type);
+
+    // Audio
+    void inDevChanged(const QString& name);
+    void audioInDevEnabledChanged(bool enabled);
+    void audioInGainDecibelChanged(qreal gain);
+    void outDevChanged(const QString& name);
+    void audioOutDevEnabledChanged(bool enabled);
+    void outVolumeChanged(int volume);
+
+    // Video
+    void videoDevChanged(const QString& name);
+    void camVideoResChanged(const QRect& resolution);
+    void screenRegionChanged(const QRect& region);
+    void screenGrabbedChanged(bool enabled);
+    void camVideoFPSChanged(quint16 fps);
 
 public:
     const QList<DhtServer>& getDhtServerList() const;
@@ -187,8 +355,8 @@ public:
     bool getAudioOutDevEnabled() const;
     void setAudioOutDevEnabled(bool enabled);
 
-    qreal getAudioInGain() const;
-    void setAudioInGain(qreal dB);
+    qreal getAudioInGainDecibel() const;
+    void setAudioInGainDecibel(qreal dB);
 
     int getOutVolume() const;
     void setOutVolume(int volume);
@@ -215,7 +383,7 @@ public:
     void setSmileyPack(const QString &value);
 
     int getThemeColor() const;
-    void setThemeColor(const int& value);
+    void setThemeColor(int value);
 
     StyleType getStylePreference() const;
     void setStylePreference(StyleType newValue);
@@ -243,7 +411,7 @@ public:
     void setFirstColumnHandlePos(const int pos);
 
     int getSecondColumnHandlePosFromRight() const;
-    void setSecondColumnHandlePosFromRight(const int pos);
+    void setSecondColumnHandlePosFromRight(int pos);
 
     const QString& getTimestampFormat() const;
     void setTimestampFormat(const QString& format);
@@ -251,14 +419,14 @@ public:
     const QString& getDateFormat() const;
     void setDateFormat(const QString& format);
 
-    bool isMinimizeOnCloseEnabled() const;
+    bool getMinimizeOnClose() const;
     void setMinimizeOnClose(bool newValue);
 
     bool getStatusChangeNotificationEnabled() const;
     void setStatusChangeNotificationEnabled(bool newValue);
 
     // Privacy
-    bool isTypingNotificationEnabled() const;
+    bool getTypingNotification() const;
     void setTypingNotification(bool enabled);
 
     // State

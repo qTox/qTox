@@ -15,6 +15,18 @@ struct DhtServer
     QString userId;
     QString address;
     quint16 port;
+
+    bool operator==(const DhtServer& other) const
+    {
+        return this == &other ||
+                (port == other.port && address == other.address &&
+                 userId == other.userId && name == other.name);
+    }
+
+    bool operator!=(const DhtServer& other) const
+    {
+        return !(*this == other);
+    }
 };
 
 struct ToxFile
