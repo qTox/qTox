@@ -43,17 +43,18 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/translator.h"
 
-ContentDialog* ContentDialog::currentDialog = nullptr;
+QPointer<ContentDialog> ContentDialog::currentDialog;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
 
-ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
+ContentDialog::ContentDialog(QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , activeChatroomWidget(nullptr)
-    , settingsWidget(settingsWidget)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
+    const Settings& s = Settings::getInstance();
+
     QVBoxLayout* boxLayout = new QVBoxLayout(this);
     boxLayout->setMargin(0);
     boxLayout->setSpacing(0);
@@ -71,7 +72,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     friendLayout->setSpacing(0);
     friendWidget->setLayout(friendLayout);
 
-    onGroupchatPositionChanged(Settings::getInstance().getGroupchatPosition());
+    onGroupchatPositionChanged(s.getGroupchatPosition());
 
     QScrollArea *friendScroll = new QScrollArea(this);
     friendScroll->setMinimumWidth(220);
@@ -96,20 +97,21 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
-    connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, this, &ContentDialog::onGroupchatPositionChanged);
+    // settings
+    connect(&s, &Settings::groupchatPositionChanged,
+            this, &ContentDialog::onGroupchatPositionChanged);
 
     setMinimumSize(500, 220);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QByteArray geometry = Settings::getInstance().getDialogGeometry();
+    QByteArray geometry = s.getDialogGeometry();
 
     if (!geometry.isNull())
         restoreGeometry(geometry);
     else
         resize(720, 400);
 
-
-    QByteArray splitterState = Settings::getInstance().getDialogSplitterState();
+    QByteArray splitterState = s.getDialogSplitterState();
 
     if (!splitterState.isNull())
         splitter->restoreState(splitterState);
@@ -131,9 +133,6 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
 ContentDialog::~ContentDialog()
 {
-    if (currentDialog == this)
-        currentDialog = nullptr;
-
     auto friendIt = friendList.begin();
 
     while (friendIt != friendList.end())
@@ -166,10 +165,13 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
-    Friend* frnd = friendWidget->getFriend();
+    // settings
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            friendWidget, &FriendWidget::compactLayoutChanged);
 
+    Friend* frnd = friendWidget->getFriend();
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
-    connect(settingsWidget, &SettingsWidget::compactToggled, friendWidget, &FriendWidget::compactChange);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
     connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), frnd->getChatForm(), SLOT(focusInput()));
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
@@ -191,10 +193,14 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     GroupWidget* groupWidget = new GroupWidget(groupId, name);
     groupLayout.addSortedWidget(groupWidget);
 
+    // settings
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            groupWidget, &GroupWidget::compactLayoutChanged);
+
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    connect(settingsWidget, &SettingsWidget::compactToggled, groupWidget, &GroupWidget::compactChange);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);
@@ -619,7 +625,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 {
     if (group)
     {
-        ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+        ContentDialog* contentDialog = new ContentDialog();
         contentDialog->show();
 
         if (widget->getFriend() != nullptr)

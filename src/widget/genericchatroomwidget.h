@@ -59,7 +59,7 @@ public:
 	void reloadTheme();
 
 public slots:
-	void compactChange(bool compact);
+    void compactLayoutChanged(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);

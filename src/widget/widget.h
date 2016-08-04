@@ -93,7 +93,7 @@ public:
     };
 
     static QString fromDialogType(DialogType type);
-    ContentDialog* createContentDialog() const;
+    ContentDialog* createContentDialog();
     ContentLayout* createContentDialog(DialogType type);
 
     static void confirmExecutableOpen(const QFileInfo &file);
