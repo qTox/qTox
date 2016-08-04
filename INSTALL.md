@@ -444,7 +444,7 @@ Next, install
 
 Then, clone qTox:
 ```bash
-git clone https://github.com/qTox/qTox``
+git clone https://github.com/qTox/qTox
 ```
 
 Finally, copy all required files. Whenever you update your brew packages, you
