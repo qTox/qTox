@@ -583,8 +583,8 @@ void Widget::closeEvent(QCloseEvent *event)
         }
         saveWindowGeometry();
         saveSplitterGeometry();
-        qApp->exit(0);
         QWidget::closeEvent(event);
+        qApp->quit();
     }
 }
 
