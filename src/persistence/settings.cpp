@@ -626,7 +626,7 @@ uint32_t Settings::makeProfileId(const QString& profile)
 @brief Get path to directory, where the settings files are stored.
 @return Path to settings directory, ends with a directory separator.
 */
-QString Settings::getSettingsDirPath()
+QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
@@ -649,7 +649,7 @@ QString Settings::getSettingsDirPath()
 @brief Get path to directory, where the application data are stored.
 @return Path to application data, ends with a directory separator.
 */
-QString Settings::getAppDataDirPath()
+QString Settings::getAppDataDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
@@ -674,7 +674,7 @@ QString Settings::getAppDataDirPath()
 @brief Get path to directory, where the application cache are stored.
 @return Path to application cache, ends with a directory separator.
 */
-QString Settings::getAppCacheDirPath()
+QString Settings::getAppCacheDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
