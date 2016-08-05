@@ -83,7 +83,7 @@ void AboutUser::onAutoAcceptDirClicked()
 void AboutUser::onAutoAcceptCallClicked()
 {
     Settings::getInstance().setAutoAcceptCall(this->toxId,ui->autoacceptcall->isChecked());
-    Settings::getInstance().saveGlobal();
+    Settings::getInstance().savePersonal();
 }
 
 void AboutUser::onSelectDirClicked()
