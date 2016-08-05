@@ -77,9 +77,11 @@ The **header** is mandatory and the **body** is optional. The **scope** of the
 header is also optional.
 
 ### Header
+
 The header must be a short (72 characters or less) summary of the changes made.
 
 #### Type
+
 Must be one of the following:
 
 * **feat**: A new feature
@@ -87,8 +89,8 @@ Must be one of the following:
 * **docs**: Documentation only changes
 * **style**: Changes that do not affect the meaning of the code (white-space,
   formatting, etc), but change the style to a more appropriate one
-* **refactor**: A code change that only improves code readability
-  and reduces complexity, without changing any functionality
+* **refactor**: A code change that only improves code readability and reduces
+  complexity, without changing any functionality
 * **perf**: A code change that improves performance
 * **revert**: Reverts a previous commit
 * **test**: Adding missing tests
@@ -96,19 +98,36 @@ Must be one of the following:
   as documentation generation
 
 ##### Revert
+
 If the commit reverts a previous commit, it should begin with `revert: `,
 followed by the header of the reverted commit. In the body it should say:
-`Revert commit <hash>.`, where the hash is the SHA of the commit being reverted.
+`Revert commit <hash>.`, where the hash is the SHA of the commit being
+reverted.
 
 #### Scope
-The scope could be anything specifying place of the commit change. For example
-`$location`, `$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`,
-`ngView`, etc.
+
+The scope could be anything specifying place of the commit change. Note that
+"place" doesn't necessarily mean location in source code.
+
+For example:
+
+* `audio` – change affects audio
+* `video` – change affects video
+* `settings` – change affects qTox settings
+* `chatform`
+* `tray` – change affects tray icon
+* `l10n` – translation update
+* `i18n` – something has been made translatable
+* `build` – change affects build system / scripts, e.g. `qtox.pro`,
+  `simple_make.sh`, etc.
+* `travis` – change affects Travis CI
+* `CONTRIBUTING` – change to the contributing guidelines
 
 Since people were abusing length of the scope, it's limited to 12 characters.
 If you're running into the limit, you're doing it wrong.
 
 #### Subject
+
 The subject contains succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
@@ -121,16 +140,18 @@ following sentence:
 > If applied, this commit will ___your subject line here___
 
 ### Body
-Wrap the body at 72 characters whenever possible (for example, don't modify long
-links to follow this rule). Just as in the **subject**, use the imperative,
-present tense: "change" not "changed" nor "changes". The body should include the
-motivation for the change and contrast this with previous behavior.
+
+Wrap the body at 72 characters whenever possible (for example, don't modify
+long links to follow this rule). Just as in the **subject**, use the
+imperative, present tense: "change" not "changed" nor "changes". The body
+should include the motivation for the change and contrast this with previous
+behavior.
 
 The body contains (in order of appearance):
 
 * A detailed **description** of the committed changes.
-* References to GitHub issues that the commit **closes** (e.g., `Closes #000` or
-  `Fixes #000`).
+* References to GitHub issues that the commit **closes** (e.g., `Closes #000`
+  or `Fixes #000`).
 * Any **breaking changes**.
 
 Include every section of the body that is relevant for your commit.
@@ -162,6 +183,7 @@ git config --global commit.gpgsign true
 Use `C++11`.
 
 ## Coding style
+
 ```C++
 function()
 {
@@ -204,9 +226,9 @@ E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
 ## Documentaion
 
-If you added a new function, also add a doxygen comment before the implementation.
-If you changed an old function, make sure the doxygen comment is still correct.
-If it doesn't exist add it.
+If you added a new function, also add a doxygen comment before the
+implementation. If you changed an old function, make sure the doxygen comment
+is still correct. If it doesn't exist add it.
 
 Don't put docs in .h files, if there is a corresponding .cpp file.
 
@@ -266,6 +288,7 @@ someWidget->setTooltip(
 ## Limitations
 
 ### Filesystem
+
 Windows' unbeaten beauty and clarity:
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
