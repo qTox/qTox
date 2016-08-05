@@ -120,7 +120,7 @@ private:
 
     AVFrame* retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
     AVFrame* generateAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
-    void storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat);
+    AVFrame* storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat);
 
     void deleteFrameBuffer();
 

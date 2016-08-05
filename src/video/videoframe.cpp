@@ -58,7 +58,7 @@ extern "C"{
  * directly equal to the width.
  *
  *
- * @var dataAlignment
+ * @var VideoFrame::dataAlignment
  * @brief Data alignment parameter used to populate AVFrame buffers.
  *
  * This field is public in effort to standardize the data alignment parameter for all AVFrame
@@ -636,13 +636,26 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
 /**
  * @brief Stores a given AVFrame within the frameBuffer map.
  *
+ * As protection against duplicate frames, the storage mechanism will only allow one frame of a
+ * given type to exist in the frame buffer. Should the given frame type already exist in the frame
+ * buffer, the given frame will be freed and have it's buffers invalidated. In order to ensure
+ * correct operation, always replace the frame pointer with the one returned by this function.
+ *
+ * As an example:
+ * @code{.cpp}
+ * AVFrame* frame = // create AVFrame...
+ *
+ * frame = storeAVFrame(frame, dimensions, pixelFormat);
+ * @endcode
+ *
  * This function is not thread-safe and must be called from a thread-safe context.
  *
  * @param frame the given frame to store.
  * @param dimensions the dimensions of the frame, must be valid.
  * @param pixelFormat the pixel format of the frame.
+ * @return The given AVFrame* or a pre-existing AVFrame* that already exists in the frameBuffer.
  */
-void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat)
+AVFrame* VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat)
 {
     FrameBufferKey frameKey = getFrameKey(dimensions, pixelFormat, frame->linesize[0]);
 
@@ -651,13 +664,19 @@ void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int
     {
         AVFrame* old_ret = frameBuffer[frameKey];
 
-        // Free old frame
-        av_freep(&old_ret->data[0]);
-        av_frame_unref(old_ret);
-        av_frame_free(&old_ret);
-    }
+        // Free new frame
+        av_freep(&frame->data[0]);
+        av_frame_unref(frame);
+        av_frame_free(&frame);
 
-    frameBuffer[frameKey] = frame;
+        return old_ret;
+    }
+    else
+    {
+        frameBuffer[frameKey] = frame;
+
+        return frame;
+    }
 }
 
 /**
@@ -753,7 +772,7 @@ T VideoFrame::toGenericObject(const QSize& dimensions, const int pixelFormat, co
     frameLock.unlock();
     frameLock.lockForWrite();
 
-    storeAVFrame(frame, dimensions, static_cast<int>(pixelFormat));
+    frame = storeAVFrame(frame, dimensions, static_cast<int>(pixelFormat));
 
     T ret = objectConstructor(frame);
 
