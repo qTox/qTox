@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+<TS version="2.0" language="de_DE" sourcelanguage="en_US">
 <context>
     <name>AVForm</name>
     <message>
@@ -17,62 +17,51 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spiele während dem Ändern der Ausgabelautstärke ein Testgeräusch ab.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden Sie den Schieberegler um die Verstärkung zwischen %1dB und %2dB festzulegen.</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Region auswählen</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Audioeinstellungen</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Wiedergabegerät</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Aufnahmegerät</translation>
+        <translation type="unfinished">Audioeinstellungen</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Aufnahmelautstärke</translation>
+        <translation type="unfinished">Aufnahmelautstärke</translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">Wiedergabegerät</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Aufnahmegerät</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Wiedergabelautstärke</translation>
+        <translation type="unfinished">Wiedergabelautstärke</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videoeinstellungen</translation>
+        <translation type="unfinished">Videoeinstellungen</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videogerät</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Kameraauflösung</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Geräte aktualisieren</translation>
+        <translation type="unfinished">Videogerät</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -80,9 +69,17 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Wähle deine Kameraauflösung.
+        <translation type="unfinished">Wähle deine Kameraauflösung.
 Höhere Werte führen zu einem schärferen Bild, allerdings nimmt die Netzwerkauslastung zu.
 Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Kameraauflösung</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Geräte aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -294,7 +291,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Diese Tox ID existiert nicht.</translation>
+        <translation>Diese Tox ID existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -1139,15 +1136,15 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Text Stilformat:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie die Textstil Einstellung.</translation>
     </message>
 </context>
 <context>
@@ -1297,7 +1294,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2 um %3.</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1413,8 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Speichert das ausgewählte Profil in eine Datei. Beachte, dass diese Datei deinen Gesprächsverlauf &lt;i&gt;nicht&lt;/i&gt; enthält!</translation>
+        <translation>Speichert das ausgewählte Profil in eine Datei.
+Das Profil beinhaltet nicht deine Historie.</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1955,6 +1953,46 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <comment>import confirm text</comment>
         <translation>Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil importiert</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">Die Datei %1.tox wurde erfolgreich importiert</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Abbrechen</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2012,34 +2050,6 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Eingehender Anruf ...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Nicht-Tox-Datei ignoriert</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Warnung: Die von dir gewählte Datei ist keine Tox-Datei. Sie wird ignoriert.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profil bereits vorhanden</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil importiert</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>Die Datei %1.tox wurde erfolgreich importiert</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
