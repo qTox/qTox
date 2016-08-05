@@ -76,8 +76,10 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
-    connect(&Settings::getInstance(), &Settings::emojiFontChanged,
-            this, [this]() { chatWidget->forceRelayout(); });
+    // settings
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::emojiFontPointSizeChanged,
+            chatWidget, &ChatLog::forceRelayout);
 
     msgEdit = new ChatTextEdit();
 

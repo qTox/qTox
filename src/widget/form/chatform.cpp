@@ -163,7 +163,7 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onTextEditChanged()
 {
-    if (!Settings::getInstance().isTypingNotificationEnabled())
+    if (!Settings::getInstance().getTypingNotification())
     {
         if (isTyping)
             Core::getInstance()->sendTyping(f->getFriendID(), false);

@@ -165,7 +165,7 @@ void AddFriendForm::onSendTriggered()
         if (toxId.toString().isEmpty())  // If it isn't supported
         {
             qDebug() << "Toxme didn't return a ToxID, trying ToxDNS";
-            if (Settings::getInstance().getProxyType() != ProxyType::ptNone)
+            if (Settings::getInstance().getProxyType() != Settings::ProxyType::ptNone)
             {
                 QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
     Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);

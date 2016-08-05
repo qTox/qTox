@@ -364,7 +364,7 @@ bool Audio::initInput(const QString& deviceName)
         return false;
     }
 
-    d->setInputGain(Settings::getInstance().getAudioInGain());
+    d->setInputGain(Settings::getInstance().getAudioInGainDecibel());
 
     qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);

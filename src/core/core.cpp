@@ -122,8 +122,8 @@ void Core::makeTox(QByteArray savedata)
     // IPv6 needed for LAN discovery, but can crash some weird routers. On by default, can be disabled in options.
     bool enableIPv6 = Settings::getInstance().getEnableIPv6();
     bool forceTCP = Settings::getInstance().getForceTCP();
-    ProxyType proxyType = Settings::getInstance().getProxyType();
-    int proxyPort = Settings::getInstance().getProxyPort();
+    Settings::ProxyType proxyType = Settings::getInstance().getProxyType();
+    quint16 proxyPort = Settings::getInstance().getProxyPort();
     QString proxyAddr = Settings::getInstance().getProxyAddr();
     QByteArray proxyAddrData = proxyAddr.toUtf8();
 
@@ -147,7 +147,7 @@ void Core::makeTox(QByteArray savedata)
     toxOptions.savedata_data = (uint8_t*)savedata.data();
     toxOptions.savedata_length = savedata.size();
 
-    if (proxyType != ProxyType::ptNone)
+    if (proxyType != Settings::ProxyType::ptNone)
     {
         if (proxyAddr.length() > 255)
         {
@@ -157,9 +157,9 @@ void Core::makeTox(QByteArray savedata)
         {
             qDebug() << "using proxy" << proxyAddr << ":" << proxyPort;
             // protection against changings in TOX_PROXY_TYPE enum
-            if (proxyType == ProxyType::ptSOCKS5)
+            if (proxyType == Settings::ProxyType::ptSOCKS5)
                 toxOptions.proxy_type = TOX_PROXY_TYPE_SOCKS5;
-            else if (proxyType == ProxyType::ptHTTP)
+            else if (proxyType == Settings::ProxyType::ptHTTP)
                 toxOptions.proxy_type = TOX_PROXY_TYPE_HTTP;
 
             toxOptions.proxy_host = proxyAddrData.data();
@@ -592,7 +592,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
         {
             qDebug() << "Requested friendship of "<<friendId;
             // Update our friendAddresses
-            Settings::getInstance().updateFriendAdress(friendAddress);
+            Settings::getInstance().updateFriendAddress(friendAddress);
             QString inviteStr = tr("/me offers friendship.");
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
@@ -1166,7 +1166,7 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 QString Core::getFriendAddress(uint32_t friendNumber) const
 {
     QString id = getFriendPublicKey(friendNumber);
-    QString addr = Settings::getInstance().getFriendAdress(id);
+    QString addr = Settings::getInstance().getFriendAddress(id);
     if (addr.size() > id.size())
         return addr;
 

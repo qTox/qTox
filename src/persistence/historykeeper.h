@@ -29,7 +29,10 @@
 
 class Profile;
 class GenericDdInterface;
-namespace Db { enum class syncType; }
+
+namespace Db {
+enum class syncType;
+}
 
 class HistoryKeeper
 {
