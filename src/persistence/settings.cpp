@@ -338,7 +338,7 @@ void Settings::loadPersonal(Profile* profile)
             fp.alias = ps.value("alias").toString();
             fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
-            fp.autoAcceptCall = ps.value("autoAcceptCall").toBool();
+            fp.autoAcceptCall = ps.value("autoAcceptCall").toInt();
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
@@ -1153,7 +1153,7 @@ void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
     }
 }
 
-bool Settings::getAutoAcceptCall(const ToxId &id) const
+int Settings::getAutoAcceptCall(const ToxId &id) const
 {
     QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
@@ -1165,7 +1165,7 @@ bool Settings::getAutoAcceptCall(const ToxId &id) const
     return false;
 }
 
-void Settings::setAutoAcceptCall(const ToxId &id, bool accept)
+void Settings::setAutoAcceptCall(const ToxId &id, int accept)
 {
     QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
