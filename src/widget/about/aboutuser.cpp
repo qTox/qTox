@@ -18,7 +18,7 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptDirClicked);
-    connect(ui->autoacceptcall, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptCallClicked);
+    connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
@@ -26,7 +26,7 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
     ui->autoacceptfile->setChecked(!dir.isEmpty());
 
-    ui->autoacceptcall->setChecked(Settings::getInstance().getAutoAcceptCall(this->toxId));
+    ui->autoacceptcall->setCurrentIndex(Settings::getInstance().getAutoAcceptCall(this->toxId));
 
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
 
@@ -82,7 +82,9 @@ void AboutUser::onAutoAcceptDirClicked()
 
 void AboutUser::onAutoAcceptCallClicked()
 {
-    Settings::getInstance().setAutoAcceptCall(this->toxId,ui->autoacceptcall->isChecked());
+    int test;
+    test = ui->autoacceptcall->currentIndex();
+    Settings::getInstance().setAutoAcceptCall(this->toxId,ui->autoacceptcall->currentIndex());
     Settings::getInstance().savePersonal();
 }
 

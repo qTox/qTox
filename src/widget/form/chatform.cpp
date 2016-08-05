@@ -285,7 +285,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
     /* AutoAcceptCall is set for this friend */
-    if(Settings::getInstance().getAutoAcceptCall(f->getToxId()))
+    if(     (video && Settings::getInstance().getAutoAcceptCall(f->getToxId())==2) ||
+            (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId())>=1))
     {
         uint32_t friendId;
         friendId = f->getFriendID();
