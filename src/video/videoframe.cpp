@@ -384,6 +384,140 @@ ToxYUVFrame VideoFrame::toToxYUVFrame(QSize frameSize)
 }
 
 /**
+ * @brief Returns the ID for the given frame.
+ *
+ * Frame IDs are globally unique (with respect to the running instance).
+ *
+ * @return an integer representing the ID of this frame.
+ */
+VideoFrame::IDType VideoFrame::getFrameID() const
+{
+    return frameID;
+}
+
+/**
+ * @brief Returns the ID for the VideoSource which created this frame.
+ *
+ * @return an integer representing the ID of the VideoSource which created this frame.
+ */
+VideoFrame::IDType VideoFrame::getSourceID() const
+{
+    return sourceID;
+}
+
+/**
+ * @brief Retrieves a copy of the source VideoFrame's dimensions.
+ *
+ * @return QRect copy representing the source VideoFrame's dimensions.
+ */
+QRect VideoFrame::getSourceDimensions() const
+{
+    return sourceDimensions;
+}
+
+/**
+ * @brief Retrieves a copy of the source VideoFormat's pixel format.
+ *
+ * @return integer copy representing the source VideoFrame's pixel format.
+ */
+int VideoFrame::getSourcePixelFormat() const
+{
+    return sourcePixelFormat;
+}
+
+
+/**
+ * @brief Constructs a new FrameBufferKey with the given attributes.
+ *
+ * @param width the width of the frame.
+ * @param height the height of the frame.
+ * @param pixFmt the pixel format of the frame.
+ * @param lineAligned whether the linesize matches the width of the image.
+ */
+VideoFrame::FrameBufferKey::FrameBufferKey(const int pixFmt, const int width, const int height, const bool lineAligned)
+    : frameWidth(width),
+      frameHeight(height),
+      pixelFormat(pixFmt),
+      linesizeAligned(lineAligned){}
+
+/**
+ * @brief Comparison operator for FrameBufferKey.
+ *
+ * @param other instance to compare against.
+ * @return true if instances are equivilent, false otherwise.
+ */
+bool VideoFrame::FrameBufferKey::operator==(const FrameBufferKey& other) const
+{
+    return pixelFormat == other.pixelFormat &&
+           frameWidth == other.frameWidth &&
+           frameHeight == other.frameHeight &&
+           linesizeAligned == other.linesizeAligned;
+}
+
+/**
+ * @brief Not equal to operator for FrameBufferKey.
+ *
+ * @param other instance to compare against
+ * @return true if instances are not equivilent, false otherwise.
+ */
+bool VideoFrame::FrameBufferKey::operator!=(const FrameBufferKey& other) const
+{
+    return !operator==(other);
+}
+
+/**
+ * @brief Hash function for FrameBufferKey.
+ *
+ * This function computes a hash value for use with std::unordered_map.
+ *
+ * @param key the given instance to compute hash value of.
+ * @return the hash of the given instance.
+ */
+size_t VideoFrame::FrameBufferKey::hash(const FrameBufferKey& key)
+{
+    std::hash<int> intHasher;
+    std::hash<bool> boolHasher;
+
+    // Use java-style hash function to combine fields
+    // See: https://en.wikipedia.org/wiki/Java_hashCode%28%29#hashCode.28.29_in_general
+
+    size_t ret = 47;
+
+    ret = 37 * ret + intHasher(key.frameWidth);
+    ret = 37 * ret + intHasher(key.frameHeight);
+    ret = 37 * ret + intHasher(key.pixelFormat);
+    ret = 37 * ret + boolHasher(key.linesizeAligned);
+
+    return ret;
+}
+
+/**
+ * @brief Generates a key object based on given parameters.
+ *
+ * @param frameSize the given size of the frame.
+ * @param pixFmt the pixel format of the frame.
+ * @param linesize the maximum linesize of the frame, may be larger than the width.
+ * @return a FrameBufferKey object representing the key for the frameBuffer map.
+ */
+VideoFrame::FrameBufferKey VideoFrame::getFrameKey(const QSize& frameSize, const int pixFmt, const int linesize)
+{
+    return getFrameKey(frameSize, pixFmt, frameSize.width() == linesize);
+}
+
+/**
+ * @brief Generates a key object based on given parameters.
+ *
+ * @param frameSize the given size of the frame.
+ * @param pixFmt the pixel format of the frame.
+ * @param frameAligned true if the frame is aligned, false otherwise.
+ * @return a FrameBufferKey object representing the key for the frameBuffer map.
+ */
+VideoFrame::FrameBufferKey VideoFrame::getFrameKey(const QSize& frameSize, const int pixFmt, const bool frameAligned)
+{
+    return {frameSize.width(), frameSize.height(), pixFmt, frameAligned};
+}
+
+/**
  * @brief Retrieves an AVFrame derived from the source based on the given parameters without
  * obtaining a lock.
  *
@@ -564,15 +698,71 @@ void VideoFrame::deleteFrameBuffer()
 }
 
 /**
- * @brief Constructs a new FrameBufferKey with the given attributes.
+ * @brief Converts this VideoFrame to a generic type T based on the given parameters and
+ * supplied converter functions.
  *
- * @param width the width of the frame.
- * @param height the height of the frame.
- * @param pixFmt the pixel format of the frame.
- * @param lineAligned whether the linesize matches the width of the image.
+ * This function is used internally to create various toXObject functions that all follow the
+ * same generation pattern (where XObject is some existing type like QImage).
+ *
+ * In order to create such a type, a object constructor function is required that takes the
+ * generated AVFrame object and creates type T out of it. This function additionally requires
+ * a null object of type T that represents an invalid/null object for when the generation
+ * process fails (e.g. when the VideoFrame is no longer valid).
+ *
+ * @param dimensions the dimensions of the frame, must be valid.
+ * @param pixelFormat the pixel format of the frame.
+ * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
+ * @param objectConstructor a std::function that takes the generated AVFrame and converts it
+ * to an object of type T.
+ * @param nullObject an object of type T that represents the null/invalid object to be used
+ * when the generation process fails.
  */
-VideoFrame::FrameBufferKey::FrameBufferKey(const int pixFmt, const int width, const int height, const bool lineAligned)
-    : frameWidth(width),
-      frameHeight(height),
-      pixelFormat(pixFmt),
-      linesizeAligned(lineAligned){}
+template <typename T>
+T VideoFrame::toGenericObject(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
+                              const std::function<T(AVFrame* const)> objectConstructor, const T& nullObject)
+{
+    frameLock.lockForRead();
+
+    // We return nullObject if the VideoFrame is no longer valid
+    if(frameBuffer.size() == 0)
+    {
+        frameLock.unlock();
+        return nullObject;
+    }
+
+    AVFrame* frame = retrieveAVFrame(dimensions, static_cast<int>(pixelFormat), requireAligned);
+
+    if(frame)
+    {
+        T ret = objectConstructor(frame);
+
+        frameLock.unlock();
+        return ret;
+    }
+
+    // VideoFrame does not contain an AVFrame to spec, generate one here
+    frame = generateAVFrame(dimensions, static_cast<int>(pixelFormat), requireAligned);
+
+    /*
+     * We need to "upgrade" the lock to a write lock so we can update our frameBuffer map.
+     *
+     * It doesn't matter if another thread obtains the write lock before we finish since it is
+     * likely writing to somewhere else. Worst-case scenario, we merely perform the generation
+     * process twice, and discard the old result.
+     */
+    frameLock.unlock();
+    frameLock.lockForWrite();
+
+    storeAVFrame(frame, dimensions, static_cast<int>(pixelFormat));
+
+    T ret = objectConstructor(frame);
+
+    frameLock.unlock();
+    return ret;
+}
+
+// Explicitly specialize VideoFrame::toGenericObject() function
+template QImage VideoFrame::toGenericObject<QImage>(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
+                                                    const std::function<QImage(AVFrame* const)> objectConstructor, const QImage& nullObject);
+template ToxYUVFrame VideoFrame::toGenericObject<ToxYUVFrame>(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
+                                                              const std::function<ToxYUVFrame(AVFrame* const)> objectConstructor, const ToxYUVFrame& nullObject);
