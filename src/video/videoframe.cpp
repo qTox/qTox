@@ -293,8 +293,8 @@ void VideoFrame::releaseFrame()
  * If a given frame does not exist, this function will perform appropriate conversions to
  * return a frame that fulfills the given parameters.
  *
- * @param frameSize the dimensions of the frame to get. If frame size is 0, defaults to source
- * frame size.
+ * @param frameSize the dimensions of the frame to get. Defaults to source frame size if frameSize
+ * is invalid.
  * @param pixelFormat the desired pixel format of the frame.
  * @param requireAligned true if the returned frame must be frame aligned, false if not.
  * @return a pointer to a AVFrame with the given parameters or nullptr if the VideoFrame is no
@@ -302,6 +302,11 @@ void VideoFrame::releaseFrame()
  */
 const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned)
 {
+    if(!frameSize.isValid())
+    {
+        frameSize = sourceDimensions.size();
+    }
+
     // Since we are retrieving the AVFrame* directly, we merely need to pass the arguement through
     const std::function<AVFrame*(AVFrame* const)> converter = [](AVFrame* const frame)
     {
@@ -321,14 +326,14 @@ const AVFrame* VideoFrame::getAVFrame(QSize frameSize, const int pixelFormat, co
  * The VideoFrame will be scaled into the RGB24 pixel format along with the given
  * dimension.
  *
- * @param frameSize the given frame size of QImage to generate. If frame size is 0, defaults to
- * source frame size.
+ * @param frameSize the given frame size of QImage to generate. Defaults to source frame size if
+ * frameSize is invalid.
  * @return a QImage that represents this VideoFrame, sharing it's buffers or a null image if
  * this VideoFrame is no longer valid.
  */
 QImage VideoFrame::toQImage(QSize frameSize)
 {
-    if(frameSize.width() == 0 && frameSize.height() == 0)
+    if(!frameSize.isValid())
     {
         frameSize = sourceDimensions.size();
     }
@@ -349,14 +354,15 @@ QImage VideoFrame::toQImage(QSize frameSize)
  * The given ToxAVFrame will be frame aligned under a pixel format of planar YUV with a chroma
  * subsampling format of 4:2:0 (i.e. AV_PIX_FMT_YUV420P).
  *
- * @param frameSize the given frame size of ToxAVFrame to generate. If frame size is 0, defaults
+ * @param frameSize the given frame size of ToxAVFrame to generate. Defaults to source frame size
+ * if frameSize is invalid.
  * to source frame size.
  * @return a ToxAVFrame structure that represents this VideoFrame, sharing it's buffers or an
  * empty structure if this VideoFrame is no longer valid.
  */
-ToxYUVFrame VideoFrame::toToxAVFrame(QSize frameSize)
+ToxYUVFrame VideoFrame::toToxYUVFrame(QSize frameSize)
 {
-    if(frameSize.width() == 0 && frameSize.height() == 0)
+    if(!frameSize.isValid())
     {
         frameSize = sourceDimensions.size();
     }
@@ -386,7 +392,7 @@ ToxYUVFrame VideoFrame::toToxAVFrame(QSize frameSize)
  * Note: this function differs from getAVFrame() in that it returns a nullptr if no frame was
  * found.
  *
- * @param dimensions the dimensions of the frame.
+ * @param dimensions the dimensions of the frame, must be valid.
  * @param pixelFormat the desired pixel format of the frame.
  * @param requireAligned true if the frame must be frame aligned, false otherwise.
  * @return a pointer to a AVFrame with the given parameters or nullptr if no such frame was
@@ -425,7 +431,7 @@ AVFrame* VideoFrame::retrieveAVFrame(const QSize& dimensions, const int pixelFor
  *
  * This function is not thread-safe and must be called from a thread-safe context.
  *
- * @param dimensions the required dimensions for the frame.
+ * @param dimensions the required dimensions for the frame, must be valid.
  * @param pixelFormat the required pixel format for the frame.
  * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
  * @return an AVFrame with the given specifications.
@@ -499,7 +505,7 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
  * This function is not thread-safe and must be called from a thread-safe context.
  *
  * @param frame the given frame to store.
- * @param dimensions the dimensions of the frame.
+ * @param dimensions the dimensions of the frame, must be valid.
  * @param pixelFormat the pixel format of the frame.
  */
 void VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const int pixelFormat)

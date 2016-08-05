@@ -76,8 +76,8 @@ public:
     void releaseFrame();
 
     const AVFrame* getAVFrame(QSize frameSize, const int pixelFormat, const bool requireAligned);
-    QImage toQImage(QSize frameSize = {0, 0});
-    ToxYUVFrame toToxAVFrame(QSize frameSize = {0, 0});
+    QImage toQImage(QSize frameSize = {});
+    ToxYUVFrame toToxYUVFrame(QSize frameSize = {});
 
     /**
      * @brief Returns the ID for the given frame.
@@ -237,7 +237,7 @@ private:
      * a null object of type T that represents an invalid/null object for when the generation
      * process fails (e.g. when the VideoFrame is no longer valid).
      *
-     * @param dimensions the dimensions of the frame.
+     * @param dimensions the dimensions of the frame, must be valid.
      * @param pixelFormat the pixel format of the frame.
      * @param requireAligned true if the generated frame needs to be frame aligned, false otherwise.
      * @param objectConstructor a std::function that takes the generated AVFrame and converts it

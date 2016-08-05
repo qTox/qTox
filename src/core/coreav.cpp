@@ -360,7 +360,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         call.nullVideoBitrate = false;
     }
 
-    ToxYUVFrame frame = vframe->toToxAVFrame();
+    ToxYUVFrame frame = vframe->toToxYUVFrame();
 
     if(frame.width == 0 || frame.height == 0)
     {
