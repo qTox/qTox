@@ -82,8 +82,6 @@ void AboutUser::onAutoAcceptDirClicked()
 
 void AboutUser::onAutoAcceptCallClicked()
 {
-    int test;
-    test = ui->autoacceptcall->currentIndex();
     Settings::getInstance().setAutoAcceptCall(this->toxId,ui->autoacceptcall->currentIndex());
     Settings::getInstance().savePersonal();
 }
