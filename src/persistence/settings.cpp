@@ -1176,11 +1176,6 @@ void Settings::setAutoAcceptCall(const ToxId& id, int accept)
         it->autoAcceptCall = accept;
         emit autoAcceptCallChanged(id, accept);
     }
-    else
-    {
-        updateFriendAdress(id.toString());
-        setAutoAcceptCall(id, accept);
-    }
 }
 
 QString Settings::getContactNote(const ToxId &id) const
