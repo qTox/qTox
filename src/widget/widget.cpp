@@ -1085,14 +1085,11 @@ void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
 {
     contactListWidget->moveWidget(friendWidget, s);
     int filter = getFilterCriteria();
-    switch (s)
-    {
-        case Status::Offline:
-            friendWidget->searchName(ui->searchContactText->text(), filterOffline(filter));
-        default:
-            friendWidget->searchName(ui->searchContactText->text(), filterOnline(filter));
-    }
 
+    bool hide = s == Status::Offline ?
+                filterOffline(filter) : filterOnline(filter);
+
+    friendWidget->searchName(ui->searchContactText->text(), hide);
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
