@@ -28,6 +28,8 @@
 #include "src/core/core.h"
 #include "tool/croppinglabel.h"
 #include "src/widget/translator.h"
+#include "src/widget/friendwidget.h"
+#include "src/friend.h"
 #include <QPalette>
 #include <QMenu>
 #include <QContextMenuEvent>
@@ -137,13 +139,12 @@ void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
 
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
-        QDrag* drag = new QDrag(this);
         QMimeData* mdata = new QMimeData;
-        mdata->setData("group", QString::number(groupId).toLatin1());
+        mdata->setText(getGroup()->getName());
 
+        QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
         drag->setPixmap(avatar->getPixmap());
-
         drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
 }
@@ -231,7 +232,9 @@ void GroupWidget::resetEventFlags()
 
 void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
+    QObject *o = ev->source();
+    FriendWidget *frnd = qobject_cast<FriendWidget*>(o);
+    if (frnd != nullptr)
         ev->acceptProposedAction();
 
     if (!active)
@@ -246,14 +249,16 @@ void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 
 void GroupWidget::dropEvent(QDropEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
-    {
-        int friendId = ev->mimeData()->data("friend").toInt();
-        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    QObject *o = ev->source();
+    FriendWidget *frnd = qobject_cast<FriendWidget*>(o);
+    if (frnd == nullptr)
+        return;
 
-        if (!active)
-            setBackgroundRole(QPalette::Window);
-    }
+    int friendId = frnd->getFriend()->getFriendID();
+    Core::getInstance()->groupInviteFriend(friendId, groupId);
+
+    if (!active)
+        setBackgroundRole(QPalette::Window);
 }
 
 void GroupWidget::setName(const QString& name)
