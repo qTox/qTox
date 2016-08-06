@@ -1948,7 +1948,7 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1. tox byl úspěšně přidán</translation>
+        <translation type="unfinished">%1.tox byl úspěšně přidán</translation>
     </message>
 </context>
 <context>
