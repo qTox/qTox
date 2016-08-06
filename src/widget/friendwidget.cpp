@@ -411,13 +411,12 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
-        QDrag* drag = new QDrag(this);
         QMimeData* mdata = new QMimeData;
-        mdata->setData("friend", QString::number(friendId).toLatin1());
+        mdata->setText(getFriend()->getToxId().toString());
 
+        QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
         drag->setPixmap(avatar->getPixmap());
-
         drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
 }
