@@ -67,26 +67,47 @@ git config --global alias.logs 'log --show-signature'
   something right away can lead to bugs & regressions suddenly popping up, thus
   it's preferable to wait at least a day or so, to let people test & comment on
   the PR before merging.
-  - with trivial changes, like fixing typos or something along those lines, feel
-    free to merge right away.
+  - with trivial changes, like fixing typos or something along those lines,
+    feel free to merge right away.
 - if you're about to merge PR, assign yourself to it.
 - if you decide that PR actually isn't to be (yet) merged, de-assign yourself.
 - if PR requires some changes, comment what parts need to be adjusted, and
-  assign the `PR-needs-changes` label – after requested changes are done, remove
-  the label.
+  assign the `PR-needs-changes` label – after requested changes are done,
+  remove the label.
 - if PR doesn't apply properly on top of current master (when using
   [`merge-pr.sh`] script), request a rebase and tag PR with `PR-needs-rebase`.
+
+## Reviews
+
+Currently `reviewable.io` is being used to review changes that land in qTox.
+
+How to review:
+
+1. Click on the `Reviewable` button in pull request.
+2. Once Reviewable opens, comment on the lines that need changes.
+3. Mark as reviewed only those files that don't require any changes – this
+   makes it easier to see which files need to be changed & reviewed again once
+   change is made.
+4. If pull request is good to be merged, press `LGTM` button in Reviewable.
+5. Once you're done with evaluating PR, press `Publish` to make comments
+   visible on GitHub.
+
+Note:
+
+* when no one is assigned to the PR, *anyone* can review it
+* when there are assigned people, only they can mark review as passed
+
 
 # Issues
 
 - tag issues
-  - `help wanted` tag should be used whenever no one is currently working on the
-    issue, and you're not going to work on it in foreseeable future (hours, day
-    or two).
+  - `help wanted` tag should be used whenever no one is currently working on
+    the issue, and you're not going to work on it in foreseeable future (hours,
+    day or two).
   - when you request more info to be provided in the issue, tag it with
     `I-need-info`. Remove tag once needed info has been provided.
-    - sometimes there are issue with only one comment, and no reply to query for
-      more info. Those issues usually can be closed after some period,
+    - sometimes there are issue with only one comment, and no reply to query
+      for more info. Those issues usually can be closed after some period,
       preferably after a month or more with no reply. To search for them, you
       can specify time period when issue with a given tag was last updated,
       e.g.: `label:I-need-info updated:<2016-03-01`.
@@ -97,6 +118,19 @@ git config --global alias.logs 'log --show-signature'
   duplicate of, tag with higher `duplicates:#`
 
 
+# How to become a maintainer?
+
+Contribute, review & test pull requests, be active, oh and don't forget to
+mention that you would want to become a maintainer :P
+
+Aside from contents of [`CONTRIBUTING.md`] you should also know the contents of
+this file.
+
+Once you're confident about your knowledge and you've been around the project
+helping for a while, ask to be added to the `qTox` organization on GitHub.
+
+
 [commit message format]: /CONTRIBUTING.md#commit-message-format
+[`CONTRIBUTING.md`]: /CONTRIBUTING.md
 [`merge-pr.sh`]: /merge-pr.sh
 [`test-pr.sh`]: /test-pr.sh
