@@ -520,20 +520,34 @@ bool ContentDialog::event(QEvent* event)
 
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *frnd = qobject_cast<FriendWidget*>(o);
+    GroupWidget *group = qobject_cast<GroupWidget*>(o);
+    if (frnd)
     {
-        int friendId = event->mimeData()->data("friend").toInt();
+        ToxId toxId(event->mimeData()->text());
+        Friend *contact = FriendList::findFriend(toxId);
+        if (!contact)
+            return;
+
+        int friendId = contact->getFriendID();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
         if (iter == friendList.end() || std::get<0>(iter.value()) != this)
             event->acceptProposedAction();
     }
-    else if (event->mimeData()->hasFormat("group"))
+    else if (group)
     {
-        int groupId = event->mimeData()->data("group").toInt();
-        auto iter = groupList.find(groupId);
+        if (!event->mimeData()->hasFormat("groupId"))
+            return;
 
+        int groupId = event->mimeData()->data("groupId").toInt();
+        Group *contact = GroupList::findGroup(groupId);
+        if (!contact)
+            return;
+
+        auto iter = groupList.find(groupId);
         if (iter == groupList.end() || std::get<0>(iter.value()) != this)
             event->acceptProposedAction();
     }
@@ -541,27 +555,38 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 
 void ContentDialog::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *frnd = qobject_cast<FriendWidget*>(o);
+    GroupWidget *group = qobject_cast<GroupWidget*>(o);
+    if (frnd)
     {
-        int friendId = event->mimeData()->data("friend").toInt();
-        auto iter = friendList.find(friendId);
+        ToxId toxId(event->mimeData()->text());
+        Friend *contact = FriendList::findFriend(toxId);
+        if (!contact)
+            return;
 
+        int friendId = contact->getFriendID();
+        auto iter = friendList.find(friendId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeFriend(friendId);
 
-        Friend* contact = FriendList::findFriend(friendId);
         Widget::getInstance()->addFriendDialog(contact, this);
         ensureSplitterVisible();
     }
-    else if (event->mimeData()->hasFormat("group"))
+    else if (group)
     {
-        int groupId = event->mimeData()->data("group").toInt();
-        auto iter = friendList.find(groupId);
+        if (!event->mimeData()->hasFormat("groupId"))
+            return;
 
+        int groupId = event->mimeData()->data("groupId").toInt();
+        Group *contact = GroupList::findGroup(groupId);
+        if (!contact)
+            return;
+
+        auto iter = friendList.find(groupId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeGroup(groupId);
 
-        Group* contact = GroupList::findGroup(groupId);
         Widget::getInstance()->addGroupDialog(contact, this);
         ensureSplitterVisible();
     }
