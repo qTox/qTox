@@ -338,7 +338,7 @@ void Settings::loadPersonal(Profile* profile)
             fp.alias = ps.value("alias").toString();
             fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
-            fp.autoAcceptCall = ps.value("autoAcceptCall").toInt();
+            fp.autoAcceptCall = ps.value("autoAcceptCall", 0).toInt();
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
