@@ -161,6 +161,7 @@ public slots:
     void sync();
 
 signals:
+<<<<<<< 37623c9fd05a3d873ccfc4f0d712584e8001d8ca
     // General
     void enableIPv6Changed(bool enabled);
     void forceTCPChanged(bool enabled);
@@ -239,6 +240,12 @@ signals:
     void screenRegionChanged(const QRect& region);
     void screenGrabbedChanged(bool enabled);
     void camVideoFPSChanged(quint16 fps);
+=======
+    void dhtServerListChanged();
+    void smileyPackChanged();
+    void emojiFontChanged();
+    void autoAcceptCallChanged(const ToxId& id, int accept);
+>>>>>>> feat(autoAnswer): add signal when autoAcceptCall's value is updated
 
 public:
     const QList<DhtServer>& getDhtServerList() const;
