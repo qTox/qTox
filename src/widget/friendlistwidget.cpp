@@ -605,29 +605,28 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    ToxId toxId = ToxId(event->mimeData()->text());
+    Friend *frnd = FriendList::findFriend(toxId);
+    if (frnd)
         event->acceptProposedAction();
 }
 
 void FriendListWidget::dropEvent(QDropEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
-    {
-        int friendId = event->mimeData()->data("friend").toInt();
-        Friend* f = FriendList::findFriend(friendId);
-        assert(f != nullptr);
+    ToxId toxId = ToxId(event->mimeData()->text());
+    Friend *f = FriendList::findFriend(toxId);
+    if (!f)
+        return;
 
-        FriendWidget* widget = f->getFriendWidget();
-        assert(widget != nullptr);
+    // Update old circle after moved.
+    int circleId = Settings::getInstance().getFriendCircleID(f->getToxId());
+    CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
-        // Update old circle after moved.
-        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
+    FriendWidget *widget = qobject_cast<FriendWidget*>(event->source());
+    moveWidget(widget, f->getStatus(), true);
 
-        moveWidget(widget, f->getStatus(), true);
-
-        if (circleWidget != nullptr)
-            circleWidget->updateStatus();
-    }
+    if (circleWidget)
+        circleWidget->updateStatus();
 }
 
 void FriendListWidget::dayTimeout()
