@@ -74,6 +74,7 @@ signals:
     void dhtServerListChanged();
     void smileyPackChanged();
     void emojiFontChanged();
+    void autoAcceptCallChanged(const ToxId& id, int accept);
 
 public:
     const QList<DhtServer>& getDhtServerList() const;

@@ -1165,7 +1165,7 @@ int Settings::getAutoAcceptCall(const ToxId &id) const
     return false;
 }
 
-void Settings::setAutoAcceptCall(const ToxId &id, int accept)
+void Settings::setAutoAcceptCall(const ToxId& id, int accept)
 {
     QMutexLocker locker{&bigLock};
     QString key = id.publicKey;
@@ -1174,6 +1174,7 @@ void Settings::setAutoAcceptCall(const ToxId &id, int accept)
     if(it != friendLst.end())
     {
         it->autoAcceptCall = accept;
+        emit autoAcceptCallChanged(id, accept);
     }
     else
     {
