@@ -20,6 +20,7 @@
 #include "groupchatform.h"
 #include "tabcompleter.h"
 #include "src/group.h"
+#include "src/friend.h"
 #include "src/widget/groupwidget.h"
 #include "src/widget/tool/chattextedit.h"
 #include "src/widget/tool/croppinglabel.h"
@@ -29,6 +30,7 @@
 #include "src/widget/style.h"
 #include "src/widget/flowlayout.h"
 #include "src/widget/translator.h"
+#include "src/widget/friendwidget.h"
 #include "src/video/groupnetcamview.h"
 #include <QDebug>
 #include <QTimer>
@@ -278,17 +280,21 @@ void GroupChatForm::peerAudioPlaying(int peer)
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
+    QObject *o = ev->source();
+    FriendWidget *frnd = dynamic_cast<FriendWidget*>(o);
+    if (frnd != nullptr)
         ev->acceptProposedAction();
 }
 
 void GroupChatForm::dropEvent(QDropEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
-    {
-        int friendId = ev->mimeData()->data("friend").toInt();
-        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
-    }
+    QObject *o = ev->source();
+    FriendWidget *frnd = dynamic_cast<FriendWidget*>(o);
+    if (frnd == nullptr)
+        return;
+
+    int friendId = frnd->getFriend()->getFriendID();
+    Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
 }
 
 void GroupChatForm::onMicMuteToggle()

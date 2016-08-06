@@ -543,18 +543,21 @@ bool ContentDialog::event(QEvent* event)
 
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *frnd = dynamic_cast<FriendWidget*>(o);
+    GroupWidget *group = dynamic_cast<GroupWidget*>(o);
+    if (frnd != nullptr)
     {
-        int friendId = event->mimeData()->data("friend").toInt();
+        int friendId = frnd->getFriend()->getFriendID();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
         if (iter == friendList.end() || std::get<0>(iter.value()) != this)
             event->acceptProposedAction();
     }
-    else if (event->mimeData()->hasFormat("group"))
+    else if (group != nullptr)
     {
-        int groupId = event->mimeData()->data("group").toInt();
+        int groupId = group->getGroup()->getGroupId();
         auto iter = groupList.find(groupId);
 
         if (iter == groupList.end() || std::get<0>(iter.value()) != this)
@@ -564,9 +567,12 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
 
 void ContentDialog::dropEvent(QDropEvent *event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *frnd = dynamic_cast<FriendWidget*>(o);
+    GroupWidget *group = dynamic_cast<GroupWidget*>(o);
+    if (frnd != nullptr)
     {
-        int friendId = event->mimeData()->data("friend").toInt();
+        int friendId = frnd->getFriend()->getFriendID();
         auto iter = friendList.find(friendId);
 
         if (iter != friendList.end())
@@ -576,9 +582,9 @@ void ContentDialog::dropEvent(QDropEvent *event)
         Widget::getInstance()->addFriendDialog(contact, this);
         ensureSplitterVisible();
     }
-    else if (event->mimeData()->hasFormat("group"))
+    else if (group != nullptr)
     {
-        int groupId = event->mimeData()->data("group").toInt();
+        int groupId = group->getGroup()->getGroupId();
         auto iter = friendList.find(groupId);
 
         if (iter != friendList.end())
