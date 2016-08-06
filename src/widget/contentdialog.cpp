@@ -548,7 +548,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
     GroupWidget *group = dynamic_cast<GroupWidget*>(o);
     if (frnd != nullptr)
     {
-        int friendId = frnd->getFriend()->getFriendID();
+        int friendId = frnd->getFriend()->getFriendId();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
@@ -572,7 +572,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
     GroupWidget *group = dynamic_cast<GroupWidget*>(o);
     if (frnd != nullptr)
     {
-        int friendId = frnd->getFriend()->getFriendID();
+        int friendId = frnd->getFriend()->getFriendId();
         auto iter = friendList.find(friendId);
 
         if (iter != friendList.end())
@@ -633,7 +633,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 
         if (widget->getFriend() != nullptr)
         {
-            removeFriend(widget->getFriend()->getFriendID());
+            removeFriend(widget->getFriend()->getFriendId());
             Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
         }
         else
