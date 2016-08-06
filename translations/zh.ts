@@ -31,37 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
+    <message>
+        <source>Audio Settings</source>
+        <translation type="unfinished">音频设置</translation>
+    </message>
+    <message>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">播放设备</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">使用滑块设置扬声器音量</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">音频捕获设备</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Video Settings</source>
-        <translation>视频设置</translation>
+        <translation type="unfinished">视频设置</translation>
     </message>
     <message>
         <source>Video device</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>分辨率</translation>
-    </message>
-    <message>
-        <source>Audio Settings</source>
-        <translation>音频设置</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translatorcomment> </translatorcomment>
-        <translation>使用滑块设置扬声器音量</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>播放设备</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>音频捕获设备</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,19 +69,15 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>设置摄像头分辨率
+        <translation type="unfinished">设置摄像头分辨率
 此值越高，你的好友看到的视频质量就越好
 请注意，更好的视频质量需要更好的网络连接来承载
 有时你的网络连接并不足以承载如此高的视频质量
 这有可能导致视频通话的问题</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <source>Resolution</source>
+        <translation type="unfinished">分辨率</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -1930,32 +1926,49 @@ Share it with your friends to communicate.</source>
         <comment>import confirm title</comment>
         <translation type="unfinished">用户配置文件已存在</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>忽略非Tox的文件</translation>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>注意：你选择了一个不是Tox存储的文件，已被忽略</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>用户配置文件已存在</translation>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>已导入用户配置文件</translation>
+        <translation type="unfinished">已导入用户配置文件</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1 已成功导入</translation>
+        <translation type="unfinished">%1 已成功导入</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
@@ -2073,11 +2086,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Version %1, %2</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished">一个叫&quot;%1&quot;的用户配置文件已经存在，你想要擦除它吗？</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>

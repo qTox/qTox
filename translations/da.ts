@@ -31,40 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Audioindstillinger</translation>
+        <translation type="unfinished">Audioindstillinger</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Brug skyderen til at indstille lydstyrken for højttalerne.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
         <translation type="unfinished">Afspilnings-enhed</translation>
     </message>
     <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Brug skyderen til at indstille lydstyrken for højttalerne.</translation>
+    </message>
+    <message>
         <source>Capture device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Video Settings</source>
-        <translation>Video-indstillinger</translation>
+        <translation type="unfinished">Video-indstillinger</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videoenhed</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Opløsning</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Videoenhed</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -75,11 +72,11 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Opløsning</translation>
     </message>
     <message>
-        <source>Volume</source>
+        <source>Rescan devices</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1928,6 +1925,46 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1983,34 +2020,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

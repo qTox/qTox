@@ -31,49 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Garso nustatymai</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Slinktuku galite nustatyti garsiakalbių garsį.</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Atkūrimo įrenginys</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Garsis</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Įrašymo įrenginys</translation>
+        <translation type="unfinished">Garso nustatymai</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Stiprinimas</translation>
+        <translation type="unfinished">Stiprinimas</translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">Atkūrimo įrenginys</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Slinktuku galite nustatyti garsiakalbių garsį.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Įrašymo įrenginys</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Garsis</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Vaizdo nustatymai</translation>
+        <translation type="unfinished">Vaizdo nustatymai</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Vaizdo įrenginys</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translatorcomment>Trumpiau nei skiriamoji geba</translatorcomment>
-        <translation>Raiška</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Aptikti įrenginius iš naujo</translation>
+        <translation type="unfinished">Vaizdo įrenginys</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -81,11 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Nustatykite vaizdo kameros raišką.
+        <translation type="unfinished">Nustatykite vaizdo kameros raišką.
 Kuo didesnė reikšmė, tuo geresnę vaizdo kokybę matys jūsų kontaktai.
 Geresnei vaizdo kokybei atitinkamai reikia geresnio interneto ryšio.
 Jeigu jūsų interneto ryšys yra per prastas, turėsite keblumų su aukštesnės kokybės
 vaizdo skambučiais.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Raiška</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Aptikti įrenginius iš naujo</translation>
     </message>
 </context>
 <context>
@@ -1944,6 +1940,46 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <comment>import confirm text</comment>
         <translation>Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profilis importuotas</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox sėkmingai importuotas</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atšaukti</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1993,34 +2029,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Violet</source>
         <translation>Violetinė</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Praleidžiamas failas</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Įspėjimas: pasirinktas failas nėra Tox failas – praleista.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Toks profilis jau yra</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profilis importuotas</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox sėkmingai importuotas</translation>
     </message>
     <message>
         <source>Incoming call...</source>

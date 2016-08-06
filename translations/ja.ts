@@ -31,9 +31,6 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
         <translation type="unfinished">オーディオ設定</translation>
@@ -1932,6 +1929,46 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation type="unfinished">プロファイル名 &quot;%1&quot; が既に存在します。消去しますか？</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">プロファイルのインポート済</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox を正しくインポートしました</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2018,34 +2055,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation type="unfinished">qTox はチャットログを開けません。なので、ログは無効になります。</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished">Toxファイルではないものを無視します</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished">警告： あなたはToxのセーブファイルではないものを選びました。無視します。</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation type="unfinished">プロファイルが既に存在します</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished">プロファイル &quot;%1&quot; が既に存在します。消去しますか？</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation type="unfinished">プロファイルのインポート済</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox を正しくインポートしました</translation>
     </message>
     <message>
         <source>None</source>

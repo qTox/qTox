@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="bg_BG">
+<TS version="2.0" language="bg_BG">
 <context>
     <name>AVForm</name>
     <message>
@@ -1941,6 +1941,22 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation>Профил с име &quot;%1&quot; вече съществува. Искате ли да го изтриете?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Профилът е внесен</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox бе внесен успешно</translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -1958,6 +1974,11 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2009,34 +2030,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Incoming call...</source>
         <translation>Входящо обаждане...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Не е избран Tox файл</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Внимание: Вие сте избрали файл, който не е Tox (*.tox) файл; игнориране.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Този профил вече съществува</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Профил с име &quot;%1&quot; вече съществува. Искате ли да го изтриете?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Профилът е внесен</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox бе внесен успешно</translation>
     </message>
     <message>
         <source>Resizing</source>

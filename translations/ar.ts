@@ -31,32 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>إعدادات الصوت</translation>
+        <translation type="unfinished">إعدادات الصوت</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>استخدام شريط التمرير لضبط مستوى الصوت من السماعة.</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>جهاز التسجيل</translation>
+        <source>Gain</source>
+        <translation type="unfinished">كسب</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>جهاز مكبر الصوت</translation>
+        <translation type="unfinished">جهاز مكبر الصوت</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">استخدام شريط التمرير لضبط مستوى الصوت من السماعة.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">جهاز التسجيل</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">الصوت</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>اعدادات الفيديو</translation>
+        <translation type="unfinished">اعدادات الفيديو</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>جهاز الفيديو</translation>
+        <translation type="unfinished">جهاز الفيديو</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,23 +69,15 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>ضع الدقة المناسبة للكاميرا.</translation>
+        <translation type="unfinished">ضع الدقة المناسبة للكاميرا.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>الدقة</translation>
+        <translation type="unfinished">الدقة</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>إعادة الكشف عن الأجهزة</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>الصوت</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation>كسب</translation>
+        <translation type="unfinished">إعادة الكشف عن الأجهزة</translation>
     </message>
 </context>
 <context>
@@ -1933,6 +1930,22 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation>إسم الملف الشخصي &quot;%1&quot; موجود مسبقاً . هل تود إزاته؟</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">ملف شخصي مستورد</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.نجحت اضافته</translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -1940,6 +1953,22 @@ Share it with your friends to communicate.</source>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>RTL</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">إلغاء</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2027,34 +2056,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>غير قادر على فتح سجل المحادثات , قد يكون معطلاً.</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>تخطي , ليس ملف Tox</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>تحذير: لم يتم اختيار ملف حفظ Tox ; تجاهل.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>الملف الشخصي موجود فعلا</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>الملف الشخصي &quot;%1&quot; موجود فعلا . هل تريد  محوه ؟</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>ملف شخصي مستورد</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.نجحت اضافته</translation>
     </message>
     <message>
         <source>None</source>

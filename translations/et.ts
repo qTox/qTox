@@ -31,40 +31,37 @@
         <source>Screen %1</source>
         <translation>Ekraan %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Heliseaded</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Mahamängiv seade</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Helitugevus</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Kasuta liugurit, et seada kõlarite helitaset.</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Salvestav seade</translation>
+        <translation type="unfinished">Heliseaded</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Võimendus</translation>
+        <translation type="unfinished">Võimendus</translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">Mahamängiv seade</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Kasuta liugurit, et seada kõlarite helitaset.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Salvestav seade</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Helitugevus</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videoseaded</translation>
+        <translation type="unfinished">Videoseaded</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videoseade</translation>
+        <translation type="unfinished">Videoseade</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -72,7 +69,7 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Määra oma kaamera lahutus.
+        <translation type="unfinished">Määra oma kaamera lahutus.
 Mida kõrgemad on väärtused, seda kõrgem pilt võib sinu sõpradeni jõuda.
 Pea siiski meeles, et kvaliteetsem pilt eeldab ka kiiremat internetiühendust.
 Vahel võib sinu ühendus olla hea videopildi edastamiseks liialt vilets, 
@@ -80,11 +77,11 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Lahutus</translation>
+        <translation type="unfinished">Lahutus</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Otsi seadmeid</translation>
+        <translation type="unfinished">Otsi seadmeid</translation>
     </message>
 </context>
 <context>
@@ -1944,6 +1941,46 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
         <comment>import confirm text</comment>
         <translation>Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profiil imporditi</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox imporditi edukalt</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Katkesta</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -2031,34 +2068,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox ei suutnud sinu vestluste logisid avada, need deaktiveeritakse.</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Eiran faili, mis pole Tox vormingus</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Hoiatus: oled valinud faili, mis ei ole tox fail. Seda eiratakse.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profiil on juba olemas</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profiil imporditi</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox imporditi edukalt</translation>
     </message>
     <message>
         <source>None</source>

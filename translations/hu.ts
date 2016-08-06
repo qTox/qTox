@@ -31,32 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Hangbeállítások</translation>
+        <translation type="unfinished">Hangbeállítások</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Csúsztassa el a hangerő beállításához.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Hangeszköz</translation>
+        <translation type="unfinished">Hangeszköz</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Csúsztassa el a hangerő beállításához.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Videóeszköz</translation>
+        <translation type="unfinished">Videóeszköz</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Hangerő</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videóbeállítások</translation>
+        <translation type="unfinished">Videóbeállítások</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation>Képfelbontás</translation>
+        <source>Video device</source>
+        <translation type="unfinished">Videó eszköz</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,27 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>A webkamera képfelbontásának beállítása.
+        <translation type="unfinished">A webkamera képfelbontásának beállítása.
 A magasabb érték jobb minőségű képet eredményez.
 Ne felejtse, hogy a jobb minőségű képhez gyorsabb Internet-kapcsolatra lehet szükség.
 Néha az Internet-kapcsolat nem elég jó ahhoz, hogy kezelni tudja a jobb minőségű videót,
 ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Hangerő</translation>
-    </message>
-    <message>
-        <source>Video device</source>
-        <translation type="unfinished">Videó eszköz</translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Képfelbontás</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Eszközök frissítése</translation>
+        <translation type="unfinished">Eszközök frissítése</translation>
     </message>
 </context>
 <context>
@@ -1930,6 +1927,46 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
         <comment>import confirm text</comment>
         <translation type="unfinished">A(z) &quot;%1&quot; nevű profil már létezik. Szeretné törölni?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil importálva</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox sikeresen beimportálva</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1979,34 +2016,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Bejövő hívás...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Nem Tox-fájl mellőzése</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Figyelem: Olyan fájlt választott, amely nem Tox mentésfájl, mellőzés.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>A profil már létezik</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>A(z) &quot;%1&quot; nevű profil már létezik. Szeretné törölni?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil importálva</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox sikeresen beimportálva</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>

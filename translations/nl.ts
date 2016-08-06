@@ -31,36 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Audio Instellingen</translation>
+        <translation type="unfinished">Audio Instellingen</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Gebruik de slider om het volume van de speakers in te stellen.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Afspeelapparaat</translation>
+        <translation type="unfinished">Afspeelapparaat</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Gebruik de slider om het volume van de speakers in te stellen.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Microfoon</translation>
+        <translation type="unfinished">Microfoon</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Volume</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Video Instellingen</translation>
+        <translation type="unfinished">Video Instellingen</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videoapparaat</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Resolutie</translation>
+        <translation type="unfinished">Videoapparaat</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -68,23 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Stel de resolutie van je camera in.
+        <translation type="unfinished">Stel de resolutie van je camera in.
 Hoe hoger de resolutie, des de beter de video kwaliteit die je vrienden te zijn krijgen.
 Let er echter op dat een hogere resolutie meer bandbreedte gebruikt.
 Het kan mogelijk zijn dat je internetverbinding niet snel genoeg is om een hogere video kwaliteit te ondersteunen,
 wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Volume</translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Resolutie</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Apparaten opnieuw scannen</translation>
+        <translation type="unfinished">Apparaten opnieuw scannen</translation>
     </message>
 </context>
 <context>
@@ -1937,6 +1934,46 @@ Deel dit met je vrienden om te communiceren.</translation>
         <comment>import confirm text</comment>
         <translation>Er bestaat al een profiel met de naam &quot;%1&quot;. Wil je het verwijderen?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profiel geïmporteerd</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox was succesvol geïmporteerd</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuleer</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1986,34 +2023,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Inkomend gesprek...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Niet-Tox bestand wordt genegeerd</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Let op: je hebt een bestand gekozen dat geen Tox bestand is. Dit bestand wordt genegeerd.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profiel bestaat al</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Er bestaat al een profiel met de naam &quot;%1&quot;. Wil je deze verwijderen?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profiel geïmporteerd</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox was succesvol geïmporteerd</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>

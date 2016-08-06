@@ -31,48 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Аудіо параметри</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Гучність</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Використовуйте повзунок для регулювання гучності пристрою відтворення.</translation>
+        <translation type="unfinished">Аудіо параметри</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Підсилення</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Пересканувати пристрої</translation>
+        <translation type="unfinished">Підсилення</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Пристрій відтворення</translation>
+        <translation type="unfinished">Пристрій відтворення</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Використовуйте повзунок для регулювання гучності пристрою відтворення.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Пристрій захоплення</translation>
+        <translation type="unfinished">Пристрій захоплення</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Гучність</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Параметри відео</translation>
+        <translation type="unfinished">Параметри відео</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Відео пристрій</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Роздільна здатність</translation>
+        <translation type="unfinished">Відео пристрій</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -80,11 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Встановлює роздільну здатність для вашої камери.
+        <translation type="unfinished">Встановлює роздільну здатність для вашої камери.
 За більших значень ваші співрозмовники будуть бачити вас чіткіше.
 Зауважте, для кращої якості відео потрібен більш швидкий інтернет.
 Іноді ваше інтернет з’єднання може бути недостатньо якісним для досить високої якості відео,
 що може спричинити проблеми під час відео зв’язку.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Роздільна здатність</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Пересканувати пристрої</translation>
     </message>
 </context>
 <context>
@@ -1948,37 +1945,49 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation type="unfinished">Профіль із назвою «%1» вже існує. Бажаєте перезаписати його?</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ігнорування не Tox файлу</translation>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Увага: Вказаний Вами файл не є файлом збереження Tox; він буде проігнорований.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Профіль вже існує</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Профіль із назвою «%1» вже існує. Бажаєте перезаписати його?</translation>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Профіль імпортовано</translation>
+        <translation type="unfinished">Профіль імпортовано</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox успішно імпортовано</translation>
+        <translation type="unfinished">%1.tox успішно імпортовано</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
         <translation>Версія %1, %2</translation>

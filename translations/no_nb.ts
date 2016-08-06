@@ -31,32 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Lydinstillinger</translation>
+        <translation type="unfinished">Lydinstillinger</translation>
     </message>
     <message>
-        <source>Capture device</source>
-        <translation>Opptaksenhet</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Bruk slideren til å sette volumet til dine høytalere.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Avspillingsenhet</translation>
+        <translation type="unfinished">Avspillingsenhet</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Bruk slideren til å sette volumet til dine høytalere.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">Opptaksenhet</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videoinstillinger</translation>
+        <translation type="unfinished">Videoinstillinger</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videoenhet</translation>
+        <translation type="unfinished">Videoenhet</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,22 +69,14 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Set oppløsningen for ditt kamera.
+        <translation type="unfinished">Set oppløsningen for ditt kamera.
 Høyere verdier øker sjansen for at dine venner får en bedre videokvalitet.
 NB! Høyere videokvalitet krever raskere internett-tilkobling.
 Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokvalitet enn hva din internett-tilkoblingen klarer å levere.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation>Oppløsning</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oppløsning</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -1940,6 +1937,46 @@ Del den med venner du vil kommunisere med.</translation>
         <comment>import confirm text</comment>
         <translation type="unfinished">En profil med navn &quot;%1&quot; eksisterer allerede. Vil du slette den?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil importert</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox ble importert</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Avbryt</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1993,34 +2030,6 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Inkommende samtale...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ignorerer ikke-Tox-fil</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Advarsel: du har valgt en fil som ikke er en tox-lagringsfil; ignorerer.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profil eksisterer allerede</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>En profil med navn &quot;%1&quot; eksisterer allerede. Vil du slette den?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil importert</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox ble importert</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>

@@ -31,48 +31,37 @@
         <source>Screen %1</source>
         <translation>ئېكران %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>ئۈن تەڭشەكلىرى</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>توچكىنى سۈرۈپ ئۈنقويغۇنىڭ ئاۋازىنى تەڭشەڭ.</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>قويۇش ئەسۋابى</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>ئۈنئالغۇ ئەسۋابى</translation>
+        <translation type="unfinished">ئۈن تەڭشەكلىرى</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>قۇۋۋەت</translation>
+        <translation type="unfinished">قۇۋۋەت</translation>
+    </message>
+    <message>
+        <source>Playback device</source>
+        <translation type="unfinished">قويۇش ئەسۋابى</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">توچكىنى سۈرۈپ ئۈنقويغۇنىڭ ئاۋازىنى تەڭشەڭ.</translation>
+    </message>
+    <message>
+        <source>Capture device</source>
+        <translation type="unfinished">ئۈنئالغۇ ئەسۋابى</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>ئۈن چوڭلۇقى</translation>
+        <translation type="unfinished">ئۈن چوڭلۇقى</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>سىن تەڭشىكى</translation>
+        <translation type="unfinished">سىن تەڭشىكى</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>سىن ئەسۋابى</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>سۈزۈكلىكى</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>ئەسۋابلارنى قايتا ئىزلەش</translation>
+        <translation type="unfinished">سىن ئەسۋابى</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -80,11 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>سىنئالغۇ (كامېرا) سۈزۈكلۈكىنى تەڭشەڭ
+        <translation type="unfinished">سىنئالغۇ (كامېرا) سۈزۈكلۈكىنى تەڭشەڭ
 قانچە چوڭ بولسا، دوستىڭىزغا كۆرۈنىدىغان سىن شۇنچە سۈپەتلىك بولىدۇ
 لېكىن سۈپەتلىك سىن ئ‍ۈچۈن ياخشى تور ئۇلىنىشى زۆرۈر
 بەزىدە تور ئۇلىنىشىڭىزسىن سۈپىتىگە  يېتەرلىك بولمىسا
 سىنلىق پاراڭلىشىشىڭىز تەسىرگە ئۇچرىشى مۇمكىن</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">سۈزۈكلىكى</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">ئەسۋابلارنى قايتا ئىزلەش</translation>
     </message>
 </context>
 <context>
@@ -1934,6 +1931,22 @@ Share it with your friends to communicate.</source>
         <comment>import confirm text</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QApplication</name>
@@ -1941,6 +1954,22 @@ Share it with your friends to communicate.</source>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>RTL</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1997,34 +2026,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

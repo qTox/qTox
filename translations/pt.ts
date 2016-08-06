@@ -31,36 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Configurações de Áudio</translation>
+        <translation type="unfinished">Configurações de Áudio</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Deslize para ajustar o volume dos seus auto-falantes.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Dispositivo de Reprodução</translation>
+        <translation type="unfinished">Dispositivo de Reprodução</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Deslize para ajustar o volume dos seus auto-falantes.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Dispositivo de Captura</translation>
+        <translation type="unfinished">Dispositivo de Captura</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Configurações de Vídeo</translation>
+        <translation type="unfinished">Configurações de Vídeo</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Dispositivo de Vídeo</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Resolução</translation>
+        <translation type="unfinished">Dispositivo de Vídeo</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -68,18 +69,14 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Define a resolução da sua câmera.
+        <translation type="unfinished">Define a resolução da sua câmera.
 Valores mais altos fornecem uma qualidade melhor.
 Observe no entanto que uma qualidade de vídeo maior exige uma conexão melhor com a internet.
 Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo maior, que pode levar a problemas em chamadas de vídeo.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Resolução</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -1932,6 +1929,46 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <comment>import confirm text</comment>
         <translation type="unfinished">Um perfil chamado &quot;%1&quot; já existe. Deseja sobrescrevê-lo?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Perfil importado</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox importado com sucesso</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1977,34 +2014,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Violet</source>
         <translation>Violeta</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ignorando arquivo não Tox</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Atenção: foi escolhido um arquivo que não é um arquivo Tox. Ignorando.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>O perfil já existe</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Um perfil chamado &quot;%1&quot; já existe. Deseja sobrescrevê-lo?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Perfil importado</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox importado com sucesso</translation>
     </message>
     <message>
         <source>Incoming call...</source>

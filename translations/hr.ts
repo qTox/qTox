@@ -31,32 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
         <source>Audio Settings</source>
-        <translation>Postavke zvuka</translation>
+        <translation type="unfinished">Postavke zvuka</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Koristite klizač za postavljanje jačine zvuka vaših zvučnika.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Uređaj za reprodukciju</translation>
+        <translation type="unfinished">Uređaj za reprodukciju</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Koristite klizač za postavljanje jačine zvuka vaših zvučnika.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Uređaj za snimanje</translation>
+        <translation type="unfinished">Uređaj za snimanje</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Postavke videa</translation>
+        <translation type="unfinished">Postavke videa</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation>Rezolucija</translation>
+        <source>Video device</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -64,23 +69,15 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Postavite rezoluciju svoje kamere.
+        <translation type="unfinished">Postavite rezoluciju svoje kamere.
 Što su vrijednosti veće, vaši će prijatelji primati bolju kvalitetu videa.
 Vodite računa o tome da bolja kvaliteta zahtijeva bržu internetsku vezu.
 Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvalitetu,
 što može dovesti do problema sa video pozivima.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Rezolucija</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -1934,6 +1931,46 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <comment>import confirm text</comment>
         <translation type="unfinished">Profil imena &quot;%1&quot; već postoji. Želite li ga izbrisati?</translation>
     </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil je uvezen</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox je uspješno uvezen</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Otkaži</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1983,34 +2020,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Dolazni poziv...</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Ignoriram ne-Tox datoteku</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Upozorenje: odabrali ste datoteku koja nije Tox datoteka; ignoriram.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profil već postoji</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profil imena &quot;%1&quot; već postoji. Želite li ga izbrisati?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil je uvezen</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox je uspješno uvezen</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>

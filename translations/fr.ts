@@ -31,36 +31,37 @@
         <source>Screen %1</source>
         <translation>Écran %1</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
-    <message>
-        <source>Video Settings</source>
-        <translation>Options vidéo</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Résolution</translation>
-    </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Options audio</translation>
+        <translation type="unfinished">Options audio</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Utilisez cette barre pour régler le volume de vos haut-parleurs.</translation>
+        <source>Gain</source>
+        <translation type="unfinished">Gain</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Haut-parleurs</translation>
+        <translation type="unfinished">Haut-parleurs</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Utilisez cette barre pour régler le volume de vos haut-parleurs.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Microphone</translation>
+        <translation type="unfinished">Microphone</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Volume</translation>
+    </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished">Options vidéo</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Source vidéo</translation>
+        <translation type="unfinished">Source vidéo</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -68,23 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Définit la résolution de votre webcam/caméra.
+        <translation type="unfinished">Définit la résolution de votre webcam/caméra.
 Plus la valeur est élevée plus la qualité de la vidéo sera bonne.
 Notez toutes fois qu&apos;une meilleure qualité vidéo néscessite une meilleure connexion Internet.
 Il se peut que votre connexion Internet ne supporte pas une qualité vidéo importante,
 ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
-        <source>Gain</source>
-        <translation>Gain</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Volume</translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Résolution</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Actualiser la liste des périphériques</translation>
+        <translation type="unfinished">Actualiser la liste des périphériques</translation>
     </message>
 </context>
 <context>
@@ -1940,37 +1937,49 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
         <comment>import confirm text</comment>
         <translation>Un profil appelé « %1 » existe déjà. Voulez-vous le supprimer ?</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Fichier non-Tox ignoré</translation>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Attention : Vous avez sélectionné un fichier qui n&apos;est pas une sauvegarde Tox, il sera ignoré.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Ce profil existe déjà</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Un profil appelé « %1 » existe déjà. Voulez-vous le supprimer ?</translation>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Profil importé</translation>
+        <translation type="unfinished">Profil importé</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox à été importé avec succès</translation>
+        <translation type="unfinished">%1.tox à été importé avec succès</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>

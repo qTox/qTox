@@ -31,36 +31,37 @@
         <source>Screen %1</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
-    <message>
-        <source>Video Settings</source>
-        <translation>Impostazioni Video</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Risoluzione</translation>
-    </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Impostazioni Audio</translation>
+        <translation type="unfinished">Impostazioni Audio</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
+        <source>Gain</source>
+        <translation type="unfinished">Volume microfono</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Dispositivo di output</translation>
+        <translation type="unfinished">Dispositivo di output</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Usa lo slider per impostare il volume degli altoparlanti.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Dispositivo di input</translation>
+        <translation type="unfinished">Dispositivo di input</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Volume</translation>
+    </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished">Impostazioni Video</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Dispositivo di input</translation>
+        <translation type="unfinished">Dispositivo di input</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -68,23 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Imposta la risoluzione della webcam.
+        <translation type="unfinished">Imposta la risoluzione della webcam.
 Più alto il valore, migliore sarà la qualità del video che i tuoi contatti riceveranno.
 NOTA: più alta è la qualità video, più veloce deve essere la connessione ad internet.
 Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
 qualità video elevate, questo può causare problemi con le chiamate video.</translation>
     </message>
     <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Risoluzione</translation>
+    </message>
+    <message>
         <source>Rescan devices</source>
-        <translation>Scansiona dispositivi</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation>Volume microfono</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Volume</translation>
+        <translation type="unfinished">Scansiona dispositivi</translation>
     </message>
 </context>
 <context>
@@ -1939,37 +1936,49 @@ Condividilo con chi vuoi comunicare.</translation>
         <comment>import confirm text</comment>
         <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
     </message>
-</context>
-<context>
-    <name>QObject</name>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>File ignorato</translation>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Attenzione: hai scelto un file che non contiene un profilo Tox; Questo file verrà ignorato.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profilo già esistente</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Un profilo chiamato &quot;%1&quot; esiste già. Vuoi sovrascriverlo?</translation>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation>Profilo importato</translation>
+        <translation type="unfinished">Profilo importato</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox è stato importato con successo</translation>
+        <translation type="unfinished">%1.tox è stato importato con successo</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
