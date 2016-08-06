@@ -254,7 +254,7 @@ void GroupWidget::dropEvent(QDropEvent *ev)
     if (frnd == nullptr)
         return;
 
-    int friendId = frnd->getFriend()->getFriendID();
+    int friendId = frnd->getFriend()->getFriendId();
     Core::getInstance()->groupInviteFriend(friendId, groupId);
 
     if (!active)
