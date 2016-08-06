@@ -33,35 +33,35 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Heliseaded</translation>
+        <translation>Heliseaded</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Võimendus</translation>
+        <translation>Võimendus</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Mahamängiv seade</translation>
+        <translation>Mahamängiv seade</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Kasuta liugurit, et seada kõlarite helitaset.</translation>
+        <translation>Kasuta liugurit, et seada kõlarite helitaset.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Salvestav seade</translation>
+        <translation>Salvestav seade</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Helitugevus</translation>
+        <translation>Helitugevus</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Videoseaded</translation>
+        <translation>Videoseaded</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Videoseade</translation>
+        <translation>Videoseade</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,19 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Määra oma kaamera lahutus.
-Mida kõrgemad on väärtused, seda kõrgem pilt võib sinu sõpradeni jõuda.
+        <translation>Määra oma kaamera lahutus.
+Mida kõrgemad on väärtused, seda kõrgema kvaliteediga pilt võib sinu sõpradeni jõuda.
 Pea siiski meeles, et kvaliteetsem pilt eeldab ka kiiremat internetiühendust.
 Vahel võib sinu ühendus olla hea videopildi edastamiseks liialt vilets, 
-mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
+mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Lahutus</translation>
+        <translation>Lahutus</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Otsi seadmeid</translation>
+        <translation>Otsi seadmeid</translation>
     </message>
 </context>
 <context>
@@ -1283,8 +1283,8 @@ kui nad sulle nähtavaks muutuvad.</translation>
         <translation>Keeldu</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation>Kutse esitas &lt;b&gt;%1&lt;/b&gt;, kui oli %2 kl. %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Kutse esitas %1, kui oli %2 kl. %3.</translation>
     </message>
 </context>
 <context>
@@ -1943,43 +1943,43 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Faili pole olemas</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Profiili pole olemas</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Profiil imporditi</translation>
+        <translation>Profiil imporditi</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox imporditi edukalt</translation>
+        <translation>%1.tox imporditi edukalt</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Olgu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Katkesta</translation>
+        <translation>Katkesta</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jah</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VPA</translation>
     </message>
 </context>
 <context>
