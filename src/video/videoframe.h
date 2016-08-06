@@ -39,6 +39,9 @@ extern "C"{
 struct ToxYUVFrame
 {
 public:
+    bool isValid() const;
+    explicit operator bool() const;
+
     const std::uint16_t width;
     const std::uint16_t height;
 

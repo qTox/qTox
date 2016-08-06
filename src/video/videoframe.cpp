@@ -356,7 +356,6 @@ QImage VideoFrame::toQImage(QSize frameSize)
  *
  * @param frameSize the given frame size of ToxAVFrame to generate. Defaults to source frame size
  * if frameSize is invalid.
- * to source frame size.
  * @return a ToxAVFrame structure that represents this VideoFrame, sharing it's buffers or an
  * empty structure if this VideoFrame is no longer valid.
  */
@@ -784,4 +783,24 @@ T VideoFrame::toGenericObject(const QSize& dimensions, const int pixelFormat, co
 template QImage VideoFrame::toGenericObject<QImage>(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
                                                     const std::function<QImage(AVFrame* const)> objectConstructor, const QImage& nullObject);
 template ToxYUVFrame VideoFrame::toGenericObject<ToxYUVFrame>(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
-                                                              const std::function<ToxYUVFrame(AVFrame* const)> objectConstructor, const ToxYUVFrame& nullObject);
+const std::function<ToxYUVFrame(AVFrame* const)> objectConstructor, const ToxYUVFrame& nullObject);
+
+/**
+ * @brief Returns whether the given ToxYUVFrame represents a valid frame or not.
+ *
+ * Valid frames are frames in which both width and height are greater than zero.
+ *
+ * @return true if the frame is valid, false otherwise.
+ */
+bool ToxYUVFrame::isValid() const
+{
+    return width > 0 && height > 0;
+}
+
+/**
+ * @brief Checks if the given ToxYUVFrame is valid or not, delegates to isValid().
+ */
+ToxYUVFrame::operator bool() const
+{
+    return isValid();
+}

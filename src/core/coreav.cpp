@@ -362,7 +362,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     ToxYUVFrame frame = vframe->toToxYUVFrame();
 
-    if(frame.width == 0 || frame.height == 0)
+    if(!frame)
     {
         return;
     }
