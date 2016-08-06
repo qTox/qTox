@@ -115,6 +115,18 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>report it</source>
         <translation>raporteeri sellest</translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -145,10 +157,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Authors</source>
         <translation>Autorid</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Algversiooni autor: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Vaata ka &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;kaastööliste täielikku nimekirja&lt;/span&gt;&lt;/a&gt; keskkonnas nimega Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -226,19 +234,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
 <context>
     <name>AddFriendForm</name>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox peab kasutama Tox DNS teenust, ent ei saa seda läbi puhverserveri teha.
-    Kas minna puhverserverist mööda ja ürituda ühenduda internetiga otse?</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Sõbra lisamine ebaõnnestus</translation>
-    </message>
-    <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Sellist Tox ID-d pole olemas</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -293,12 +290,59 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Reject</source>
         <translation>Keeldu</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Sellist Tox ID-d pole olemas</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Edasijõudnud</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Jah</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Ei</translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Kõne käib</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Sa ei saa võrgust lahkuda, kui kõne käib!</translation>
     </message>
 </context>
 <context>
@@ -313,12 +357,62 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Muuda Tox teisaldatavaks</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;OLULINE MÄRKUS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Kui sa &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;päris kindlalt&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; ei tea, mida sa teed, siis palun &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ära&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; muuda siin midagi. Siin tehtud muudatused võivad põhjustada probleeme qToxi töös ja viia isegi andmete, näiteks ajaloo, kadumiseni.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Taasta vaikeseaded</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Ühenduse seaded</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Toeta IPv6 protokolli (soovitatav)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">Toeta UDP protokolli</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Puhverserveri tüüp:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Aadress:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Port:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Ühendu uuesti</translation>
     </message>
 </context>
 <context>
@@ -802,23 +896,9 @@ Vestluste ajaloo logimise väljalülitamine ei hävita krüpteeritud ajalugu, en
 <context>
     <name>GeneralForm</name>
     <message>
-        <source>None</source>
-        <translation>Puudub</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Vali kaust, kuhu automaatselt vastuvõetavad failid laetakse</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Kõne käib</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Sa ei saa võrgust lahkuda, kui kõne käib!</translation>
     </message>
     <message>
         <source>General</source>
@@ -924,217 +1004,24 @@ instead of closing itself.</source>
         <translation>Nõustu automaatselt failide vastuvõtmisega</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Vestlus</translation>
-    </message>
-    <message>
         <source>On new message:</source>
         <translation>Uue sõnumi vastuvõtmisel:</translation>
-    </message>
-    <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>Mängi sõnumi vastuvõtmisel heli.</translation>
     </message>
     <message>
         <source>Play sound</source>
         <translation>Mängi heli</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Ava qToxi aken, kui saabub uus sõnum ja akent pole veel avatud.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Ava aken</translation>
-    </message>
-    <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Sõnumi saabumisel sea fookus qToxi aknale.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Sea fookus aknale</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Näita muutusi kontaktide olekus</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Grupivestlustes vastuvõetud uutest sõnumitest antakse alati teada.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Grupivestluste puhul teavita alati</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Kui see valik on aktiivne, pannakse grupivestlused sõbranimekirja tippu, vastasel juhul asetatakse need sisselogitud sõprade järele.</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>Aseta grupivestlused sõbranimekirja algusesse</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translatorcomment>Ehk leidub mingi täpsem tõlgendus, peab täpsustama konteksti (st usutavasti siiski ei ole vaja vestlusvalmis olekut, vaid piisab mistahes nähtavast võrku ilmumisest)</translatorcomment>
-        <translation>Sõnumid, mida üritad saata ühendamata olekus sõpradele, toimetatakse nele kohale,
-kui nad sulle nähtavaks muutuvad.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
         <translation>Sõnumite edastamine ühendamata olekus sõpradele</translation>
     </message>
     <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Sinu kontaktide nimekirja kuvatakse kompaktsel kujul.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Kompaktne kontaktide nimekiri</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>Mitme akna tugi</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>Ava iga vestlus eraldi aknas</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>Teema</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Kasuta emotikone</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Emotikonipakk:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Emotikoni suurus:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Stiil:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Teema värv:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Ajatempli vorming:</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>Kuupäeva vorming:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Ühenduse seaded</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Toeta IPv6 protokolli (soovitatav)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Toeta UDP protokolli</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Puhverserveri tüüp:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Aadress:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Puudub</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Ühendu uuesti</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation>Lihttekst</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation>Kuva vorminduse märgid</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation>Ära kuva vorminduse märke</translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation>Olles hõivatud, mängi heli</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation>Aluskirjatüüp:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation>px</translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation>Suurus: </translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox käivitatakse uuesti.</translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation>Teksti kujunduse vorming:</translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation>Vali teksti kujunduse eelistus.</translation>
     </message>
 </context>
 <context>
@@ -1714,6 +1601,10 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
         <source>Generate random NoSpam</source>
         <translation>Loo juhuslik NoSpam</translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Privaatsus</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -1979,7 +1870,7 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished">VPA</translation>
+        <translation>V→P</translation>
     </message>
 </context>
 <context>
@@ -2179,34 +2070,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Ühendus aegus</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Seda aadressi pole olemas</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Viga DNS kirje lahendamisel</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>Tekstikirjet ei leitud</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Tekstikirjes on sobimatu arv väärtusi</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2234,6 +2097,166 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Katkesta</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Vestlus</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">Aluskirjatüüp:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished">px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">Suurus: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished">Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox käivitatakse uuesti.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">Teksti kujunduse vorming:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished">Vali teksti kujunduse eelistus.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">Lihttekst</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished">Kuva vorminduse märgid</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished">Ära kuva vorminduse märke</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Uus sõnum</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Ava qToxi aken, kui saabub uus sõnum ja akent pole veel avatud.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Ava aken</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Sõnumi saabumisel sea fookus qToxi aknale.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Sea fookus aknale</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Grupivestlustes vastuvõetud uutest sõnumitest antakse alati teada.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Grupivestluste puhul teavita alati</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">Kui see valik on aktiivne, pannakse grupivestlused sõbranimekirja tippu, vastasel juhul asetatakse need sisselogitud sõprade järele.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">Aseta grupivestlused sõbranimekirja algusesse</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Sinu kontaktide nimekirja kuvatakse kompaktsel kujul.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Kompaktne kontaktide nimekiri</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">Mitme akna tugi</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">Ava iga vestlus eraldi aknas</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Kasuta emotikone</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Emotikonipakk:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Emotikoni suurus:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Teema</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Stiil:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Teema värv:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Ajatempli vorming:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Kuupäeva vorming:</translation>
     </message>
 </context>
 <context>
