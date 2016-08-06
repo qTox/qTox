@@ -49,19 +49,19 @@
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Aufnahmegerät</translation>
+        <translation>Aufnahmegerät</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Wiedergabelautstärke</translation>
+        <translation>Wiedergabelautstärke</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Videoeinstellungen</translation>
+        <translation>Videoeinstellungen</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Videogerät</translation>
+        <translation>Videogerät</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -1293,8 +1293,8 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Ablehnen</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2 um %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+         <translation>Eingeladen von %1 am %2 um %3.</translation>
     </message>
 </context>
 <context>
@@ -1955,11 +1955,11 @@ Teile sie einfach deinen Bekannten mit!</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei existiert nicht</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil existiert nicht</translation>
     </message>
     <message>
         <source>Profile imported</source>
@@ -1974,19 +1974,19 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>LTR</source>
