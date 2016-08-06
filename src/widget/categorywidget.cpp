@@ -137,7 +137,10 @@ void CategoryWidget::removeFriendWidget(FriendWidget* w, Status s)
 
 void CategoryWidget::updateStatus()
 {
-    statusLabel->setText(QString::number(listLayout->friendOnlineCount()) + QStringLiteral(" / ") + QString::number(listLayout->friendTotalCount()));
+    QString online = QString::number(listLayout->friendOnlineCount());
+    QString offline = QString::number(listLayout->friendTotalCount());
+    QString text = online + QStringLiteral(" / ") + offline;
+    statusLabel->setText(text);
 }
 
 bool CategoryWidget::hasChatrooms() const
