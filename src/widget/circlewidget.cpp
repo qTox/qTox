@@ -150,7 +150,9 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
 void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *widget = dynamic_cast<FriendWidget*>(o);
+    if (widget != nullptr)
         event->acceptProposedAction();
 
     setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
@@ -163,31 +165,30 @@ void CircleWidget::dragLeaveEvent(QDragLeaveEvent* )
 
 void CircleWidget::dropEvent(QDropEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    QObject *o = event->source();
+    FriendWidget *widget = dynamic_cast<FriendWidget*>(o);
+    if (widget == nullptr)
+        return;
+
+    setExpanded(true, false);
+
+    Friend* f = widget->getFriend();
+    assert(f != nullptr);
+
+    // Update old circle after moved.
+    int circleId = Settings::getInstance().getFriendCircleID(f->getToxId());
+    CircleWidget* circleWidget = getFromID(circleId);
+
+    addFriendWidget(widget, f->getStatus());
+    Settings::getInstance().savePersonal();
+
+    if (circleWidget != nullptr)
     {
-        setExpanded(true, false);
-
-        int friendId = event->mimeData()->data("friend").toInt();
-        Friend* f = FriendList::findFriend(friendId);
-        assert(f != nullptr);
-
-        FriendWidget* widget = f->getFriendWidget();
-        assert(widget != nullptr);
-
-        // Update old circle after moved.
-        CircleWidget* circleWidget = getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
-
-        addFriendWidget(widget, f->getStatus());
-        Settings::getInstance().savePersonal();
-
-        if (circleWidget != nullptr)
-        {
-            circleWidget->updateStatus();
-            Widget::getInstance()->searchCircle(circleWidget);
-        }
-
-        setContainerAttribute(Qt::WA_UnderMouse, false);
+        circleWidget->updateStatus();
+        Widget::getInstance()->searchCircle(circleWidget);
     }
+
+    setContainerAttribute(Qt::WA_UnderMouse, false);
 }
 
 void CircleWidget::onSetName()
