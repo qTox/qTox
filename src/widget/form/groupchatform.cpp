@@ -18,10 +18,16 @@
 */
 
 #include "groupchatform.h"
+
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QTimer>
+
 #include "tabcompleter.h"
 #include "src/group.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
 #include "src/widget/groupwidget.h"
-#include "src/widget/tool/chattextedit.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/core/core.h"
@@ -31,12 +37,6 @@
 #include "src/widget/translator.h"
 #include "src/widget/form/chatform.h"
 #include "src/video/groupnetcamview.h"
-#include <QDebug>
-#include <QTimer>
-#include <QPushButton>
-#include <QMimeData>
-#include <QDragEnterEvent>
-#include <QtAlgorithms>
 
 /**
  * @var QList<QLabel*> GroupChatForm::peerLabels
@@ -279,17 +279,22 @@ void GroupChatForm::peerAudioPlaying(int peer)
 
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
+    ToxId toxId = ToxId(ev->mimeData()->text());
+    Friend *frnd = FriendList::findFriend(toxId);
+    if (frnd)
         ev->acceptProposedAction();
 }
 
 void GroupChatForm::dropEvent(QDropEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
-    {
-        int friendId = ev->mimeData()->data("friend").toInt();
-        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
-    }
+    ToxId toxId = ToxId(ev->mimeData()->text());
+    Friend *frnd = FriendList::findFriend(toxId);
+    if (!frnd)
+        return;
+
+    int friendId = frnd->getFriendID();
+    int groupId = group->getGroupId();
+    Core::getInstance()->groupInviteFriend(friendId, groupId);
 }
 
 void GroupChatForm::onMicMuteToggle()
