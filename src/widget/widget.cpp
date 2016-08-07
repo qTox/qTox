@@ -603,7 +603,16 @@ void Widget::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
     saveWindowGeometry();
-
+    
+    if(this->width() <= 775) {
+         // width that doesn't break file transfer layout is 535
+        this->setMinimumWidth(540);
+        ui->statusPanel->hide();
+    } else {
+        this->setMinimumWidth(775); //this was in .ui file
+        ui->statusPanel->show();
+    }
+    
     emit resized();
 }
 
