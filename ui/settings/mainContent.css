@@ -71,11 +71,6 @@ QTabWidget
     background-color: white;
 }
 
-QTabBar
-{
-    background-color: white;
-}
-
 QScrollArea
 {
     background-color: white;
