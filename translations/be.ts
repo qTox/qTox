@@ -33,35 +33,35 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Аўдыяналады</translation>
+        <translation>Аўдыяналады</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Узмацненне</translation>
+        <translation>Узмацненне</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Прылада прайгравання</translation>
+        <translation>Прылада прайгравання</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Карыстайцеся паўзунком для ўсталявання гучнасці дынамікаў.</translation>
+        <translation>Карыстайцеся паўзунком для ўсталявання гучнасці дынамікаў.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Прылада запісу</translation>
+        <translation>Прылада захопу</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Гучнасць</translation>
+        <translation>Гучнасць</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Відэаналады</translation>
+        <translation>Відэаналады</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Відэапрылада</translation>
+        <translation>Відэапрылада</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,19 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Усталяваць распазнавальнасць вашай камеры.
+        <translation>Усталяваць распазнавальнасць вашай камеры.
 Чым больш высокія значэнні зададзены, тым лепшую якасць відэа вашыя сябры могуць атрымаць.
-Але звярніце ўвагу, што з лепшай якасцю відэа патрабуецца лепшае падключэнне да Інтэрнэту.
+Але звярніце ўвагу, што для лепшай якасці відэа патрабуецца лепшае падключэнне да Інтэрнэту.
 Часам вашага падключэння будзе недастаткова, каб справіцца з больш высокай якасцю відэа,
 што можа прывесці да праблем з відэавыклікам.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Распазнавальнасць</translation>
+        <translation>Распазнавальнасць</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Перасканаваць прылады</translation>
+        <translation>Перасканаваць прылады</translation>
     </message>
 </context>
 <context>
@@ -1287,8 +1287,8 @@ will be sent to them when they appear online to you.</source>
         <translation>Адмовіцца</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation>Запрошаны &lt;b&gt;%1&lt;/b&gt; у «%2» а %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Запрошаны %1 у «%2» а %3.</translation>
     </message>
 </context>
 <context>
@@ -1950,43 +1950,43 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не існуе</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Профіль не існуе</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Профіль імпартаваны</translation>
+        <translation>Профіль імпартаваны</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox паспяхова імпартаваны</translation>
+        <translation>%1.tox паспяхова імпартаваны</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Добра</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Адмяніць</translation>
+        <translation>Адмяніць</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Так</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Не</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>Л→П</translation>
     </message>
 </context>
 <context>
