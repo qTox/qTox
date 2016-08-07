@@ -273,6 +273,7 @@ HEADERS  += \
     src/core/cstring.h \
     src/core/toxid.h \
     src/core/indexedlist.h \
+    src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
     src/net/toxuri.h \
     src/net/toxdns.h \
@@ -303,6 +304,7 @@ HEADERS  += \
     src/video/videomode.h \
     src/video/genericnetcamview.h \
     src/video/groupnetcamview.h \
+    src/widget/contentwidget.h \
     src/widget/emoticonswidget.h \
     src/widget/style.h \
     src/widget/tool/croppinglabel.h \
@@ -378,6 +380,7 @@ SOURCES += \
     src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
+    src/core/recursivesignalblocker.cpp \
     src/core/toxid.cpp \
     src/core/toxcall.cpp \
     src/chatlog/chatlog.cpp \
@@ -421,6 +424,7 @@ SOURCES += \
     src/video/groupnetcamview.cpp \
     src/video/netcamview.cpp \
     src/video/videosurface.cpp \
+    src/widget/contentwidget.cpp \
     src/widget/form/addfriendform.cpp \
     src/widget/form/settingswidget.cpp \
     src/widget/form/settings/generalform.cpp \

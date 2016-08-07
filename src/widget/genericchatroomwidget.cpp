@@ -47,7 +47,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     setAutoFillBackground(true);
     reloadTheme();
 
-    compactChange(isCompact());
+    compactLayoutChanged(isCompact());
 }
 
 bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
@@ -55,7 +55,7 @@ bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
     return true; // Disable all events.
 }
 
-void GenericChatroomWidget::compactChange(bool _compact)
+void GenericChatroomWidget::compactLayoutChanged(bool _compact)
 {
     if (!isCompact())
         delete textLayout; // has to be first, deleted by layout

@@ -778,7 +778,12 @@ bool Settings::getShowSystemTray() const
 void Settings::setShowSystemTray(const bool& newValue)
 {
     QMutexLocker locker{&bigLock};
-    showSystemTray = newValue;
+
+    if (newValue != showSystemTray)
+    {
+        showSystemTray = newValue;
+        emit showSystemTrayChanged(newValue);
+    }
 }
 
 void Settings::setUseEmoticons(bool newValue)
@@ -1702,7 +1707,12 @@ bool Settings::getCompactLayout() const
 void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
-    compactLayout = value;
+
+    if (value != compactLayout)
+    {
+        compactLayout = value;
+        emit compactLayoutChanged(value);
+    }
 }
 
 bool Settings::getSeparateWindow() const
@@ -1714,7 +1724,11 @@ bool Settings::getSeparateWindow() const
 void Settings::setSeparateWindow(bool value)
 {
     QMutexLocker locker{&bigLock};
-    separateWindow = value;
+    if (value != separateWindow)
+    {
+        separateWindow = value;
+        emit separateWindowChanged(value);
+    }
 }
 
 bool Settings::getDontGroupWindows() const
@@ -1738,7 +1752,12 @@ bool Settings::getGroupchatPosition() const
 void Settings::setGroupchatPosition(bool value)
 {
     QMutexLocker locker{&bigLock};
-    groupchatPosition = value;
+
+    if (value != groupchatPosition)
+    {
+        groupchatPosition = value;
+        emit groupchatPositionChanged(value);
+    }
 }
 
 int Settings::getCircleCount() const

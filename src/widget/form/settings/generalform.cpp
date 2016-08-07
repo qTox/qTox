@@ -316,7 +316,6 @@ void GeneralForm::onAutorunUpdated()
 void GeneralForm::onSetShowSystemTray()
 {
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
-    emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
     Settings::getInstance().saveGlobal();
 }
 

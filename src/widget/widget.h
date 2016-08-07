@@ -21,6 +21,7 @@
 #define WIDGET_H
 
 #include <QMainWindow>
+#include <QPointer>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
 #include "src/core/corestructs.h"
@@ -32,41 +33,46 @@ namespace Ui {
 class MainWindow;
 }
 
-class GenericChatroomWidget;
-class FriendWidget;
-class Group;
+class AddFriendForm;
+class ContentDialog;
+class ContentLayout;
+class ContentWidget;
+class CircleWidget;
+class FilesForm;
 class Friend;
-class QSplitter;
-class VideoSurface;
-class QMenu;
+class FriendListWidget;
+class FriendWidget;
+class GenericChatroomWidget;
+class Group;
+class GroupInviteForm;
 class Core;
 class Camera;
-class FriendListWidget;
 class MaskablePixmapWidget;
-class QTimer;
-class SystemTrayIcon;
-class FilesForm;
 class ProfileForm;
-class SettingsWidget;
-class AddFriendForm;
-class GroupInviteForm;
-class CircleWidget;
 class QActionGroup;
-class ContentLayout;
-class ContentDialog;
+class QMenu;
 class QPushButton;
+class QSplitter;
+class QTimer;
+class SettingsWidget;
+class SystemTrayIcon;
+class VideoSurface;
 
 class Widget final : public QMainWindow
 {
     Q_OBJECT
 public:
+    static Widget* getInstance();
+
+public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
+
     void init();
-    void setCentralWidget(QWidget *widget, const QString &widgetName);
+
     QString getUsername();
     Camera* getCamera();
-    static Widget* getInstance();
+
     void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
@@ -87,7 +93,7 @@ public:
     };
 
     static QString fromDialogType(DialogType type);
-    ContentDialog* createContentDialog() const;
+    ContentDialog* createContentDialog();
     ContentLayout* createContentDialog(DialogType type);
 
     static void confirmExecutableOpen(const QFileInfo &file);
@@ -97,7 +103,7 @@ public:
 
     void reloadTheme();
     static QString getStatusIconPath(Status status);
-    static inline QIcon prepareIcon(QString path, uint32_t w=0, uint32_t h=0);
+    static inline QIcon prepareIcon(QString path, int w=0, int h=0);
     static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
@@ -108,8 +114,12 @@ public:
 
     void resetIcon();
 
+public:
+    // QMainWindow overrides
+    QSize minimumSizeHint() const override final;
+
 public slots:
-    void onSettingsClicked();
+    void onShowSettings();
     void onSeparateWindowClicked(bool separate);
     void onSeparateWindowChanged(bool separate, bool clicked);
     void setWindowTitle(const QString& title);
@@ -203,7 +213,7 @@ private:
         None,
     };
 
-    enum FilterCriteria
+    enum class FilterCriteria
     {
         All=0,
         Online,
@@ -225,14 +235,18 @@ private:
     void searchContacts();
     void changeDisplayMode();
     void updateFilterText();
-    int getFilterCriteria() const;
-    static bool filterGroups(int index);
-    static bool filterOnline(int index);
-    static bool filterOffline(int index);
+    FilterCriteria getFilterCriteria() const;
+    static bool filterGroups(FilterCriteria filter);
+    static bool filterOnline(FilterCriteria filter);
+    static bool filterOffline(FilterCriteria filter);
     void retranslateUi();
     void focusChatInput();
+    void showContentWidget(QWidget* widget, const QString& title = QString(),
+                  ActiveToolMenuButton activeButton = ActiveToolMenuButton::None);
 
 private:
+    static Widget *instance;
+
     SystemTrayIcon *icon = nullptr;
     QMenu *trayMenu;
     QAction *statusOnline;
@@ -258,13 +272,13 @@ private:
     Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
-    ContentLayout* contentLayout;
-    AddFriendForm *addFriendForm;
-    GroupInviteForm* groupInviteForm;
-    ProfileForm *profileForm;
-    SettingsWidget *settingsWidget;
-    FilesForm *filesForm;
-    static Widget *instance;
+    QPointer<QWidget> contentWidget;
+    QPointer<ContentLayout> contentLayout;
+    QPointer<AddFriendForm> addFriendForm;
+    QPointer<GroupInviteForm> groupInviteForm;
+    QPointer<ProfileForm> profileForm;
+    QPointer<SettingsWidget> settingsWidget;
+    QPointer<FilesForm> filesForm;
     GenericChatroomWidget *activeChatroomWidget;
     FriendListWidget *contactListWidget;
     MaskablePixmapWidget *profilePicture;

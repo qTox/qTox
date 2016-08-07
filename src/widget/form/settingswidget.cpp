@@ -34,8 +34,7 @@
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
 {
-    // block all signals during initialization, including child widgets
-    blockSignals(true);
+    setAttribute(Qt::WA_DeleteOnClose);
 
     body = new QWidget();
     QVBoxLayout* bodyLayout = new QVBoxLayout();
@@ -73,8 +72,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
-
-    blockSignals(false);
 }
 
 SettingsWidget::~SettingsWidget()

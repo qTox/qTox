@@ -22,6 +22,8 @@
 
 #include <tuple>
 
+#include <QPointer>
+
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
@@ -42,7 +44,7 @@ class ContentDialog : public ActivateDialog
 {
     Q_OBJECT
 public:
-    ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
+    explicit ContentDialog(QWidget* parent = nullptr);
     ~ContentDialog();
 
     FriendWidget* addFriend(int friendId, QString id);
@@ -113,11 +115,10 @@ private:
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
     GenericChatroomWidget* displayWidget = nullptr;
-    SettingsWidget* settingsWidget;
     QSize videoSurfaceSize;
     int videoCount;
 
-    static ContentDialog* currentDialog;
+    static QPointer<ContentDialog> currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;
 };
