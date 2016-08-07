@@ -1323,19 +1323,19 @@ QString Widget::fromDialogType(DialogType type)
 {
     switch (type)
     {
-        case AddDialog:
-            return tr("Add friend");
-        case GroupDialog:
-            return tr("Group invites");
-        case TransferDialog:
-            return tr("File transfers");
-        case SettingDialog:
-            return tr("Settings");
-        case ProfileDialog:
-            return tr("Profile");
-        default:
-            return QString();
+    case DialogType::AddDialog:
+        return tr("Add friend");
+    case DialogType::GroupDialog:
+        return tr("Group invites");
+    case DialogType::TransferDialog:
+        return tr("File transfers");
+    case DialogType::SettingDialog:
+        return tr("Settings");
+    case DialogType::ProfileDialog:
+        return tr("Profile");
     }
+
+    return QString();
 }
 
 bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, bool notify)
@@ -1747,38 +1747,38 @@ bool Widget::event(QEvent * e)
 {
     switch (e->type())
     {
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonDblClick:
-            focusChatInput();
-            break;
-        case QEvent::Paint:
-            friendList->updateVisualTracking();
-            break;
-        case QEvent::WindowActivate:
-            if (activeChatroomWidget != nullptr)
-            {
-                activeChatroomWidget->resetEventFlags();
-                activeChatroomWidget->updateStatusLight();
-                setWindowTitle(activeChatroomWidget->getTitle());
-            }
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+        focusChatInput();
+        break;
+    case QEvent::Paint:
+        friendList->updateVisualTracking();
+        break;
+    case QEvent::WindowActivate:
+        if (activeChatroomWidget != nullptr)
+        {
+            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->updateStatusLight();
+            setWindowTitle(activeChatroomWidget->getTitle());
+        }
 
-            if (eventFlag)
-                resetIcon();
+        if (eventFlag)
+            resetIcon();
 
-            focusChatInput();
+        focusChatInput();
 
 #ifdef Q_OS_MAC
-            emit windowStateChanged(windowState());
+        emit windowStateChanged(windowState());
 
-        case QEvent::WindowStateChange:
-            Nexus::getInstance().updateWindowsStates();
+    case QEvent::WindowStateChange:
+        Nexus::getInstance().updateWindowsStates();
 #endif
-            break;
-        default:
-            break;
+        break;
+    default:
+        break;
     }
 
-    return QWidget::event(e);
+    return QMainWindow::event(e);
 }
 
 void Widget::onUserAwayCheck()
@@ -2119,7 +2119,6 @@ QString Widget::getStatusTitle(Status status)
     case Status::Busy:
         return QStringLiteral("busy");
     case Status::Offline:
-    default:
         return QStringLiteral("offline");
     }
 }
@@ -2281,14 +2280,14 @@ void Widget::groupInvitesClear()
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 {
-    addButton->setChecked(newActiveButton == Widget::AddButton);
-    addButton->setDisabled(newActiveButton == Widget::AddButton);
-    groupButton->setChecked(newActiveButton == Widget::GroupButton);
-    groupButton->setDisabled(newActiveButton == Widget::GroupButton);
-    transferButton->setChecked(newActiveButton == Widget::TransferButton);
-    transferButton->setDisabled(newActiveButton == Widget::TransferButton);
-    settingsButton->setChecked(newActiveButton == Widget::SettingButton);
-    settingsButton->setDisabled(newActiveButton == Widget::SettingButton);
+    addButton->setChecked(newActiveButton == ActiveToolMenuButton::AddButton);
+    addButton->setDisabled(newActiveButton == ActiveToolMenuButton::AddButton);
+    groupButton->setChecked(newActiveButton == ActiveToolMenuButton::GroupButton);
+    groupButton->setDisabled(newActiveButton == ActiveToolMenuButton::GroupButton);
+    transferButton->setChecked(newActiveButton == ActiveToolMenuButton::TransferButton);
+    transferButton->setDisabled(newActiveButton == ActiveToolMenuButton::TransferButton);
+    settingsButton->setChecked(newActiveButton == ActiveToolMenuButton::SettingButton);
+    settingsButton->setDisabled(newActiveButton == ActiveToolMenuButton::SettingButton);
 }
 
 void Widget::retranslateUi()
