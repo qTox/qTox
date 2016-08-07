@@ -34,6 +34,7 @@
 class AddFriendForm;
 class ContentDialog;
 class ContentLayout;
+class ContentWidget;
 class CircleWidget;
 class FilesForm;
 class Friend;
@@ -59,13 +60,17 @@ class Widget final : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
 public:
+    static Widget* getInstance();
+
+public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
+
     void init();
-    void setCentralWidget(QWidget *widget, const QString &widgetName);
+
     QString getUsername();
     Camera* getCamera();
-    static Widget* getInstance();
+
     void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
@@ -106,6 +111,10 @@ public:
     bool groupsVisible() const;
 
     void resetIcon();
+
+public:
+    // QMainWindow overrides
+    QSize minimumSizeHint() const override final;
 
 public slots:
     void onShowSettings();
@@ -230,6 +239,8 @@ private:
     static bool filterOffline(FilterCriteria filter);
     void retranslateUi();
     void focusChatInput();
+    void showContentWidget(QWidget* widget, const QString& title = QString(),
+                  ActiveToolMenuButton activeButton = ActiveToolMenuButton::None);
 
 private:
     static Widget *instance;
@@ -258,6 +269,7 @@ private:
 
     QSplitter *centralLayout;
     QPoint dragPosition;
+    QPointer<QWidget> contentWidget;
     QPointer<ContentLayout> contentLayout;
     QPointer<AddFriendForm> addFriendForm;
     QPointer<GroupInviteForm> groupInviteForm;
