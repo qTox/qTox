@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jouer un son de test en variant le volume.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -33,11 +33,11 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Options audio</translation>
+        <translation>Réglages audio</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Gain</translation>
+        <translation>Gain</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Options vidéo</translation>
+        <translation>Réglages vidéo</translation>
     </message>
     <message>
         <source>Video device</source>
@@ -69,15 +69,15 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Définit la résolution de votre webcam/caméra.
+        <translation>Définit la résolution de votre webcam/caméra.
 Plus la valeur est élevée plus la qualité de la vidéo sera bonne.
-Notez toutes fois qu&apos;une meilleure qualité vidéo néscessite une meilleure connexion Internet.
+Notez toutes fois qu&apos;une meilleure qualité vidéo nécessite une meilleure connexion Internet.
 Il se peut que votre connexion Internet ne supporte pas une qualité vidéo importante,
 ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Résolution</translation>
+        <translation>Résolution</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -1279,8 +1279,8 @@ au lieu de se fermer.</translation>
         <translation>Décliner</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation>Invité par &lt;b&gt;%1&lt;/b&gt; le %2 à %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Invité par %1 le %2 à %3.</translation>
     </message>
 </context>
 <context>
@@ -1939,11 +1939,11 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le fichier n&apos;existe pas</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Le profile n&apos;existe pas</translation>
     </message>
     <message>
         <source>Profile imported</source>
@@ -1958,19 +1958,19 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Oui</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Non</translation>
     </message>
     <message>
         <source>LTR</source>
