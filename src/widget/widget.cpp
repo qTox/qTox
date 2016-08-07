@@ -584,10 +584,8 @@ void Widget::changeEvent(QEvent* event)
 
 void Widget::resizeEvent(QResizeEvent* event)
 {
-    Q_UNUSED(event);
     saveWindowGeometry();
-
-    emit resized();
+    QMainWindow::resizeEvent(event);
 }
 
 QString Widget::getUsername()
