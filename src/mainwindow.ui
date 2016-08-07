@@ -6,15 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
-    <height>420</height>
+    <width>220</width>
+    <height>205</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>775</width>
-    <height>420</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string notr="true">qTox</string>
@@ -1093,8 +1087,8 @@ QSplitter:handle{
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>775</width>
-             <height>279</height>
+             <width>220</width>
+             <height>68</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
