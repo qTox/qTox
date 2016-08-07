@@ -208,8 +208,12 @@ void Widget::init()
     friendList->setContextMenuPolicy(Qt::CustomContextMenu);
 
     statusLabel->setEditable(true);
-
     statusPanel->setStyleSheet(Style::getStylesheet(":/ui/window/statusPanel.css"));
+
+    addButton->setCheckable(true);
+    groupButton->setCheckable(true);
+    transferButton->setCheckable(true);
+    settingsButton->setCheckable(true);
 
     QMenu *statusButtonMenu = new QMenu(statusButton);
     statusButtonMenu->addAction(statusOnline);
@@ -354,11 +358,6 @@ void Widget::init()
 #endif
 
     onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
-
-    addButton->setCheckable(true);
-    groupButton->setCheckable(true);
-    transferButton->setCheckable(true);
-    settingsButton->setCheckable(true);
 
     if (contentLayout)
         onAddClicked();
@@ -811,15 +810,35 @@ void Widget::onTransferClicked()
 
 void Widget::confirmExecutableOpen(const QFileInfo &file)
 {
-    static const QStringList dangerousExtensions = { "app", "bat", "com", "cpl", "dmg", "exe", "hta", "jar", "js", "jse", "lnk", "msc", "msh", "msh1", "msh1xml", "msh2", "msh2xml", "mshxml", "msi", "msp", "pif", "ps1", "ps1xml", "ps2", "ps2xml", "psc1", "psc2", "py", "reg", "scf", "sh", "src", "vb", "vbe", "vbs", "ws", "wsc", "wsf", "wsh" };
+    static const QStringList dangerousExtensions = { "app", "bat", "com", "cpl",
+                                                     "dmg", "exe", "hta", "jar",
+                                                     "js", "jse", "lnk", "msc",
+                                                     "msh", "msh1", "msh1xml",
+                                                     "msh2", "msh2xml",
+                                                     "mshxml", "msi", "msp",
+                                                     "pif", "ps1", "ps1xml",
+                                                     "ps2", "ps2xml", "psc1",
+                                                     "psc2", "py", "reg", "scf",
+                                                     "sh", "src", "vb", "vbe",
+                                                     "vbs", "ws", "wsc", "wsf",
+                                                     "wsh" };
 
     if (dangerousExtensions.contains(file.suffix()))
     {
-        if (!GUI::askQuestion(tr("Executable file", "popup title"), tr("You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?", "popup text"), false, true))
+        if (!GUI::askQuestion(tr("Executable file", "popup title"),
+                              tr("You have asked qTox to open an executable"
+                                 " file. Executable files can potentially"
+                                 " damage your computer. Are you sure want to"
+                                 " open this file?", "popup text"),
+                              false, true))
             return;
 
         // The user wants to run this file, so make it executable and run it
-        QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
+        QFile(file.filePath()).setPermissions(file.permissions() |
+                                              QFile::ExeOwner |
+                                              QFile::ExeUser |
+                                              QFile::ExeGroup |
+                                              QFile::ExeOther);
     }
 
     QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
