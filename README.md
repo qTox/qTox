@@ -1,5 +1,6 @@
 qTox
 ======
+![state of qTox](http://hapshack.eu/lr/svg.php?title=qTox%20state&state=fuck%20uTox)
 
  [**User Manual**](/doc/user_manual_en.md) **|**
  [**Install**](/INSTALL.md) **|**
