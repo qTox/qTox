@@ -48,7 +48,6 @@ GUI::GUI(QObject *parent) :
 {
     assert(QThread::currentThread() == qApp->thread());
     assert(Nexus::getDesktopGUI());
-    connect(Nexus::getDesktopGUI(), &Widget::resized, this, &GUI::resized);
 }
 
 /**
