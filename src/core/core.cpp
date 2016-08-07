@@ -166,6 +166,12 @@ void Core::makeTox(QByteArray savedata)
             toxOptions.proxy_port = proxyPort;
         }
     }
+    
+    if (!savedata.isEmpty()) {
+        toxOptions.savedata_type = TOX_SAVEDATA_TYPE_TOX_SAVE;
+        toxOptions.savedata_data = (uint8_t*)savedata.data();
+        toxOptions.savedata_length = savedata.size();
+    }
 
     TOX_ERR_NEW tox_err;
     tox = tox_new(&toxOptions, &tox_err);
