@@ -1815,7 +1815,13 @@ void Widget::onTryCreateTrayIcon()
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
 
+            // don't activate qTox widget on tray icon click in Unity backend (see #3419)
+            #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
+            if (icon->backend() != SystrayBackendType::Unity)
+                connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
+            #else
             connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
+            #endif
 
             if (Settings::getInstance().getShowSystemTray())
             {
