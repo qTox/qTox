@@ -26,11 +26,9 @@
 #include "src/core/corestructs.h"
 #include "genericchatitemwidget.h"
 
-#define PIXELS_TO_ACT 7
+#include <ui_mainwindow.h>
 
-namespace Ui {
-class MainWindow;
-}
+#define PIXELS_TO_ACT 7
 
 class GenericChatroomWidget;
 class FriendWidget;
@@ -56,7 +54,7 @@ class ContentLayout;
 class ContentDialog;
 class QPushButton;
 
-class Widget final : public QMainWindow
+class Widget final : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
 public:
@@ -255,7 +253,6 @@ private:
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
 
-    Ui::MainWindow *ui;
     QSplitter *centralLayout;
     QPoint dragPosition;
     ContentLayout* contentLayout;
