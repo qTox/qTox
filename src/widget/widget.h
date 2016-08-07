@@ -267,8 +267,8 @@ private:
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
 
-    QSplitter *centralLayout;
     QPoint dragPosition;
+
     QPointer<QWidget> contentWidget;
     QPointer<ContentLayout> contentLayout;
     QPointer<AddFriendForm> addFriendForm;
