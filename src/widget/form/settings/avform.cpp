@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -28,6 +28,7 @@
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/core/recursivesignalblocker.h"
 
 #include <QDebug>
 #include <QShowEvent>
@@ -45,6 +46,9 @@ AVForm::AVForm()
     , camera(CameraSource::getInstance())
 {
     setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
 
     const Audio& audio = Audio::getInstance();
     const Settings& s = Settings::getInstance();

@@ -17,8 +17,10 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ui_generalsettings.h"
 #include "generalform.h"
+#include "ui_generalsettings.h"
+
+#include <src/core/recursivesignalblocker.h>
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
@@ -104,13 +106,16 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
-GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+GeneralForm::GeneralForm(SettingsWidget *myParent)
+    : GenericForm(QPixmap(":/img/settings/general.png"))
+    , bodyUI(new Ui::GeneralSettings)
 {
     parent = myParent;
 
-    bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
 
     Settings& s = Settings::getInstance();
 

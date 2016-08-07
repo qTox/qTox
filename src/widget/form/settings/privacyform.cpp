@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,25 +19,31 @@
 
 #include "privacyform.h"
 #include "ui_privacysettings.h"
-#include "src/widget/form/settingswidget.h"
-#include "src/persistence/settings.h"
+
 #include "src/core/core.h"
-#include "src/widget/widget.h"
-#include "src/widget/gui.h"
-#include "src/widget/form/setpassworddialog.h"
-#include "src/widget/translator.h"
+#include <src/core/recursivesignalblocker.h>
 #include "src/nexus.h"
-#include "src/persistence/profile.h"
 #include "src/persistence/history.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/widget/form/setpassworddialog.h"
+#include "src/widget/form/settingswidget.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/widget.h"
+
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
 
-PrivacyForm::PrivacyForm() :
-    GenericForm(QPixmap(":/img/settings/privacy.png"))
+PrivacyForm::PrivacyForm()
+    : GenericForm(QPixmap(":/img/settings/privacy.png"))
+    , bodyUI(new Ui::PrivacySettings)
 {
-    bodyUI = new Ui::PrivacySettings;
     bodyUI->setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
 
     connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
     connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
