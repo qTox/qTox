@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,27 +17,32 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include "aboutform.h"
+#include <src/core/recursivesignalblocker.h>
 #include "src/widget/translator.h"
 #include "tox/tox.h"
 #include "src/net/autoupdate.h"
 #include <QTimer>
 #include <QDebug>
 
-AboutForm::AboutForm() :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+AboutForm::AboutForm()
+    : GenericForm(QPixmap(":/img/settings/general.png"))
+    , bodyUI(new Ui::AboutSettings)
+    , progressTimer(new QTimer(this))
 {
-    bodyUI = new Ui::AboutSettings;
     bodyUI->setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
+
     replaceVersions();
 
     if (QString(GIT_VERSION).indexOf(" ") > -1)
         bodyUI->gitVersion->setOpenExternalLinks(false);
 
     showUpdateProgress();
-    progressTimer = new QTimer();
     progressTimer->setInterval(500);
     progressTimer->setSingleShot(false);
     connect(progressTimer, &QTimer::timeout, this, &AboutForm::showUpdateProgress);
@@ -107,7 +112,6 @@ void AboutForm::replaceVersions()
 AboutForm::~AboutForm()
 {
     Translator::unregister(this);
-    delete progressTimer;
     delete bodyUI;
 }
 

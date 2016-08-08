@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,18 +17,22 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "advancedform.h"
 #include "ui_advancedsettings.h"
 
-#include "advancedform.h"
+#include <src/core/recursivesignalblocker.h>
 #include "src/persistence/settings.h"
 #include "src/persistence/db/plaindb.h"
 #include "src/widget/translator.h"
 
-AdvancedForm::AdvancedForm() :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+AdvancedForm::AdvancedForm()
+  : GenericForm(QPixmap(":/img/settings/general.png"))
+  , bodyUI (new Ui::AdvancedSettings)
 {
-    bodyUI = new Ui::AdvancedSettings;
     bodyUI->setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
 
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
 
