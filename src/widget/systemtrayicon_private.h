@@ -63,15 +63,9 @@ extern "C" {
 enum class SystrayBackendType
 {
     Qt,
-#ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     Unity,
-#endif
-#ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     StatusNotifier,
-#endif
-#ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    GTK,
-#endif
+    GTK
 };
 
 #endif // SYSTEMTRAYICON_PRIVATE_H

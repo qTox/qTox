@@ -356,3 +356,8 @@ void SystemTrayIcon::setIcon(QIcon &icon)
         qtIcon->setIcon(icon);
     }
 }
+
+SystrayBackendType SystemTrayIcon::backend() const
+{
+    return backendType;
+}
