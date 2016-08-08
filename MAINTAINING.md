@@ -48,6 +48,9 @@ git config --global alias.logs 'log --show-signature'
 
 # Pull requests
 
+- **do not** push any `Merge`, `Squash & Merge`, etc. buttons on the website!
+  The only allowed way of merging is locally, since otherwise merge will not
+  be signed, and websites can fairly well mess things up.
 - **always** test PR that is being merged.
 - **always** GPG-sign PR that you're merging.
 - **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
