@@ -17,8 +17,7 @@
 #    See the COPYING file for more details.
 
 
-QT       += core gui network xml opengl sql svg
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui network xml opengl sql svg widgets
 
 TARGET    = qtox
 TEMPLATE  = app
