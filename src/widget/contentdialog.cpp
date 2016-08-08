@@ -96,7 +96,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
-    connect(settingsWidget, &SettingsWidget::groupchatPositionToggled, this, &ContentDialog::onGroupchatPositionChanged);
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
 
     setMinimumSize(500, 220);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -167,9 +168,10 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
     Friend* frnd = friendWidget->getFriend();
+    const Settings& s = Settings::getInstance();
 
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
-    connect(settingsWidget, &SettingsWidget::compactToggled, friendWidget, &FriendWidget::compactChange);
+    connect(&s, &Settings::compactLayoutChanged, friendWidget, &FriendWidget::compactChange);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
     connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), frnd->getChatForm(), SLOT(focusInput()));
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
@@ -191,10 +193,11 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     GroupWidget* groupWidget = new GroupWidget(groupId, name);
     groupLayout.addSortedWidget(groupWidget);
 
+    const Settings& s = Settings::getInstance();
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    connect(settingsWidget, &SettingsWidget::compactToggled, groupWidget, &GroupWidget::compactChange);
+    connect(&s, &Settings::compactLayoutChanged, groupWidget, &GroupWidget::compactChange);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);

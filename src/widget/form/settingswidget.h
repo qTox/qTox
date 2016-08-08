@@ -47,12 +47,6 @@ public:
 
     void showAbout();
 
-signals:
-    void setShowSystemTray(bool newValue);
-    void compactToggled(bool compact);
-    void separateWindowToggled(bool separateWindow);
-    void groupchatPositionToggled(bool groupchatPosition);
-
 private slots:
     void onTabChanged(int);
 

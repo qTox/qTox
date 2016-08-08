@@ -321,7 +321,6 @@ void GeneralForm::onAutorunUpdated()
 void GeneralForm::onSetShowSystemTray()
 {
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
-    emit parent->setShowSystemTray(bodyUI->showSystemTray->isChecked());
     Settings::getInstance().saveGlobal();
 }
 
@@ -534,14 +533,12 @@ void GeneralForm::onFauxOfflineMessaging()
 void GeneralForm::onCompactLayout()
 {
     Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
-    emit parent->compactToggled(bodyUI->cbCompactLayout->isChecked());
 }
 
 void GeneralForm::onSeparateWindowChanged()
 {
     bodyUI->cbDontGroupWindows->setEnabled(bodyUI->cbSeparateWindow->isChecked());
     Settings::getInstance().setSeparateWindow(bodyUI->cbSeparateWindow->isChecked());
-    emit parent->separateWindowToggled(bodyUI->cbSeparateWindow->isChecked());
 }
 
 void GeneralForm::onDontGroupWindowsChanged()
@@ -552,7 +549,6 @@ void GeneralForm::onDontGroupWindowsChanged()
 void GeneralForm::onGroupchatPositionChanged()
 {
     Settings::getInstance().setGroupchatPosition(bodyUI->cbGroupchatPosition->isChecked());
-    emit parent->groupchatPositionToggled(bodyUI->cbGroupchatPosition->isChecked());
 }
 
 void GeneralForm::onThemeColorChanged(int)
