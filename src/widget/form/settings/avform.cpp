@@ -537,7 +537,7 @@ void AVForm::on_microphoneSlider_valueChanged(int value)
 {
     const qreal dB = value / 10.0;
 
-    Settings::getInstance().setAudioInGain(dB);
+    Settings::getInstance().setAudioInGainDecibel(dB);
     Audio::getInstance().setInputGain(dB);
 }
 

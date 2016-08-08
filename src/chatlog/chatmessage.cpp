@@ -56,7 +56,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //text styling
-    if (Settings::getInstance().getStylePreference() != NONE)
+    if (Settings::getInstance().getStylePreference() != Settings::StyleType::NONE)
         text = detectStyle(text);
 
     switch(type)
@@ -229,7 +229,7 @@ QString ChatMessage::detectStyle(const QString &str)
         {
             int mul = 0; // Determines how many characters to strip from text
             // Set mul depending on styleownPreference
-            if (Settings::getInstance().getStylePreference() == WITHOUT_CHARS)
+            if (Settings::getInstance().getStylePreference() == Settings::StyleType::WITHOUT_CHARS)
                 mul = 2;
 
             // Match captured string to corresponding style format

@@ -133,7 +133,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent)
     const QFont chatBaseFont = s.getChatMessageFont();
     bodyUI->txtChatFontSize->setValue(QFontInfo(chatBaseFont).pixelSize());
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
-    bodyUI->textStyleComboBox->setCurrentIndex(s.getStylePreference());
+    bodyUI->textStyleComboBox->setCurrentIndex(static_cast<int>(s.getStylePreference()));
     bodyUI->cbAutorun->setChecked(s.getAutorun());
 
     bool showSystemTray = s.getShowSystemTray();
@@ -407,7 +407,9 @@ void GeneralForm::onUseEmoticonsChange()
 
 void GeneralForm::onStyleUpdated()
 {
-    Settings::getInstance().setStylePreference(static_cast<StyleType>(bodyUI->textStyleComboBox->currentIndex()));
+    Settings::StyleType styleType =
+            static_cast<Settings::StyleType>(bodyUI->textStyleComboBox->currentIndex());
+    Settings::getInstance().setStylePreference(styleType);
 }
 
 void GeneralForm::onSetStatusChange()
@@ -434,18 +436,16 @@ void GeneralForm::onProxyAddrEdited()
 
 void GeneralForm::onProxyPortEdited(int port)
 {
-    if (port > 0)
-        Settings::getInstance().setProxyPort(port);
-    else
-        Settings::getInstance().setProxyPort(-1);
+    Settings::getInstance().setProxyPort(static_cast<quint16>(port));
 }
 
 void GeneralForm::onUseProxyUpdated()
 {
-    int proxytype = bodyUI->proxyType->currentIndex();
+    Settings::ProxyType proxytype =
+            static_cast<Settings::ProxyType>(bodyUI->proxyType->currentIndex());
 
-    bodyUI->proxyAddr->setEnabled(proxytype);
-    bodyUI->proxyPort->setEnabled(proxytype);
+    bodyUI->proxyAddr->setEnabled(proxytype != Settings::ProxyType::ptNone);
+    bodyUI->proxyPort->setEnabled(proxytype != Settings::ProxyType::ptNone);
     Settings::getInstance().setProxyType(proxytype);
 }
 

@@ -93,8 +93,9 @@ void PrivacyForm::setNospam()
 
 void PrivacyForm::showEvent(QShowEvent*)
 {
+    const Settings& s = Settings::getInstance();
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
-    bodyUI->cbTypingNotification->setChecked(Settings::getInstance().isTypingNotificationEnabled());
+    bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
 }
 

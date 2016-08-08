@@ -15,6 +15,9 @@ struct DhtServer
     QString userId;
     QString address;
     quint16 port;
+
+    bool operator==(const DhtServer& other) const;
+    bool operator!=(const DhtServer& other) const;
 };
 
 struct ToxFile

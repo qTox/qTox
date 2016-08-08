@@ -52,7 +52,6 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
-    void forceRelayout();
 
     QString getSelectedText() const;
 
@@ -66,6 +65,13 @@ public:
 
 signals:
     void selectionChanged();
+
+public slots:
+    void forceRelayout();
+
+private slots:
+    void onSelectionTimerTimeout();
+    void onWorkerTimeout();
 
 protected:
     QRectF calculateSceneRect() const;
@@ -99,10 +105,6 @@ protected:
     void updateBusyNotification();
 
     ChatLine::Ptr findLineByPosY(qreal yPos) const;
-
-private slots:
-    void onSelectionTimerTimeout();
-    void onWorkerTimeout();
 
 private:
     void retranslateUi();
