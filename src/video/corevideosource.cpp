@@ -70,11 +70,12 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     AVFrame* avframe = av_frame_alloc();
     if (!avframe)
         return;
+
     avframe->width = width;
     avframe->height = height;
     avframe->format = AV_PIX_FMT_YUV420P;
 
-    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_YUV420P, width, height, 1);
+    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_YUV420P, width, height, 16);
     uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
@@ -85,7 +86,7 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
 
     uint8_t** data = avframe->data;
     int* linesize = avframe->linesize;
-    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 1);
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 16);
 
     for (int i = 0; i < 3; i++)
     {

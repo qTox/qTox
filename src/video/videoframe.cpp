@@ -105,7 +105,9 @@ QImage VideoFrame::toQImage(QSize size)
 
     QMutexLocker locker(&biglock);
 
-    return QImage(*frameRGB24->data, frameRGB24->width, frameRGB24->height, *frameRGB24->linesize, QImage::Format_RGB888);
+    return QImage(*frameRGB24->data,
+                  frameRGB24->width, frameRGB24->height,
+                  *frameRGB24->linesize, QImage::Format_RGB888);
 }
 
 /**
@@ -115,7 +117,7 @@ Converts the VideoFrame to a vpx_image_t that shares our internal video buffer.
 */
 vpx_image *VideoFrame::toVpxImage()
 {
-    vpx_image* img = vpx_img_alloc(nullptr, VPX_IMG_FMT_I420, width, height, 0);
+    vpx_image* img = vpx_img_alloc(nullptr, VPX_IMG_FMT_I420, width, height, 16);
 
     if (!convertToYUV420())
         return img;
@@ -139,6 +141,8 @@ vpx_image *VideoFrame::toVpxImage()
 
 bool VideoFrame::convertToRGB24(QSize size)
 {
+    size.setHeight(size.height() / 16 * 16);
+    size.setWidth(size.width() / 16 * 16);
     QMutexLocker locker(&biglock);
 
     AVFrame* sourceFrame;
@@ -155,7 +159,6 @@ bool VideoFrame::convertToRGB24(QSize size)
         qWarning() << "None of the frames are valid! Did someone release us?";
         return false;
     }
-    //std::cout << "converting to RGB24" << std::endl;
 
     if (size.isEmpty())
     {
@@ -173,14 +176,15 @@ bool VideoFrame::convertToRGB24(QSize size)
         av_frame_free(&frameRGB24);
     }
 
-    frameRGB24=av_frame_alloc();
+    frameRGB24 = av_frame_alloc();
     if (!frameRGB24)
     {
         qCritical() << "av_frame_alloc failed";
         return false;
     }
 
-    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGB24, size.width(), size.height(), 1);
+    // 24 bit at all, 8 bit per color
+    int imgBufferSize = size.width() * size.height() * (24/8);
     uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
@@ -188,20 +192,22 @@ bool VideoFrame::convertToRGB24(QSize size)
         av_frame_free(&frameRGB24);
         return false;
     }
-    frameRGB24->opaque = buf;
 
+
+    frameRGB24->opaque = buf;
     uint8_t** data = frameRGB24->data;
     int* linesize = frameRGB24->linesize;
-    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_RGB24, size.width(), size.height(), 1);
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_RGB24, size.width(), size.height(), 16);
     frameRGB24->width = size.width();
     frameRGB24->height = size.height();
 
     // Bilinear is better for shrinking, bicubic better for upscaling
-    int resizeAlgo = size.width()<=width ? SWS_BILINEAR : SWS_BICUBIC;
+    int resizeAlgo = size.width() <= width ? SWS_BILINEAR : SWS_BICUBIC;
 
     SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
                                           size.width(), size.height(), AV_PIX_FMT_RGB24,
                                           resizeAlgo, nullptr, nullptr, nullptr);
+
     sws_scale(swsCtx, (uint8_t const * const *)sourceFrame->data,
                 sourceFrame->linesize, 0, height,
                 frameRGB24->data, frameRGB24->linesize);
@@ -231,16 +237,15 @@ bool VideoFrame::convertToYUV420()
         qCritical() << "None of the frames are valid! Did someone release us?";
         return false;
     }
-    //std::cout << "converting to YUV420" << std::endl;
 
-    frameYUV420=av_frame_alloc();
+    frameYUV420 = av_frame_alloc();
     if (!frameYUV420)
     {
         qCritical() << "av_frame_alloc failed";
         return false;
     }
 
-    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGB24, width, height, 1);
+    int imgBufferSize = av_image_get_buffer_size(AV_PIX_FMT_RGB24, width, height, 16);
     uint8_t* buf = (uint8_t*)av_malloc(imgBufferSize);
     if (!buf)
     {
@@ -252,7 +257,7 @@ bool VideoFrame::convertToYUV420()
 
     uint8_t** data = frameYUV420->data;
     int* linesize = frameYUV420->linesize;
-    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 1);
+    av_image_fill_arrays(data, linesize, buf, AV_PIX_FMT_YUV420P, width, height, 16);
 
     SwsContext *swsCtx =  sws_getContext(width, height, (AVPixelFormat)pixFmt,
                                           width, height, AV_PIX_FMT_YUV420P,

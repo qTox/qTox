@@ -1466,6 +1466,7 @@ QString Settings::getVideoDev() const
 void Settings::setVideoDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
+    qDebug() << "Set video dev" << deviceSpecifier;
     videoDev = deviceSpecifier;
 }
 

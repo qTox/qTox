@@ -168,8 +168,8 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
         auto onGrabbed = [screenshotGrabber, devName, this] (QRect region)
         {
             VideoMode mode(region);
-            mode.width = mode.width / 2 * 2;
-            mode.height = mode.height / 2 * 2;
+            mode.width = mode.width / 16 * 16;
+            mode.height = mode.height / 16 * 16;
 
             Settings::getInstance().setScreenRegion(mode.toRect());
             Settings::getInstance().setScreenGrabbed(true);
@@ -380,6 +380,7 @@ void AVForm::updateVideoModes(int curIndex)
     if (isScreen)
     {
         QRect rect = Settings::getInstance().getScreenRegion();
+        qDebug() << "Load grabbed screen region: " << rect;
         VideoMode mode(rect);
 
         Settings::getInstance().setScreenGrabbed(true);
@@ -428,6 +429,7 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 void AVForm::getVideoDevices()
 {
     QString settingsInDev = Settings::getInstance().getVideoDev();
+    qDebug() << "getVideoDevices" << settingsInDev;
     int videoDevIndex = 0;
     videoDeviceList = CameraDevice::getDeviceList();
     //prevent currentIndexChanged to be fired while adding items
@@ -437,7 +439,10 @@ void AVForm::getVideoDevices()
     {
         videoDevCombobox->addItem(device.second);
         if (device.first == settingsInDev)
+        {
+            qDebug() << "Device loaded";
             videoDevIndex = videoDevCombobox->count()-1;
+        }
     }
     videoDevCombobox->setCurrentIndex(videoDevIndex);
     videoDevCombobox->blockSignals(false);
