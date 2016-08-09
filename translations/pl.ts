@@ -1309,8 +1309,8 @@ zostaną wysłane gdy znajomi pokażą się online dla ciebie.</translation>
         <translation>Odrzuć</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished">Zaproszony przez &lt;b&gt;%1&lt;/b&gt; na %2 o %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished">Zaproszony przez %1 na %2 o %3.</translation>
     </message>
 </context>
 <context>

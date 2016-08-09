@@ -1279,7 +1279,7 @@ bus nusiųstos jiems prisijungus.</translation>
         <translation>Atmesti</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <source>Invited by %1 on %2 at %3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

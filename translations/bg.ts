@@ -1284,8 +1284,8 @@ will be sent to them when they appear online to you.</source>
         <translation>Затвори</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation type="unfinished">Поканен от &lt;b&gt;%1&lt;/b&gt; на %2 в %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished">Поканен от %1 на %2 в %3.</translation>
     </message>
 </context>
 <context>

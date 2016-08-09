@@ -1276,7 +1276,7 @@ desconectados serão enviadas assim que eles aparecerem contectados para você.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <source>Invited by %1 on %2 at %3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1288,8 +1288,8 @@ will be sent to them when they appear online to you.</source>
         <translation>Отклонить</translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
-        <translation>Приглашение от &lt;b&gt;%1&lt;/b&gt; в %2 %3.</translation>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Приглашение от %1 в %2 %3.</translation>
     </message>
 </context>
 <context>

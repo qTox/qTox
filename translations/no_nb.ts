@@ -1283,7 +1283,7 @@ vil bli sent til de når de vises som pålogget til deg.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2 at %3.</source>
+        <source>Invited by %1 on %2 at %3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1930,7 +1930,7 @@ Del den med venner du vil kommunisere med.</translation>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Profilen finnes allrede</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
