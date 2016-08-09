@@ -18,6 +18,7 @@ build-*-Profile
 build-*-Debug
 
 # Folders
+_[Bb]uild*/
 _obj
 _test
 libs
