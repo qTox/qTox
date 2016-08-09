@@ -1,4 +1,4 @@
-sudo: required
+sudo: true
 dist: trusty
 language: cpp
 
@@ -9,30 +9,21 @@ branches:
     - /^v(\d+\.){2}\d+$/
 
 matrix:
-  fast_finish: true
   include:
     - os: linux
-      env: JOB=verify-commit-format
+      env: JOB=test ENV=linux
     - os: linux
-      env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
+      env: JOB=deploy ENV=linux
     - os: linux
-      env: JOB=build-ubuntu-14-04
+      env: JOB=deploy ENV=windows ARCH=i686 LIBTYPE=shared
+      services:
+        - docker
+    - os: linux
+      env: JOB=deploy ENV=windows ARCH=x86_64 LIBTYPE=shared
+      services:
+        - docker
     - os: osx
-      osx_image: xcode7.3
-      env: JOB=build-osx
-
-script: "./.travis/$JOB.sh"
-
-deploy:
-  provider: releases
-  api_key:
-    secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
-  file: "./qTox.dmg"
-  on:
-    condition: $TRAVIS_OS_NAME == osx
-    repo: qTox/qTox
-    tags: true
-  skip_cleanup: true
+      env: JOB=deploy ENV=osx
 
 after_success:
   ->
@@ -40,3 +31,7 @@ after_success:
   && test $TRAVIS_BRANCH == "master"
   && test $JOB == "build-docs"
   && bash ./.travis/deploy-docs.sh
+
+install:      .travis/phase $JOB $ENV install
+script:       .travis/phase $JOB $ENV script
+after_script: .travis/phase $JOB $ENV after_script

@@ -1,0 +1,36 @@
+#!/usr/bin/env perl
+
+use strict;
+use File::Find;
+use Data::Dumper;
+
+local $Data::Dumper::Terse = 1;
+local $Data::Dumper::Indent = 1;
+
+my $BUNDLE_PATH = @ARGV[0] or die "Usage: macfixrpath <BUNDLE_PATH>\n";
+
+my $prefix = `brew --prefix`;
+chomp $prefix;
+$prefix .= "/Cellar/";
+
+my @libs = <$BUNDLE_PATH/Contents/Frameworks/*.framework/Versions/5/Qt*>;
+find sub {
+   /\.dylib$/ or return;
+   push @libs, $File::Find::name;
+}, $BUNDLE_PATH;
+
+my %deps;
+for (@libs) {
+   my @deps = grep { @$_ } map { [m!^\t($prefix.+)/([^/]+) \(.+\)$!] } grep { /^\t/ } split /\n/, `otool -L $_`;
+   my @resolved = map { my $dep = $_; [@$dep, grep { m!/$dep->[1]$! } @libs] } @deps;
+   $_->[2] =~ s|\Q$BUNDLE_PATH\E/Contents/|\@executable_path/../| for @resolved;
+   $deps{$_} = \@resolved if  @deps;
+}
+
+for my $lib (sort keys %deps) {
+   my $count = @{$deps{$lib}};
+   for my $dep (@{$deps{$lib}}) {
+      my ($path, $name, $dest) = @$dep;
+      system "install_name_tool", "-change", "$path/$name", $dest, $lib;
+   }
+}

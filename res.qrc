@@ -42,37 +42,6 @@
         <file>img/taskbar/light/taskbar_offline.svg</file>
         <file>img/taskbar/light/taskbar_event.svg</file>
         <file>img/transfer.svg</file>
-        <file>translations/ar.qm</file>
-        <file>translations/be.qm</file>
-        <file>translations/bg.qm</file>
-        <file>translations/cs.qm</file>
-        <file>translations/da.qm</file>
-        <file>translations/de.qm</file>
-        <file>translations/el.qm</file>
-        <file>translations/eo.qm</file>
-        <file>translations/es.qm</file>
-        <file>translations/et.qm</file>
-        <file>translations/fi.qm</file>
-        <file>translations/fr.qm</file>
-        <file>translations/he.qm</file>
-        <file>translations/hr.qm</file>
-        <file>translations/hu.qm</file>
-        <file>translations/it.qm</file>
-        <file>translations/ja.qm</file>
-        <file>translations/jbo.qm</file>
-        <file>translations/nl.qm</file>
-        <file>translations/no_nb.qm</file>
-        <file>translations/lt.qm</file>
-        <file>translations/pl.qm</file>
-        <file>translations/pt.qm</file>
-        <file>translations/ru.qm</file>
-        <file>translations/sk.qm</file>
-        <file>translations/sl.qm</file>
-        <file>translations/sv.qm</file>
-        <file>translations/tr.qm</file>
-        <file>translations/ug.qm</file>
-        <file>translations/uk.qm</file>
-        <file>translations/zh.qm</file>
         <file>ui/fileTransferWidget/fileDone.svg</file>
         <file>ui/callButton/callButton.css</file>
         <file>ui/callButton/callButton.svg</file>

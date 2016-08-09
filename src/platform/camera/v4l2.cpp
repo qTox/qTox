@@ -20,6 +20,8 @@
 */
 
 
+#include <QtCore>
+#ifdef Q_OS_LINUX
 #include "v4l2.h"
 
 #include <unistd.h>
@@ -219,4 +221,4 @@ bool v4l2::betterPixelFormat(uint32_t a, uint32_t b)
     }
 	return pixFmtToQuality.at(a) > pixFmtToQuality.at(b);
 }
-
+#endif

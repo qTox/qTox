@@ -1,0 +1,4 @@
+#!/bin/sh
+
+. $THIS_DIR/build-script
+$THIS_DIR/git-deploy
