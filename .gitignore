@@ -18,6 +18,7 @@ build-*-Profile
 build-*-Debug
 
 # Folders
+_build
 _obj
 _test
 libs
