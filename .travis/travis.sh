@@ -16,6 +16,7 @@ then
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
-    # Disabled due to error: hdiutil: create failed - Resource busy
-    #bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
+    # The following line can randomly fail due to travis emitting the error:
+    # "hdiutil: create failed - Resource busy"
+    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
 fi
