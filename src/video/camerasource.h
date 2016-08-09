@@ -24,6 +24,7 @@
 #include <QString>
 #include <QFuture>
 #include <QVector>
+#include <QReadWriteLock>
 #include <atomic>
 #include "src/video/videosource.h"
 #include "src/video/videomode.h"
@@ -55,20 +56,17 @@ private:
     CameraSource();
     ~CameraSource();
     void stream();
-    void freelistCallback(int freelistIndex);
-    int getFreelistSlotLockless();
     bool openDevice();
     void closeDevice();
 
 private:
-    QVector<std::weak_ptr<VideoFrame>> freelist;
     QFuture<void> streamFuture;
     QString deviceName;
     CameraDevice* device;
     VideoMode mode;
     AVCodecContext* cctx, *cctxOrig;
     int videoStreamIndex;
-    QMutex biglock, freelistLock;
+    QReadWriteLock streamMutex;
     std::atomic_bool _isOpen;
     std::atomic_bool streamBlocker;
     std::atomic_int subscriptions;
