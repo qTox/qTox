@@ -17,7 +17,7 @@
 		<key>CFBundleName</key>
 		<string>qTox</string>
 		<key>CFBundleVersion</key>
-		<string>1.4.1</string>
+		<string>1.5.1</string>
 		<key>CFBundleShortVersionString</key>
 		<string>@SHORT_VERSION@</string>
 		<key>CFBundleIdentifier</key>

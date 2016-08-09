@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export CFLAGS="-fprofile-arcs -ftest-coverage"
+export CXXFLAGS="-fprofile-arcs -ftest-coverage"
+export LDFLAGS="-lgcov --coverage"
+
+export DISPLAY=:99.0
+sh -e /etc/init.d/xvfb start
+
+. $THIS_DIR/build-script
+
+export CTEST_OUTPUT_ON_FAILURE=1
+RUN $MAKE -C $BUILD_DIR -j$NPROC -k test

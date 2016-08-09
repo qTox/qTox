@@ -1,0 +1,24 @@
+#!/bin/sh
+
+set -eux
+
+JOB="$1"
+ENV="$2"
+PHASE="$3"
+
+THIS_DIR=`dirname \`which $0\``
+
+. "$THIS_DIR/env.sh"
+. "$THIS_DIR/env-$ENV.sh"
+
+try_source() {
+  SCRIPT="$THIS_DIR/$1"
+  if [ -f "$SCRIPT" ]; then
+    . "$SCRIPT"
+  fi
+}
+
+try_source "$PHASE"
+try_source "$ENV-$PHASE"
+try_source "$JOB-$PHASE"
+try_source "$JOB-$ENV-$PHASE"

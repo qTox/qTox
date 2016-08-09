@@ -1,0 +1,4 @@
+#!/bin/sh
+
+RUN $CMAKE -B$BUILD_DIR -H. -DCMAKE_INSTALL_PREFIX:PATH=$CURDIR/_install
+RUN $MAKE -C $BUILD_DIR -j$NPROC -k install

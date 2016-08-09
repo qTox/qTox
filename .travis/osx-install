@@ -1,0 +1,6 @@
+#!/bin/sh
+
+set -e -x
+
+brew update > /dev/null
+brew install libvpx opus libsodium ffmpeg qrencode qt5 sqlcipher gtk gdk-pixbuf

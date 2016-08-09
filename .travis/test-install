@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Install cpp-coveralls to upload test coverage results.
+pip install --user cpp-coveralls
+
+. $THIS_DIR/deploy-install
