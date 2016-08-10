@@ -17,3 +17,6 @@ deploy:
     repo: qTox/qTox
     tags: true
   skip_cleanup: true
+
+after_success:
+- test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash ./.travis/build-docs.sh
