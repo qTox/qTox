@@ -18,19 +18,26 @@
 # Fail out on error
 set -eu -o pipefail
 
-# Obtain doxygen
-sudo apt-get install doxygen
+DOCS_FOLDER="./doc/html"
 
-CONFIG_FILE="doxygen.conf"
+# Ensure docs exists
+if [ ! -d "$DOCS_FOLDER" ]
+then
+    exit 1
+fi
 
-GIT_DESC=$(git describe --tags 2> /dev/null)
+# Obtain git commit hash from HEAD
 GIT_CHASH=$(git rev-parse HEAD)
 
-# Append git version to doxygen version string
-echo "PROJECT_NUMBER = \"Version: $GIT_DESC | Commit: $GIT_CHASH\"" >> "$CONFIG_FILE"
+# Push generated doxygen to GitHub pages
+cd "$DOCS_FOLDER"
 
-# Generate documentation
-echo "Generating documentation..."
-echo
+git --quiet init
+git config user.name "Travis CI"
+git config user.email "qTox@users.noreply.github.com"
 
-doxygen "$CONFIG_FILE"
+git add .
+git commit --quiet -m "Deploy to GH pages from commit: $GIT_CHASH"
+
+echo "Pushing to GH pages..."
+git push --force --quiet "https://${GH_TOKEN}@github.com/qTox/doxygen.git" master:gh-pages &> /dev/null
