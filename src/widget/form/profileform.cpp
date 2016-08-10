@@ -93,7 +93,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
     bodyUI->qrLabel->setWordWrap(true);
 
     QRegExp re("[^@ ]+");
-    QRegExpValidator* validator = new QRegExpValidator(re);
+    QRegExpValidator* validator = new QRegExpValidator(re, this);
     bodyUI->toxmeUsername->setValidator(validator);
 
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
@@ -122,6 +122,8 @@ ProfileForm::ProfileForm(QWidget *parent) :
     connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
     connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
     connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
@@ -262,9 +264,11 @@ void ProfileForm::onAvatarClicked()
     };
 
     QString filename = QFileDialog::getOpenFileName(this,
-        tr("Choose a profile picture"),
-        QDir::homePath(),
-        Nexus::getSupportedImageFilter());
+                                                    tr("Choose a profile picture"),
+                                                    QDir::homePath(),
+                                                    Nexus::getSupportedImageFilter(),
+                                                    0,
+                                                    QFileDialog::DontUseNativeDialog);
     if (filename.isEmpty())
         return;
 
@@ -340,8 +344,10 @@ void ProfileForm::onExportClicked()
     QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Export profile", "save dialog title"),
-                    QDir::home().filePath(current),
-                    tr("Tox save file (*.tox)", "save dialog filter"));
+                                                QDir::home().filePath(current),
+                                                tr("Tox save file (*.tox)", "save dialog filter"),
+                                                0,
+                                                QFileDialog::DontUseNativeDialog);
     if (!path.isEmpty())
     {
         if (!Nexus::tryRemoveFile(path))
@@ -361,8 +367,24 @@ void ProfileForm::onDeleteClicked()
                 tr("Are you sure you want to delete this profile?", "deletion confirmation text")))
     {
         Nexus& nexus = Nexus::getInstance();
-        nexus.getProfile()->remove();
-        nexus.showLogin();
+
+        QVector<QString> manualDeleteFiles = nexus.getProfile()->remove();
+
+        if (!manualDeleteFiles.empty())
+        {
+            QString message = tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
+
+            for (auto& file : manualDeleteFiles)
+            {
+                message = message + file + "\n";
+            }
+
+            message = message + "\n" + tr("Please manually remove them.", "deletion failed text part 2");
+
+            GUI::showError(tr("Files could not be deleted!", "deletion failed title"), message);
+        }
+
+        nexus.showLoginLater();
     }
 }
 
@@ -370,7 +392,21 @@ void ProfileForm::onLogoutClicked()
 {
     Nexus& nexus = Nexus::getInstance();
     Settings::getInstance().saveGlobal();
-    nexus.showLogin();
+    nexus.showLoginLater();
+}
+
+void ProfileForm::setPasswordButtonsText()
+{
+    if (Nexus::getProfile()->isEncrypted())
+    {
+        bodyUI->changePassButton->setText(tr("Change password", "button text"));
+        bodyUI->deletePassButton->setVisible(true);
+    }
+    else
+    {
+        bodyUI->changePassButton->setText(tr("Set profile password", "button text"));
+        bodyUI->deletePassButton->setVisible(false);
+    }
 }
 
 void ProfileForm::onCopyQrClicked()
@@ -383,8 +419,10 @@ void ProfileForm::onSaveQrClicked()
     QString current = Nexus::getProfile()->getName() + ".png";
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Save", "save qr image"),
-                   QDir::home().filePath(current),
-                   tr("Save QrCode (*.png)", "save dialog filter"));
+                                                QDir::home().filePath(current),
+                                                tr("Save QrCode (*.png)", "save dialog filter"),
+                                                0,
+                                                QFileDialog::DontUseNativeDialog);
     if (!path.isEmpty())
     {
         if (!Nexus::tryRemoveFile(path))
@@ -428,6 +466,7 @@ void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
     nameLabel->setText(tr("User Profile"));
+    setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
 }
@@ -484,7 +523,7 @@ void ProfileForm::onRegisterButtonClicked()
     Core* oldCore = Core::getInstance();
 
     Toxme::ExecCode code = Toxme::ExecCode::Ok;
-    QString response = Toxme::createAddress(code, server, id, name, privacy, bio);
+    QString response = Toxme::createAddress(code, server, ToxId(id), name, privacy, bio);
 
     Core* newCore = Core::getInstance();
     // Make sure the user didn't logout (or logout and login)
@@ -504,7 +543,9 @@ void ProfileForm::onRegisterButtonClicked()
             break;
         default:
             QString errorMessage = Toxme::getErrorMessage(code);
-            GUI::showWarning(tr("Toxme error"),  errorMessage);
+            qWarning() << errorMessage;
+            QString translated = Toxme::translateErrorMessage(code);
+            GUI::showWarning(tr("Toxme error"),  translated);
         }
 
         bodyUI->toxmeRegisterButton->setEnabled(true);

@@ -42,6 +42,7 @@ public:
     explicit FileTransferWidget(QWidget *parent, ToxFile file);
     virtual ~FileTransferWidget();
     void autoAcceptTransfer(const QString& path);
+    bool isActive() const;
 
 protected slots:
     void onFileTransferInfo(ToxFile file);
@@ -88,6 +89,8 @@ private:
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;
     qreal meanData[TRANSFER_ROLLING_AVG_COUNT] = {0.0};
+
+    bool active;
 };
 
 #endif // FILETRANSFERWIDGET_H

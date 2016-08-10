@@ -41,6 +41,11 @@
 #include <QWindow>
 #include <QScrollArea>
 
+/**
+@var QString AddFriendForm::lastUsername
+@brief Cached username so we can retranslate the invite message
+*/
+
 AddFriendForm::AddFriendForm()
 {
     tabWidget = new QTabWidget();
@@ -113,6 +118,11 @@ void AddFriendForm::show(ContentLayout* contentLayout)
     head->show();
     setIdFromClipboard();
     toxId.setFocus();
+
+    // Fix #3421
+    // Needed to update tab after opening window
+    int index = tabWidget->currentIndex();
+    onCurrentChanged(index);
 }
 
 QString AddFriendForm::getMessage() const
@@ -128,13 +138,12 @@ void AddFriendForm::setMode(Mode mode)
 
 bool AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
 {
-    if(Settings::getInstance().addFriendRequest(friendAddress, message))
+    if (Settings::getInstance().addFriendRequest(friendAddress, message))
     {
         addFriendRequestWidget(friendAddress, message);
-        if(isShown())
-        {
+        if (isShown())
             onCurrentChanged(tabWidget->currentIndex());
-        }
+
         return true;
     }
     return false;
@@ -192,13 +201,14 @@ void AddFriendForm::onIdChanged(const QString &id)
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
     QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
 
-    if(isValidId)
+    if (isValidId)
     {
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" (") +
                            toxIdComment +
                            QStringLiteral(")"));
-    } else
+    }
+    else
     {
         toxIdLabel.setText(toxIdText +
                            QStringLiteral(" <font color='red'>(") +

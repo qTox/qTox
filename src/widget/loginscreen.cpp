@@ -27,7 +27,9 @@
 #include "src/widget/form/setpassworddialog.h"
 #include "src/widget/translator.h"
 #include "src/widget/style.h"
+#include "src/widget/tool/profileimporter.h"
 #include <QMessageBox>
+#include <QToolButton>
 #include <QDebug>
 
 LoginScreen::LoginScreen(QWidget *parent) :
@@ -37,8 +39,8 @@ LoginScreen::LoginScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // permanently disables maximize button https://github.com/tux3/qTox/issues/1973
-    this->setWindowFlags(windowFlags() &! Qt::WindowMaximizeButtonHint);
+    // permanently disables maximize button https://github.com/qTox/qTox/issues/1973
+    this->setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(this->size());
 
     connect(&quitShortcut, &QShortcut::activated, this, &LoginScreen::close);
@@ -54,6 +56,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
+    connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
@@ -68,6 +71,9 @@ LoginScreen::~LoginScreen()
     delete ui;
 }
 
+/**
+@brief Resets the UI, clears all fields.
+*/
 void LoginScreen::reset()
 {
     ui->newUsername->clear();
@@ -102,15 +108,23 @@ void LoginScreen::reset()
     ui->autoLoginCB->blockSignals(false);
 }
 
-#ifdef Q_OS_MAC
 bool LoginScreen::event(QEvent* event)
 {
-    if (event->type() == QEvent::WindowActivate || event->type() == QEvent::WindowStateChange)
-       emit windowStateChanged(windowState());
+    switch (event->type())
+    {
+#ifdef Q_OS_MAC
+    case QEvent::WindowActivate:
+    case QEvent::WindowStateChange:
+        emit windowStateChanged(windowState());
+        break;
+#endif
+    default:
+        break;
+    }
+
 
     return QWidget::event(event);
 }
-#endif
 
 void LoginScreen::onNewProfilePageClicked()
 {
@@ -224,6 +238,7 @@ void LoginScreen::onLogin()
         {
             QMessageBox::critical(this, tr("Couldn't load this profile"),
                                   tr("Wrong password."));
+            ui->loginPassword->setFocus();
             ui->loginPassword->selectAll();
             return;
         }
@@ -254,4 +269,14 @@ void LoginScreen::onAutoLoginToggled(int state)
 void LoginScreen::retranslateUi()
 {
     ui->retranslateUi(this);
+}
+
+void LoginScreen::onImportProfile()
+{
+    ProfileImporter *pi = new ProfileImporter(this);
+
+    if (pi->importProfile())
+        reset();
+
+    delete pi;
 }

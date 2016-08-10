@@ -6,6 +6,7 @@
 * [Settings](#settings)
 * [Groupchats](#groupchats)
 * [Message Styling](#message-styling)
+* [Quotes](#quotes)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
 
@@ -37,9 +38,16 @@ can open it by clicking the picture in the top left corner. It contains the
 following settings:
 
 ### Public Information
-* _Name:_ This is your nickname which everyone who has your Tox ID can see.
-* _Status:_ You can post a status message here, which again everyone on who has
-  your Tox ID can see.
+
+* _Name:_ This is your nickname which everyone who is on your contact list can
+  see.
+* _Status:_ You can post a status message here, which again everyone on your
+  contact list can see.
+
+#### Avatar
+
+Your profile picture that all your friends can see. To add or change, click on
+the avatar. To remove, right-click.
 
 ### Tox ID
 
@@ -212,15 +220,16 @@ Videochats and file transfers are currently unsupported in groupchats.
 ## Message Styling
 
 Similar to other messaging applications, qTox supports stylized text formatting.
-Formatting follows
-[Markdown syntax](https://daringfireball.net/projects/markdown/syntax), thus:
 
-* For **Bold**, surround text in double asterisks or underscores: `**text**`
-  or `__text__`
-* For **Italics**, surround text in single asterisks or underscores: `*text*`
-  or `_text_`
-* For **Strikethrough**, surround text in single tilde's: `~text~`
-* For **Underline**, surround text in single dashes: `-text-`
+* For **Bold**, surround text in single or double asterisks: `*text*`
+ or `**text**`
+* For **Italics**, surround text in single or double forward slashes: `/text/`
+ or `//text//`
+* For **Strikethrough**, surround text in single or double tilde's: `~text~`
+ or `~~text~~`
+* For **Underline**, surround text in single or double underscores: `_text_`
+ or `__text__`
+* For **Code**, surround your code in in single backticks: `` `text` ``
 
 Additionally, qTox supports three modes of Markdown parsing:
 
@@ -231,6 +240,34 @@ Additionally, qTox supports three modes of Markdown parsing:
   characters
 
 *Note that any change in Markdown preference will require a restart.*
+
+qTox also supports action messages by prefixing a message with `/me`, where
+`/me` is replaced with your current username. For example `/me likes cats`
+turns into *` * qTox User likes cats`*.
+
+## Quotes
+
+qTox has feature to quote selected text in chat window:
+
+1. Select the text you want to quote.
+2. Right-click on the selected text and choose "Quote selected text" in the
+context menu. You also can use `ALT` + `q` shortcut.
+3. Selected text will be automatically quoted into the message input area in a
+pretty formatting.
+
+## Friend- and Groupinvites
+
+To invite a friend to a chat with you, you have to click the `+` button on the
+bottom left of the qTox window. The "Add a friend" Tab allows you to enter the
+Tox ID of your friend, or the username of a ToxMe service if your friend
+registered there.
+
+On the "Friend requests" tab you can see, friend requests you got from other
+Tox users. You can then choose to either accept or decline these requests.
+
+On the Groupinvites page, you can create a new groupchat and add users to it by
+using the context menu in your contact list. Invites from your contacts are
+also displayed here and you can accept and decline them.
 
 ## Multi Window Mode
 
@@ -253,3 +290,4 @@ The following shortcuts are currently supported:
 | `CTRL` + `Page Up` | Switch to the previous contact|
 | `CTRL` + `TAB` | Switch to the next contact |
 | `CTRL` + `SHIFT` + `TAB` | Switch to the previous contact|
+| `ALT` + `q` | Quote selected text |

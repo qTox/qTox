@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="lt_LT">
+<TS version="2.0" language="lt_LT">
 <context>
     <name>AVForm</name>
     <message>
@@ -8,80 +8,60 @@
         <translation>Garsas ir vaizdas</translation>
     </message>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Standartinė raiška</translation>
     </message>
     <message>
-        <source> at %1 FPS</source>
-        <translation> (%1 kadrų/s)</translation>
+        <source>Disabled</source>
+        <translation>Išjungta</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Joks</translation>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Garso įrenginiai</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Šliaužikliu nustatykite garsiakalbių garsumą.</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Išvesties įrenginys</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Garsumas</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Įrašymo įrenginys</translation>
+        <translation type="unfinished">Garso nustatymai</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation>Garsumas</translation>
+        <translation type="unfinished">Stiprinimas</translation>
     </message>
     <message>
-        <source>Filter audio</source>
-        <translation>Filtruoti garso signalą</translation>
+        <source>Playback device</source>
+        <translation type="unfinished">Atkūrimo įrenginys</translation>
     </message>
     <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Filtruoti mikrofono garsą, kad žmonės Jus geriau girdėtų.</translation>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Slinktuku galite nustatyti garsiakalbių garsį.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Šliaužikliu nustatykite mikrofono garsumą.</translation>
+        <source>Capture device</source>
+        <translation type="unfinished">Įrašymo įrenginys</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Garsis</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Vaizdo nustatymai</translation>
+        <translation type="unfinished">Vaizdo nustatymai</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Vaizdą įrašymo įrenginys</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translatorcomment>Trumpiau nei skiriamoji geba</translatorcomment>
-        <translation>Raiška</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Aptikti įrenginius iš naujo</translation>
+        <translation type="unfinished">Vaizdo įrenginys</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -89,10 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Nustatykite vaizdo kameros skiriamąją gebą.
-Kuo didesnė vertė, tuo geresnę vaizdo kokybę matys Jūsų kontaktai.
+        <translation type="unfinished">Nustatykite vaizdo kameros raišką.
+Kuo didesnė reikšmė, tuo geresnę vaizdo kokybę matys jūsų kontaktai.
 Geresnei vaizdo kokybei atitinkamai reikia geresnio interneto ryšio.
-Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambučiais.</translation>
+Jeigu jūsų interneto ryšys yra per prastas, turėsite keblumų su aukštesnės kokybės
+vaizdo skambučiais.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Raiška</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Aptikti įrenginius iš naujo</translation>
     </message>
 </context>
 <context>
@@ -102,17 +91,29 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
         <translation>Apie</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt grafinės aplinkos versija:</translation>
-    </message>
-    <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Paleiskite qTox iš naujo, kad būtų įdiegta versija: %1</translation>
+        <translation>Paleiskite qTox iš naujo, kad būtų įdiegta versija %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>qTox siunčia programos atnaujinimą: %1</translation>
+        <translation>qTox atsisiunčia programos atnaujinimą: %1</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation>Visų žinomų problemų sąrašą galite rasti mūsų Github %1. Jeigu qTox programoje radote problemą ar saugumo spragą, prašome %3 pagal gaires mūsų viki straipsnyje „%2“.</translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation>klaidų seklyje</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation>Kaip parašyti naudingą klaidos pranešimą</translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation>pranešti apie tai</translation>
     </message>
 </context>
 <context>
@@ -127,7 +128,7 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation>Siunčiamas atnaujinimas: %p%</translation>
+        <translation>Atsiunčiamas atnaujinimas: %p%</translation>
     </message>
     <message>
         <source>License</source>
@@ -138,48 +139,24 @@ Jei Jūsų interneto ryšys yra per prastas, turėsite keblumų su vaizdo skambu
         <translation>toxcore versija: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt grafinės aplinkos versija:</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Atnaujinimo maiša (&lt;i&gt;hash&lt;/i&gt;): &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Atnaujinimo maiša (&lt;i&gt;hash&lt;/i&gt;): &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Authors</source>
         <translation>Kūrėjai</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github portale&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github svetainėje&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Žinomos klaidos</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Žinomų klaidų sąrašą rasite mūsų &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;klaidų pranešimų skiltyje&lt;/span&gt;&lt;/a&gt; Github portale. Jei radote qTox klaidą ar saugumo spragą, prašome apie ją pranešti pagal mūsų klaidų pranešimų nuostatas. Žr. viki straipsnį &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style= &quot;font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Autorių teisės: qTox projektas, 2014-2015.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox – Tox protokolu veikianti programa su Qt grafine aplinka.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox yra atvira programinė įranga: galite ją platinti ir (arba) modifikuoti pagal GNU atvirosios programinės įrangos licencijos (GPL), kurią parengė Laisvosios programinės įrangos fondas (FSF), trečiąją (ar bet kurią vėlesnę) versiją.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;Tikimės, kad qTox bus Jums naudingas, bet nesuteikiame JOKIOS GARANTIJOS, įskaitant PERKAMUMO ar TINKAMUMO KOKIAM NORS TIKSLUI. Detalesnė informacija pateikta GPL licencijoje. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;GPL licencijos kopiją turėjote gauti kartu su šia programine įranga. Priešingu atveju, apsilankykite &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation>Qt versija: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -214,7 +191,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Iš šio kontakto failai automatiškai nepriimami</translation>
+        <translation>Nuo šio kontakto failai automatiškai nepriimami</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -235,11 +212,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Pasirinkite priimamų failų katalogą</translation>
+        <translation>Pasirinkite katalogą priimamiems failams</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation>Pokalbių žurnalas išvalytas</translation>
+        <translation>Žurnalas išvalytas</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
@@ -284,7 +261,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Čia %1! Gal susirašinėjam per Tox?</translation>
+        <translation>Čia %1! Gal bendraujame per Tox?</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -299,6 +276,22 @@ p, li { white-space: pre-wrap; }
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Tokio Tox ID nėra</translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation>Pridėti kontaktą</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Kontaktų užklausos</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Priimti</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Atmesti</translation>
     </message>
 </context>
 <context>
@@ -325,50 +318,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Atstatyti pradinius nustatymus</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Kažkas</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Kažkas kitas</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Grupės robotas</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Neprisimenu, kodėl jį pakviečiau</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA vadybininkas</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
+        <translation>Atstatyti numatytuosius nustatymus</translation>
     </message>
 </context>
 <context>
@@ -407,15 +357,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>%1 calling</source>
-        <translation>%1 skambina</translation>
+        <translation>Skambina %1</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation>Nutraukti vaizdo pokalbį</translation>
+        <translation>Užbaigti vaizdo pokalbį</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Nutraukti pokalbį</translation>
+        <translation>Užbaigti pokalbį</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -460,7 +410,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation>Nepavyko sukurti laikino failo</translation>
+        <translation>Nepavyko atverti laikinojo failo</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
@@ -473,6 +423,14 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Call duration: </source>
         <translation>Pokalbio trukmė: </translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation>%1 rašo</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopijuoti</translation>
     </message>
 </context>
 <context>
@@ -487,14 +445,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>pending</source>
-        <translation>dar nenusiųsta</translation>
+        <translation>dar neišsiųsta</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation>Įveskite čia savo žinutę...</translation>
+        <translation>Įrašykite čia savo žinutę...</translation>
     </message>
 </context>
 <context>
@@ -553,7 +511,7 @@ p, li { white-space: pre-wrap; }
         <source>No encrypted chat history file found, or it was corrupted.
 History will be disabled!</source>
         <translation>Užšifruoto pokalbių žurnalo rasti nepavyko, arba failas yra sugadintas.
-Žurnalas išjungtas!</translation>
+Žurnalas bus išjungtas!</translation>
     </message>
     <message>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
@@ -564,7 +522,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Bet kada galite vėl įjungti šifravimą nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
+        <translation>
+Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Bet kada galite vėl įjungti šifravimą nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -802,7 +761,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Away</source>
-        <translation>Pasitraukęs</translation>
+        <translation>Pasišalinęs</translation>
     </message>
     <message>
         <source>Busy</source>
@@ -811,6 +770,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Offline</source>
         <translation>Neprisijungęs</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>Į naują grupės pokalbį</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Pakviesti į grupės pokalbį „%1“</translation>
     </message>
 </context>
 <context>
@@ -930,11 +897,11 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Jūsų būsena po nustatyto laiko automatiškai bus pakeista į „pasitraukęs“.</translation>
+        <translation>Jūsų būsena po nustatyto laiko automatiškai bus pakeista į „Pasišalinęs“.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation>Automatiškai „pasitraukęs“ po („0“ išjungia):</translation>
+        <translation>Automatiškai „pasišalinęs“ po („0“ išjungia):</translation>
     </message>
     <message>
         <source>Chat</source>
@@ -1003,7 +970,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl atžymėkite tik tada, kai reikia.</translation>
+        <translation>Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1125,6 +1092,46 @@ bus nusiųstos jiems prisijungus.</translation>
         <comment>reconnect button</comment>
         <translation>Prisijungti iš naujo</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Neformatuotas tekstas</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Rodyti formatavimo simbolius</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Nerodyti formatavimo simbolių</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation>Net jei įjungta būsena „Užsiėmęs“</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation>Standartinis šriftas:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation>px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation>Dydis: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1184,6 +1191,10 @@ bus nusiųstos jiems prisijungus.</translation>
         <source>Cleared</source>
         <translation>Išvalyta</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation>Cituoti pažymėtą tekstą</translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1198,6 +1209,14 @@ bus nusiųstos jiems prisijungus.</translation>
     <message>
         <source>Hide Messages</source>
         <translation>Slėpti žinutes</translation>
+    </message>
+</context>
+<context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;nėra&gt;</translation>
     </message>
 </context>
 <context>
@@ -1235,6 +1254,33 @@ bus nusiųstos jiems prisijungus.</translation>
     <message>
         <source>Start audio call</source>
         <translation>Skambinti</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Groups</source>
+        <translation>Grupės</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Sukurti naują grupės pokalbį</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Pakvietimai į grupes</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Prisijungti</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Atmesti</translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1364,6 +1410,38 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <comment>delete profile button</comment>
         <translation>Ištrinti</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation>Toxme registras</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Naudotojo vardas</translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation>Biografija</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Serveris</translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation>Paslėpti mano vardą viešajame sąraše</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registruotis</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation>Jūsų slaptažodis</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Atnaujinti</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1447,10 +1525,6 @@ If you encountered this error, please report it.</source>
 Prašome pranešti apie šią klaidą.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
-        <translation>Slaptažodžiu apsaugoto profilio atidaryti automatiškai nepavyko.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Nepavyko prisijungti</translation>
     </message>
@@ -1477,6 +1551,14 @@ Galite sukurti naują.</translation>
     <message>
         <source>Wrong password.</source>
         <translation>Neteisingas slaptažodis.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importuoti</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Slaptažodžiu apsaugotų profilių automatiškai užkrauti negalima.</translation>
     </message>
 </context>
 <context>
@@ -1561,6 +1643,13 @@ Plural:10–20,30,40,..</translatorcomment>
             <numerusform>Neperskaitytos žinutės</numerusform>
             <numerusform>Neperskaitytų žinučių</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>ĮJUNGTAS „CAPS LOCK“</translation>
     </message>
 </context>
 <context>
@@ -1761,6 +1850,136 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <comment>deletion confirmation text</comment>
         <translation>Ar tikrai norite ištrinti šį profilį?</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation>Šių failų ištrinti nepavyko:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation>Prašome juos ištrinti patiems.</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Failų ištrinti nepavyko!</translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation>Registruotis (vykdoma)</translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation>Atnaujinti (vykdoma)</translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation>Baigta!</translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation>Paskyra %1@%2 sėkmingai atnaujinta</translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation>%1@%2 užregistruotas duomenų bazėje. Nepamirškite slaptažodžio</translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation>Toxme klaida</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registruotis</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Atnaujinti</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation>Pakeisti slaptažodį</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation>Nustatyti profilio slaptažodį</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation>Importuoti profilį</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation>Tox failas (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation>Praleidžiamas failas</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation>Įspėjimas: pasirinktas failas nėra Tox failas – praleista.</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Toks profilis jau yra</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
+    </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profilis importuotas</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox sėkmingai importuotas</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atšaukti</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1812,34 +2031,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Violetinė</translation>
     </message>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Praleidžiamas failas</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Įspėjimas: pasirinktas failas nėra Tox failas – praleista.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Toks profilis jau yra</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profilis „%1“ jau yra. Ar norite jį ištrinti?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profilis importuotas</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox sėkmingai importuotas</translation>
-    </message>
-    <message>
         <source>Incoming call...</source>
         <translation>Skambutis...</translation>
     </message>
@@ -1871,28 +2062,8 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>qTox nepavyko atidaryti pokalbių žurnalo, todėl jis buvo išjungtas.</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Neteisingas atsakas</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Atsake trūksta slaptažodžio</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Serveris nepalaiko Toxme funkcijos</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Reikia siųsti POST užklausas į /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Bandykite per naujo naudodami HTTPS ryšį</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Nepavyko perskaityti užšifruotų duomenų</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -1927,20 +2098,16 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Tox ID neišsiųstas</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Užklausa nepavyko, nes serverio atsakas nesuprantamas</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Šio naudotojo nėra</translation>
     </message>
     <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Vidinė klaida. Praneškite apie šį įvykį programuotojams</translation>
+        <source>Problem with HTTPS connection</source>
+        <translation>Nepavyko sudaryti HTTPS ryšio</translation>
     </message>
     <message>
-        <source>Unknown error (%1)</source>
-        <translation>Nežinoma klaida (%1)</translation>
+        <source>Internal ToxMe error</source>
+        <translation>Vidinė „ToxMe“ klaida</translation>
     </message>
 </context>
 <context>
@@ -2113,7 +2280,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation>Pasitraukęs</translation>
+        <translation>Pasišalinęs</translation>
     </message>
     <message>
         <source>Busy</source>
@@ -2224,7 +2391,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>pasitraukęs (-usi)</translation>
+        <translation>pasišalinęs (-usi)</translation>
     </message>
     <message>
         <source>busy</source>
@@ -2247,27 +2414,50 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>%1 dabar %2</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Pakvietimas į grupę</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 Jus kviečia prisijungti prie grupės pokalbio. Norite prisijungti?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Nepažįstamas&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 nustatė pavadinimą „%2“</translation>
     </message>
     <message>
         <source>Message failed to send</source>
         <translation>Nepavyko nusiųsti žinutės</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Pakvietimai į grupes</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;nėra&gt;</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Grupės pokalbis Nr. %1</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Sukurti naują grupę...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n nauja kontaktų užklausa</numerusform>
+            <numerusform>%n naujos kontaktų užklausos</numerusform>
+            <numerusform>%n naujų kontaktų užklausų</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n naujas grupės pakvietimas</numerusform>
+            <numerusform>%n nauji grupės pakvietimai</numerusform>
+            <numerusform>%n naujų grupės pakvietimų</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation>Fokusuoti langą</translation>
     </message>
 </context>
 </TS>

@@ -181,9 +181,12 @@ void GenericChatroomWidget::reloadTheme()
     setPalette(p);
 }
 
-void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent*)
+void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-    emit chatroomWidgetClicked(this);
+    if (event->button() == Qt::LeftButton)
+        emit chatroomWidgetClicked(this);
+    else
+        event->ignore();
 }
 
 void GenericChatroomWidget::enterEvent(QEvent*)

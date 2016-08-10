@@ -4,63 +4,64 @@
 <context>
     <name>AVForm</name>
     <message>
-        <source>%1p</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Разрешение по умолчанию</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished">Отсутствует</translation>
     </message>
     <message>
         <source>Audio/Video</source>
         <translation>Аудио/Видео</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
     <message>
-        <source>Gain</source>
-        <translation>Усиление</translation>
+        <source>Disabled</source>
+        <translation>Отсутствует</translation>
     </message>
     <message>
-        <source>Volume</source>
-        <translation>Громкость</translation>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation>Проигрывать тестовый звук во время настройки громкости.</translation>
     </message>
     <message>
-        <source>Video Settings</source>
-        <translation>Настройки видео</translation>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation>Используйте ползунок для установки уровня записи от %1dB до %2dB.</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation>Разрешение</translation>
+        <source>Select region</source>
+        <translation>Выбрать область экрана</translation>
     </message>
     <message>
-        <source>Rescan devices</source>
-        <translation>Повторить поиск устройств</translation>
+        <source>Screen %1</source>
+        <translation>Экран %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Настройки звука</translation>
+        <translation type="unfinished">Настройки звука</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Используйте ползунок для установки уровня звука динамиков.</translation>
+        <source>Gain</source>
+        <translation type="unfinished">Усиление</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Устройство воспроизведения</translation>
+        <translation type="unfinished">Устройство воспроизведения</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Используйте ползунок для установки уровня звука динамиков.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Устройство записи</translation>
+        <translation type="unfinished">Устройство записи</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation type="unfinished">Громкость</translation>
+    </message>
+    <message>
+        <source>Video Settings</source>
+        <translation type="unfinished">Настройки видео</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Видеоустройство</translation>
+        <translation type="unfinished">Видеоустройство</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -68,15 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Установите разрешение своей камеры.
+        <translation type="unfinished">Установите разрешение своей камеры.
 Чем больше значение, тем выше качество видео, которое увидят ваши друзья.
 Заметим, однако, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
 Иногда подключение слишком слабое, что бы передать видео выского качества,
 что может привести к проблемам при видеозвонке.</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Используйте ползунок для регулировки громкости микрофона</translation>
+        <source>Resolution</source>
+        <translation type="unfinished">Разрешение</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Повторить поиск устройств</translation>
     </message>
 </context>
 <context>
@@ -84,10 +89,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>About</source>
         <translation>О программе</translation>
-    </message>
-    <message>
-        <source>Qt version:</source>
-        <translation></translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
@@ -99,16 +100,28 @@ which may lead to problems with video calls.</source>
         <translatorcomment>%1 версия обновления</translatorcomment>
         <translation>qTox загружает обновление %1</translation>
     </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation>Список всех известных проблем вы можете найти на нашем %1 на Github. Если вы обнаружите ошибку или уязвимость в безопасности qTox, пожалуйста %3 согласно указаниям в нашей статье %2 вики.</translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation>баг-трекере</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation>Написание полезных отчетов об ошибках</translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation>сообщите о них</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Версия</translation>
-    </message>
-    <message>
-        <source>Qt version:</source>
-        <translation>Версия Qt:</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
@@ -123,8 +136,8 @@ which may lead to problems with video calls.</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Хэш коммита: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Хэш коммита: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
@@ -135,35 +148,35 @@ which may lead to problems with video calls.</source>
         <translation>Авторы</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Изначальный автор: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Полный список &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;авторов&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Изначальный автор: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Полный список &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;авторов&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Известные проблемы</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Со списком всех известных проблем можно ознакомиться на нашем &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;трекере-ошибок&lt;/span&gt;&lt;/a&gt; на Github. Если вы обнаружили ошибку или уязвимость при использовании qTox, сообщите пожалуйста об этом в соответствии с &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Руководством&lt;/span&gt;&lt;/a&gt; на нашей wiki-странице.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation>Версия Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>имя пользователя</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>статус</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Публичный ключ:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -171,7 +184,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>ИСТОРИЯ ПСЕВДОНИМОВ</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -225,7 +238,8 @@ which may lead to problems with video calls.</source>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox необходимо использовать Tox DNS, но не может сделать это через прокси. 
+    Игнорировать прокси и подключитесь к Интернету напрямую?</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -311,49 +325,6 @@ which may lead to problems with video calls.</source>
     </message>
 </context>
 <context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">От</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Кто-то</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Кто-то другой</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Групповой чат</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>Парень, которого я не добавлял</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>Менеджер НАСА</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
@@ -361,6 +332,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
+        <translatorcomment>Паравозик не смог. Не сможешь и ты!</translatorcomment>
         <translation>qTox не смог открыть %1</translation>
     </message>
     <message>
@@ -373,6 +345,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
+        <translatorcomment>...передаёте последовательный файл и получаете te-le-fun-ken. И переводчик работает по другой линии. По линии «Библиотека».</translatorcomment>
         <translation>Вы пытаетесь отправить специальный (последовательный) файл. Это так не работает!</translation>
     </message>
     <message>
@@ -450,11 +423,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Длительность разговора:</translation>
+        <translation>Длительность разговора: </translation>
     </message>
     <message>
         <source>Load chat history...</source>
         <translation>Загрузить историю чата...</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation>%1 набирает сообщение</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копировать</translation>
     </message>
 </context>
 <context>
@@ -769,6 +750,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Set alias...</source>
+        <translatorcomment>Может &quot;отображаемое имя&quot;?; Можно даже &apos;элиас&apos; :)</translatorcomment>
         <translation>Установить псевдоним...</translation>
     </message>
     <message>
@@ -875,7 +857,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Стандартная папка сохранения файлов</translation>
+        <translation>Стандартная папка сохранения файлов:</translation>
     </message>
     <message>
         <source>Play sound</source>
@@ -1044,18 +1026,6 @@ instead of system taskbar.</source>
         <translation>Открыть окно</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Для изменения отображения разметки необходимо перезапустить qTox</translation>
-    </message>
-    <message>
-        <source>Markdown:</source>
-        <translation>Разметка:</translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Выбор отображения разметки.</translation>
-    </message>
-    <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation>Если отмечено, групповые беседы будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
@@ -1131,6 +1101,46 @@ will be sent to them when they appear online to you.</source>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Обычный текст</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Отображать символы форматирования</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Не отображать символы форматирования</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation>Воспроизводить звук, когда Занят</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation>Основной шрифт:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation>px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation>Размер: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation>Формат текстовых сообщений:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation>Выберите формат текстовых сообщений.</translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1183,6 +1193,10 @@ will be sent to them when they appear online to you.</source>
         <translation>Очистить показываемые сообщения</translation>
     </message>
     <message>
+        <source>Quote selected text</source>
+        <translation>Цитировать выделенное</translation>
+    </message>
+    <message>
         <source>Not sent</source>
         <translation>Не отправлено</translation>
     </message>
@@ -1211,7 +1225,7 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Пусто&gt;</translation>
     </message>
 </context>
 <context>
@@ -1254,10 +1268,6 @@ will be sent to them when they appear online to you.</source>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Приглашен пользователем &lt;b&gt;%1&lt;/b&gt; в %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Группы</translation>
     </message>
@@ -1276,6 +1286,10 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Decline</source>
         <translation>Отклонить</translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Приглашение от %1 в %2 %3.</translation>
     </message>
 </context>
 <context>
@@ -1405,6 +1419,38 @@ Profile does not contain your history.</source>
         <comment>delete profile button</comment>
         <translation>Удалить</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation>Регистрация Toxme</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation>О себе</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation>Не отображать меня в публичном списке</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Регистрация</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation>Ваш пароль</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Обновление</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1488,10 +1534,6 @@ If you encountered this error, please report it.</source>
 Пожалуйста, сообщите об этой проблеме.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
-        <translation>Профиль защищенный паролем не может быть автоматически загружен.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load this profile</source>
         <translation>Невозможно загрузить данный профиль</translation>
     </message>
@@ -1517,7 +1559,15 @@ If you encountered this error, please report it.</source>
 You may want to create one.</source>
         <translation>Нет выбранного профиля.
 
-Вы можете создать новый</translation>
+Вы можете создать новый.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Импорт</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Профили защищенные паролем не могут быть загружены автоматически.</translation>
     </message>
 </context>
 <context>
@@ -1600,6 +1650,13 @@ You may want to create one.</source>
             <numerusform>%n непрочитанных сообщения</numerusform>
             <numerusform>%n непрочитанных сообщений</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>Включен Caps Lock</translation>
     </message>
 </context>
 <context>
@@ -1799,6 +1856,136 @@ Share it with your friends to communicate.</source>
         <source>User Profile</source>
         <translation>Профиль пользователя</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation>Следующие файлы не могут быть удалены:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation>Пожалуйста, удалите их вручную.</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Файлы не могут быть удалены!</translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation>Регистрация (в процессе)</translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation>Обновление (в процессе)</translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation>Выполнено!</translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation>Аккаунт %1@%2 обновлен успешно</translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation>Аккаунт %1@%2 успешно записан. Сохраните ваш пароль</translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation>Ошибка Toxme</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Регистрация</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Обновить</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation>Сменить пароль</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation>Установить пароль для профиля</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation>Импорт профиля</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation>Файл Tox (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation>Игнорирование не-Tox файлов</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation>Предупреждение: Вы выбрали файл, который не является Tox файлом; он будет проигнорирован.</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Профиль уже существует</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
+    </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Профиль импортирован</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">%1.tox успешно импортирован</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1818,47 +2005,19 @@ It will be installed when qTox restarts.</source>
 Оно будет установлено после того, как qTox будет перезапущен.</translation>
     </message>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Выбран не файл Tox</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Внимание: вы выбрали не файл Tox; игнорирование.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Профиль уже существует</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Профиль импортирован</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox успешно импортирован</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>Tox URI to parse</translation>
+        <translation>Tox URI для разбора</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>Starts new instance and loads specified profile.</translation>
+        <translation>Запускает новый экземпляр и загружает указанный профиль.</translation>
     </message>
     <message>
         <source>profile</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>profile</translation>
+        <translation>профиль</translation>
     </message>
     <message>
         <source>Default</source>
@@ -1904,76 +2063,44 @@ It will be installed when qTox restarts.</source>
         <translation>Рабочий стол</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервер не поддерживает Toxme</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы делаете слишком много запросов. Подождите один час и повторите попытку</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
+        <translation>Это имя уже используется</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот Tox ID уже зарегистрирован под другим именем</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, не используйте пробелы в вашем имени</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный пароль</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>Нельзя использовать это имя</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя не найдено</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID не отправлен</translation>
     </message>
     <message>
         <source>That user does not exist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот пользователь не существует</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1981,7 +2108,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox не может загрузить историю переписки</translation>
+        <translation>qTox не может загрузить историю переписки, она будет отключена.</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation>Проблема с HTTPS соединением</translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation>Внутренняя ошибка ToxMe</translation>
     </message>
 </context>
 <context>
@@ -2024,7 +2159,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>Ещё раз:</translation>
+        <translation>Подтверждение:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2149,12 +2284,12 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">Приглашение группы</translation>
+        <translation>Приглашения в группы</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Пусто&gt;</translation>
     </message>
     <message>
         <source>Create new group...</source>
@@ -2166,18 +2301,18 @@ It will be installed when qTox restarts.</source>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform>Новых запросов в друзья: %n</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новый запрос в друзья</numerusform>
+            <numerusform>%n новых запроса в друзья</numerusform>
+            <numerusform>%n новых запросов в друзья</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform>Новых приглашений в группу: %n</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n новое приглашение в группу</numerusform>
+            <numerusform>%n новых приглашения в группы</numerusform>
+            <numerusform>%n новых приглашений в группы</numerusform>
         </translation>
     </message>
     <message>
@@ -2324,6 +2459,15 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Message failed to send</source>
         <translation>Не удалось отправить сообщение</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Групповой чат #%1</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation>Отобразить</translation>
     </message>
 </context>
 </TS>

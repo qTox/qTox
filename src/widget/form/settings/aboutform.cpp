@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,27 +17,32 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include "aboutform.h"
+#include <src/core/recursivesignalblocker.h>
 #include "src/widget/translator.h"
 #include "tox/tox.h"
 #include "src/net/autoupdate.h"
 #include <QTimer>
 #include <QDebug>
 
-AboutForm::AboutForm() :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+AboutForm::AboutForm()
+    : GenericForm(QPixmap(":/img/settings/general.png"))
+    , bodyUI(new Ui::AboutSettings)
+    , progressTimer(new QTimer(this))
 {
-    bodyUI = new Ui::AboutSettings;
     bodyUI->setupUi(this);
+
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
+
     replaceVersions();
 
     if (QString(GIT_VERSION).indexOf(" ") > -1)
         bodyUI->gitVersion->setOpenExternalLinks(false);
 
     showUpdateProgress();
-    progressTimer = new QTimer();
     progressTimer->setInterval(500);
     progressTimer->setSingleShot(false);
     connect(progressTimer, &QTimer::timeout, this, &AboutForm::showUpdateProgress);
@@ -57,41 +62,56 @@ void AboutForm::replaceVersions()
     bodyUI->toxCoreVersion->setText(bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION", TOXCORE_VERSION));
     bodyUI->qtVersion->setText(bodyUI->qtVersion->text().replace("$QTVERSION", QT_VERSION_STR));
     bodyUI->knownIssues->setText(
-      tr("A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.")
-        .arg(QString::fromUtf8("<a href=\"https://github.com/tux3/qTox/issues\" style=\"text-decoration: underline; color:#0000ff;\">%1</a>")
-          .arg(tr("bug-tracker")))
-        .arg(QString::fromUtf8("<a href=\"https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports\" style=\"text-decoration: underline; color:#0000ff;\">%1</a>")
-          .arg(tr("Writing Useful Bug Reports")))
-        .arg(QString::fromUtf8("<a href=\"https://github.com/tux3/qTox/issues/"
-            "new?body=%23%23%23%23%23+Brief+Description%1A%1AOS%3A+Windows+%2F+"
-            "OS+X+%2F+Linux+(include+version+and%2For+distro)%1AqTox+version"
-            "%3A+%4%1ACommit+hash%3A+%5%1Atoxcore%3A+%6%1AQt%3A+%7%1A"
-            "Hardware%3A++%1A%E2%80%A6%1A%1AReproducible%3A+Always+%2F+Almost+"
-            "Always+%2F+Sometimes+%2F+Rarely+%2F+Couldn%27t+Reproduce%1A%1A%23"
-            "%23%23%23%23+Steps+to+reproduce%1A%1A1.+%1A2.+%1A3.+%E2%80%A6%1A"
-            "%1A%23%23%23%23%23+Observed+Behavior%1A%1A%1A%23%23%23%23%23+"
-            "Expected+Behavior%1A%1A%1A%23%23%23%23%23+Additional+Info%1A(links"
-            "%2C+images%2C+etc+go+here)%1A%1A----%1A%1AMore+information+on+how+"
-            "to+write+good+bug+reports+in+the+wiki%3A+https%3A%2F%2Fgithub.com"
-            "%2Ftux3%2FqTox%2Fwiki%2FWriting-Useful-Bug-Reports.%1A%1APlease+"
-            "remove+any+unnecessary+template+section+before+submitting.\" "
-            "style=\"text-decoration: underline; color:#0000ff;\">%8</a>")
-          .arg(
-              QString("%0"),
-              QString("%2"),
-              QString("%3"),
-              QString(GIT_DESCRIBE),
-              QString(GIT_VERSION),
-              QString(TOXCORE_VERSION),
-              QString(QT_VERSION_STR),
-              tr("report it")))
-    );
+                tr("A list of all known issues may be found at our %1 at Github."
+                   " If you discover a bug or security vulnerability within"
+                   " qTox, please %3 according to the guidelines in our %2"
+                   " wiki article.")
+                .arg(QString::fromUtf8("<a href=\"https://github.com/qTox/qTox/"
+                                       "issues\""
+                                       " style=\"text-decoration: underline;"
+                                       " color:#0000ff;\">%1</a>")
+                     .arg(tr("bug-tracker")))
+                .arg(QString::fromUtf8("<a href=\"https://github.com/qTox/qTox/"
+                                       "wiki/Writing-Useful-Bug-Reports\""
+                                       " style=\"text-decoration: underline;"
+                                       " color:#0000ff;\">%1</a>")
+                     .arg(tr("Writing Useful Bug Reports")))
+                .arg(QStringLiteral(
+                         "<a href=\"https://github.com/qTox/qTox/issues"
+                         "/new?body=%23%23%23%23%23+Brief+Description%0A%0AOS"
+                         "%3A+Windows+%2F+OS+X+%2F+Linux+(include+version+and"
+                         "%2For+distro)%0AqTox+version%3A+") +
+                     QStringLiteral(GIT_DESCRIBE) +
+                     QStringLiteral("%0ACommit+hash%3A+") +
+                     QStringLiteral(GIT_VERSION) +
+                     QStringLiteral("%0Atoxcore%3A+") + TOXCORE_VERSION +
+                     QStringLiteral("%0AQt%3A+") +
+                     QStringLiteral(QT_VERSION_STR) +
+                     QStringLiteral("%0AHardware%3A++%0A%E2%80%A6%0A%0A"
+                                    "Reproducible%3A+Always+%2F+Almost+Always+"
+                                    "%2F+Sometimes+%2F+Rarely+%2F+Couldn%27t+"
+                                    "Reproduce%0A%0A%23%23%23%23%23+Steps+to+"
+                                    "reproduce%0A%0A1.+%0A2.+%0A3.+%E2%80%A6"
+                                    "%0A%0A%23%23%23%23%23+Observed+Behavior"
+                                    "%0A%0A%0A%23%23%23%23%23+Expected+Behavior"
+                                    "%0A%0A%0A%23%23%23%23%23+Additional+Info"
+                                    "%0A(links%2C+images%2C+etc+go+here)%0A%0A"
+                                    "----%0A%0AMore+information+on+how+to+"
+                                    "write+good+bug+reports+in+the+wiki%3A+"
+                                    "https%3A%2F%2Fgithub.com%2FqTox%2FqTox%2F"
+                                    "wiki%2FWriting-Useful-Bug-Reports.%0A%0A"
+                                    "Please+remove+any+unnecessary+template+"
+                                    "section+before+submitting.\""
+                                    " style=\"text-decoration: underline;"
+                                    " color:#0000ff;\">") + tr("report it") +
+                     QStringLiteral("</a>")
+                     )
+                );
 }
 
 AboutForm::~AboutForm()
 {
     Translator::unregister(this);
-    delete progressTimer;
     delete bodyUI;
 }
 

@@ -25,28 +25,7 @@ if [ ! -f "libtoxcore_build_windows_x86_shared_release.zip" ]; then
 fi
 
 if [ ! -d "include/tox" ]; then
-    $QTOX_DIR/tools/unzip -o libtoxcore_build_windows_x86_shared_release.zip -d ./
-fi
-
-
-## filter_audio
-if [ ! -d $QTOX_DIR/libs/filter_audio ]; then
-    git clone https://github.com/irungentoo/filter_audio.git $QTOX_DIR/libs/filter_audio
-    rm bin/libfilteraudio.dll
-else
-    pushd $QTOX_DIR/libs/filter_audio
-    git pull
-    popd
-fi
-
-if [ ! -f "bin/libfilteraudio.dll" ]; then
-    pushd $QTOX_DIR/libs/filter_audio
-    PREFIX="$QTOX_DIR/libs" CC="gcc.exe" make install
-    mv libfilteraudio.dll.a $QTOX_DIR/libs/lib
-    popd
-    if [ -f "lib/libfilteraudio.dll" ]; then
-        mv lib/libfilteraudio.dll bin/
-    fi
+    unzip -o libtoxcore_build_windows_x86_shared_release.zip -d ./
 fi
 
 

@@ -126,9 +126,6 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
 void EmoticonsWidget::onSmileyClicked()
 {
-    // hide the QMenu
-    hide();
-
     // emit insert emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
     if (sender)
@@ -193,3 +190,10 @@ void EmoticonsWidget::PageButtonsUpdate()
            t_pageButton->setChecked(false);
     }
 }
+
+void EmoticonsWidget::keyPressEvent(QKeyEvent *e)
+{
+    Q_UNUSED(e)
+    hide();
+}
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="uk_UA">
+<TS version="2.0" language="uk_UA">
 <context>
     <name>AVForm</name>
     <message>
@@ -8,79 +8,60 @@
         <translation>Аудіо/Відео</translation>
     </message>
     <message>
-        <source>%1x%2</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Роздільна здатність за замовчуванням</translation>
     </message>
     <message>
-        <source> at %1 FPS</source>
-        <translation> з %1 FPS</translation>
+        <source>Disabled</source>
+        <translation>Вимкнений</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Відсутній</translation>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation>Відтворювати тестовий звук при зміні гучності.</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation>Використовуйте повзунок для налаштування підсилення вашого мікрофону в діапазоні від %1дБ до %2дБ.</translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation>Обрати ділянку</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
+        <translation>Екран %1</translation>
+    </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Аудіо параметри</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Гучність</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Використовуйте повзунок для регулювання гучності пристрою відтворення.</translation>
+        <translation>Налаштування аудіо</translation>
     </message>
     <message>
         <source>Gain</source>
         <translation>Підсилення</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Використовуйте повзунок для регулювання чутливості мікрофону.</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Пересканувати пристрої</translation>
-    </message>
-    <message>
         <source>Playback device</source>
         <translation>Пристрій відтворення</translation>
     </message>
     <message>
-        <source>...</source>
-        <translation></translation>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation>Використовуйте повзунок для регулювання гучності пристрою відтворення.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation>Пристрій захоплення</translation>
+        <translation type="unfinished">Пристрій захоплення</translation>
     </message>
     <message>
-        <source>Filter audio</source>
-        <translation>Фільтр звуку</translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Фільтрація звуку вашого мікрофону для того, щоб люди краще вас чули.</translation>
+        <source>Volume</source>
+        <translation>Гучність</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Параметри відео</translation>
+        <translation>Налаштування відео</translation>
     </message>
     <message>
         <source>Video device</source>
         <translation>Відео пристрій</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translation>Роздільна здатність</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -88,19 +69,23 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Встановлює роздільну здатність для вашої камери.
-За більших значень ваші співрозмовники будуть бачити вас чіткіше.
+        <translation>Встановлює роздільну здатність для Вашої камери.
+За більших значень Ваші співрозмовники будуть бачити Вас чіткіше.
 Зауважте, для кращої якості відео потрібен більш швидкий інтернет.
-Іноді ваше інтернет з’єднання може бути недостатньо якісним для досить високої якості відео,
+Іноді Ваше інтернет з’єднання може бути недостатньо якісним для досить високої якості відео,
 що може спричинити проблеми під час відео зв’язку.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation>Роздільна здатність</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation>Пересканувати пристрої</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
-    <message>
-        <source>Qt version:</source>
-        <translation>Версія Qt:</translation>
-    </message>
     <message>
         <source>Restart qTox to install version %1</source>
         <translation>Перезапустіть qTox для встановлення версіїі %1</translation>
@@ -114,6 +99,22 @@ which may lead to problems with video calls.</source>
         <source>About</source>
         <translation>Про програму</translation>
     </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation>Перелік відомих проблем можна знайти на нашому %1 на GitHub. Якшо Ви знайдете баг чи вади в безпеці qTox, будь ласка, %3 відповідно до інструкцій в нашій вікі-статті %2.</translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation>баг-трекері</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation type="unfinished">Writing Useful Bug Reports</translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation>повідомте про це</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -126,12 +127,8 @@ which may lead to problems with video calls.</source>
         <translation>Версія toxcore: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Версія Qt:</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Хеш коміту: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Хеш коміту: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
@@ -146,32 +143,20 @@ which may lead to problems with video calls.</source>
         <translation>Ліцензія</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Автори</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Оригінальний автор: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Дивіться повний список &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;учасників&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Оригінальний автор: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Дивіться повний список &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;учасників&lt;/span&gt;&lt;/a&gt; на Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Відомі проблеми</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Повний перелік відомих проблем можна переглянути на нашому &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;баг-трекері&lt;/span&gt;&lt;/a&gt; на Github. Якщо Ви знайшли баг чи вразливість в безпеці qTox, будь ласка, повідомте про це відповідно до вказівок нашої wiki-статті: &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation>Версія Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -252,7 +237,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
+        <translation></translation>
     </message>
     <message>
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
@@ -283,8 +268,7 @@ p, li { white-space: pre-wrap; }
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translatorcomment>That means &quot;Hi, I&apos;m %1! Please, add me to you contact list.
 It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian noun can&apos;t mean a verb (like &quot;call&quot; for noun and verb in English)</translatorcomment>
-        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.
-</translation>
+        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -299,6 +283,22 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Даного Tox ID не існує</translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation>Додати друга</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Запити дружби</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Прийняти</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Відхилити</translation>
     </message>
 </context>
 <context>
@@ -326,49 +326,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>Reset to default settings</source>
         <translation>Скинути на типові значення</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished">Form</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -476,6 +433,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Call duration: </source>
         <translation>Тривалість дзвінка: </translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation>%1 набирає повідомлення</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Копіювати</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -536,11 +501,11 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     </message>
     <message>
         <source>/me offers friendship.</source>
-        <translation type="unfinished"></translation>
+        <translation>/me пропонує дружбу.</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me пропонує дружбу, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -567,7 +532,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+Вимкнення історії переписки залишить Вашу зашифровану історію неушкодженою (але невикористовуємою); якщо пізніше Ви пам&apos;ятатимете пароль, Ви зможете знову увімкнути шифрування з вкладки &quot;Приватність&quot;.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -583,27 +549,23 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation></translation>
     </message>
     <message>
         <source>10Mb</source>
-        <translation type="unfinished">10МБ</translation>
+        <translation>10Мб</translation>
     </message>
     <message>
         <source>0kb/s</source>
-        <translation type="unfinished">0кБ/с</translation>
+        <translation>0кб/с</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation type="unfinished"></translation>
+        <translation>Лишилось:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
         <translation>Назва файлу</translation>
-    </message>
-    <message>
-        <source>[preview]</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -818,6 +780,14 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
         <translation>Вилучити з друзів</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>До нової групи</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Запросити до групи &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1129,6 +1099,46 @@ will be sent to them when they appear online to you.</source>
         <comment>reconnect button</comment>
         <translation>Повторно під&apos;єднатись</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Звичайний текст</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Відображати символи форматування</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Не відображати символи форматування</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation>Відтворювати звук якщо Зайнятий</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation>Базовий шрифт:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation>пікс</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation>Розмір: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation>Нові налаштування стилю тексту можуть не застосуватись до перезавантаження qTox.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">Формат стилю тексту:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation>Оберіть налаштування стилю тексту.</translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1188,6 +1198,10 @@ will be sent to them when they appear online to you.</source>
         <source>Cleared</source>
         <translation>Очищено</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation>Цитувати виділений текст</translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1202,6 +1216,14 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Hide Messages</source>
         <translation>Приховати повідомлення</translation>
+    </message>
+</context>
+<context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Пусто&gt;</translation>
     </message>
 </context>
 <context>
@@ -1242,6 +1264,33 @@ will be sent to them when they appear online to you.</source>
     </message>
 </context>
 <context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Groups</source>
+        <translation>Групи</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Створити нову групу</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Приєднатись</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Відхилити</translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupWidget</name>
     <message>
         <source>Open chat in new window</source>
@@ -1277,7 +1326,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ID</translation>
+        <translation></translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1365,6 +1414,38 @@ Profile does not contain your history.</source>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Вилучити</translation>
+    </message>
+    <message>
+        <source>Toxme register</source>
+        <translation>Реєстрація Toxme</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Ім&apos;я користувача</translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation>Біографія</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Сервер</translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation>Приховати моє ім&apos;я з публічного списку</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Реєстрація</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation>Ваш пароль</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Оновити</translation>
     </message>
 </context>
 <context>
@@ -1454,10 +1535,6 @@ If you encountered this error, please report it.</source>
         <translation>Невідома помилка: Неможливо створити новий профіль. Якщо Ви зустріли цю помилку, будь ласка, повідомте про це.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
-        <translation>Профіль, захищений паролем, не може бути завантажений автоматично.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Неможливо завантажити профіль</translation>
     </message>
@@ -1484,6 +1561,14 @@ You may want to create one.</source>
     <message>
         <source>Wrong password.</source>
         <translation>Неправильний пароль.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Імпорт</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Профілі, захищені паролем, не можуть бути завантажені автоматично.</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1631,7 @@ You may want to create one.</source>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">На передній план</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1569,6 +1654,13 @@ You may want to create one.</source>
     </message>
 </context>
 <context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>CAPS-LOCK УВІМКНЕНИЙ</translation>
+    </message>
+</context>
+<context>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
@@ -1580,7 +1672,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation></translation>
+        <translation>Бажаєте назавжди видалити історію чату?</translation>
     </message>
 </context>
 <context>
@@ -1609,7 +1701,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation></translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -1660,7 +1752,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation>Поточний профіль:</translation>
+        <translation>Поточний профіль: </translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1764,18 +1856,85 @@ Share it with your friends to communicate.</source>
         <comment>save dialog filter</comment>
         <translation>Зберегти Qr код (*.png)</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation>Не вдалось видалити наступні файли:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation>Будь ласка, видаліть їх самостійно.</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Не вдалось видалити файли!</translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation>Реєстрація (обробка)</translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation>Оновлення (обробка)</translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation>Готово!</translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation>Обліковий запис %1@%2 успішно оновлено</translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation>%1@%2 успішно додано до бази даних. Збережіть Ваш пароль</translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation>Помилка Toxme</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Реєстрація</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Оновити</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation>Змінити пароль</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation>Встановити пароль</translation>
+    </message>
 </context>
 <context>
-    <name>QObject</name>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation>Імпортувати профіль</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation>Файл Tox (*.tox)</translation>
+    </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation>Ігнорування не Tox файлу</translation>
+        <translation type="unfinished">Ігнорування не Tox файлу</translation>
     </message>
     <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Увага: Вказаний Вами файл не є файлом збереження Tox; він буде проігнорований.</translation>
+        <translation type="unfinished">Увага: обраний Вами файл не являється файлом Tox; ігнорування.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1788,6 +1947,14 @@ Share it with your friends to communicate.</source>
         <translation>Профіль із назвою «%1» вже існує. Бажаєте перезаписати його?</translation>
     </message>
     <message>
+        <source>File doesn&apos;t exist</source>
+        <translation>Файл не існує</translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation>Профіль не існує</translation>
+    </message>
+    <message>
         <source>Profile imported</source>
         <translation>Профіль імпортовано</translation>
     </message>
@@ -1795,6 +1962,33 @@ Share it with your friends to communicate.</source>
         <source>%1.tox was successfully imported</source>
         <translation>%1.tox успішно імпортовано</translation>
     </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ок</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Так</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Ні</translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
         <translation>Версія %1, %2</translation>
@@ -1855,32 +2049,11 @@ It will be installed when qTox restarts.</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translatorcomment>That means &quot;Hi, I&apos;m %1! Please, add me to you contact list.
 It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian noun can&apos;t mean a verb (like &quot;call&quot; for noun and verb in English)</translatorcomment>
-        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.
-</translation>
-    </message>
-    <message>
-        <source>Incorrect response</source>
-        <translation>Некоректна відповідь</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>У відповіді відсутній пароль</translation>
+        <translation>Привіт, я %1! Додай мене в свій список контактів, будь ласка.</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Сервер не підтримує Toxme</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Ви повинні відправити POST-запит до /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Спробуйте ще раз, використовуючи HTTPS-з&apos;єднання, будь ласка</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Я не міг прочитати Ваш зашифрований трафік</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -1915,20 +2088,8 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>Tox ID не надіслано</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Пошук завершився невдало, тому що сервер надіслав некоректні дані</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Такого користувача не існує</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Внутрішня помилка пошуку. Будь ласка, повідомте про помилку</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Невідома помилка (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1948,6 +2109,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <comment>Desktop as a camera input for screen sharing</comment>
         <translatorcomment>I think in this case more appropriate is &quot;Екран&quot; which means &quot;Screen&quot;</translatorcomment>
         <translation>Робочий стіл</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation>Проблеми з з&apos;єднанням HTTPS</translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation>Внутрішня помилка ToxMe</translation>
     </message>
 </context>
 <context>
@@ -2254,27 +2423,50 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>%1 тепер вже відомий як %2</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Групове запрошення</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 запросив вас до групового чату. Приєднаєтеся?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Невідомо&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 встановив тему %2</translation>
     </message>
     <message>
         <source>Message failed to send</source>
         <translation>Не вдалось відправити повідомлення</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Пусто&gt;</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Груповий чат #%1</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Створити нову групу...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n новий запит дружби</numerusform>
+            <numerusform>%n нових запитів дружби</numerusform>
+            <numerusform>%n нових запитів дружби</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n нове запрошення в групові чати</numerusform>
+            <numerusform>%n нових запрошення в групові чати</numerusform>
+            <numerusform>%n нових запрошень в групові чати</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished">Відкрити</translation>
     </message>
 </context>
 </TS>

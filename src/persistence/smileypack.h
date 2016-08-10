@@ -32,7 +32,6 @@
         ":/smileys", "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
     }
 
-//maps emoticons to smileys
 class SmileyPack : public QObject
 {
     Q_OBJECT
@@ -54,14 +53,14 @@ private:
     SmileyPack(SmileyPack&) = delete;
     SmileyPack& operator=(const SmileyPack&) = delete;
 
-    bool load(const QString& filename); ///< The caller must lock loadingMutex and should run it in a thread
+    bool load(const QString& filename);
     void cacheSmiley(const QString& name);
     QIcon getCachedSmiley(const QString& key);
 
-    QHash<QString, QString> filenameTable; // matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
-    QHash<QString, QIcon> iconCache; // representation of a smiley ie. "happy.png" -> data
-    QList<QStringList> emoticons; // {{ ":)", ":-)" }, {":(", ...}, ... }
-    QString path; // directory containing the cfg and image files
+    QHash<QString, QString> filenameTable;
+    QHash<QString, QIcon> iconCache;
+    QList<QStringList> emoticons;
+    QString path;
     mutable QMutex loadingMutex;
 };
 

@@ -49,24 +49,24 @@ public:
 
     enum Font
     {
-        ExtraBig,   // [SystemDefault + 2]px, bold
-        Big,        // [SystemDefault    ]px
-        BigBold,    // [SystemDefault    ]px, bold
-        Medium,     // [SystemDefault - 1]px
-        MediumBold, // [SystemDefault - 1]px, bold
-        Small,      // [SystemDefault - 2]px
-        SmallLight  // [SystemDefault - 2]px, light
+        ExtraBig,
+        Big,
+        BigBold,
+        Medium,
+        MediumBold,
+        Small,
+        SmallLight
     };
 
     static QStringList getThemeColorNames();
-    static QString getStylesheet(const QString& filename);
+    static QString getStylesheet(const QString& filename, const QFont& baseFont = QFont());
     static QColor getColor(ColorPalette entry);
     static QFont getFont(Font font);
-    static QString resolve(QString qss);
+    static QString resolve(QString qss, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
     static void setThemeColor(int color);
-    static void setThemeColor(const QColor &color); ///< Pass an invalid QColor to reset to defaults
-    static void applyTheme(); ///< Reloads some CCS
+    static void setThemeColor(const QColor &color);
+    static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
 
     static QList<QColor> themeColorColors;

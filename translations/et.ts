@@ -1,70 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="et_EE">
+<TS version="2.0" language="et_EE">
 <context>
     <name>AVForm</name>
-    <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
-    </message>
     <message>
         <source>Default resolution</source>
         <translation>Vaikelahutus</translation>
     </message>
     <message>
-        <source> at %1 FPS</source>
-        <translation>sagedusega %1 FPS</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Puudub</translation>
-    </message>
-    <message>
         <source>Audio/Video</source>
         <translation>Heli/Video</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
+    <message>
+        <source>Disabled</source>
+        <translation>Välja lülitatud</translation>
+    </message>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation>Väljundsignaali muutmisel mängi prooviheli.</translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation>Kasuta liugurit, et määrata oma sisendseadme võimendus skaalal %1dB kuni %2dB.</translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation>Vali ala</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
+        <translation>Ekraan %1</translation>
+    </message>
     <message>
         <source>Audio Settings</source>
         <translation>Heliseaded</translation>
-    </message>
-    <message>
-        <source>Playback device</source>
-        <translation>Mahamängiv seade</translation>
-    </message>
-    <message>
-        <source>Volume</source>
-        <translation>Helitugevus</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Kasuta liugurit, et seada kõlarite helitaset.</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message>
-        <source>Capture device</source>
-        <translation>Salvestav seade</translation>
     </message>
     <message>
         <source>Gain</source>
         <translation>Võimendus</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Kasuta liugurit, et seada mikrofoni võimendust.</translation>
+        <source>Playback device</source>
+        <translation>Mahamängiv seade</translation>
     </message>
     <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Lase mikrofoni sisend läbi filtri, et sind kuulvad inimesed kogeksid paremat heli.</translation>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation>Kasuta liugurit, et seada kõlarite helitaset.</translation>
     </message>
     <message>
-        <source>Filter audio</source>
-        <translation>Helisisend läbi filtri</translation>
+        <source>Capture device</source>
+        <translation>Salvestav seade</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Helitugevus</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -81,10 +70,10 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Määra oma kaamera lahutus.
-Mida kõrgemad on väärtused, seda kõrgem pilt võib sinu sõpradeni jõuda.
+Mida kõrgemad on väärtused, seda kõrgema kvaliteediga pilt võib sinu sõpradeni jõuda.
 Pea siiski meeles, et kvaliteetsem pilt eeldab ka kiiremat internetiühendust.
 Vahel võib sinu ühendus olla hea videopildi edastamiseks liialt vilets, 
-mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
+mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -98,10 +87,6 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
 <context>
     <name>AboutForm</name>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt versioon:</translation>
-    </message>
-    <message>
         <source>Restart qTox to install version %1</source>
         <translation>Taaskäivita qTox, et paigaldada versioon %1</translation>
     </message>
@@ -114,6 +99,22 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
         <source>About</source>
         <translation>Programmist lähemalt</translation>
     </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation>Loetelu tuntud vigadest asub Githubis meie %1. Kui sa leiad qToxis vea või haavatavuse turvalisuses, siis palun %3 vastavalt juhendile meie wiki artiklis %2.</translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation>veahalduse süsteemis (inglise keeles)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation>„Writing Useful Bug Reports“ (inglise keeles)</translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation>raporteeri sellest</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -123,15 +124,11 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>toxcore&apos;i versioon: $TOXCOREVERSION</translation>
+        <translation>TOXcore&apos;i versioon: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt versioon:</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit räsi: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Commit räsi: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>You are using qTox version $GIT_DESCRIBE.</source>
@@ -146,40 +143,20 @@ mis omakorda võib tekitada probleeme videokõnede pidamisel.</translation>
         <translation>Litsents</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Noto Sans&apos;; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt; color:#000000;&quot;&gt;Autoriõigused © 2014-2015 The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;qTox on Qt-põhine graafiline kasutajaliides Tox protokollile.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qTox on vaba tarkvara: seda võib levitada ja/või muuta vastavalt GNU üldisele Avalikule Litsentsile (originaali nimetus GNU General Public Licence), mille on sätestanud Free Software Foundation. Käesolevale programmile kohaldub litsentsi 3. või (teie vabal valikul) mistahes muu sellest uuem versioon.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:10pt;&quot;&gt;qToxi levitatakse lootuses, et see on kasulik, ent ilma mistahes garantiita; isegi ilma kaudse garantiita MÜÜGIKÕLBULIKKUSE või MINGIKS OTSTARBEKS SOBIMISE kohta. Täiendava teabe saamiseks vaadake GNU Üldist Avalikku Litsentsi.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;Te pidanuks koos selle programmiga saama ka koopia GNU Üldisest Avalikust Litsentsist. Kui Te koopiat ei saanud, vaadake &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Autorid</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Algversiooni autor: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Vaata ka &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;kaastööliste täielikku nimekirja&lt;/span&gt;&lt;/a&gt; keskkonnas nimega Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Algversiooni autor: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Vaata ka &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;kaastööliste täielikku nimekirja&lt;/span&gt;&lt;/a&gt; keskkonnas nimega Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Teadaolevad probleemid</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kõiki teadaolevaid probleeme saab näha meie &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;vigade jälgimise süsteemis,&lt;/span&gt;&lt;/a&gt; mis asub keskkonnas nimega Github. Kui märkad, et qTox sisaldab mõnd viga või lausa turvaauku, siis anna sellest palun teada, lähtudes meie &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;asjalike veakirjelduste kirjutamise&lt;/span&gt;&lt;/a&gt; teemalisest wiki artiklist.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation>Qt versioon: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -300,6 +277,22 @@ p, li { white-space: pre-wrap; }
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
         <translation>%1 siin! Ehk liitud minuga Tox keskkonnas?</translation>
     </message>
+    <message>
+        <source>Add a friend</source>
+        <translation>Lisa sõber</translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation>Kutsed sõpradelt</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>Nõustu</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation>Keeldu</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -326,50 +319,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Reset to default settings</source>
         <translation>Taasta vaikeseaded</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation>Aken</translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translatorcomment>qTox</translatorcomment>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation>Keegi</translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation>Keegi teine</translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation>Grupirobot</translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation>See sell, kelle lisamine mulle ei meenu</translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation>NASA juht</translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation>Lorem</translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation>Ipsum</translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation>Dolor</translation>
     </message>
 </context>
 <context>
@@ -470,12 +419,20 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Kõne kestvus:</translation>
+        <translation>Kõne kestvus: </translation>
     </message>
     <message>
         <source>Load chat history...</source>
         <translatorcomment>mitmuse kasutamine on siin ilmselt loogilisem</translatorcomment>
         <translation>Lae vestluste ajalugu...</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation>%1 on kirjutamas</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopeeri</translation>
     </message>
 </context>
 <context>
@@ -603,10 +560,6 @@ Vestluste ajaloo logimise väljalülitamine ei hävita krüpteeritud ajalugu, en
     <message>
         <source>Filename</source>
         <translation>Faili nimi</translation>
-    </message>
-    <message>
-        <source>[preview]</source>
-        <translation>[eelvaade]</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -821,6 +774,14 @@ Vestluste ajaloo logimise väljalülitamine ei hävita krüpteeritud ajalugu, en
     <message>
         <source>Offline</source>
         <translation>Ühendamata</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation>Uude gruppi</translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation>Kutsu gruppi „%1“</translation>
     </message>
 </context>
 <context>
@@ -1097,8 +1058,7 @@ kui nad sulle nähtavaks muutuvad.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu.
-Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
+        <translation>Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -1135,6 +1095,46 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Ühendu uuesti</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Lihttekst</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Kuva vorminduse märgid</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Ära kuva vorminduse märke</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation>Olles hõivatud, mängi heli</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation>Aluskirjatüüp:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation>px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation>Suurus: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation>Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox käivitatakse uuesti.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation>Teksti kujunduse vorming:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation>Vali teksti kujunduse eelistus.</translation>
     </message>
 </context>
 <context>
@@ -1195,6 +1195,10 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
         <source>Clear displayed messages</source>
         <translation>Eemalda kuvatud teated</translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation>Tsiteeri valitud tekst</translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1209,6 +1213,14 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
     <message>
         <source>Hide Messages</source>
         <translation>Peida sõnumid</translation>
+    </message>
+</context>
+<context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Tühi&gt;</translation>
     </message>
 </context>
 <context>
@@ -1246,6 +1258,33 @@ Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse 
     <message>
         <source>End audio call</source>
         <translation>Lõpeta audiokõne</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Groups</source>
+        <translation>Grupid</translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation>Loo uus grupp</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Grupi kutsed</translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation>Liitu</translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation>Keeldu</translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation>Kutse esitas %1, kui oli %2 kl. %3.</translation>
     </message>
 </context>
 <context>
@@ -1375,6 +1414,38 @@ Profiil ei sisalda vestluste ajalugu.</translation>
         <source>Change password</source>
         <translation>Muuda salasõna</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation>Toxme register</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Kasutajanimi</translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation>Biograafia</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation>Peida mu nimi avalikust loendist</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registreeri</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation>Sinu salasõna</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Värskenda</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1458,10 +1529,6 @@ If you encountered this error, please report it.</source>
 Palun teavitage meid sellest veast.</translation>
     </message>
     <message>
-        <source>Password protected profile can&apos;t be loaded automatically.</source>
-        <translation>Salasõnaga kaitstud profiili ei saa automaatselt laadida.</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t load profile</source>
         <translation>Profiili laadimine luhtus</translation>
     </message>
@@ -1488,6 +1555,14 @@ Võimalik, et peaksid selle looma.</translation>
     <message>
         <source>Wrong password.</source>
         <translation>Vale salasõna.</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Impordi</translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation>Salasõnaga kaitstud profiile ei saa automaatselt laadida.</translation>
     </message>
 </context>
 <context>
@@ -1570,6 +1645,13 @@ Võimalik, et peaksid selle looma.</translation>
             <numerusform>Lugemata sõnum</numerusform>
             <numerusform>Lugemata sõnumit</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>SUURTÄHED ON AKTIVEERITUD</translation>
     </message>
 </context>
 <context>
@@ -1769,6 +1851,136 @@ Share it with your friends to communicate.</source>
         <translation>See märgijada annab teistele Tox võrgu liikmetele teada, kuidas sinuga ühendust saada.
 Sõpradega suhtlemiseks jaga seda nendega.</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation>Järgmiste failide kustutamine nurjus:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation>Palun kustuta need käsitsi.</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Faile ei suudetud kustutada!</translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation>Registreerimine (töötlemisel)</translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation>Uuendamine (töötlemisel)</translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation>Valmis!</translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation>Konto %1@%2 väskendus oli edukas</translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation>%1@%2 lisati edukalt andmebaasi. Salvesta oma salasõna</translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation>Toxme viga</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registreeri</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Värskenda</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation>Muuda salasõna</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation>Määra profiili salasõna</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation>Impordi profiil</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation>Tox profiili fail (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation>Eiran mitte-Toxi faili</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation>Hoiatus: faili eratakse, sest oled valinud faili, mida Tox ei ole salvestanud.</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Profiil on juba olemas</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
+    </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation>Faili pole olemas</translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation>Profiili pole olemas</translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation>Profiil imporditi</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation>%1.tox imporditi edukalt</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation>Olgu</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Katkesta</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Jah</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Ei</translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished">VPA</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1805,28 +2017,8 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Uuendus</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Sobimatu vastus</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Vastus ei sisalda salasõna</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Serveril puudub Toxme tugi</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>POST päringud tuleb saata asukohta /api</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Palun proovi uuesti, kasutades HTTPS ühendust</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Ei suutnud edastada sisulist osa krüpteeritud andmetest</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -1861,20 +2053,8 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Tox ID-d ei saadetud</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Otsing nurjus, kuna server vastas sobimatute andmetega</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Seda kasutajat pole olemas</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Süsteemi töös esines otsimisel viga. Palun kirjutage selle kohta vearaport</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Tundmatu viga (%1)</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -1888,34 +2068,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox ei suutnud sinu vestluste logisid avada, need deaktiveeritakse.</translation>
-    </message>
-    <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Eiran faili, mis pole Tox vormingus</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Hoiatus: oled valinud faili, mis ei ole tox fail. Seda eiratakse.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profiil on juba olemas</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Profiil nimega &quot;%1&quot; on juba olemas. Soovid seda kustutada?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profiil imporditi</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>%1.tox imporditi edukalt</translation>
     </message>
     <message>
         <source>None</source>
@@ -1950,6 +2102,14 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Incoming call...</source>
         <translation>Sissetulev kõne...</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation>Probleemid HTTPS ühendusega</translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation>Sisemine Toxme viga</translation>
     </message>
 </context>
 <context>
@@ -2155,21 +2315,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Profiil</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation>Kutse gruppi</translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation>%1 kutsus sind grupivestlusesse. Kas soovid liituda?</translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;Tundmatu&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 seadis pealkirjaks %2</translation>
     </message>
@@ -2277,6 +2422,42 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Previous Conversation</source>
         <translation>Eelmine vestlus</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation>Gruppide kutsed</translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation>&lt;Tühi&gt;</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Grupivestlus #%1</translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation>Loo uus grupp...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation>
+            <numerusform>%n uus sõbra kutse</numerusform>
+            <numerusform>%n uut sõbra kutset</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation>
+            <numerusform>%n uus grupi kutse</numerusform>
+            <numerusform>%n uut gruppide kutset</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation>Kuva</translation>
     </message>
 </context>
 </TS>

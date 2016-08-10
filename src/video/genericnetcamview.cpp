@@ -18,9 +18,10 @@
 */
 
 #include "genericnetcamview.h"
+
 #include <QBoxLayout>
-#include <QPushButton>
 #include <QFrame>
+#include <QPushButton>
 
 GenericNetCamView::GenericNetCamView(QWidget *parent)
     : QWidget(parent)
@@ -35,6 +36,7 @@ GenericNetCamView::GenericNetCamView(QWidget *parent)
     buttonLayout->addStretch();
     button = new QPushButton();
     buttonLayout->addWidget(button);
+    buttonLayout->setSizeConstraint(QLayout::SetMinimumSize);
     connect(button, &QPushButton::clicked, this, &GenericNetCamView::showMessageClicked);
 
     verLayout->addSpacing(spacing);
@@ -52,18 +54,26 @@ GenericNetCamView::GenericNetCamView(QWidget *parent)
     setStyleSheet("NetCamView { background-color: #c1c1c1; }");
 }
 
+QSize GenericNetCamView::getSurfaceMinSize()
+{
+    QSize surfaceSize = videoSurface->minimumSize();
+    QSize buttonSize = button->size();
+    QSize panelSize(0, 45);
+
+    return surfaceSize + buttonSize + panelSize;
+}
+
 void GenericNetCamView::setShowMessages(bool show, bool notify)
 {
-    if (show)
-    {
-        button->setText(tr("Show Messages"));
-
-        if (notify)
-            button->setIcon(QIcon(":/ui/chatArea/info.svg"));
-    }
-    else
+    if (!show)
     {
         button->setText(tr("Hide Messages"));
         button->setIcon(QIcon());
+        return;
     }
+
+    button->setText(tr("Show Messages"));
+
+    if (notify)
+        button->setIcon(QIcon(":/ui/chatArea/info.svg"));
 }

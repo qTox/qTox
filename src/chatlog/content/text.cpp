@@ -31,10 +31,13 @@
 #include <QDesktopServices>
 #include <QTextFragment>
 
-Text::Text(const QString& txt, QFont font, bool enableElide, const QString &rwText, const QColor c)
+#include "src/widget/style.h"
+
+Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
     , elide(enableElide)
     , defFont(font)
+    , defStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/chatArea/innerStyle.css"), font))
     , color(c)
 {
     setText(txt);
@@ -58,12 +61,6 @@ void Text::setWidth(qreal w)
 {
     width = w;
     dirty = true;
-
-    if (elide)
-    {
-        QFontMetrics metrics = QFontMetrics(defFont);
-        elidedText = metrics.elidedText(text, Qt::ElideRight, width);
-    }
 
     regenerate();
 }
@@ -246,10 +243,18 @@ void Text::regenerate()
     {
         doc->setDefaultFont(defFont);
 
-        if (!elide)
-            doc->setHtml(text);
-        else
+        if (elide)
+        {
+            QFontMetrics metrics = QFontMetrics(defFont);
+            QString elidedText = metrics.elidedText(text, Qt::ElideRight, qRound(width));
+
             doc->setPlainText(elidedText);
+        }
+        else
+        {
+            doc->setDefaultStyleSheet(defStyleSheet);
+            doc->setHtml(text);
+        }
 
         // wrap mode
         QTextOption opt;

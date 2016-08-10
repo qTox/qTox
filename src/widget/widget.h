@@ -67,7 +67,7 @@ public:
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
-    void showUpdateDownloadProgress(); ///< Switches to the About settings page
+    void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound=true);
@@ -75,6 +75,7 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
+    void updateScroll(GenericChatroomWidget *widget);
 
     enum DialogType
     {
@@ -105,7 +106,6 @@ public:
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
-    // Used to reset the blinking icon
     void resetIcon();
 
 public slots:
@@ -233,13 +233,14 @@ private:
     void focusChatInput();
 
 private:
-    SystemTrayIcon *icon;
+    SystemTrayIcon *icon = nullptr;
     QMenu *trayMenu;
     QAction *statusOnline;
     QAction *statusAway;
     QAction *statusBusy;
     QAction *actionLogout;
     QAction *actionQuit;
+    QAction *actionShow;
 
     QMenu* filterMenu;
 

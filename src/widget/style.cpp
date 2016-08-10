@@ -31,6 +31,31 @@
 #include <QSvgRenderer>
 #include <QPainter>
 
+/**
+@enum Style::Font
+
+@var ExtraBig
+@brief [SystemDefault + 2]px, bold
+
+@var Big
+@brief [SystemDefault]px
+
+@var BigBold
+@brief [SystemDefault]px, bold
+
+@var Medium
+@brief [SystemDefault - 1]px
+
+@var MediumBold
+@brief [SystemDefault - 1]px, bold
+
+@var Small
+@brief [SystemDefault - 2]px
+
+@var SmallLight
+@brief [SystemDefault - 2]px, light
+*/
+
 // helper functions
 QFont appFont(int pixelSize, int weight)
 {
@@ -78,7 +103,7 @@ QStringList Style::getThemeColorNames()
 
 QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"), QColor("#c23716"), QColor("#4617b5")};
 
-QString Style::getStylesheet(const QString &filename)
+QString Style::getStylesheet(const QString &filename, const QFont& baseFont)
 {
     QFile file(filename);
     if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -87,7 +112,7 @@ QString Style::getStylesheet(const QString &filename)
         return QString();
     }
 
-    return resolve(file.readAll());
+    return resolve(file.readAll(), baseFont);
 }
 
 QColor Style::getColor(Style::ColorPalette entry)
@@ -115,7 +140,7 @@ QFont Style::getFont(Style::Font font)
     return fonts[font];
 }
 
-QString Style::resolve(QString qss)
+QString Style::resolve(QString qss, const QFont& baseFont)
 {
     if (dict.isEmpty())
     {
@@ -137,13 +162,15 @@ QString Style::resolve(QString qss)
             {"@themeLight", Style::getColor(Style::ThemeLight).name()},
 
             // fonts
+            {"@baseFont", QString::fromUtf8("'%1' %2px")
+             .arg(baseFont.family()).arg(QFontInfo(baseFont).pixelSize())},
             {"@extraBig", qssifyFont(Style::getFont(Style::ExtraBig))},
             {"@big", qssifyFont(Style::getFont(Style::Big))},
             {"@bigBold", qssifyFont(Style::getFont(Style::BigBold))},
             {"@medium", qssifyFont(Style::getFont(Style::Medium))},
             {"@mediumBold", qssifyFont(Style::getFont(Style::MediumBold))},
             {"@small", qssifyFont(Style::getFont(Style::Small))},
-            {"@smallLight", qssifyFont(Style::getFont(Style::SmallLight))},
+            {"@smallLight", qssifyFont(Style::getFont(Style::SmallLight))}
         };
     }
 
@@ -179,6 +206,12 @@ void Style::setThemeColor(int color)
         setThemeColor(themeColorColors[color]);
 }
 
+/**
+@brief Set theme color.
+@param color Color to set.
+
+Pass an invalid QColor to reset to defaults.
+*/
 void Style::setThemeColor(const QColor &color)
 {
     if (!color.isValid())
@@ -203,6 +236,9 @@ void Style::setThemeColor(const QColor &color)
     dict["@themeLight"] = getColor(ThemeLight).name();
 }
 
+/**
+@brief Reloads some CCS
+*/
 void Style::applyTheme()
 {
     GUI::reloadTheme();

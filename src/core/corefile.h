@@ -35,8 +35,6 @@
 struct Tox;
 class Core;
 
-/// Implements Core's file transfer callbacks
-/// Avoids polluting core.h with private internal callbacks
 class CoreFile
 {
     friend class Core;
@@ -46,7 +44,7 @@ private:
 
     // Internal file sending APIs, used by Core. Public API in core.h
 private:
-    static void sendFile(Core *core, uint32_t friendId, QString Filename, QString FilePath, long long filesize);
+    static void sendFile(Core *core, uint32_t friendId, QString filename, QString filePath, long long filesize);
     static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
     static void pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileId);
     static void pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
@@ -57,8 +55,6 @@ private:
     static ToxFile *findFile(uint32_t friendId, uint32_t fileId);
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
-    /// Returns the maximum amount of time in ms that Core should wait between two
-    /// tox_iterate calls to get good file transfer performances
     static unsigned corefileIterationInterval();
 
 private:

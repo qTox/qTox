@@ -23,6 +23,7 @@
 
 #include <QWidget>
 #include <QShortcut>
+#include <QToolButton>
 
 namespace Ui {
 class LoginScreen;
@@ -35,11 +36,11 @@ class LoginScreen : public QWidget
 public:
     explicit LoginScreen(QWidget *parent = 0);
     ~LoginScreen();
-    void reset(); ///< Resets the UI, clears all fields
+    void reset();
 
-#ifdef Q_OS_MAC
     bool event(QEvent* event) final override;
 
+#ifdef Q_OS_MAC
 signals:
     void windowStateChanged(Qt::WindowStates states);
 #endif
@@ -54,9 +55,13 @@ private slots:
     // Buttons to submit form
     void onCreateNewProfile();
     void onLogin();
+    void onImportProfile();
 
 private:
     void retranslateUi();
+    void showCapsIndicator();
+    void hideCapsIndicator();
+    void checkCapsLock();
 
 private:
     Ui::LoginScreen *ui;

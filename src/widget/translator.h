@@ -31,11 +31,8 @@ class QTranslator;
 class Translator
 {
 public:
-    /// Loads the translations according to the settings or locale
     static void translate();
-    /// Register a function to be called when the UI needs to be retranslated
     static void registerHandler(std::function<void()>, void* owner);
-    /// Unregisters all handlers of an owner
     static void unregister(void* owner);
 
 private:

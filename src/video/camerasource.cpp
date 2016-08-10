@@ -23,19 +23,69 @@ extern "C" {
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
 }
-#include <QMutexLocker>
+#include <QWriteLocker>
+#include <QReadLocker>
 #include <QDebug>
 #include <QtConcurrent/QtConcurrentRun>
 #include <memory>
 #include <functional>
+#include "src/persistence/settings.h"
 #include "camerasource.h"
 #include "cameradevice.h"
 #include "videoframe.h"
 
+/**
+@class CameraSource
+@brief This class is a wrapper to share a camera's captured video frames
+
+It allows objects to suscribe and unsuscribe to the stream, starting
+the camera and streaming new video frames only when needed.
+This is a singleton, since we can only capture from one
+camera at the same time without thread-safety issues.
+The source is lazy in the sense that it will only keep the video
+device open as long as there are subscribers, the source can be
+open but the device closed if there are zero subscribers.
+*/
+
+/**
+@var QVector<std::weak_ptr<VideoFrame>> CameraSource::freelist
+@brief Frames that need freeing before we can safely close the device
+
+@var QFuture<void> CameraSource::streamFuture
+@brief Future of the streaming thread
+
+@var QString CameraSource::deviceName
+@brief Short name of the device for CameraDevice's open(QString)
+
+@var CameraDevice* CameraSource::device
+@brief Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
+
+@var VideoMode CameraSource::mode
+@brief What mode we tried to open the device in, all zeros means default mode
+
+@var AVCodecContext* CameraSource::cctx
+@brief Codec context of the camera's selected video stream
+
+@var AVCodecContext* CameraSource::cctxOrig
+@brief Codec context of the camera's selected video stream
+
+@var int CameraSource::videoStreamIndex
+@brief A camera can have multiple streams, this is the one we're decoding
+
+@var QMutex CameraSource::biglock
+@brief True when locked. Faster than mutexes for video decoding.
+
+@var std::atomic_bool CameraSource::streamBlocker
+@brief Holds the streaming thread still when true
+
+@var std::atomic_int CameraSource::subscriptions
+@brief Remember how many times we subscribed for RAII
+*/
+
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceName{"none"}, device{nullptr}, mode(VideoMode{0,0,0,0}),
+    : deviceName{"none"}, device{nullptr}, mode(VideoMode()),
       cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
       _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
@@ -44,6 +94,9 @@ CameraSource::CameraSource()
     avdevice_register_all();
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 CameraSource& CameraSource::getInstance()
 {
     if (!instance)
@@ -60,6 +113,12 @@ void CameraSource::destroyInstance()
     }
 }
 
+/**
+@brief Opens the source for the camera device.
+@note If a device is already open, the source will seamlessly switch to the new device.
+
+Opens the source for the camera device in argument, in the settings, or the system default.
+*/
 void CameraSource::open()
 {
     open(CameraDevice::getDefaultDeviceName());
@@ -67,17 +126,23 @@ void CameraSource::open()
 
 void CameraSource::open(const QString& deviceName)
 {
-    open(deviceName, VideoMode{0,0,0,0});
+    bool isScreen = CameraDevice::isScreen(deviceName);
+    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
+    if (!isScreen)
+    {
+        mode = VideoMode(Settings::getInstance().getCamVideoRes());
+        mode.FPS = Settings::getInstance().getCamVideoFPS();
+    }
+
+    open(deviceName, mode);
 }
 
 void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 {
-    streamBlocker = true;
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (DeviceName == deviceName && Mode == mode)
     {
-        streamBlocker = false;
         return;
     }
 
@@ -90,10 +155,13 @@ void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 
     if (subscriptions && _isOpen)
         openDevice();
-
-    streamBlocker = false;
 }
 
+/**
+@brief Stops streaming.
+
+Equivalent to opening the source with the video device "none".
+*/
 void CameraSource::close()
 {
     open("none");
@@ -106,20 +174,15 @@ bool CameraSource::isOpen()
 
 CameraSource::~CameraSource()
 {
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
+    {
         return;
+    }
 
     // Free all remaining VideoFrame
-    // Locking must be done precisely this way to avoid races
-    for (int i = 0; i < freelist.size(); i++)
-    {
-        std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
-        if (!vframe)
-            continue;
-        vframe->releaseFrame();
-    }
+    VideoFrame::untrackFrames(id, true);
 
     if (cctx)
         avcodec_free_context(&cctx);
@@ -128,14 +191,13 @@ CameraSource::~CameraSource()
 
     if (device)
     {
-        for(int i = 0; i < subscriptions; i++)
+        for (int i = 0; i < subscriptions; i++)
             device->close();
+
         device = nullptr;
     }
 
-    // Memfence so the stream thread sees a nullptr device
-    std::atomic_thread_fence(std::memory_order_release);
-    l.unlock();
+    locker.unlock();
 
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
@@ -144,7 +206,7 @@ CameraSource::~CameraSource()
 
 bool CameraSource::subscribe()
 {
-    QMutexLocker l{&biglock};
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
     {
@@ -163,18 +225,13 @@ bool CameraSource::subscribe()
         device = nullptr;
         cctx = cctxOrig = nullptr;
         videoStreamIndex = -1;
-        // Memfence so the stream thread sees a nullptr device
-        std::atomic_thread_fence(std::memory_order_release);
         return false;
     }
-
 }
 
 void CameraSource::unsubscribe()
 {
-    streamBlocker = true;
-    QMutexLocker l{&biglock};
-    streamBlocker = false;
+    QWriteLocker locker{&streamMutex};
 
     if (!_isOpen)
     {
@@ -191,11 +248,6 @@ void CameraSource::unsubscribe()
     if (subscriptions - 1 == 0)
     {
         closeDevice();
-        l.unlock();
-
-        // Synchronize with our stream thread
-        while (streamFuture.isRunning())
-            QThread::yieldCurrentThread();
     }
     else
     {
@@ -204,9 +256,14 @@ void CameraSource::unsubscribe()
     subscriptions--;
 }
 
+/**
+@brief Opens the video device and starts streaming.
+@note Callers must own the biglock.
+@return True if success, false otherwise.
+*/
 bool CameraSource::openDevice()
 {
-    qDebug() << "Opening device "<<deviceName;
+    qDebug() << "Opening device " << deviceName;
 
     if (device)
     {
@@ -216,10 +273,8 @@ bool CameraSource::openDevice()
 
     // We need to create a new CameraDevice
     AVCodec* codec;
-    if (mode)
-        device = CameraDevice::open(deviceName, mode);
-    else
-        device = CameraDevice::open(deviceName);
+    device = CameraDevice::open(deviceName, mode);
+
     if (!device)
     {
         qWarning() << "Failed to open device!";
@@ -234,31 +289,42 @@ bool CameraSource::openDevice()
     // Find the first video stream
     for (unsigned i = 0; i < device->context->nb_streams; i++)
     {
-        if(device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+        if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
         {
             videoStreamIndex = i;
             break;
         }
     }
+
     if (videoStreamIndex == -1)
+    {
+        qWarning() << "Video stream not found";
         return false;
+    }
 
     // Get a pointer to the codec context for the video stream
     cctxOrig = device->context->streams[videoStreamIndex]->codec;
     codec = avcodec_find_decoder(cctxOrig->codec_id);
-    if(!codec)
+    if (!codec)
+    {
+        qWarning() << "Codec not found";
         return false;
+    }
 
     // Copy context, since we apparently aren't allowed to use the original
     cctx = avcodec_alloc_context3(codec);
-    if(avcodec_copy_context(cctx, cctxOrig) != 0)
+    if (avcodec_copy_context(cctx, cctxOrig) != 0)
+    {
+        qWarning() << "Can't copy context";
         return false;
+    }
 
     cctx->refcounted_frames = 1;
 
     // Open codec
-    if(avcodec_open2(cctx, codec, nullptr)<0)
+    if (avcodec_open2(cctx, codec, nullptr)<0)
     {
+        qWarning() << "Can't open codec";
         avcodec_free_context(&cctx);
         return false;
     }
@@ -277,21 +343,16 @@ bool CameraSource::openDevice()
     return true;
 }
 
+/**
+@brief Closes the video device and stops streaming.
+@note Callers must own the biglock.
+*/
 void CameraSource::closeDevice()
 {
-    qDebug() << "Closing device "<<deviceName;
+    qDebug() << "Closing device " << deviceName;
 
     // Free all remaining VideoFrame
-    // Locking must be done precisely this way to avoid races
-    for (int i = 0; i < freelist.size(); i++)
-    {
-        std::shared_ptr<VideoFrame> vframe = freelist[i].lock();
-        if (!vframe)
-            continue;
-        vframe->releaseFrame();
-    }
-    freelist.clear();
-    freelist.squeeze();
+    VideoFrame::untrackFrames(id, true);
 
     // Free our resources and close the device
     videoStreamIndex = -1;
@@ -300,10 +361,12 @@ void CameraSource::closeDevice()
     cctxOrig = nullptr;
     while (device && !device->close()) {}
     device = nullptr;
-    // Memfence so the stream thread sees a nullptr device
-    std::atomic_thread_fence(std::memory_order_release);
 }
 
+/**
+@brief Blocking. Decodes video stream and emits new frames.
+@note Designed to run in its own thread.
+*/
 void CameraSource::stream()
 {
     auto streamLoop = [=]()
@@ -311,14 +374,13 @@ void CameraSource::stream()
         AVFrame* frame = av_frame_alloc();
         if (!frame)
             return;
-        frame->opaque = nullptr;
 
         AVPacket packet;
-        if (av_read_frame(device->context, &packet)<0)
+        if (av_read_frame(device->context, &packet) < 0)
             return;
 
         // Only keep packets from the right stream;
-        if (packet.stream_index==videoStreamIndex)
+        if (packet.stream_index == videoStreamIndex)
         {
             // Decode video frame
             int frameFinished;
@@ -326,54 +388,24 @@ void CameraSource::stream()
             if (!frameFinished)
                 return;
 
-            freelistLock.lock();
-
-            int freeFreelistSlot = getFreelistSlotLockless();
-            auto frameFreeCb = std::bind(&CameraSource::freelistCallback, this, freeFreelistSlot);
-            std::shared_ptr<VideoFrame> vframe = std::make_shared<VideoFrame>(frame, frameFreeCb);
-            freelist.append(vframe);
-            freelistLock.unlock();
-            emit frameAvailable(vframe);
+            VideoFrame* vframe = new VideoFrame(id, frame);
+            emit frameAvailable(vframe->trackFrame());
         }
 
       // Free the packet that was allocated by av_read_frame
       av_packet_unref(&packet);
     };
 
-    forever {
-        biglock.lock();
+    forever
+    {
+        QReadLocker locker{&streamMutex};
 
-        // When a thread makes device null, it releases it, so we acquire here
-        std::atomic_thread_fence(std::memory_order_acquire);
-        if (!device)
+        // Exit if device is no longer valid
+        if(!device)
         {
-            biglock.unlock();
-            return;
+            break;
         }
 
         streamLoop();
-
-        // Give a chance to other functions to pick up the lock if needed
-        biglock.unlock();
-        while (streamBlocker)
-            QThread::yieldCurrentThread();
-        QThread::yieldCurrentThread();
     }
-}
-
-void CameraSource::freelistCallback(int freelistIndex)
-{
-    QMutexLocker l{&freelistLock};
-    freelist[freelistIndex].reset();
-}
-
-int CameraSource::getFreelistSlotLockless()
-{
-    int size = freelist.size();
-    for (int i = 0; i < size; ++i)
-        if (freelist[i].expired())
-            return i;
-
-    freelist.resize(size + (size>>1) + 4); // Arbitrary growth strategy, should work well
-    return size;
 }

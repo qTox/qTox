@@ -17,8 +17,10 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "ui_generalsettings.h"
 #include "generalform.h"
+#include "ui_generalsettings.h"
+
+#include <src/core/recursivesignalblocker.h>
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/widget.h"
 #include "src/persistence/settings.h"
@@ -35,22 +37,30 @@
 #include <QStyleFactory>
 #include <QTime>
 #include <QFileDialog>
+#include <QFont>
 #include <QStandardPaths>
 #include <QDebug>
 
-static QStringList locales = {"bg",
+static QStringList locales = {"ar",
+                              "be",
+                              "bg",
                               "cs",
+                              "da",
                               "de",
                               "et",
                               "el",
                               "en",
                               "es",
+                              "eo",
                               "fr",
+                              "he",
                               "hr",
-                              "hu",
                               "it",
                               "lt",
+                              "jbo",
+                              "hu",
                               "nl",
+                              "ja",
                               "no_nb",
                               "pl",
                               "pt",
@@ -59,22 +69,29 @@ static QStringList locales = {"bg",
                               "fi",
                               "sv",
                               "tr",
+                              "ug",
                               "uk",
-                              "ar",
                               "zh"};
-static QStringList langs = {"Български",
+static QStringList langs = {"Arabic",
+                            "Беларуская",
+                            "Български",
                             "Čeština",
+                            "Dansk",
                             "Deutsch",
                             "Eesti",
                             "Ελληνικά",
                             "English",
                             "Español",
+                            "Esperanto",
                             "Français",
+                            "עברית",
                             "Hrvatski",
-                            "Magyar",
                             "Italiano",
                             "Lietuvių",
+                            "Lojban",
+                            "Magyar",
                             "Nederlands",
+                            "日本語",
                             "Norsk Bokmål",
                             "Polski",
                             "Português",
@@ -83,89 +100,97 @@ static QStringList langs = {"Български",
                             "Suomi",
                             "Svenska",
                             "Türkçe",
+                            "ئۇيغۇرچە",
                             "Українська",
-                            "Arabic",
                             "简体中文"};
-static QStringList mdPrefs = {"Plaintext",
-                              "Show Formatting Characters",
-                              "Don't Show Formatting Characters"};
 
 static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"};
 // http://doc.qt.io/qt-4.8/qdate.html#fromString
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
-GeneralForm::GeneralForm(SettingsWidget *myParent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+GeneralForm::GeneralForm(SettingsWidget *myParent)
+    : GenericForm(QPixmap(":/img/settings/general.png"))
+    , bodyUI(new Ui::GeneralSettings)
 {
     parent = myParent;
 
-    bodyUI = new Ui::GeneralSettings;
     bodyUI->setupUi(this);
 
-    bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
-    bodyUI->checkUpdates->setChecked(Settings::getInstance().getCheckUpdates());
+    // block all child signals during initialization
+    const RecursiveSignalBlocker signalBlocker(this);
 
-    bodyUI->cbEnableIPv6->setChecked(Settings::getInstance().getEnableIPv6());
+    Settings& s = Settings::getInstance();
+
+    bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
+    bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
+
+    bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
     for (int i = 0; i < langs.size(); i++)
         bodyUI->transComboBox->insertItem(i, langs[i]);
 
-    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(Settings::getInstance().getTranslation()));
-    for (int i = 0; i < mdPrefs.size(); i++)
-        bodyUI->markdownComboBox->insertItem(i, mdPrefs[i]);
+    bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));
 
-    bodyUI->markdownComboBox->setCurrentIndex(Settings::getInstance().getMarkdownPreference());
-    bodyUI->cbAutorun->setChecked(Settings::getInstance().getAutorun());
+    const QFont chatBaseFont = s.getChatMessageFont();
+    bodyUI->txtChatFontSize->setValue(QFontInfo(chatBaseFont).pixelSize());
+    bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
+    bodyUI->textStyleComboBox->setCurrentIndex(s.getStylePreference());
+    bodyUI->cbAutorun->setChecked(s.getAutorun());
 
-    bool showSystemTray = Settings::getInstance().getShowSystemTray();
+    bool showSystemTray = s.getShowSystemTray();
 
     bodyUI->showSystemTray->setChecked(showSystemTray);
-    bodyUI->startInTray->setChecked(Settings::getInstance().getAutostartInTray());
+    bodyUI->startInTray->setChecked(s.getAutostartInTray());
     bodyUI->startInTray->setEnabled(showSystemTray);
-    bodyUI->closeToTray->setChecked(Settings::getInstance().getCloseToTray());
+    bodyUI->closeToTray->setChecked(s.getCloseToTray());
     bodyUI->closeToTray->setEnabled(showSystemTray);
-    bodyUI->minimizeToTray->setChecked(Settings::getInstance().getMinimizeToTray());
+    bodyUI->minimizeToTray->setChecked(s.getMinimizeToTray());
     bodyUI->minimizeToTray->setEnabled(showSystemTray);
-    bodyUI->lightTrayIcon->setChecked(Settings::getInstance().getLightTrayIcon());
+    bodyUI->lightTrayIcon->setChecked(s.getLightTrayIcon());
 
-    bodyUI->statusChanges->setChecked(Settings::getInstance().getStatusChangeNotificationEnabled());
-    bodyUI->useEmoticons->setChecked(Settings::getInstance().getUseEmoticons());
-    bodyUI->autoacceptFiles->setChecked(Settings::getInstance().getAutoSaveEnabled());
-    bodyUI->autoSaveFilesDir->setText(Settings::getInstance().getGlobalAutoAcceptDir());
+    bodyUI->statusChanges->setChecked(s.getStatusChangeNotificationEnabled());
+    bodyUI->useEmoticons->setChecked(s.getUseEmoticons());
+    bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
+    bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
 
-    bool showWindow = Settings::getInstance().getShowWindow();
+    bool showWindow = s.getShowWindow();
 
     bodyUI->showWindow->setChecked(showWindow);
-    bodyUI->showInFront->setChecked(Settings::getInstance().getShowInFront());
+    bodyUI->showInFront->setChecked(s.getShowInFront());
     bodyUI->showInFront->setEnabled(showWindow);
-    bodyUI->notifySound->setChecked(Settings::getInstance().getNotifySound());
-    bodyUI->groupAlwaysNotify->setChecked(Settings::getInstance().getGroupAlwaysNotify());
-    bodyUI->cbFauxOfflineMessaging->setChecked(Settings::getInstance().getFauxOfflineMessaging());
-    bodyUI->cbCompactLayout->setChecked(Settings::getInstance().getCompactLayout());
-    bodyUI->cbSeparateWindow->setChecked(Settings::getInstance().getSeparateWindow());
-    bodyUI->cbDontGroupWindows->setChecked(Settings::getInstance().getDontGroupWindows());
+
+    bool notifySound = s.getNotifySound();
+
+    bodyUI->notifySound->setChecked(notifySound);
+    bodyUI->busySound->setChecked(s.getBusySound());
+    bodyUI->busySound->setEnabled(notifySound);
+    bodyUI->groupAlwaysNotify->setChecked(s.getGroupAlwaysNotify());
+    bodyUI->cbFauxOfflineMessaging->setChecked(s.getFauxOfflineMessaging());
+    bodyUI->cbCompactLayout->setChecked(s.getCompactLayout());
+    bodyUI->cbSeparateWindow->setChecked(s.getSeparateWindow());
+    bodyUI->cbDontGroupWindows->setChecked(s.getDontGroupWindows());
     bodyUI->cbDontGroupWindows->setEnabled(bodyUI->cbSeparateWindow->isChecked());
-    bodyUI->cbGroupchatPosition->setChecked(Settings::getInstance().getGroupchatPosition());
+    bodyUI->cbGroupchatPosition->setChecked(s.getGroupchatPosition());
 
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
 
-    bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(Settings::getInstance().getSmileyPack()));
+    bodyUI->smileyPackBrowser->setCurrentIndex(bodyUI->smileyPackBrowser->findData(s.getSmileyPack()));
     reloadSmiles();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
-    if (QStyleFactory::keys().contains(Settings::getInstance().getStyle()))
-        bodyUI->styleBrowser->setCurrentText(Settings::getInstance().getStyle());
+    if (QStyleFactory::keys().contains(s.getStyle()))
+        bodyUI->styleBrowser->setCurrentText(s.getStyle());
     else
         bodyUI->styleBrowser->setCurrentText(tr("None"));
 
     for (QString color : Style::getThemeColorNames())
         bodyUI->themeColorCBox->addItem(color);
 
-    bodyUI->themeColorCBox->setCurrentIndex(Settings::getInstance().getThemeColor());
+    bodyUI->themeColorCBox->setCurrentIndex(s.getThemeColor());
 
-    bodyUI->emoticonSize->setValue(Settings::getInstance().getEmojiFontPointSize());
+    bodyUI->emoticonSize->setValue(s.getEmojiFontPointSize());
 
     QStringList timestamps;
     for (QString timestamp : timeFormats)
@@ -187,19 +212,19 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
 
     bodyUI->dateFormats->addItems(datestamps);
 
-    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getTimestampFormat(), QTime::currentTime().toString(Settings::getInstance().getTimestampFormat())));
+    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(s.getTimestampFormat(), QTime::currentTime().toString(s.getTimestampFormat())));
 
-    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(Settings::getInstance().getDateFormat(), QDate::currentDate().toString(Settings::getInstance().getDateFormat())));
+    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(s.getDateFormat(), QDate::currentDate().toString(s.getDateFormat())));
 
-    bodyUI->autoAwaySpinBox->setValue(Settings::getInstance().getAutoAwayTime());
+    bodyUI->autoAwaySpinBox->setValue(s.getAutoAwayTime());
 
-    bodyUI->cbEnableUDP->setChecked(!Settings::getInstance().getForceTCP());
-    bodyUI->proxyAddr->setText(Settings::getInstance().getProxyAddr());
-    int port = Settings::getInstance().getProxyPort();
+    bodyUI->cbEnableUDP->setChecked(!s.getForceTCP());
+    bodyUI->proxyAddr->setText(s.getProxyAddr());
+    int port = s.getProxyPort();
     if (port != -1)
         bodyUI->proxyPort->setValue(port);
 
-    bodyUI->proxyType->setCurrentIndex(static_cast<int>(Settings::getInstance().getProxyType()));
+    bodyUI->proxyType->setCurrentIndex(static_cast<int>(s.getProxyType()));
     onUseProxyUpdated();
 
     //general
@@ -216,7 +241,8 @@ GeneralForm::GeneralForm(SettingsWidget *myParent) :
     connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &GeneralForm::onShowWindowChanged);
     connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowInFront);
     connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
-    connect(bodyUI->markdownComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onMarkdownUpdated);
+    connect(bodyUI->busySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetBusySound);
+    connect(bodyUI->textStyleComboBox, &QComboBox::currentTextChanged, this, &GeneralForm::onStyleUpdated);
     connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &GeneralForm::onSetGroupAlwaysNotify);
     connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
     connect(bodyUI->autoSaveFilesDir, SIGNAL(clicked()), this, SLOT(onAutoSaveDirChange()));
@@ -339,11 +365,13 @@ void GeneralForm::onEmoticonSizeChanged()
 void GeneralForm::onTimestampSelected(int index)
 {
     Settings::getInstance().setTimestampFormat(timeFormats.at(index));
+    Translator::translate();
 }
 
 void GeneralForm::onDateFormatSelected(int index)
 {
     Settings::getInstance().setDateFormat(dateFormats.at(index));
+    Translator::translate();
 }
 
 void GeneralForm::onAutoAwayChanged()
@@ -362,8 +390,8 @@ void GeneralForm::onAutoSaveDirChange()
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0,
                                                           tr("Choose an auto accept directory", "popup title"),  //opens in home directory
-                                                             QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
-                                                          );
+                                                          QDir::homePath(),
+                                                          QFileDialog::DontUseNativeDialog);
     if (directory.isEmpty())  // cancel was pressed
         directory = previousDir;
 
@@ -377,9 +405,9 @@ void GeneralForm::onUseEmoticonsChange()
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 }
 
-void GeneralForm::onMarkdownUpdated()
+void GeneralForm::onStyleUpdated()
 {
-    Settings::getInstance().setMarkdownPreference(static_cast<MarkdownType>(bodyUI->markdownComboBox->currentIndex()));
+    Settings::getInstance().setStylePreference(static_cast<StyleType>(bodyUI->textStyleComboBox->currentIndex()));
 }
 
 void GeneralForm::onSetStatusChange()
@@ -488,6 +516,11 @@ void GeneralForm::onSetNotifySound()
     Settings::getInstance().setNotifySound(bodyUI->notifySound->isChecked());
 }
 
+void GeneralForm::onSetBusySound()
+{
+    Settings::getInstance().setBusySound(bodyUI->busySound->isChecked());
+}
+
 void GeneralForm::onSetGroupAlwaysNotify()
 {
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
@@ -554,4 +587,28 @@ void GeneralForm::retranslateUi()
     }
 
     bodyUI->styleBrowser->setItemText(0, tr("None"));
+}
+
+void GeneralForm::on_txtChatFont_currentFontChanged(const QFont& f)
+{
+    QFont tmpFont = f;
+    const int px = bodyUI->txtChatFontSize->value();
+
+    if (QFontInfo(tmpFont).pixelSize() != px)
+        tmpFont.setPixelSize(px);
+
+    Settings::getInstance().setChatMessageFont(tmpFont);
+}
+
+void GeneralForm::on_txtChatFontSize_valueChanged(int px)
+{
+    Settings& s = Settings::getInstance();
+    QFont tmpFont = s.getChatMessageFont();
+    const int fontSize = QFontInfo(tmpFont).pixelSize();
+
+    if (px != fontSize)
+    {
+        tmpFont.setPixelSize(px);
+        s.setChatMessageFont(tmpFont);
+    }
 }

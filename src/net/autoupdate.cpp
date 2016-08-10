@@ -17,7 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "src/net/autoupdate.h"
 #include "src/persistence/serialize.h"
 #include "src/persistence/settings.h"
@@ -39,6 +38,13 @@
 #include <windows.h>
 #include <shellapi.h>
 #endif
+
+/**
+@file autoupdate.cpp
+
+For now we only support auto updates on Windows and OS X, although extending it is not a technical issue.
+Linux users are expected to use their package managers or update manually through official channels.
+*/
 
 #ifdef Q_OS_WIN
 #ifdef Q_OS_WIN64
@@ -72,6 +78,50 @@ const QString AutoUpdater::updaterBin;
 const QString AutoUpdater::updateServer;
 unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
 #endif
+
+/**
+@var unsigned char AutoUpdater::UpdateFileMeta::sig[crypto_sign_BYTES]
+@brief Signature of the file (ed25519)
+
+@var QString AutoUpdater::UpdateFileMeta::id
+@brief Unique id of the file
+
+@var QString AutoUpdater::UpdateFileMeta::installpath
+@brief Local path including the file name. May be relative to qtox-updater or absolute
+
+@var uint64_t AutoUpdater::UpdateFileMeta::size
+@brief Size in bytes of the file
+*/
+
+/**
+@var static const QString AutoUpdater::updateServer
+@brief Hostname of the qTox update server
+
+@var static const QString AutoUpdater::platform
+@brief Name of platform we're trying to get updates for
+
+@var static const QString AutoUpdater::checkURI
+@brief URI of the file containing the latest version string
+
+@var static const QString AutoUpdater::flistURI
+@brief URI of the file containing info on each file (hash, signature, size, name, ..)
+
+@var static const QString AutoUpdater::filesURI
+@brief URI of the actual files of the latest version
+
+@var static const QString AutoUpdater::updaterBin
+@brief Path to the qtox-updater binary
+
+@var static std::atomic_bool AutoUpdater::abortFlag
+@brief If true, try to abort everything.
+
+@var static std::atomic_bool AutoUpdater::isDownloadingUpdate
+@brief We'll pretend there's no new update available if we're already updating
+
+@var static QMutex AutoUpdater::progressVersionMutex
+@brief No, we can't just make the QString atomic
+*/
+
 const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
 const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
 const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
@@ -81,6 +131,19 @@ std::atomic<float> AutoUpdater::progressValue{0};
 QString AutoUpdater::progressVersion;
 QMutex AutoUpdater::progressVersionMutex;
 
+/**
+@class AutoUpdater
+@brief Handles checking and applying updates for qTox.
+@note Do *NOT* use auto update unless AUTOUPDATE_ENABLED is defined to 1.
+*/
+
+/**
+@brief Checks if an update is available for download.
+@return True if an update is available for download, false otherwise.
+
+Connects to the qTox update server, and check if an update is available for download
+Will call getUpdateVersion, and as such may block and processEvents.
+*/
 bool AutoUpdater::isUpdateAvailable()
 {
     if (isDownloadingUpdate)
@@ -95,6 +158,11 @@ bool AutoUpdater::isUpdateAvailable()
     return !diff.isEmpty();
 }
 
+/**
+@brief Fetch the version info of the last update available from the qTox update server
+@note Will try to follow qTox's proxy settings, may block and processEvents
+@return Avaliable version info.
+*/
 AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
 {
     VersionInfo versionInfo;
@@ -159,6 +227,11 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     return versionInfo;
 }
 
+/**
+@brief Parses and validates a flist file.
+@param flistData Install file data.
+@return An empty list on error.
+*/
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
 {
     QList<UpdateFileMeta> flist;
@@ -218,6 +291,11 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
     return flist;
 }
 
+/**
+@brief Gets the update server's flist.
+@note Will try to follow qTox's proxy settings, may block and processEvents
+@return An empty array on error
+*/
 QByteArray AutoUpdater::getUpdateFlist()
 {
     QByteArray flist;
@@ -247,6 +325,11 @@ QByteArray AutoUpdater::getUpdateFlist()
     return flist;
 }
 
+/**
+@brief Generates a list of files we need to update.
+@param updateFlist List of files available to update.
+@return List of files we need to update.
+*/
 QList<AutoUpdater::UpdateFileMeta> AutoUpdater::genUpdateDiff(QList<UpdateFileMeta> updateFlist)
 {
     QList<UpdateFileMeta> diff;
@@ -258,6 +341,11 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::genUpdateDiff(QList<UpdateFileMe
     return diff;
 }
 
+/**
+@brief Checks if we have an up to date version of this file locally installed.
+@param fileMeta File to check.
+@return True if file doesn't need updates, false if need.
+*/
 bool AutoUpdater::isUpToDate(AutoUpdater::UpdateFileMeta fileMeta)
 {
     QString appDir = qApp->applicationDirPath();
@@ -273,6 +361,14 @@ bool AutoUpdater::isUpToDate(AutoUpdater::UpdateFileMeta fileMeta)
     return true;
 }
 
+/**
+@brief Tries to fetch the file from the update server.
+@note Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
+@note Will try to follow qTox's proxy settings, may block and processEvents.
+@param fileMeta Meta data fo file to update.
+@param progressCallback Callback function, which will connected with QNetworkReply::downloadProgress
+@return A file with a null QByteArray on error.
+*/
 AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta,
                                         std::function<void(int,int)> progressCallback)
 {
@@ -305,7 +401,11 @@ AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta,
     return file;
 }
 
-
+/**
+@brief Will try to download an update, if successful qTox will apply it after a restart
+@note Will try to follow qTox's proxy settings, may block and processEvents
+@result True if successful and qTox will apply it after a restart
+*/
 bool AutoUpdater::downloadUpdate()
 {
     // Updates only for supported platforms
@@ -433,6 +533,13 @@ fail:
     return false;
 }
 
+/**
+@brief Checks if an update is downloaded and ready to be installed.
+@note If result is true, call installLocalUpdate,
+@return True if an update is downloaded, false if partially downloaded.
+
+If an update was partially downloaded, the function will resume asynchronously and return false.
+*/
 bool AutoUpdater::isLocalUpdateReady()
 {
     // Updates only for supported platforms
@@ -472,6 +579,13 @@ bool AutoUpdater::isLocalUpdateReady()
     return true;
 }
 
+/**
+@brief Launches the qTox updater to try to install the local update and exits immediately.
+
+@note Will not check that the update actually exists, use isLocalUpdateReady first for that.
+The qTox updater will restart us after the update is done.
+If we fail to start the qTox updater, we will delete the update and exit.
+*/
 void AutoUpdater::installLocalUpdate()
 {
     qDebug() << "About to start the qTox updater to install a local update";
@@ -511,6 +625,14 @@ void AutoUpdater::installLocalUpdate()
     exit(0);
 }
 
+/**
+@brief Checks update an show dialog asking to download it.
+@note Runs asynchronously in its own thread, and will return immediatly
+
+Will call isUpdateAvailable, and as such may processEvents.
+Connects to the qTox update server, if an update is found
+shows a dialog to the user asking to download it.
+*/
 void AutoUpdater::checkUpdatesAsyncInteractive()
 {
     if (isDownloadingUpdate)
@@ -519,6 +641,11 @@ void AutoUpdater::checkUpdatesAsyncInteractive()
     QtConcurrent::run(&AutoUpdater::checkUpdatesAsyncInteractiveWorker);
 }
 
+/**
+@brief Does the actual work for checkUpdatesAsyncInteractive
+
+Blocking, but otherwise has the same properties than checkUpdatesAsyncInteractive
+*/
 void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
 {
     if (!isUpdateAvailable())
@@ -557,18 +684,32 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
     }
 }
 
+/**
+@brief Thread safe setter
+@param version Version to set.
+*/
 void AutoUpdater::setProgressVersion(QString version)
 {
     QMutexLocker lock(&progressVersionMutex);
     progressVersion = version;
 }
 
+/**
+@brief Abort update process.
+
+@note Aborting will make some functions try to return early.
+Call before qTox exits to avoid the updater running in the background.
+*/
 void AutoUpdater::abortUpdates()
 {
     abortFlag = true;
     isDownloadingUpdate = false;
 }
 
+/**
+@brief Functions giving info on the progress of update downloads.
+@return Version as string.
+ */
 QString AutoUpdater::getProgressVersion()
 {
     QMutexLocker lock(&progressVersionMutex);

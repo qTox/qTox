@@ -31,14 +31,53 @@
 #include <QCoreApplication>
 #include <QtConcurrent/QtConcurrentRun>
 
-#ifdef QTOX_FILTER_AUDIO
-#include "src/audio/audiofilterer.h"
-#endif
+/**
+@fn void CoreAV::avInvite(uint32_t friendId, bool video)
+@brief Sent when a friend calls us.
+@param friendId Id of friend in call list.
+@param video False if chat is audio only, true audio and video.
 
+@fn void CoreAV::avStart(uint32_t friendId, bool video)
+@brief Sent when a call we initiated has started.
+@param friendId Id of friend in call list.
+@param video False if chat is audio only, true audio and video.
+
+@fn void CoreAV::avEnd(uint32_t friendId)
+@brief Sent when a call was ended by the peer.
+@param friendId Id of friend in call list.
+*/
+
+/**
+@var CoreAV::AUDIO_DEFAULT_BITRATE
+@brief In kb/s. More than enough for Opus.
+
+@var CoreAV::VIDEO_DEFAULT_BITRATE
+@brief Picked at random by fair dice roll.
+*/
+
+/**
+@var std::atomic_flag CoreAV::threadSwitchLock
+@brief This flag is to be acquired before switching in a blocking way between the UI and CoreAV thread.
+
+The CoreAV thread must have priority for the flag, other threads should back off or release it quickly.
+CoreAV needs to interface with three threads, the toxcore/Core thread that fires non-payload
+toxav callbacks, the toxav/CoreAV thread that fires AV payload callbacks and manages
+most of CoreAV's members, and the UI thread, which calls our [start/answer/cancel]Call functions
+and which we call via signals.
+When the UI calls us, we switch from the UI thread to the CoreAV thread to do the processing,
+when toxcore fires a non-payload av callback, we do the processing in the CoreAV thread and then
+switch to the UI thread to send it a signal. Both switches block both threads, so this would deadlock.
+*/
+
+/**
+@brief Maps friend IDs to ToxFriendCall.
+*/
 IndexedList<ToxFriendCall> CoreAV::calls;
-IndexedList<ToxGroupCall> CoreAV::groupCalls;
 
-using namespace std;
+/**
+@brief Maps group IDs to ToxGroupCalls.
+*/
+IndexedList<ToxGroupCall> CoreAV::groupCalls;
 
 CoreAV::CoreAV(Tox *tox)
     : coreavThread{new QThread}, iterateTimer{new QTimer{this}},
@@ -80,6 +119,9 @@ const ToxAV *CoreAV::getToxAv() const
     return toxav;
 }
 
+/**
+@brief Starts the CoreAV main loop that calls toxav's main loop
+*/
 void CoreAV::start()
 {
     // Timers can only be touched from their own thread
@@ -88,6 +130,9 @@ void CoreAV::start()
     iterateTimer->start();
 }
 
+/**
+@brief Stops the main loop
+*/
 void CoreAV::stop()
 {
     // Timers can only be touched from their own thread
@@ -96,6 +141,9 @@ void CoreAV::stop()
     iterateTimer->stop();
 }
 
+/**
+@brief Calls itself blocking queued on the coreav thread
+*/
 void CoreAV::killTimerFromThread()
 {
     // Timers can only be touched from their own thread
@@ -110,6 +158,11 @@ void CoreAV::process()
     iterateTimer->start(toxav_iteration_interval(toxav));
 }
 
+/**
+@brief Check, that and calls are active now
+@return True is any calls are currently active, False otherwise
+@note A call about to start is not yet active
+*/
 bool CoreAV::anyActiveCalls()
 {
     return !calls.isEmpty();
@@ -133,7 +186,7 @@ bool CoreAV::answerCall(uint32_t friendNum)
 
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -165,17 +218,19 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
             qDebug() << "CoreAV::startCall: Backed off of thread-switch lock";
             return false;
         }
-        bool ret;
 
-        (void)QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum), Q_ARG(bool, video));
+        bool ret;
+        QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(uint32_t, friendNum),
+                                  Q_ARG(bool, video));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
     qDebug() << QString("Starting call with %1").arg(friendNum);
-    if(calls.contains(friendNum))
+    if (calls.contains(friendNum))
     {
         qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
         return false;
@@ -201,8 +256,10 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         }
 
         bool ret;
-        QMetaObject::invokeMethod(this, "cancelCall", Qt::BlockingQueuedConnection,
-                                    Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+        QMetaObject::invokeMethod(this, "cancelCall",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(uint32_t, friendNum));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
@@ -238,6 +295,15 @@ void CoreAV::timeoutCall(uint32_t friendNum)
     emit avEnd(friendNum);
 }
 
+/**
+@brief Send audio frame to a friend
+@param callId Id of friend in call list.
+@param pcm An array of audio samples (Pulse-code modulation).
+@param samples Number of samples in this frame.
+@param chans Number of audio channels.
+@param rate Audio sampling rate used in this frame.
+@return False only on error, but not if there's nothing to send.
+*/
 bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
 {
     if (!calls.contains(callId))
@@ -250,30 +316,6 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
     {
         return true;
     }
-
-#if 0
-#ifdef QTOX_FILTER_AUDIO
-    if (Settings::getInstance().getFilterAudio())
-    {
-        if (!call.filterer)
-        {
-            call.filterer = new AudioFilterer();
-            call.filterer->startFilter(AUDIO_SAMPLE_RATE);
-        }
-
-#ifdef ALC_LOOPBACK_CAPTURE_SAMPLES
-        // compatibility with older versions of OpenAL
-        Audio::getInstance().getEchoesToFilter(call.filterer, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-#endif
-        call.filterer->filterAudio(buf, AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS);
-    }
-    else if (call.filterer)
-    {
-        delete call.filterer;
-        call.filterer = nullptr;
-    }
-#endif
-#endif
 
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     TOXAV_ERR_SEND_FRAME err;
@@ -298,7 +340,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
     return true;
 }
 
-void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
+void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 {
     // We might be running in the FFmpeg thread and holding the CameraSource lock
     // So be careful not to deadlock with anything while toxav locks in toxav_video_send_frame
@@ -318,12 +360,10 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
         call.nullVideoBitrate = false;
     }
 
-    // This frame shares vframe's buffers, we don't call vpx_img_free but just delete it
-    vpx_image* frame = vframe->toVpxImage();
-    if (frame->fmt == VPX_IMG_FMT_NONE)
+    ToxYUVFrame frame = vframe->toToxYUVFrame();
+
+    if(!frame)
     {
-        qWarning() << "Invalid frame";
-        delete frame;
         return;
     }
 
@@ -332,8 +372,8 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
     TOXAV_ERR_SEND_FRAME err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav, callId, frame->d_w, frame->d_h,
-                                    frame->planes[0], frame->planes[1], frame->planes[2], &err))
+        if (!toxav_video_send_frame(toxav, callId, frame.width, frame.height,
+                                    frame.y, frame.u, frame.v, &err))
         {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC)
             {
@@ -348,8 +388,6 @@ void CoreAV::sendCallVideo(uint32_t callId, shared_ptr<VideoFrame> vframe)
     } while (err == TOXAV_ERR_SEND_FRAME_SYNC && retries < 5);
     if (err == TOXAV_ERR_SEND_FRAME_SYNC)
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
-
-    delete frame;
 }
 
 void CoreAV::micMuteToggle(uint32_t callId)
@@ -406,6 +444,11 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
                           sample_rate);
 }
 
+/**
+@brief Get a call's video source.
+@param friendNum Id of friend in call list.
+@return Video surface to show
+*/
 VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
 {
     if (!calls.contains(friendNum))
@@ -417,6 +460,11 @@ VideoSource *CoreAV::getVideoSourceFromCall(int friendNum)
     return calls[friendNum].videoSource;
 }
 
+/**
+@brief Starts a call in an existing AV groupchat.
+@note Call from the GUI thread.
+@param groupId Id of group to join
+*/
 void CoreAV::joinGroupCall(int groupId)
 {
     qDebug() << QString("Joining group call %1").arg(groupId);
@@ -425,6 +473,11 @@ void CoreAV::joinGroupCall(int groupId)
     call->inactive = false;
 }
 
+/**
+@brief Will not leave the group, just stop the call.
+@note Call from the GUI thread.
+@param groupId Id of group to leave
+*/
 void CoreAV::leaveGroupCall(int groupId)
 {
     qDebug() << QString("Leaving group call %1").arg(groupId);
@@ -478,11 +531,19 @@ bool CoreAV::isGroupCallVolEnabled(int groupId) const
     return !groupCalls[groupId].muteVol;
 }
 
+/**
+@brief Check, that group has audio or video stream
+@param groupId Id of group to check
+@return True for AV groups, false for text-only groups
+*/
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
 }
 
+/**
+@brief Forces to regenerate each call's audio sources.
+*/
 void CoreAV::invalidateCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
@@ -496,6 +557,10 @@ void CoreAV::invalidateCallSources()
     }
 }
 
+/**
+@brief Signal to all peers that we're not sending video anymore.
+@note The next frame sent cancels this.
+*/
 void CoreAV::sendNoVideo()
 {
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
@@ -573,12 +638,13 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         return;
     }
 
-    if(!self->calls.contains(friendNum))
+    if (!self->calls.contains(friendNum))
     {
         qWarning() << QString("stateCallback called, but call %1 is already dead").arg(friendNum);
         self->threadSwitchLock.clear(std::memory_order_release);
         return;
     }
+
     ToxFriendCall& call = self->calls[friendNum];
 
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR)

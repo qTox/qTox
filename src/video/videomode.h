@@ -17,35 +17,29 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef VIDEOMODE_H
 #define VIDEOMODE_H
 
-/// Describes a video mode supported by a device
+#include <QRect>
+#include <cstdint>
+
 struct VideoMode
 {
-    unsigned short width, height; ///< Displayed video resolution (NOT frame resolution)
-    float FPS; ///< Max frames per second supported by the device at this resolution
+    unsigned short width, height;
+    unsigned short x, y;
+    float FPS;
     uint32_t pixel_format;
 
-    /// All zeros means a default/unspecified mode
-    operator bool() const
-    {
-        return width || height || FPS;
-    }
+    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0,
+              int FPS = 0, int format = 0);
 
-    bool operator==(const VideoMode& other) const
-    {
-        return width == other.width
-                && height == other.height
-                && FPS == other.FPS
-                && pixel_format == other.pixel_format;
-    }
+    VideoMode(QRect rect);
 
-    uint32_t norm(const VideoMode& other) const
-    {
-        return abs(this->width-other.width) + abs(this->height-other.height);
-    }
+    QRect toRect() const;
+
+    operator bool() const;
+    bool operator==(const VideoMode& other) const;
+    uint32_t norm(const VideoMode& other) const;
 };
 
 #endif // VIDEOMODE_H

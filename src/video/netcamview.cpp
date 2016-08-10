@@ -35,6 +35,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
     , friendId{friendId}
+    , e(false)
 {
     QString id = FriendList::findFriend(friendId)->getToxId().toString();
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
@@ -84,12 +85,8 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
             videoSurface->setAvatar(pixmap);
     });
 
-    VideoMode videoMode;
-    QSize videoSize = Settings::getInstance().getCamVideoRes();
-    videoMode.width = videoSize.width();
-    videoMode.height = videoSize.height();
+    QRect videoSize = Settings::getInstance().getCamVideoRes();
     qDebug() << "SIZER" << videoSize;
-    videoMode.FPS = Settings::getInstance().getCamVideoFPS();
 }
 
 NetCamView::~NetCamView()

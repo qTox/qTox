@@ -37,7 +37,6 @@ public:
     ~Friend();
     Friend& operator=(const Friend& other)=delete;
 
-    /// Loads the friend's chat history if enabled
     void loadHistory();
 
     void setName(QString name);

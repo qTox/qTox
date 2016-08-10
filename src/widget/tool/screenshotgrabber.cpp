@@ -35,14 +35,13 @@
 #include "toolboxgraphicsitem.h"
 #include "src/widget/widget.h"
 
-ScreenshotGrabber::ScreenshotGrabber(QObject* parent)
-    : QObject(parent)
+ScreenshotGrabber::ScreenshotGrabber()
+    : QObject()
     , mKeysBlocked(false)
     , scene(0)
     , mQToxVisible(true)
 {
     window = new QGraphicsView (scene); // Top-level widget
-    window->setAttribute(Qt::WA_DeleteOnClose);
     window->setWindowFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     window->setContentsMargins(0, 0, 0, 0);
     window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -71,6 +70,7 @@ void ScreenshotGrabber::reInit()
 ScreenshotGrabber::~ScreenshotGrabber()
 {
     delete scene;
+    delete window;
 }
 
 bool ScreenshotGrabber::eventFilter(QObject* object, QEvent* event)
@@ -131,10 +131,13 @@ void ScreenshotGrabber::acceptRegion()
     if (rect.width() < 1 || rect.height() < 1)
         return;
 
+    emit regionChosen(rect);
     qDebug() << "Screenshot accepted, chosen region" << rect;
-    emit screenshotTaken(this->screenGrab.copy(rect));
-    this->window->close();
+    QPixmap pixmap = this->screenGrab.copy(rect);
     restoreHiddenWindows();
+    emit screenshotTaken(pixmap);
+
+    deleteLater();
 }
 
 void ScreenshotGrabber::setupScene()
@@ -189,10 +192,9 @@ void ScreenshotGrabber::chooseHelperTooltipText(QRect rect)
 }
 
 /**
- * @internal
- *
- * Align the tooltip centred at top of screen with the mouse cursor.
- */
+@internal
+@brief Align the tooltip centered at top of screen with the mouse cursor.
+*/
 void ScreenshotGrabber::adjustTooltipPosition()
 {
     QRect recGL = QGuiApplication::primaryScreen()->virtualGeometry();
@@ -208,9 +210,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
 
 void ScreenshotGrabber::reject()
 {
-    qDebug() << "Rejected screenshot";
-    this->window->close();
     restoreHiddenWindows();
+    deleteLater();
 }
 
 QPixmap ScreenshotGrabber::grabScreen()

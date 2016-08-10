@@ -18,6 +18,14 @@
 */
 
 #include "contentdialog.h"
+
+#include <QBoxLayout>
+#include <QDragEnterEvent>
+#include <QGuiApplication>
+#include <QMimeData>
+#include <QShortcut>
+#include <QSplitter>
+
 #include "contentlayout.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
@@ -34,12 +42,6 @@
 #include "src/widget/friendlistlayout.h"
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/translator.h"
-#include <QBoxLayout>
-#include <QSplitter>
-#include <QGuiApplication>
-#include <QDragEnterEvent>
-#include <QMimeData>
-#include <QShortcut>
 
 ContentDialog* ContentDialog::currentDialog = nullptr;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
@@ -49,13 +51,15 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , activeChatroomWidget(nullptr)
     , settingsWidget(settingsWidget)
+    , videoSurfaceSize(QSize())
+    , videoCount(0)
 {
     QVBoxLayout* boxLayout = new QVBoxLayout(this);
     boxLayout->setMargin(0);
     boxLayout->setSpacing(0);
 
     splitter = new QSplitter(this);
-    setStyleSheet("QSplitter{color: rgb(255, 255, 255);background-color: rgb(255, 255, 255);alternate-background-color: rgb(255, 255, 255);border-color: rgb(255, 255, 255);gridline-color: rgb(255, 255, 255);selection-color: rgb(255, 255, 255);selection-background-color: rgb(255, 255, 255);}QSplitter:handle{color: rgb(255, 255, 255);background-color: rgb(255, 255, 255);}");
+    setStyleSheet(Style::getStylesheet(":/ui/contentDialog/contentDialog.css"));
     splitter->setHandleWidth(6);
 
     QWidget *friendWidget = new QWidget();
@@ -360,6 +364,28 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
     }
 }
 
+void ContentDialog::onVideoShow(QSize size)
+{
+    videoCount++;
+    if (videoCount > 1)
+        return;
+
+    videoSurfaceSize = size;
+    QSize minSize = minimumSize();
+    setMinimumSize(minSize + videoSurfaceSize);
+}
+
+void ContentDialog::onVideoHide()
+{
+    videoCount--;
+    if (videoCount > 0)
+        return;
+
+    QSize minSize = minimumSize();
+    setMinimumSize(minSize - videoSurfaceSize);
+    videoSurfaceSize = QSize();
+}
+
 ContentDialog* ContentDialog::current()
 {
     return currentDialog;
@@ -429,7 +455,7 @@ void ContentDialog::updateTitleAndStatusIcon(const QString& username)
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
 
         // it's null when it's a groupchat
-        if(displayWidget->getFriend() == nullptr)
+        if (displayWidget->getFriend() == nullptr)
         {
             setWindowIcon(QIcon(":/img/group.svg"));
             return;
@@ -484,18 +510,19 @@ bool ContentDialog::event(QEvent* event)
                 updateTitle(activeChatroomWidget);
 
                 Friend* frnd = activeChatroomWidget->getFriend();
+                Group* group = activeChatroomWidget->getGroup();
+
+                GenericChatroomWidget *widget = nullptr;
 
                 if (frnd)
-                {
-                    frnd->getFriendWidget()->resetEventFlags();
-                    frnd->getFriendWidget()->updateStatusLight();
-                }
+                    widget = frnd->getFriendWidget();
                 else
-                {
-                    Group* g = activeChatroomWidget->getGroup();
-                    g->getGroupWidget()->resetEventFlags();
-                    g->getGroupWidget()->updateStatusLight();
-                }
+                    widget = group->getGroupWidget();
+
+                widget->resetEventFlags();
+                widget->updateStatusLight();
+
+                Widget::getInstance()->updateScroll(widget);
                 Widget::getInstance()->resetIcon();
             }
 
@@ -584,7 +611,7 @@ void ContentDialog::moveEvent(QMoveEvent* event)
 
 void ContentDialog::keyPressEvent(QKeyEvent* event)
 {
-    if(event->key() != Qt::Key_Escape)
+    if (event->key() != Qt::Key_Escape)
         QDialog::keyPressEvent(event); // Ignore escape keyboard shortcut.
 }
 

@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QWindow>
 #include "ui_mainwindow.h"
+#include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
 #include "src/nexus.h"
@@ -104,12 +105,18 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     QWidget* groupWidget = new QWidget(this);
     QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);
 
+    GroupInvite group;
+    group.friendId = friendId;
+    group.type = type;
+    group.invite = invite;
+    group.time = QDateTime::currentDateTime();
+    groupInvites.push_front(group);
+
     CroppingLabel* groupLabel = new CroppingLabel(this);
     groupLabels.insert(groupLabel);
-    QString name = Nexus::getCore()->getFriendUsername(friendId);
-    QString time = QDateTime::currentDateTime().toString();
-    groupLabel->setText(tr("Invited by <b>%1</b> on %2.").arg(name, time));
     groupLayout->addWidget(groupLabel);
+    scroll->widget()->layout()->addWidget(groupWidget);
+    retranslateGroupLabel(groupLabel);
 
     QPushButton* acceptButton = new QPushButton(this);
     acceptButtons.insert(acceptButton);
@@ -122,15 +129,6 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     connect(rejectButton, &QPushButton::released, this, &GroupInviteForm::onGroupInviteRejected);
     groupLayout->addWidget(rejectButton);
     retranslateRejectButton(rejectButton);
-
-    scroll->widget()->layout()->addWidget(groupWidget);
-
-    GroupInvite group;
-    group.friendId = friendId;
-    group.type = type;
-    group.invite = invite;
-    group.time = QDateTime::currentDateTime();
-    groupInvites.push_front(group);
 
     if (isVisible())
         emit groupInvitesSeen();
@@ -183,10 +181,9 @@ void GroupInviteForm::deleteInviteButtons(QWidget* widget)
 void GroupInviteForm::retranslateUi()
 {
     headLabel->setText(tr("Groups"));
-    if(createButton)
-    {
+    if (createButton)
         createButton->setText(tr("Create new group"));
-    }
+
     inviteBox->setTitle(tr("Group invites"));
 
     for (QPushButton* acceptButton : acceptButtons)
@@ -206,8 +203,11 @@ void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
     GroupInvite invite = groupInvites.at(index);
 
     QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
-    QString date = invite.time.toString();
-    label->setText(tr("Invited by <b>%1</b> on %2.").arg(name, date));
+
+    QString date = invite.time.toString(Settings::getInstance().getDateFormat());
+    QString time = invite.time.toString(Settings::getInstance().getTimestampFormat());
+
+    label->setText(tr("Invited by %1 on %2 at %3.").arg("<b>" + name.toHtmlEscaped() + "</b>", date, time));
 }
 
 void GroupInviteForm::retranslateAcceptButton(QPushButton* acceptButton)

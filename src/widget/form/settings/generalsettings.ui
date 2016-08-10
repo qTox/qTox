@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1277</width>
-        <height>1272</height>
+        <width>1278</width>
+        <height>1382</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -305,6 +305,116 @@ instead of closing itself.</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Base font:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QFontComboBox" name="txtChatFont"/>
+            </item>
+            <item row="0" column="2">
+             <widget class="QSpinBox" name="txtChatFontSize">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="suffix">
+               <string>px</string>
+              </property>
+              <property name="prefix">
+               <string>Size: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="textStyleLabel">
+              <property name="toolTip">
+               <string>New text styling preference may not load until qTox restarts.</string>
+              </property>
+              <property name="text">
+               <string>Text Style format:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="3">
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="3">
+             <spacer name="generalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1" colspan="2">
+             <widget class="QComboBox" name="textStyleComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Select text styling preference.</string>
+              </property>
+              <property name="currentIndex">
+               <number>1</number>
+              </property>
+              <item>
+               <property name="text">
+                <string>Plaintext</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Show formatting characters</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Don't show formatting characters</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
              <widget class="QLabel" name="label_3">
@@ -327,6 +437,20 @@ instead of closing itself.</string>
                  <string>Play sound</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <property name="leftMargin">
+                 <number>40</number>
+                </property>
+                <item>
+                 <widget class="QCheckBox" name="busySound">
+                  <property name="text">
+                   <string>Play sound while Busy</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
               <item>
                <widget class="QCheckBox" name="showWindow">
@@ -360,44 +484,11 @@ instead of closing itself.</string>
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="generalLayout_2">
-            <item>
-             <widget class="QLabel" name="transLabel_2">
-              <property name="toolTip">
-               <string>New Markdown preference may not load until qTox restarts.</string>
-              </property>
-              <property name="text">
-               <string>Markdown:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="markdownComboBox">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="toolTip">
-               <string>Select Markdown preference.</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="generalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="statusChanges">
@@ -444,6 +535,13 @@ will be sent to them when they appear online to you.</string>
             </property>
             <property name="text">
              <string>Compact contact list</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -937,6 +1035,22 @@ will be sent to them when they appear online to you.</string>
     <hint type="destinationlabel">
      <x>119</x>
      <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>notifySound</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>busySound</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>665</x>
+     <y>522</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>551</y>
     </hint>
    </hints>
   </connection>

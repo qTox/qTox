@@ -22,6 +22,7 @@
 #include "src/persistence/profile.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/widget/widget.h"
 #include "persistence/settings.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"
@@ -33,13 +34,7 @@
 #include <QApplication>
 #include <cassert>
 #include <vpx/vpx_image.h>
-
-#ifdef Q_OS_ANDROID
-#include <src/widget/androidgui.h>
-#else
-#include <src/widget/widget.h>
 #include <QDesktopWidget>
-#endif
 
 #ifdef Q_OS_MAC
 #include <QWindow>
@@ -47,6 +42,14 @@
 #include <QActionGroup>
 #include <QSignalMapper>
 #endif
+
+/**
+@class Nexus
+
+This class is in charge of connecting various systems together
+and forwarding signals appropriately to the right objects,
+it is in charge of starting the GUI and the Core.
+*/
 
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
@@ -56,18 +59,13 @@ Nexus::Nexus(QObject *parent) :
     QObject(parent),
     profile{nullptr},
     widget{nullptr},
-    androidgui{nullptr},
     loginScreen{nullptr}
 {
 }
 
 Nexus::~Nexus()
 {
-#ifdef Q_OS_ANDROID
-    delete androidgui;
-#else
     delete widget;
-#endif
     delete loginScreen;
     delete profile;
     Settings::getInstance().saveGlobal();
@@ -76,6 +74,11 @@ Nexus::~Nexus()
 #endif
 }
 
+/**
+Sets up invariants and calls showLogin
+Hides the login screen and shows the GUI for the given profile.
+Will delete the current GUI, if it exists.
+*/
 void Nexus::start()
 {
     qDebug() << "Starting up";
@@ -141,23 +144,19 @@ void Nexus::start()
         showLogin();
 }
 
+/**
+@brief Hides the main GUI, delete the profile, and shows the login screen
+*/
 void Nexus::showLogin()
 {
-#ifdef Q_OS_ANDROID
-    delete androidui;
-    androidgui = nullptr;
-#else
     delete widget;
     widget = nullptr;
-#endif
 
     delete profile;
     profile = nullptr;
 
     loginScreen->reset();
-#ifndef Q_OS_ANDROID
     loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
-#endif
     loginScreen->show();
     ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
 }
@@ -170,17 +169,10 @@ void Nexus::showMainGUI()
     loginScreen->close();
 
     // Create GUI
-#ifndef Q_OS_ANDROID
     widget = Widget::getInstance();
-#endif
 
     // Start GUI
-#ifdef Q_OS_ANDROID
-    androidgui = new AndroidGUI;
-    androidgui->show();
-#else
     widget->init();
-#endif
     GUI::getInstance();
 
     // Zetok protection
@@ -191,21 +183,6 @@ void Nexus::showMainGUI()
 
     // Connections
     Core* core = profile->getCore();
-#ifdef Q_OS_ANDROID
-    connect(core, &Core::connected, androidgui, &AndroidGUI::onConnected);
-    connect(core, &Core::disconnected, androidgui, &AndroidGUI::onDisconnected);
-    //connect(core, &Core::failedToStart, androidgui, &AndroidGUI::onFailedToStartCore, Qt::BlockingQueuedConnection);
-    //connect(core, &Core::badProxy, androidgui, &AndroidGUI::onBadProxyCore, Qt::BlockingQueuedConnection);
-    connect(core, &Core::statusSet, androidgui, &AndroidGUI::onStatusSet);
-    connect(core, &Core::usernameSet, androidgui, &AndroidGUI::setUsername);
-    connect(core, &Core::statusMessageSet, androidgui, &AndroidGUI::setStatusMessage);
-    connect(core, &Core::selfAvatarChanged, androidgui, &AndroidGUI::onSelfAvatarLoaded);
-
-    connect(androidgui, &AndroidGUI::statusSet, core, &Core::setStatus);
-    //connect(androidgui, &AndroidGUI::friendRequested, core, &Core::requestFriendship);
-    //connect(androidgui, &AndroidGUI::friendRequestAccepted, core, &Core::acceptFriendRequest);
-    //connect(androidgui, &AndroidGUI::changeProfile, core, &Core::switchConfiguration);
-#else
     connect(core, &Core::connected,                  widget, &Widget::onConnected);
     connect(core, &Core::disconnected,               widget, &Widget::onDisconnected);
     connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore, Qt::BlockingQueuedConnection);
@@ -228,20 +205,21 @@ void Nexus::showMainGUI()
     connect(core, &Core::groupNamelistChanged,       widget, &Widget::onGroupNamelistChanged);
     connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
     connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
-    connect(core, &Core::emptyGroupCreated, widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
+    connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
+    connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
+    connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
 
-    connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
-
-    connect(widget, &Widget::statusSet, core, &Core::setStatus);
-    connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
+    connect(widget, &Widget::statusSet,             core, &Core::setStatus);
+    connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
-#endif
 
     profile->startCore();
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 Nexus& Nexus::getInstance()
 {
     if (!nexus)
@@ -256,19 +234,32 @@ void Nexus::destroyInstance()
     nexus = nullptr;
 }
 
+/**
+@brief Get core instance.
+@return nullptr if not started, core instance otherwise.
+*/
 Core* Nexus::getCore()
 {
     Nexus& nexus = getInstance();
     if (!nexus.profile)
         return nullptr;
+
     return nexus.profile->getCore();
 }
 
+/**
+@brief Get current user profile.
+@return nullptr if not started, profile otherwise.
+*/
 Profile* Nexus::getProfile()
 {
     return getInstance().profile;
 }
 
+/**
+@brief Unload the current profile, if any, and replaces it.
+@param profile Profile to set.
+*/
 void Nexus::setProfile(Profile* profile)
 {
     getInstance().profile = profile;
@@ -276,11 +267,10 @@ void Nexus::setProfile(Profile* profile)
         Settings::getInstance().loadPersonal(profile);
 }
 
-AndroidGUI* Nexus::getAndroidGUI()
-{
-    return getInstance().androidgui;
-}
-
+/**
+@brief Get desktop GUI widget.
+@return nullptr if not started, desktop widget otherwise.
+*/
 Widget* Nexus::getDesktopGUI()
 {
     return getInstance().widget;
@@ -295,12 +285,26 @@ QString Nexus::getSupportedImageFilter()
   return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
 }
 
+/**
+@brief Dangerous way to find out if a path is writable.
+@param filepath Path to file which should be deleted.
+@return True, if file writeable, false otherwise.
+*/
 bool Nexus::tryRemoveFile(const QString& filepath)
 {
     QFile tmp(filepath);
     bool writable = tmp.open(QIODevice::WriteOnly);
     tmp.remove();
     return writable;
+}
+
+/**
+@brief Calls showLogin asynchronously, so we can safely logout from within the main GUI
+*/
+void Nexus::showLoginLater()
+{
+    GUI::setEnabled(false);
+    QMetaObject::invokeMethod(&getInstance(), "showLogin", Qt::QueuedConnection);
 }
 
 #ifdef Q_OS_MAC

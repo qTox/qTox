@@ -31,11 +31,11 @@
 #include "src/group.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
-    : userName{Core::getInstance()->getPeerName(UserId)},
-      userID{UserId}, friendId{FriendId}
+    : userName{Core::getInstance()->getPeerName(UserId)}
+    , userID(UserId), friendId(FriendId)
+    , hasNewEvents(0), friendStatus(Status::Offline)
+
 {
-    hasNewEvents = 0;
-    friendStatus = Status::Offline;
     if (userName.size() == 0)
         userName = UserId.publicKey;
 
@@ -51,6 +51,9 @@ Friend::~Friend()
     delete widget;
 }
 
+/**
+@brief Loads the friend's chat history if enabled
+*/
 void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())

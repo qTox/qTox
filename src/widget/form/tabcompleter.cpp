@@ -20,15 +20,21 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* This file was taken from the Quassel IRC client source (src/uisupport), and
-   was greatly simplified for use in qTox. */
+/**
+@file tabcompleter.h
+@file tabcompleter.cpp
+These files were taken from the Quassel IRC client source (src/uisupport), and
+was greatly simplified for use in qTox.
+*/
 
 #include "tabcompleter.h"
+
+#include <QRegExp>
+#include <QKeyEvent>
+
 #include "src/core/core.h"
 #include "src/group.h"
 #include "src/widget/tool/chattextedit.h"
-#include <QRegExp>
-#include <QKeyEvent>
 
 const QString TabCompleter::nickSuffix = QString(": ");
 
@@ -54,14 +60,18 @@ void TabCompleter::buildCompletionList()
     nextCompletion = completionMap.begin();
 
     // split the string on the given RE (not chars, nums or braces/brackets) and take the last section
-    QString tabAbbrev = msgEdit->toPlainText().left(msgEdit->textCursor().position()).section(QRegExp("[^\\w\\d:@--_\\[\\]{}|`^.\\\\]"), -1, -1);
+    QString tabAbbrev = msgEdit->toPlainText().left(msgEdit->textCursor().position())
+        .section(QRegExp("[^\\w\\d\\$:@--_\\[\\]{}|`^.\\\\]"), -1, -1);
     // that section is then used as the completion regex
     QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)), Qt::CaseInsensitive);
 
     for (auto name : group->getPeerList())
     {
         if (regex.indexIn(name) > -1)
-            completionMap[name.toLower()] = name;
+        {
+            SortableString lower = SortableString(name.toLower());
+            completionMap[lower] = name;
+        }
     }
 
     nextCompletion = completionMap.begin();

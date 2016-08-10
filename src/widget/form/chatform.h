@@ -20,12 +20,14 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
-#include "genericchatform.h"
-#include "src/core/corestructs.h"
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
+
+#include "genericchatform.h"
+#include "src/core/corestructs.h"
+#include "src/widget/tool/screenshotgrabber.h"
 
 class Friend;
 class FileTransferInstance;
@@ -77,6 +79,7 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
+    void onFriendStatusChanged(uint32_t friendId, Status status);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
@@ -84,10 +87,17 @@ private slots:
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
     void onMessageInserted();
+    void onCopyStatusMessage();
 
 private:
     void retranslateUi();
     void showOutgoingCall(bool video);
+    void startCounter();
+    void stopCounter();
+    QString secondsToDHMS(quint32 duration);
+    void enableCallButtons();
+    void disableCallButtons();
+    void SendMessageStr(QString msg);
 
 protected:
     virtual GenericNetCamView* createNetcam() final override;
@@ -101,6 +111,7 @@ private:
     CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;
+    QMenu statusMessageMenu;
     QLabel *callDuration;
     QTimer *callDurationTimer;
     QTimer typingTimer;
@@ -108,16 +119,12 @@ private:
     QElapsedTimer timeElapsed;
     OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
+    QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    void startCounter();
-    void stopCounter();
-    QString secondsToDHMS(quint32 duration);
+    QMap<uint32_t, Status> oldStatus;
     CallConfirmWidget *callConfirm;
-    void enableCallButtons();
-    void disableCallButtons();
     bool isTyping;
-    void SendMessageStr(QString msg);
 };
 
 #endif // CHATFORM_H

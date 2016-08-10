@@ -18,7 +18,7 @@
 # Script for verifying conformance to commit message format of commits in commit
 # range supplied.
 #
-# Scrpt fails (non-zero exit status) if commit messages don't conform.
+# Script fails (non-zero exit status) if commit messages don't conform.
 
 # usage:
 #   ./$script $commit_range
@@ -31,11 +31,11 @@ echo "" # ← formatting
 
 # Conform, /OR ELSE/.
 if git log --format=format:'%s' "$ARG" | \
-    grep -v -E '^((feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.+\))?:.{1,68})|(Merge pull request #[[:digit:]]{4,10})$'
+    grep -v -E '^((feat|fix|docs|style|refactor|perf|revert|test|chore)(\(.{,12}\))?:.{1,68})|(Merge pull request #[[:digit:]]{1,10})$'
 then
     echo ""
     echo "Above ↑ commits don't conform to commit message format:"
-    echo "https://github.com/tux3/qTox/blob/master/CONTRIBUTING.md#commit-message-format"
+    echo "https://github.com/qTox/qTox/blob/master/CONTRIBUTING.md#commit-message-format"
     echo ""
     echo "Pls fix."
     echo ""

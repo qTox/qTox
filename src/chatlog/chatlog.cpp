@@ -20,6 +20,8 @@
 #include "chatlog.h"
 #include "chatmessage.h"
 #include "chatlinecontent.h"
+#include "chatlinecontentproxy.h"
+#include "content/filetransferwidget.h"
 #include "src/widget/translator.h"
 
 #include <QDebug>
@@ -30,6 +32,11 @@
 #include <QTimer>
 #include <QMouseEvent>
 #include <QShortcut>
+
+/**
+@var ChatLog::repNameAfter
+@brief repetition interval sender name (sec)
+*/
 
 template<class T>
 T clamp(T x, T min, T max)
@@ -69,20 +76,29 @@ ChatLog::ChatLog(QWidget* parent)
     copyAction->setIcon(QIcon::fromTheme("edit-copy"));
     copyAction->setShortcut(QKeySequence::Copy);
     copyAction->setEnabled(false);
-    connect(copyAction, &QAction::triggered, this, [this]() { copySelectedText(); });
+    connect(copyAction, &QAction::triggered, this, [this]()
+    {
+        copySelectedText();
+    });
     addAction(copyAction);
 
 #ifdef Q_OS_LINUX
     // Ctrl+Insert shortcut
     QShortcut* copyCtrlInsShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Insert), this);
-    connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]() { copySelectedText(); });
+    connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]()
+    {
+        copySelectedText();
+    });
 #endif
 
     // select all action (ie. Ctrl+A)
     selectAllAction = new QAction(this);
     selectAllAction->setIcon(QIcon::fromTheme("edit-select-all"));
     selectAllAction->setShortcut(QKeySequence::SelectAll);
-    connect(selectAllAction, &QAction::triggered, this, [this]() { selectAll(); });
+    connect(selectAllAction, &QAction::triggered, this, [this]()
+    {
+        selectAll();
+    });
     addAction(selectAllAction);
 
     // This timer is used to scroll the view while the user is
@@ -546,11 +562,20 @@ void ChatLog::clear()
 {
     clearSelection();
 
+    QVector<ChatLine::Ptr> savedLines;
+
     for (ChatLine::Ptr l : lines)
-        l->removeFromScene();
+    {
+        if (isActiveFileTransfer(l))
+            savedLines.push_back(l);
+        else
+            l->removeFromScene();
+    }
 
     lines.clear();
     visibleLines.clear();
+    for (ChatLine::Ptr l : savedLines)
+        insertChatlineAtBottom(l);
 
     updateSceneRect();
 }
@@ -835,4 +860,23 @@ void ChatLog::retranslateUi()
 {
     copyAction->setText(tr("Copy"));
     selectAllAction->setText(tr("Select all"));
+}
+
+bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
+{
+    int count = l->getColumnCount();
+    for (int i = 0; i < count; i++)
+    {
+        ChatLineContent *content = l->getContent(i);
+        ChatLineContentProxy *proxy = dynamic_cast<ChatLineContentProxy*>(content);
+        if (!proxy)
+            continue;
+
+        QWidget *widget = proxy->getWidget();
+        FileTransferWidget *transferWidget = dynamic_cast<FileTransferWidget*>(widget);
+        if (transferWidget && transferWidget->isActive())
+            return true;
+    }
+
+    return false;
 }

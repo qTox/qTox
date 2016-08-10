@@ -8,43 +8,48 @@
         <translation>Audio/Video</translation>
     </message>
     <message>
-        <source>%1p</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Standardauflösung</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Kein Gerät ausgewählt</translation>
+        <source>Disabled</source>
+        <translation>Deaktiviert</translation>
     </message>
-</context>
-<context>
-    <name>AVSettings</name>
+    <message>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation>Spiele während dem Ändern der Ausgabelautstärke ein Testgeräusch ab.</translation>
+    </message>
+    <message>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation>Verwenden Sie den Schieberegler um die Verstärkung zwischen %1dB und %2dB festzulegen.</translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation>Region auswählen</translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
+        <translation>Bildschirm %1</translation>
+    </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Audioeinstellungen</translation>
+        <translation type="unfinished">Audioeinstellungen</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
+        <source>Gain</source>
+        <translation type="unfinished">Aufnahmelautstärke</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Wiedergabegerät</translation>
+        <translation type="unfinished">Wiedergabegerät</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
     </message>
     <message>
         <source>Capture device</source>
         <translation>Aufnahmegerät</translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Verwende den Schieber, um die Aufnahmelautstärke deines Mikrofons anzupassen.</translation>
-    </message>
-    <message>
-        <source>Gain</source>
-        <translation>Aufnahmelautstärke</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -59,22 +64,22 @@
         <translation>Videogerät</translation>
     </message>
     <message>
-        <source>Resolution</source>
-        <translation>Kameraauflösung</translation>
-    </message>
-    <message>
-        <source>Rescan devices</source>
-        <translation>Geräte aktualisieren</translation>
-    </message>
-    <message>
         <source>Set resolution of your camera.
 The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Wähle deine Kameraauflösung.
+        <translation type="unfinished">Wähle deine Kameraauflösung.
 Höhere Werte führen zu einem schärferen Bild, allerdings nimmt die Netzwerkauslastung zu.
 Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
+    </message>
+    <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Kameraauflösung</translation>
+    </message>
+    <message>
+        <source>Rescan devices</source>
+        <translation type="unfinished">Geräte aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -84,17 +89,31 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Über</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt-Version:</translation>
-    </message>
-    <message>
         <source>Restart qTox to install version %1</source>
-        <translation>Starte qTox neu, um Version %1 zu installieren.</translation>
+        <translation>Starte qTox neu, um Version %1 zu installieren</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation>qTox lädt Update %1 herunter.</translation>
+        <translation>qTox lädt Update %1 herunter</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation type="unfinished">Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, %3 bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation>Bug-Tracker (Englisch)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translatorcomment>Original-Titel, deshalb auf Englisch</translatorcomment>
+        <translation>„Writing Useful Bug Reports“ (Englisch)</translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translatorcomment>Linktext für Bugreport</translatorcomment>
+        <translation type="unfinished">melde sie</translation>
     </message>
 </context>
 <context>
@@ -116,32 +135,28 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Lizenz</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit-Hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Commit-Hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>toxcore version: $TOXCOREVERSION</source>
         <translation>Toxcore-Version: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt-Version:</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Entwickler</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ursprünglich entwickelt von: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alle Mitwirkenden findest du unter &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Contributors&lt;/span&gt;&lt;/a&gt; auf GitHub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ursprünglich entwickelt von: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alle Mitwirkenden findest du unter &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Contributors&lt;/span&gt;&lt;/a&gt; auf GitHub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Bekannte Probleme</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Eine Liste aller bekannten Probleme findest du in unserem &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Bug-Tracker (Englisch)&lt;/span&gt;&lt;/a&gt; auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, melde sie bitte wie in unserem Wiki-Artikel &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports (Englisch)&lt;/span&gt;&lt;/a&gt; beschrieben.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>Qt version: $QTVERSION</source>
+        <translation>Qt-Version: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -152,11 +167,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>username</source>
-        <translation>Benutzername:</translation>
+        <translation>Benutzername</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation>Status:</translation>
+        <translation>Status-Nachricht</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -205,7 +220,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation>Gesprächsverlauf mit %1 wurde gelöscht.</translation>
+        <translation>Gesprächsverlauf mit %1 wurde gelöscht!</translation>
     </message>
 </context>
 <context>
@@ -223,7 +238,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
     Ignore the proxy and connect to the Internet directly?</source>
         <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, kann das bei aktiviertem Proxyserver aber nicht.
-Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden? </translation>
+Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden?</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -246,12 +261,7 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Hallo,
-
-hier ist %1! Hast du Lust, dich mit mir zu unterhalten?
-
-Viele Grüße,
-%1</translation>
+        <translation>Hier ist %1! Lust dich mit mir zu unterhalten?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -281,7 +291,7 @@ Viele Grüße,
     <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
-        <translation>Diese Tox ID existiert nicht.</translation>
+        <translation>Diese Tox ID existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -304,70 +314,16 @@ Viele Grüße,
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translatorcomment>Der Html Code ist recht übertrieben und enthält Fehler.</translatorcomment>
         <translation>&lt;html&gt;
-&lt;body style=&quot; font-weight:400; color:#500;&quot;&gt;
+&lt;body style=&quot;font-weight:400; color:#500;&quot;&gt;
 &lt;p&gt;Wichtiger Hinweis:&lt;/p&gt;
-&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es zu Problemen und sogar Datenverlust wie z. B. Beschädigungen der Gesprächsverläufe kommen!&lt;/p&gt;
+&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es zu Problemen und sogar Datenverlust wie z. B. Verlust der Gesprächsverläufe kommen!&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>
     </message>
     <message>
         <source>Reset to default settings</source>
         <translation>Einstellungen zurücksetzen</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
     </message>
 </context>
 <context>
@@ -474,6 +430,14 @@ Viele Grüße,
         <source>Call duration: </source>
         <translation>Anrufdauer: </translation>
     </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation>%1 tippt gerade</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopieren</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -518,7 +482,7 @@ Viele Grüße,
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Tox ist toll!</translation>
+        <translation>Toxe mit qTox</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -566,12 +530,13 @@ Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Verlaufsdatei erhalten bleiben. Sollte dir später das Passwort wieder einfallen, kannst du deinen alten Verlauf weiterverwenden, indem du die Verschlüsselung wieder aktivierst und das korrekte Passwort benutzt.</translation>
+        <translation>
+Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Verlaufsdatei erhalten bleiben. Sollte dir später das Passwort wieder einfallen, kannst du deinen alten Verlauf weiterverwenden, indem du die Verschlüsselung wieder aktivierst und das korrekte Passwort benutzt.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Entschuldigung, das Passwort für deinen Verlauf war nicht korrekt. Versuch es erneut!</translation>
+        <translation>Entschuldigung, das Passwort für deinen Verlauf war nicht korrekt.  Nochmal versuchen?</translation>
     </message>
     <message>
         <source>Disable chat history</source>
@@ -583,7 +548,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Form</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
+        <translation>Von</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -603,7 +568,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Filename</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
+        <translation>Dateiname</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -754,7 +719,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>In Kreis verschieben</translation>
+        <translation>Verschieben in Kreis...</translation>
     </message>
     <message>
         <source>To new circle</source>
@@ -942,7 +907,7 @@ instead of system taskbar.</source>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Dies lässt sich für jeden Kontakt einzeln einstellen. (Rechtsklick-Menü)</translation>
+        <translation>Dies lässt sich für jeden Kontakt per Rechtsklick einstellen.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
@@ -1054,14 +1019,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>Standardordner für Dateien:</translation>
     </message>
     <message>
-        <source>Markdown:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Select Markdown preference.</source>
-        <translation>Wähle Markdown-Einstellungen.</translation>
-    </message>
-    <message>
         <source>Theme</source>
         <translation>Aussehen</translation>
     </message>
@@ -1123,10 +1080,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <translation>IPv6 aktivieren (Empfohlen)</translation>
     </message>
     <message>
-        <source>New Markdown preference may not load until qTox restarts.</source>
-        <translation>Änderungen an den Markdown-Einstellungen werden erst nach einem Neustart von qTox wirksam.</translation>
-    </message>
-    <message>
         <source>Proxy type:</source>
         <translation>Proxy-Typ:</translation>
     </message>
@@ -1152,6 +1105,47 @@ werden übertragen, sobald ihr beide online seid.</translation>
         <comment>reconnect button</comment>
         <translation>Erneut verbinden</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation>Klartext</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation>Formatierungszeichen anzeigen</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation>Formatierungszeichen nicht anzeigen</translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation>Auch Ton abspielen während man „beschäftigt“ ist</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation>Schriftart:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translatorcomment>Keine Übersetzung notwendig</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation>Größe: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation>Text Stilformat:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation>Wählen Sie die Textstil Einstellung.</translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1161,7 +1155,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Smileys</translation>
+        <translation>Emoticons</translation>
     </message>
     <message>
         <source>Send file(s)</source>
@@ -1210,6 +1204,10 @@ werden übertragen, sobald ihr beide online seid.</translation>
     <message>
         <source>Cleared</source>
         <translation>Gesprächsverlauf entfernt</translation>
+    </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation>Ausgewählten Text zitieren</translation>
     </message>
 </context>
 <context>
@@ -1275,10 +1273,6 @@ werden übertragen, sobald ihr beide online seid.</translation>
 <context>
     <name>GroupInviteForm</name>
     <message>
-        <source>Invited by &lt;b&gt;%1&lt;/b&gt; on %2.</source>
-        <translation>Eingeladen von &lt;b&gt;%1&lt;/b&gt; am %2.</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>Gruppen</translation>
     </message>
@@ -1297,6 +1291,10 @@ werden übertragen, sobald ihr beide online seid.</translation>
     <message>
         <source>Decline</source>
         <translation>Ablehnen</translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+         <translation>Eingeladen von %1 am %2 um %3.</translation>
     </message>
 </context>
 <context>
@@ -1352,7 +1350,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
         <translation>Dies ist deine persönliche Adresse. Damit können dich andere qTox-Nutzer erreichen.
-Teile sie einfach deinen Bekannten mit!</translation>
+Teile sie mit deinen Freunden um zu kommunizieren.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
@@ -1415,7 +1413,8 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Speichert das ausgewählte Profil in eine Datei. Beachte, dass diese Datei deinen Gesprächsverlauf &lt;i&gt;nicht&lt;/i&gt; enthält!</translation>
+        <translation>Speichert das ausgewählte Profil in eine Datei.
+Das Profil beinhaltet nicht deine Historie.</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1426,6 +1425,38 @@ Profile does not contain your history.</source>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>Toxme register</source>
+        <translation>ToxMe-Registrierung</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>ToxMe-Name</translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation>Öffentliche Info (optional)</translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation>Name nicht zur öffentlichen Liste hinzufügen</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registrieren</translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation>Dein Passwort</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -1541,6 +1572,10 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
         <source>Wrong password.</source>
         <translation>Falsches Passwort.</translation>
     </message>
+    <message>
+        <source>Import</source>
+        <translation>Importieren</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1622,6 +1657,13 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
             <numerusform>Ungelesene Nachricht</numerusform>
             <numerusform>Ungelesene Nachrichten</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation>Feststelltaste aktiviert</translation>
     </message>
 </context>
 <context>
@@ -1809,7 +1851,7 @@ Teile sie einfach deinen Bekannten mit!</translation>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation>Bestätige, dass du das gewählte Profil löschen möchtest.</translation>
+        <translation>Bist du sicher, dass das gewählte Profil gelöschen werden soll?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1820,6 +1862,136 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
         <translation>QR-Code speichern (*.png)</translation>
+    </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation>Die folgenden Dateien konnten nicht gelöscht werden:</translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation>Bitte lösche sie manuell.</translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation>Dateien konnten nicht gelöscht werden!</translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation>Registrieren (in Arbeit)</translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation>Aktualisieren (in Arbeit)</translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation>Erledigt!</translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation>Account %1@%2 wurde erfolgreich aktualisiert.</translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation>Der Benutzer %1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern.</translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation>ToxMe-Fehler</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registrieren</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation>Passwort ändern</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation>Profil mit Passwort schützen</translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation>Profil importieren</translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation>Tox-Datei (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation>Nicht-Tox-Datei ignoriert</translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation>Warnung: Die von dir gewählte Datei ist keine Tox-Datei. Sie wird ignoriert.</translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation>Profil bereits vorhanden</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation>Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
+    </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation>Datei existiert nicht</translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation>Profil existiert nicht</translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished">Profil importiert</translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished">Die Datei %1.tox wurde erfolgreich importiert</translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Nein</translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1880,42 +2052,9 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Eingehender Anruf ...</translation>
     </message>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation>Nicht-Tox-Datei ignoriert</translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation>Warnung: Die von dir gewählte Datei ist keine Tox-Datei. Sie wird ignoriert.</translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation>Profil bereits vorhanden</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation>Ein Profil namens „%1“ existiert bereits. Möchtest du es überschreiben?</translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation>Profil importiert</translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation>Die Datei %1.tox wurde erfolgreich importiert</translation>
-    </message>
-    <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>Hallo,
-
-hier ist %1! Hast du Lust, dich mit mir zu unterhalten?
-
-Viele Grüße,
-%1</translation>
+        <translation>Hier ist %1! Lust dich mit mir zu unterhalten?</translation>
     </message>
     <message>
         <source>None</source>
@@ -1928,28 +2067,8 @@ Viele Grüße,
         <translation>Bildschirm</translation>
     </message>
     <message>
-        <source>Incorrect response</source>
-        <translation>Fehlerhafte Antwort.</translation>
-    </message>
-    <message>
-        <source>No password in response</source>
-        <translation>Kein Passwort als Antwort.</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>Der Server unterstützt kein ToxMe.</translation>
-    </message>
-    <message>
-        <source>You must send POST requests to /api</source>
-        <translation>Du musst POST-Anfragen an /api senden.</translation>
-    </message>
-    <message>
-        <source>Please try again using a HTTPS connection</source>
-        <translation>Bitte versuche es noch einmal mit einer HTTPS-Verbindung.</translation>
-    </message>
-    <message>
-        <source>I was unable to read your encrypted payload</source>
-        <translation>Ich konnte deinen verschlüsselten Payload nicht lesen.</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -1984,20 +2103,8 @@ Viele Grüße,
         <translation>Tox ID wurde nicht gesendet.</translation>
     </message>
     <message>
-        <source>Lookup failed because the server replied with invalid data</source>
-        <translation>Lookup ist gescheitert, weil die Server-Antwort ungültig war.</translation>
-    </message>
-    <message>
         <source>That user does not exist</source>
         <translation>Dieser Benutzer existiert nicht.</translation>
-    </message>
-    <message>
-        <source>Internal lookup error. Please file a bug</source>
-        <translation>Interner Lookup-Fehler. Bitte melde diesen Fehler.</translation>
-    </message>
-    <message>
-        <source>Unknown error (%1)</source>
-        <translation>Unbekannter Fehler (%1)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2006,6 +2113,14 @@ Viele Grüße,
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
         <translation>qTox konnte deine Gesprächshistorie nicht öffnen. Das Speichern der Gespräche wird deaktiviert!</translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation>Problem mit HTTPS-Verbindung.</translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation>Interner ToxMe-Fehler.</translation>
     </message>
 </context>
 <context>
@@ -2347,6 +2462,15 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Search Contacts</source>
         <translation>Kontakte durchsuchen</translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation>Gruppenchat #%1</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
+        <translation>Öffnen</translation>
     </message>
 </context>
 </TS>

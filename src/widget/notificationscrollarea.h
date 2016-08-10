@@ -33,7 +33,8 @@ public:
 
 public slots:
     void trackWidget(GenericChatroomWidget* widget);
-    void updateTracking();
+    void updateVisualTracking();
+    void updateTracking(GenericChatroomWidget *widget);
 
 protected:
     void resizeEvent(QResizeEvent *event) final override;

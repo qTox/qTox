@@ -78,7 +78,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (contentDialog == nullptr || notAlone)
         openChatWindow = menu.addAction(tr("Open chat in new window"));
 
-    if (contentDialog->hasFriendWidget(friendId, this))
+    if (contentDialog != nullptr && contentDialog->hasFriendWidget(friendId, this))
         removeChatWindow = menu.addAction(tr("Remove chat from this window"));
 
     menu.addSeparator();
@@ -89,7 +89,13 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
     for (Group* group : GroupList::getAllGroups())
     {
-        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(group->getGroupWidget()->getName()));
+        int maxNameLen = 30;
+        QString name = group->getGroupWidget()->getName();
+        if ( name.length() > maxNameLen )
+        {
+            name = name.left(maxNameLen).trimmed() + "..";
+        }
+        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
         groupActions[groupAction] =  group;
     }
 
@@ -193,7 +199,10 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
             }
             else if (autoAccept->isChecked())
             {
-                dir = QFileDialog::getExistingDirectory(0, tr("Choose an auto accept directory","popup title"), dir);
+                dir = QFileDialog::getExistingDirectory(0,
+                                                        tr("Choose an auto accept directory","popup title"),
+                                                        dir,
+                                                        QFileDialog::DontUseNativeDialog);
                 autoAccept->setChecked(true);
                 qDebug() << "setting auto accept dir for" << friendId << "to" << dir;
                 Settings::getInstance().setAutoAcceptDir(id, dir);

@@ -23,17 +23,16 @@
 #include <QObject>
 #include <QString>
 #include <QList>
+
 #include "genericsettings.h"
+#include "ui_avform.h"
 #include "src/video/videomode.h"
 
-namespace Ui {
-class AVSettings;
-}
 
 class CameraSource;
 class VideoSurface;
 
-class AVForm : public GenericForm
+class AVForm : public GenericForm, private Ui::AVForm
 {
     Q_OBJECT
 public:
@@ -46,37 +45,40 @@ private:
     void getAudioOutDevices();
     void getVideoDevices();
 
+    static int getModeSize(VideoMode mode);
+    void selectBestModes(QVector<VideoMode> &allVideoModes);
+    void fillCameraModesComboBox();
+    void fillScreenModesComboBox();
+    int searchPreferredIndex();
+
     void createVideoSurface();
     void killVideoSurface();
 
     void retranslateUi();
 
 private slots:
-
     // audio
-    void onInDevChanged(QString deviceDescriptor);
-    void onOutDevChanged(QString deviceDescriptor);
-    void onFilterAudioToggled(bool filterAudio);
-    void onPlaybackValueChanged(int value);
-    void onMicrophoneValueChanged(int value);
+    void on_inDevCombobox_currentIndexChanged(int deviceIndex);
+    void on_outDevCombobox_currentIndexChanged(int deviceIndex);
+    void on_playbackSlider_valueChanged(int value);
+    void on_btnPlayTestSound_clicked(bool checked);
+    void on_microphoneSlider_valueChanged(int value);
 
     // camera
-    void onVideoDevChanged(int index);
-    void onVideoModesIndexChanged(int index);
+    void on_videoDevCombobox_currentIndexChanged(int index);
+    void on_videoModescomboBox_currentIndexChanged(int index);
 
-    void on_btnPlayTestSound_clicked(bool checked);
 
 protected:
     void updateVideoModes(int curIndex);
 
 private:
     bool eventFilter(QObject *o, QEvent *e) final override;
-
     void hideEvent(QHideEvent* event) final override;
     void showEvent(QShowEvent*event) final override;
+    void open(const QString &devName, const VideoMode &mode);
 
 private:
-    Ui::AVSettings *bodyUI;
     bool subscribedToAudioIn;
     bool mPlayTestSound;
     VideoSurface *camVideoSurface;

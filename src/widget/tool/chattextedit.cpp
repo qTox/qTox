@@ -26,6 +26,7 @@ ChatTextEdit::ChatTextEdit(QWidget *parent) :
 {
     retranslateUi();
     setAcceptRichText(false);
+    setAcceptDrops(false);
 
     Translator::registerHandler(std::bind(&ChatTextEdit::retranslateUi, this), this);
 }
@@ -45,7 +46,10 @@ void ChatTextEdit::keyPressEvent(QKeyEvent * event)
         if (event->modifiers())
             event->ignore();
         else
+        {
             emit tabPressed();
+            event->ignore();
+        }
     }
     else if (key == Qt::Key_Up && this->toPlainText().isEmpty())
     {
@@ -68,4 +72,9 @@ void ChatTextEdit::setLastMessage(QString lm)
 void ChatTextEdit::retranslateUi()
 {
     setPlaceholderText(tr("Type your message here..."));
+}
+
+void ChatTextEdit::sendKeyEvent(QKeyEvent * event)
+{
+    emit keyPressEvent(event);
 }

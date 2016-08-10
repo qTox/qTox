@@ -60,8 +60,10 @@ void AboutUser::onAutoAcceptClicked()
     }
     else if (ui->autoaccept->isChecked())
     {
-        dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
-                                                         "popup title"), dir);
+        dir = QFileDialog::getExistingDirectory(this,
+                                                tr("Choose an auto accept directory", "popup title"),
+                                                dir,
+                                                QFileDialog::DontUseNativeDialog);
         if(dir.isEmpty())
         {
             ui->autoaccept->setChecked(false);
@@ -77,20 +79,22 @@ void AboutUser::onAutoAcceptClicked()
 void AboutUser::onSelectDirClicked()
 {
     QString dir;
-    dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
-                                                     "popup title"), dir);
+    dir = QFileDialog::getExistingDirectory(this,
+                                            tr("Choose an auto accept directory", "popup title"),
+                                            dir,
+                                            QFileDialog::DontUseNativeDialog);
     ui->autoaccept->setChecked(true);
     Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
     Settings::getInstance().saveGlobal();
 }
 
 /**
- * @brief AboutUser::onAcceptedClicked When users clicks the bottom OK button,
- *          save all settings
- */
+@brief Called when user clicks the bottom OK button, save all settings
+*/
 void AboutUser::onAcceptedClicked()
 {
-    Settings::getInstance().setContactNote(ui->publicKey->text(), ui->note->toPlainText());
+    ToxId toxId = ToxId(ui->publicKey->text());
+    Settings::getInstance().setContactNote(toxId, ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
 }
 

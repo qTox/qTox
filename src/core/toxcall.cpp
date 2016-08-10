@@ -7,9 +7,22 @@
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
-#ifdef QTOX_FILTER_AUDIO
-#include "src/audio/audiofilterer.h"
-#endif
+/**
+@var uint32_t ToxCall::callId
+@brief Could be a friendNum or groupNum, must uniquely identify the call. Do not modify!
+
+@var bool ToxCall::inactive
+@brief True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
+
+@var bool ToxCall::videoEnabled
+@brief True if our user asked for a video call, sending and recieving.
+
+@var bool ToxCall::nullVideoBitrate
+@brief True if our video bitrate is zero, i.e. if the device is closed.
+
+@var TOXAV_FRIEND_CALL_STATE ToxCall::state
+@brief State of the peer (not ours!)
+*/
 
 using namespace std;
 
@@ -44,7 +57,7 @@ ToxCall::~ToxCall()
     audio.unsubscribeOutput(alSource);
 }
 
-const ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
+ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
     audioInConn = other.audioInConn;
     other.audioInConn = QMetaObject::Connection();
@@ -106,6 +119,7 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
     {
         videoSource = new CoreVideoSource;
         CameraSource& source = CameraSource::getInstance();
+
         if (!source.isOpen())
             source.open();
         source.subscribe();
@@ -144,7 +158,7 @@ ToxFriendCall::~ToxFriendCall()
     }
 }
 
-const ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
+ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
 {
     ToxCall::operator =(move(other));
     videoEnabled = other.videoEnabled;
@@ -178,7 +192,7 @@ ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
 {
 }
 
-const ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
+ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
 {
     ToxCall::operator =(move(other));
 

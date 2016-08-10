@@ -104,6 +104,9 @@ Core::~Core()
     deadifyTox();
 }
 
+/**
+@brief Returns the global widget's Core instance
+*/
 Core* Core::getInstance()
 {
     return Nexus::getCore();
@@ -217,6 +220,9 @@ void Core::makeTox(QByteArray savedata)
     }
 }
 
+/**
+@brief Initializes the core, must be called before anything else
+*/
 void Core::start()
 {
     bool isNewProfile = profile.isNewProfile();
@@ -329,6 +335,9 @@ void Core::start()
  */
 #define CORE_DISCONNECT_TOLERANCE 30
 
+/**
+@brief Processes toxcore events and ensure we stay connected, called by its own timer
+*/
 void Core::process()
 {
     if (!isReady())
@@ -383,6 +392,9 @@ bool Core::checkConnection()
     return isConnected;
 }
 
+/**
+@brief Connects us to the Tox network
+*/
 void Core::bootstrapDht()
 {
     const Settings& s = Settings::getInstance();
@@ -618,7 +630,7 @@ int Core::sendAction(uint32_t friendId, const QString &action)
 void Core::sendTyping(uint32_t friendId, bool typing)
 {
     bool ret = tox_self_set_typing(tox, friendId, typing, nullptr);
-    if (ret == false)
+    if (!ret)
         emit failedToSetTyping(typing);
 }
 
@@ -656,9 +668,9 @@ void Core::changeGroupTitle(int groupId, const QString& title)
         emit groupTitleChanged(groupId, getUsername(), title);
 }
 
-void Core::sendFile(uint32_t friendId, QString Filename, QString FilePath, long long filesize)
+void Core::sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize)
 {
-    CoreFile::sendFile(this, friendId, Filename, FilePath, filesize);
+    CoreFile::sendFile(this, friendId, filename, filePath, filesize);
 }
 
 void Core::sendAvatarFile(uint32_t friendId, const QByteArray& data)
@@ -701,15 +713,14 @@ void Core::removeFriend(uint32_t friendId, bool fake)
     if (!isReady() || fake)
         return;
 
-    if (tox_friend_delete(tox, friendId, nullptr) == false)
+    if (!tox_friend_delete(tox, friendId, nullptr))
     {
         emit failedToRemoveFriend(friendId);
+        return;
     }
-    else
-    {
-        profile.saveToxSave();
-        emit friendRemoved(friendId);
-    }
+
+    profile.saveToxSave();
+    emit friendRemoved(friendId);
 }
 
 void Core::removeGroup(int groupId, bool fake)
@@ -721,6 +732,9 @@ void Core::removeGroup(int groupId, bool fake)
     av->leaveGroupCall(groupId);
 }
 
+/**
+@brief Returns our username, or an empty string on failure
+*/
 QString Core::getUsername() const
 {
     QString sname;
@@ -741,16 +755,15 @@ void Core::setUsername(const QString& username)
 
     CString cUsername(username);
 
-    if (tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr) == false)
+    if (!tox_self_set_name(tox, cUsername.data(), cUsername.size(), nullptr))
     {
         emit failedToSetUsername(username);
+        return;
     }
-    else
-    {
-        emit usernameSet(username);
-        if (ready)
-            profile.saveToxSave();
-    }
+
+    emit usernameSet(username);
+    if (ready)
+        profile.saveToxSave();
 }
 
 void Core::setAvatar(const QByteArray& data)
@@ -771,6 +784,9 @@ void Core::setAvatar(const QByteArray& data)
     AvatarBroadcaster::enableAutoBroadcast();
 }
 
+/**
+@brief Returns our Tox ID
+*/
 ToxId Core::getSelfId() const
 {
     uint8_t friendAddress[TOX_ADDRESS_SIZE] = {0};
@@ -778,6 +794,9 @@ ToxId Core::getSelfId() const
     return ToxId(CFriendAddress::toString(friendAddress));
 }
 
+/**
+@brief Returns our public and private keys
+*/
 QPair<QByteArray, QByteArray> Core::getKeypair() const
 {
     QPair<QByteArray, QByteArray> keypair;
@@ -792,6 +811,9 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
     return keypair;
 }
 
+/**
+@brief Returns our status message, or an empty string on failure
+*/
 QString Core::getStatusMessage() const
 {
     QString sname;
@@ -805,6 +827,9 @@ QString Core::getStatusMessage() const
     return sname;
 }
 
+/**
+@brief Returns our user status
+*/
 Status Core::getStatus() const
 {
     return (Status)tox_self_get_status(tox);
@@ -817,16 +842,15 @@ void Core::setStatusMessage(const QString& message)
 
     CString cMessage(message);
 
-    if (tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr) == false)
+    if (!tox_self_set_status_message(tox, cMessage.data(), cMessage.size(), nullptr))
     {
         emit failedToSetStatusMessage(message);
+        return;
     }
-    else
-    {
-        if (ready)
-            profile.saveToxSave();
-        emit statusMessageSet(message);
-    }
+
+    if (ready)
+        profile.saveToxSave();
+    emit statusMessageSet(message);
 }
 
 void Core::setStatus(Status status)
@@ -870,6 +894,9 @@ QString Core::sanitize(QString name)
     return name;
 }
 
+/**
+@brief Returns the unencrypted tox save data
+*/
 QByteArray Core::getToxSaveData()
 {
     uint32_t fileSize = tox_get_savedata_size(tox);
@@ -928,6 +955,9 @@ void Core::checkLastOnline(uint32_t friendId) {
         emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
 }
 
+/**
+@brief Returns the list of friendIds in our friendlist, an empty list on error
+*/
 QVector<uint32_t> Core::getFriendList() const
 {
     QVector<uint32_t> friends;
@@ -936,11 +966,17 @@ QVector<uint32_t> Core::getFriendList() const
     return friends;
 }
 
+/**
+@brief Return the number of peers in the group chat on success, or -1 on failure
+*/
 int Core::getGroupNumberPeers(int groupId) const
 {
     return tox_group_number_peers(tox, groupId);
 }
 
+/**
+@brief Get the name of a peer of a group
+*/
 QString Core::getGroupPeerName(int groupId, int peerId) const
 {
     QString name;
@@ -955,6 +991,9 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
     return name;
 }
 
+/**
+@brief Get the public key of a peer of a group
+*/
 ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 {
     ToxId peerToxId;
@@ -971,6 +1010,9 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
     return peerToxId;
 }
 
+/**
+@brief Get the names of the peers of a group
+*/
 QList<QString> Core::getGroupPeerNames(int groupId) const
 {
     QList<QString> names;
@@ -1002,6 +1044,9 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
     return names;
 }
 
+/**
+@brief Accept a groupchat invite
+*/
 int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* friend_group_public_key,uint16_t length) const
 {
     if (type == TOX_GROUPCHAT_TYPE_TEXT)
@@ -1023,6 +1068,9 @@ int Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* frien
     }
 }
 
+/**
+@brief Quit a groupchat
+*/
 void Core::quitGroupChat(int groupId) const
 {
     tox_del_groupchat(tox, groupId);
@@ -1055,11 +1103,17 @@ int Core::createGroup(uint8_t type)
     }
 }
 
+/**
+@brief Checks if a friend is online. Unknown friends are considered offline.
+*/
 bool Core::isFriendOnline(uint32_t friendId) const
 {
     return tox_friend_get_connection_status(tox, friendId, nullptr) != TOX_CONNECTION_NONE;
 }
 
+/**
+@brief Checks if we have a friend by address
+*/
 bool Core::hasFriendWithAddress(const QString &addr) const
 {
     // Valid length check
@@ -1072,6 +1126,9 @@ bool Core::hasFriendWithAddress(const QString &addr) const
     return hasFriendWithPublicKey(pubkey);
 }
 
+/**
+@brief Checks if we have a friend by public key
+*/
 bool Core::hasFriendWithPublicKey(const QString &pubkey) const
 {
     // Valid length check
@@ -1103,6 +1160,9 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
     return found;
 }
 
+/**
+@brief Get the full address if known, or public key of a friend
+*/
 QString Core::getFriendAddress(uint32_t friendNumber) const
 {
     QString id = getFriendPublicKey(friendNumber);
@@ -1113,6 +1173,9 @@ QString Core::getFriendAddress(uint32_t friendNumber) const
     return id;
 }
 
+/**
+@brief Get the public key part of the ToxID only
+*/
 QString Core::getFriendPublicKey(uint32_t friendNumber) const
 {
     uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
@@ -1127,6 +1190,9 @@ QString Core::getFriendPublicKey(uint32_t friendNumber) const
     return id;
 }
 
+/**
+@brief Get the username of a friend
+*/
 QString Core::getFriendUsername(uint32_t friendnumber) const
 {
     size_t namesize = tox_friend_get_name_size(tox, friendnumber, nullptr);
@@ -1188,7 +1254,7 @@ QString Core::getPeerName(const ToxId& id) const
         return name;
 
     uint8_t* cname = new uint8_t[nameSize<TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
-    if (tox_friend_get_name(tox, friendId, cname, nullptr) == false)
+    if (!tox_friend_get_name(tox, friendId, cname, nullptr))
     {
         qWarning() << "getPeerName: Can't get name of friend "+QString().setNum(friendId);
         delete[] cname;
@@ -1200,6 +1266,9 @@ QString Core::getPeerName(const ToxId& id) const
     return name;
 }
 
+/**
+@brief Most of the API shouldn't be used until Core is ready, call start() first
+*/
 bool Core::isReady()
 {
     return av && av->getToxAv() && tox && ready;
@@ -1210,8 +1279,13 @@ void Core::setNospam(uint32_t nospam)
     uint8_t *nspm = reinterpret_cast<uint8_t*>(&nospam);
     std::reverse(nspm, nspm + 4);
     tox_self_set_nospam(tox, nospam);
+
+    emit idSet(getSelfId().toString());
 }
 
+/**
+@brief Returns the unencrypted tox save data
+*/
 void Core::killTimers(bool onlyStop)
 {
     assert(QThread::currentThread() == coreThread);
@@ -1224,6 +1298,10 @@ void Core::killTimers(bool onlyStop)
     }
 }
 
+/**
+@brief Reinitialized the core.
+@warning Must be called from the Core thread, with the GUI thread ready to process events.
+*/
 void Core::reset()
 {
     assert(QThread::currentThread() == coreThread);

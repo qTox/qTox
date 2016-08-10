@@ -8,80 +8,60 @@
         <translation>Ääni/Video</translation>
     </message>
     <message>
-        <source>%1x%2</source>
-        <translation>%1x%2</translation>
-    </message>
-    <message>
         <source>Default resolution</source>
         <translation>Oletustarkkuus</translation>
     </message>
     <message>
-        <source> at %1 FPS</source>
-        <translation type="unfinished">%1 FPS:llä</translation>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="unfinished">Ei mitään</translation>
-    </message>
-</context>
-<context>
-    <name>AVSettings</name>
-    <message>
-        <source>Playback</source>
-        <translation type="unfinished">Toisto</translation>
+        <source>Play a test sound while changing the output volume.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Microphone</source>
-        <translation>Mikrofoni</translation>
+        <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select region</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation>Ääniasetukset</translation>
+        <translation type="unfinished">Ääniasetukset</translation>
     </message>
     <message>
-        <source>Use slider to set volume of your speakers.</source>
-        <translation>Aseta kaiuttimien äänenvoimakkuus liukusäätimellä.</translation>
+        <source>Gain</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation>Toistolaite</translation>
+        <translation type="unfinished">Toistolaite</translation>
+    </message>
+    <message>
+        <source>Use slider to set volume of your speakers.</source>
+        <translation type="unfinished">Aseta kaiuttimien äänenvoimakkuus liukusäätimellä.</translation>
     </message>
     <message>
         <source>Capture device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Filter audio</source>
-        <translation>Suodata ääni</translation>
-    </message>
-    <message>
-        <source>0</source>
+        <source>Volume</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filter sound from your microphone, so that people hearing you would get better sound.</source>
-        <translation>Suodata mikrofonin nauhoittama ääni laadun parantamiseksi.</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Use slider to set volume of your microphone.</source>
-        <translation>Aseta mikrofonin äänenvoimakkuus liukusäätimellä.</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation>Videoasetukset</translation>
+        <translation type="unfinished">Videoasetukset</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videolaite</translation>
-    </message>
-    <message>
-        <source>Resolution</source>
-        <translatorcomment>Could also use the word &quot;Erottelukyky&quot;.</translatorcomment>
-        <translation type="unfinished">Tarkkuus</translation>
+        <translation type="unfinished">Videolaite</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -89,25 +69,50 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Aseta kamerasi tarkkuus.
+        <translation type="unfinished">Aseta kamerasi tarkkuus.
 Korkeammilla arvoilla ystäväsi saavat paremman kuvanlaadun.
 Korkeampi kuvanlaatu vaatii kuitennii paremman internet-yhteyden.
 Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua varten, jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
+        <source>Resolution</source>
+        <translation type="unfinished">Tarkkuus</translation>
+    </message>
+    <message>
         <source>Rescan devices</source>
-        <translation>Uudelleenhae laitteet</translation>
+        <translation type="unfinished">Uudelleenhae laitteet</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt:n versio:</translation>
-    </message>
-    <message>
         <source>About</source>
         <translation>Tietoja</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>report it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart qTox to install version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qTox is downloading update %1</source>
+        <comment>%1 is the version of the update</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -121,47 +126,35 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
         <translation>toxcore:n versio: $TOXCOREVERSION</translation>
     </message>
     <message>
-        <source>Qt version:</source>
-        <translation>Qt:n versio:</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Kommitti: &lt;a href=&quot;https://github.com/tux3/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>You are using a qTox nightly build.</source>
-        <translation type="unfinished">Käytät qToxin yöllistä versiota.</translation>
+        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
+        <translation>Kommitti: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
     </message>
     <message>
         <source>License</source>
         <translation>Lisenssi</translation>
-    </message>
-    <message utf8="true">
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Oxygen-Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; color:#000000;&quot;&gt;Copyright © 2014-2015 by The qTox Project&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;qTox is a Qt-based graphical interface for Tox.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is libre software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;qTox is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;You should have received a copy of the GNU General Public License along with this program. If not, see &lt;/span&gt;&lt;a href=&quot;https://www.gnu.org/copyleft/gpl.html&quot;&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;; text-decoration: underline; color:#007af4;&quot;&gt;https://www.gnu.org/copyleft/gpl.html&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Ubuntu&apos;;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Authors</source>
         <translation>Tekijät</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alkuperäinen tekijä: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Katso koko lista &lt;a href=&quot;https://github.com/tux3/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tekijöistä&lt;/span&gt;&lt;/a&gt; Githubissa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alkuperäinen tekijä: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Katso koko lista &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tekijöistä&lt;/span&gt;&lt;/a&gt; Githubissa&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Tiedetyt ongelmat</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A list of all known issues may be found at our &lt;a href=&quot;https://github.com/tux3/qTox/issues&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;bug-tracker&lt;/span&gt;&lt;/a&gt; at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our &lt;a href=&quot;https://github.com/tux3/qTox/wiki/Writing-Useful-Bug-Reports&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing Useful Bug Reports&lt;/span&gt;&lt;/a&gt; wiki article.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Qt version: $QTVERSION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using qTox version $GIT_DESCRIBE.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading update: %p%</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -273,15 +266,30 @@ p, li { white-space: pre-wrap; }
         <translation>Et voi lisätä itseäsi kontaktiksi</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox:in täytyy käyttää ToxDNS:ää, mutta ei voi tehdä sitä välipalvelimen kautta.
-Ohita välipalvelin ja yhdistä internettiin suoraan?</translation>
-    </message>
-    <message>
         <source>This Tox ID does not exist</source>
         <comment>DNS error</comment>
         <translation>Tätä Tox ID:tä ei ole olemassa</translation>
+    </message>
+    <message>
+        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
+    Ignore the proxy and connect to the Internet directly?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend requests</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Hyväksy</translation>
+    </message>
+    <message>
+        <source>Reject</source>
+        <translation type="unfinished">Hylkää</translation>
     </message>
 </context>
 <context>
@@ -289,18 +297,6 @@ Ohita välipalvelin ja yhdistä internettiin suoraan?</translation>
     <message>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronized - safe (recommended)</source>
-        <translation>Synkronisoitu - turvallinen (suositus)</translation>
-    </message>
-    <message>
-        <source>Partially async - risky (20% faster)</source>
-        <translation>Osittain asynkroninen - riskialtis (20% nopeampi)</translation>
-    </message>
-    <message>
-        <source>Asynchronous - dangerous (fastest)</source>
-        <translation>Asynkroninen - vaarallinen (nopein)</translation>
     </message>
 </context>
 <context>
@@ -321,57 +317,6 @@ Ohita välipalvelin ja yhdistä internettiin suoraan?</translation>
     <message>
         <source>Reset to default settings</source>
         <translation>Palauta oletusasetukset</translation>
-    </message>
-    <message>
-        <source>Chat history</source>
-        <translation>Keskusteluhistoria</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Writing to DB&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://www.sqlite.org/pragma.html#pragma_synchronous&quot;&gt;&lt;span style=&quot; text-decoration:underline; color:#0000ff;&quot;&gt;Tietokantaan kirjoittaminen&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>Android</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>qTox</source>
-        <translation>qTox</translation>
-    </message>
-    <message>
-        <source>Someone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Someone else</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Groupbot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>That guy who I don&apos;t remember adding</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NASA manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lorem</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ipsum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dolor</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -476,6 +421,14 @@ Ohita välipalvelin ja yhdistä internettiin suoraan?</translation>
     <message>
         <source>Call duration: </source>
         <translation>Puhelun kesto:</translation>
+    </message>
+    <message>
+        <source>%1 is typing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Kopioi</translation>
     </message>
 </context>
 <context>
@@ -601,10 +554,6 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
     <message>
         <source>Filename</source>
         <translation>Tiedostonimi</translation>
-    </message>
-    <message>
-        <source>[preview]</source>
-        <translation>[esikatselu]</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -819,6 +768,14 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
     <message>
         <source>Show details</source>
         <translation>Näytä yksityiskohdat</translation>
+    </message>
+    <message>
+        <source>To new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invite to group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1130,6 +1087,46 @@ will be sent to them when they appear online to you.</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
         <translation>Ota käyttöön IPv6 (suositus)</translation>
     </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play sound while Busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericChatForm</name>
@@ -1189,6 +1186,10 @@ will be sent to them when they appear online to you.</source>
         <source>Cleared</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Quote selected text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1203,6 +1204,14 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>Hide Messages</source>
         <translation>Piilota viestit</translation>
+    </message>
+</context>
+<context>
+    <name>Group</name>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1240,6 +1249,33 @@ will be sent to them when they appear online to you.</source>
     <message>
         <source>End audio call</source>
         <translation>Lopeta äänipuhelu</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteForm</name>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1367,6 +1403,38 @@ Profile does not contain your history.</source>
         <comment>delete profile button</comment>
         <translation>Poista</translation>
     </message>
+    <message>
+        <source>Toxme register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide my name from the public list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Päivitys</translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1475,6 +1543,14 @@ Haluat ehkä luoda sellaisen.</translation>
         <source>Wrong password.</source>
         <translation>Väärä salasana.</translation>
     </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1555,6 +1631,13 @@ Haluat ehkä luoda sellaisen.</translation>
             <numerusform>Lukematon viesti</numerusform>
             <numerusform>Lukemattomat viestit</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>CAPS-LOCK ENABLED</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1748,6 +1831,136 @@ Please use another image.</source>
 Share it with your friends to communicate.</source>
         <translation>Tämän merkkijonon avulla toiset Tox käyttäjät voivat ottaa yhteyttä sinuun. Jaa merkkijono ystävillesi.</translation>
     </message>
+    <message>
+        <source>The following files could not be deleted:</source>
+        <comment>deletion failed text part 1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please manually remove them.</source>
+        <comment>deletion failed text part 2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files could not be deleted!</source>
+        <comment>deletion failed title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update (processing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Account %1@%2 updated successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully added %1@%2 to the database. Save your password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toxme error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Päivitys</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <comment>button text</comment>
+        <translation type="unfinished">Vaihda salasana</translation>
+    </message>
+    <message>
+        <source>Set profile password</source>
+        <comment>button text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProfileImporter</name>
+    <message>
+        <source>Import profile</source>
+        <comment>import dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox save file (*.tox)</source>
+        <comment>import dialog filter</comment>
+        <translation type="unfinished">Tox-tiedosto (*.tox)</translation>
+    </message>
+    <message>
+        <source>Ignoring non-Tox file</source>
+        <comment>popup title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
+        <comment>popup text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile already exists</source>
+        <comment>import confirm title</comment>
+        <translation type="unfinished">Profiili on jo olemassa</translation>
+    </message>
+    <message>
+        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <comment>import confirm text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1.tox was successfully imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QApplication</name>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Peru</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LTR</source>
+        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1798,34 +2011,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ignoring non-Tox file</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: you&apos;ve chosen a file that is not a Tox save file; ignoring.</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile already exists</source>
-        <comment>import confirm title</comment>
-        <translation type="unfinished">Profiili on jo olemassa</translation>
-    </message>
-    <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
-        <comment>import confirm text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile imported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1.tox was successfully imported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resizing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1843,6 +2028,66 @@ It will be installed when qTox restarts.</source>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
         <translation>Työpöytä</translation>
+    </message>
+    <message>
+        <source>Version %1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server doesn&apos;t support Toxme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This name is already in use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is already registered under another name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please don&apos;t use a space in your name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password incorrect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t use this name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tox ID not sent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>That user does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Virhe</translation>
+    </message>
+    <message>
+        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem with HTTPS connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2063,21 +2308,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">Profiili</translation>
     </message>
     <message>
-        <source>Group invite</source>
-        <comment>popup title</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 has invited you to a groupchat. Would you like to join?</source>
-        <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;Unknown&gt;</source>
-        <comment>Placeholder when we don&apos;t know someone&apos;s name in a group chat</comment>
-        <translation>&lt;tuntematon&gt;</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2169,6 +2399,42 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Previous Conversation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;Empty&gt;</source>
+        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat #%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new group...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Friend Request(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n New Group Invite(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <comment>Tray action menu to show qTox window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

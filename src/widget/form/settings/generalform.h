@@ -34,7 +34,10 @@ class GeneralForm : public GenericForm
 public:
     explicit GeneralForm(SettingsWidget *parent);
     ~GeneralForm();
-    virtual QString getFormName() final override {return tr("General");}
+    virtual QString getFormName() final override
+    {
+        return tr("General");
+    }
 
 private slots:
     void onEnableIPv6Updated();
@@ -53,7 +56,7 @@ private slots:
     void onStyleSelected(QString style);
     void onTimestampSelected(int index);
     void onDateFormatSelected(int index);
-    void onMarkdownUpdated();
+    void onStyleUpdated();
     void onSetStatusChange();
     void onAutoAwayChanged();
     void onUseEmoticonsChange();
@@ -65,6 +68,7 @@ private slots:
     void onShowWindowChanged();
     void onSetShowInFront();
     void onSetNotifySound();
+    void onSetBusySound();
     void onSetGroupAlwaysNotify();
     void onFauxOfflineMessaging();
     void onCompactLayout();
@@ -72,6 +76,9 @@ private slots:
     void onDontGroupWindowsChanged();
     void onGroupchatPositionChanged();
     void onThemeColorChanged(int);
+
+    void on_txtChatFont_currentFontChanged(const QFont& f);
+    void on_txtChatFontSize_valueChanged(int px);
 
 private:
     void retranslateUi();

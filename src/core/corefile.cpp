@@ -30,14 +30,27 @@
 #include <QDir>
 #include <memory>
 
+/**
+@class CoreFile
+@brief Implements Core's file transfer callbacks.
+
+Avoids polluting core.h with private internal callbacks.
+*/
+
 QMutex CoreFile::fileSendMutex;
 QHash<uint64_t, ToxFile> CoreFile::fileMap;
 using namespace std;
 
+/**
+@brief Get corefile iteration interval.
+
+tox_iterate calls to get good file transfer performances
+@return The maximum amount of time in ms that Core should wait between two tox_iterate() calls.
+*/
 unsigned CoreFile::corefileIterationInterval()
 {
     /// Sleep at most 1000ms if we have no FT, 10 for user FTs, 50 for the rest (avatars, ...)
-    constexpr unsigned fastFileInterval=10, slowFileInterval=50, idleInterval=1000;
+    constexpr unsigned fastFileInterval = 10, slowFileInterval = 50, idleInterval = 1000;
     unsigned interval = idleInterval;
 
     for (ToxFile& file : fileMap)
@@ -77,7 +90,6 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
         qWarning() << "sendAvatarFile: Can't create the Tox file sender, error"<<err;
         return;
     }
-    //qDebug() << QString("sendAvatarFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
     ToxFile file{fileNum, friendId, "", "", ToxFile::SENDING};
     file.filesize = filesize;
@@ -89,22 +101,22 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     addFile(friendId, fileNum, file);
 }
 
-void CoreFile::sendFile(Core* core, uint32_t friendId, QString Filename, QString FilePath, long long filesize)
+void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString filePath, long long filesize)
 {
     QMutexLocker mlocker(&fileSendMutex);
 
-    QByteArray fileName = Filename.toUtf8();
+    QByteArray fileName = filename.toUtf8();
     uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_DATA, filesize, nullptr,
                                 (uint8_t*)fileName.data(), fileName.size(), nullptr);
     if (fileNum == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "sendFile: Can't create the Tox file sender";
-        emit core->fileSendFailed(friendId, Filename);
+        emit core->fileSendFailed(friendId, filename);
         return;
     }
     qDebug() << QString("sendFile: Created file sender %1 with friend %2").arg(fileNum).arg(friendId);
 
-    ToxFile file{fileNum, friendId, fileName, FilePath, ToxFile::SENDING};
+    ToxFile file{fileNum, friendId, fileName, filePath, ToxFile::SENDING};
     file.filesize = filesize;
     file.resumeFileId.resize(TOX_FILE_ID_LENGTH);
     tox_file_get_file_id(core->tox, friendId, fileNum, (uint8_t*)file.resumeFileId.data(), nullptr);
@@ -350,7 +362,6 @@ void CoreFile::onFileControlCallback(Tox*, uint32_t friendId, uint32_t fileId,
 void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
                               uint64_t pos, size_t length, void* core)
 {
-    //qDebug() << "File data req of "<<length<<" at "<<pos<<" for file "<<friendId<<':'<<fileId;
 
     ToxFile* file = findFile(friendId, fileId);
     if (!file)
@@ -362,7 +373,6 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
     // If we reached EOF, ack and cleanup the transfer
     if (!length)
     {
-        //qDebug("onFileDataCallback: File sending completed");
         if (file->fileKind != TOX_FILE_KIND_AVATAR)
         {
             emit static_cast<Core*>(core)->fileTransferFinished(*file);
@@ -408,9 +418,6 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
 void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                     const uint8_t *data, size_t length, void *_core)
 {
-    //qDebug() << QString("Received chunk for %1:%2 pos %3 size %4")
-    //                    .arg(friendId).arg(fileId).arg(position).arg(length);
-
     Core* core = static_cast<Core*>(_core);
     ToxFile* file = findFile(friendId, fileId);
     if (!file)

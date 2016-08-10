@@ -30,7 +30,6 @@
 
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
-#include "src/widget/style.h"
 
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0
@@ -56,12 +55,15 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     //quotes (green text)
     text = detectQuotes(detectAnchors(text), type);
 
-    //markdown
-    if (Settings::getInstance().getMarkdownPreference() != NONE)
-        text = detectMarkdown(text);
+    //text styling
+    if (Settings::getInstance().getStylePreference() != NONE)
+        text = detectStyle(text);
 
     switch(type)
     {
+    case NORMAL:
+        text = wrapDiv(text, "msg");
+        break;
     case ACTION:
         senderText = "*";
         text = wrapDiv(QString("%1 %2").arg(sender.toHtmlEscaped(), text), "action");
@@ -70,13 +72,16 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     case ALERT:
         text = wrapDiv(text, "alert");
         break;
-    default:
-        text = wrapDiv(text, "msg");
     }
 
     // Note: Eliding cannot be enabled for RichText items. (QTBUG-17207)
-    msg->addColumn(new Text(senderText, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text(text, Style::getFont(Style::Big), false, ((type == ACTION) && isMe) ? QString("%1 %2").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont authorFont = baseFont;
+    if (isMe)
+        authorFont.setBold(true);
+
+    msg->addColumn(new Text(senderText, authorFont, true, sender, type == ACTION ? actionColor : Qt::black), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text(text, baseFont, false, ((type == ACTION) && isMe) ? QString("%1 %2").arg(sender, rawMessage) : rawMessage), ColumnFormat(1.0, ColumnFormat::VariableSize));
     msg->addColumn(new Spinner(":/ui/chatArea/spinner.svg", QSize(16, 16), 360.0/1.6), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     if (!date.isNull())
@@ -98,9 +103,11 @@ ChatMessage::Ptr ChatMessage::createChatInfoMessage(const QString &rawMessage, S
     case TYPING: img = ":/ui/chatArea/typing.svg";   break;
     }
 
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+
     msg->addColumn(new Image(QSize(18, 18), img), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("<b>" + text + "</b>", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Text("<b>" + text + "</b>", baseFont, false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
 }
@@ -109,9 +116,14 @@ ChatMessage::Ptr ChatMessage::createFileTransferMessage(const QString& sender, T
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
-    msg->addColumn(new Text(sender, isMe ? Style::getFont(Style::BigBold) : Style::getFont(Style::Big), true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    QFont authorFont = baseFont;
+    if (isMe)
+        authorFont.setBold(true);
+
+    msg->addColumn(new Text(sender, authorFont, true), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
     msg->addColumn(new ChatLineContentProxy(new FileTransferWidget(0, file), 320, 0.6f), ColumnFormat(1.0, ColumnFormat::VariableSize));
-    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
+    msg->addColumn(new Timestamp(date, Settings::getInstance().getTimestampFormat(), baseFont), ColumnFormat(TIME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
 
     return msg;
 }
@@ -120,6 +132,8 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
 
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+
     // Note: "[user]..." is just a placeholder. The actual text is set in ChatForm::setFriendTyping()
     //
     // FIXME: Due to circumstances, placeholder is being used in a case where
@@ -127,7 +141,7 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     // This causes "[user]..." to be displayed in place of user nick, as long
     // as user will keep typing. Issue #1280
     msg->addColumn(new NotificationIcon(QSize(18, 18)), ColumnFormat(NAME_COL_WIDTH, ColumnFormat::FixedSize, ColumnFormat::Right));
-    msg->addColumn(new Text("[user]...", Style::getFont(Style::Big), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
+    msg->addColumn(new Text("[user]...", baseFont, false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Left));
 
     return msg;
 }
@@ -135,17 +149,21 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
 ChatMessage::Ptr ChatMessage::createBusyNotification()
 {
     ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+    baseFont.setPixelSize(baseFont.pixelSize() + 2);
+    baseFont.setBold(true);
 
-    // TODO: Bigger font
-    msg->addColumn(new Text(QObject::tr("Resizing"), Style::getFont(Style::ExtraBig), false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
+    msg->addColumn(new Text(QObject::tr("Resizing"), baseFont, false, ""), ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
 
     return msg;
 }
 
 void ChatMessage::markAsSent(const QDateTime &time)
 {
+    QFont baseFont = Settings::getInstance().getChatMessageFont();
+
     // remove the spinner and replace it by $time
-    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), Style::getFont(Style::Big)));
+    replaceContent(2, new Timestamp(time, Settings::getInstance().getTimestampFormat(), baseFont));
 }
 
 QString ChatMessage::toString() const
@@ -181,19 +199,21 @@ void ChatMessage::hideDate()
         c->hide();
 }
 
-QString ChatMessage::detectMarkdown(const QString &str)
+QString ChatMessage::detectStyle(const QString &str)
 {
     QString out = str;
 
-    // Create regex for certain markdown syntax
-    QRegExp exp("(\\*\\*)([^\\*\\*]{2,})(\\*\\*)"   // Bold    **text**
-                "|(\\*)([^\\*]{2,})(\\*)"           // Italics *text*
-                "|(\\_)([^\\_]{2,})(\\_)"           // Italics _text_
-                "|(\\_\\_)([^\\_\\_]{2,})(\\_\\_)"  // Bold    __text__
-                "|(\\-)([^\\-]{2,})(\\-)"           // Underline  -text-
-                "|(\\~)([^\\~]{2,})(\\~)"           // Strike  ~text~
-                "|(\\~~)([^\\~\\~]{2,})(\\~~)"      // Strike  ~~text~~
-                "|(\\`)([^\\`]{2,})(\\`)"           // Codeblock  `text`
+    // Create regex for text styling syntax
+    QRegExp exp("(\\*)([^\\*]{2,})(\\*)"            		// Bold         *text*
+                "|(\\*\\*)([^\\*\\*]{2,})(\\*\\*)"  		// Bold         **text**
+                "|(\\/)([^\\/]{2,})(\\/)"           		// Italics      /text/
+                "|(\\/\\/)([^\\/\\/]{2,})(\\/\\/)"  		// Italics      //text//
+                "|(\\_)([^\\_]{2,})(\\_)"           		// Underline    _text_
+                "|(\\_\\_)([^\\_\\_]{2,})(\\_\\_)"  		// Underline    __text__
+                "|(\\~)([^\\~]{2,})(\\~)"           		// Strike       ~text~
+                "|(\\~\\~)([^\\~\\~]{2,})(\\~\\~)"      	// Strike       ~~text~~
+                "|(\\`)([^\\`]{2,})(\\`)"                   // Codeblock    `text`
+                "|(\\`\\`\\`)([^\\`\\`\\`]{2,})(\\`\\`\\`)" // Codeblock    ```\ntext\n```
                 );
 
     int offset = 0;
@@ -201,34 +221,38 @@ QString ChatMessage::detectMarkdown(const QString &str)
     {
         QString snipCheck = out.mid(offset-1,exp.cap(0).length()+2);
         QString snippet = exp.cap(0).trimmed();
-
         QString htmledSnippet;
 
         // Only parse if surrounded by spaces, newline(s) and/or beginning/end of line
-        if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0) && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.toHtmlEscaped().length() == out.toHtmlEscaped().length()))
+        if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0)
+            && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.length() == out.length()))
         {
-            int mul = 0; // Determines how many characters to strip from markdown text
-            // Set mul depending on markdownPreference
-            if (Settings::getInstance().getMarkdownPreference() == WITHOUT_CHARS)
+            int mul = 0; // Determines how many characters to strip from text
+            // Set mul depending on styleownPreference
+            if (Settings::getInstance().getStylePreference() == WITHOUT_CHARS)
                 mul = 2;
 
-            // Match captured string to corresponding md format
-            if (exp.cap(1) == "**") // Bold **text**
-                htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(4) == "*" && snippet.length() > 2) // Italics *text*
-                htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(7) == "_" && snippet.length() > 2) // Italics _text_
-                htmledSnippet = QString(" <i>%1</i> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(10) == "__"&& snippet.length() > 4) // Bold __text__
-                htmledSnippet = QString(" <b>%1</b> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(13) == "-" && snippet.length() > 2) // Underline -text-
-                htmledSnippet = QString(" <u>%1</u> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(16) == "~" && snippet.length() > 2) // Strikethrough ~text~
-                htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(19) == "~~" && snippet.length() > 4) // Strikethrough ~~text~~
-                htmledSnippet = QString(" <s>%1</s> ").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(22) == "`" && snippet.length() > 2) // Codeblock `text`
+            // Match captured string to corresponding style format
+            if (exp.cap(1) == "*" && snippet.length() > 2) // Bold *text*
+                htmledSnippet = QString("<b>%1</b>").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(4) == "**" && snippet.length() > 4) // Bold **text**
+                htmledSnippet = QString("<b>%1</b>").arg(snippet.mid(mul,snippet.length()-2*mul));
+            else if (exp.cap(7) == "/" && snippet.length() > 2) // Italics /text/
+                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(10) == "//" && snippet.length() > 4) // Italics //text//
+                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(mul,snippet.length()-2*mul));
+            else if (exp.cap(13) == "_"&& snippet.length() > 2) // Underline _text_
+                htmledSnippet = QString("<u>%1</u>").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(16) == "__" && snippet.length() > 4) // Underline __text__
+                htmledSnippet = QString("<u>%1</u>").arg(snippet.mid(mul,snippet.length()-2*mul));
+            else if (exp.cap(19) == "~" && snippet.length() > 2) // Strike ~text~
+                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(22) == "~~" && snippet.length() > 4) // Strike ~~text~~
+                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(mul,snippet.length()-2*mul));
+            else if (exp.cap(25) == "`" && snippet.length() > 2) // Codeblock `text`
                 htmledSnippet = QString("<font color=#595959><code>%1</code></font>").arg(snippet.mid(mul/2,snippet.length()-mul));
+            else if (exp.cap(28) == "```" && snippet.length() > 6) // Codeblock ```text```
+                htmledSnippet = QString("<font color=#595959><code>%1</code></font>").arg(snippet.mid(4*mul,snippet.length()-8*mul));
             else
                 htmledSnippet = snippet;
             out.replace(offset, exp.cap().length(), htmledSnippet);

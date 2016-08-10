@@ -20,17 +20,18 @@
 #ifndef GENERICNETCAMVIEW_H
 #define GENERICNETCAMVIEW_H
 
+#include <QPushButton>
+#include <QVBoxLayout>
 #include <QWidget>
 
-class VideoSurface;
-class QPushButton;
-class QVBoxLayout;
+#include "src/video/videosurface.h"
 
 class GenericNetCamView : public QWidget
 {
     Q_OBJECT
 public:
     explicit GenericNetCamView(QWidget* parent);
+    QSize getSurfaceMinSize();
 
 signals:
     void showMessageClicked();

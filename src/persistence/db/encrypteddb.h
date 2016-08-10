@@ -46,7 +46,7 @@ private:
     static qint64 plainChunkSize;
     static qint64 encryptedChunkSize;
 
-    static TOX_PASS_KEY decryptionKey; ///< When importing, the decryption key may not be the same as the profile key
+    static TOX_PASS_KEY decryptionKey;
 
     qint64 chunkPosition;
     QByteArray buffer;

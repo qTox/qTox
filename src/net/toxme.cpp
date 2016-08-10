@@ -30,6 +30,14 @@
 #include <string>
 #include <ctime>
 
+/**
+@class Toxme
+@brief This class implements a client for the toxme.se API
+
+@note The class is thread safe
+@note May process events while waiting for blocking calls
+*/
+
 QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error)
 {
     if (error)
@@ -136,6 +144,11 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
     return json.toUtf8();
 }
 
+/**
+@brief Converts a toxme address to a Tox ID.
+@param address Toxme address.
+@return Found ToxId (an empty ID on error).
+*/
 ToxId Toxme::lookup(QString address)
 {
     // JSON injection ?
@@ -204,6 +217,16 @@ Toxme::ExecCode Toxme::extractError(QString json)
     return ExecCode(r);
 }
 
+/**
+@brief Creates a new toxme address associated with a Tox ID.
+@param[out] code Tox error code @see getErrorMessage.
+@param[in] server Create toxme account on this server.
+@param[in] id ToxId of current user.
+@param[in] address Create toxme account with this adress.
+@param[in] keepPrivate If true, the address will not be published on toxme site.
+@param[in] bio A short optional description of yourself if you want to publish your address.
+@return password on success, else sets code parameter and returns an empty QString.
+*/
 QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString address,
                              bool keepPrivate, QString bio)
 {
@@ -271,6 +294,12 @@ QString Toxme::getPass(QString json, ExecCode &code) {
     return json;
 }
 
+/**
+@brief Deletes the address associated with your current Tox ID.
+@param server Server to delete the address from.
+@param id ToxId to delete.
+@return Status code returned from server.
+*/
 Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
 {
     const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
@@ -288,21 +317,65 @@ Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
     return extractError(response);
 }
 
+/**
+@brief Return string of the corresponding error code
+@param errorCode Code to get error message
+@return Source error message
+*/
 QString Toxme::getErrorMessage(int errorCode)
 {
     switch (errorCode) {
     case IncorrectResponse:
-        return QObject::tr("Incorrect response");
+        return "Incorrect response";
     case NoPassword:
-        return QObject::tr("No password in response");
+        return "No password in response";
+    case ServerError:
+        return "Server doesn't support Toxme";
+    case -1:
+        return "You must send POST requests to /api";
+    case -2:
+        return "Problem with HTTPS connection";
+    case -3:
+        return "I was unable to read your encrypted payload";
+    case -4:
+        return "You're making too many requests. Wait an hour and try again";
+    case -25:
+        return "This name is already in use";
+    case -26:
+        return "This Tox ID is already registered under another name";
+    case -27:
+        return "Please don't use a space in your name";
+    case -28:
+        return "Password incorrect";
+    case -29:
+        return "You can't use this name";
+    case -30:
+        return "Name not found";
+    case -31:
+        return "Tox ID not sent";
+    case -41:
+        return "Lookup failed because the server replied with invalid data";
+    case -42:
+        return "That user does not exist";
+    case -43:
+        return "Internal lookup error. Please file a bug";
+    default:
+        return QString("Unknown error (%1)").arg(errorCode);
+    }
+}
+
+/**
+@brief Return translated error message
+@param errorCode Code to translate
+@return Translated Toxme error message
+*/
+QString Toxme::translateErrorMessage(int errorCode)
+{
+    switch (errorCode) {
     case ServerError:
         return QObject::tr("Server doesn't support Toxme");
-    case -1:
-        return QObject::tr("You must send POST requests to /api");
     case -2:
-        return QObject::tr("Please try again using a HTTPS connection");
-    case -3:
-        return QObject::tr("I was unable to read your encrypted payload");
+        return QObject::tr("Problem with HTTPS connection");
     case -4:
         return QObject::tr("You're making too many requests. Wait an hour and try again");
     case -25:
@@ -319,13 +392,9 @@ QString Toxme::getErrorMessage(int errorCode)
         return QObject::tr("Name not found");
     case -31:
         return QObject::tr("Tox ID not sent");
-    case -41:
-        return QObject::tr("Lookup failed because the server replied with invalid data");
     case -42:
         return QObject::tr("That user does not exist");
-    case -43:
-        return QObject::tr("Internal lookup error. Please file a bug");
     default:
-        return QObject::tr("Unknown error (%1)").arg(errorCode);
+        return QObject::tr("Internal ToxMe error");
     }
 }

@@ -35,9 +35,24 @@
 #include <QDebug>
 #include <sodium.h>
 
+/**
+@class Profile
+@brief Manages user profiles.
+
+@var bool Profile::newProfile
+@brief True if this is a newly created profile, with no .tox save file yet.
+
+@var bool Profile::isRemoved
+@brief True if the profile has been removed by remove().
+
+@var static constexpr int Profile::encryptHeaderSize = 8
+@brief How much data we need to read to check if the file is encrypted.
+@note Must be >= TOX_ENC_SAVE_MAGIC_LENGTH (8), which isn't publicly defined.
+*/
+
 QVector<QString> Profile::profiles;
 
-Profile::Profile(QString name, QString password, bool isNewProfile)
+Profile::Profile(QString name, const QString &password, bool isNewProfile)
     : name{name}, password{password},
       newProfile{isNewProfile}, isRemoved{false}
 {
@@ -65,7 +80,15 @@ Profile::Profile(QString name, QString password, bool isNewProfile)
     QObject::connect(coreThread, &QThread::started, core, &Core::start);
 }
 
-Profile* Profile::loadProfile(QString name, QString password)
+/**
+@brief Locks and loads an existing profile and creates the associate Core* instance.
+@param name Profile name.
+@param password Profile password.
+@return Returns a nullptr on error. Profile pointer otherwise.
+
+@example If the profile is already in use return nullptr.
+*/
+Profile* Profile::loadProfile(QString name, const QString &password)
 {
     if (ProfileLocker::hasLock())
     {
@@ -142,6 +165,14 @@ Profile* Profile::loadProfile(QString name, QString password)
     return p;
 }
 
+/**
+@brief Creates a new profile and the associated Core* instance.
+@param name Username.
+@param password If password is not empty, the profile will be encrypted.
+@return Returns a nullptr on error. Profile pointer otherwise.
+
+@example If the profile is already in use return nullptr.
+*/
 Profile* Profile::createProfile(QString name, QString password)
 {
     if (ProfileLocker::hasLock())
@@ -182,6 +213,11 @@ Profile::~Profile()
     }
 }
 
+/**
+@brief Lists all the files in the config dir with a given extension
+@param extension Raw extension, e.g. "jpeg" not ".jpeg".
+@return Vector of filenames.
+*/
 QVector<QString> Profile::getFilesByExt(QString extension)
 {
     QDir dir(Settings::getInstance().getSettingsDirPath());
@@ -195,6 +231,10 @@ QVector<QString> Profile::getFilesByExt(QString extension)
     return out;
 }
 
+/**
+@brief Scan for profile, automatically importing them if needed.
+@warning NOT thread-safe.
+*/
 void Profile::scanProfiles()
 {
     profiles.clear();
@@ -222,6 +262,9 @@ QString Profile::getName() const
     return name;
 }
 
+/**
+@brief Starts the Core thread
+*/
 void Profile::startCore()
 {
     coreThread->start();
@@ -232,6 +275,10 @@ bool Profile::isNewProfile()
     return newProfile;
 }
 
+/**
+@brief Loads the profile's .tox save from file, unencrypted
+@return Byte array of loaded profile save.
+*/
 QByteArray Profile::loadToxSave()
 {
     assert(!isRemoved);
@@ -290,6 +337,10 @@ fail:
     return data;
 }
 
+/**
+@brief Saves the profile's .tox save, encrypted if needed.
+@warning Invalid on deleted profiles.
+*/
 void Profile::saveToxSave()
 {
     assert(core->isReady());
@@ -298,6 +349,11 @@ void Profile::saveToxSave()
     saveToxSave(data);
 }
 
+/**
+@brief Write the .tox save, encrypted if needed.
+@param data Byte array of profile save.
+@warning Invalid on deleted profiles.
+*/
 void Profile::saveToxSave(QByteArray data)
 {
     assert(!isRemoved);
@@ -328,7 +384,7 @@ void Profile::saveToxSave(QByteArray data)
     saveFile.write(data);
 
     // check if everything got written
-    if(saveFile.flush())
+    if (saveFile.flush())
     {
         saveFile.commit();
         newProfile = false;
@@ -340,6 +396,12 @@ void Profile::saveToxSave(QByteArray data)
     }
 }
 
+/**
+@brief Gets the path of the avatar file cached by this profile and corresponding to this owner ID.
+@param ownerId Path to avatar of friend with this ID will returned.
+@param forceUnencrypted If true, return the path to the plaintext file even if this is an encrypted profile.
+@return Path to the avatar.
+*/
 QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
 {
     if (password.isEmpty() || forceUnencrypted)
@@ -357,11 +419,20 @@ QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
+/**
+@brief Get our avatar from cache.
+@return Avatar as QPixmap.
+*/
 QPixmap Profile::loadAvatar()
 {
     return loadAvatar(core->getSelfId().publicKey);
 }
 
+/**
+@brief Get a contact's avatar from cache.
+@param ownerId Friend ID to load avatar.
+@return Avatar as QPixmap.
+*/
 QPixmap Profile::loadAvatar(const QString &ownerId)
 {
     QPixmap pic;
@@ -369,11 +440,22 @@ QPixmap Profile::loadAvatar(const QString &ownerId)
     return pic;
 }
 
+/**
+@brief Get a contact's avatar from cache
+@param ownerId Friend ID to load avatar.
+@return Avatar as QByteArray.
+*/
 QByteArray Profile::loadAvatarData(const QString &ownerId)
 {
   return loadAvatarData(ownerId, password);
 }
 
+/**
+@brief Get a contact's avatar from cache, with a specified profile password.
+@param ownerId Friend ID to load avatar.
+@param password Profile password to decrypt data.
+@return Avatar as QByteArray.
+*/
 QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &password)
 {
     QString path = avatarPath(ownerId);
@@ -401,6 +483,11 @@ QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &passwo
     return pic;
 }
 
+/**
+@brief Save an avatar to cache.
+@param pic Picture to save.
+@param ownerId ID of avatar owner.
+*/
 void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
 {
     if (!password.isEmpty() && !pic.isEmpty())
@@ -425,6 +512,11 @@ void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
     }
 }
 
+/**
+@brief Get the tox hash of a cached avatar.
+@param ownerId Friend ID to get hash.
+@return Avatar tox hash.
+*/
 QByteArray Profile::getAvatarHash(const QString &ownerId)
 {
     QByteArray pic = loadAvatarData(ownerId);
@@ -433,21 +525,36 @@ QByteArray Profile::getAvatarHash(const QString &ownerId)
     return avatarHash;
 }
 
+/**
+@brief Removes our own avatar.
+*/
 void Profile::removeAvatar()
 {
     removeAvatar(core->getSelfId().publicKey);
 }
 
+/**
+@brief Checks that the history is enabled in the settings, and loaded successfully for this profile.
+@return True if enabled, false otherwise.
+*/
 bool Profile::isHistoryEnabled()
 {
     return Settings::getInstance().getEnableLogging() && history;
 }
 
+/**
+@brief Get chat history.
+@return May return a nullptr if the history failed to load.
+*/
 History *Profile::getHistory()
 {
     return history.get();
 }
 
+/**
+@brief Removes a cached avatar.
+@param ownerId Friend ID whose avater to delete.
+*/
 void Profile::removeAvatar(const QString &ownerId)
 {
     QFile::remove(avatarPath(ownerId));
@@ -461,11 +568,21 @@ bool Profile::exists(QString name)
     return QFile::exists(path+".tox");
 }
 
+/**
+@brief Checks, if profile has a password.
+@return True if we have a password set (doesn't check the actual file on disk).
+*/
 bool Profile::isEncrypted() const
 {
     return !password.isEmpty();
 }
 
+/**
+@brief Checks if profile is encrypted.
+@note Checks the actual file on disk.
+@param name Profile name.
+@return True if profile is encrypted, false otherwise.
+*/
 bool Profile::isEncrypted(QString name)
 {
     uint8_t data[encryptHeaderSize] = {0};
@@ -483,16 +600,22 @@ bool Profile::isEncrypted(QString name)
     return tox_is_data_encrypted(data);
 }
 
-void Profile::remove()
+/**
+@brief Removes the profile permanently.
+Updates the profiles vector.
+@return Vector of filenames that could not be removed.
+@warning It is invalid to call loadToxSave or saveToxSave on a deleted profile.
+*/
+QVector<QString> Profile::remove()
 {
     if (isRemoved)
     {
-        qWarning() << "Profile "<<name<<" is already removed!";
-        return;
+        qWarning() << "Profile " << name << " is already removed!";
+        return {};
     }
     isRemoved = true;
 
-    qDebug() << "Removing profile"<<name;
+    qDebug() << "Removing profile" << name;
     for (int i=0; i<profiles.size(); i++)
     {
         if (profiles[i] == name)
@@ -503,18 +626,54 @@ void Profile::remove()
     }
     QString path = Settings::getInstance().getSettingsDirPath() + name;
     ProfileLocker::unlock();
-    QFile::remove(path+".tox");
-    QFile::remove(path+".ini");
 
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 0));
-    QFile::remove(HistoryKeeper::getHistoryPath(name, 1));
+    QFile profileMain {path + ".tox"};
+    QFile profileConfig {path + ".ini"};
+    QFile historyLegacyUnencrypted {HistoryKeeper::getHistoryPath(name, 0)};
+    QFile historyLegacyEncrypted {HistoryKeeper::getHistoryPath(name, 1)};
+
+    QVector<QString> ret;
+
+    if (!profileMain.remove() && profileMain.exists())
+    {
+        ret.push_back(profileMain.fileName());
+        qWarning() << "Could not remove file " << profileMain.fileName();
+    }
+    if (!profileConfig.remove() && profileConfig.exists())
+    {
+        ret.push_back(profileConfig.fileName());
+        qWarning() << "Could not remove file " << profileConfig.fileName();
+    }
+
+    if (!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
+    {
+        ret.push_back(historyLegacyUnencrypted.fileName());
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+    if (!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
+    {
+        ret.push_back(historyLegacyEncrypted.fileName());
+        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
+    }
+
     if (history)
     {
-        history->remove();
+        if (!history->remove() && QFile::exists(History::getDbPath(name)))
+        {
+            ret.push_back(History::getDbPath(name));
+            qWarning() << "Could not remove file " << History::getDbPath(name);
+        }
         history.release();
     }
+
+    return ret;
 }
 
+/**
+@brief Tries to rename the profile.
+@param newName New name for the profile.
+@return False on error, true otherwise.
+*/
 bool Profile::rename(QString newName)
 {
     QString path = Settings::getInstance().getSettingsDirPath() + name,
@@ -537,6 +696,10 @@ bool Profile::rename(QString newName)
     return true;
 }
 
+/**
+@brief Checks whether the password is valid.
+@return True, if password is valid, false otherwise.
+*/
 bool Profile::checkPassword()
 {
     if (isRemoved)
@@ -555,6 +718,9 @@ const TOX_PASS_KEY& Profile::getPasskey() const
     return passkey;
 }
 
+/**
+@brief Delete core and restart a new one
+*/
 void Profile::restartCore()
 {
     GUI::setEnabled(false); // Core::reset re-enables it
@@ -563,7 +729,11 @@ void Profile::restartCore()
     QMetaObject::invokeMethod(core, "reset");
 }
 
-void Profile::setPassword(QString newPassword)
+/**
+@brief Changes the encryption password and re-saves everything with it
+@param newPassword Password for encryption.
+*/
+void Profile::setPassword(const QString &newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
     QString oldPassword = password;

@@ -47,6 +47,7 @@ FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
     , lastTick(QTime::currentTime())
     , backgroundColor(Style::getColor(Style::LightGrey))
     , buttonColor(Style::getColor(Style::Yellow))
+    , active(true)
 {
     ui->setupUi(this);
 
@@ -130,6 +131,11 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
         Core::getInstance()->acceptFileRecvRequest(fileInfo.friendId, fileInfo.fileNum, filepath);
     else
         qWarning() << "Cannot write to " << filepath;
+}
+
+bool FileTransferWidget::isActive() const
+{
+    return active;
 }
 
 void FileTransferWidget::acceptTransfer(const QString &filepath)
@@ -292,6 +298,7 @@ void FileTransferWidget::onFileTransferCancelled(ToxFile file)
         return;
 
     fileInfo = file;
+    active = false;
 
     setBackgroundColor(Style::getColor(Style::Red), true);
 
@@ -347,6 +354,7 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
         return;
 
     fileInfo = file;
+    active = false;
 
     setBackgroundColor(Style::getColor(Style::Green), true);
 
@@ -478,7 +486,10 @@ void FileTransferWidget::handleButton(QPushButton *btn)
         {
             QString path = QFileDialog::getSaveFileName(parentWidget(),
                                                         tr("Save a file", "Title of the file saving dialog"),
-                                                        Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName);
+                                                        Settings::getInstance().getGlobalAutoAcceptDir() + "/" + fileInfo.fileName,
+                                                        0,
+                                                        0,
+                                                        QFileDialog::DontUseNativeDialog);
             acceptTransfer(path);
         }
     }

@@ -83,12 +83,6 @@
 #include <QSignalMapper>
 #endif
 
-#ifdef Q_OS_ANDROID
-#define IS_ON_DESKTOP_GUI 0
-#else
-#define IS_ON_DESKTOP_GUI 1
-#endif
-
 bool toxActivateEventHandler(const QByteArray&)
 {
     Widget* widget = Nexus::getDesktopGUI();
@@ -126,9 +120,14 @@ void Widget::init()
     timer = new QTimer();
     timer->start(1000);
     offlineMsgTimer = new QTimer();
-    offlineMsgTimer->start(15000);
+    // FIXME: ↓ make a proper fix instead of increasing timeout into ∞
+    offlineMsgTimer->start(2*60*1000);
 
     icon_size = 15;
+
+    actionShow = new QAction(this);
+    connect(actionShow, &QAction::triggered, this, &Widget::forceShow);
+
     statusOnline = new QAction(this);
     statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
@@ -148,6 +147,7 @@ void Widget::init()
 #ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
 #endif
+
     actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
@@ -411,21 +411,29 @@ void Widget::init()
 
 bool Widget::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::WindowStateChange && obj != NULL)
+    QWindowStateChangeEvent *ce = nullptr;
+    Qt::WindowStates state = windowState();
+
+    switch (event->type())
     {
-           QWindowStateChangeEvent * ce = static_cast<QWindowStateChangeEvent*>(event);
-           if (windowState() & Qt::WindowMinimized)
-           {
-                if (ce->oldState() & Qt::WindowMaximized)
-                    wasMaximized = true;
-                else
-                    wasMaximized = false;
-           }
+    case QEvent::Close:
+        // It's needed if user enable `Close to tray`
+        wasMaximized = state & Qt::WindowMaximized;
+        break;
+
+    case QEvent::WindowStateChange:
+        ce = static_cast<QWindowStateChangeEvent*>(event);
+        if (state & Qt::WindowMinimized && obj)
+             wasMaximized = ce->oldState() & Qt::WindowMaximized;
 
 #ifdef Q_OS_MAC
-           emit windowStateChanged(windowState());
+         emit windowStateChanged(windowState());
 #endif
+        break;
+    default:
+        break;
     }
+
     return false;
 }
 
@@ -512,6 +520,7 @@ Widget::~Widget()
     if (icon)
         icon->hide();
 
+    delete icon;
     delete profileForm;
     delete settingsWidget;
     delete addFriendForm;
@@ -528,16 +537,20 @@ Widget::~Widget()
     instance = nullptr;
 }
 
+/**
+@brief Returns the singleton instance.
+*/
 Widget* Widget::getInstance()
 {
-    assert(IS_ON_DESKTOP_GUI); // Widget must only be used on Desktop platforms
-
     if (!instance)
         instance = new Widget();
 
     return instance;
 }
 
+/**
+@brief Switches to the About settings page.
+*/
 void Widget::showUpdateDownloadProgress()
 {
     settingsWidget->showAbout();
@@ -556,7 +569,7 @@ void Widget::moveEvent(QMoveEvent *event)
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray() == true)
+    if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray())
     {
         event->ignore();
         this->hide();
@@ -570,8 +583,8 @@ void Widget::closeEvent(QCloseEvent *event)
         }
         saveWindowGeometry();
         saveSplitterGeometry();
-        qApp->exit(0);
         QWidget::closeEvent(event);
+        qApp->quit();
     }
 }
 
@@ -798,12 +811,9 @@ void Widget::confirmExecutableOpen(const QFileInfo &file)
 
         // The user wants to run this file, so make it executable and run it
         QFile(file.filePath()).setPermissions(file.permissions() | QFile::ExeOwner | QFile::ExeUser | QFile::ExeGroup | QFile::ExeOther);
-        QProcess::startDetached(file.filePath());
     }
-    else
-    {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
-    }
+
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file.filePath()));
 }
 
 void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
@@ -1013,14 +1023,12 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     f->setStatus(status);
     f->getFriendWidget()->updateStatusLight();
-    if(f->getFriendWidget()->isActive())
+    if (f->getFriendWidget()->isActive())
         setWindowTitle(f->getFriendWidget()->getTitle());
 
     ContentDialog::updateFriendStatus(friendId);
 
-    //won't print the message if there were no messages before
-    if (!f->getChatForm()->isEmpty()
-            && Settings::getInstance().getStatusChangeNotificationEnabled())
+    if (Settings::getInstance().getStatusChangeNotificationEnabled())
     {
         QString fStatus = "";
         switch (f->getStatus())
@@ -1198,14 +1206,35 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     }
     else
     {
-        currentWindow = window();
-        hasActive = f->getFriendWidget() == activeChatroomWidget;
+        if (Settings::getInstance().getSeparateWindow() && Settings::getInstance().getShowWindow())
+        {
+            if (Settings::getInstance().getDontGroupWindows())
+            {
+                contentDialog = createContentDialog();
+            }
+            else
+            {
+                contentDialog = ContentDialog::current();
+                if (!contentDialog)
+                    contentDialog = createContentDialog();
+            }
+
+            addFriendDialog(f, contentDialog);
+            currentWindow = contentDialog->window();
+            hasActive = ContentDialog::isFriendWidgetActive(friendId);
+        }
+        else
+        {
+            currentWindow = window();
+            hasActive = f->getFriendWidget() == activeChatroomWidget;
+        }
     }
 
     if (newMessageAlert(currentWindow, hasActive, sound))
     {
         f->setEventFlag(true);
         f->getFriendWidget()->updateStatusLight();
+        ui->friendList->trackWidget(f->getFriendWidget());
 
         if (contentDialog == nullptr)
         {
@@ -1303,7 +1332,11 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
                 currentWindow->activateWindow();
         }
 
-        if (Settings::getInstance().getNotifySound() && sound)
+        bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
+        bool busySound = Settings::getInstance().getBusySound();
+        bool notifySound = Settings::getInstance().getNotifySound();
+
+        if (notifySound && sound && (!isBusy || busySound))
             Audio::getInstance().playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
     }
 
@@ -1312,7 +1345,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
-    if(addFriendForm->addFriendRequest(userId, message))
+    if (addFriendForm->addFriendRequest(userId, message))
     {
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
@@ -1387,10 +1420,14 @@ void Widget::clearContactsList()
         removeGroup(g, true);
 }
 
+void Widget::updateScroll(GenericChatroomWidget *widget) {
+    ui->friendList->updateTracking(widget);
+}
+
+
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
-    contentDialog->show();
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
@@ -1670,6 +1707,9 @@ void Widget::onEmptyGroupCreated(int groupId)
         group->getGroupWidget()->editName();
 }
 
+/**
+@brief Used to reset the blinking icon.
+*/
 void Widget::resetIcon() {
     eventIcon = false;
     eventFlag = false;
@@ -1683,6 +1723,9 @@ bool Widget::event(QEvent * e)
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonDblClick:
             focusChatInput();
+            break;
+        case QEvent::Paint:
+            ui->friendList->updateVisualTracking();
             break;
         case QEvent::WindowActivate:
             if (activeChatroomWidget != nullptr)
@@ -1761,6 +1804,9 @@ void Widget::onTryCreateTrayIcon()
             updateIcons();
             trayMenu = new QMenu(this);
 
+            // adding activate to the top, avoids accidentally clicking quit
+            trayMenu->addAction(actionShow);
+            trayMenu->addSeparator();
             trayMenu->addAction(statusOnline);
             trayMenu->addAction(statusAway);
             trayMenu->addAction(statusBusy);
@@ -1769,7 +1815,9 @@ void Widget::onTryCreateTrayIcon()
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
 
-            connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
+            // don't activate qTox widget on tray icon click in Unity backend (see #3419)
+            if (icon->backend() != SystrayBackendType::Unity)
+                connect(icon, &SystemTrayIcon::activated, this, &Widget::onIconClick);
 
             if (Settings::getInstance().getShowSystemTray())
             {
@@ -1941,7 +1989,7 @@ void Widget::clearAllReceipts()
 void Widget::reloadTheme()
 {
     QString statusPanelStyle = Style::getStylesheet(":/ui/window/statusPanel.css");
-    ui->tooliconsZone->setStyleSheet(Style::resolve("QPushButton{background-color:@themeDark;border:none;}QPushButton:hover{background-color:@themeMediumDark;border:none;}QPushButton:checked{background-color:@themeMedium;border:none;}QPushButton:pressed{background-color:@themeMediumLight;border:none;}"));
+    ui->tooliconsZone->setStyleSheet(Style::getStylesheet(":/ui/tooliconsZone/tooliconsZone.css"));
     ui->statusPanel->setStyleSheet(statusPanelStyle);
     ui->statusHead->setStyleSheet(statusPanelStyle);
     ui->friendList->setStyleSheet(Style::getStylesheet(":/ui/friendList/friendList.css"));
@@ -2221,6 +2269,7 @@ void Widget::retranslateUi()
     statusBusy->setText(tr("Busy", "Button to set your status to 'Busy'"));
     actionLogout->setText(tr("Logout", "Tray action menu to logout user"));
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
+    actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
     if (!Settings::getInstance().getSeparateWindow())
         setWindowTitle(fromDialogType(AddDialog));

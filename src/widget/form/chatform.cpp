@@ -29,9 +29,11 @@
 #include <QBitmap>
 #include <QScreen>
 #include <QTemporaryFile>
+#include <QApplication>
 #include <QGuiApplication>
 #include <QStyle>
 #include <QSplitter>
+#include <QClipboard>
 #include <cassert>
 #include "chatform.h"
 #include "src/audio/audio.h"
@@ -65,7 +67,7 @@
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
-    , isTyping{false}
+    , isTyping(false)
 {
     Core* core = Core::getInstance();
     coreav = core->getAv();
@@ -79,6 +81,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
+    statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
     callConfirm = nullptr;
     offlineEngine = new OfflineMsgEngine(f);
@@ -96,10 +99,11 @@ ChatForm::ChatForm(Friend* chatFriend)
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
-    chatWidget->setMinimumHeight(160);
+    chatWidget->setMinimumHeight(50);
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
+    copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
 
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
@@ -110,7 +114,17 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
     connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
+    connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
+    {
+        if (!statusMessageLabel->text().isEmpty())
+        {
+            QWidget* sender = static_cast<QWidget*>(this->sender());
+
+            statusMessageMenu.exec(sender->mapToGlobal(pos));
+        }
+    } );
     connect(&typingTimer, &QTimer::timeout, this, [=]{
         Core::getInstance()->sendTyping(f->getFriendID(), false);
         isTyping = false;
@@ -122,7 +136,7 @@ ChatForm::ChatForm(Friend* chatFriend)
     } );
 
     setAcceptDrops(true);
-
+    disableCallButtons();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
 }
@@ -173,7 +187,11 @@ void ChatForm::onTextEditChanged()
 void ChatForm::onAttachClicked()
 {
     QStringList paths = QFileDialog::getOpenFileNames(this,
-                                                      tr("Send a file"));
+                                                      tr("Send a file"),
+                                                      QDir::homePath(),
+                                                      0,
+                                                      0,
+                                                      QFileDialog::DontUseNativeDialog);
     if (paths.isEmpty())
         return;
 
@@ -195,7 +213,7 @@ void ChatForm::onAttachClicked()
             file.close();
             continue;
         }
-        long long filesize = file.size();
+        qint64 filesize = file.size();
         file.close();
         QFileInfo fi(path);
 
@@ -503,13 +521,10 @@ void ChatForm::enableCallButtons()
         disableCallButtonsTimer->start(1500); // 1.5sec
         qDebug() << "timer started!!";
     }
-
 }
 
 void ChatForm::disableCallButtons()
 {
-    qDebug() << "disableCallButtons";
-
     // Prevents race enable / disable / onEnable, when it should be disabled
     if (disableCallButtonsTimer)
     {
@@ -539,7 +554,6 @@ void ChatForm::disableCallButtons()
 
 void ChatForm::onEnableCallButtons()
 {
-    qDebug() << "onEnableCallButtons";
     audioInputFlag = false;
     audioOutputFlag = false;
 
@@ -555,14 +569,17 @@ void ChatForm::onEnableCallButtons()
     connect(videoButton, SIGNAL(clicked()),
             this, SLOT(onVideoCallTriggered()));
 
-    disableCallButtonsTimer->stop();
-    delete disableCallButtonsTimer;
-    disableCallButtonsTimer = nullptr;
+    if (disableCallButtonsTimer != nullptr)
+    {
+        disableCallButtonsTimer->stop();
+        delete disableCallButtonsTimer;
+        disableCallButtonsTimer = nullptr;
+    }
 }
 
 void ChatForm::onMicMuteToggle()
 {
-    if (audioInputFlag == true)
+    if (audioInputFlag)
     {
         coreav->micMuteToggle(f->getFriendID());
         if (micButton->objectName() == "red")
@@ -582,7 +599,7 @@ void ChatForm::onMicMuteToggle()
 
 void ChatForm::onVolMuteToggle()
 {
-    if (audioOutputFlag == true)
+    if (audioOutputFlag)
     {
         coreav->volMuteToggle(f->getFriendID());
         if (volButton->objectName() == "red")
@@ -606,6 +623,22 @@ void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
         return;
 
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
+}
+
+void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
+{
+    // Disable call buttons if friend is offline
+    if(friendId != f->getFriendID())
+        return;
+
+    Status old = oldStatus.value(friendId, Status::Offline);
+
+    if (old != Status::Offline && status == Status::Offline)
+        disableCallButtons();
+    else if (old == Status::Offline && status != Status::Offline)
+        enableCallButtons();
+
+    oldStatus[friendId] = status;
 }
 
 void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
@@ -770,9 +803,14 @@ void ChatForm::onScreenshotClicked()
 
 void ChatForm::doScreenshot()
 {
-    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber(this);
-    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken, this, &ChatForm::onScreenshotTaken);
+    // note: grabber is self-managed and will destroy itself when done
+    ScreenshotGrabber* screenshotGrabber = new ScreenshotGrabber;
+
+    connect(screenshotGrabber, &ScreenshotGrabber::screenshotTaken,
+            this, &ChatForm::onScreenshotTaken);
+
     screenshotGrabber->showGrabber();
+
     // Create dir for screenshots
     QDir(Settings::getInstance().getAppDataDirPath()).mkpath("screenshots");
 }
@@ -789,21 +827,22 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 
     QFile file(filepath);
 
-    if (!file.open(QFile::ReadWrite))
+    if (file.open(QFile::ReadWrite))
+    {
+        pixmap.save(&file, "PNG");
+
+        qint64 filesize = file.size();
+        file.close();
+        QFileInfo fi(file);
+
+        emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
+    }
+    else
     {
         QMessageBox::warning(this,
                              tr("Failed to open temporary file", "Temporary file for screenshot"),
                              tr("qTox wasn't able to save the screenshot"));
-        return;
     }
-
-    pixmap.save(&file, "PNG");
-
-    long long filesize = file.size();
-    file.close();
-    QFileInfo fi(file);
-
-    emit sendFile(f->getFriendID(), fi.fileName(), fi.filePath(), filesize);
 }
 
 void ChatForm::onLoadHistory()
@@ -824,6 +863,17 @@ void ChatForm::onMessageInserted()
 {
     if (netcam && bodySplitter->sizes()[1] == 0)
         netcam->setShowMessages(true, true);
+}
+
+void ChatForm::onCopyStatusMessage()
+{
+    QString text = statusMessageLabel->text();
+    QClipboard* clipboard = QApplication::clipboard();
+
+    if (clipboard)
+    {
+        clipboard->setText(text, QClipboard::Clipboard);
+    }
 }
 
 void ChatForm::startCounter()
@@ -975,6 +1025,7 @@ void ChatForm::retranslateUi()
     QString volObjectName = volButton->objectName();
     QString micObjectName = micButton->objectName();
     loadHistoryAction->setText(tr("Load chat history..."));
+    copyStatusAction->setText(tr("Copy"));
 
     if (volObjectName == QStringLiteral("green"))
         volButton->setToolTip(tr("Mute call"));

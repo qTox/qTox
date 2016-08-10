@@ -29,6 +29,11 @@
 #include <QDebug>
 #include <QSqlError>
 
+/**
+@var static TOX_PASS_KEY EncryptedDb::decryptionKey
+@note When importing, the decryption key may not be the same as the profile key
+*/
+
 qint64 EncryptedDb::encryptedChunkSize = 4096;
 qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
 

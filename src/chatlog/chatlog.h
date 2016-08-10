@@ -62,7 +62,6 @@ public:
     ChatLine::Ptr getTypingNotification() const;
     QVector<ChatLine::Ptr> getLines();
     ChatLine::Ptr getLatestLine() const;
-    // repetition interval sender name (sec)
     const uint repNameAfter = 5*60;
 
 signals:
@@ -107,6 +106,7 @@ private slots:
 
 private:
     void retranslateUi();
+    bool isActiveFileTransfer(ChatLine::Ptr l);
 
 private:
     enum SelectionMode {

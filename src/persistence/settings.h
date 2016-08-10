@@ -21,6 +21,7 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include <QFont>
 #include <QHash>
 #include <QObject>
 #include <QPixmap>
@@ -35,7 +36,7 @@ namespace Db { enum class syncType; }
 
 enum ProxyType {ptNone, ptSOCKS5, ptHTTP};
 
-enum MarkdownType {NONE, WITH_CHARS, WITHOUT_CHARS};
+enum StyleType {NONE, WITH_CHARS, WITHOUT_CHARS};
 
 class Settings : public QObject
 {
@@ -43,15 +44,15 @@ class Settings : public QObject
 public:
     static Settings& getInstance();
     static void destroyInstance();
-    QString getSettingsDirPath(); ///< The returned path ends with a directory separator
-    QString getAppDataDirPath(); ///< The returned path ends with a directory separator
-    QString getAppCacheDirPath(); ///< The returned path ends with a directory separator
+    QString getSettingsDirPath();
+    QString getAppDataDirPath();
+    QString getAppCacheDirPath();
 
-    void createSettingsDir(); ///< Creates a path to the settings dir, if it doesn't already exist
-    void createPersonal(QString basename); ///< Write a default personal .ini settings file for a profile
+    void createSettingsDir();
+    void createPersonal(QString basename);
 
-    void savePersonal(); ///< Asynchronous, saves the current profile
-    void savePersonal(Profile *profile); ///< Asynchronous
+    void savePersonal();
+    void savePersonal(Profile *profile);
 
     void loadGlobal();
     void loadPersonal();
@@ -66,8 +67,8 @@ public:
 
 
 public slots:
-    void saveGlobal(); ///< Asynchronous
-    void sync(); ///< Waits for all asynchronous operations to complete
+    void saveGlobal();
+    void sync();
 
 signals:
     void dhtServerListChanged();
@@ -75,7 +76,6 @@ signals:
     void emojiFontChanged();
 
 public:
-    // Getter/setters
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
@@ -129,7 +129,7 @@ public:
     void setToxmePriv(bool priv);
     
     QString getToxmePass() const;
-    void setToxmePass(QString pass);
+    void setToxmePass(const QString &pass);
     
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
@@ -145,8 +145,8 @@ public:
     ProxyType getProxyType() const;
     void setProxyType(int newValue);
 
-    int getProxyPort() const;
-    void setProxyPort(int newValue);
+    quint16 getProxyPort() const;
+    void setProxyPort(quint16 newValue);
 
     bool getEnableLogging() const;
     void setEnableLogging(bool newValue);
@@ -169,29 +169,41 @@ public:
     bool getNotifySound() const;
     void setNotifySound(bool newValue);
 
+    bool getBusySound() const;
+    void setBusySound(bool newValue);
+
     bool getGroupAlwaysNotify() const;
     void setGroupAlwaysNotify(bool newValue);
 
     QString getInDev() const;
     void setInDev(const QString& deviceSpecifier);
 
+    bool getAudioInDevEnabled() const;
+    void setAudioInDevEnabled(bool enabled);
+
     QString getOutDev() const;
     void setOutDev(const QString& deviceSpecifier);
 
-    int getInVolume() const;
-    void setInVolume(int volume);
+    bool getAudioOutDevEnabled() const;
+    void setAudioOutDevEnabled(bool enabled);
+
+    qreal getAudioInGain() const;
+    void setAudioInGain(qreal dB);
 
     int getOutVolume() const;
     void setOutVolume(int volume);
 
-    bool getFilterAudio() const;
-    void setFilterAudio(bool newValue);
-
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
 
-    QSize getCamVideoRes() const;
-    void setCamVideoRes(QSize newValue);
+    QRect getScreenRegion() const;
+    void setScreenRegion(const QRect &value);
+
+    bool getScreenGrabbed() const;
+    void setScreenGrabbed(bool value);
+
+    QRect getCamVideoRes() const;
+    void setCamVideoRes(QRect newValue);
 
     unsigned short getCamVideoFPS() const;
     void setCamVideoFPS(unsigned short newValue);
@@ -205,8 +217,8 @@ public:
     int getThemeColor() const;
     void setThemeColor(const int& value);
 
-    MarkdownType getMarkdownPreference() const;
-    void setMarkdownPreference(MarkdownType newValue);
+    StyleType getStylePreference() const;
+    void setStylePreference(StyleType newValue);
 
     bool isCurstomEmojiFont() const;
     void setCurstomEmojiFont(bool value);
@@ -224,6 +236,9 @@ public:
     void setGlobalAutoAcceptDir(const QString& dir);
 
     // ChatView
+    const QFont& getChatMessageFont() const;
+    void setChatMessageFont(const QFont& font);
+
     int getFirstColumnHandlePos() const;
     void setFirstColumnHandlePos(const int pos);
 
@@ -313,10 +328,6 @@ public:
     void removeFriendRequest(int index);
     void readFriendRequest(int index);
 
-    // Assume all widgets have unique names
-    // Don't use it to save every single thing you want to save, use it
-    // for some general purpose widgets, such as MainWindows or Splitters,
-    // which have widget->saveX() and widget->loadX() methods.
     QByteArray getWidgetData(const QString& uniqueName) const;
     void setWidgetData(const QString& uniqueName, const QByteArray& data);
 
@@ -344,7 +355,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
 private slots:
-    void savePersonal(QString profileName, QString password);
+    void savePersonal(QString profileName, const QString &password);
 
 private:
     bool loaded;
@@ -372,19 +383,20 @@ private:
     bool showWindow;
     bool showInFront;
     bool notifySound;
+    bool busySound;
     bool groupAlwaysNotify;
 
     bool forceTCP;
 
     ProxyType proxyType;
     QString proxyAddr;
-    int proxyPort;
+    quint16 proxyPort;
 
     QString currentProfile;
     uint32_t currentProfileId;
 
     // Toxme Info
-    QString toxmeInfo; // name@server
+    QString toxmeInfo;
     QString toxmeBio;
     bool toxmePriv;
     QString toxmePass;
@@ -414,7 +426,8 @@ private:
     bool showSystemTray;
 
     // ChatView
-    MarkdownType markdownPreference;
+    QFont chatMessageFont;
+    StyleType stylePreference;
     int firstColumnHandlePos;
     int secondColumnHandlePosFromRight;
     QString timestampFormat;
@@ -427,14 +440,17 @@ private:
 
     // Audio
     QString inDev;
+    bool audioInDevEnabled;
+    qreal audioInGainDecibel;
     QString outDev;
-    int inVolume;
+    bool audioOutDevEnabled;
     int outVolume;
-    bool filterAudio;
 
     // Video
     QString videoDev;
-    QSize camVideoRes;
+    QRect camVideoRes;
+    QRect screenRegion;
+    bool screenGrabbed;
     unsigned short camVideoFPS;
 
     struct friendProp

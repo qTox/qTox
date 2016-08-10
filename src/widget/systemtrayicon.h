@@ -38,16 +38,20 @@ public:
     void hide();
     void setVisible(bool);
     void setIcon(QIcon &icon);
+    SystrayBackendType backend() const;
 
 signals:
     void activated(QSystemTrayIcon::ActivationReason);
 
 private:
     QString extractIconToFile(QIcon icon, QString name="icon");
+#if defined(ENABLE_SYSTRAY_GTK_BACKEND) || defined(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND)
+    static GdkPixbuf* convertQIconToPixbuf(const QIcon &icon);
+#endif
 
 private:
     SystrayBackendType backendType;
-    QSystemTrayIcon* qtIcon;
+    QSystemTrayIcon* qtIcon = nullptr;
 
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     AppIndicator *unityIndicator;

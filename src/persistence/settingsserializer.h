@@ -25,21 +25,15 @@
 #include <QString>
 #include <QDataStream>
 
-/// Serializes a QSettings's data in an (optionally) encrypted binary format
-/// SettingsSerializer can detect regular .ini files and serialized ones,
-/// it will read both regular and serialized .ini, but only save in serialized format.
-/// The file is encrypted with the current profile's password, if any.
-/// The file is only written to disk if save() is called, the destructor does not save to disk
-/// All member functions are reentrant, but not thread safe.
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, QString password=QString());
+    SettingsSerializer(QString filePath, const QString &password=QString());
 
-    static bool isSerializedFormat(QString filePath); ///< Check if the file is serialized settings. False on error.
+    static bool isSerializedFormat(QString filePath);
 
-    void load(); ///< Loads the settings from file
-    void save(); ///< Saves the current settings back to file
+    void load();
+    void save();
 
     void beginGroup(const QString &prefix);
     void endGroup();
@@ -47,7 +41,7 @@ public:
     int beginReadArray(const QString &prefix);
     void beginWriteArray(const QString &prefix, int size = -1);
     void endArray();
-    void setArrayIndex(unsigned i);
+    void setArrayIndex(int i);
 
     void setValue(const QString &key, const QVariant &value);
     QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
@@ -55,15 +49,10 @@ public:
 private:
     enum class RecordTag : uint8_t
     {
-        /// Followed by a QString key then a QVariant value
         Value=0,
-        /// Followed by a QString group name
         GroupStart=1,
-        /// Followed by a QString array name and a vuint array size
         ArrayStart=2,
-        /// Followed by a vuint array index, a QString key then a QVariant value
         ArrayValue=3,
-        /// Not followed by any data
         ArrayEnd=4,
     };
     friend QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
@@ -72,10 +61,11 @@ private:
     struct Value
     {
         Value() : group{-2},array{-2},key{QString()},value{}{}
-        Value(qint64 group, qint64 array, qint64 arrayIndex, QString key, QVariant value)
+        Value(qint64 group, qint64 array, int arrayIndex, QString key, QVariant value)
             : group{group}, array{array}, arrayIndex{arrayIndex}, key{key}, value{value} {}
         qint64 group;
-        qint64 array, arrayIndex;
+        qint64 array;
+        int arrayIndex;
         QString key;
         QVariant value;
     };
@@ -83,9 +73,9 @@ private:
     struct Array
     {
         qint64 group;
-        quint64 size;
+        int size;
         QString name;
-        QVector<quint64> values;
+        QVector<int> values;
     };
 
 private:
@@ -94,7 +84,7 @@ private:
     void readSerialized();
     void readIni();
     void removeValue(const QString& key);
-    void removeGroup(int group); ///< The group must be empty
+    void removeGroup(int group);
     void writePackedVariant(QDataStream& dataStream, const QVariant& v);
 
 private:
@@ -104,7 +94,7 @@ private:
     QVector<QString> groups;
     QVector<Array> arrays;
     QVector<Value> values;
-    static const char magic[]; ///< Little endian ASCII "QTOX" magic
+    static const char magic[];
 };
 
 #endif // SETTINGSSERIALIZER_H

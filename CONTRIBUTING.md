@@ -3,7 +3,7 @@
 ### Must read
 * If you aren't sure, you can ask on the
   [**IRC channel**](https://webchat.freenode.net/?channels=qtox) or read our
-  [**wiki**](https://github.com/tux3/qTox/wiki) first.
+  [**wiki**](https://github.com/qTox/qTox/wiki) first.
 * Do a quick **search**. Others might have already reported the issue.
 * Write in **English**!
 * Provide **version** information (you can find version numbers in menu
@@ -33,15 +33,17 @@ Qt:
 
 ### Must read
 * Use [**commit message format**](#commit-message-format).
-* Read our [**coding guidelines**](https://github.com/tux3/qTox/wiki/Coding).
+* Read our [**coding guidelines**](#coding-guidelines).
 * Keep the title **short** and provide a **clear** description about what your
   pull request does.
 * Provide **screenshots** for UI related changes.
 * Keep your git commit history **clean** and **precise**. Commits like
   `xxx fixup` should not appear.
+* Commit message should state not only what has been changed, but also why a
+  change is needed.
 * If your commit fixes a reported issue (for example #4134), add the following
   message to the commit `Fixes #4134.`.
-  [Here is an example](https://github.com/tux3/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
+  [Here is an example](https://github.com/qTox/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
 
 ### Good to know
 * **Search** the pull request history! Others might have already implemented
@@ -75,17 +77,20 @@ The **header** is mandatory and the **body** is optional. The **scope** of the
 header is also optional.
 
 ### Header
+
 The header must be a short (72 characters or less) summary of the changes made.
 
 #### Type
+
 Must be one of the following:
 
 * **feat**: A new feature
 * **fix**: A bug fix
 * **docs**: Documentation only changes
 * **style**: Changes that do not affect the meaning of the code (white-space,
-  formatting, etc)
-* **refactor**: A code change that neither fixes a bug nor adds a feature
+  formatting, etc), but change the style to a more appropriate one
+* **refactor**: A code change that only improves code readability and reduces
+  complexity, without changing any functionality
 * **perf**: A code change that improves performance
 * **revert**: Reverts a previous commit
 * **test**: Adding missing tests
@@ -93,16 +98,36 @@ Must be one of the following:
   as documentation generation
 
 ##### Revert
+
 If the commit reverts a previous commit, it should begin with `revert: `,
 followed by the header of the reverted commit. In the body it should say:
-`Revert commit <hash>.`, where the hash is the SHA of the commit being reverted.
+`Revert commit <hash>.`, where the hash is the SHA of the commit being
+reverted.
 
 #### Scope
-The scope could be anything specifying place of the commit change. For example
-`$location`, `$browser`, `$compile`, `$rootScope`, `ngHref`, `ngClick`,
-`ngView`, etc.
+
+The scope could be anything specifying place of the commit change. Note that
+"place" doesn't necessarily mean location in source code.
+
+For example:
+
+* `audio` – change affects audio
+* `video` – change affects video
+* `settings` – change affects qTox settings
+* `chatform`
+* `tray` – change affects tray icon
+* `l10n` – translation update
+* `i18n` – something has been made translatable
+* `build` – change affects build system / scripts, e.g. `qtox.pro`,
+  `simple_make.sh`, etc.
+* `travis` – change affects Travis CI
+* `CONTRIBUTING` – change to the contributing guidelines
+
+Since people were abusing length of the scope, it's limited to 12 characters.
+If you're running into the limit, you're doing it wrong.
 
 #### Subject
+
 The subject contains succinct description of the change:
 
 * use the imperative, present tense: "change" not "changed" nor "changes"
@@ -115,16 +140,18 @@ following sentence:
 > If applied, this commit will ___your subject line here___
 
 ### Body
-Wrap the body at 72 characters whenever possible (for example, don't modify long
-links to follow this rule). Just as in the **subject**, use the imperative,
-present tense: "change" not "changed" nor "changes". The body should include the
-motivation for the change and contrast this with previous behavior.
+
+Wrap the body at 72 characters whenever possible (for example, don't modify
+long links to follow this rule). Just as in the **subject**, use the
+imperative, present tense: "change" not "changed" nor "changes". The body
+should include the motivation for the change and contrast this with previous
+behavior.
 
 The body contains (in order of appearance):
 
 * A detailed **description** of the committed changes.
-* References to GitHub issues that the commit **closes** (e.g., `Closes #000` or
-  `Fixes #000`).
+* References to GitHub issues that the commit **closes** (e.g., `Closes #000`
+  or `Fixes #000`).
 * Any **breaking changes**.
 
 Include every section of the body that is relevant for your commit.
@@ -156,6 +183,7 @@ git config --global commit.gpgsign true
 Use `C++11`.
 
 ## Coding style
+
 ```C++
 function()
 {
@@ -194,7 +222,58 @@ uint8_t* array = new uint8_t[count];
 QObject notToMentionThatWeUseCamelCase;
 ```
 
-E.g. https://github.com/tux3/qTox/blob/master/src/misc/flowlayout.cpp
+E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
+
+## Documentaion
+
+If you added a new function, also add a doxygen comment before the
+implementation. If you changed an old function, make sure the doxygen comment
+is still correct. If it doesn't exist add it.
+
+Don't put docs in .h files, if there is a corresponding .cpp file.
+
+### Documentation style
+
+```C++
+/*...license info...*/
+#include "blabla.h"
+
+/**
+I can be briefly described as well!
+*/
+static void method()
+{
+      // I'm just a little example.
+}
+
+/**
+@class OurClass
+@brief Exists for some reason...!?
+
+Longer description
+*/
+
+/**
+@enum OurClass::OurEnum
+@brief The brief description line.
+
+@var EnumValue1
+means something
+
+@var EnumValue2
+means something else
+
+Optional long description
+*/
+
+/**
+@fn OurClass::somethingHappened(const QString &happened)
+@param[in] happened    tells what has happened...
+@brief This signal is emitted when something has happened in the class.
+
+Here's an optional longer description of what the signal additionally does.
+*/
+```
 
 ## No translatable HTML tags
 
@@ -209,6 +288,7 @@ someWidget->setTooltip(
 ## Limitations
 
 ### Filesystem
+
 Windows' unbeaten beauty and clarity:
 
 https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx

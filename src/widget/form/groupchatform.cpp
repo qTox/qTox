@@ -37,6 +37,14 @@
 #include <QDragEnterEvent>
 #include <QtAlgorithms>
 
+/**
+@var QList<QLabel*> GroupChatForm::peerLabels
+@brief Maps peernumbers to the QLabels in namesListLayout.
+
+@var QMap<int, QTimer*> GroupChatForm::peerAudioTimers
+@brief Timeout = peer stopped sending audio.
+*/
+
 GroupChatForm::GroupChatForm(Group* chatGroup)
     : group(chatGroup), inCall{false}
 {
@@ -220,7 +228,7 @@ void GroupChatForm::onUserListChanged()
     if (peersCount > 1 && group->isAvGroupchat())
     {
         // don't set button to green if call running
-        if(!inCall)
+        if (!inCall)
         {
             callButton->setEnabled(true);
             callButton->setObjectName("green");
@@ -285,7 +293,7 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
 
 void GroupChatForm::onMicMuteToggle()
 {
-    if (audioInputFlag == true)
+    if (audioInputFlag)
     {
         if (micButton->objectName() == "red")
         {
@@ -306,7 +314,7 @@ void GroupChatForm::onMicMuteToggle()
 
 void GroupChatForm::onVolMuteToggle()
 {
-    if (audioOutputFlag == true)
+    if (audioOutputFlag)
     {
         if (volButton->objectName() == "red")
         {

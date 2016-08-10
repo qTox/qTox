@@ -58,8 +58,10 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
-    QString LogMsg = QString("[%1] %2:%3 : ")
-                .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
+    // Time should be in UTC to save user privacy on log sharing
+    QTime time = QDateTime::currentDateTime().toUTC().time();
+    QString LogMsg = QString("[%1 UTC] %2:%3 : ")
+                .arg(time.toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
     switch (type)
     {
         case QtDebugMsg:
@@ -87,22 +89,19 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     if (!logFilePtr)
     {
         logBufferMutex->lock();
-        if(logBuffer)
-        {
+        if (logBuffer)
             logBuffer->append(LogMsgBytes);
-        }
+
         logBufferMutex->unlock();
     }
     else
     {
         logBufferMutex->lock();
-        if(logBuffer)
+        if (logBuffer)
         {
             // empty logBuffer to file
-            foreach(QByteArray msg, *logBuffer)
-            {
+            foreach (QByteArray msg, *logBuffer)
                 fwrite(msg.constData(), 1, msg.size(), logFilePtr);
-            }
 
             delete logBuffer;   // no longer needed
             logBuffer = nullptr;
@@ -117,6 +116,12 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 int main(int argc, char *argv[])
 {
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+
     qInstallMessageHandler(logMessageHandler);
 
     QApplication a(argc, argv);
@@ -127,10 +132,6 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_OSX)
     //osx::moveToAppFolder(); TODO: Add setting to enable this feature.
     osx::migrateProfiles();
-#endif
-
-#ifdef HIGH_DPI
-    a.setAttribute(Qt::AA_UseHighDpiPixmaps, true);
 #endif
 
     qsrand(time(0));
@@ -146,9 +147,7 @@ int main(int argc, char *argv[])
     parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
     parser.process(a);
 
-#ifndef Q_OS_ANDROID
     IPC& ipc = IPC::getInstance();
-#endif
 
     if (sodium_init() < 0) // For the auto-updater
     {
@@ -167,27 +166,27 @@ int main(int argc, char *argv[])
     if (QFileInfo(logfile).size() > 1000000)
     {
         qDebug() << "Log file over 1MB, rotating...";
-		
+
+        // close old logfile (need for windows)
+        if (mainLogFilePtr)
+            fclose(mainLogFilePtr);
+
         QDir dir (logFileDir);
-		
+
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
             qDebug() << "Removed old log successfully";
         else
             qWarning() << "Unable to remove old log file";
 
-        if(!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
+        if (!dir.rename(logFileDir + "qtox.log", logFileDir + "qtox.log.1"))
             qCritical() << "Unable to move logs";
-
-        // close old logfile
-        if(mainLogFilePtr)
-            fclose(mainLogFilePtr);
 
         // open a new logfile
         mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
     }
 
-    if(!mainLogFilePtr)
+    if (!mainLogFilePtr)
         qCritical() << "Couldn't open logfile" << logfile;
 
     logFileFile.store(mainLogFilePtr);   // atomically set the logFile
@@ -212,7 +211,6 @@ int main(int argc, char *argv[])
 
     QString profileName;
     bool autoLogin = Settings::getInstance().getAutoLogin();
-#ifndef Q_OS_ANDROID
     // Inter-process communication
     ipc.registerEventHandler("uri", &toxURIEventHandler);
     ipc.registerEventHandler("save", &toxSaveEventHandler);
@@ -232,19 +230,27 @@ int main(int argc, char *argv[])
         autoLogin = true;
     }
     else
+    {
         profileName = Settings::getInstance().getCurrentProfile();
+    }
 
     if (parser.positionalArguments().size() == 0)
+    {
         eventType = "activate";
+    }
     else
     {
         firstParam = parser.positionalArguments()[0];
         // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI and we exit
         // Otherwise we start a new qTox instance and process it ourselves
         if (firstParam.startsWith("tox:"))
+        {
             eventType = "uri";
+        }
         else if (firstParam.endsWith(".tox"))
+        {
             eventType = "save";
+        }
         else
         {
             qCritical() << "Invalid argument";
@@ -262,7 +268,6 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
     }
-#endif
 
     // Autologin
     if (autoLogin)
@@ -281,13 +286,11 @@ int main(int argc, char *argv[])
 
     Nexus::getInstance().start();
 
-#ifndef Q_OS_ANDROID
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
         handleToxURI(firstParam.toUtf8());
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
-#endif
 
     // Run
     int errorcode = a.exec();

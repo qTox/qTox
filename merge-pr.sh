@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 Zetok Zalbavar
+#    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -29,63 +29,34 @@
 #       before the appended shortlog.
 #
 
-PR=$1
+set -e -o pipefail
+
+readonly PR=$1
 
 # make sure to add newlines to the message, otherwise merge message
 # will not look well
 if [[ ! -z $2 ]]
 then
-    OPT_MSG="
+    readonly OPT_MSG="
 $2
 "
 fi
 
-
-# check if supplied var is a number; if not exit
-if [[ ! "${PR}" =~ ^[[:digit:]]+$ ]]
-then
-    echo "Not a PR number!" && \
-    exit 1
-fi
-
-# list remotes, and if there's no tux3 one, add it
-if  ! git remote | grep upstream > /dev/null
-then
-    git remote add upstream git@github.com:tux3/qTox.git
-fi
-
-# print the message only if the merge was successful
-after_merge_msg() {
-    echo ""
-    echo "PR #$PR was merged into «merge$PR» branch."
-    echo "To compare with master:"
-    echo "git diff master..merge$PR"
-    echo ""
-    echo "To push that to master on github:"
-    echo "git checkout master && git merge --ff merge$PR && git push upstream master"
-    echo ""
-    echo "After pushing to master, delete branches:"
-    echo ""
-    echo "git branch -d {merge,}$PR"
+source_functions() {
+    local fns_file="tools/lib/PR_bash.source"
+    source $fns_file
 }
 
-# print the message only if some merge step failed
-after_merge_failure_msg() {
-    echo ""
-    echo "Merge failed."
-    echo ""
-    echo "You may want to remove not merged branches, if they exist:"
-    echo ""
-    echo "git checkout master && git branch -D {merge,}$PR"
+main() {
+    local remote_name="upstream"
+    local merge_branch="merge"
+    source_functions
+    exit_if_not_pr $PR
+    add_remote
+    get_sources
+
+    merge git merge -S \
+        && after_merge_msg $merge_branch \
+        || after_merge_failure_msg $merge_branch
 }
-
-
-git fetch upstream && \
-git checkout master && \
-git rebase upstream/master master && \
-git fetch upstream pull/$PR/head:$PR && \
-git checkout master -b merge$PR && \
-git merge --no-ff -S $PR -m "Merge pull request #$PR
-$OPT_MSG
-$(git shortlog master..$PR)" && \
-after_merge_msg || after_merge_failure_msg
+main
