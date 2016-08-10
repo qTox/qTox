@@ -16,21 +16,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Fail out on error
-set -e -o pipefail
+set -eu -o pipefail
 
-# Obtain doxygen
-sudo apt-get install doxygen
+# Ensure docs exists
+if [ ! -d ./doc/html ]
+then
+	echo "Cannot deploy! Documentation does not exist!"
+	exit 1
+fi
 
-CONFIG_FILE="doxygen.conf"
-
-GIT_DESC=$(git describe --tags 2> /dev/null)
+# Obtain git commit hash from HEAD
 GIT_CHASH=$(git rev-parse HEAD)
 
-# Append git version to doxygen version string
-echo "PROJECT_NUMBER = \"Version: $GIT_DESC | Commit: $GIT_CHASH\"" >> "$CONFIG_FILE"
+# Push generated doxygen to GitHub pages
+cd ./doc/html/
 
-# Generate documentation
-echo "Generating documentation..."
-echo
+git init
+git config user.name "Travis CI"
+git config user.email "qTox@users.noreply.github.com"
 
-doxygen "$CONFIG_FILE"
+git add .
+git commit --quiet -m "Deploy to GH pages from commit: $GIT_CHASH"
+
+echo "Pushing to GH pages..."
+git push --force --quiet "https://${GH_TOKEN}@github.com/qTox/doxygen.git" master:gh-pages &> /dev/null
