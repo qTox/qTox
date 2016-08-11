@@ -1,4 +1,3 @@
-#include "src/audio/audio.h"
 #include "src/core/toxcall.h"
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
@@ -27,51 +26,34 @@
 using namespace std;
 
 ToxCall::ToxCall(uint32_t CallId)
-    : callId{CallId}, alSource{0},
+    : callId{CallId},
       inactive{true}, muteMic{false}, muteVol{false}
 {
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
-    audio.subscribeOutput(alSource);
+    // TODO: Read the audio in/out device id's (names??) from settings.
+    //       For the moment we will use the default audio device.
+    audioRx.setOutputDevice();
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept
-    : audioInConn{other.audioInConn}, callId{other.callId}, alSource{other.alSource},
-      inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol}
+    : callId{other.callId},
+      inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol},
+      audioRx{std::move(other.audioRx)}
 {
-    other.audioInConn = QMetaObject::Connection();
     other.callId = numeric_limits<decltype(callId)>::max();
-    other.alSource = 0;
-
-    // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
 }
 
-ToxCall::~ToxCall()
+ToxCall::~ToxCall() noexcept
 {
-    Audio& audio = Audio::getInstance();
-
-    QObject::disconnect(audioInConn);
-    audio.unsubscribeInput();
-    audio.unsubscribeOutput(alSource);
 }
 
 ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
 {
-    audioInConn = other.audioInConn;
-    other.audioInConn = QMetaObject::Connection();
     callId = other.callId;
     other.callId = numeric_limits<decltype(callId)>::max();
     inactive = other.inactive;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
-    alSource = other.alSource;
-    other.alSource = 0;
-
-    // required -> ownership of audio input is moved to new instance
-    Audio& audio = Audio::getInstance();
-    audio.subscribeInput();
+    audioRx = std::move(other.audioRx);
 
     return *this;
 }
@@ -84,7 +66,8 @@ void ToxFriendCall::startTimeout()
         // We might move, so we need copies of members. CoreAV won't move while we're alive
         CoreAV* avCopy = av;
         auto callIdCopy = callId;
-        QObject::connect(timeoutTimer, &QTimer::timeout, [avCopy, callIdCopy](){
+        QObject::connect(timeoutTimer, &QTimer::timeout, [avCopy, callIdCopy]()
+        {
            avCopy->timeoutCall(callIdCopy);
         });
     }
@@ -109,12 +92,6 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
       state{static_cast<TOXAV_FRIEND_CALL_STATE>(0)},
       av{&av}, timeoutTimer{nullptr}
 {
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                     [&av,FriendNum](const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
-    {
-        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
-    });
-
     if (videoEnabled)
     {
         videoSource = new CoreVideoSource;
@@ -179,12 +156,6 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV &av)
 {
     static_assert(numeric_limits<decltype(callId)>::max() >= numeric_limits<decltype(GroupNum)>::max(),
                   "The callId must be able to represent any group number, change its type if needed");
-
-    audioInConn = QObject::connect(&Audio::getInstance(), &Audio::frameAvailable,
-                    [&av,GroupNum](const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate)
-    {
-        av.sendGroupCallAudio(GroupNum, pcm, samples, chans, rate);
-    });
 }
 
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept

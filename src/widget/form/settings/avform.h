@@ -26,6 +26,7 @@
 
 #include "genericsettings.h"
 #include "ui_avform.h"
+#include "src/audio/devices.h"
 #include "src/video/videomode.h"
 
 
@@ -79,8 +80,12 @@ private:
     void open(const QString &devName, const VideoMode &mode);
 
 private:
-    bool subscribedToAudioIn;
+
+    qTox::Audio::Stream audio;
+    //qTox::Audio::StreamContext audioCall;
     bool mPlayTestSound;
+    bool mPlaythrough;
+
     VideoSurface *camVideoSurface;
     CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;

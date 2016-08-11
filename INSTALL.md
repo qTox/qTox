@@ -38,18 +38,19 @@
 <a name="dependencies" />
 ## Dependencies
 
-| Name          | Version     | Modules                                           |
-|---------------|-------------|-------------------------------------------------- |
-| Qt            | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
-| GCC/MinGW     | >= 4.8      | C++11 enabled                                     |
-| toxcore       | most recent | core, av                                          |
-| FFmpeg        | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
-| OpenAL Soft   | >= 1.16.0   |                                                   |
-| qrencode      | >= 3.0.3    |                                                   |
-| sqlcipher     | >= 3.2.0    |                                                   |
-| libXScrnSaver | >= 1.2      |                                                   |
-| pkg-config    | >= 0.28     |                                                   |
-| libX11        | >= 1.6.0    |                                                   |
+Name          | Version     | Modules
+--------------|-------------|--------
+Qt            | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml
+GCC/MinGW     | >= 4.8      | C++11 enabled
+toxcore       | most recent | core, av
+FFmpeg        | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale
+OpenAL Soft   | >= 1.16.0   |
+[RtAudio]     | >= 4.0.11   |
+qrencode      | >= 3.0.3    |
+sqlcipher     | >= 3.2.0    |
+libXScrnSaver | >= 1.2      |
+pkg-config    | >= 0.28     |
+libX11        | >= 1.6.0    |
 
 
 <a name="linux" />
@@ -199,7 +200,7 @@ and others. Instructions here: http://backports.debian.org/Instructions/
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
-libsqlcipher-dev
+librtaudio-dev libsqlcipher-dev
 ```
 
 
@@ -214,7 +215,7 @@ sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
 sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel \
 openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel \
-qtsingleapplication qt5-linguist gtk2-devel libtool openssl-devel
+qtsingleapplication qt5-linguist gtk2-devel libtool openssl-devel rtaudio-devel
 ```
 
 **Go to [sqlcipher](#sqlcipher) section to compile it.**
@@ -245,13 +246,17 @@ libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev \
 libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev \
 libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev \
-libsqlcipher-dev
+librtaudio-dev libsqlcipher-dev
 ```
 
 <a name="ubuntu-other-1604-deps" />
 #### Ubuntu >=16.04:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
+sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
+libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
+libqrencode-dev libavutil-dev libswresample-dev libavcodec-dev libswscale-dev \
+libavfilter-dev libavdevice-dev libglib2.0-dev libgdk-pixbuf2.0-dev \
+libgtk2.0-dev librtaudio-dev libsqlcipher-dev
 ```
 
 ### toxcore dependencies
@@ -560,4 +565,5 @@ dependencies compile them and put to appropriate directories.
 
 
 [OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+[RtAudio]: http://www.music.mcgill.ca/~gary/rtaudio/
 [Ubuntu PPA]: https://launchpad.net/~abbat/+archive/ubuntu/tox

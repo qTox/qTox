@@ -113,7 +113,7 @@ private:
     static IndexedList<ToxGroupCall> groupCalls;
     std::atomic_flag threadSwitchLock;
 
-    friend class Audio;
+    qTox::Audio::Stream  audioTx;
 };
 
 #endif // COREAV_H
