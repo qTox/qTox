@@ -18,10 +18,14 @@
 # Fail out on error
 set -eu -o pipefail
 
-DOCS_FOLDER="./doc/html/"
+# Extract html documentation directory from doxygen configuration
+OUTPUT_DIR_CFG=( $(grep 'OUTPUT_DIRECTORY' "$DOXYGEN_CONFIG_FILE") )
+HTML_OUTPUT_CFG=( $(grep 'HTML_OUTPUT' "$DOXYGEN_CONFIG_FILE") )
+
+DOCS_DIR="./${OUTPUT_DIR_CFG[2]}/${HTML_OUTPUT_CFG[2]}/"
 
 # Ensure docs exists
-if [ ! -d "$DOCS_FOLDER" ]
+if [ ! -d "$DOCS_DIR" ]
 then
     echo "Docs deploy failing, no $DOCS_DIR present."
     exit 1
@@ -31,7 +35,7 @@ fi
 GIT_CHASH=$(git rev-parse HEAD)
 
 # Push generated doxygen to GitHub pages
-cd "$DOCS_FOLDER"
+cd "$DOCS_DIR"
 
 git --quiet init
 git config user.name "Travis CI"

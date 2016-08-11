@@ -8,7 +8,7 @@ matrix:
     - os: linux
       env: JOB=verify-commit-format
     - os: linux
-      env: JOB=build-docs
+      env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
     - os: linux
       env: JOB=build-ubuntu-14-04
     - os: osx
