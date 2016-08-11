@@ -38,7 +38,7 @@ GIT_CHASH=$(git rev-parse HEAD)
 # Push generated doxygen to GitHub pages
 cd "$DOCS_DIR"
 
-git --quiet init
+git init --quiet
 git config user.name "Travis CI"
 git config user.email "qTox@users.noreply.github.com"
 
