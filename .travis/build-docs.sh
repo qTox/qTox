@@ -14,6 +14,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 # Fail out on error
 set -eu -o pipefail
@@ -21,16 +22,14 @@ set -eu -o pipefail
 # Obtain doxygen
 sudo apt-get install doxygen
 
-CONFIG_FILE="doxygen.conf"
-
 GIT_DESC=$(git describe --tags 2> /dev/null)
 GIT_CHASH=$(git rev-parse HEAD)
 
 # Append git version to doxygen version string
-echo "PROJECT_NUMBER = \"Version: $GIT_DESC | Commit: $GIT_CHASH\"" >> "$CONFIG_FILE"
+echo "PROJECT_NUMBER = \"Version: $GIT_DESC | Commit: $GIT_CHASH\"" >> "$DOXYGEN_CONFIG_FILE"
 
 # Generate documentation
 echo "Generating documentation..."
 echo
 
-doxygen "$CONFIG_FILE"
+doxygen "$DOXYGEN_CONFIG_FILE"

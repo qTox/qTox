@@ -14,6 +14,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 
 # stop as soon as one of steps will fail
 set -e -o pipefail
