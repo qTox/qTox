@@ -1,11 +1,20 @@
 sudo: required
 dist: trusty
 language: cpp
-os:
-- linux
-- osx
-script:
-- bash ./.travis/travis.sh
+
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+      env: JOB=verify-commit-format
+    - os: linux
+      env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
+    - os: linux
+      env: JOB=build-ubuntu-14-04
+    - os: osx
+      env: JOB=build-osx
+
+script: "./.travis/$JOB.sh"
 
 deploy:
   provider: releases
@@ -17,3 +26,6 @@ deploy:
     repo: qTox/qTox
     tags: true
   skip_cleanup: true
+
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $JOB == "build-docs" && bash ./.travis/deploy-docs.sh
