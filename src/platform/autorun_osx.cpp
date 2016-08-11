@@ -38,6 +38,7 @@ bool Platform::setAutorun(bool on)
 
     state = on;
     autoRun.setValue("RunAtLoad", state);
+    return true;
 }
 
 bool Platform::getAutorun()
