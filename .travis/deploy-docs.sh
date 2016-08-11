@@ -18,11 +18,12 @@
 # Fail out on error
 set -eu -o pipefail
 
-DOCS_FOLDER="./doc/html"
+DOCS_FOLDER="./doc/html/"
 
 # Ensure docs exists
 if [ ! -d "$DOCS_FOLDER" ]
 then
+    echo "Docs deploy failing, no $DOCS_DIR present."
     exit 1
 fi
 
