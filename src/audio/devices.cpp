@@ -60,7 +60,7 @@ namespace qTox {
 @brief  Representation of a physical audio device.
 
 
-@class  Audio::StreamContext
+@class  Audio::Stream
 @brief  Defines the streaming context.
 
 Manages input and/or output audio resources in a streaming context. Input can
@@ -100,11 +100,11 @@ private:
 
 /**
 @internal
-@brief Private implementation of the StreamContext class.
+@brief Private implementation of the Stream class.
 */
-class Audio::StreamContext::Private : public QSharedData
+class Audio::Stream::Private : public QSharedData
 {
-    friend class StreamContext;
+    friend class Stream;
 
 public:
     /**
@@ -120,7 +120,7 @@ public:
         Q_UNUSED(status);
 
         int ret = 1;
-        const Private* p = static_cast<StreamContext::Private*>(userData);
+        const Private* p = static_cast<Stream::Private*>(userData);
 
         if (p->inParams && nFrames > 0)
         {
@@ -426,37 +426,37 @@ bool Audio::Device::isDefaultInput() const
 @brief Creates an audio stream context.
 @param[in] inputDevice      the input device index; -1 == no input
 @param[in] outputDevice     the output device index; -1 == no output
-@return the created StreamContext or a null object, if creation failed
+@return the created Stream or a null object, if creation failed
 
-The created StreamContext has a maximum of 2 (stereo) channels, depending on the
+The created Stream has a maximum of 2 (stereo) channels, depending on the
 devices' capabilities. A device in qTox cannot have more than two channels.
 */
-Audio::StreamContext::StreamContext()
+Audio::Stream::Stream()
     : d(new Private())
 {
 }
 
-Audio::StreamContext::StreamContext(const StreamContext& other)
+Audio::Stream::Stream(const Stream& other)
     : d(other.d)
 {
 }
 
-Audio::StreamContext::StreamContext(StreamContext&& other)
+Audio::Stream::Stream(Stream&& other)
     : d(std::move(other.d))
 {
 }
 
-Audio::StreamContext::~StreamContext()
+Audio::Stream::~Stream()
 {
 }
 
-Audio::StreamContext& Audio::StreamContext::operator=(const StreamContext& other)
+Audio::Stream& Audio::Stream::operator=(const Stream& other)
 {
     d = other.d;
     return *this;
 }
 
-Audio::StreamContext& Audio::StreamContext::operator=(StreamContext&& other)
+Audio::Stream& Audio::Stream::operator=(Stream&& other)
 {
     d = std::move(other.d);
     return *this;
@@ -466,7 +466,7 @@ Audio::StreamContext& Audio::StreamContext::operator=(StreamContext&& other)
 @brief  The current sample rate.
 @return the sample rate in Hz.
 */
-quint32 Audio::StreamContext::sampleRate() const
+quint32 Audio::Stream::sampleRate() const
 {
     return d ? d->sampleRate : 0;
 }
@@ -476,7 +476,7 @@ quint32 Audio::StreamContext::sampleRate() const
 
 @note An open stream will be closed by this method.
 */
-void Audio::StreamContext::setSampleRate(quint32 hz)
+void Audio::Stream::setSampleRate(quint32 hz)
 {
     if (!d)
         return;
@@ -490,18 +490,18 @@ void Audio::StreamContext::setSampleRate(quint32 hz)
 
 /**
 @brief Returns the current frame count.
-@return The StreamContext's (input) frame count.
+@return The Stream's (input) frame count.
 */
-quint32 Audio::StreamContext::frameCount() const
+quint32 Audio::Stream::frameCount() const
 {
     return d ? d->inFrames : 0;
 }
 
 /**
 @brief  Sets the frame count (for internal frame buffer) for input.
-@note   Can only be set for an input or playthrough (duplex) StreamContext.
+@note   Can only be set for an input or playthrough (duplex) Stream.
 */
-void Audio::StreamContext::setFrameCount(quint32 frames)
+void Audio::Stream::setFrameCount(quint32 frames)
 {
     if (!d || frames == d->inFrames)
         return;
@@ -516,19 +516,19 @@ void Audio::StreamContext::setFrameCount(quint32 frames)
 }
 
 /**
-@brief Returns the StreamContext input device id.
+@brief Returns the Stream input device id.
 @return the input device id or -1, if no device was assigned
 */
-int Audio::StreamContext::inputDeviceId() const
+int Audio::Stream::inputDeviceId() const
 {
     return (d && d->inParams) ? static_cast<int>((*d->inParams).deviceId) : -1;
 }
 
 /**
-@brief Returns the StreamContext input device.
+@brief Returns the Stream input device.
 @return the input @a Device or a null @a Device, if none was assigned
 */
-Audio::Device Audio::StreamContext::inputDevie() const
+Audio::Device Audio::Stream::inputDevie() const
 {
     return d && d->inParams
             ? new Device::Private(d->audio.getDeviceInfo((*d->inParams).deviceId))
@@ -536,10 +536,10 @@ Audio::Device Audio::StreamContext::inputDevie() const
 }
 
 /**
-@brief Initializes the input device for the StreamContext.
+@brief Initializes the input device for the Stream.
 @param[in] deviceId the input device id; -1 for default device
 */
-void Audio::StreamContext::setInputDevice(int deviceId)
+void Audio::Stream::setInputDevice(int deviceId)
 {
     if (!d)
         return;
@@ -565,11 +565,11 @@ void Audio::StreamContext::setInputDevice(int deviceId)
 }
 
 /**
-@brief  Removes the StreamContext input device.
+@brief  Removes the Stream input device.
 @note   The input device is destroyed and the stream is restored to it's
         previous open/running state.
 */
-void Audio::StreamContext::removeInputDevice()
+void Audio::Stream::removeInputDevice()
 {
     if (!d)
         return;
@@ -582,19 +582,19 @@ void Audio::StreamContext::removeInputDevice()
 }
 
 /**
-@brief Returns the StreamContext output device id.
+@brief Returns the Stream output device id.
 @return the input device id or -1, if no device was assigned
 */
-int Audio::StreamContext::outputDeviceId() const
+int Audio::Stream::outputDeviceId() const
 {
     return (d && d->outParams) ? static_cast<int>((*d->outParams).deviceId) : -1;
 }
 
 /**
-@brief Returns the StreamContext output device.
+@brief Returns the Stream output device.
 @return the output @a Device or a null @a Device, if none was assigned
 */
-Audio::Device Audio::StreamContext::outputDevice() const
+Audio::Device Audio::Stream::outputDevice() const
 {
 
     return d && d->outParams
@@ -603,10 +603,10 @@ Audio::Device Audio::StreamContext::outputDevice() const
 }
 
 /**
-@brief Sets the output device for the StreamContext.
+@brief Sets the output device for the Stream.
 @param[in] deviceId     the output device id
 */
-void Audio::StreamContext::setOutputDevice(int deviceId)
+void Audio::Stream::setOutputDevice(int deviceId)
 {
     if (!d)
         return;
@@ -632,11 +632,11 @@ void Audio::StreamContext::setOutputDevice(int deviceId)
 }
 
 /**
-@brief  Removes the StreamContext input device.
+@brief  Removes the Stream input device.
 @note   The input device is destroyed and the stream is restored to it's
         previous open/running state.
 */
-void Audio::StreamContext::removeOutputDevice()
+void Audio::Stream::removeOutputDevice()
 {
     if (!d)
         return;
@@ -652,7 +652,7 @@ void Audio::StreamContext::removeOutputDevice()
 @brief Opens the stream for reading and writing.
 @return
 */
-bool Audio::StreamContext::open()
+bool Audio::Stream::open()
 {
     return d ? d->open() : false;
 }
@@ -660,7 +660,7 @@ bool Audio::StreamContext::open()
 /**
 Closes the audio stream.
 */
-void Audio::StreamContext::close()
+void Audio::Stream::close()
 {
     if (d)
         d->close();
@@ -669,7 +669,7 @@ void Audio::StreamContext::close()
 /**
 Aborts a stream immediately.
 */
-bool Audio::StreamContext::abort()
+bool Audio::Stream::abort()
 {
     return d ? d->abort() : false;
 }
@@ -677,7 +677,7 @@ bool Audio::StreamContext::abort()
 /**
 Starts recording or playback on the stream.
 */
-bool Audio::StreamContext::start()
+bool Audio::Stream::start()
 {
     return d ? d->start() : false;
 }
@@ -685,12 +685,12 @@ bool Audio::StreamContext::start()
 /**
 Waits for the streamed buffers to drain and stops playback afterwards.
 */
-bool Audio::StreamContext::stop()
+bool Audio::Stream::stop()
 {
     return d ? d->stop() : false;
 }
 
-void Audio::StreamContext::playback(char* pcm, Format fmt, quint32 frames,
+void Audio::Stream::playback(char* pcm, Format fmt, quint32 frames,
                              quint8 channels, quint32 sampleRate)
 {
     // TODO: map the number of channels (currently assuming input == output)
@@ -716,7 +716,7 @@ void Audio::StreamContext::playback(char* pcm, Format fmt, quint32 frames,
     d->start();
 }
 
-void Audio::StreamContext::playback(const QString& fileName)
+void Audio::Stream::playback(const QString& fileName)
 {
     QFile f(fileName);
     if (f.open(QFile::ReadOnly))
@@ -734,17 +734,17 @@ void Audio::StreamContext::playback(const QString& fileName)
     }
 }
 
-bool Audio::StreamContext::isOpen() const
+bool Audio::Stream::isOpen() const
 {
     return d ? d->audio.isStreamOpen() : false;
 }
 
-bool Audio::StreamContext::isRunning() const
+bool Audio::Stream::isRunning() const
 {
     return d ? d->audio.isStreamRunning() : false;
 }
 
-void Audio::StreamContext::onRecorded(RecordFunc event)
+void Audio::Stream::onRecorded(RecordFunc event)
 {
     if (!d)
         return;

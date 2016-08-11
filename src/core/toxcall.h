@@ -51,7 +51,7 @@ public:
     bool muteVol;
 
 protected:
-    qTox::Audio::StreamContext audioRx;
+    qTox::Audio::Stream audioRx;
 };
 
 struct ToxFriendCall : public ToxCall

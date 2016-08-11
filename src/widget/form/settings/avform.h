@@ -81,7 +81,7 @@ private:
 
 private:
 
-    qTox::Audio::StreamContext audio;
+    qTox::Audio::Stream audio;
     //qTox::Audio::StreamContext audioCall;
     bool mPlayTestSound;
     bool mPlaythrough;

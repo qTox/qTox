@@ -100,19 +100,19 @@ public:
         QExplicitlySharedDataPointer<Private> d;
     };
 
-    class StreamContext
+    class Stream
     {
     public:
         class Private;
 
     public:
-        StreamContext();
-        StreamContext(const StreamContext& other);
-        StreamContext(StreamContext&& other);
-        ~StreamContext();
+        Stream();
+        Stream(const Stream& other);
+        Stream(Stream&& other);
+        ~Stream();
 
-        StreamContext& operator=(const StreamContext& other);
-        StreamContext& operator=(StreamContext&& other);
+        Stream& operator=(const Stream& other);
+        Stream& operator=(Stream&& other);
 
         inline bool isNull() const
         {
