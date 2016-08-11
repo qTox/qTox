@@ -135,7 +135,15 @@ public:
         if (p->outParams)
         {
             if (p->playbackBuffer)
+            {
                 memcpy(outBuffer, p->playbackBuffer, nFrames);
+            }
+            else if (p->playthrough)
+            {
+                quint8 channels = static_cast<quint8>((*p->inParams).nChannels);
+                size_t bytes = nFrames * channels * 2;
+                memcpy(outBuffer, inBuffer, bytes);
+            }
         }
 
         return ret;
@@ -549,7 +557,7 @@ void Audio::StreamContext::setInputDevice(int deviceId)
         RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
         d->inParams = new RtAudio::StreamParameters();
         (*d->inParams).deviceId = devId;
-        (*d->inParams).nChannels = 1; //qMin<unsigned int>(info.inputChannels, 2);
+        (*d->inParams).nChannels = qMin<unsigned int>(info.inputChannels, 2);
         (*d->inParams).firstChannel = 0;
     }
 
@@ -616,7 +624,7 @@ void Audio::StreamContext::setOutputDevice(int deviceId)
         RtAudio::DeviceInfo info = d->audio.getDeviceInfo(devId);
         d->outParams = new RtAudio::StreamParameters();
         (*d->outParams).deviceId = devId;
-        (*d->outParams).nChannels = 1; //qMin<unsigned int>(info.inputChannels, 2);
+        (*d->outParams).nChannels = qMin<unsigned int>(info.inputChannels, 2);
         (*d->outParams).firstChannel = 0;
     }
 

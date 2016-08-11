@@ -97,6 +97,37 @@ CoreAV::CoreAV(Tox *tox)
     toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
     toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
 
+    // TODO: get audio input device from settings
+    audioTx.setInputDevice();
+    audioTx.setSampleRate(48000);
+    audioTx.setFrameCount(20 * audioTx.sampleRate() / 1000);
+    audioTx.onRecorded([this](const void* pcm, qTox::Audio::Format fmt,
+                       size_t frames, quint8 channels, quint32 sampleRate) -> int
+    {
+        if (fmt != qTox::Audio::Format::SINT16)
+        {
+            qWarning() << "Audio data must be formatted in SINT16."
+                       << "Aborting…";
+            return 2;
+        }
+
+        //qDebug() << "Audio data recorded. Transmitting"<<frames<<"frames…";
+        for (const ToxCall& call : calls)
+        {
+            this->sendCallAudio(call.callId, static_cast<const int16_t*>(pcm),
+                                frames, channels, sampleRate);
+        }
+
+        for (const ToxGroupCall& groupCall : groupCalls)
+        {
+            this->sendGroupCallAudio(groupCall.callId,
+                                     static_cast<const int16_t*>(pcm),
+                                     frames, channels, sampleRate);
+        }
+
+        return 0;
+    });
+
     coreavThread->start();
 }
 
@@ -242,6 +273,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
 
     auto call = calls.insert({friendNum, video, *this});
     call->startTimeout();
+
     return true;
 }
 
@@ -272,6 +304,10 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         return false;
     }
     calls.remove(friendNum);
+
+    if (calls.isEmpty() && groupCalls.isEmpty())
+        audioTx.close();
+
     return true;
 }
 
@@ -436,12 +472,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
     if (call.muteVol || call.inactive)
         return;
 
-    Audio& audio = Audio::getInstance();
-    if (!call.alSource)
-        audio.subscribeOutput(call.alSource);
-
-    audio.playAudioBuffer(call.alSource, data, samples, channels,
-                          sample_rate);
+    call.playbackAudio(data, samples, channels, sample_rate);
 }
 
 /**
@@ -546,15 +577,7 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
 */
 void CoreAV::invalidateCallSources()
 {
-    for (ToxGroupCall& call : groupCalls)
-    {
-        call.alSource = 0;
-    }
-
-    for (ToxFriendCall& call : calls)
-    {
-        call.alSource = 0;
-    }
+    // TODO: This method is obsolete with RtAudio.
 }
 
 /**
@@ -666,6 +689,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
         {
             call.stopTimeout();
             call.inactive = false;
+            self->audioTx.start();
             emit self->avStart(friendNum, call.videoEnabled);
         }
         else if ((call.state & TOXAV_FRIEND_CALL_STATE_SENDING_V)
@@ -717,11 +741,7 @@ void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
     if (call.muteVol)
         return;
 
-    Audio& audio = Audio::getInstance();
-    if (!call.alSource)
-        audio.subscribeOutput(call.alSource);
-
-    audio.playAudioBuffer(call.alSource, pcm, sampleCount, channels, samplingRate);
+    call.playbackAudio(pcm, sampleCount, channels, samplingRate);
 }
 
 void CoreAV::videoFrameCallback(ToxAV *, uint32_t friendNum, uint16_t w, uint16_t h,

@@ -5,9 +5,12 @@
 #include <QtGlobal>
 #include <QMetaObject>
 
+#include "src/audio/devices.h"
 #include "src/core/indexedlist.h"
 
 #include <tox/toxav.h>
+
+#include <QDebug>
 
 class QTimer;
 class AudioFilterer;
@@ -19,24 +22,36 @@ struct ToxCall
 protected:
      ToxCall() = default;
      explicit ToxCall(uint32_t CallId);
-     ~ToxCall();
+     ~ToxCall() noexcept;
 public:
      ToxCall(const ToxCall& other) = delete;
      ToxCall(ToxCall&& other) noexcept;
 
-     inline operator int() {return callId;}
+     inline operator uint32_t() {return callId;}
      ToxCall& operator=(const ToxCall& other) = delete;
      ToxCall& operator=(ToxCall&& other) noexcept;
 
-protected:
-     QMetaObject::Connection audioInConn;
+     inline void playbackAudio(const qint16* pcm, quint32 frames,
+                               quint8 channels, quint32 sampleRate)
+     {
+         qDebug() << "ToxCall: Playback of" <<frames<< "recieved frames…";
+
+         qTox::Audio::Format fmt = qTox::Audio::Format::SINT16;
+
+         size_t bytes = frames * channels * 2;
+         char* data = new char[bytes];
+         memcpy(data, reinterpret_cast<const char*>(pcm), bytes);
+         audioRx.playback(data, fmt, frames, channels, sampleRate);
+     }
 
 public:
     uint32_t callId;
-    quint32 alSource;
     bool inactive;
     bool muteMic;
     bool muteVol;
+
+protected:
+    qTox::Audio::StreamContext audioRx;
 };
 
 struct ToxFriendCall : public ToxCall
