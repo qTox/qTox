@@ -27,6 +27,9 @@
 
 namespace qTox {
 
+QSet<const Audio::Device::Private*> Audio::activeDevices = QSet<const Audio::Device::Private*>();
+QSet<const Audio::Stream::Private*> Audio::streams = QSet<const Audio::Stream::Private*>();
+
 /**
 @class Audio
 @brief A non-constructable wrapper class to qTox audio features.
@@ -76,6 +79,54 @@ void cb_rtaudio_error(RtAudioError::Type type, const std::string& message)
     Q_UNUSED(type);
     qWarning() << "RtAudio:" << QString::fromStdString(message);
 }
+
+/**
+ * @internal
+ * @brief audio resource management
+ */
+class Audio::Private
+{
+public:
+    static int streamCount()
+    {
+        return Audio::streams.count();
+    }
+
+    static void insert(const Stream::Private* stream)
+    {
+        if (stream)
+        {
+            Audio::streams << stream;
+            qDebug() << "Registered audio stream. Streams:" << streams.count();
+        }
+    }
+
+    static void remove(const Stream::Private* stream)
+    {
+        if (Audio::streams.remove(stream))
+            qDebug() << "Removed audio stream. Streams:" << streams.count();
+    }
+
+    static int openDevices()
+    {
+        return Audio::activeDevices.count();
+    }
+
+    static void insert(const Device::Private* device)
+    {
+        if (device)
+        {
+            Audio::activeDevices << device;
+            qDebug() << "Registered open audio device. Active devices:" << activeDevices.count();
+        }
+    }
+
+    static void remove(const Device::Private* device)
+    {
+        if (Audio::activeDevices.remove(device))
+            qDebug() << "Removed open audio device. Active devices:" << activeDevices.count();
+    }
+};
 
 /**
 @internal
@@ -160,11 +211,13 @@ public:
         , playbackBuffer(nullptr)
         , outParams(nullptr)
     {
+        Audio::Private::insert(this);
         audio.showWarnings(true);
     }
 
     ~Private()
     {
+        Audio::Private::remove(this);
         resetPlayback();
         delete inParams;
         delete outParams;
