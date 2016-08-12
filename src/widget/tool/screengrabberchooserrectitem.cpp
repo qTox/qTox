@@ -213,8 +213,8 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
         return;
 
     QPointF delta = event->scenePos() - event->lastScenePos();
-    delta.rx() *= qreal(std::abs(x));
-    delta.ry() *= qreal(std::abs(y));
+    delta.rx() *= qreal(qAbs(x));
+    delta.ry() *= qreal(qAbs(y));
 
     // We increase if the multiplier and the delta have the same sign
     bool increaseX = ((x < 0) == (delta.x() < 0));

@@ -200,8 +200,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
     QRect recGL = QGuiApplication::primaryScreen()->virtualGeometry();
     QRect rec = qApp->desktop()->screenGeometry(QCursor::pos());
     const QRectF ttRect = this->helperToolbox->childrenBoundingRect();
-    int x = abs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
-    int y = abs(recGL.y()) + rec.y();
+    int x = qAbs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
+    int y = qAbs(recGL.y()) + rec.y();
 
     // Multiply by devicePixelRatio to get centered positions under scaling
     helperToolbox->setX(x * pixRatio);
