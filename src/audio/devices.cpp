@@ -27,6 +27,8 @@
 
 namespace qTox {
 
+QSet<const Audio::Stream::Private*> Audio::streams = QSet<const Audio::Stream::Private*>();
+
 /**
 @class Audio
 @brief A non-constructable wrapper class to qTox audio features.
@@ -76,6 +78,29 @@ void cb_rtaudio_error(RtAudioError::Type type, const std::string& message)
     Q_UNUSED(type);
     qWarning() << "RtAudio:" << QString::fromStdString(message);
 }
+
+/**
+ * @internal
+ * @brief audio resource management
+ */
+class Audio::Private
+{
+public:
+    static void insert(const Stream::Private* stream)
+    {
+        if (stream)
+        {
+            Audio::streams << stream;
+            qDebug() << "Registered audio stream. Streams:" << streams.count();
+        }
+    }
+
+    static void remove(const Stream::Private* stream)
+    {
+        if (Audio::streams.remove(stream))
+            qDebug() << "Removed audio stream. Streams:" << streams.count();
+    }
+};
 
 /**
 @internal
@@ -160,14 +185,21 @@ public:
         , playbackBuffer(nullptr)
         , outParams(nullptr)
     {
+        Audio::Private::insert(this);
         audio.showWarnings(true);
     }
 
     ~Private()
     {
+        Audio::Private::remove(this);
         resetPlayback();
         delete inParams;
         delete outParams;
+    }
+
+    bool isOpen() const
+    {
+        return audio.isStreamOpen();
     }
 
     bool open()
@@ -177,6 +209,29 @@ public:
 
         if (!(inParams || outParams))
             return false;
+
+        // check, if one of the requested devices is in use by another stream
+        for (const Audio::Stream::Private* p : Audio::streams)
+        {
+            if (p != this && p->isOpen())
+            {
+                if (inParams && p->inParams &&
+                    (*p->inParams).deviceId == (*inParams).deviceId)
+                {
+                    qWarning() << "The audio input device is opened by"
+                                  " another stream.";
+                    return false;
+                }
+
+                if (outParams && p->outParams &&
+                    (*p->outParams).deviceId == (*outParams).deviceId)
+                {
+                    qWarning() << "The audio output device is opened by"
+                                  " another stream.";
+                    return false;
+                }
+            }
+        }
 
         audio.openStream(outParams, inParams, format, sampleRate, &inFrames,
                          cb_rtaudio_playback, this, opts, cb_rtaudio_error);
@@ -291,6 +346,15 @@ Audio::Device::List Audio::availableDevices()
     }
 
     return devices;
+}
+
+/**
+ * @brief Returns the number of created streams.
+ * @return number of stream instances
+ */
+int Audio::streamCount()
+{
+    return Audio::streams.count();
 }
 
 /**

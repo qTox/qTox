@@ -158,8 +158,11 @@ public:
 
 public:
     static Device::List availableDevices();
+    static int streamCount();
 
 private:
+    class Private;
+
     Audio() = delete;
     Audio(const Audio&) = delete;
     Audio(Audio&&) = delete;
@@ -167,6 +170,9 @@ private:
 
     Audio& operator=(const Audio&) = delete;
     Audio& operator=(Audio&&) = delete;
+
+private:
+    static QSet<const Stream::Private*> streams;
 };
 
 }

@@ -34,8 +34,6 @@ public:
      inline void playbackAudio(const qint16* pcm, quint32 frames,
                                quint8 channels, quint32 sampleRate)
      {
-         qDebug() << "ToxCall: Playback of" <<frames<< "recieved frames…";
-
          qTox::Audio::Format fmt = qTox::Audio::Format::SINT16;
 
          size_t bytes = frames * channels * 2;
