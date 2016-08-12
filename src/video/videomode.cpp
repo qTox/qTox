@@ -63,7 +63,7 @@ bool VideoMode::operator==(const VideoMode &other) const
 
 uint32_t VideoMode::norm(const VideoMode &other) const
 {
-    return abs(this->width-other.width) + abs(this->height-other.height);
+    return qAbs(this->width-other.width) + qAbs(this->height-other.height);
 }
 
 /**
