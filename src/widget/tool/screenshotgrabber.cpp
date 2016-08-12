@@ -29,6 +29,7 @@
 #include <QMouseEvent>
 #include <QScreen>
 #include <QTimer>
+#include <cstdlib>
 
 #include "screengrabberchooserrectitem.h"
 #include "screengrabberoverlayitem.h"

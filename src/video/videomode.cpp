@@ -18,6 +18,7 @@
 */
 
 #include "videomode.h"
+#include <cstdlib>
 
 /**
 @struct VideoMode
