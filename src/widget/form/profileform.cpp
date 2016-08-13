@@ -263,9 +263,13 @@ void ProfileForm::onAvatarClicked()
         return bytes;
     };
 
+    QString avatarsPath = Settings::getInstance().getAvatarsPath();
+    if (avatarsPath.isEmpty())
+        avatarsPath = QDir::homePath();
+
     QString filename = QFileDialog::getOpenFileName(this,
                                                     tr("Choose a profile picture"),
-                                                    QDir::homePath(),
+                                                    avatarsPath,
                                                     Nexus::getSupportedImageFilter(),
                                                     0,
                                                     QFileDialog::DontUseNativeDialog);

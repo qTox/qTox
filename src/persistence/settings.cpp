@@ -235,6 +235,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
+        setAvatarsPath(QDir::homePath());
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -478,6 +479,7 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("avatarsPath", avatarsPath);
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -1467,6 +1469,23 @@ void Settings::setVideoDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
     videoDev = deviceSpecifier;
+}
+
+QString Settings::getAvatarsPath() const
+{
+    QMutexLocker locker{&bigLock};
+    return avatarsPath;
+}
+
+void Settings::setAvatarsPath(const QString& path)
+{
+    QMutexLocker locker{&bigLock};
+    QDir dir(path);
+
+    if (dir.exists())
+        avatarsPath = path;
+    else
+        avatarsPath = QDir::homePath();
 }
 
 QString Settings::getOutDev() const
