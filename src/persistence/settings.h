@@ -28,6 +28,7 @@
 #include <QMutex>
 #include <QDate>
 #include <QNetworkProxy>
+#include <QFlags>
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -160,6 +161,7 @@ public slots:
     void saveGlobal();
     void sync();
 
+<<<<<<< 31bbf5d9ca207347ec261e68e888cbb7621e536c
 signals:
 <<<<<<< 37623c9fd05a3d873ccfc4f0d712584e8001d8ca
     // General
@@ -247,7 +249,19 @@ signals:
     void autoAcceptCallChanged(const ToxId& id, int accept);
 >>>>>>> feat(autoAnswer): add signal when autoAcceptCall's value is updated
 
+=======
+>>>>>>> feat(autoAnswer): using qflags instead of int
 public:
+    enum class AutoAcceptCall
+        {
+            None     = 0x00,
+            Audio    = 0x01,
+            Video    = 0x02,
+            AV       = 0x03,
+
+        };
+        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
+
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
@@ -404,8 +418,8 @@ public:
     QString getAutoAcceptDir(const ToxId& id) const;
     void setAutoAcceptDir(const ToxId& id, const QString& dir);
 
-    int getAutoAcceptCall(const ToxId& id) const;
-    void setAutoAcceptCall(const ToxId& id, int accept);
+    AutoAcceptCallFlags getAutoAcceptCall(const ToxId& id) const;
+    void setAutoAcceptCall(const ToxId& id, AutoAcceptCallFlags accept);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -630,7 +644,7 @@ private:
         QString note;
         int circleID = -1;
         QDate activity = QDate();
-        int autoAcceptCall;
+        AutoAcceptCallFlags autoAcceptCall;
     };
 
     struct circleProp
@@ -649,6 +663,13 @@ private:
     static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;
+
+signals:
+    void dhtServerListChanged();
+    void smileyPackChanged();
+    void emojiFontChanged();
+    void autoAcceptCallChanged(const ToxId& id, AutoAcceptCallFlags accept);
 };
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(Settings::AutoAcceptCallFlags)
 #endif // SETTINGS_HPP

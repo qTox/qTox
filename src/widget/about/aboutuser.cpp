@@ -82,7 +82,7 @@ void AboutUser::onAutoAcceptDirClicked()
 
 void AboutUser::onAutoAcceptCallClicked()
 {
-    Settings::getInstance().setAutoAcceptCall(this->toxId,ui->autoacceptcall->currentIndex());
+    Settings::getInstance().setAutoAcceptCall(this->toxId,Settings::AutoAcceptCallFlags(QFlag(ui->autoacceptcall->currentIndex())));
     Settings::getInstance().savePersonal();
 }
 

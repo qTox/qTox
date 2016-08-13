@@ -285,8 +285,8 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
     /* AutoAcceptCall is set for this friend */
-    if(     (video && Settings::getInstance().getAutoAcceptCall(f->getToxId())==2) ||
-            (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId())>=1))
+    if((video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Video)) ||
+       (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Audio)))
     {
         uint32_t friendId;
         friendId = f->getFriendID();
@@ -294,7 +294,6 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
                                   Q_ARG(uint32_t, friendId));
         onAvStart(friendId,video);
-
     }
     else
     {
@@ -326,7 +325,6 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
         audio.startLoop();
         audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
     }
-
 }
 
 void ChatForm::onAvStart(uint32_t FriendId, bool video)
