@@ -438,7 +438,13 @@ QVector<VideoMode> CameraDevice::getScreenModes()
         QRect rect = s->geometry();
         QPoint p = rect.topLeft();
 
-        VideoMode mode(rect.width(), rect.height(), p.x(), p.y());
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
+        qreal pixRatio = s->devicePixelRatio();
+#else
+        qreal pixRatio = 1.0;
+#endif
+
+        VideoMode mode(rect.width() * pixRatio, rect.height() * pixRatio, p.x() * pixRatio, p.y() * pixRatio);
         result.push_back(mode);
     });
 
