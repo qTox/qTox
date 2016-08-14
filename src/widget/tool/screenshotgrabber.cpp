@@ -53,9 +53,6 @@ ScreenshotGrabber::ScreenshotGrabber()
     pixRatio = QApplication::primaryScreen()->devicePixelRatio();
 #endif
 
-    // Scale window down by devicePixelRatio to show full screen region
-    window->scale(1 / pixRatio, 1 / pixRatio);
-
     setupScene();
 }
 
@@ -131,6 +128,9 @@ void ScreenshotGrabber::acceptRegion()
     if (rect.width() < 1 || rect.height() < 1)
         return;
 
+    // Scale the accepted region from DIPs to actual pixels
+    rect.setRect(rect.x() * pixRatio, rect.y() * pixRatio, rect.width() * pixRatio, rect.height() * pixRatio);
+
     emit regionChosen(rect);
     qDebug() << "Screenshot accepted, chosen region" << rect;
     QPixmap pixmap = this->screenGrab.copy(rect);
@@ -151,10 +151,6 @@ void ScreenshotGrabber::setupScene()
 
     this->screenGrabDisplay = scene->addPixmap(this->screenGrab);
     this->helperTooltip = scene->addText(QString());
-
-    // Scale UI elements up by devicePixelRatio to compensate for window downscaling
-    this->helperToolbox->setScale(pixRatio);
-    this->helperTooltip->setScale(pixRatio);
 
     scene->addItem(this->overlay);
     this->chooserRect = new ScreenGrabberChooserRectItem(scene);
@@ -203,9 +199,8 @@ void ScreenshotGrabber::adjustTooltipPosition()
     int x = qAbs(recGL.x()) + rec.x() + ((rec.width() - ttRect.width()) / 2);
     int y = qAbs(recGL.y()) + rec.y();
 
-    // Multiply by devicePixelRatio to get centered positions under scaling
-    helperToolbox->setX(x * pixRatio);
-    helperToolbox->setY(y * pixRatio);
+    helperToolbox->setX(x);
+    helperToolbox->setY(y);
 }
 
 void ScreenshotGrabber::reject()
