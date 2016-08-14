@@ -184,14 +184,6 @@ signals:
     void windowStateChanged(Qt::WindowStates states);
 #endif
 
-protected:
-    virtual bool eventFilter(QObject *obj, QEvent *event) final override;
-    virtual bool event(QEvent * e) final override;
-    virtual void closeEvent(QCloseEvent *event) final override;
-    virtual void changeEvent(QEvent *event) final override;
-    virtual void resizeEvent(QResizeEvent *event) final override;
-    virtual void moveEvent(QMoveEvent *event) final override;
-
 private slots:
     void onAddClicked();
     void onGroupClicked();
@@ -216,6 +208,15 @@ private slots:
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
+
+private:
+    // QMainWindow overrides
+    bool eventFilter(QObject *obj, QEvent *event) final override;
+    bool event(QEvent * e) final override;
+    void closeEvent(QCloseEvent *event) final override;
+    void changeEvent(QEvent *event) final override;
+    void resizeEvent(QResizeEvent *event) final override;
+    void moveEvent(QMoveEvent *event) final override;
 
 private:
     int icon_size;
