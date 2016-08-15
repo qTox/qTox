@@ -132,6 +132,15 @@ class Settings : public QObject
 public:
     enum class ProxyType {ptNone = 0, ptSOCKS5 = 1, ptHTTP = 2};
     enum class StyleType {NONE = 0, WITH_CHARS = 1, WITHOUT_CHARS = 2};
+    enum class AutoAcceptCall
+        {
+            None     = 0x00,
+            Audio    = 0x01,
+            Video    = 0x02,
+            AV       = 0x03,
+
+        };
+        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
 
 public:
     static Settings& getInstance();
@@ -161,9 +170,7 @@ public slots:
     void saveGlobal();
     void sync();
 
-<<<<<<< 31bbf5d9ca207347ec261e68e888cbb7621e536c
 signals:
-<<<<<<< 37623c9fd05a3d873ccfc4f0d712584e8001d8ca
     // General
     void enableIPv6Changed(bool enabled);
     void forceTCPChanged(bool enabled);
@@ -195,6 +202,7 @@ signals:
     void globalAutoAcceptDirChanged(const QString& path);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
+    void autoAcceptCallChanged(const ToxId& id, AutoAcceptCallFlags accept);
 
     // GUI
     void autoLoginChanged(bool enabled);
@@ -242,26 +250,8 @@ signals:
     void screenRegionChanged(const QRect& region);
     void screenGrabbedChanged(bool enabled);
     void camVideoFPSChanged(quint16 fps);
-=======
-    void dhtServerListChanged();
-    void smileyPackChanged();
-    void emojiFontChanged();
-    void autoAcceptCallChanged(const ToxId& id, int accept);
->>>>>>> feat(autoAnswer): add signal when autoAcceptCall's value is updated
 
-=======
->>>>>>> feat(autoAnswer): using qflags instead of int
 public:
-    enum class AutoAcceptCall
-        {
-            None     = 0x00,
-            Audio    = 0x01,
-            Video    = 0x02,
-            AV       = 0x03,
-
-        };
-        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
-
     const QList<DhtServer>& getDhtServerList() const;
     void setDhtServerList(const QList<DhtServer>& newDhtServerList);
 
@@ -663,12 +653,6 @@ private:
     static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;
-
-signals:
-    void dhtServerListChanged();
-    void smileyPackChanged();
-    void emojiFontChanged();
-    void autoAcceptCallChanged(const ToxId& id, AutoAcceptCallFlags accept);
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Settings::AutoAcceptCallFlags)
