@@ -51,7 +51,7 @@ AboutForm::AboutForm()
 }
 
 /**
- * @todo when we finally have stable releases: build-in a way to tell
+ * TODO: When we finally have stable releases: build-in a way to tell
  * nightly builds from stable releases.
  */
 void AboutForm::replaceVersions()
