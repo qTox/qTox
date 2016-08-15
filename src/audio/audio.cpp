@@ -345,7 +345,7 @@ bool Audio::initInput(const QString& deviceName)
     qDebug() << "Opening audio input" << deviceName;
     assert(!alInDev);
 
-    /// @todo Try to actually detect if our audio source is stereo
+    // TODO: Try to actually detect if our audio source is stereo
     int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
