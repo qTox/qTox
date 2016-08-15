@@ -143,30 +143,6 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(s.getTimestampFormat(), QTime::currentTime().toString(s.getTimestampFormat())));
     bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(s.getDateFormat(), QDate::currentDate().toString(s.getDateFormat())));
 
-    // Chat
-    connect(bodyUI->textStyleComboBox, &QComboBox::currentTextChanged, this, &UserInterfaceForm::onStyleUpdated);
-
-    connect(bodyUI->showWindow, &QCheckBox::stateChanged, this, &UserInterfaceForm::onShowWindowChanged);
-    connect(bodyUI->showInFront, &QCheckBox::stateChanged, this, &UserInterfaceForm::onSetShowInFront);
-
-    connect(bodyUI->groupAlwaysNotify, &QCheckBox::stateChanged, this, &UserInterfaceForm::onSetGroupAlwaysNotify);
-    connect(bodyUI->cbGroupchatPosition, &QCheckBox::stateChanged, this, &UserInterfaceForm::onGroupchatPositionChanged);
-    connect(bodyUI->cbCompactLayout, &QCheckBox::stateChanged, this, &UserInterfaceForm::onCompactLayout);
-
-    connect(bodyUI->cbDontGroupWindows, &QCheckBox::stateChanged, this, &UserInterfaceForm::onDontGroupWindowsChanged);
-    connect(bodyUI->cbSeparateWindow, &QCheckBox::stateChanged, this, &UserInterfaceForm::onSeparateWindowChanged);
-
-    // Theme
-    void (QComboBox::* currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
-    connect(bodyUI->useEmoticons, &QCheckBox::stateChanged, this, &UserInterfaceForm::onUseEmoticonsChange);
-    connect(bodyUI->smileyPackBrowser, currentIndexChanged, this, &UserInterfaceForm::onSmileyBrowserIndexChanged);
-    connect(bodyUI->styleBrowser, &QComboBox::currentTextChanged, this, &UserInterfaceForm::onStyleSelected);
-    connect(bodyUI->themeColorCBox, currentIndexChanged, this, &UserInterfaceForm::onThemeColorChanged);
-    connect(bodyUI->emoticonSize, &QSpinBox::editingFinished, this, &UserInterfaceForm::onEmoticonSizeChanged);
-    connect(bodyUI->timestamp, currentIndexChanged, this, &UserInterfaceForm::onTimestampSelected);
-    connect(bodyUI->dateFormats, currentIndexChanged, this, &UserInterfaceForm::onDateFormatSelected);
-
-
     eventsInit();
     Translator::registerHandler(std::bind(&UserInterfaceForm::retranslateUi, this), this);
 }
@@ -177,7 +153,7 @@ UserInterfaceForm::~UserInterfaceForm()
     delete bodyUI;
 }
 
-void UserInterfaceForm::onStyleSelected(QString style)
+void UserInterfaceForm::on_styleBrowser_currentIndexChanged(QString style)
 {
     if (bodyUI->styleBrowser->currentIndex() == 0)
         Settings::getInstance().setStyle("None");
@@ -188,37 +164,37 @@ void UserInterfaceForm::onStyleSelected(QString style)
     parent->setBodyHeadStyle(style);
 }
 
-void UserInterfaceForm::onEmoticonSizeChanged()
+void UserInterfaceForm::on_emoticonSize_editingFinished()
 {
     Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
 }
 
-void UserInterfaceForm::onTimestampSelected(int index)
+void UserInterfaceForm::on_timestamp_currentIndexChanged(int index)
 {
     Settings::getInstance().setTimestampFormat(timeFormats.at(index));
     Translator::translate();
 }
 
-void UserInterfaceForm::onDateFormatSelected(int index)
+void UserInterfaceForm::on_dateFormats_currentIndexChanged(int index)
 {
     Settings::getInstance().setDateFormat(dateFormats.at(index));
     Translator::translate();
 }
 
-void UserInterfaceForm::onUseEmoticonsChange()
+void UserInterfaceForm::on_useEmoticons_stateChanged()
 {
     Settings::getInstance().setUseEmoticons(bodyUI->useEmoticons->isChecked());
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 }
 
-void UserInterfaceForm::onStyleUpdated()
+void UserInterfaceForm::on_textStyleComboBox_currentTextChanged()
 {
     Settings::StyleType styleType =
             static_cast<Settings::StyleType>(bodyUI->textStyleComboBox->currentIndex());
     Settings::getInstance().setStylePreference(styleType);
 }
 
-void UserInterfaceForm::onSmileyBrowserIndexChanged(int index)
+void UserInterfaceForm::on_smileyPackBrowser_currentIndexChanged(int index)
 {
     QString filename = bodyUI->smileyPackBrowser->itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
@@ -264,44 +240,46 @@ void UserInterfaceForm::reloadSmiles()
     bodyUI->emoticonSize->setMaximum(actualSize.width());
 }
 
-void UserInterfaceForm::onShowWindowChanged()
+void UserInterfaceForm::on_showWindow_stateChanged()
 {
-    Settings::getInstance().setShowWindow(bodyUI->showWindow->isChecked());
+    bool isChecked = bodyUI->showWindow->isChecked();
+    Settings::getInstance().setShowWindow(isChecked);
+    bodyUI->showInFront->setEnabled(isChecked);
 }
 
-void UserInterfaceForm::onSetShowInFront()
+void UserInterfaceForm::on_showInFront_stateChanged()
 {
     Settings::getInstance().setShowInFront(bodyUI->showInFront->isChecked());
 }
 
-void UserInterfaceForm::onSetGroupAlwaysNotify()
+void UserInterfaceForm::on_groupAlwaysNotify_stateChanged()
 {
     Settings::getInstance().setGroupAlwaysNotify(bodyUI->groupAlwaysNotify->isChecked());
 }
 
-void UserInterfaceForm::onCompactLayout()
+void UserInterfaceForm::on_cbCompactLayout_stateChanged()
 {
     Settings::getInstance().setCompactLayout(bodyUI->cbCompactLayout->isChecked());
 }
 
-void UserInterfaceForm::onSeparateWindowChanged()
+void UserInterfaceForm::on_cbSeparateWindow_stateChanged()
 {
     bool checked = bodyUI->cbSeparateWindow->isChecked();
     bodyUI->cbDontGroupWindows->setEnabled(checked);
     Settings::getInstance().setSeparateWindow(checked);
 }
 
-void UserInterfaceForm::onDontGroupWindowsChanged()
+void UserInterfaceForm::on_cbDontGroupWindows_stateChanged()
 {
     Settings::getInstance().setDontGroupWindows(bodyUI->cbDontGroupWindows->isChecked());
 }
 
-void UserInterfaceForm::onGroupchatPositionChanged()
+void UserInterfaceForm::on_cbGroupchatPosition_stateChanged()
 {
     Settings::getInstance().setGroupchatPosition(bodyUI->cbGroupchatPosition->isChecked());
 }
 
-void UserInterfaceForm::onThemeColorChanged(int)
+void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
 {
     int index = bodyUI->themeColorCBox->currentIndex();
     Settings::getInstance().setThemeColor(index);

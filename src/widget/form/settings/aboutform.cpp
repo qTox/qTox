@@ -20,12 +20,13 @@
 #include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include <src/core/recursivesignalblocker.h>
-#include "src/widget/translator.h"
-#include "tox/tox.h"
-#include "src/net/autoupdate.h"
 #include <QTimer>
 #include <QDebug>
+#include <tox/tox.h>
+
+#include "src/core/recursivesignalblocker.h"
+#include "src/net/autoupdate.h"
+#include "src/widget/translator.h"
 
 AboutForm::AboutForm()
     : GenericForm(QPixmap(":/img/settings/general.png"))
@@ -57,8 +58,9 @@ void AboutForm::replaceVersions()
     // nightly builds from stable releases.
 
     QString TOXCORE_VERSION = QString::number(TOX_VERSION_MAJOR) + "." +
-      QString::number(TOX_VERSION_MINOR) + "." +
-      QString::number(TOX_VERSION_PATCH);
+            QString::number(TOX_VERSION_MINOR) + "." +
+            QString::number(TOX_VERSION_PATCH);
+
     bodyUI->youareusing->setText(bodyUI->youareusing->text().replace("$GIT_DESCRIBE", QString(GIT_DESCRIBE)));
     bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
     bodyUI->toxCoreVersion->setText(bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION", TOXCORE_VERSION));
