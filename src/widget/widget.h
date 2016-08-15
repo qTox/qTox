@@ -24,6 +24,7 @@
 #include <QPointer>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
+
 #include "src/core/corestructs.h"
 #include "genericchatitemwidget.h"
 
@@ -40,7 +41,7 @@ class FilesForm;
 class Friend;
 class FriendListWidget;
 class FriendWidget;
-class GenericChatroomWidget;
+class GenericChatForm;
 class Group;
 class GroupInviteForm;
 class Core;
@@ -128,6 +129,7 @@ public:
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
+    void arrangeContent(QWidget* widget = nullptr);
     void resetIcon();
 
 public:
@@ -136,8 +138,7 @@ public:
 
 public slots:
     void onShowSettings();
-    void onSeparateWindowClicked(bool separate);
-    void onSeparateWindowChanged(bool separate, bool clicked);
+    void onSeparateWindowChanged(bool separate);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();
@@ -223,7 +224,6 @@ private:
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
-    void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
@@ -255,30 +255,30 @@ private:
     QAction *actionShow;
 
     QMenu* filterMenu;
-
     QActionGroup* filterGroup;
     QAction* filterAllAction;
     QAction* filterOnlineAction;
     QAction* filterOfflineAction;
     QAction* filterFriendsAction;
     QAction* filterGroupsAction;
-
     QActionGroup* filterDisplayGroup;
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
 
     QPoint dragPosition;
 
+    Qt::Edge contentArrangement;
     QPointer<QWidget> contentWidget;
-    QPointer<ContentLayout> contentLayout;
     QPointer<AddFriendForm> addFriendForm;
     QPointer<GroupInviteForm> groupInviteForm;
     QPointer<ProfileForm> profileForm;
     QPointer<SettingsWidget> settingsWidget;
     QPointer<FilesForm> filesForm;
-    GenericChatroomWidget *activeChatroomWidget;
-    FriendListWidget *contactListWidget;
-    MaskablePixmapWidget *profilePicture;
+    QPointer<GenericChatForm> activeChat;
+
+    FriendListWidget* contactListWidget;
+    MaskablePixmapWidget* profilePicture;
+
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     QTimer *timer, *offlineMsgTimer;

@@ -51,7 +51,6 @@ public:
     void setFriendTyping(bool isTyping);
     OfflineMsgEngine* getOfflineMsgEngine();
 
-    virtual void show(ContentLayout* contentLayout) final override;
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);

@@ -938,14 +938,6 @@ void ChatForm::setFriendTyping(bool isTyping)
     text->setText("<div class=typing>" + tr("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
-void ChatForm::show(ContentLayout* contentLayout)
-{
-    GenericChatForm::show(contentLayout);
-
-    if (callConfirm)
-        callConfirm->show();
-}
-
 void ChatForm::showEvent(QShowEvent* event)
 {
     if (callConfirm)

@@ -360,10 +360,10 @@ bool FriendWidget::chatFormIsSet(bool focus) const
     return ContentDialog::existsFriendWidget(friendId, focus) || f->getChatForm()->isVisible();
 }
 
-void FriendWidget::setChatForm(ContentLayout* contentLayout)
+void FriendWidget::setChatForm()
 {
     Friend* f = FriendList::findFriend(friendId);
-    f->getChatForm()->show(contentLayout);
+    f->getChatForm()->show();
 }
 
 void FriendWidget::resetEventFlags()

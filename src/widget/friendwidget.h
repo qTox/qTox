@@ -33,7 +33,7 @@ public:
     virtual void setAsInactiveChatroom() override;
     virtual void updateStatusLight() override;
     virtual bool chatFormIsSet(bool focus) const override;
-    virtual void setChatForm(ContentLayout* contentLayout) override;
+    virtual void setChatForm() override;
     virtual void resetEventFlags() override;
     virtual QString getStatusString() const override;
     virtual Friend* getFriend() const override;

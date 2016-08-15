@@ -40,7 +40,7 @@ public:
     virtual void setAsInactiveChatroom() = 0;
     virtual void updateStatusLight() = 0;
     virtual bool chatFormIsSet(bool focus) const = 0;
-    virtual void setChatForm(ContentLayout* contentLayout) = 0;
+    virtual void setChatForm() = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
     virtual Friend* getFriend() const{return nullptr;}
