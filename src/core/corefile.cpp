@@ -471,12 +471,12 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
 
 void CoreFile::onConnectionStatusChanged(Core* core, uint32_t friendId, bool online)
 {
-    /// @todo Actually resume broken file transfers
-    /// We need to:
-    /// - Start a new file transfer with the same 32byte file ID with toxcore
-    /// - Seek to the correct position again
-    /// - Update the fileNum in our ToxFile
-    /// - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
+    // TODO: Actually resume broken file transfers
+    // We need to:
+    // - Start a new file transfer with the same 32byte file ID with toxcore
+    // - Seek to the correct position again
+    // - Update the fileNum in our ToxFile
+    // - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
     ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING : ToxFile::BROKEN;
     for (uint64_t key : fileMap.keys())
     {
