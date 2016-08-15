@@ -36,24 +36,25 @@ public:
     virtual QString getFormName() final override {return tr("User Interface");}
 
 private slots:
-    void onSmileyBrowserIndexChanged(int index);
-    void onEmoticonSizeChanged();
-    void onStyleSelected(QString style);
-    void onTimestampSelected(int index);
-    void onDateFormatSelected(int index);
-    void onStyleUpdated();
-    void onUseEmoticonsChange();
-    void onShowWindowChanged();
-    void onSetShowInFront();
-    void onSetGroupAlwaysNotify();
-    void onCompactLayout();
-    void onSeparateWindowChanged();
-    void onDontGroupWindowsChanged();
-    void onGroupchatPositionChanged();
-    void onThemeColorChanged(int);
+    void on_smileyPackBrowser_currentIndexChanged(int index);
+    void on_emoticonSize_editingFinished();
+    void on_styleBrowser_currentIndexChanged(QString style);
+    void on_timestamp_currentIndexChanged(int index);
+    void on_dateFormats_currentIndexChanged(int index);
+    void on_textStyleComboBox_currentTextChanged();
+    void on_useEmoticons_stateChanged();
+    void on_showWindow_stateChanged();
+    void on_showInFront_stateChanged();
+    void on_groupAlwaysNotify_stateChanged();
+    void on_cbCompactLayout_stateChanged();
+    void on_cbSeparateWindow_stateChanged();
+    void on_cbDontGroupWindows_stateChanged();
+    void on_cbGroupchatPosition_stateChanged();
+    void on_themeColorCBox_currentIndexChanged(int);
 
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
+
 
 private:
     void retranslateUi();

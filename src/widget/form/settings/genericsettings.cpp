@@ -1,8 +1,8 @@
 #include "genericsettings.h"
 
-#include <QEvent>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QEvent>
 #include <QSpinBox>
 
 GenericForm::GenericForm(const QPixmap &icon)

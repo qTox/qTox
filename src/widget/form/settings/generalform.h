@@ -40,22 +40,22 @@ public:
     }
 
 private slots:
-    void onTranslationUpdated();
-    void onAutorunUpdated();
-    void onSetShowSystemTray();
-    void onSetAutostartInTray();
-    void onSetCloseToTray();
-    void onSetLightTrayIcon();
-    void onAutoAwayChanged();
-    void onSetMinimizeToTray();
-    void onSetNotifySound();
-    void onSetBusySound();
-    void onSetStatusChange();
-    void onFauxOfflineMessaging();
+    void on_transComboBox_currentIndexChanged(int index);
+    void on_cbAutorun_stateChanged();
+    void on_showSystemTray_stateChanged();
+    void on_startInTray_stateChanged();
+    void on_closeToTray_stateChanged();
+    void on_lightTrayIcon_stateChanged();
+    void on_autoAwaySpinBox_editingFinished();
+    void on_minimizeToTray_stateChanged();
+    void on_notifySound_stateChanged();
+    void on_busySound_stateChanged();
+    void on_statusChanges_stateChanged();
+    void on_cbFauxOfflineMessaging_stateChanged();
 
-    void onAutoAcceptFileChange();
-    void onAutoSaveDirChange();
-    void onCheckUpdateChanged();
+    void on_autoacceptFiles_stateChanged();
+    void on_autoSaveFilesDir_clicked();
+    void on_checkUpdates_stateChanged();
 
 private:
     void retranslateUi();

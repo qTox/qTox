@@ -143,27 +143,6 @@ GeneralForm::GeneralForm(SettingsWidget *myParent)
     bodyUI->autoSaveFilesDir->setText(s.getGlobalAutoAcceptDir());
     bodyUI->autoacceptFiles->setChecked(s.getAutoSaveEnabled());
 
-    // General
-    void (QComboBox::* currentIndexChanged)(int index) = &QComboBox::currentIndexChanged;
-    connect(bodyUI->transComboBox, currentIndexChanged, this, &GeneralForm::onTranslationUpdated);
-    connect(bodyUI->checkUpdates, &QCheckBox::stateChanged, this, &GeneralForm::onCheckUpdateChanged);
-    connect(bodyUI->cbAutorun, &QCheckBox::stateChanged, this, &GeneralForm::onAutorunUpdated);
-    connect(bodyUI->lightTrayIcon, &QCheckBox::stateChanged, this, &GeneralForm::onSetLightTrayIcon);
-
-    connect(bodyUI->showSystemTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetShowSystemTray);
-    connect(bodyUI->startInTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetAutostartInTray);
-    connect(bodyUI->minimizeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetMinimizeToTray);
-    connect(bodyUI->closeToTray, &QCheckBox::stateChanged, this, &GeneralForm::onSetCloseToTray);
-
-    connect(bodyUI->notifySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetNotifySound);
-    connect(bodyUI->busySound, &QCheckBox::stateChanged, this, &GeneralForm::onSetBusySound);
-    connect(bodyUI->statusChanges, &QCheckBox::stateChanged, this, &GeneralForm::onSetStatusChange);
-    connect(bodyUI->cbFauxOfflineMessaging, &QCheckBox::stateChanged, this, &GeneralForm::onFauxOfflineMessaging);
-
-    connect(bodyUI->autoAwaySpinBox, &QSpinBox::editingFinished, this, &GeneralForm::onAutoAwayChanged);
-    connect(bodyUI->autoSaveFilesDir, &QPushButton::clicked, this, &GeneralForm::onAutoSaveDirChange);
-    connect(bodyUI->autoacceptFiles, &QCheckBox::stateChanged, this, &GeneralForm::onAutoAcceptFileChange);
-
 #ifndef QTOX_PLATFORM_EXT
     bodyUI->autoAwayLabel->setEnabled(false);   // these don't seem to change the appearance of the widgets,
     bodyUI->autoAwaySpinBox->setEnabled(false); // though they are unusable
@@ -179,78 +158,78 @@ GeneralForm::~GeneralForm()
     delete bodyUI;
 }
 
-void GeneralForm::onTranslationUpdated()
+void GeneralForm::on_transComboBox_currentIndexChanged(int index)
 {
-    Settings::getInstance().setTranslation(locales[bodyUI->transComboBox->currentIndex()]);
+    Settings::getInstance().setTranslation(locales[index]);
     Translator::translate();
 }
 
-void GeneralForm::onAutorunUpdated()
+void GeneralForm::on_cbAutorun_stateChanged()
 {
     Settings::getInstance().setAutorun(bodyUI->cbAutorun->isChecked());
 }
 
-void GeneralForm::onSetShowSystemTray()
+void GeneralForm::on_showSystemTray_stateChanged()
 {
     Settings::getInstance().setShowSystemTray(bodyUI->showSystemTray->isChecked());
     Settings::getInstance().saveGlobal();
 }
 
-void GeneralForm::onSetAutostartInTray()
+void GeneralForm::on_startInTray_stateChanged()
 {
     Settings::getInstance().setAutostartInTray(bodyUI->startInTray->isChecked());
 }
 
-void GeneralForm::onSetCloseToTray()
+void GeneralForm::on_closeToTray_stateChanged()
 {
     Settings::getInstance().setCloseToTray(bodyUI->closeToTray->isChecked());
 }
 
-void GeneralForm::onSetLightTrayIcon()
+void GeneralForm::on_lightTrayIcon_stateChanged()
 {
     Settings::getInstance().setLightTrayIcon(bodyUI->lightTrayIcon->isChecked());
     Widget::getInstance()->updateIcons();
 }
 
-void GeneralForm::onSetMinimizeToTray()
+void GeneralForm::on_minimizeToTray_stateChanged()
 {
     Settings::getInstance().setMinimizeToTray(bodyUI->minimizeToTray->isChecked());
 }
 
-void GeneralForm::onSetNotifySound()
+void GeneralForm::on_notifySound_stateChanged()
 {
     bool notify = bodyUI->notifySound->isChecked();
     Settings::getInstance().setNotifySound(notify);
     bodyUI->busySound->setEnabled(notify);
 }
 
-void GeneralForm::onSetBusySound()
+void GeneralForm::on_busySound_stateChanged()
 {
     Settings::getInstance().setBusySound(bodyUI->busySound->isChecked());
 }
 
-void GeneralForm::onSetStatusChange()
+void GeneralForm::on_statusChanges_stateChanged()
 {
     Settings::getInstance().setStatusChangeNotificationEnabled(bodyUI->statusChanges->isChecked());
 }
 
-void GeneralForm::onFauxOfflineMessaging()
+void GeneralForm::on_cbFauxOfflineMessaging_stateChanged()
 {
     Settings::getInstance().setFauxOfflineMessaging(bodyUI->cbFauxOfflineMessaging->isChecked());
 }
 
-void GeneralForm::onAutoAwayChanged()
+void GeneralForm::on_autoAwaySpinBox_editingFinished()
 {
     int minutes = bodyUI->autoAwaySpinBox->value();
     Settings::getInstance().setAutoAwayTime(minutes);
 }
 
-void GeneralForm::onAutoAcceptFileChange()
+void GeneralForm::on_autoacceptFiles_stateChanged()
 {
     Settings::getInstance().setAutoSaveEnabled(bodyUI->autoacceptFiles->isChecked());
 }
 
-void GeneralForm::onAutoSaveDirChange()
+void GeneralForm::on_autoSaveFilesDir_clicked()
 {
     QString previousDir = Settings::getInstance().getGlobalAutoAcceptDir();
     QString directory = QFileDialog::getExistingDirectory(0,
@@ -264,7 +243,7 @@ void GeneralForm::onAutoSaveDirChange()
     bodyUI->autoSaveFilesDir->setText(directory);
 }
 
-void GeneralForm::onCheckUpdateChanged()
+void GeneralForm::on_checkUpdates_stateChanged()
 {
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
 }
