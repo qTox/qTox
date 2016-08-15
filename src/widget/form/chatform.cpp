@@ -1010,7 +1010,7 @@ void ChatForm::SendMessageStr(QString msg)
         }
         else
         {
-            /// @todo Make faux-offline messaging work partially with the history disabled
+            // TODO: Make faux-offline messaging work partially with the history disabled
             ma->markAsSent(QDateTime::currentDateTime());
         }
 
