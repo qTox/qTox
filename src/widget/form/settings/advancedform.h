@@ -41,15 +41,15 @@ public:
 
 private slots:
     // Portable
-    void onMakeToxPortableUpdated();
-    void resetToDefault();
+    void on_cbMakeToxPortable_stateChanged();
+    void on_resetButton_clicked();
     // Connection
-    void onEnableIPv6Updated();
-    void onUDPUpdated();
-    void onProxyAddrEdited();
-    void onProxyPortEdited(int port);
-    void onUseProxyUpdated();
-    void onReconnectClicked();
+    void on_cbEnableIPv6_stateChanged();
+    void on_cbEnableUDP_stateChanged();
+    void on_proxyAddr_editingFinished();
+    void on_proxyPort_valueChanged(int port);
+    void on_proxyType_currentIndexChanged(int index);
+    void on_reconnectButton_clicked();
 
 private:
     void retranslateUi();

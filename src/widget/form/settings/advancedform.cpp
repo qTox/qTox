@@ -20,10 +20,10 @@
 #include "advancedform.h"
 #include "ui_advancedsettings.h"
 
+#include <QApplication>
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
-#include <QApplication>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -53,21 +53,9 @@ AdvancedForm::AdvancedForm()
     if (port > 0)
         bodyUI->proxyPort->setValue(port);
 
-    bodyUI->proxyType->setCurrentIndex(static_cast<int>(s.getProxyType()));
-    onUseProxyUpdated();
-
-    // portable
-    connect(bodyUI->cbMakeToxPortable, &QCheckBox::stateChanged, this, &AdvancedForm::onMakeToxPortableUpdated);
-    connect(bodyUI->resetButton, &QPushButton::clicked, this, &AdvancedForm::resetToDefault);
-    //connection
-    void (QComboBox::* currentIndexChanged)(int) = &QComboBox::currentIndexChanged;
-    void (QSpinBox::* valueChanged)(int) = &QSpinBox::valueChanged;
-    connect(bodyUI->cbEnableIPv6, &QCheckBox::stateChanged, this, &AdvancedForm::onEnableIPv6Updated);
-    connect(bodyUI->cbEnableUDP, &QCheckBox::stateChanged, this, &AdvancedForm::onUDPUpdated);
-    connect(bodyUI->proxyType, currentIndexChanged, this, &AdvancedForm::onUseProxyUpdated);
-    connect(bodyUI->proxyAddr, &QLineEdit::editingFinished, this, &AdvancedForm::onProxyAddrEdited);
-    connect(bodyUI->proxyPort, valueChanged, this, &AdvancedForm::onProxyPortEdited);
-    connect(bodyUI->reconnectButton, &QPushButton::clicked, this, &AdvancedForm::onReconnectClicked);
+    int index = static_cast<int>(s.getProxyType());
+    bodyUI->proxyType->setCurrentIndex(index);
+    on_proxyType_currentIndexChanged(index);
 
     eventsInit();
     Translator::registerHandler(std::bind(&AdvancedForm::retranslateUi, this), this);
@@ -79,12 +67,12 @@ AdvancedForm::~AdvancedForm()
     delete bodyUI;
 }
 
-void AdvancedForm::onMakeToxPortableUpdated()
+void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
 }
 
-void AdvancedForm::resetToDefault()
+void AdvancedForm::on_resetButton_clicked()
 {
     const QString titile = tr("Reset settings");
     bool result = GUI::askQuestion(titile,
@@ -98,22 +86,22 @@ void AdvancedForm::resetToDefault()
     GUI::showInfo(titile, "Changes will take effect after restart");
 }
 
-void AdvancedForm::onEnableIPv6Updated()
+void AdvancedForm::on_cbEnableIPv6_stateChanged()
 {
     Settings::getInstance().setEnableIPv6(bodyUI->cbEnableIPv6->isChecked());
 }
 
-void AdvancedForm::onUDPUpdated()
+void AdvancedForm::on_cbEnableUDP_stateChanged()
 {
     Settings::getInstance().setForceTCP(!bodyUI->cbEnableUDP->isChecked());
 }
 
-void AdvancedForm::onProxyAddrEdited()
+void AdvancedForm::on_proxyAddr_editingFinished()
 {
     Settings::getInstance().setProxyAddr(bodyUI->proxyAddr->text());
 }
 
-void AdvancedForm::onProxyPortEdited(int port)
+void AdvancedForm::on_proxyPort_valueChanged(int port)
 {
     if (port <= 0)
         port = 0;
@@ -121,17 +109,16 @@ void AdvancedForm::onProxyPortEdited(int port)
     Settings::getInstance().setProxyPort(port);
 }
 
-void AdvancedForm::onUseProxyUpdated()
+void AdvancedForm::on_proxyType_currentIndexChanged(int index)
 {
-    Settings::ProxyType proxytype =
-            static_cast<Settings::ProxyType>(bodyUI->proxyType->currentIndex());
+    Settings::ProxyType proxytype = static_cast<Settings::ProxyType>(index);
 
     bodyUI->proxyAddr->setEnabled(proxytype != Settings::ProxyType::ptNone);
     bodyUI->proxyPort->setEnabled(proxytype != Settings::ProxyType::ptNone);
     Settings::getInstance().setProxyType(proxytype);
 }
 
-void AdvancedForm::onReconnectClicked()
+void AdvancedForm::on_reconnectButton_clicked()
 {
     if (Core::getInstance()->getAv()->anyActiveCalls())
     {

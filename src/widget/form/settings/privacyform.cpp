@@ -20,8 +20,12 @@
 #include "privacyform.h"
 #include "ui_privacysettings.h"
 
+#include <QDebug>
+#include <QFile>
+#include <QMessageBox>
+
 #include "src/core/core.h"
-#include <src/core/recursivesignalblocker.h>
+#include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
 #include "src/persistence/history.h"
 #include "src/persistence/profile.h"
@@ -32,10 +36,6 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-#include <QMessageBox>
-#include <QFile>
-#include <QDebug>
-
 PrivacyForm::PrivacyForm()
     : GenericForm(QPixmap(":/img/settings/privacy.png"))
     , bodyUI(new Ui::PrivacySettings)
@@ -44,12 +44,6 @@ PrivacyForm::PrivacyForm()
 
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
-
-    connect(bodyUI->cbTypingNotification, SIGNAL(stateChanged(int)), this, SLOT(onTypingNotificationEnabledUpdated()));
-    connect(bodyUI->cbKeepHistory, SIGNAL(stateChanged(int)), this, SLOT(onEnableLoggingUpdated()));
-    connect(bodyUI->nospamLineEdit, SIGNAL(editingFinished()), this, SLOT(setNospam()));
-    connect(bodyUI->randomNosapamButton, SIGNAL(clicked()), this, SLOT(generateRandomNospam()));
-    connect(bodyUI->nospamLineEdit, SIGNAL(textChanged(QString)), this, SLOT(onNospamEdit()));
 
     eventsInit();
     Translator::registerHandler(std::bind(&PrivacyForm::retranslateUi, this), this);
@@ -61,7 +55,7 @@ PrivacyForm::~PrivacyForm()
     delete bodyUI;
 }
 
-void PrivacyForm::onEnableLoggingUpdated()
+void PrivacyForm::on_cbKeepHistory_stateChanged()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     Widget::getInstance()->clearAllReceipts();
@@ -77,12 +71,12 @@ void PrivacyForm::onEnableLoggingUpdated()
     }
 }
 
-void PrivacyForm::onTypingNotificationEnabledUpdated()
+void PrivacyForm::on_cbTypingNotification_stateChanged()
 {
     Settings::getInstance().setTypingNotification(bodyUI->cbTypingNotification->isChecked());
 }
 
-void PrivacyForm::setNospam()
+void PrivacyForm::on_nospamLineEdit_editingFinished()
 {
     QString newNospam = bodyUI->nospamLineEdit->text();
 
@@ -100,7 +94,7 @@ void PrivacyForm::showEvent(QShowEvent*)
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
 }
 
-void PrivacyForm::generateRandomNospam()
+void PrivacyForm::on_randomNosapamButton_clicked()
 {
     QTime time = QTime::currentTime();
     qsrand((uint)time.msec());
@@ -113,7 +107,7 @@ void PrivacyForm::generateRandomNospam()
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
 }
 
-void PrivacyForm::onNospamEdit()
+void PrivacyForm::on_nospamLineEdit_textChanged()
 {
     QString str = bodyUI->nospamLineEdit->text();
     int curs = bodyUI->nospamLineEdit->cursorPosition();
