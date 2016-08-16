@@ -153,11 +153,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
-    // settings
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged,
-            friendWidget, &FriendWidget::compactLayoutChanged);
-
     Friend* frnd = friendWidget->getFriend();
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
@@ -180,11 +175,6 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
 {
     GroupWidget* groupWidget = new GroupWidget(groupId, name);
     groupLayout.addSortedWidget(groupWidget);
-
-    // settings
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged,
-            groupWidget, &GroupWidget::compactLayoutChanged);
 
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
