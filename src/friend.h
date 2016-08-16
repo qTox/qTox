@@ -22,10 +22,13 @@
 
 #include <QObject>
 #include <QString>
+#include "src/chatlog/chatmessage.h"
 #include "src/core/corestructs.h"
-#include "core/toxid.h"
+#include "src/core/toxid.h"
+#include "src/persistence/offlinemsgengine.h"
 
 class FriendWidget;
+class OfflineMsgEngine;
 class ChatForm;
 
 class Friend : public QObject
@@ -35,7 +38,8 @@ public:
     Friend(uint32_t FriendId, const ToxId &UserId);
     Friend(const Friend& other)=delete;
     ~Friend();
-    Friend& operator=(const Friend& other)=delete;
+
+    Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
 
@@ -60,8 +64,16 @@ public:
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 
+    const OfflineMsgEngine& getOfflineMsgEngine() const;
+    void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
+    void dischargeReceipt(int receipt);
+
 signals:
     void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+
+public slots:
+    void clearOfflineReceipts();
+    void deliverOfflineMsgs();
 
 private:
     QString userAlias, userName, statusMessage;
@@ -72,6 +84,7 @@ private:
 
     FriendWidget* widget;
     ChatForm* chatForm;
+    OfflineMsgEngine offlineEngine;
 };
 
 #endif // FRIEND_H

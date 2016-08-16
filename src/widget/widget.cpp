@@ -1108,15 +1108,6 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     newFriendMessageAlert(friendId);
 }
 
-void Widget::onReceiptRecieved(int friendId, int receipt)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
-}
-
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
     FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendID(),
@@ -1955,8 +1946,10 @@ void Widget::processOfflineMsgs()
     if (OfflineMsgEngine::globalMutex.tryLock())
     {
         QList<Friend*> frnds = FriendList::getAllFriends();
-        for (Friend *f : frnds)
-            f->getChatForm()->getOfflineMsgEngine()->deliverOfflineMsgs();
+        for (Friend* f : frnds)
+        {
+            f->deliverOfflineMsgs();
+        }
 
         OfflineMsgEngine::globalMutex.unlock();
     }
@@ -1965,8 +1958,10 @@ void Widget::processOfflineMsgs()
 void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
-    for (Friend *f : frnds)
-        f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
+    for (Friend* f : frnds)
+    {
+        f->clearOfflineReceipts();
+    }
 }
 
 void Widget::reloadTheme()

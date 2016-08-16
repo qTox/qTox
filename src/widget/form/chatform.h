@@ -35,7 +35,6 @@ class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
-class OfflineMsgEngine;
 class CoreAV;
 
 class ChatForm : public GenericChatForm
@@ -44,13 +43,12 @@ class ChatForm : public GenericChatForm
 public:
     explicit ChatForm(Friend* chatFriend);
     ~ChatForm();
+
     void setStatusMessage(QString newMessage);
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
-    OfflineMsgEngine* getOfflineMsgEngine();
-
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
@@ -79,6 +77,7 @@ private slots:
     void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
     void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
@@ -116,7 +115,6 @@ private:
     QTimer typingTimer;
     QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
-    OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 

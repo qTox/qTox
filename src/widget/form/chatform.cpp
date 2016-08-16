@@ -56,7 +56,6 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/video/netcamview.h"
-#include "src/persistence/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
@@ -84,8 +83,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
     callConfirm = nullptr;
-    offlineEngine = new OfflineMsgEngine(f);
-
     typingTimer.setSingleShot(true);
 
     callDurationTimer = nullptr;
@@ -101,11 +98,13 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     chatWidget->setMinimumHeight(50);
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
+    connect(this, &ChatForm::chatAreaCleared, f, &Friend::clearOfflineReceipts);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
     copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
 
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
     connect(screenshotButton, &QPushButton::clicked, this, &ChatForm::onScreenshotClicked);
@@ -115,7 +114,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
     connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
-    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
         if (!statusMessageLabel->text().isEmpty())
@@ -146,7 +144,6 @@ ChatForm::~ChatForm()
     Translator::unregister(this);
     delete netcam;
     delete callConfirm;
-    delete offlineEngine;
 }
 
 void ChatForm::setStatusMessage(QString newMessage)
@@ -776,7 +773,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                 else
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
 
-                getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
+                f->registerReceipt(rec, it.id, msg);
             }
         }
         historyMessages.append(msg);
@@ -954,11 +951,6 @@ void ChatForm::hideEvent(QHideEvent* event)
     GenericChatForm::hideEvent(event);
 }
 
-OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
-{
-    return offlineEngine;
-}
-
 void ChatForm::SendMessageStr(QString msg)
 {
     if (msg.isEmpty())
@@ -992,12 +984,13 @@ void ChatForm::SendMessageStr(QString msg)
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled())
         {
-            auto* offMsgEngine = getOfflineMsgEngine();
-            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
-                                        [offMsgEngine,rec,ma](int64_t id)
+            profile->getHistory()->addNewMessage(
+                        f->getToxId().publicKey, qt_msg_hist,
+                        Core::getInstance()->getSelfId().publicKey, timestamp,
+                        status, Core::getInstance()->getUsername(),
+                        [this, rec, ma](int64_t id)
             {
-                offMsgEngine->registerReceipt(rec, id, ma);
+                f->registerReceipt(rec, id, ma);
             });
         }
         else
