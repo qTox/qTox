@@ -321,13 +321,13 @@ void Widget::init()
 
     QAction* preferencesAction = viewMenu->menu()->addAction(QString());
     preferencesAction->setMenuRole(QAction::PreferencesRole);
-    connect(preferencesAction, &QAction::triggered, this, &Widget::onSettingsClicked);
+    connect(preferencesAction, &QAction::triggered, this, &Widget::onShowSettings);
 
     QAction* aboutAction = viewMenu->menu()->addAction(QString());
     aboutAction->setMenuRole(QAction::AboutRole);
     connect(aboutAction, &QAction::triggered, [this]()
     {
-        onSettingsClicked();
+        onShowSettings();
         settingsWidget->showAbout();
     });
 
@@ -406,7 +406,7 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
              wasMaximized = ce->oldState() & Qt::WindowMaximized;
 
 #ifdef Q_OS_MAC
-         emit windowStateChanged(windowState());
+        emit windowStateChanged(state);
 #endif
         break;
     default:
