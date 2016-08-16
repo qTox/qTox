@@ -64,8 +64,6 @@ public:
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
 
-    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
-    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
     bool isEmpty();
 
     ChatLog* getChatLog() const;
@@ -79,6 +77,8 @@ signals:
 
 public slots:
     void focusInput();
+    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
+    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);

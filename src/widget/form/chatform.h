@@ -20,6 +20,7 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
+#include <QPointer>
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
@@ -64,6 +65,7 @@ public slots:
     void onAvatarRemoved(uint32_t FriendId);
 
 private slots:
+    void onLoadChatHistory();
     void onSendTriggered();
     void onTextEditChanged();
     void onAttachClicked();
@@ -75,8 +77,13 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onFileSendFailed(uint32_t FriendId, const QString &fname);
-    void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onFileSendFailed(quint32 FriendId, const QString &fname);
+    void onFriendStatusChanged(quint32 friendId, Status status);
+    void onFriendTypingChanged(quint32 friendId, bool isTyping);
+    void onFriendNameChanged(const QString& name);
+    void onFriendMessageReceived(quint32 friendId, const QString& message,
+                                 bool isAction);
+    void onStatusMessage(const QString& message);
     void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
@@ -113,13 +120,12 @@ private:
     QLabel *callDuration;
     QTimer *callDurationTimer;
     QTimer typingTimer;
-    QTimer *disableCallButtonsTimer;
+    QPointer<QTimer> disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    QMap<uint32_t, Status> oldStatus;
     CallConfirmWidget *callConfirm;
     bool isTyping;
 };

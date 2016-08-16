@@ -32,22 +32,20 @@
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
+    , userAlias(Settings::getInstance().getFriendAlias(UserId))
+    , userID(UserId)
+    , friendId(FriendId)
+    , hasNewEvents(0)
+    , friendStatus(Status::Offline)
+    , widget(new FriendWidget(friendId, getDisplayedName()))
     , offlineEngine(this)
 {
-    if (userName.size() == 0)
+    if (userName.isEmpty())
         userName = UserId.publicKey;
-
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
-
-    widget = new FriendWidget(friendId, getDisplayedName());
-    chatForm = new ChatForm(this);
 }
 
 Friend::~Friend()
 {
-    delete chatForm;
     delete widget;
 }
 
@@ -58,21 +56,25 @@ void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
     {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
+        emit loadChatHistory();
     }
 }
 
 void Friend::setName(QString name)
 {
-   if (name.isEmpty())
-       name = userID.publicKey;
+    if (name.isEmpty())
+        name = userID.publicKey;
 
-    userName = name;
-    if (userAlias.size() == 0)
+    if (name != userName)
+    {
+        userName = name;
+        emit nameChanged(userName);
+    }
+
+    // TODO: the following is old code -> refactor/remove
+    if (userAlias.isEmpty())
     {
         widget->setName(name);
-        chatForm->setName(name);
 
         if (widget->isActive())
             GUI::setWindowTitle(name);
@@ -87,7 +89,6 @@ void Friend::setAlias(QString name)
     QString dispName = userAlias.size() == 0 ? userName : userAlias;
 
     widget->setName(dispName);
-    chatForm->setName(dispName);
 
     if (widget->isActive())
             GUI::setWindowTitle(dispName);
@@ -103,8 +104,9 @@ void Friend::setAlias(QString name)
 void Friend::setStatusMessage(QString message)
 {
     statusMessage = message;
+    // TODO: connect FriendWidget to signal
     widget->setStatusMsg(message);
-    chatForm->setStatusMessage(message);
+    emit newStatusMessage(message);
 }
 
 QString Friend::getStatusMessage()
@@ -147,17 +149,16 @@ int Friend::getEventFlag() const
 
 void Friend::setStatus(Status s)
 {
-    friendStatus = s;
+    if (s != friendStatus)
+    {
+        friendStatus = s;
+        emit statusChanged(friendId, friendStatus);
+    }
 }
 
 Status Friend::getStatus() const
 {
     return friendStatus;
-}
-
-ChatForm *Friend::getChatForm()
-{
-    return chatForm;
 }
 
 FriendWidget *Friend::getFriendWidget()

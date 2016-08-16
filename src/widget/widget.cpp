@@ -892,7 +892,9 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::reloadHistory()
 {
     for (auto f : FriendList::getAllFriends())
-        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+    {
+        f->loadHistory();
+    }
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
@@ -900,9 +902,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     Settings& s = Settings::getInstance();
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
+    ChatForm* friendForm = new ChatForm(newfriend);
 
     QDate activityDate = s.getFriendActivity(newfriend->getToxId());
-    QDate chatDate = newfriend->getChatForm()->getLatestDate();
+    QDate chatDate = friendForm->getLatestDate();
 
     if (chatDate > activityDate && chatDate.isValid())
         s.setFriendActivity(newfriend->getToxId(), chatDate);
@@ -916,25 +919,25 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
-    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->getChatForm(), SLOT(focusInput()));
-    connect(newfriend->getChatForm(), &GenericChatForm::sendMessage, core, &Core::sendMessage);
-    connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
-    connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
-    connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
-    connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
-    connect(coreav, &CoreAV::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
-    connect(coreav, &CoreAV::avStart, newfriend->getChatForm(), &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
-    connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
-    connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
+    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), friendForm, SLOT(focusInput()));
+    connect(friendForm, &GenericChatForm::sendMessage, core, &Core::sendMessage);
+    connect(friendForm, &GenericChatForm::sendAction, core, &Core::sendAction);
+    connect(friendForm, &ChatForm::sendFile, core, &Core::sendFile);
+    connect(friendForm, &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
+    connect(core, &Core::fileReceiveRequested, friendForm, &ChatForm::onFileRecvRequest);
+    connect(coreav, &CoreAV::avInvite, friendForm, &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avStart, friendForm, &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avEnd, friendForm, &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
+    connect(core, &Core::friendAvatarChanged, friendForm, &ChatForm::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, friendForm, &ChatForm::onAvatarRemoved);
     connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
     connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(userId);
     if (!avatar.isNull())
     {
-        newfriend->getChatForm()->onAvatarChange(friendId, avatar);
+        friendForm->onAvatarChange(friendId, avatar);
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
 
@@ -980,32 +983,6 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
         setWindowTitle(f->getFriendWidget()->getTitle());
 
     ContentDialog::updateFriendStatus(friendId);
-
-    if (Settings::getInstance().getStatusChangeNotificationEnabled())
-    {
-        QString fStatus = "";
-        switch (f->getStatus())
-        {
-        case Status::Away:
-            fStatus = tr("away", "contact status"); break;
-        case Status::Busy:
-            fStatus = tr("busy", "contact status"); break;
-        case Status::Offline:
-            fStatus = tr("offline", "contact status");
-            f->getChatForm()->setFriendTyping(false); // Hide the "is typing" message when a friend goes offline
-            break;
-        default:
-            fStatus = tr("online", "contact status"); break;
-        }
-        if (isActualChange)
-            f->getChatForm()->addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"").arg(f->getDisplayedName()).arg(fStatus),
-                                                   ChatMessage::INFO, QDateTime::currentDateTime());
-    }
-
-    if (isActualChange && status != Status::Offline)
-    { // wait a little
-        QTimer::singleShot(250, f->getChatForm()->getOfflineMsgEngine(), SLOT(deliverOfflineMsgs()));
-    }
 }
 
 void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
@@ -1062,13 +1039,11 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
         return;
 
     GenericChatForm* chatWidget = nullptr;
-    Core* core = Core::getInstance();
     Friend* frnd = widget->getFriend();
 
     if (frnd)
     {
-
-        chatWidget = frnd->getChatForm();
+        chatWidget = new ChatForm(frnd);
     }
     else
     {
@@ -1078,8 +1053,9 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
 
     if (chatWidget)
     {
-        chatWidget->setAttribute(Qt::WA_DeleteOnClose);
         activeChat = chatWidget;
+        widget->setAsActiveChatroom();
+        frnd->setEventFlag(false);
     }
 
     showContentWidget(chatWidget, chatWidget->windowTitle());
@@ -1092,8 +1068,6 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    f->getChatForm()->addMessage(f->getToxId(), message, isAction, timestamp, true);
-
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled())
         profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? "/me " + f->getDisplayedName() + " " + message : message,
@@ -1144,7 +1118,8 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     }
     else
     {
-        if (Settings::getInstance().getSeparateWindow() && Settings::getInstance().getShowWindow())
+        if (Settings::getInstance().getSeparateWindow() &&
+            Settings::getInstance().getShowWindow())
         {
             if (Settings::getInstance().getDontGroupWindows())
             {
@@ -1164,7 +1139,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
         else
         {
             currentWindow = window();
-            hasActive = f->getChatForm() == activeChat;
+            hasActive = activeChat;
         }
     }
 
@@ -1331,7 +1306,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     f->getFriendWidget()->setAsInactiveChatroom();
-    if (f->getChatForm() == activeChat)
+    if (!activeChat)
         onAddClicked();
 
     contactListWidget->removeFriendWidget(f->getFriendWidget());
@@ -1842,15 +1817,6 @@ void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 
     if (result == -1)
         g->getChatForm()->addSystemInfoMessage(tr("Message failed to send"), ChatMessage::INFO, QDateTime::currentDateTime());
-}
-
-void Widget::onFriendTypingChanged(int friendId, bool isTyping)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->getChatForm()->setFriendTyping(isTyping);
 }
 
 void Widget::onSetShowSystemTray(bool newValue)

@@ -168,7 +168,6 @@ public slots:
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void onGroupSendResult(int groupId, const QString& message, int result);
-    void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
 
