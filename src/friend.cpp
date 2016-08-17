@@ -84,7 +84,7 @@ void Friend::setName(QString name)
 void Friend::setAlias(QString name)
 {
     userAlias = name;
-    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+    QString dispName = userAlias.isEmpty() ? userName : userAlias;
 
     widget->setName(dispName);
     chatForm->setName(dispName);
@@ -114,10 +114,7 @@ QString Friend::getStatusMessage()
 
 QString Friend::getDisplayedName() const
 {
-    if (userAlias.size() == 0)
-        return userName;
-
-    return userAlias;
+    return userAlias.isEmpty() ? userName : userAlias;
 }
 
 bool Friend::hasAlias() const
