@@ -413,14 +413,14 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
     {
     case QEvent::Close:
         // It's needed if user enable `Close to tray`
-        wasMaximized = state & Qt::WindowMaximized;
+        wasMaximized = state.testFlag(Qt::WindowMaximized);
         break;
 
     case QEvent::WindowStateChange:
         ce = static_cast<QWindowStateChangeEvent*>(event);
-        if (state & Qt::WindowMinimized && obj)
+        if (state.testFlag(Qt::WindowMinimized) && obj)
         {
-             wasMaximized = ce->oldState() & Qt::WindowMaximized;
+            wasMaximized = ce->oldState().testFlag(Qt::WindowMaximized);
         }
 
 #ifdef Q_OS_MAC
