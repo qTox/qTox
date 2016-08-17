@@ -102,6 +102,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     void enableCallButtons();
     void disableCallButtons();
+    void updateCallButtons();
     void SendMessageStr(QString msg);
 
 protected:
@@ -118,7 +119,7 @@ private:
     CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel *callDuration;
-    QTimer *callDurationTimer;
+    QPointer<QTimer> callDurationTimer;
     QTimer typingTimer;
     QPointer<QTimer> disableCallButtonsTimer;
     QElapsedTimer timeElapsed;

@@ -70,16 +70,14 @@
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
     , callDuration(new QLabel(this))
-    , callDurationTimer(new QTimer(this))
     , callConfirm(nullptr)
     , isTyping(false)
 {
     Core* core = Core::getInstance();
     coreav = core->getAv();
 
-    nameLabel->setText(f->getDisplayedName());
-
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
+    nameLabel->setText(f->getDisplayedName());
 
     statusMessageLabel = new CroppingLabel;
     statusMessageLabel->setObjectName("statusLabel");
@@ -89,9 +87,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
     typingTimer.setSingleShot(true);
-
-    callDurationTimer = nullptr;
-    disableCallButtonsTimer = nullptr;
 
     chatWidget->setTypingNotification(ChatMessage::createTypingNotification());
 
@@ -147,9 +142,13 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(f, &Friend::loadChatHistory, this, &ChatForm::onLoadChatHistory);
 
     setAcceptDrops(true);
-    disableCallButtons();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    // initialize chat
+    loadHistory(QDateTime::currentDateTime().addDays(-7),
+                f->getStatus() != Status::Offline);
+    updateCallButtons();
 }
 
 ChatForm::~ChatForm()
@@ -582,8 +581,14 @@ void ChatForm::onEnableCallButtons()
     {
         disableCallButtonsTimer->stop();
         delete disableCallButtonsTimer;
-        disableCallButtonsTimer = nullptr;
     }
+}
+
+void ChatForm::updateCallButtons()
+{
+    // TODO: set the call button visuals to the actual status of the ToxCall.
+    f->getStatus() == Status::Offline ? disableCallButtons()
+                                      : enableCallButtons();
 }
 
 void ChatForm::onMicMuteToggle()
@@ -972,7 +977,6 @@ void ChatForm::stopCounter()
         callDuration->hide();
 
         delete callDurationTimer;
-        callDurationTimer = nullptr;
     }
 }
 
