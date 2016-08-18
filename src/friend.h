@@ -59,6 +59,8 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
+    void setFriendWidget(FriendWidget* widget);
+
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 
