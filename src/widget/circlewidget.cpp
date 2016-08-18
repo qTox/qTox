@@ -126,20 +126,14 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                 FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i)
             {
                 FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
 
             dialog->show();
