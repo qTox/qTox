@@ -26,6 +26,7 @@
 #include <QFileInfo>
 
 #include "src/core/corestructs.h"
+#include "src/widget/form/chatform.h"
 #include "genericchatitemwidget.h"
 
 #include <ui_mainwindow.h>
@@ -288,6 +289,8 @@ private:
     QPushButton* friendRequestsButton;
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
+
+    QMap<Friend*, FriendWidget*> friendWidgets;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
