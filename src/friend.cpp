@@ -21,7 +21,6 @@
 #include "friend.h"
 #include "friendlist.h"
 #include "widget/friendwidget.h"
-#include "widget/form/chatform.h"
 #include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
@@ -156,6 +155,11 @@ void Friend::setStatus(Status s)
 Status Friend::getStatus() const
 {
     return friendStatus;
+}
+
+void Friend::setFriendWidget(FriendWidget *widget)
+{
+    this->widget = widget;
 }
 
 FriendWidget *Friend::getFriendWidget()
