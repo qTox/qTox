@@ -37,10 +37,6 @@ Friend* FriendList::addFriend(int friendId, const ToxId& userId)
     friendList[friendId] = newfriend;
     tox2id[userId.publicKey] = friendId;
 
-    // Must be done AFTER adding to the friendlist
-    // or we won't find the friend and history will have blank names
-    newfriend->loadHistory();
-
     return newfriend;
 }
 

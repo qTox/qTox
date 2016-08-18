@@ -20,11 +20,14 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "ui_mainwindow.h"
+
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
-#include "src/core/corestructs.h"
+
 #include "genericchatitemwidget.h"
+#include "src/core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -278,6 +281,8 @@ private:
     QPushButton* friendRequestsButton;
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
+
+    QMap<int, FriendWidget*> friendWidgets;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
