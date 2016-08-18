@@ -18,70 +18,58 @@
 */
 
 #include "widget.h"
-#include "contentlayout.h"
-#include "ui_mainwindow.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/persistence/settings.h"
-#include "contentdialog.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "tool/friendrequestdialog.h"
-#include "friendwidget.h"
-#include "src/grouplist.h"
-#include "src/group.h"
-#include "groupwidget.h"
-#include "form/groupchatform.h"
-#include "circlewidget.h"
-#include "src/widget/style.h"
-#include "friendlistwidget.h"
-#include "form/chatform.h"
-#include "maskablepixmapwidget.h"
-#include "src/net/autoupdate.h"
-#include "src/audio/audio.h"
-#include "src/platform/timer.h"
-#include "systemtrayicon.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
-#include "src/widget/gui.h"
-#include "src/persistence/offlinemsgengine.h"
-#include "src/widget/translator.h"
-#include "src/widget/form/addfriendform.h"
-#include "src/widget/form/groupinviteform.h"
-#include "src/widget/form/filesform.h"
-#include "src/widget/form/profileform.h"
-#include "src/widget/form/settingswidget.h"
-#include "tool/removefrienddialog.h"
-#include "src/widget/tool/activatedialog.h"
+
 #include <cassert>
-#include <QMessageBox>
-#include <QDebug>
-#include <QFile>
-#include <QString>
-#include <QBuffer>
-#include <QPainter>
-#include <QMouseEvent>
+
 #include <QClipboard>
-#include <QThread>
-#include <QDialogButtonBox>
-#include <QShortcut>
-#include <QTimer>
-#include <QStyleFactory>
-#include <QString>
-#include <QByteArray>
-#include <QImageReader>
-#include <QList>
+#include <QDebug>
 #include <QDesktopServices>
-#include <QProcess>
+#include <QDesktopWidget>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QShortcut>
+#include <QString>
 #include <QSvgRenderer>
 #include <QWindow>
-#include <tox/tox.h>
-
 #ifdef Q_OS_MAC
 #include <QMenuBar>
-#include <QWindow>
 #include <QSignalMapper>
+#include <QWindow>
 #endif
+
+#include "circlewidget.h"
+#include "contentdialog.h"
+#include "contentlayout.h"
+#include "form/groupchatform.h"
+#include "friendlistwidget.h"
+#include "friendwidget.h"
+#include "groupwidget.h"
+#include "maskablepixmapwidget.h"
+#include "src/audio/audio.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/group.h"
+#include "src/grouplist.h"
+#include "src/net/autoupdate.h"
+#include "src/nexus.h"
+#include "src/persistence/offlinemsgengine.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/platform/timer.h"
+#include "src/widget/form/addfriendform.h"
+#include "src/widget/form/chatform.h"
+#include "src/widget/form/filesform.h"
+#include "src/widget/form/groupinviteform.h"
+#include "src/widget/form/profileform.h"
+#include "src/widget/form/settingswidget.h"
+#include "src/widget/gui.h"
+#include "src/widget/style.h"
+#include "src/widget/translator.h"
+#include "systemtrayicon.h"
+#include "tool/removefrienddialog.h"
 
 bool toxActivateEventHandler(const QByteArray&)
 {
@@ -947,47 +935,55 @@ void Widget::addFriend(int friendId, const QString &userId)
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
 
-    QDate activityDate = Settings::getInstance().getFriendActivity(newfriend->getToxId());
-    QDate chatDate = newfriend->getChatForm()->getLatestDate();
+    QString name = newfriend->getDisplayedName();
+    FriendWidget* widget = new FriendWidget(friendId, name);
+    ChatForm* friendForm = newfriend->getChatForm();
 
-    if (chatDate > activityDate && chatDate.isValid())
-        Settings::getInstance().setFriendActivity(newfriend->getToxId(), chatDate);
+    friendWidgets[friendId] = widget;
 
-    contactListWidget->addFriendWidget(newfriend->getFriendWidget(), Status::Offline, Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
+    newfriend->setFriendWidget(widget);
+    newfriend->loadHistory();
 
     const Settings& s = Settings::getInstance();
+
+    QDate activityDate = s.getFriendActivity(userToxId);
+    QDate chatDate = friendForm->getLatestDate();
+    if (chatDate > activityDate && chatDate.isValid())
+        Settings::getInstance().setFriendActivity(userToxId, chatDate);
+
+    contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(userToxId));
+
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
+    connect(&s, &Settings::compactLayoutChanged, widget, &GenericChatroomWidget::compactChange);
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
-    connect(&s, &Settings::compactLayoutChanged, newfriend->getFriendWidget(), &GenericChatroomWidget::compactChange);
-    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
-    connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-    connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
-    connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newfriend->getChatForm(), SLOT(focusInput()));
-    connect(newfriend->getChatForm(), &GenericChatForm::sendMessage, core, &Core::sendMessage);
-    connect(newfriend->getChatForm(), &GenericChatForm::sendAction, core, &Core::sendAction);
-    connect(newfriend->getChatForm(), &ChatForm::sendFile, core, &Core::sendFile);
-    connect(newfriend->getChatForm(), &ChatForm::aliasChanged, newfriend->getFriendWidget(), &FriendWidget::setAlias);
-    connect(core, &Core::fileReceiveRequested, newfriend->getChatForm(), &ChatForm::onFileRecvRequest);
-    connect(coreav, &CoreAV::avInvite, newfriend->getChatForm(), &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
-    connect(coreav, &CoreAV::avStart, newfriend->getChatForm(), &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
-    connect(coreav, &CoreAV::avEnd, newfriend->getChatForm(), &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
-    connect(core, &Core::friendAvatarChanged, newfriend->getChatForm(), &ChatForm::onAvatarChange);
-    connect(core, &Core::friendAvatarChanged, newfriend->getFriendWidget(), &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, newfriend->getChatForm(), &ChatForm::onAvatarRemoved);
-    connect(core, &Core::friendAvatarRemoved, newfriend->getFriendWidget(), &FriendWidget::onAvatarRemoved);
+    connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
+    connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+    connect(widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), friendForm, SLOT(focusInput()));
+    connect(friendForm, &GenericChatForm::sendMessage, core, &Core::sendMessage);
+    connect(friendForm, &GenericChatForm::sendAction, core, &Core::sendAction);
+    connect(friendForm, &ChatForm::sendFile, core, &Core::sendFile);
+    connect(friendForm, &ChatForm::aliasChanged, widget, &FriendWidget::setAlias);
+    connect(core, &Core::fileReceiveRequested, friendForm, &ChatForm::onFileRecvRequest);
+    connect(coreav, &CoreAV::avInvite, friendForm, &ChatForm::onAvInvite, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avStart, friendForm, &ChatForm::onAvStart, Qt::BlockingQueuedConnection);
+    connect(coreav, &CoreAV::avEnd, friendForm, &ChatForm::onAvEnd, Qt::BlockingQueuedConnection);
+    connect(core, &Core::friendAvatarChanged, friendForm, &ChatForm::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, friendForm, &ChatForm::onAvatarRemoved);
+    connect(core, &Core::friendAvatarChanged, widget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(userId);
     if (!avatar.isNull())
     {
-        newfriend->getChatForm()->onAvatarChange(friendId, avatar);
-        newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
+        friendForm->onAvatarChange(friendId, avatar);
+        widget->onAvatarChange(friendId, avatar);
     }
 
     int filter = getFilterCriteria();
-    newfriend->getFriendWidget()->search(ui->searchContactText->text(), filterOffline(filter));
-
+    widget->search(ui->searchContactText->text(), filterOffline(filter));
 }
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
@@ -1014,18 +1010,19 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     bool isActualChange = f->getStatus() != status;
 
+    FriendWidget* widget = friendWidgets[friendId];
     if (isActualChange)
     {
         if (f->getStatus() == Status::Offline)
-            contactListWidget->moveWidget(f->getFriendWidget(), Status::Online);
+            contactListWidget->moveWidget(widget, Status::Online);
         else if (status == Status::Offline)
-            contactListWidget->moveWidget(f->getFriendWidget(), Status::Offline);
+            contactListWidget->moveWidget(widget, Status::Offline);
     }
 
     f->setStatus(status);
-    f->getFriendWidget()->updateStatusLight();
-    if (f->getFriendWidget()->isActive())
-        setWindowTitle(f->getFriendWidget()->getTitle());
+    widget->updateStatusLight();
+    if (widget->isActive())
+        setWindowTitle(widget->getTitle());
 
     ContentDialog::updateFriendStatus(friendId);
 
@@ -1165,12 +1162,16 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
-    if (!ContentDialog::getFriendDialog(frnd->getFriendID()) && !Settings::getInstance().getSeparateWindow() && activeChatroomWidget == frnd->getFriendWidget())
+    ContentDialog *contentDialog = ContentDialog::getFriendDialog(frnd->getFriendID());
+    bool isSeparate = Settings::getInstance().getSeparateWindow();
+    FriendWidget* widget = friendWidgets[frnd->getFriendID()];
+
+    if (!contentDialog && !isSeparate && activeChatroomWidget == widget)
         onAddClicked();
 
     FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendID(), frnd->getDisplayedName());
 
-    friendWidget->setStatusMsg(frnd->getFriendWidget()->getStatusMsg());
+    friendWidget->setStatusMsg(widget->getStatusMsg());
 
     connect(friendWidget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(friendWidget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -1227,20 +1228,22 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
         else
         {
             currentWindow = window();
-            hasActive = f->getFriendWidget() == activeChatroomWidget;
+            FriendWidget* widget = friendWidgets[friendId];
+            hasActive = widget == activeChatroomWidget;
         }
     }
 
     if (newMessageAlert(currentWindow, hasActive, sound))
     {
+        FriendWidget* widget = friendWidgets[friendId];
         f->setEventFlag(true);
-        f->getFriendWidget()->updateStatusLight();
-        ui->friendList->trackWidget(f->getFriendWidget());
+        widget->updateStatusLight();
+        ui->friendList->trackWidget(widget);
 
         if (contentDialog == nullptr)
         {
             if (hasActive)
-                setWindowTitle(f->getFriendWidget()->getTitle());
+                setWindowTitle(widget->getTitle());
         }
         else
         {
@@ -1361,7 +1364,7 @@ void Widget::updateFriendActivity(Friend *frnd)
         // Update old activity before after new one. Store old date first.
         QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getToxId());
         Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
-        contactListWidget->moveWidget(frnd->getFriendWidget(), frnd->getStatus());
+        contactListWidget->moveWidget(friendWidgets[frnd->getFriendID()], frnd->getStatus());
         contactListWidget->updateActivityDate(oldDate);
     }
 }
@@ -1375,18 +1378,20 @@ void Widget::removeFriend(Friend* f, bool fake)
 
         if (!ask.accepted())
                return;
-        else if (ask.removeHistory())
+
+        if (ask.removeHistory())
             Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
     }
 
-    f->getFriendWidget()->setAsInactiveChatroom();
-    if (f->getFriendWidget() == activeChatroomWidget)
+    FriendWidget *widget = friendWidgets[f->getFriendID()];
+    widget->setAsInactiveChatroom();
+    if (widget == activeChatroomWidget)
     {
         activeChatroomWidget = nullptr;
         onAddClicked();
     }
 
-    contactListWidget->removeFriendWidget(f->getFriendWidget());
+    contactListWidget->removeFriendWidget(widget);
 
     ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendID());
 
@@ -1424,7 +1429,6 @@ void Widget::clearContactsList()
 void Widget::updateScroll(GenericChatroomWidget *widget) {
     ui->friendList->updateTracking(widget);
 }
-
 
 ContentDialog* Widget::createContentDialog() const
 {
@@ -1999,10 +2003,15 @@ void Widget::reloadTheme()
     contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends())
-        f->getFriendWidget()->reloadTheme();
+    {
+        int friendId = f->getFriendID();
+        friendWidgets[friendId]->reloadTheme();
+    }
 
     for (Group* g : GroupList::getAllGroups())
+    {
         g->getGroupWidget()->reloadTheme();
+    }
 }
 
 void Widget::nextContact()
