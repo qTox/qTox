@@ -663,7 +663,7 @@ QString Settings::getAppDataDirPath() const
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
                            + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
-    /**
+    /*
      * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
      * For now we need support Qt 5.3, so we use deprecated DataLocation
      * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
