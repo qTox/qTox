@@ -41,7 +41,6 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 
     userAlias = Settings::getInstance().getFriendAlias(UserId);
 
-    widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
 }
 
@@ -153,6 +152,11 @@ void Friend::setStatus(Status s)
 Status Friend::getStatus() const
 {
     return friendStatus;
+}
+
+void Friend::setFriendWidget(FriendWidget *widget)
+{
+    this->widget = widget;
 }
 
 ChatForm *Friend::getChatForm()

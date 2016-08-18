@@ -57,6 +57,8 @@ public:
     Status getStatus() const;
 
     ChatForm *getChatForm();
+
+    void setFriendWidget(FriendWidget* widget);
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 
