@@ -126,20 +126,14 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i)
             {
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
 
             dialog->show();
@@ -167,13 +161,13 @@ void CircleWidget::dragLeaveEvent(QDragLeaveEvent* )
 
 void CircleWidget::dropEvent(QDropEvent* event)
 {
-    // Check, that element dropped from qTox
+    // Check, if element dropped from qTox
     QObject *o = event->source();
     FriendWidget *widget = qobject_cast<FriendWidget*>(o);
     if (!widget)
         return;
 
-    // Check, that user have friend with same toxid
+    // Check, if a friend with this toxId is contained in our friend list
     ToxId toxId(event->mimeData()->text());
     Friend *f = FriendList::findFriend(toxId);
     if (!f)
