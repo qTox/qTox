@@ -108,11 +108,10 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
-    void updateScroll(GenericChatroomWidget *widget);
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog();
-    ContentLayout* createContentDialog(DialogType type);
+    ContentLayout* createContentDialog(DialogType type) const;
 
     static void confirmExecutableOpen(const QFileInfo &file);
 
@@ -171,6 +170,8 @@ public slots:
     void onGroupSendResult(int groupId, const QString& message, int result);
     void nextContact();
     void previousContact();
+    void onFriendDialogShown(Friend *f);
+    void onGroupDialogShown(Group *g);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -208,6 +209,7 @@ private slots:
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
+    void onDialogShown(GenericChatroomWidget *widget);
 
 private:
     // QMainWindow overrides
