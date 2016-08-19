@@ -25,12 +25,12 @@
 #include <QDebug>
 
 /**
-@enum ChatLineContentProxy::ChatLineContentProxyType
-@brief Type tag to avoid dynamic_cast of contained QWidget*
-
-@value GenericType
-@value FileTransferWidgetType = 0
-*/
+ * @enum ChatLineContentProxy::ChatLineContentProxyType
+ * @brief Type tag to avoid dynamic_cast of contained QWidget*
+ *
+ * @value GenericType
+ * @value FileTransferWidgetType = 0
+ */
 
 ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth, float widthInPercent)
     : widthPercent(widthInPercent)

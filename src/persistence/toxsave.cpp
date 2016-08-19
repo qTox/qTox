@@ -35,11 +35,11 @@ bool toxSaveEventHandler(const QByteArray& eventData)
 }
 
 /**
-@brief Import new profile.
-@note Will wait until the core is ready first.
-@param path Path to .tox file.
-@return True if import success, false, otherwise.
-*/
+ * @brief Import new profile.
+ * @note Will wait until the core is ready first.
+ * @param path Path to .tox file.
+ * @return True if import success, false, otherwise.
+ */
 bool handleToxSave(const QString& path)
 {
     Core* core = Core::getInstance();

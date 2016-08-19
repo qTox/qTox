@@ -52,8 +52,8 @@ Friend::~Friend()
 }
 
 /**
-@brief Loads the friend's chat history if enabled
-*/
+ * @brief Loads the friend's chat history if enabled
+ */
 void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())

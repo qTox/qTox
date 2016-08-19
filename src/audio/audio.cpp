@@ -33,10 +33,10 @@
 #include <cassert>
 
 /**
-@class Audio::Private
-
-@brief Encapsulates private audio framework from public qTox Audio API.
-*/
+ * @class Audio::Private
+ *
+ * @brief Encapsulates private audio framework from public qTox Audio API.
+ */
 class Audio::Private
 {
 public:
@@ -86,29 +86,29 @@ private:
 };
 
 /**
-@class Audio
-
-@fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
-
-When there are input subscribers, we regularly emit captured audio frames with this signal
-Always connect with a blocking queued connection lambda, else the behaviour is undefined
-
-@var Audio::AUDIO_SAMPLE_RATE
-@brief The next best Opus would take is 24k
-
-@var Audio::AUDIO_FRAME_DURATION
-@brief In milliseconds
-
-@var Audio::AUDIO_FRAME_SAMPLE_COUNT
-@brief Frame sample count
-
-@var Audio::AUDIO_CHANNELS
-@brief Ideally, we'd auto-detect, but that's a sane default
-*/
+ * @class Audio
+ *
+ * @fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
+ *
+ * When there are input subscribers, we regularly emit captured audio frames with this signal
+ * Always connect with a blocking queued connection lambda, else the behaviour is undefined
+ *
+ * @var Audio::AUDIO_SAMPLE_RATE
+ * @brief The next best Opus would take is 24k
+ *
+ * @var Audio::AUDIO_FRAME_DURATION
+ * @brief In milliseconds
+ *
+ * @var Audio::AUDIO_FRAME_SAMPLE_COUNT
+ * @brief Frame sample count
+ *
+ * @var Audio::AUDIO_CHANNELS
+ * @brief Ideally, we'd auto-detect, but that's a sane default
+ */
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 Audio& Audio::getInstance()
 {
     static Audio instance;
@@ -169,8 +169,8 @@ void Audio::checkAlcError(ALCdevice *device) noexcept
 }
 
 /**
-@brief Returns the current output volume (between 0 and 1)
-*/
+ * @brief Returns the current output volume (between 0 and 1)
+ */
 qreal Audio::outputVolume() const
 {
     QMutexLocker locker(&audioLock);
@@ -187,10 +187,10 @@ qreal Audio::outputVolume() const
 }
 
 /**
-@brief Set the master output volume.
-
-@param[in] volume   the master volume (between 0 and 1)
-*/
+ * @brief Set the master output volume.
+ *
+ * @param[in] volume   the master volume (between 0 and 1)
+ */
 void Audio::setOutputVolume(qreal volume)
 {
     QMutexLocker locker(&audioLock);
@@ -202,10 +202,10 @@ void Audio::setOutputVolume(qreal volume)
 }
 
 /**
-@brief The minimum gain value for an input device.
-
-@return minimum gain value in dB
-*/
+ * @brief The minimum gain value for an input device.
+ *
+ * @return minimum gain value in dB
+ */
 qreal Audio::minInputGain() const
 {
     QMutexLocker locker(&audioLock);
@@ -213,10 +213,10 @@ qreal Audio::minInputGain() const
 }
 
 /**
-@brief Set the minimum allowed gain value in dB.
-
-@note Default is -30dB; usually you don't need to alter this value;
-*/
+ * @brief Set the minimum allowed gain value in dB.
+ *
+ * @note Default is -30dB; usually you don't need to alter this value;
+ */
 void Audio::setMinInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
@@ -224,10 +224,10 @@ void Audio::setMinInputGain(qreal dB)
 }
 
 /**
-@brief The maximum gain value for an input device.
-
-@return maximum gain value in dB
-*/
+ * @brief The maximum gain value for an input device.
+ *
+ * @return maximum gain value in dB
+ */
 qreal Audio::maxInputGain() const
 {
     QMutexLocker locker(&audioLock);
@@ -235,10 +235,10 @@ qreal Audio::maxInputGain() const
 }
 
 /**
-@brief Set the maximum allowed gain value in dB.
-
-@note Default is 30dB; usually you don't need to alter this value.
-*/
+ * @brief Set the maximum allowed gain value in dB.
+ *
+ * @note Default is 30dB; usually you don't need to alter this value.
+ */
 void Audio::setMaxInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
@@ -246,10 +246,10 @@ void Audio::setMaxInputGain(qreal dB)
 }
 
 /**
-@brief The dB gain value.
-
-@return the gain value in dB
-*/
+ * @brief The dB gain value.
+ *
+ * @return the gain value in dB
+ */
 qreal Audio::inputGain() const
 {
     QMutexLocker locker(&audioLock);
@@ -257,8 +257,8 @@ qreal Audio::inputGain() const
 }
 
 /**
-@brief Set the input gain dB level.
-*/
+ * @brief Set the input gain dB level.
+ */
 void Audio::setInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
@@ -280,10 +280,10 @@ bool Audio::reinitOutput(const QString& outDevDesc)
 }
 
 /**
-@brief Subscribe to capture sound from the opened input device.
-
-If the input device is not open, it will be opened before capturing.
-*/
+ * @brief Subscribe to capture sound from the opened input device.
+ *
+ * If the input device is not open, it will be opened before capturing.
+ */
 void Audio::subscribeInput()
 {
     QMutexLocker locker(&audioLock);
@@ -299,10 +299,10 @@ void Audio::subscribeInput()
 }
 
 /**
-@brief Unsubscribe from capturing from an opened input device.
-
-If the input device has no more subscriptions, it will be closed.
-*/
+ * @brief Unsubscribe from capturing from an opened input device.
+ *
+ * If the input device has no more subscriptions, it will be closed.
+ */
 void Audio::unsubscribeInput()
 {
     QMutexLocker locker(&audioLock);
@@ -318,20 +318,20 @@ void Audio::unsubscribeInput()
 }
 
 /**
-@brief Initialize audio input device, if not initialized.
-
-@return true, if device was initialized; false otherwise
-*/
+ * @brief Initialize audio input device, if not initialized.
+ *
+ * @return true, if device was initialized; false otherwise
+ */
 bool Audio::autoInitInput()
 {
     return alInDev ? true : initInput(Settings::getInstance().getInDev());
 }
 
 /**
-@brief Initialize audio output device, if not initialized.
-
-@return true, if device was initialized; false otherwise
-*/
+ * @brief Initialize audio output device, if not initialized.
+ *
+ * @return true, if device was initialized; false otherwise
+ */
 bool Audio::autoInitOutput()
 {
     return alOutDev ? true : initOutput(Settings::getInstance().getOutDev());
@@ -345,7 +345,7 @@ bool Audio::initInput(const QString& deviceName)
     qDebug() << "Opening audio input" << deviceName;
     assert(!alInDev);
 
-    /// TODO: Try to actually detect if our audio source is stereo
+    // TODO: Try to actually detect if our audio source is stereo
     int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
     const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
     const uint16_t frameDuration = AUDIO_FRAME_DURATION;
@@ -373,8 +373,8 @@ bool Audio::initInput(const QString& deviceName)
 }
 
 /**
-@brief Open an audio output device
-*/
+ * @brief Open an audio output device
+ */
 bool Audio::initOutput(const QString& deviceName)
 {
     outSources.clear();
@@ -426,8 +426,8 @@ bool Audio::initOutput(const QString& deviceName)
 }
 
 /**
-@brief Play a 44100Hz mono 16bit PCM sound from a file
-*/
+ * @brief Play a 44100Hz mono 16bit PCM sound from a file
+ */
 void Audio::playMono16Sound(const QString& path)
 {
     QFile sndFile(path);
@@ -436,8 +436,8 @@ void Audio::playMono16Sound(const QString& path)
 }
 
 /**
-@brief Play a 44100Hz mono 16bit PCM sound
-*/
+ * @brief Play a 44100Hz mono 16bit PCM sound
+ */
 void Audio::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker locker(&audioLock);
@@ -505,8 +505,8 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t *data, int samples, u
 }
 
 /**
-@brief Close active audio input device.
-*/
+ * @brief Close active audio input device.
+ */
 void Audio::cleanupInput()
 {
     if (!alInDev)
@@ -521,8 +521,8 @@ void Audio::cleanupInput()
 }
 
 /**
-@brief Close active audio output device
-*/
+ * @brief Close active audio output device
+ */
 void Audio::cleanupOutput()
 {
     outputInitialized = false;
@@ -554,8 +554,8 @@ void Audio::cleanupOutput()
 }
 
 /**
-@brief Called after a mono16 sound stopped playing
-*/
+ * @brief Called after a mono16 sound stopped playing
+ */
 void Audio::playMono16SoundCleanup()
 {
     QMutexLocker locker(&audioLock);
@@ -571,8 +571,8 @@ void Audio::playMono16SoundCleanup()
 }
 
 /**
-@brief Called on the captureTimer events to capture audio
-*/
+ * @brief Called on the captureTimer events to capture audio
+ */
 void Audio::doCapture()
 {
     QMutexLocker lock(&audioLock);
@@ -602,8 +602,8 @@ void Audio::doCapture()
 }
 
 /**
-@brief Returns true if the output device is open
-*/
+ * @brief Returns true if the output device is open
+ */
 bool Audio::isOutputReady() const
 {
     QMutexLocker locker(&audioLock);

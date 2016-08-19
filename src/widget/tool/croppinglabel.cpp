@@ -152,9 +152,9 @@ void CroppingLabel::showTextEdit()
 }
 
 /**
-@brief Get original full text.
-@return The un-cropped text.
-*/
+ * @brief Get original full text.
+ * @return The un-cropped text.
+ */
 QString CroppingLabel::fullText()
 {
     return origText;

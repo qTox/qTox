@@ -31,9 +31,9 @@
 #include <QDebug>
 
 /**
-@var std::atomic_bool VideoSurface::frameLock
-@brief Fast lock for lastFrame.
-*/
+ * @var std::atomic_bool VideoSurface::frameLock
+ * @brief Fast lock for lastFrame.
+ */
 
 float getSizeRatio(const QSize size)
 {
@@ -69,12 +69,12 @@ bool VideoSurface::isExpanding() const
 }
 
 /**
-@brief Update source.
-@note nullptr is a valid option.
-@param src source to set.
-
-Unsubscribe from old source and subscribe to new.
-*/
+ * @brief Update source.
+ * @note nullptr is a valid option.
+ * @param src source to set.
+ *
+ * Unsubscribe from old source and subscribe to new.
+ */
 void VideoSurface::setSource(VideoSource *src)
 {
     if (source == src)

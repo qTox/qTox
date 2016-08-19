@@ -388,7 +388,7 @@ void FileTransferWidget::fileTransferRemotePausedUnpaused(ToxFile file, bool pau
 
 void FileTransferWidget::fileTransferBrokenUnbroken(ToxFile file, bool broken)
 {
-    /// TODO: Handle broken transfer differently once we have resuming code
+    // TODO: Handle broken transfer differently once we have resuming code
     if (broken)
         onFileTransferCancelled(file);
 }

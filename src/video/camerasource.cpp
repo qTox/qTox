@@ -35,52 +35,55 @@ extern "C" {
 #include "videoframe.h"
 
 /**
-@class CameraSource
-@brief This class is a wrapper to share a camera's captured video frames
-
-It allows objects to suscribe and unsuscribe to the stream, starting
-the camera and streaming new video frames only when needed.
-This is a singleton, since we can only capture from one
-camera at the same time without thread-safety issues.
-The source is lazy in the sense that it will only keep the video
-device open as long as there are subscribers, the source can be
-open but the device closed if there are zero subscribers.
-*/
+ * @class CameraSource
+ * @brief This class is a wrapper to share a camera's captured video frames
+ *
+ * It allows objects to suscribe and unsuscribe to the stream, starting
+ * the camera and streaming new video frames only when needed.
+ * This is a singleton, since we can only capture from one
+ * camera at the same time without thread-safety issues.
+ * The source is lazy in the sense that it will only keep the video
+ * device open as long as there are subscribers, the source can be
+ * open but the device closed if there are zero subscribers.
+ */
 
 /**
-@var QVector<std::weak_ptr<VideoFrame>> CameraSource::freelist
-@brief Frames that need freeing before we can safely close the device
-
-@var QFuture<void> CameraSource::streamFuture
-@brief Future of the streaming thread
-
-@var QString CameraSource::deviceName
-@brief Short name of the device for CameraDevice's open(QString)
-
-@var CameraDevice* CameraSource::device
-@brief Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
-
-@var VideoMode CameraSource::mode
-@brief What mode we tried to open the device in, all zeros means default mode
-
-@var AVCodecContext* CameraSource::cctx
-@brief Codec context of the camera's selected video stream
-
-@var AVCodecContext* CameraSource::cctxOrig
-@brief Codec context of the camera's selected video stream
-
-@var int CameraSource::videoStreamIndex
-@brief A camera can have multiple streams, this is the one we're decoding
-
-@var QMutex CameraSource::biglock
-@brief True when locked. Faster than mutexes for video decoding.
-
-@var std::atomic_bool CameraSource::streamBlocker
-@brief Holds the streaming thread still when true
-
-@var std::atomic_int CameraSource::subscriptions
-@brief Remember how many times we subscribed for RAII
-*/
+ * @var QVector<std::weak_ptr<VideoFrame>> CameraSource::freelist
+ * @brief Frames that need freeing before we can safely close the device
+ *
+ * @var QFuture<void> CameraSource::streamFuture
+ * @brief Future of the streaming thread
+ *
+ * @var QString CameraSource::deviceName
+ * @brief Short name of the device for CameraDevice's open(QString)
+ *
+ * @var CameraDevice* CameraSource::device
+ * @brief Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
+ *
+ * @var VideoMode CameraSource::mode
+ * @brief What mode we tried to open the device in, all zeros means default mode
+ *
+ * @var AVCodecContext* CameraSource::cctx
+ * @brief Codec context of the camera's selected video stream
+ *
+ * @var AVCodecContext* CameraSource::cctxOrig
+ * @brief Codec context of the camera's selected video stream
+ *
+ * @var int CameraSource::videoStreamIndex
+ * @brief A camera can have multiple streams, this is the one we're decoding
+ *
+ * @var QMutex CameraSource::biglock
+ * @brief True when locked. Faster than mutexes for video decoding.
+ *
+ * @var QMutex CameraSource::freelistLock
+ * @brief True when locked. Faster than mutexes for video decoding.
+ *
+ * @var std::atomic_bool CameraSource::streamBlocker
+ * @brief Holds the streaming thread still when true
+ *
+ * @var std::atomic_int CameraSource::subscriptions
+ * @brief Remember how many times we subscribed for RAII
+ */
 
 CameraSource* CameraSource::instance{nullptr};
 
@@ -95,8 +98,8 @@ CameraSource::CameraSource()
 }
 
 /**
-@brief Returns the singleton instance.
-*/
+ * @brief Returns the singleton instance.
+ */
 CameraSource& CameraSource::getInstance()
 {
     if (!instance)
@@ -114,11 +117,11 @@ void CameraSource::destroyInstance()
 }
 
 /**
-@brief Opens the source for the camera device.
-@note If a device is already open, the source will seamlessly switch to the new device.
-
-Opens the source for the camera device in argument, in the settings, or the system default.
-*/
+ * @brief Opens the source for the camera device.
+ * @note If a device is already open, the source will seamlessly switch to the new device.
+ *
+ * Opens the source for the camera device in argument, in the settings, or the system default.
+ */
 void CameraSource::open()
 {
     open(CameraDevice::getDefaultDeviceName());
@@ -158,10 +161,10 @@ void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 }
 
 /**
-@brief Stops streaming.
-
-Equivalent to opening the source with the video device "none".
-*/
+ * @brief Stops streaming.
+ *
+ * Equivalent to opening the source with the video device "none".
+ */
 void CameraSource::close()
 {
     open("none");
@@ -257,10 +260,10 @@ void CameraSource::unsubscribe()
 }
 
 /**
-@brief Opens the video device and starts streaming.
-@note Callers must own the biglock.
-@return True if success, false otherwise.
-*/
+ * @brief Opens the video device and starts streaming.
+ * @note Callers must own the biglock.
+ * @return True if success, false otherwise.
+ */
 bool CameraSource::openDevice()
 {
     qDebug() << "Opening device " << deviceName;
@@ -344,9 +347,9 @@ bool CameraSource::openDevice()
 }
 
 /**
-@brief Closes the video device and stops streaming.
-@note Callers must own the biglock.
-*/
+ * @brief Closes the video device and stops streaming.
+ * @note Callers must own the biglock.
+ */
 void CameraSource::closeDevice()
 {
     qDebug() << "Closing device " << deviceName;
@@ -364,9 +367,9 @@ void CameraSource::closeDevice()
 }
 
 /**
-@brief Blocking. Decodes video stream and emits new frames.
-@note Designed to run in its own thread.
-*/
+ * @brief Blocking. Decodes video stream and emits new frames.
+ * @note Designed to run in its own thread.
+ */
 void CameraSource::stream()
 {
     auto streamLoop = [=]()

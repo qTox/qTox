@@ -31,22 +31,22 @@
 #include <memory>
 
 /**
-@class CoreFile
-@brief Implements Core's file transfer callbacks.
-
-Avoids polluting core.h with private internal callbacks.
-*/
+ * @class CoreFile
+ * @brief Implements Core's file transfer callbacks.
+ *
+ * Avoids polluting core.h with private internal callbacks.
+ */
 
 QMutex CoreFile::fileSendMutex;
 QHash<uint64_t, ToxFile> CoreFile::fileMap;
 using namespace std;
 
 /**
-@brief Get corefile iteration interval.
-
-tox_iterate calls to get good file transfer performances
-@return The maximum amount of time in ms that Core should wait between two tox_iterate() calls.
-*/
+ * @brief Get corefile iteration interval.
+ *
+ * tox_iterate calls to get good file transfer performances
+ * @return The maximum amount of time in ms that Core should wait between two tox_iterate() calls.
+ */
 unsigned CoreFile::corefileIterationInterval()
 {
     /// Sleep at most 1000ms if we have no FT, 10 for user FTs, 50 for the rest (avatars, ...)
@@ -471,12 +471,12 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
 
 void CoreFile::onConnectionStatusChanged(Core* core, uint32_t friendId, bool online)
 {
-    /// TODO: Actually resume broken file transfers
-    /// We need to:
-    /// - Start a new file transfer with the same 32byte file ID with toxcore
-    /// - Seek to the correct position again
-    /// - Update the fileNum in our ToxFile
-    /// - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
+    // TODO: Actually resume broken file transfers
+    // We need to:
+    // - Start a new file transfer with the same 32byte file ID with toxcore
+    // - Seek to the correct position again
+    // - Update the fileNum in our ToxFile
+    // - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
     ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING : ToxFile::BROKEN;
     for (uint64_t key : fileMap.keys())
     {

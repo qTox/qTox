@@ -20,10 +20,10 @@
 #include "src/persistence/serialize.h"
 
 /**
-@file serialize.cpp
-Most of functions in this file are unsafe unless otherwise specified.
-@warning Do not use them on untrusted data (e.g. check a signature first).
-*/
+ * @file serialize.cpp
+ * Most of functions in this file are unsafe unless otherwise specified.
+ * @warning Do not use them on untrusted data (e.g. check a signature first).
+ */
 
 QString dataToString(QByteArray data)
 {

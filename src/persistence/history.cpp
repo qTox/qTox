@@ -9,19 +9,19 @@
 using namespace std;
 
 /**
-@class History
-@brief Interacts with the profile database to save the chat history.
-
-@var QHash<QString, int64_t> History::peers
-@brief Maps friend public keys to unique IDs by index.
-Caches mappings to speed up message saving.
-*/
+ * @class History
+ * @brief Interacts with the profile database to save the chat history.
+ *
+ * @var QHash<QString, int64_t> History::peers
+ * @brief Maps friend public keys to unique IDs by index.
+ * Caches mappings to speed up message saving.
+ */
 
 /**
-@brief Opens the profile database and prepares to work with the history.
-@param profileName Profile name to load.
-@param password If empty, the database will be opened unencrypted.
-*/
+ * @brief Opens the profile database and prepares to work with the history.
+ * @param profileName Profile name to load.
+ * @param password If empty, the database will be opened unencrypted.
+ */
 History::History(const QString &profileName, const QString &password)
     : db{getDbPath(profileName), password}
 {
@@ -29,11 +29,11 @@ History::History(const QString &profileName, const QString &password)
 }
 
 /**
-@brief Opens the profile database, and import from the old database.
-@param profileName Profile name to load.
-@param password If empty, the database will be opened unencrypted.
-@param oldHistory Old history to import.
-*/
+ * @brief Opens the profile database, and import from the old database.
+ * @param profileName Profile name to load.
+ * @param password If empty, the database will be opened unencrypted.
+ * @param oldHistory Old history to import.
+ */
 History::History(const QString &profileName, const QString &password, const HistoryKeeper &oldHistory)
     : History{profileName, password}
 {
@@ -48,44 +48,44 @@ History::~History()
 }
 
 /**
-@brief Checks if the database was opened successfully
-@return True if database if opened, false otherwise.
-*/
+ * @brief Checks if the database was opened successfully
+ * @return True if database if opened, false otherwise.
+ */
 bool History::isValid()
 {
     return db.isOpen();
 }
 
 /**
-@brief Changes the database password, will encrypt or decrypt if necessary.
-@param password Password to set.
-*/
+ * @brief Changes the database password, will encrypt or decrypt if necessary.
+ * @param password Password to set.
+ */
 void History::setPassword(const QString& password)
 {
     db.setPassword(password);
 }
 
 /**
-@brief Moves the database file on disk to match the new name.
-@param newName New name.
-*/
+ * @brief Moves the database file on disk to match the new name.
+ * @param newName New name.
+ */
 void History::rename(const QString &newName)
 {
     db.rename(getDbPath(newName));
 }
 
 /**
-@brief Deletes the on-disk database file.
-@return True if success, false otherwise.
-*/
+ * @brief Deletes the on-disk database file.
+ * @return True if success, false otherwise.
+ */
 bool History::remove()
 {
     return db.remove();
 }
 
 /**
-@brief Erases all the chat history from the database.
-*/
+ * @brief Erases all the chat history from the database.
+ */
 void History::eraseHistory()
 {
     db.execNow("DELETE FROM faux_offline_pending;"
@@ -96,9 +96,9 @@ void History::eraseHistory()
 }
 
 /**
-@brief Erases the chat history with one friend.
-@param friendPk Friend public key to erase.
-*/
+ * @brief Erases the chat history with one friend.
+ * @param friendPk Friend public key to erase.
+ */
 void History::removeFriendHistory(const QString &friendPk)
 {
     if (!peers.contains(friendPk))
@@ -125,15 +125,15 @@ void History::removeFriendHistory(const QString &friendPk)
 }
 
 /**
-@brief Generate query to insert new message in database
-@param friendPk Friend publick key to save.
-@param message Message to save.
-@param sender Sender to save.
-@param time Time of message sending.
-@param isSent True if message was already sent.
-@param dispName Name, which should be displayed.
-@param insertIdCallback Function, called after query execution.
-*/
+ * @brief Generate query to insert new message in database
+ * @param friendPk Friend publick key to save.
+ * @param message Message to save.
+ * @param sender Sender to save.
+ * @param time Time of message sending.
+ * @param isSent True if message was already sent.
+ * @param dispName Name, which should be displayed.
+ * @param insertIdCallback Function, called after query execution.
+ */
 QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &friendPk, const QString &message,
                                         const QString &sender, const QDateTime &time, bool isSent, QString dispName,
                                                                std::function<void(int64_t)> insertIdCallback)
@@ -193,15 +193,15 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
 }
 
 /**
-@brief Saves a chat message in the database.
-@param friendPk Friend publick key to save.
-@param message Message to save.
-@param sender Sender to save.
-@param time Time of message sending.
-@param isSent True if message was already sent.
-@param dispName Name, which should be displayed.
-@param insertIdCallback Function, called after query execution.
-*/
+ * @brief Saves a chat message in the database.
+ * @param friendPk Friend publick key to save.
+ * @param message Message to save.
+ * @param sender Sender to save.
+ * @param time Time of message sending.
+ * @param isSent True if message was already sent.
+ * @param dispName Name, which should be displayed.
+ * @param insertIdCallback Function, called after query execution.
+ */
 void History::addNewMessage(const QString &friendPk, const QString &message, const QString &sender,
                 const QDateTime &time, bool isSent, QString dispName, std::function<void(int64_t)> insertIdCallback)
 {
@@ -209,12 +209,12 @@ void History::addNewMessage(const QString &friendPk, const QString &message, con
 }
 
 /**
-@brief Fetches chat messages from the database.
-@param friendPk Friend publick key to fetch.
-@param from Start of period to fetch.
-@param to End of period to fetch.
-@return List of messages.
-*/
+ * @brief Fetches chat messages from the database.
+ * @param friendPk Friend publick key to fetch.
+ * @param from Start of period to fetch.
+ * @param to End of period to fetch.
+ * @return List of messages.
+ */
 QList<History::HistMessage> History::getChatHistory(const QString &friendPk, const QDateTime &from, const QDateTime &to)
 {
     QList<HistMessage> messages;
@@ -245,29 +245,29 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
 }
 
 /**
-@brief Marks a message as sent.
-Removing message from the faux-offline pending messages list.
-
-@param id Message ID.
-*/
+ * @brief Marks a message as sent.
+ * Removing message from the faux-offline pending messages list.
+ *
+ * @param id Message ID.
+ */
 void History::markAsSent(qint64 id)
 {
     db.execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(id));
 }
 
 /**
-@brief Retrieves the path to the database file for a given profile.
-@param profileName Profile name.
-@return Path to database.
-*/
+ * @brief Retrieves the path to the database file for a given profile.
+ * @param profileName Profile name.
+ * @return Path to database.
+ */
 QString History::getDbPath(const QString &profileName)
 {
     return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
 }
 
 /**
-@brief Makes sure the history tables are created
-*/
+ * @brief Makes sure the history tables are created
+ */
 void History::init()
 {
     if (!isValid())
@@ -292,9 +292,9 @@ void History::init()
 }
 
 /**
-@brief Imports messages from the old history file.
-@param oldHistory Old history to import.
-*/
+ * @brief Imports messages from the old history file.
+ * @param oldHistory Old history to import.
+ */
 void History::import(const HistoryKeeper &oldHistory)
 {
     if (!isValid())

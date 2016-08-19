@@ -12,8 +12,8 @@
  *
  * They should include this file directly instead to reduce compilation times
  *
- *
- * @var ToxFile::fileKind   Data file (default) or avatar
+ * @var uint8_t ToxFile::fileKind
+ * @brief Data file (default) or avatar
  */
 
 /**

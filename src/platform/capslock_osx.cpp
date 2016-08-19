@@ -21,9 +21,9 @@
 #if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/capslock.h"
 
+// TODO: Implement for osx
 bool Platform::capsLockEnabled()
 {
-    // TODO: implement for osx
     return false;
 }
 
