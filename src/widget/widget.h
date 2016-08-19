@@ -23,6 +23,7 @@
 #include "ui_mainwindow.h"
 
 #include <QMainWindow>
+#include <QPointer>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
 
@@ -113,7 +114,7 @@ public:
     void resetIcon();
 
 public slots:
-    void onSettingsClicked();
+    void onShowSettings();
     void onSeparateWindowClicked(bool separate);
     void onSeparateWindowChanged(bool separate, bool clicked);
     void setWindowTitle(const QString& title);
@@ -268,7 +269,7 @@ private:
     AddFriendForm *addFriendForm;
     GroupInviteForm* groupInviteForm;
     ProfileForm *profileForm;
-    SettingsWidget *settingsWidget;
+    QPointer<SettingsWidget> settingsWidget;
     FilesForm *filesForm;
     static Widget *instance;
     GenericChatroomWidget *activeChatroomWidget;
