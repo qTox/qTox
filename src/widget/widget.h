@@ -64,6 +64,16 @@ class QPushButton;
 class Widget final : public QMainWindow
 {
     Q_OBJECT
+
+    enum class DialogType
+    {
+        AddDialog,
+        TransferDialog,
+        SettingDialog,
+        ProfileDialog,
+        GroupDialog
+    };
+
 public:
     explicit Widget(QWidget* parent = 0);
     ~Widget();
@@ -80,15 +90,6 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
-
-    enum DialogType
-    {
-        AddDialog,
-        TransferDialog,
-        SettingDialog,
-        ProfileDialog,
-        GroupDialog
-    };
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
@@ -201,7 +202,8 @@ private:
     int icon_size;
 
 private:
-    enum ActiveToolMenuButton {
+    enum class ActiveToolMenuButton 
+    {
         AddButton,
         GroupButton,
         TransferButton,
@@ -209,9 +211,9 @@ private:
         None,
     };
 
-    enum FilterCriteria
+    enum class FilterCriteria
     {
-        All=0,
+        All = 0,
         Online,
         Offline,
         Friends,
@@ -231,10 +233,10 @@ private:
     void searchContacts();
     void changeDisplayMode();
     void updateFilterText();
-    int getFilterCriteria() const;
-    static bool filterGroups(int index);
-    static bool filterOnline(int index);
-    static bool filterOffline(int index);
+    FilterCriteria getFilterCriteria() const;
+    static bool filterGroups(FilterCriteria index);
+    static bool filterOnline(FilterCriteria index);
+    static bool filterOffline(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
 
