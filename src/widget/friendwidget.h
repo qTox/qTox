@@ -28,15 +28,16 @@ class FriendWidget : public GenericChatroomWidget
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    virtual void contextMenuEvent(QContextMenuEvent * event) override;
-    virtual void setAsActiveChatroom() override;
-    virtual void setAsInactiveChatroom() override;
-    virtual void updateStatusLight() override;
-    virtual bool chatFormIsSet(bool focus) const override;
-    virtual void setChatForm(ContentLayout* contentLayout) override;
-    virtual void resetEventFlags() override;
-    virtual QString getStatusString() const override;
-    virtual Friend* getFriend() const override;
+    void contextMenuEvent(QContextMenuEvent * event) override final;
+    void setAsActiveChatroom() override final;
+    void setAsInactiveChatroom() override final;
+    void updateStatusLight() override final;
+    bool chatFormIsSet(bool focus) const override final;
+    void setChatForm(ContentLayout* contentLayout) override final;
+    void resetEventFlags() override final;
+    QString getStatusString() const override final;
+    Friend* getFriend() const override final;
+
     void search(const QString &searchString, bool hide = false);
 
 signals:
