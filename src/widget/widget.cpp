@@ -905,7 +905,7 @@ void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
     if (contentLayout != nullptr)
         contentLayout->clear();
 
-    if (activeChatroomWidget != nullptr)
+    if (activeChatroomWidget)
         activeChatroomWidget->setAsInactiveChatroom();
 
     activeChatroomWidget = chatroomWidget;
@@ -968,7 +968,8 @@ void Widget::addFriend(int friendId, const QString &userId)
     if (chatDate > activityDate && chatDate.isValid())
         s.setFriendActivity(newfriend->getToxId(), chatDate);
 
-    contactListWidget->addFriendWidget(newfriend->getFriendWidget(), Status::Offline, Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
+    contactListWidget->addFriendWidget(newfriend->getFriendWidget(),
+                                       Status::Offline, s.getFriendCircleID(newfriend->getToxId()));
 
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
@@ -1449,9 +1450,9 @@ void Widget::updateScroll(GenericChatroomWidget *widget) {
 }
 
 
-ContentDialog* Widget::createContentDialog() const
+ContentDialog* Widget::createContentDialog()
 {
-    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    ContentDialog* contentDialog = new ContentDialog(this);
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
@@ -1467,12 +1468,12 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     {
     public:
         explicit Dialog(DialogType type)
-            : ActivateDialog()
+            : ActivateDialog(this)
             , type(type)
         {
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
-            Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
             retranslateUi();
+            Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
 
             connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
         }
@@ -1483,7 +1484,6 @@ ContentLayout* Widget::createContentDialog(DialogType type)
         }
 
     public slots:
-
         void retranslateUi()
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ") + Widget::fromDialogType(type));
