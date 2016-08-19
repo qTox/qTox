@@ -59,6 +59,33 @@ class VideoSurface;
 class Widget final : public QMainWindow, private Ui::MainWindow
 {
     Q_OBJECT
+
+    enum class DialogType
+    {
+        AddDialog,
+        TransferDialog,
+        SettingDialog,
+        ProfileDialog,
+        GroupDialog
+    };
+
+    enum class ActiveToolMenuButton {
+        AddButton,
+        GroupButton,
+        TransferButton,
+        SettingButton,
+        None,
+    };
+
+    enum class FilterCriteria
+    {
+        All=0,
+        Online,
+        Offline,
+        Friends,
+        Groups
+    };
+
 public:
     static Widget* getInstance();
 
@@ -80,15 +107,6 @@ public:
     void updateIcons();
     void clearContactsList();
     void updateScroll(GenericChatroomWidget *widget);
-
-    enum DialogType
-    {
-        AddDialog,
-        TransferDialog,
-        SettingDialog,
-        ProfileDialog,
-        GroupDialog
-    };
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog();
@@ -201,24 +219,6 @@ private slots:
 
 private:
     int icon_size;
-
-private:
-    enum ActiveToolMenuButton {
-        AddButton,
-        GroupButton,
-        TransferButton,
-        SettingButton,
-        None,
-    };
-
-    enum class FilterCriteria
-    {
-        All=0,
-        Online,
-        Offline,
-        Friends,
-        Groups
-    };
 
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
