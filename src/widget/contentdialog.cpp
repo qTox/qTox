@@ -491,18 +491,10 @@ bool ContentDialog::event(QEvent* event)
             Friend* frnd = activeChatroomWidget->getFriend();
             Group* group = activeChatroomWidget->getGroup();
 
-            GenericChatroomWidget *widget = nullptr;
-
             if (frnd)
-                widget = frnd->getFriendWidget();
+                emit friendDialogShown(frnd);
             else
-                widget = group->getGroupWidget();
-
-            widget->resetEventFlags();
-            widget->updateStatusLight();
-
-            Widget::getInstance()->updateScroll(widget);
-            Widget::getInstance()->resetIcon();
+                emit groupDialogShown(group);
         }
 
         currentDialog = this;

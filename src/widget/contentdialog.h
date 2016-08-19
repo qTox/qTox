@@ -39,6 +39,8 @@ class FriendWidget;
 class GroupWidget;
 class FriendListLayout;
 class SettingsWidget;
+class Friend;
+class Group;
 
 class ContentDialog : public QWidget
 {
@@ -72,8 +74,10 @@ public:
     static ContentDialog* getFriendDialog(int friendId);
     static ContentDialog* getGroupDialog(int groupId);
 
-#ifdef Q_OS_MAC
 signals:
+    void friendDialogShown(Friend *f);
+    void groupDialogShown(Group *g);
+#ifdef Q_OS_MAC
     void activated();
     void windowStateChanged(Qt::WindowStates state);
 #endif
