@@ -43,14 +43,13 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/translator.h"
 
-ContentDialog* ContentDialog::currentDialog = nullptr;
+QPointer<ContentDialog> ContentDialog::currentDialog;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
 
-ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
+ContentDialog::ContentDialog(QWidget* parent)
     : ActivateDialog(parent, Qt::Window)
     , activeChatroomWidget(nullptr)
-    , settingsWidget(settingsWidget)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
@@ -134,9 +133,6 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
 ContentDialog::~ContentDialog()
 {
-    if (currentDialog == this)
-        currentDialog = nullptr;
-
     auto friendIt = friendList.begin();
 
     while (friendIt != friendList.end())
@@ -169,9 +165,9 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
-    Friend* frnd = friendWidget->getFriend();
     const Settings& s = Settings::getInstance();
 
+    Friend* frnd = friendWidget->getFriend();
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
     connect(&s, &Settings::compactLayoutChanged, friendWidget, &FriendWidget::compactChange);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);

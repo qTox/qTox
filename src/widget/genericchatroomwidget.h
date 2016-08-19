@@ -74,7 +74,6 @@ protected:
 protected:
     QColor lastColor;
     QHBoxLayout* mainLayout = nullptr;
-    QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
 	bool active;
