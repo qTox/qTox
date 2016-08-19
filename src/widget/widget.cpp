@@ -233,7 +233,6 @@ void Widget::init()
     addFriendForm = new AddFriendForm;
     groupInviteForm = new GroupInviteForm;
     profileForm = new ProfileForm();
-    settingsWidget = new SettingsWidget();
 
     //connect logout tray menu action
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
@@ -242,12 +241,11 @@ void Widget::init()
     Core* core = Nexus::getCore();
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
-    connect(&s, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray);
     connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
     connect(addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
     connect(groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
     connect(transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);
-    connect(settingsButton, &QPushButton::clicked, this, &Widget::onSettingsClicked);
+    connect(settingsButton, &QPushButton::clicked, this, &Widget::onShowSettings);
     connect(profilePicture, &MaskablePixmapWidget::clicked, this, &Widget::showProfile);
     connect(nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
     connect(statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
@@ -379,9 +377,6 @@ void Widget::init()
         mainSplitter->setSizes(sizes);
     }
 
-    connect(&s, &Settings::compactLayoutChanged, contactListWidget, &FriendListWidget::onCompactChanged);
-    connect(&s, &Settings::groupchatPositionChanged, contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
-    connect(&s, &Settings::separateWindowChanged, this, &Widget::onSeparateWindowClicked);
 #if (AUTOUPDATE_ENABLED)
     if (Settings::getInstance().getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -396,6 +391,16 @@ void Widget::init()
     connect(addFriendForm, &AddFriendForm::friendRequestAccepted, this, &Widget::friendRequestAccepted);
     connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen, this, &Widget::groupInvitesClear);
     connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted, this, &Widget::onGroupInviteAccepted);
+
+    // settings
+    connect(&s, &Settings::showSystemTrayChanged,
+            this, &Widget::onSetShowSystemTray);
+    connect(&s, &Settings::separateWindowChanged,
+            this, &Widget::onSeparateWindowClicked);
+    connect(&s, &Settings::compactLayoutChanged,
+            contactListWidget, &FriendListWidget::onCompactChanged);
+    connect(&s, &Settings::groupchatPositionChanged,
+            contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
@@ -521,7 +526,6 @@ Widget::~Widget()
 
     delete icon;
     delete profileForm;
-    delete settingsWidget;
     delete addFriendForm;
     delete groupInviteForm;
     delete filesForm;
@@ -551,8 +555,8 @@ Widget* Widget::getInstance()
  */
 void Widget::showUpdateDownloadProgress()
 {
+    onShowSettings();
     settingsWidget->showAbout();
-    onSettingsClicked();
 }
 
 void Widget::moveEvent(QMoveEvent *event)
@@ -643,7 +647,7 @@ void Widget::onBadProxyCore()
                "settings and restart.", "popup text"));
     critical.setIcon(QMessageBox::Critical);
     critical.exec();
-    onSettingsClicked();
+    onShowSettings();
 }
 
 void Widget::onStatusSet(Status status)
@@ -706,19 +710,19 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         {
             showNormal();
             resize(width, height());
+
+            if (settingsWidget)
+            {
+                ContentLayout* contentLayout = createContentDialog((SettingDialog));
+                contentLayout->parentWidget()->resize(size);
+                contentLayout->parentWidget()->move(pos);
+                settingsWidget->show(contentLayout);
+                setActiveToolMenuButton(Widget::None);
+            }
         }
 
         setWindowTitle(QString());
         setActiveToolMenuButton(None);
-
-        if (clicked)
-        {
-            ContentLayout* contentLayout = createContentDialog((SettingDialog));
-            contentLayout->parentWidget()->resize(size);
-            contentLayout->parentWidget()->move(pos);
-            settingsWidget->show(contentLayout);
-            setActiveToolMenuButton(Widget::None);
-        }
     }
 }
 
@@ -843,8 +847,11 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-void Widget::onSettingsClicked()
+void Widget::onShowSettings()
 {
+    if (!settingsWidget)
+        settingsWidget = new SettingsWidget(this);
+
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!settingsWidget->isShown())
@@ -941,6 +948,7 @@ void Widget::reloadHistory()
 
 void Widget::addFriend(int friendId, const QString &userId)
 {
+    Settings& s = Settings::getInstance();
     ToxId userToxId = ToxId(userId);
     Friend* newfriend = FriendList::addFriend(friendId, userToxId);
 
@@ -948,15 +956,15 @@ void Widget::addFriend(int friendId, const QString &userId)
     QDate chatDate = newfriend->getChatForm()->getLatestDate();
 
     if (chatDate > activityDate && chatDate.isValid())
-        Settings::getInstance().setFriendActivity(newfriend->getToxId(), chatDate);
+        s.setFriendActivity(newfriend->getToxId(), chatDate);
 
     contactListWidget->addFriendWidget(newfriend->getFriendWidget(), Status::Offline, Settings::getInstance().getFriendCircleID(newfriend->getToxId()));
 
-    const Settings& s = Settings::getInstance();
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
-    connect(&s, &Settings::compactLayoutChanged, newfriend->getFriendWidget(), &GenericChatroomWidget::compactChange);
+    connect(&s, &Settings::compactLayoutChanged, newfriend->getFriendWidget(),
+            &GenericChatroomWidget::compactChange);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -1680,8 +1688,8 @@ Group *Widget::createGroup(int groupId)
     newgroup->getGroupWidget()->updateStatusLight();
     contactListWidget->activateWindow();
 
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged, newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
+    connect(&Settings::getInstance(), &Settings::compactLayoutChanged,
+            newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
