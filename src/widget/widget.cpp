@@ -1426,13 +1426,32 @@ void Widget::clearContactsList()
         removeGroup(g, true);
 }
 
-void Widget::updateScroll(GenericChatroomWidget *widget) {
+void Widget::onDialogShown(GenericChatroomWidget* widget)
+{
+    widget->resetEventFlags();
+    widget->updateStatusLight();
+
     ui->friendList->updateTracking(widget);
+    resetIcon();
+}
+
+void Widget::onFriendDialogShown(Friend* f)
+{
+    int friendId = f->getFriendID();
+    onDialogShown(friendWidgets[friendId]);
+}
+
+void Widget::onGroupDialogShown(Group* g)
+{
+    onDialogShown(g->getGroupWidget());
 }
 
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
+    connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
+
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(), &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
@@ -1442,7 +1461,7 @@ ContentDialog* Widget::createContentDialog() const
     return contentDialog;
 }
 
-ContentLayout* Widget::createContentDialog(DialogType type)
+ContentLayout* Widget::createContentDialog(DialogType type) const
 {
     class Dialog : public ActivateDialog
     {
