@@ -723,16 +723,16 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
 
             if (settingsWidget)
             {
-                ContentLayout* contentLayout = createContentDialog((SettingDialog));
+                ContentLayout* contentLayout = createContentDialog((DialogType::SettingDialog));
                 contentLayout->parentWidget()->resize(size);
                 contentLayout->parentWidget()->move(pos);
                 settingsWidget->show(contentLayout);
-                setActiveToolMenuButton(Widget::None);
+                setActiveToolMenuButton(ActiveToolMenuButton::None);
             }
         }
 
         setWindowTitle(QString());
-        setActiveToolMenuButton(None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
 }
 
@@ -762,16 +762,16 @@ void Widget::onAddClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!addFriendForm->isShown())
-            addFriendForm->show(createContentDialog(AddDialog));
+            addFriendForm->show(createContentDialog(DialogType::AddDialog));
 
-        setActiveToolMenuButton(Widget::None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
     else
     {
         hideMainForms(nullptr);
         addFriendForm->show(contentLayout);
-        setWindowTitle(fromDialogType(AddDialog));
-        setActiveToolMenuButton(Widget::AddButton);
+        setWindowTitle(fromDialogType(DialogType::AddDialog));
+        setActiveToolMenuButton(ActiveToolMenuButton::AddButton);
     }
 }
 
@@ -780,16 +780,16 @@ void Widget::onGroupClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!groupInviteForm->isShown())
-            groupInviteForm->show(createContentDialog(GroupDialog));
+            groupInviteForm->show(createContentDialog(DialogType::GroupDialog));
 
-        setActiveToolMenuButton(Widget::None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
     else
     {
         hideMainForms(nullptr);
         groupInviteForm->show(contentLayout);
-        setWindowTitle(fromDialogType(GroupDialog));
-        setActiveToolMenuButton(Widget::GroupButton);
+        setWindowTitle(fromDialogType(DialogType::GroupDialog));
+        setActiveToolMenuButton(ActiveToolMenuButton::GroupButton);
     }
 }
 
@@ -798,16 +798,16 @@ void Widget::onTransferClicked()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!filesForm->isShown())
-            filesForm->show(createContentDialog(TransferDialog));
+            filesForm->show(createContentDialog(DialogType::TransferDialog));
 
-        setActiveToolMenuButton(Widget::None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
     else
     {
         hideMainForms(nullptr);
         filesForm->show(contentLayout);
-        setWindowTitle(fromDialogType(TransferDialog));
-        setActiveToolMenuButton(Widget::TransferButton);
+        setWindowTitle(fromDialogType(DialogType::TransferDialog));
+        setActiveToolMenuButton(ActiveToolMenuButton::TransferButton);
     }
 }
 
@@ -865,17 +865,17 @@ void Widget::onShowSettings()
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!settingsWidget->isShown())
-            settingsWidget->show(createContentDialog(SettingDialog));
+            settingsWidget->show(createContentDialog(DialogType::SettingDialog));
 
-        setActiveToolMenuButton(Widget::None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
         settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
         hideMainForms(nullptr);
         settingsWidget->show(contentLayout);
-        setWindowTitle(fromDialogType(SettingDialog));
-        setActiveToolMenuButton(Widget::SettingButton);
+        setWindowTitle(fromDialogType(DialogType::SettingDialog));
+        setActiveToolMenuButton(ActiveToolMenuButton::SettingButton);
     }
 }
 
@@ -884,23 +884,23 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
     if (Settings::getInstance().getSeparateWindow())
     {
         if (!profileForm->isShown())
-            profileForm->show(createContentDialog(ProfileDialog));
+            profileForm->show(createContentDialog(DialogType::ProfileDialog));
 
-        setActiveToolMenuButton(Widget::None);
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
         settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
     else
     {
         hideMainForms(nullptr);
         profileForm->show(contentLayout);
-        setWindowTitle(fromDialogType(ProfileDialog));
-        setActiveToolMenuButton(Widget::None);
+        setWindowTitle(fromDialogType(DialogType::ProfileDialog));
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
 }
 
 void Widget::hideMainForms(GenericChatroomWidget* chatroomWidget)
 {
-    setActiveToolMenuButton(Widget::None);
+    setActiveToolMenuButton(ActiveToolMenuButton::None);
 
     if (contentLayout != nullptr)
         contentLayout->clear();
@@ -1320,19 +1320,19 @@ QString Widget::fromDialogType(DialogType type)
 {
     switch (type)
     {
-        case AddDialog:
-            return tr("Add friend");
-        case GroupDialog:
-            return tr("Group invites");
-        case TransferDialog:
-            return tr("File transfers");
-        case SettingDialog:
-            return tr("Settings");
-        case ProfileDialog:
-            return tr("Profile");
-        default:
-            return QString();
+    case DialogType::AddDialog:
+        return tr("Add friend");
+    case DialogType::GroupDialog:
+        return tr("Group invites");
+    case DialogType::TransferDialog:
+        return tr("File transfers");
+    case DialogType::SettingDialog:
+        return tr("Settings");
+    case DialogType::ProfileDialog:
+        return tr("Profile");
     }
+
+    return QString();
 }
 
 bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, bool notify)
@@ -1744,38 +1744,38 @@ bool Widget::event(QEvent * e)
 {
     switch (e->type())
     {
-        case QEvent::MouseButtonPress:
-        case QEvent::MouseButtonDblClick:
-            focusChatInput();
-            break;
-        case QEvent::Paint:
-            friendList->updateVisualTracking();
-            break;
-        case QEvent::WindowActivate:
-            if (activeChatroomWidget != nullptr)
-            {
-                activeChatroomWidget->resetEventFlags();
-                activeChatroomWidget->updateStatusLight();
-                setWindowTitle(activeChatroomWidget->getTitle());
-            }
+    case QEvent::MouseButtonPress:
+    case QEvent::MouseButtonDblClick:
+        focusChatInput();
+        break;
+    case QEvent::Paint:
+        friendList->updateVisualTracking();
+        break;
+    case QEvent::WindowActivate:
+        if (activeChatroomWidget != nullptr)
+        {
+            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->updateStatusLight();
+            setWindowTitle(activeChatroomWidget->getTitle());
+        }
 
-            if (eventFlag)
-                resetIcon();
+        if (eventFlag)
+            resetIcon();
 
-            focusChatInput();
+        focusChatInput();
 
 #ifdef Q_OS_MAC
-            emit windowStateChanged(windowState());
+        emit windowStateChanged(windowState());
 
-        case QEvent::WindowStateChange:
-            Nexus::getInstance().updateWindowsStates();
+    case QEvent::WindowStateChange:
+        Nexus::getInstance().updateWindowsStates();
 #endif
-            break;
-        default:
-            break;
+        break;
+    default:
+        break;
     }
 
-    return QWidget::event(e);
+    return QMainWindow::event(e);
 }
 
 void Widget::onUserAwayCheck()
@@ -2116,7 +2116,6 @@ QString Widget::getStatusTitle(Status status)
     case Status::Busy:
         return QStringLiteral("busy");
     case Status::Offline:
-    default:
         return QStringLiteral("offline");
     }
 }
@@ -2278,14 +2277,14 @@ void Widget::groupInvitesClear()
 
 void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 {
-    addButton->setChecked(newActiveButton == Widget::AddButton);
-    addButton->setDisabled(newActiveButton == Widget::AddButton);
-    groupButton->setChecked(newActiveButton == Widget::GroupButton);
-    groupButton->setDisabled(newActiveButton == Widget::GroupButton);
-    transferButton->setChecked(newActiveButton == Widget::TransferButton);
-    transferButton->setDisabled(newActiveButton == Widget::TransferButton);
-    settingsButton->setChecked(newActiveButton == Widget::SettingButton);
-    settingsButton->setDisabled(newActiveButton == Widget::SettingButton);
+    addButton->setChecked(newActiveButton == ActiveToolMenuButton::AddButton);
+    addButton->setDisabled(newActiveButton == ActiveToolMenuButton::AddButton);
+    groupButton->setChecked(newActiveButton == ActiveToolMenuButton::GroupButton);
+    groupButton->setDisabled(newActiveButton == ActiveToolMenuButton::GroupButton);
+    transferButton->setChecked(newActiveButton == ActiveToolMenuButton::TransferButton);
+    transferButton->setDisabled(newActiveButton == ActiveToolMenuButton::TransferButton);
+    settingsButton->setChecked(newActiveButton == ActiveToolMenuButton::SettingButton);
+    settingsButton->setDisabled(newActiveButton == ActiveToolMenuButton::SettingButton);
 }
 
 void Widget::retranslateUi()
@@ -2315,7 +2314,7 @@ void Widget::retranslateUi()
     actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
     if (!Settings::getInstance().getSeparateWindow())
-        setWindowTitle(fromDialogType(AddDialog));
+        setWindowTitle(fromDialogType(DialogType::AddDialog));
 
     friendRequestsUpdate();
     groupInvitesUpdate();
