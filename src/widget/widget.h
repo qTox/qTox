@@ -78,7 +78,6 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
-    void updateScroll(GenericChatroomWidget *widget);
 
     enum DialogType
     {
@@ -91,7 +90,7 @@ public:
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
-    ContentLayout* createContentDialog(DialogType type);
+    ContentLayout* createContentDialog(DialogType type) const;
 
     static void confirmExecutableOpen(const QFileInfo &file);
 
@@ -148,6 +147,8 @@ public slots:
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
+    void onFriendDialogShown(Friend* f);
+    void onGroupDialogShown(Group* g);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -174,7 +175,7 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void showProfile();
-    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
+    void onChatroomWidgetClicked(GenericChatroomWidget*, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -193,6 +194,7 @@ private slots:
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
+    void onDialogShown(GenericChatroomWidget* widget);
 
 private:
     int icon_size;

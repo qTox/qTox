@@ -505,37 +505,29 @@ bool ContentDialog::event(QEvent* event)
 {
     switch (event->type())
     {
-        case QEvent::WindowActivate:
-            if (activeChatroomWidget != nullptr)
-            {
-                activeChatroomWidget->resetEventFlags();
-                activeChatroomWidget->updateStatusLight();
-                updateTitle(activeChatroomWidget);
+    case QEvent::WindowActivate:
+        if (activeChatroomWidget != nullptr)
+        {
+            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->updateStatusLight();
+            updateTitle(activeChatroomWidget);
 
-                Friend* frnd = activeChatroomWidget->getFriend();
-                Group* group = activeChatroomWidget->getGroup();
+            Friend* frnd = activeChatroomWidget->getFriend();
+            Group* group = activeChatroomWidget->getGroup();
 
-                GenericChatroomWidget *widget = nullptr;
+            if (frnd)
+                emit friendDialogShown(frnd);
+            else
+                emit groupDialogShown(group);
+        }
 
-                if (frnd)
-                    widget = frnd->getFriendWidget();
-                else
-                    widget = group->getGroupWidget();
-
-                widget->resetEventFlags();
-                widget->updateStatusLight();
-
-                Widget::getInstance()->updateScroll(widget);
-                Widget::getInstance()->resetIcon();
-            }
-
-            currentDialog = this;
+        currentDialog = this;
 
 #ifdef Q_OS_MAC
-            emit activated();
+        emit activated();
 #endif
-        default:
-            break;
+    default:
+        break;
     }
 
     return ActivateDialog::event(event);
