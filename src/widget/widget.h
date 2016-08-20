@@ -40,7 +40,7 @@ class FilesForm;
 class Friend;
 class FriendListWidget;
 class FriendWidget;
-class GenericChatroomWidget;
+class GenericChatForm;
 class Group;
 class GroupInviteForm;
 class Core;
@@ -167,7 +167,6 @@ public slots:
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void onGroupSendResult(int groupId, const QString& message, int result);
-    void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
 
@@ -223,7 +222,6 @@ private:
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
-    void hideMainForms(GenericChatroomWidget* chatroomWidget);
     Group *createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
@@ -276,9 +274,11 @@ private:
     QPointer<ProfileForm> profileForm;
     QPointer<SettingsWidget> settingsWidget;
     QPointer<FilesForm> filesForm;
-    GenericChatroomWidget *activeChatroomWidget;
+    QPointer<GenericChatForm> activeChat;
+
     FriendListWidget *contactListWidget;
     MaskablePixmapWidget *profilePicture;
+
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     QTimer *timer, *offlineMsgTimer;

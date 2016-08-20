@@ -28,7 +28,6 @@
 #include "src/persistence/offlinemsgengine.h"
 
 class FriendWidget;
-class ChatForm;
 class OfflineMsgEngine;
 
 class Friend : public QObject
@@ -60,7 +59,6 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm *getChatForm();
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 

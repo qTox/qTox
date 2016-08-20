@@ -206,7 +206,6 @@ void Nexus::showMainGUI()
     connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
     connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
     connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
     connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
     connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
 
