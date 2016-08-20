@@ -43,35 +43,31 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/translator.h"
 
-ContentDialog* ContentDialog::currentDialog = nullptr;
+QPointer<ContentDialog> ContentDialog::currentDialog;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
 
-ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
-    : ActivateDialog(parent, Qt::Window)
-    , activeChatroomWidget(nullptr)
-    , settingsWidget(settingsWidget)
+ContentDialog::ContentDialog(QWidget* parent, Qt::WindowFlags f)
+    : QWidget(parent, f | Qt::Window)
+    , splitter(new QSplitter(this))
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
-    QVBoxLayout* boxLayout = new QVBoxLayout(this);
-    boxLayout->setMargin(0);
-    boxLayout->setSpacing(0);
+    currentDialog = this;
 
-    splitter = new QSplitter(this);
+    const Settings& s = Settings::getInstance();
+
     setStyleSheet(Style::getStylesheet(":/ui/contentDialog/contentDialog.css"));
     splitter->setHandleWidth(6);
 
-    QWidget *friendWidget = new QWidget();
+    QWidget *friendWidget = new QWidget(this);
     friendWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    friendWidget->setAutoFillBackground(true);
 
-    friendLayout = new FriendListLayout();
+    friendLayout = new FriendListLayout(friendWidget);
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
-    friendWidget->setLayout(friendLayout);
 
-    onGroupchatPositionChanged(Settings::getInstance().getGroupchatPosition());
+    onGroupchatPositionChanged(s.getGroupchatPosition());
 
     QScrollArea *friendScroll = new QScrollArea(this);
     friendScroll->setMinimumWidth(220);
@@ -84,38 +80,31 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
     QWidget* contentWidget = new QWidget(this);
     contentWidget->setAutoFillBackground(true);
-    contentLayout = new ContentLayout(contentWidget);
-    contentLayout->setMargin(0);
-    contentLayout->setSpacing(0);
 
     splitter->addWidget(friendScroll);
     splitter->addWidget(contentWidget);
     splitter->setStretchFactor(1, 1);
     splitter->setCollapsible(1, false);
-    boxLayout->addWidget(splitter);
 
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
+    // settings
+    connect(&s, &Settings::groupchatPositionChanged,
+            this, &ContentDialog::onGroupchatPositionChanged);
 
     setMinimumSize(500, 220);
-    setAttribute(Qt::WA_DeleteOnClose);
 
-    QByteArray geometry = Settings::getInstance().getDialogGeometry();
+    QByteArray geometry = s.getDialogGeometry();
 
     if (!geometry.isNull())
         restoreGeometry(geometry);
     else
         resize(720, 400);
 
-
-    QByteArray splitterState = Settings::getInstance().getDialogSplitterState();
+    QByteArray splitterState = s.getDialogSplitterState();
 
     if (!splitterState.isNull())
         splitter->restoreState(splitterState);
-
-    currentDialog = this;
 
     setAcceptDrops(true);
 
@@ -132,9 +121,6 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
 ContentDialog::~ContentDialog()
 {
-    if (currentDialog == this)
-        currentDialog = nullptr;
-
     auto friendIt = friendList.begin();
 
     while (friendIt != friendList.end())
@@ -168,12 +154,8 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
     Friend* frnd = friendWidget->getFriend();
-    const Settings& s = Settings::getInstance();
-
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
-    connect(&s, &Settings::compactLayoutChanged, friendWidget, &FriendWidget::compactChange);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
-    connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), frnd->getChatForm(), SLOT(focusInput()));
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
@@ -193,11 +175,9 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     GroupWidget* groupWidget = new GroupWidget(groupId, name);
     groupLayout.addSortedWidget(groupWidget);
 
-    const Settings& s = Settings::getInstance();
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    connect(&s, &Settings::compactLayoutChanged, groupWidget, &GroupWidget::compactChange);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);
@@ -233,8 +213,6 @@ void ContentDialog::removeFriend(int friendId)
 
     if (chatroomWidgetCount() == 0)
     {
-        contentLayout->clear();
-        activeChatroomWidget = nullptr;
         deleteLater();
     }
     else
@@ -270,8 +248,6 @@ void ContentDialog::removeGroup(int groupId)
 
     if (chatroomWidgetCount() == 0)
     {
-        contentLayout->clear();
-        activeChatroomWidget = nullptr;
         deleteLater();
     }
     else
@@ -505,40 +481,41 @@ bool ContentDialog::event(QEvent* event)
 {
     switch (event->type())
     {
-        case QEvent::WindowActivate:
-            if (activeChatroomWidget != nullptr)
-            {
-                activeChatroomWidget->resetEventFlags();
-                activeChatroomWidget->updateStatusLight();
-                updateTitle(activeChatroomWidget);
+    case QEvent::WindowActivate:
+        if (activeChatroomWidget != nullptr)
+        {
+            activeChatroomWidget->resetEventFlags();
+            activeChatroomWidget->updateStatusLight();
+            updateTitle(activeChatroomWidget);
 
-                Friend* frnd = activeChatroomWidget->getFriend();
-                Group* group = activeChatroomWidget->getGroup();
+            Friend* frnd = activeChatroomWidget->getFriend();
+            Group* group = activeChatroomWidget->getGroup();
 
-                GenericChatroomWidget *widget = nullptr;
+            GenericChatroomWidget *widget = nullptr;
 
-                if (frnd)
-                    widget = frnd->getFriendWidget();
-                else
-                    widget = group->getGroupWidget();
+            if (frnd)
+                widget = frnd->getFriendWidget();
+            else
+                widget = group->getGroupWidget();
 
-                widget->resetEventFlags();
-                widget->updateStatusLight();
+            widget->resetEventFlags();
+            widget->updateStatusLight();
 
-                Widget::getInstance()->updateScroll(widget);
-                Widget::getInstance()->resetIcon();
-            }
+            Widget::getInstance()->updateScroll(widget);
+            Widget::getInstance()->resetIcon();
+        }
 
-            currentDialog = this;
+        currentDialog = this;
 
 #ifdef Q_OS_MAC
-            emit activated();
+        emit activated();
 #endif
-        default:
-            break;
+        break;
+    default:
+        break;
     }
 
-    return ActivateDialog::event(event);
+    return QWidget::event(event);
 }
 
 void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
@@ -603,29 +580,23 @@ void ContentDialog::changeEvent(QEvent *event)
 void ContentDialog::resizeEvent(QResizeEvent* event)
 {
     saveDialogGeometry();
-    QDialog::resizeEvent(event);
+    QWidget::resizeEvent(event);
 }
 
 void ContentDialog::moveEvent(QMoveEvent* event)
 {
     saveDialogGeometry();
-    QDialog::moveEvent(event);
-}
-
-void ContentDialog::keyPressEvent(QKeyEvent* event)
-{
-    if (event->key() != Qt::Key_Escape)
-        QDialog::keyPressEvent(event); // Ignore escape keyboard shortcut.
+    QWidget::moveEvent(event);
 }
 
 void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
 {
     if (group)
     {
-        ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+        ContentDialog* contentDialog = new ContentDialog(this);
         contentDialog->show();
 
-        if (widget->getFriend() != nullptr)
+        if (widget->getFriend())
         {
             removeFriend(widget->getFriend()->getFriendID());
             Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
@@ -646,14 +617,12 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     if (activeChatroomWidget == widget)
         return;
 
-    contentLayout->clear();
-
-    if (activeChatroomWidget != nullptr)
+    if (activeChatroomWidget)
         activeChatroomWidget->setAsInactiveChatroom();
 
     activeChatroomWidget = widget;
 
-    widget->setChatForm(contentLayout);
+    widget->setChatForm();
     widget->setAsActiveChatroom();
     widget->resetEventFlags();
     widget->updateStatusLight();

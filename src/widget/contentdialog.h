@@ -22,6 +22,8 @@
 
 #include <tuple>
 
+#include <QPointer>
+
 #include "src/core/corestructs.h"
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
@@ -38,11 +40,12 @@ class GroupWidget;
 class FriendListLayout;
 class SettingsWidget;
 
-class ContentDialog : public ActivateDialog
+class ContentDialog : public QWidget
 {
     Q_OBJECT
 public:
-    ContentDialog(SettingsWidget* settingsWidget, QWidget* parent = 0);
+    explicit ContentDialog(QWidget* parent = nullptr,
+                           Qt::WindowFlags f = Qt::WindowFlags());
     ~ContentDialog();
 
     FriendWidget* addFriend(int friendId, QString id);
@@ -87,7 +90,6 @@ protected:
     void changeEvent(QEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void moveEvent(QMoveEvent* event) override;
-    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
@@ -107,17 +109,16 @@ private:
     static bool isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
     static ContentDialog* getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
 
+private:
     QSplitter* splitter;
     FriendListLayout* friendLayout;
     GenericChatItemLayout groupLayout;
-    ContentLayout* contentLayout;
-    GenericChatroomWidget* activeChatroomWidget;
-    GenericChatroomWidget* displayWidget = nullptr;
-    SettingsWidget* settingsWidget;
+    QPointer<GenericChatroomWidget> activeChatroomWidget;
+    QPointer<GenericChatroomWidget> displayWidget;
     QSize videoSurfaceSize;
     int videoCount;
 
-    static ContentDialog* currentDialog;
+    static QPointer<ContentDialog> currentDialog;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
     static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;
 };

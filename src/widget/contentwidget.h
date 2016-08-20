@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,34 +17,37 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICCHATITEMWIDGET_H
-#define GENERICCHATITEMWIDGET_H
+#ifndef CONTENTWIDGET_H
+#define CONTENTWIDGET_H
 
 #include <QFrame>
-#include <QLabel>
+#include <QPointer>
 
-class CroppingLabel;
+class QVBoxLayout;
 
-class GenericChatItemWidget : public QFrame
+class ContentWidget : public QWidget
 {
     Q_OBJECT
+
 public:
-    enum ItemType
-    {
-        GroupItem,
-        FriendOfflineItem,
-        FriendOnlineItem
-    };
+    explicit ContentWidget(QWidget *parent = nullptr,
+                           Qt::WindowFlags f = Qt::WindowFlags());
 
-    explicit GenericChatItemWidget(QWidget *parent = 0);
+    void setLayout(QLayout* layout) = delete;
 
-    QString getName() const;
-
-    void searchName(const QString &searchString, bool hideAll);
+    QSize minimumSizeHint() const override;
 
 protected:
-    CroppingLabel* nameLabel;
-    QLabel statusPic;
+    void setupLayout(QWidget* head, QWidget* body);
+
+    QWidget* headerWidget() const;
+    QWidget* bodyWidget() const;
+
+private:
+    QVBoxLayout*        contentLayout;
+    QFrame              mainHLine;
+    QPointer<QWidget>   head;
+    QPointer<QWidget>   body;
 };
 
-#endif // GENERICCHATITEMWIDGET_H
+#endif

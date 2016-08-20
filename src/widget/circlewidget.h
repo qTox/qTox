@@ -26,7 +26,7 @@ class CircleWidget final : public CategoryWidget
 {
     Q_OBJECT
 public:
-    CircleWidget(FriendListWidget* parent, int id);
+    explicit CircleWidget(FriendListWidget* parent, int id);
     ~CircleWidget();
 
     void editName();
@@ -36,15 +36,15 @@ signals:
     void renameRequested(CircleWidget* circleWidget, const QString &newName);
 
 protected:
-    virtual void contextMenuEvent(QContextMenuEvent* event) final override;
-    virtual void dragEnterEvent(QDragEnterEvent* event) final override;
-    virtual void dragLeaveEvent(QDragLeaveEvent* event) final override;
-    virtual void dropEvent(QDropEvent* event) final override;
+    void contextMenuEvent(QContextMenuEvent* event) final override;
+    void dragEnterEvent(QDragEnterEvent* event) final override;
+    void dragLeaveEvent(QDragLeaveEvent* event) final override;
+    void dropEvent(QDropEvent* event) final override;
 
 private:
-    virtual void onSetName() final override;
-    virtual void onExpand() final override;
-    virtual void onAddFriendWidget(FriendWidget* w) final override;
+    void onSetName() final override;
+    void onExpand() final override;
+    void onAddFriendWidget(FriendWidget* w) final override;
     void updateID(int index);
 
     static QHash<int, CircleWidget*> circleList;

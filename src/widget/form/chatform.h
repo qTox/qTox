@@ -20,6 +20,7 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
+#include <QPointer>
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
@@ -35,7 +36,6 @@ class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
-class OfflineMsgEngine;
 class CoreAV;
 
 class ChatForm : public GenericChatForm
@@ -44,14 +44,12 @@ class ChatForm : public GenericChatForm
 public:
     explicit ChatForm(Friend* chatFriend);
     ~ChatForm();
+
     void setStatusMessage(QString newMessage);
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
-    OfflineMsgEngine* getOfflineMsgEngine();
-
-    virtual void show(ContentLayout* contentLayout) final override;
 
 signals:
     void sendFile(uint32_t friendId, QString, QString, long long);
@@ -67,6 +65,7 @@ public slots:
     void onAvatarRemoved(uint32_t FriendId);
 
 private slots:
+    void onLoadChatHistory();
     void onSendTriggered();
     void onTextEditChanged();
     void onAttachClicked();
@@ -78,8 +77,14 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onFileSendFailed(uint32_t FriendId, const QString &fname);
-    void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onFileSendFailed(quint32 FriendId, const QString &fname);
+    void onFriendStatusChanged(quint32 friendId, Status status);
+    void onFriendTypingChanged(quint32 friendId, bool isTyping);
+    void onFriendNameChanged(const QString& name);
+    void onFriendMessageReceived(quint32 friendId, const QString& message,
+                                 bool isAction);
+    void onStatusMessage(const QString& message);
+    void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();
@@ -97,6 +102,7 @@ private:
     QString secondsToDHMS(quint32 duration);
     void enableCallButtons();
     void disableCallButtons();
+    void updateCallButtons();
     void SendMessageStr(QString msg);
 
 protected:
@@ -113,16 +119,14 @@ private:
     CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel *callDuration;
-    QTimer *callDurationTimer;
+    QPointer<QTimer> callDurationTimer;
     QTimer typingTimer;
-    QTimer *disableCallButtonsTimer;
+    QPointer<QTimer> disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
-    OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    QMap<uint32_t, Status> oldStatus;
     CallConfirmWidget *callConfirm;
     bool isTyping;
 };

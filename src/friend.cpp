@@ -32,22 +32,20 @@
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
-
+    , userAlias(Settings::getInstance().getFriendAlias(UserId))
+    , userID(UserId)
+    , friendId(FriendId)
+    , hasNewEvents(0)
+    , friendStatus(Status::Offline)
+    , widget(new FriendWidget(friendId, getDisplayedName()))
+    , offlineEngine(this)
 {
-    if (userName.size() == 0)
+    if (userName.isEmpty())
         userName = UserId.publicKey;
-
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
-
-    widget = new FriendWidget(friendId, getDisplayedName());
-    chatForm = new ChatForm(this);
 }
 
 Friend::~Friend()
 {
-    delete chatForm;
     delete widget;
 }
 
@@ -58,21 +56,25 @@ void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
     {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
+        emit loadChatHistory();
     }
 }
 
 void Friend::setName(QString name)
 {
-   if (name.isEmpty())
-       name = userID.publicKey;
+    if (name.isEmpty())
+        name = userID.publicKey;
 
-    userName = name;
-    if (userAlias.size() == 0)
+    if (name != userName)
+    {
+        userName = name;
+        emit nameChanged(userName);
+    }
+
+    // TODO: the following is old code -> refactor/remove
+    if (userAlias.isEmpty())
     {
         widget->setName(name);
-        chatForm->setName(name);
 
         if (widget->isActive())
             GUI::setWindowTitle(name);
@@ -84,10 +86,9 @@ void Friend::setName(QString name)
 void Friend::setAlias(QString name)
 {
     userAlias = name;
-    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+    QString dispName = userAlias.isEmpty() ? userName : userAlias;
 
     widget->setName(dispName);
-    chatForm->setName(dispName);
 
     if (widget->isActive())
             GUI::setWindowTitle(dispName);
@@ -103,8 +104,9 @@ void Friend::setAlias(QString name)
 void Friend::setStatusMessage(QString message)
 {
     statusMessage = message;
+    // TODO: connect FriendWidget to signal
     widget->setStatusMsg(message);
-    chatForm->setStatusMessage(message);
+    emit newStatusMessage(message);
 }
 
 QString Friend::getStatusMessage()
@@ -114,10 +116,7 @@ QString Friend::getStatusMessage()
 
 QString Friend::getDisplayedName() const
 {
-    if (userAlias.size() == 0)
-        return userName;
-
-    return userAlias;
+    return userAlias.isEmpty() ? userName : userAlias;
 }
 
 bool Friend::hasAlias() const
@@ -147,17 +146,16 @@ int Friend::getEventFlag() const
 
 void Friend::setStatus(Status s)
 {
-    friendStatus = s;
+    if (s != friendStatus)
+    {
+        friendStatus = s;
+        emit statusChanged(friendId, friendStatus);
+    }
 }
 
 Status Friend::getStatus() const
 {
     return friendStatus;
-}
-
-ChatForm *Friend::getChatForm()
-{
-    return chatForm;
 }
 
 FriendWidget *Friend::getFriendWidget()
@@ -168,4 +166,33 @@ FriendWidget *Friend::getFriendWidget()
 const FriendWidget *Friend::getFriendWidget() const
 {
     return widget;
+}
+
+/**
+ * @brief Returns the friend's @a OfflineMessageEngine.
+ * @return a const reference to the offline engine
+ */
+const OfflineMsgEngine& Friend::getOfflineMsgEngine() const
+{
+    return offlineEngine;
+}
+
+void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
+{
+    offlineEngine.registerReceipt(rec, id, msg);
+}
+
+void Friend::dischargeReceipt(int receipt)
+{
+    offlineEngine.dischargeReceipt(receipt);
+}
+
+void Friend::clearOfflineReceipts()
+{
+    offlineEngine.removeAllReceipts();
+}
+
+void Friend::deliverOfflineMsgs()
+{
+    offlineEngine.deliverOfflineMsgs();
 }

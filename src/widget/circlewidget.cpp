@@ -40,7 +40,9 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
     : CategoryWidget(parent)
     , id(id)
 {
-    setName(Settings::getInstance().getCircleName(id), false);
+    const Settings& s = Settings::getInstance();
+
+    setName(s.getCircleName(id), false);
     circleList[id] = this;
 
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
@@ -51,11 +53,11 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
 
     connect(nameLabel, &CroppingLabel::editRemoved, [this]()
     {
-        if (isCompact())
+        if (Settings::getInstance().getCompactLayout())
             nameLabel->minimizeMaximumWidth();
     });
 
-    setExpanded(Settings::getInstance().getCircleExpanded(id), false);
+    setExpanded(s.getCircleExpanded(id), false);
     updateStatus();
 }
 
