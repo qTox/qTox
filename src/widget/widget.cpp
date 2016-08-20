@@ -909,10 +909,10 @@ void Widget::addFriend(int friendId, const QString &userId)
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
-    connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
+    connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
+    connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
+    connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
-    connect(widget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
-    connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), friendForm, SLOT(focusInput()));
     connect(friendForm, &GenericChatForm::sendMessage, core, &Core::sendMessage);
     connect(friendForm, &GenericChatForm::sendAction, core, &Core::sendAction);
     connect(friendForm, &ChatForm::sendFile, core, &Core::sendFile);
@@ -1080,6 +1080,12 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
     connect(friendWidget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(friendWidget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+    emit widget->chatroomWidgetClicked(widget, false);
 
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
@@ -1091,12 +1097,22 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
 void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
 {
-    if (!ContentDialog::getGroupDialog(group->getGroupId()) && !Settings::getInstance().getSeparateWindow() && activeChat == group->getChatForm())
+    ContentDialog *contentDialog = ContentDialog::getGroupDialog(group->getGroupId());
+    bool separate = Settings::getInstance().getSeparateWindow();
+    GroupWidget *widget = group->getGroupWidget();
+    bool isCurrent = activeChat == group->getChatForm();
+    if (!contentDialog && !separate && isCurrent)
         onAddClicked();
 
     GroupWidget* groupWidget = dialog->addGroup(group->getGroupId(), group->getName());
     connect(groupWidget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(groupWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), group->getChatForm(), SLOT(focusInput()));
+    connect(groupWidget, &FriendWidget::chatroomWidgetClicked, this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+    emit widget->chatroomWidgetClicked(widget, false);
 }
 
 bool Widget::newFriendMessageAlert(int friendId, bool sound)
