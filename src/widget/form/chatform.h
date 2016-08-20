@@ -35,7 +35,6 @@ class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
-class OfflineMsgEngine;
 class CoreAV;
 
 class ChatForm : public GenericChatForm
@@ -49,7 +48,6 @@ public:
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
-    OfflineMsgEngine* getOfflineMsgEngine();
 
     virtual void show(ContentLayout* contentLayout) final override;
 
@@ -69,6 +67,7 @@ public slots:
     void onAvatarRemoved(uint32_t FriendId);
 
 private slots:
+    void onLoadChatHistory();
     void onSendTriggered();
     void onTextEditChanged();
     void onAttachClicked();
@@ -82,6 +81,7 @@ private slots:
     void onVolMuteToggle();
     void onFileSendFailed(uint32_t FriendId, const QString &fname);
     void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
     void onEnableCallButtons();

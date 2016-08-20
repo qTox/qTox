@@ -56,7 +56,6 @@
 #include "src/chatlog/content/text.h"
 #include "src/chatlog/chatlog.h"
 #include "src/video/netcamview.h"
-#include "src/persistence/offlinemsgengine.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
@@ -148,7 +147,6 @@ ChatForm::~ChatForm()
     Translator::unregister(this);
     delete netcam;
     delete callConfirm;
-    delete offlineEngine;
 }
 
 void ChatForm::setStatusMessage(QString newMessage)
@@ -651,6 +649,11 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
         enableCallButtons();
 
     oldStatus[friendId] = status;
+
+void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
+{
+    if (friendId == f->getFriendID())
+        f->dischargeReceipt(receipt);
 }
 
 void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
