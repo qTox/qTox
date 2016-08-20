@@ -22,11 +22,14 @@
 
 #include <QObject>
 #include <QString>
+#include "src/chatlog/chatmessage.h"
 #include "src/core/corestructs.h"
-#include "core/toxid.h"
+#include "src/core/toxid.h"
+#include "src/persistence/offlinemsgengine.h"
 
 class FriendWidget;
 class ChatForm;
+class OfflineMsgEngine;
 
 class Friend : public QObject
 {
@@ -35,7 +38,8 @@ public:
     Friend(uint32_t FriendId, const ToxId &UserId);
     Friend(const Friend& other)=delete;
     ~Friend();
-    Friend& operator=(const Friend& other)=delete;
+
+    Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
 
@@ -60,18 +64,32 @@ public:
     FriendWidget *getFriendWidget();
     const FriendWidget *getFriendWidget() const;
 
+    const OfflineMsgEngine& getOfflineMsgEngine() const;
+    void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
+    void dischargeReceipt(int receipt);
+
 signals:
+    void nameChanged(const QString& name);
     void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    void statusChanged(uint32_t friendId, Status status);
+    void newStatusMessage(const QString& message);
+    void loadChatHistory();
+
+public slots:
+    void clearOfflineReceipts();
+    void deliverOfflineMsgs();
 
 private:
-    QString userAlias, userName, statusMessage;
+    QString userName;
+    QString userAlias;
+    QString statusMessage;
     ToxId userID;
-    uint32_t friendId;
+    quint32 friendId;
     int hasNewEvents;
     Status friendStatus;
 
     FriendWidget* widget;
-    ChatForm* chatForm;
+    OfflineMsgEngine offlineEngine;
 };
 
 #endif // FRIEND_H

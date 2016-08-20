@@ -32,16 +32,16 @@
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
-
+    , userAlias(Settings::getInstance().getFriendAlias(UserId))
+    , userID(UserId)
+    , friendId(FriendId)
+    , hasNewEvents(0)
+    , friendStatus(Status::Offline)
+    , widget(new FriendWidget(friendId, getDisplayedName()))
+    , offlineEngine(this)
 {
-    if (userName.size() == 0)
+    if (userName.isEmpty())
         userName = UserId.publicKey;
-
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
-
-    widget = new FriendWidget(friendId, getDisplayedName());
     chatForm = new ChatForm(this);
 }
 
@@ -58,8 +58,7 @@ void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
     {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
+        emit loadChatHistory();
     }
 }
 
@@ -165,4 +164,33 @@ FriendWidget *Friend::getFriendWidget()
 const FriendWidget *Friend::getFriendWidget() const
 {
     return widget;
+}
+
+/**
+ * @brief Returns the friend's @a OfflineMessageEngine.
+ * @return a const reference to the offline engine
+ */
+const OfflineMsgEngine& Friend::getOfflineMsgEngine() const
+{
+    return offlineEngine;
+}
+
+void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
+{
+    offlineEngine.registerReceipt(rec, id, msg);
+}
+
+void Friend::dischargeReceipt(int receipt)
+{
+    offlineEngine.dischargeReceipt(receipt);
+}
+
+void Friend::clearOfflineReceipts()
+{
+    offlineEngine.removeAllReceipts();
+}
+
+void Friend::deliverOfflineMsgs()
+{
+    offlineEngine.deliverOfflineMsgs();
 }
