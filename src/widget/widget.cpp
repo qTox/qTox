@@ -1272,6 +1272,18 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard,
             this, &Widget::copyFriendIdToClipboard);
 
+    // Signal transmission from the created `friendWidget` (which shown in
+    // ContentDialog) to the `widget` (which shown in main widget)
+    // FIXME: emit should be removed
+    connect(friendWidget, &FriendWidget::chatroomWidgetClicked,
+            this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+    // FIXME: emit should be removed
+    emit widget->chatroomWidgetClicked(widget, false);
+
     Core* core = Core::getInstance();
     connect(core, &Core::friendAvatarChanged,
             friendWidget, &FriendWidget::onAvatarChange);
@@ -1302,6 +1314,19 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
             this, SLOT(removeGroup(int)));
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked,
             group->getChatForm(), &ChatForm::focusInput);
+
+    // Signal transmission from the created `groupWidget` (which shown in
+    // ContentDialog) to the `widget` (which shown in main widget)
+    // FIXME: emit should be removed
+    connect(groupWidget, &GroupWidget::chatroomWidgetClicked,
+            this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+
+    // FIXME: emit should be removed
+    emit widget->chatroomWidgetClicked(widget, false);
 }
 
 bool Widget::newFriendMessageAlert(int friendId, bool sound)
