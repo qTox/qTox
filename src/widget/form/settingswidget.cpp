@@ -26,23 +26,27 @@
 #include "src/widget/form/settings/advancedform.h"
 #include "src/widget/form/settings/aboutform.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
-#include <QTabWidget>
+
+#include <QKeyEvent>
 #include <QLabel>
+#include <QTabWidget>
 #include <QWindow>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
-    : QWidget(parent, Qt::Window)
+    : ContentWidget(parent)
+    , head(new QWidget(this))
+    , body(new QWidget(this))
+    , currentIndex(0)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    body = new QWidget();
-    QVBoxLayout* bodyLayout = new QVBoxLayout();
-    body->setLayout(bodyLayout);
+    setupLayout(head, body);
 
-    head = new QWidget(this);
     QHBoxLayout* headLayout = new QHBoxLayout();
     head->setLayout(headLayout);
+
+    QVBoxLayout* bodyLayout = new QVBoxLayout();
+    body->setLayout(bodyLayout);
 
     imgLabel = new QLabel();
     headLayout->addWidget(imgLabel);
@@ -72,6 +76,9 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(settingsWidgets, &QTabWidget::currentChanged, this, &SettingsWidget::onTabChanged);
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
+
+    // initialize head label & icon
+    onTabChanged(currentIndex);
 }
 
 SettingsWidget::~SettingsWidget()
@@ -79,7 +86,7 @@ SettingsWidget::~SettingsWidget()
     Translator::unregister(this);
 }
 
-void SettingsWidget::setBodyHeadStyle(QString style)
+void SettingsWidget::setBodyHeadStyle(const QString& style)
 {
     head->setStyle(QStyleFactory::create(style));
     body->setStyle(QStyleFactory::create(style));
@@ -101,15 +108,6 @@ bool SettingsWidget::isShown() const
     return false;
 }
 
-void SettingsWidget::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(body);
-    contentLayout->mainHead->layout()->addWidget(head);
-    body->show();
-    head->show();
-    onTabChanged(settingsWidgets->currentIndex());
-}
-
 void SettingsWidget::onTabChanged(int index)
 {
     this->settingsWidgets->setCurrentIndex(index);
@@ -124,4 +122,12 @@ void SettingsWidget::retranslateUi()
     nameLabel->setText(currentWidget->getFormName());
     for (size_t i=0; i<cfgForms.size(); i++)
         settingsWidgets->setTabText(i, cfgForms[i]->getFormName());
+}
+
+void SettingsWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape)
+        close();
+    else
+        QWidget::keyPressEvent(event);
 }
