@@ -704,7 +704,6 @@ CircleWidget* FriendListWidget::createCircleWidget(int id)
 
     CircleWidget* circleWidget = new CircleWidget(this, id);
     circleLayout->addSortedWidget(circleWidget);
-    connect(this, &FriendListWidget::onCompactChanged, circleWidget, &CircleWidget::onCompactChanged);
     connect(circleWidget, &CircleWidget::renameRequested, this, &FriendListWidget::renameCircleWidget);
     circleWidget->show(); // Avoid flickering.
 
