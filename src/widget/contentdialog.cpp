@@ -165,7 +165,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
         lastDialog->removeFriend(friendId);
 
     friendList.insert(friendId, std::make_tuple(this, friendWidget));
-    onChatroomWidgetClicked(friendWidget, false);
 
     return friendWidget;
 }
@@ -186,7 +185,6 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
         lastDialog->removeGroup(groupId);
 
     groupList.insert(groupId, std::make_tuple(this, groupWidget));
-    onChatroomWidgetClicked(groupWidget, false);
 
     return groupWidget;
 }
@@ -337,7 +335,7 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
         GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
 
         if (chatWidget != nullptr && chatWidget != activeChatroomWidget)
-            onChatroomWidgetClicked(chatWidget, false);
+            emit chatWidget->chatroomWidgetClicked(chatWidget, false);
 
         return;
     }
@@ -644,11 +642,6 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     widget->resetEventFlags();
     widget->updateStatusLight();
     updateTitle(widget);
-
-    if (widget->getFriend())
-        widget->getFriend()->getFriendWidget()->updateStatusLight();
-    else
-        widget->getGroup()->getGroupWidget()->updateStatusLight();
 }
 
 void ContentDialog::updateFriendWidget(FriendWidget *w, Status s)
