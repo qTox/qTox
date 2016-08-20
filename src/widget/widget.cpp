@@ -100,6 +100,7 @@ Widget::Widget(QWidget *parent)
     : QMainWindow(parent)
     , icon{nullptr}
     , trayMenu{nullptr}
+    , contentArrangement(Qt::LeftEdge)
     , eventFlag(false)
     , eventIcon(false)
 {
@@ -429,7 +430,7 @@ bool Widget::eventFilter(QObject *obj, QEvent *event)
             wasMaximized = ce->oldState().testFlag(Qt::WindowMaximized);
 
 #ifdef Q_OS_MAC
-         emit windowStateChanged(windowState());
+        emit windowStateChanged(state);
 #endif
         break;
     default:
@@ -570,11 +571,16 @@ void Widget::showUpdateDownloadProgress()
 
 void Widget::moveEvent(QMoveEvent *event)
 {
-    if (event->type() == QEvent::Move)
+    if (event->pos() != event->oldPos())
     {
+        if (!Settings::getInstance().getSeparateWindow())
+        {
+            arrangeContent();
+        }
+
         saveWindowGeometry();
-        saveSplitterGeometry();
     }
+
     QWidget::moveEvent(event);
 }
 
@@ -611,7 +617,9 @@ void Widget::changeEvent(QEvent *event)
 
 void Widget::resizeEvent(QResizeEvent *event)
 {
-    saveWindowGeometry();
+    if (event->size() != event->oldSize())
+        saveWindowGeometry();
+
     QMainWindow::resizeEvent(event);
 }
 
@@ -748,8 +756,18 @@ void Widget::setWindowTitle(const QString& title)
 
 void Widget::forceShow()
 {
-    hide(); // Workaround to force minimized window to be restored
-    show();
+    // restore minimized windows
+    for (QWidget* w : QApplication::topLevelWidgets())
+    {
+        if (w->isWindow())
+        {
+            if (w->isMinimized())
+                w->showNormal();
+            else
+                w->show();
+        }
+    }
+
     activateWindow();
 }
 
@@ -2153,6 +2171,56 @@ bool Widget::groupsVisible() const
     return !filterGroups(filter);
 }
 
+/**
+ * @brief Arranges the content widgets depending on the position on screen.
+ * @param[in] widget    the separate content widget, that will be placed
+ *
+ * In "separate window" mode, the widget is placed left or right next to the
+ * main window. In "attached window" mode, the splitter position is flipped,
+ * when crossing the virtual desktop's horizontal center.
+ */
+void Widget::arrangeContent(QWidget* widget)
+{
+    // TODO: use current screen center instead (don't forget to update docs)
+    QRect dg = QApplication::desktop()->geometry();
+
+    if (Settings::getInstance().getSeparateWindow())
+    {
+        if (widget)
+        {
+            QRect proposedGeom = frameGeometry();
+            proposedGeom.adjust(0, 0, widget->width(), 0);
+            const QRect& geom = geometry();
+            int nx = proposedGeom.left() >= dg.center().x()
+                     ? geom.left() - widget->width()
+                     : geom.right();
+
+            // move the active window attached to top-right / top-left
+            widget->setGeometry(nx, geom.top(), widget->width(), height());
+        }
+    }
+    else
+    {
+        QRect geom = frameGeometry();
+        Qt::Edge arrangement = geom.left() > dg.center().x() ||
+                               geom.right() >= dg.right()
+                               ? Qt::RightEdge
+                               : Qt::LeftEdge;
+
+        if (arrangement != contentArrangement)
+        {
+            contentArrangement = arrangement;
+
+            // reverse splitter positions
+            int i = mainSplitter->count();
+            while (--i >= 0)
+            {
+                mainSplitter->insertWidget(0, mainSplitter->widget(i));
+            }
+        }
+    }
+}
+
 void Widget::friendListContextMenu(const QPoint &pos)
 {
     QMenu menu(this);
@@ -2308,8 +2376,6 @@ void Widget::showContentWidget(QWidget* widget, const QString& title,
         return;
     }
 
-    const int dw = QApplication::desktop()->width();
-
     if (Settings::getInstance().getSeparateWindow())
     {
         contentWidget = nullptr;
@@ -2321,8 +2387,15 @@ void Widget::showContentWidget(QWidget* widget, const QString& title,
 
         if (widget->isVisible())
         {
-            widget->raise();
-            widget->activateWindow();
+            if (widget->isMinimized())
+            {
+                widget->showNormal();
+            }
+            else
+            {
+                widget->raise();
+                widget->activateWindow();
+            }
         }
         else
         {
@@ -2333,14 +2406,7 @@ void Widget::showContentWidget(QWidget* widget, const QString& title,
             if(prevWidget == widget)
                 resize(width() - widget->width(), height());
 
-            // move the content widget attached to top-right / top-left
-            QPoint newPos(0, geometry().top());
-            newPos.rx() = frameGeometry().right() + widget->width() > dw
-                       ? geometry().left() - widget->width()
-                       : geometry().right();
-
-            widget->setGeometry(newPos.x(), newPos.y(),
-                                       widget->width(), height());
+            arrangeContent(widget);
         }
     }
     else
@@ -2354,12 +2420,13 @@ void Widget::showContentWidget(QWidget* widget, const QString& title,
         setActiveToolMenuButton(activeButton);
 
         QList<int> sizes = mainSplitter->sizes();
-
         mainSplitter->insertWidget(1, contentWidget);
         sizes << contentWidget->minimumSizeHint().width();
         setMinimumWidth(minimumSizeHint().width() + sizes[1]);
 
         // restore splitter pos
         mainSplitter->setSizes(sizes);
+
+        arrangeContent();
    }
 }

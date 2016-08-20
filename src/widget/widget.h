@@ -128,6 +128,7 @@ public:
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
     bool groupsVisible() const;
 
+    void arrangeContent(QWidget* widget = nullptr);
     void resetIcon();
 
 public:
@@ -267,6 +268,7 @@ private:
 
     QPoint dragPosition;
 
+    Qt::Edge contentArrangement;
     QPointer<QWidget> contentWidget;
     QPointer<ContentLayout> contentLayout;
     QPointer<AddFriendForm> addFriendForm;
