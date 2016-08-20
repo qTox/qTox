@@ -54,6 +54,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     , videoSurfaceSize(QSize())
     , videoCount(0)
 {
+    const Settings& s = Settings::getInstance();
+
     QVBoxLayout* boxLayout = new QVBoxLayout(this);
     boxLayout->setMargin(0);
     boxLayout->setSpacing(0);
@@ -71,7 +73,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     friendLayout->setSpacing(0);
     friendWidget->setLayout(friendLayout);
 
-    onGroupchatPositionChanged(Settings::getInstance().getGroupchatPosition());
+    onGroupchatPositionChanged(s.getGroupchatPosition());
 
     QScrollArea *friendScroll = new QScrollArea(this);
     friendScroll->setMinimumWidth(220);
@@ -96,21 +98,21 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
+    // settings
+    connect(&s, &Settings::groupchatPositionChanged,
+            this, &ContentDialog::onGroupchatPositionChanged);
 
     setMinimumSize(500, 220);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QByteArray geometry = Settings::getInstance().getDialogGeometry();
+    QByteArray geometry = s.getDialogGeometry();
 
     if (!geometry.isNull())
         restoreGeometry(geometry);
     else
         resize(720, 400);
 
-
-    QByteArray splitterState = Settings::getInstance().getDialogSplitterState();
+    QByteArray splitterState = s.getDialogSplitterState();
 
     if (!splitterState.isNull())
         splitter->restoreState(splitterState);
@@ -622,7 +624,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 {
     if (group)
     {
-        ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+        ContentDialog* contentDialog = new ContentDialog();
         contentDialog->show();
 
         if (widget->getFriend() != nullptr)
