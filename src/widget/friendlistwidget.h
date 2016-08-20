@@ -62,9 +62,6 @@ public:
     void updateActivityDate(const QDate& date);
     void reDraw();
 
-signals:
-    void onCompactChanged(bool compact);
-
 public slots:
     void renameGroupWidget(GroupWidget* groupWidget, const QString& newName);
     void renameCircleWidget(CircleWidget* circleWidget, const QString& newName);

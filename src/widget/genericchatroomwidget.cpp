@@ -31,6 +31,9 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 {
     const Settings& s = Settings::getInstance();
 
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GenericChatroomWidget::onCompactLayoutChanged);
+
     // avatar
     QSize size = s.getCompactLayout() ? QSize(20,20) : QSize(40,40);
     avatar = new MaskablePixmapWidget(this, size, ":/img/avatar_mask.svg");
@@ -45,7 +48,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     setAutoFillBackground(true);
     reloadTheme();
 
-    compactChange(isCompact());
+    onCompactLayoutChanged(s.getCompactLayout());
 }
 
 bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
@@ -54,7 +57,7 @@ bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
     return true;
 }
 
-void GenericChatroomWidget::compactChange(bool _compact)
+void GenericChatroomWidget::onCompactLayoutChanged(bool compact)
 {
     delete mainLayout;
     mainLayout = new QHBoxLayout(this);
@@ -63,7 +66,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
     setLayoutDirection(Qt::LeftToRight);
 
     // avatar
-    if (isCompact())
+    if (compact)
     {
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
@@ -85,6 +88,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
     {
         setFixedHeight(55);
         avatar->setSize(QSize(40,40));
+
         QVBoxLayout* textLayout = new QVBoxLayout;
         textLayout->setSpacing(0);
         textLayout->setMargin(0);
