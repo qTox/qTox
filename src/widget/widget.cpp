@@ -1253,8 +1253,8 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     ContentDialog *contentDialog = ContentDialog::getFriendDialog(frnd->getFriendID());
     bool isSeparate = Settings::getInstance().getSeparateWindow();
     FriendWidget* widget = friendWidgets[frnd->getFriendID()];
-
-    if (!contentDialog && !isSeparate && activeChatroomWidget == widget)
+    bool isCurrent = activeChatroomWidget == widget;
+    if (!contentDialog && !isSeparate && isCurrent)
     {
         onAddClicked();
     }
@@ -1267,6 +1267,16 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
             this, SLOT(removeFriend(int)));
     connect(friendWidget, &FriendWidget::copyFriendIdToClipboard,
             this, &Widget::copyFriendIdToClipboard);
+
+    // Signal transmission from the created `friendWidget` (which shown in
+    // ContentDialog) to the `widget` (which shown in main widget)
+    connect(friendWidget, &FriendWidget::chatroomWidgetClicked,
+            this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+    emit widget->chatroomWidgetClicked(widget, false);
 
     Core* core = Core::getInstance();
     connect(core, &Core::friendAvatarChanged,
@@ -1297,6 +1307,16 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
             this, SLOT(removeGroup(int)));
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked,
             group->getChatForm(), &ChatForm::focusInput);
+
+    // Signal transmission from the created `groupWidget` (which shown in
+    // ContentDialog) to the `widget` (which shown in main widget)
+    connect(groupWidget, &GroupWidget::chatroomWidgetClicked,
+            this, [=](GenericChatroomWidget *w, bool group)
+    {
+        Q_UNUSED(w);
+        emit widget->chatroomWidgetClicked(widget, group);
+    });
+    emit widget->chatroomWidgetClicked(widget, false);
 }
 
 bool Widget::newFriendMessageAlert(int friendId, bool sound)
