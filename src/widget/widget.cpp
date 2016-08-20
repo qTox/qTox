@@ -971,7 +971,9 @@ void Widget::setStatusMessage(const QString &statusMessage)
 void Widget::reloadHistory()
 {
     for (auto f : FriendList::getAllFriends())
-        f->getChatForm()->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+    {
+        f->loadHistory();
+    }
 }
 
 void Widget::addFriend(int friendId, const QString &userId)
@@ -1194,15 +1196,6 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
                                                f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
-}
-
-void Widget::onReceiptRecieved(int friendId, int receipt)
-{
-    Friend* f = FriendList::findFriend(friendId);
-    if (!f)
-        return;
-
-    f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
 }
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
@@ -2029,8 +2022,10 @@ void Widget::processOfflineMsgs()
     if (OfflineMsgEngine::globalMutex.tryLock())
     {
         QList<Friend*> frnds = FriendList::getAllFriends();
-        for (Friend *f : frnds)
-            f->getChatForm()->getOfflineMsgEngine()->deliverOfflineMsgs();
+        for (Friend* f : frnds)
+        {
+            f->deliverOfflineMsgs();
+        }
 
         OfflineMsgEngine::globalMutex.unlock();
     }
@@ -2039,8 +2034,10 @@ void Widget::processOfflineMsgs()
 void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
-    for (Friend *f : frnds)
-        f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
+    for (Friend* f : frnds)
+    {
+        f->clearOfflineReceipts();
+    }
 }
 
 void Widget::reloadTheme()

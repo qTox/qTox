@@ -159,7 +159,6 @@ public slots:
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void updateFriendActivity(Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
-    void onReceiptRecieved(int friendId, int receipt);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
     void onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
