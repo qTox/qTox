@@ -17,6 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "chatform.h"
+
 #include <QDebug>
 #include <QBoxLayout>
 #include <QScrollBar>
@@ -34,8 +36,9 @@
 #include <QStyle>
 #include <QSplitter>
 #include <QClipboard>
+
 #include <cassert>
-#include "chatform.h"
+
 #include "src/audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -68,45 +71,47 @@ const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
 ChatForm::ChatForm(Friend* chatFriend)
     : f(chatFriend)
+    , callDuration(new QLabel(this))
+    , callConfirm(nullptr)
     , isTyping(false)
 {
     Core* core = Core::getInstance();
     coreav = core->getAv();
 
+    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
     nameLabel->setText(f->getDisplayedName());
 
-    avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
-
-    statusMessageLabel = new CroppingLabel();
+    statusMessageLabel = new CroppingLabel;
     statusMessageLabel->setObjectName("statusLabel");
     statusMessageLabel->setFont(Style::getFont(Style::Medium));
     statusMessageLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     statusMessageLabel->setTextFormat(Qt::PlainText);
     statusMessageLabel->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    callConfirm = nullptr;
-    offlineEngine = new OfflineMsgEngine(f);
-
     typingTimer.setSingleShot(true);
-
-    callDurationTimer = nullptr;
-    disableCallButtonsTimer = nullptr;
 
     chatWidget->setTypingNotification(ChatMessage::createTypingNotification());
 
     headTextLayout->addWidget(statusMessageLabel);
     headTextLayout->addStretch();
-    callDuration = new QLabel();
     headTextLayout->addWidget(callDuration, 1, Qt::AlignCenter);
     callDuration->hide();
 
     chatWidget->setMinimumHeight(50);
     connect(this, &GenericChatForm::messageInserted, this, &ChatForm::onMessageInserted);
+    connect(this, &ChatForm::chatAreaCleared, f, &Friend::clearOfflineReceipts);
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
     copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
 
     connect(core, &Core::fileSendStarted, this, &ChatForm::startFileSend);
+    connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
+    connect(core, &Core::receiptRecieved, this, &ChatForm::onReceiptReceived);
+    connect(core, &Core::friendMessageReceived,
+            this, &ChatForm::onFriendMessageReceived);
+    connect(core, &Core::friendTypingChanged,
+            this, &ChatForm::onFriendTypingChanged);
+
     connect(sendButton, &QPushButton::clicked, this, &ChatForm::onSendTriggered);
     connect(fileButton, &QPushButton::clicked, this, &ChatForm::onAttachClicked);
     connect(screenshotButton, &QPushButton::clicked, this, &ChatForm::onScreenshotClicked);
@@ -114,9 +119,6 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(videoButton, &QPushButton::clicked, this, &ChatForm::onVideoCallTriggered);
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
-    connect(core, &Core::fileSendFailed, this, &ChatForm::onFileSendFailed);
-    connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
-    connect(this, &ChatForm::chatAreaCleared, getOfflineMsgEngine(), &OfflineMsgEngine::removeAllReceipts);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this, [&](const QPoint& pos)
     {
         if (!statusMessageLabel->text().isEmpty())
@@ -136,10 +138,19 @@ ChatForm::ChatForm(Friend* chatFriend)
         emit aliasChanged(newName);
     } );
 
+    connect(f, &Friend::nameChanged, this, &ChatForm::onFriendNameChanged);
+    connect(f, &Friend::statusChanged, this, &ChatForm::onFriendStatusChanged);
+    connect(f, &Friend::newStatusMessage, this, &ChatForm::onStatusMessage);
+    connect(f, &Friend::loadChatHistory, this, &ChatForm::onLoadChatHistory);
+
     setAcceptDrops(true);
-    disableCallButtons();
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    // initialize chat
+    loadHistory(QDateTime::currentDateTime().addDays(-7),
+                f->getStatus() != Status::Offline);
+    updateCallButtons();
 }
 
 ChatForm::~ChatForm()
@@ -540,7 +551,6 @@ void ChatForm::disableCallButtons()
     {
         disableCallButtonsTimer->stop();
         delete disableCallButtonsTimer;
-        disableCallButtonsTimer = nullptr;
     }
 
     micButton->setObjectName("grey");
@@ -583,8 +593,14 @@ void ChatForm::onEnableCallButtons()
     {
         disableCallButtonsTimer->stop();
         delete disableCallButtonsTimer;
-        disableCallButtonsTimer = nullptr;
     }
+}
+
+void ChatForm::updateCallButtons()
+{
+    // TODO: set the call button visuals to the actual status of the ToxCall.
+    f->getStatus() == Status::Offline ? disableCallButtons()
+                                      : enableCallButtons();
 }
 
 void ChatForm::onMicMuteToggle()
@@ -635,20 +651,73 @@ void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
 }
 
-void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
+void ChatForm::onFriendStatusChanged(quint32 friendId, Status status)
 {
-    // Disable call buttons if friend is offline
-    if(friendId != f->getFriendID())
+    Q_UNUSED(friendId);
+
+    if(sender() != f)
         return;
 
-    Status old = oldStatus.value(friendId, Status::Offline);
-
-    if (old != Status::Offline && status == Status::Offline)
+    if (status == Status::Offline)
+    {
+        // Hide the "is typing" message when a friend goes offline
+        setFriendTyping(false);
         disableCallButtons();
-    else if (old == Status::Offline && status != Status::Offline)
+    }
+    else
+    {
         enableCallButtons();
+        QTimer::singleShot(250, f, SLOT(deliverOfflineMsgs()));
+    }
 
-    oldStatus[friendId] = status;
+    if (Settings::getInstance().getStatusChangeNotificationEnabled())
+    {
+        QString fStatus = "";
+        switch (status)
+        {
+        case Status::Away:
+            fStatus = tr("away", "contact status"); break;
+        case Status::Busy:
+            fStatus = tr("busy", "contact status"); break;
+        case Status::Offline:
+            fStatus = tr("offline", "contact status"); break;
+        case Status::Online:
+            fStatus = tr("online", "contact status"); break;
+        }
+
+        addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
+                             .arg(f->getDisplayedName()).arg(fStatus),
+                             ChatMessage::INFO, QDateTime::currentDateTime());
+    }
+}
+
+void ChatForm::onFriendTypingChanged(quint32 friendId, bool isTyping)
+{
+    if (friendId == f->getFriendID())
+        setFriendTyping(isTyping);
+}
+
+void ChatForm::onFriendNameChanged(const QString& name)
+{
+    if (sender() == f)
+        setName(name);
+}
+
+void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
+                                       bool isAction)
+{
+    if (friendId != f->getFriendID())
+        return;
+
+    QDateTime timestamp = QDateTime::currentDateTime();
+    addMessage(f->getToxId(), message, isAction, timestamp, true);
+}
+
+void ChatForm::onStatusMessage(const QString& message)
+{
+    if (sender() == f)
+        setStatusMessage(message);
+}
 
 void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
 {
@@ -724,6 +793,12 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 }
 
+void ChatForm::onLoadChatHistory()
+{
+    if (sender() == f)
+        loadHistory(QDateTime::currentDateTime().addDays(-7), true);
+}
+
 void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
     QDateTime now = historyBaselineDate.addMSecs(-1);
@@ -791,7 +866,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                 else
                     rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
 
-                getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
+                f->registerReceipt(rec, it.id, msg);
             }
         }
         historyMessages.append(msg);
@@ -914,7 +989,6 @@ void ChatForm::stopCounter()
         callDuration->hide();
 
         delete callDurationTimer;
-        callDurationTimer = nullptr;
     }
 }
 
@@ -953,14 +1027,6 @@ void ChatForm::setFriendTyping(bool isTyping)
     text->setText("<div class=typing>" + tr("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
-void ChatForm::show(ContentLayout* contentLayout)
-{
-    GenericChatForm::show(contentLayout);
-
-    if (callConfirm)
-        callConfirm->show();
-}
-
 void ChatForm::showEvent(QShowEvent* event)
 {
     if (callConfirm)
@@ -975,11 +1041,6 @@ void ChatForm::hideEvent(QHideEvent* event)
         callConfirm->hide();
 
     GenericChatForm::hideEvent(event);
-}
-
-OfflineMsgEngine *ChatForm::getOfflineMsgEngine()
-{
-    return offlineEngine;
 }
 
 void ChatForm::SendMessageStr(QString msg)
@@ -1015,12 +1076,13 @@ void ChatForm::SendMessageStr(QString msg)
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled())
         {
-            auto* offMsgEngine = getOfflineMsgEngine();
-            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
-                                        [offMsgEngine,rec,ma](int64_t id)
+            profile->getHistory()->addNewMessage(
+                        f->getToxId().publicKey, qt_msg_hist,
+                        Core::getInstance()->getSelfId().publicKey, timestamp,
+                        status, Core::getInstance()->getUsername(),
+                        [this, rec, ma](int64_t id)
             {
-                offMsgEngine->registerReceipt(rec, id, ma);
+                f->registerReceipt(rec, id, ma);
             });
         }
         else

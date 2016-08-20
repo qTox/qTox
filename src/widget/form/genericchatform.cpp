@@ -48,43 +48,37 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-GenericChatForm::GenericChatForm(QWidget *parent)
-  : QWidget(parent, Qt::Window)
+GenericChatForm::GenericChatForm(QWidget *parent, Qt::WindowFlags f)
+  : ContentWidget(parent, f)
+  , curRow(0)
+  , nameLabel(new CroppingLabel(this))
+  , avatar(new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg"))
+  , headWidget(new QWidget(this))
+  , bodyWidget(new QWidget(this))
+  , emoteButton(new QPushButton(this))
+  , headTextLayout(new QVBoxLayout(this))
+  , msgEdit(new ChatTextEdit(this))
+  , sendButton(new QPushButton(this))
+  , chatWidget(new ChatLog(this))
   , audioInputFlag(false)
   , audioOutputFlag(false)
 {
-    curRow = 0;
-    headWidget = new QWidget();
+    setupLayout(headWidget, bodyWidget);
 
-    nameLabel = new CroppingLabel();
     nameLabel->setObjectName("nameLabel");
     nameLabel->setMinimumHeight(Style::getFont(Style::Medium).pixelSize());
     nameLabel->setEditable(true);
     nameLabel->setTextFormat(Qt::PlainText);
 
-    avatar = new MaskablePixmapWidget(this, QSize(40,40), ":/img/avatar_mask.svg");
-    QHBoxLayout *mainFootLayout = new QHBoxLayout(),
-                *headLayout = new QHBoxLayout();
+    QHBoxLayout* headLayout = new QHBoxLayout(headWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(bodyWidget);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(),
-                *footButtonsSmall = new QVBoxLayout(),
-                *micButtonsLayout = new QVBoxLayout();
-                headTextLayout = new QVBoxLayout();
-
-    QGridLayout *buttonsLayout = new QGridLayout();
-
-    chatWidget = new ChatLog(this);
     chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
 
     // settings
     const Settings& s = Settings::getInstance();
     connect(&s, &Settings::emojiFontPointSizeChanged,
             chatWidget, &ChatLog::forceRelayout);
-
-    msgEdit = new ChatTextEdit();
-
-    sendButton = new QPushButton();
-    emoteButton = new QPushButton();
 
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
@@ -105,7 +99,6 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileLayout->addWidget(screenshotButton);
     fileLayout->setContentsMargins(0, 0, 0, 0);
 
-    footButtonsSmall->setSpacing(2);
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
@@ -132,10 +125,21 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     micButton->setObjectName("grey");
     micButton->setStyleSheet(micButtonStylesheet);
 
-    setLayout(mainLayout);
-
     bodySplitter = new QSplitter(Qt::Vertical, this);
     connect(bodySplitter, &QSplitter::splitterMoved, this, &GenericChatForm::onSplitterMoved);
+
+    QHBoxLayout* mainFootLayout = new QHBoxLayout;
+    mainFootLayout->addWidget(msgEdit);
+
+    QVBoxLayout *footButtonsSmall = new QVBoxLayout;
+    footButtonsSmall->setSpacing(2);
+    footButtonsSmall->addWidget(emoteButton);
+    footButtonsSmall->addWidget(fileButton);
+    mainFootLayout->addLayout(footButtonsSmall);
+    mainFootLayout->addSpacing(5);
+
+    mainFootLayout->addWidget(sendButton);
+    mainFootLayout->setSpacing(0);
 
     QWidget* contentWidget = new QWidget(this);
     QVBoxLayout* contentLayout = new QVBoxLayout(contentWidget);
@@ -146,36 +150,27 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     mainLayout->addWidget(bodySplitter);
     mainLayout->setMargin(0);
 
-    footButtonsSmall->addWidget(emoteButton);
-    footButtonsSmall->addWidget(fileButton);
-
-    mainFootLayout->addWidget(msgEdit);
-    mainFootLayout->addLayout(footButtonsSmall);
-    mainFootLayout->addSpacing(5);
-    mainFootLayout->addWidget(sendButton);
-    mainFootLayout->setSpacing(0);
+    headLayout->addWidget(avatar);
+    headLayout->addSpacing(5);
 
     headTextLayout->addStretch();
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
+    headLayout->addLayout(headTextLayout);
 
+    QVBoxLayout *micButtonsLayout = new QVBoxLayout;
     micButtonsLayout->setSpacing(0);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
     micButtonsLayout->addSpacing(4);
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
 
+    QGridLayout *buttonsLayout = new QGridLayout;
     buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);
     buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
     buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
     buttonsLayout->setVerticalSpacing(0);
     buttonsLayout->setHorizontalSpacing(4);
-
-    headLayout->addWidget(avatar);
-    headLayout->addSpacing(5);
-    headLayout->addLayout(headTextLayout);
     headLayout->addLayout(buttonsLayout);
-
-    headWidget->setLayout(headLayout);
 
     //Fix for incorrect layouts on OS X as per
     //https://bugreports.qt-project.org/browse/QTBUG-14591
@@ -280,14 +275,6 @@ void GenericChatForm::setName(const QString &newName)
 {
     nameLabel->setText(newName);
     nameLabel->setToolTip(Qt::convertFromPlainText(newName, Qt::WhiteSpaceNormal)); // for overlength names
-}
-
-void GenericChatForm::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(this);
-    contentLayout->mainHead->layout()->addWidget(headWidget);
-    headWidget->show();
-    QWidget::show();
 }
 
 void GenericChatForm::showEvent(QShowEvent *)
