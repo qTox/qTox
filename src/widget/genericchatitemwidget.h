@@ -38,21 +38,13 @@ public:
 
     explicit GenericChatItemWidget(QWidget *parent = 0);
 
-    bool isCompact() const;
-    void setCompact(bool compact);
-
     QString getName() const;
 
     void searchName(const QString &searchString, bool hideAll);
 
-    Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
-
 protected:
     CroppingLabel* nameLabel;
     QLabel statusPic;
-
-private:
-    bool compact;
 };
 
 #endif // GENERICCHATITEMWIDGET_H

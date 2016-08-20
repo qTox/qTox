@@ -51,7 +51,7 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
 
     connect(nameLabel, &CroppingLabel::editRemoved, [this]()
     {
-        if (isCompact())
+        if (Settings::getInstance().getCompactLayout())
             nameLabel->minimizeMaximumWidth();
     });
 

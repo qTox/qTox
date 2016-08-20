@@ -44,6 +44,10 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     statusPic.setMargin(3);
     nameLabel->setText(Name);
 
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GroupWidget::onCompactLayoutChanged);
+
     onUserListChanged();
 
     setAcceptDrops(true);
