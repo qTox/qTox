@@ -28,14 +28,14 @@ class GroupWidget final : public GenericChatroomWidget
 public:
     GroupWidget(int GroupId, QString Name);
     ~GroupWidget();
-    virtual void setAsInactiveChatroom() final override;
-    virtual void setAsActiveChatroom() final override;
-    virtual void updateStatusLight() final override;
-    virtual bool chatFormIsSet(bool focus) const final override;
-    virtual void setChatForm(ContentLayout* contentLayout) override;
-    virtual void resetEventFlags() final override;
-    virtual QString getStatusString() const final override;
-    virtual Group* getGroup() const override;
+    void setAsInactiveChatroom() final override;
+    void setAsActiveChatroom() final override;
+    void updateStatusLight() final override;
+    bool chatFormIsSet(bool focus) const final override;
+    void setChatForm() final override;
+    void resetEventFlags() final override;
+    QString getStatusString() const final override;
+    Group* getGroup() const final override;
     void setName(const QString& name);
     void onUserListChanged();
     void editName();
