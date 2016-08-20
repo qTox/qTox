@@ -165,11 +165,8 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
-    const Settings& s = Settings::getInstance();
-
     Friend* frnd = friendWidget->getFriend();
     connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
-    connect(&s, &Settings::compactLayoutChanged, friendWidget, &FriendWidget::compactChange);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
     connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), frnd->getChatForm(), SLOT(focusInput()));
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
@@ -191,11 +188,9 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     GroupWidget* groupWidget = new GroupWidget(groupId, name);
     groupLayout.addSortedWidget(groupWidget);
 
-    const Settings& s = Settings::getInstance();
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    connect(&s, &Settings::compactLayoutChanged, groupWidget, &GroupWidget::compactChange);
     connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);

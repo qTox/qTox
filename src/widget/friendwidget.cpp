@@ -56,6 +56,10 @@ FriendWidget::FriendWidget(int FriendId, QString id)
     nameLabel->setTextFormat(Qt::PlainText);
     connect(nameLabel, &CroppingLabel::editFinished, this, &FriendWidget::setAlias);
     statusMessageLabel->setTextFormat(Qt::PlainText);
+
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &FriendWidget::onCompactLayoutChanged);
 }
 
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)

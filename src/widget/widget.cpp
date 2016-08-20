@@ -396,8 +396,6 @@ void Widget::init()
             this, &Widget::onSetShowSystemTray);
     connect(&s, &Settings::separateWindowChanged,
             this, &Widget::onSeparateWindowClicked);
-    connect(&s, &Settings::compactLayoutChanged,
-            contactListWidget, &FriendListWidget::onCompactChanged);
     connect(&s, &Settings::groupchatPositionChanged,
             contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 
@@ -1004,8 +1002,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
-    connect(&s, &Settings::compactLayoutChanged, newfriend->getFriendWidget(),
-            &GenericChatroomWidget::compactChange);
     connect(newfriend->getFriendWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*, bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*, bool)));
     connect(newfriend->getFriendWidget(), SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(newfriend->getFriendWidget(), SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
@@ -1033,7 +1029,6 @@ void Widget::addFriend(int friendId, const QString &userId)
 
     FilterCriteria filter = getFilterCriteria();
     newfriend->getFriendWidget()->search(searchContactText->text(), filterOffline(filter));
-
 }
 
 void Widget::addFriendFailed(const QString&, const QString& errorInfo)
@@ -1678,8 +1673,6 @@ Group *Widget::createGroup(int groupId)
     newgroup->getGroupWidget()->updateStatusLight();
     contactListWidget->activateWindow();
 
-    connect(&Settings::getInstance(), &Settings::compactLayoutChanged,
-            newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
