@@ -987,7 +987,7 @@ void Widget::addFriend(int friendId, const QString &userId)
         newfriend->getFriendWidget()->onAvatarChange(friendId, avatar);
     }
 
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     newfriend->getFriendWidget()->search(searchContactText->text(), filterOffline(filter));
 
 }
@@ -1065,7 +1065,8 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
         return;
 
     QString str = message; str.replace('\n', ' ');
-    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    str.remove('\r');
+    str.remove(QChar()); // null terminator...
     f->setStatusMessage(str);
 
     ContentDialog::updateFriendStatusMessage(friendId, message);
@@ -1078,20 +1079,27 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
         return;
 
     QString str = username; str.replace('\n', ' ');
-    str.remove('\r'); str.remove(QChar((char)0)); // null terminator...
+    str.remove('\r');
+    str.remove(QChar()); // null terminator...
     f->setName(str);
 }
 
 void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
 {
     contactListWidget->moveWidget(friendWidget, s);
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     switch (s)
     {
-        case Status::Offline:
-            friendWidget->searchName(searchContactText->text(), filterOffline(filter));
-        default:
-            friendWidget->searchName(searchContactText->text(), filterOnline(filter));
+    case Status::Offline:
+        friendWidget->searchName(searchContactText->text(),
+                                 filterOffline(filter));
+        break;
+    case Status::Online:
+    case Status::Busy:
+    case Status::Away:
+        friendWidget->searchName(searchContactText->text(),
+                                 filterOnline(filter));
+        break;
     }
 
 }
@@ -1495,7 +1503,6 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     dialog->layout()->setMargin(0);
     dialog->layout()->setSpacing(0);
     dialog->setMinimumSize(720, 400);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
     dialog->show();
 
 #ifdef Q_OS_MAC
@@ -1611,7 +1618,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 
     contactListWidget->renameGroupWidget(g->getGroupWidget(), title);
     g->setName(title);
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     g->getGroupWidget()->searchName(searchContactText->text(), filterGroups(filter));
 }
 
@@ -1694,7 +1701,7 @@ Group *Widget::createGroup(int groupId)
     connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
     connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
 
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     newgroup->getGroupWidget()->searchName(searchContactText->text(), filterGroups(filter));
 
     return newgroup;
@@ -1935,40 +1942,55 @@ void Widget::cycleContacts(bool forward)
     contactListWidget->cycleContacts(activeChatroomWidget, forward);
 }
 
-bool Widget::filterGroups(int index)
+bool Widget::filterGroups(FilterCriteria filter)
 {
-    switch (index)
+    switch (filter)
     {
-        case FilterCriteria::Offline:
-        case FilterCriteria::Friends:
-            return true;
-        default:
-            return false;
+    case FilterCriteria::Offline:
+    case FilterCriteria::Friends:
+        return true;
+
+    case FilterCriteria::Online:
+    case FilterCriteria::Groups:
+    case FilterCriteria::All:
+        return false;
     }
+
+    return false;
 }
 
-bool Widget::filterOffline(int index)
+bool Widget::filterOffline(FilterCriteria filter)
 {
-    switch (index)
+    switch (filter)
     {
-        case FilterCriteria::Online:
-        case FilterCriteria::Groups:
-            return true;
-        default:
-            return false;
+    case FilterCriteria::Online:
+    case FilterCriteria::Groups:
+        return true;
+
+    case FilterCriteria::Offline:
+    case FilterCriteria::Friends:
+    case FilterCriteria::All:
+        return false;
     }
+
+    return false;
 }
 
-bool Widget::filterOnline(int index)
+bool Widget::filterOnline(FilterCriteria filter)
 {
-    switch (index)
+    switch (filter)
     {
         case FilterCriteria::Offline:
         case FilterCriteria::Groups:
             return true;
-        default:
+
+    case FilterCriteria::Online:
+    case FilterCriteria::Friends:
+    case FilterCriteria::All:
             return false;
     }
+
+    return false;
 }
 
 void Widget::processOfflineMsgs()
@@ -2099,7 +2121,7 @@ Status Widget::getStatusFromString(QString status)
 void Widget::searchContacts()
 {
     QString searchString = searchContactText->text();
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
 
     contactListWidget->searchChatrooms(searchString, filterOnline(filter), filterOffline(filter), filterGroups(filter));
 
@@ -2128,39 +2150,41 @@ void Widget::updateFilterText()
      searchContactFilterBox->setText(filterDisplayGroup->checkedAction()->text() + QStringLiteral(" | ") + filterGroup->checkedAction()->text());
 }
 
-int Widget::getFilterCriteria() const
+Widget::FilterCriteria Widget::getFilterCriteria() const
 {
     QAction* checked = filterGroup->checkedAction();
 
     if (checked == filterOnlineAction)
-        return Online;
+        return FilterCriteria::Online;
     else if (checked == filterOfflineAction)
-        return Offline;
+        return FilterCriteria::Offline;
     else if (checked == filterFriendsAction)
-        return Friends;
+        return FilterCriteria::Friends;
     else if (checked == filterGroupsAction)
-        return Groups;
+        return FilterCriteria::Groups;
 
-    return All;
+    return FilterCriteria::All;
 }
 
 void Widget::searchCircle(CircleWidget *circleWidget)
 {
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     circleWidget->search(searchContactText->text(), true, filterOnline(filter), filterOffline(filter));
 }
 
 void Widget::searchItem(GenericChatItemWidget *chatItem, GenericChatItemWidget::ItemType type)
 {
     bool hide;
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     switch (type)
     {
-        case GenericChatItemWidget::GroupItem:
-            hide = filterGroups(filter);
-            break;
-        default:
-            hide = true;
+    case GenericChatItemWidget::GroupItem:
+        hide = filterGroups(filter);
+        break;
+    case GenericChatItemWidget::FriendOfflineItem:
+    case GenericChatItemWidget::FriendOnlineItem:
+        hide = true;
+        break;
     }
 
     chatItem->searchName(searchContactText->text(), hide);
@@ -2168,7 +2192,7 @@ void Widget::searchItem(GenericChatItemWidget *chatItem, GenericChatItemWidget::
 
 bool Widget::groupsVisible() const
 {
-    int filter = getFilterCriteria();
+    FilterCriteria filter = getFilterCriteria();
     return !filterGroups(filter);
 }
 
