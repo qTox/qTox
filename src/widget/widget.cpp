@@ -1078,7 +1078,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
-    FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendID(),
+    FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendId(),
                                                    frnd->getDisplayedName());
 
     friendWidget->setStatusMsg(frnd->getFriendWidget()->getStatusMsg());
@@ -1091,7 +1091,7 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getToxId().toString());
     if (!avatar.isNull())
-        friendWidget->onAvatarChange(frnd->getFriendID(), avatar);
+        friendWidget->onAvatarChange(frnd->getFriendId(), avatar);
 }
 
 void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
@@ -1311,13 +1311,13 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     contactListWidget->removeFriendWidget(f->getFriendWidget());
 
-    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendID());
+    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendId());
 
     if (lastDialog != nullptr)
-        lastDialog->removeFriend(f->getFriendID());
+        lastDialog->removeFriend(f->getFriendId());
 
-    FriendList::removeFriend(f->getFriendID(), fake);
-    Nexus::getCore()->removeFriend(f->getFriendID(), fake);
+    FriendList::removeFriend(f->getFriendId(), fake);
+    Nexus::getCore()->removeFriend(f->getFriendId(), fake);
 
     delete f;
 
@@ -1433,7 +1433,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     if (f != nullptr)
     {
         QClipboard *clipboard = QApplication::clipboard();
-        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
+        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendId()), QClipboard::Clipboard);
     }
 }
 
