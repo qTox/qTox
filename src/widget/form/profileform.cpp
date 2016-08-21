@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -33,103 +33,117 @@
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/net/toxme.h"
+
+#include <QApplication>
+#include <QBuffer>
+#include <QClipboard>
+#include <QComboBox>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
-#include <QGroupBox>
-#include <QApplication>
-#include <QClipboard>
-#include <QInputDialog>
-#include <QFileDialog>
-#include <QBuffer>
-#include <QMessageBox>
-#include <QComboBox>
-#include <QWindow>
 #include <QMenu>
+#include <QMessageBox>
 #include <QMouseEvent>
+#include <QWindow>
 
 ProfileForm::ProfileForm(QWidget *parent)
-    : ContentWidget(parent)
+    : QWidget(parent, Qt::Window)
     , bodyUI(new Ui::IdentitySettings)
-    , nameLabel(new QLabel)
-    , head(new QWidget(this))
-    , core(Core::getInstance())
     , qr(nullptr)
 {
     const Settings& s = Settings::getInstance();
+    const Core* core = Core::getInstance();
 
-    QWidget* body = new QWidget(this);
-    bodyUI->setupUi(body);
-    setupLayout(head, body);
+    bodyUI->setupUi(this);
 
-    QHBoxLayout* headLayout = new QHBoxLayout(head);
-
-    QLabel* imgLabel = new QLabel;
-    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png")
-                        .scaledToHeight(40, Qt::SmoothTransformation));
-    headLayout->addWidget(imgLabel);
-
-    QFont bold;
-    bold.setBold(true);
-    nameLabel->setFont(bold);
-    headLayout->addWidget(nameLabel);
-    headLayout->addStretch(1);
-
-    // tox
-    toxId = new ClickableTE();
-    toxId->setReadOnly(true);
-    toxId->setFrame(false);
-    toxId->setFont(Style::getFont(Style::Small));
-    toxId->setToolTip(bodyUI->toxId->toolTip());
-
-    QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
-    delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId);     // Original toxId is in heap, delete it
-    bodyUI->toxId->hide();
-
-    /* Toxme section init */
-    bodyUI->toxmeServersList->addItem("toxme.io");
-    QString toxmeInfo = s.getToxmeInfo();
-    if (toxmeInfo.isEmpty()) // User not registered
-        showRegisterToxme();
-    else
-        showExistingToxme();
-
-    bodyUI->qrLabel->setWordWrap(true);
-
-    QRegExp re("[^@ ]+");
-    QRegExpValidator* validator = new QRegExpValidator(re, this);
-    bodyUI->toxmeUsername->setValidator(validator);
-
-    prFileLabelUpdate();
-    QString DirPath = s.getMakeToxPortable()
-                      ? QApplication::applicationDirPath()
-                      : QDir(s.getSettingsDirPath()).path().trimmed();
-    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
-    bodyUI->dirPrLink->setOpenExternalLinks(true);
-    bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
-    bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
-    bodyUI->userName->setFocus();
-    bodyUI->userName->selectAll();
-
+    // init profile section
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
     profilePicture->setContextMenuPolicy(Qt::CustomContextMenu);
     profilePicture->setClickable(true);
     profilePicture->installEventFilter(this);
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
-    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showProfilePictureContextMenu(const QPoint&)));
+    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)),
+            this, SLOT(showProfilePictureContextMenu(const QPoint&)));
+    connect(core, &Core::selfAvatarChanged,
+            this, &ProfileForm::onSelfAvatarLoaded);
+
     QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
     publicGrouplayout->insertWidget(0, profilePicture);
     publicGrouplayout->insertSpacing(1, 7);
+
+    bodyUI->userName->setText(core->getUsername());
+    bodyUI->userName->setFocus();
+    bodyUI->userName->selectAll();
+    connect(core, &Core::usernameSet, this, [=](const QString& val)
+    {
+        bodyUI->userName->setText(val);
+    });
+
+    bodyUI->statusMessage->setText(core->getStatusMessage());
+    connect(core, &Core::statusMessageSet, this, [=](const QString& val)
+    {
+        bodyUI->statusMessage->setText(val);
+    });
+
+    // init profile's tox section
+    toxId = new ClickableTE;
+    toxId->setReadOnly(true);
+    toxId->setFrame(false);
+    toxId->setFont(Style::getFont(Style::Small));
+    toxId->setToolTip(tr("This is the Tox-ID."));
+
+    // TODO: declare "toxId" QLineEdit a placeholder widget in the ui file
+    QLayout* toxIdLayout = bodyUI->toxGroup->layout();
+    delete toxIdLayout->replaceWidget(bodyUI->toxId, toxId);
+    delete bodyUI->toxId;
+    bodyUI->toxId = nullptr;
+
+    setToxId(core->getSelfId());
+    connect(core, &Core::idSet, this, &ProfileForm::setToxId);
+    connect(bodyUI->toxIdLabel, &CroppingLabel::clicked,
+            this, &ProfileForm::copyIdClicked);
+    connect(toxId, &ClickableTE::clicked,
+            this, &ProfileForm::copyIdClicked);
+
+    bodyUI->qrLabel->setWordWrap(true);
+
+    // init toxme section
+    bodyUI->toxmeServersList->addItem("toxme.io");
+    QString toxmeInfo = s.getToxmeInfo();
+    if (toxmeInfo.isEmpty())
+        // User not registered
+        showRegisterToxme();
+    else
+        showExistingToxme();
+
+    QRegExp re("[^@ ]+");
+    QRegExpValidator* validator = new QRegExpValidator(re, this);
+    bodyUI->toxmeUsername->setValidator(validator);
+
+    // init profile's location section
+    prFileLabelUpdate();
+    QString profileDir = s.getMakeToxPortable()
+                         ? QApplication::applicationDirPath()
+                         : QDir::cleanPath(s.getSettingsDirPath());
+    QString profileLink =
+            QStringLiteral("<p><a href=\"file:///") + profileDir +
+            QStringLiteral("\"><span style=\"text-decoration: NONE;"
+                           " color:#000000;\">") +
+            tr("Current profile location: %1").arg(profileDir) +
+            QStringLiteral("</span></a></p>");
+    bodyUI->dirPrLink->setText(profileLink);
+    bodyUI->dirPrLink->setOpenExternalLinks(true);
+    bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse |
+                                               Qt::TextSelectableByMouse);
+    bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
 
     timer.setInterval(750);
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
 
-    connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
-    connect(core, &Core::idSet, this, &ProfileForm::setToxId);
-    connect(bodyUI->userName, SIGNAL(editingFinished()), this, SLOT(onUserNameEdited()));
-    connect(bodyUI->statusMessage, SIGNAL(editingFinished()), this, SLOT(onStatusMessageEdited()));
     connect(bodyUI->renameButton, &QPushButton::clicked, this, &ProfileForm::onRenameClicked);
     connect(bodyUI->exportButton, &QPushButton::clicked, this, &ProfileForm::onExportClicked);
     connect(bodyUI->deleteButton, &QPushButton::clicked, this, &ProfileForm::onDeleteClicked);
@@ -142,9 +156,6 @@ ProfileForm::ProfileForm(QWidget *parent)
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
     connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
     connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
-
-    connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
-    connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 
     for (QComboBox* cb : findChildren<QComboBox*>())
     {
@@ -159,7 +170,9 @@ ProfileForm::ProfileForm(QWidget *parent)
 void ProfileForm::prFileLabelUpdate()
 {
     Nexus& nexus = Nexus::getInstance();
-    bodyUI->prFileLabel->setText(tr("Current profile: ") + nexus.getProfile()->getName() + ".tox");
+    bodyUI->prFileLabel->setText(tr("Current profile: %1")
+                                 .arg(nexus.getProfile()->getName()) +
+                                 QStringLiteral(".tox"));
 }
 
 ProfileForm::~ProfileForm()
@@ -169,15 +182,34 @@ ProfileForm::~ProfileForm()
     delete bodyUI;
 }
 
-bool ProfileForm::isShown() const
+/**
+ * @brief Returns an independent head widget.
+ * @return the head widget; it will be created, if not exists
+ * @note The head widget is not owned by the ProfileForm and needs to be
+ * correctly free'd by the caller.
+ */
+QWidget* ProfileForm::getHeadWidget()
 {
-    if (head->isVisible())
+    if (!head)
     {
-        window()->windowHandle()->alert(0);
-        return true;
+        head = new QWidget;
+
+        QHBoxLayout* headLayout = new QHBoxLayout(head);
+
+        QLabel* imgLabel = new QLabel;
+        imgLabel->setPixmap(QPixmap(":/img/settings/identity.png")
+                            .scaledToHeight(40, Qt::SmoothTransformation));
+        headLayout->addWidget(imgLabel);
+
+        QLabel* nameLabel = new QLabel(tr("User Profile"));
+        QFont nameFont;
+        nameFont.setBold(true);
+        nameLabel->setFont(nameFont);
+        headLayout->addWidget(nameLabel);
+        headLayout->addStretch(1);
     }
 
-    return false;
+    return head;
 }
 
 bool ProfileForm::eventFilter(QObject *object, QEvent *event)
@@ -210,7 +242,7 @@ void ProfileForm::copyIdClicked()
     txt.replace('\n',"");
     QApplication::clipboard()->setText(txt, QClipboard::Clipboard);
     if (QApplication::clipboard()->supportsSelection())
-      QApplication::clipboard()->setText(txt, QClipboard::Selection);
+        QApplication::clipboard()->setText(txt, QClipboard::Selection);
     toxId->setCursorPosition(0);
 
     if (!hasCheck)
@@ -221,12 +253,12 @@ void ProfileForm::copyIdClicked()
     timer.start();
 }
 
-void ProfileForm::onUserNameEdited()
+void ProfileForm::on_userName_editingFinished()
 {
     Core::getInstance()->setUsername(bodyUI->userName->text());
 }
 
-void ProfileForm::onStatusMessageEdited()
+void ProfileForm::on_statusMessage_editingFinished()
 {
     Core::getInstance()->setStatusMessage(bodyUI->statusMessage->text());
 }
@@ -236,14 +268,15 @@ void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
     profilePicture->setPixmap(pic);
 }
 
-void ProfileForm::setToxId(const QString& id)
+void ProfileForm::setToxId(const ToxId& id)
 {
-    toxId->setText(id);
+    const QString idStr = id.toString();
+    toxId->setText(idStr);
     toxId->setCursorPosition(0);
 
     delete qr;
     qr = new QRWidget();
-    qr->setQRData("tox:"+id);
+    qr->setQRData("tox:" + idStr);
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
@@ -461,7 +494,6 @@ void ProfileForm::onChangePassClicked()
 void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    nameLabel->setText(tr("User Profile"));
     setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
@@ -469,8 +501,8 @@ void ProfileForm::retranslateUi()
 
 void ProfileForm::showRegisterToxme()
 {
-    bodyUI->toxmeUsername->setText("");
-    bodyUI->toxmeBio->setText("");
+    bodyUI->toxmeUsername->setText(QString());
+    bodyUI->toxmeBio->setText(QString());
     bodyUI->toxmePrivacy->setChecked(false);
 
     bodyUI->toxmeRegisterButton->show();
@@ -526,7 +558,8 @@ void ProfileForm::onRegisterButtonClicked()
     // before the request is finished, else qTox will crash.
     if (oldCore == newCore)
     {
-        switch (code) {
+        switch (code)
+        {
         case Toxme::Updated:
             GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy);
