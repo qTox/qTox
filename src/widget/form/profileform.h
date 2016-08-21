@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,16 +20,15 @@
 #ifndef IDENTITYFORM_H
 #define IDENTITYFORM_H
 
-#include <QLineEdit>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPointer>
 #include <QTimer>
 #include <QVBoxLayout>
+
 #include "src/core/core.h"
-#include "src/widget/contentwidget.h"
 #include "src/widget/qrwidget.h"
 
-class CroppingLabel;
-class Core;
 class MaskablePixmapWidget;
 
 namespace Ui {
@@ -51,12 +50,14 @@ protected:
     }
 };
 
-class ProfileForm : public ContentWidget
+class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
     explicit ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
+
+    QWidget* getHeadWidget();
     bool isShown() const;
 
 signals:
@@ -65,24 +66,25 @@ signals:
 
 public slots:
     void onSelfAvatarLoaded(const QPixmap &pic);
-    void onLogoutClicked();
-
-private slots:
-    void setPasswordButtonsText();
-    void setToxId(const QString& id);
+    void onAvatarClicked();
+    void setToxId(const ToxId& id);
     void copyIdClicked();
-    void onUserNameEdited();
-    void onStatusMessageEdited();
     void onRenameClicked();
     void onExportClicked();
     void onDeleteClicked();
     void onCopyQrClicked();
     void onSaveQrClicked();
+    void setPasswordButtonsText();
     void onDeletePassClicked();
     void onChangePassClicked();
-    void onAvatarClicked();
+    void onLogoutClicked();
     void showProfilePictureContextMenu(const QPoint &point);
     void onRegisterButtonClicked();
+
+private slots:
+    // auto-connections
+    void on_userName_editingFinished();
+    void on_statusMessage_editingFinished();
 
 private:
     void showExistingToxme();
@@ -90,18 +92,21 @@ private:
     void prFileLabelUpdate();
 
 private:
+    Ui::IdentitySettings* bodyUI;
+
     bool eventFilter(QObject *object, QEvent *event);
     void refreshProfiles();
-    Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
-    QLabel* nameLabel;
-    QWidget *head;
-    Core* core;
+
     QTimer timer;
     bool hasCheck = false;
     QRWidget *qr;
     ClickableTE* toxId;
     void showRegisterToxme();
+
+private:
+    // indepentent head widget
+    QPointer<QWidget> head;
 };
 
 #endif
