@@ -272,10 +272,6 @@ void Core::start()
     if (!msg.isEmpty())
         emit statusMessageSet(msg);
 
-    QString id = getSelfId().toString();
-    if (!id.isEmpty())
-        emit idSet(id);
-
     // TODO: This is a backwards compatibility check,
     // once most people have been upgraded away from the old HistoryKeeper, remove this
     if (Nexus::getProfile()->isEncrypted())
@@ -325,7 +321,7 @@ void Core::start()
     if (isNewProfile)
     {
         profile.saveToxSave();
-        emit idSet(getSelfId().toString());
+        emit idSet(getSelfId());
     }
 
     if (isReady())
@@ -1289,7 +1285,7 @@ void Core::setNospam(uint32_t nospam)
     std::reverse(nspm, nspm + 4);
     tox_self_set_nospam(tox, nospam);
 
-    emit idSet(getSelfId().toString());
+    emit idSet(getSelfId());
 }
 
 /**
