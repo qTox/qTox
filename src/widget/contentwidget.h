@@ -35,11 +35,10 @@ public:
 
     void setLayout(QLayout* layout) = delete;
 
+    void setupLayout(QWidget* head, QWidget* body);
     QSize minimumSizeHint() const override;
 
 protected:
-    void setupLayout(QWidget* head, QWidget* body);
-
     QWidget* headerWidget() const;
     QWidget* bodyWidget() const;
 

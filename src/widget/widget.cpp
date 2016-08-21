@@ -141,6 +141,11 @@ void Widget::init()
 
     actionLogout = new QAction(this);
     actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
+    connect(actionLogout, &QAction::triggered, this, [&]() {
+        // TODO: move logout to a global accessible place (e.g. Core).
+        Settings::getInstance().saveGlobal();
+        Nexus::getInstance().showLoginLater();
+    });
 
     actionQuit = new QAction(this);
 #ifndef Q_OS_OSX
@@ -836,14 +841,9 @@ void Widget::showProfile()
 {
     if (!profileForm)
     {
-        profileForm = new ProfileForm(this);
-
-        connect(actionLogout, &QAction::triggered, profileForm,
-                &ProfileForm::onLogoutClicked);
-
-        Core* core = Nexus::getCore();
-        connect(core, &Core::selfAvatarChanged,
-                profileForm, &ProfileForm::onSelfAvatarLoaded);
+        profileForm = new ContentWidget(this);
+        ProfileForm* profileUi = new ProfileForm;
+        profileForm->setupLayout(profileUi->getHeadWidget(), profileUi);
     }
 
     showContentWidget(profileForm, fromDialogType(DialogType::ProfileDialog),

@@ -159,7 +159,7 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
-    void idSet(const QString& id);
+    void idSet(const ToxId& id);
     void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);
