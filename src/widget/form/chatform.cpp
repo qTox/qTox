@@ -157,8 +157,8 @@ ChatForm::ChatForm(Friend* chatFriend)
         }
     });
 
-    connect(&typingTimer, &QTimer::timeout, this, [=] {
-        Core::getInstance()->sendTyping(f->getFriendID(), false);
+    connect(&typingTimer, &QTimer::timeout, this, [=]{
+        Core::getInstance()->sendTyping(f->getFriendId(), false);
         isTyping = false;
     });
 
@@ -194,10 +194,13 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onTextEditChanged()
 {
+    Core* core = Core::getInstance();
     if (!Settings::getInstance().getTypingNotification())
     {
         if (isTyping)
-            Core::getInstance()->sendTyping(f->getFriendID(), false);
+        {
+            core->sendTyping(f->getFriendId(), false);
+        }
 
         isTyping = false;
         return;
@@ -207,11 +210,13 @@ void ChatForm::onTextEditChanged()
     {
         typingTimer.start(3000);
         if (!isTyping)
-            Core::getInstance()->sendTyping(f->getFriendID(), (isTyping = true));
+        {
+            core->sendTyping(f->getFriendId(), isTyping);
+        }
     }
     else
     {
-        Core::getInstance()->sendTyping(f->getFriendID(), (isTyping = false));
+        core->sendTyping(f->getFriendId(), !isTyping);
     }
 }
 
@@ -251,15 +256,17 @@ void ChatForm::onAttachClicked()
         file.close();
         QFileInfo fi(path);
 
-        core->sendFile(f->getFriendID(), fi.fileName(), path,
+        core->sendFile(f->getFriendId(), fi.fileName(), path,
                        filesize);
     }
 }
 
 void ChatForm::startFileSend(ToxFile file)
 {
-    if (file.friendId != f->getFriendID())
+    if (file.friendId != f->getFriendId())
+    {
         return;
+    }
 
     QString name;
     const Core* core = Core::getInstance();
@@ -277,8 +284,10 @@ void ChatForm::startFileSend(ToxFile file)
 
 void ChatForm::onFileRecvRequest(ToxFile file)
 {
-    if (file.friendId != f->getFriendID())
+    if (file.friendId != f->getFriendId())
+    {
         return;
+    }
 
     Widget::getInstance()->newFriendMessageAlert(file.friendId);
 
@@ -312,8 +321,10 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
 void ChatForm::onAvInvite(uint32_t friendId, bool video)
 {
-    if (friendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     callConfirm = new CallConfirmWidget(video ? videoButton : callButton, *f);
     insertChatMessage(ChatMessage::createChatInfoMessage(tr("%1 calling").arg(f->getDisplayedName()),
@@ -323,7 +334,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
     if ((video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Video)) ||
        (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Audio)))
     {
-        uint32_t friendId = f->getFriendID();
+        uint32_t friendId = f->getFriendId();
         qDebug() << "automatic call answer";
         CoreAV* coreav = Core::getInstance()->getAv();
         QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection, Q_ARG(uint32_t, friendId));
@@ -350,30 +361,40 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
     }
 }
 
-void ChatForm::onAvStart(uint32_t FriendId, bool video)
+void ChatForm::onAvStart(uint32_t friendId, bool video)
 {
-    if (FriendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     if (video)
+    {
         showNetcam();
+    }
     else
+    {
         hideNetcam();
+    }
 
     updateCallButtons();
     startCounter();
 }
 
-void ChatForm::onAvEnd(uint32_t FriendId)
+void ChatForm::onAvEnd(uint32_t friendId)
 {
-    if (FriendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     delete callConfirm;
 
     //Fixes an OS X bug with ending a call while in full screen
     if (netcam && netcam->isFullScreen())
+    {
         netcam->showNormal();
+    }
 
     Audio::getInstance().stopLoop();
 
@@ -413,7 +434,7 @@ void ChatForm::onAnswerCallTriggered()
     updateCallButtons();
 
     CoreAV* av = Core::getInstance()->getAv();
-    if (!av->answerCall(f->getFriendID()))
+    if (!av->answerCall(f->getFriendId()))
     {
         updateCallButtons();
         stopCounter();
@@ -421,7 +442,7 @@ void ChatForm::onAnswerCallTriggered()
         return;
     }
 
-    onAvStart(f->getFriendID(), av->isCallVideoEnabled(f));
+    onAvStart(f->getFriendId(), av->isCallVideoEnabled(f));
 }
 
 void ChatForm::onRejectCallTriggered()
@@ -431,7 +452,7 @@ void ChatForm::onRejectCallTriggered()
     Audio::getInstance().stopLoop();
 
     CoreAV* av = Core::getInstance()->getAv();
-    av->cancelCall(f->getFriendID());
+    av->cancelCall(f->getFriendId());
 }
 
 void ChatForm::onCallTriggered()
@@ -439,9 +460,9 @@ void ChatForm::onCallTriggered()
     CoreAV* av = Core::getInstance()->getAv();
     if (av->isCallActive(f))
     {
-        av->cancelCall(f->getFriendID());
+        av->cancelCall(f->getFriendId());
     }
-    else if (av->startCall(f->getFriendID(), false))
+    else if (av->startCall(f->getFriendId(), false))
     {
         showOutgoingCall(false);
     }
@@ -454,9 +475,9 @@ void ChatForm::onVideoCallTriggered()
     {
         // TODO: We want to activate video on the active call.
         if (av->isCallVideoEnabled(f))
-            av->cancelCall(f->getFriendID());
+            av->cancelCall(f->getFriendId());
     }
-    else if (av->startCall(f->getFriendID(), true))
+    else if (av->startCall(f->getFriendId(), true))
     {
         showOutgoingCall(true);
     }
@@ -520,8 +541,10 @@ void ChatForm::onVolMuteToggle()
 
 void ChatForm::onFileSendFailed(uint32_t friendId, const QString &fname)
 {
-    if (friendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
 }
@@ -529,8 +552,10 @@ void ChatForm::onFileSendFailed(uint32_t friendId, const QString &fname)
 void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
 {
     // Disable call buttons if friend is offline
-    if(friendId != f->getFriendID())
+    if(friendId != f->getFriendId())
+    {
         return;
+    }
 
     if (status == Status::Offline)
     {
@@ -567,7 +592,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
 
 void ChatForm::onFriendTypingChanged(quint32 friendId, bool isTyping)
 {
-    if (friendId == f->getFriendID())
+    if (friendId == f->getFriendId())
         setFriendTyping(isTyping);
 }
 
@@ -580,8 +605,11 @@ void ChatForm::onFriendNameChanged(const QString& name)
 void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
                                        bool isAction)
 {
-    if (friendId != f->getFriendID())
+    // Disable call buttons if friend is offline
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     QDateTime timestamp = QDateTime::currentDateTime();
     addMessage(f->getToxId(), message, isAction, timestamp, true);
@@ -590,19 +618,25 @@ void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
 void ChatForm::onStatusMessage(const QString& message)
 {
     if (sender() == f)
+    {
         setStatusMessage(message);
+    }
 }
 
 void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
 {
-    if (friendId == f->getFriendID())
+    if (friendId == f->getFriendId())
+    {
         f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
+    }
 }
 
 void ChatForm::onAvatarChange(uint32_t friendId, const QPixmap &pic)
 {
-    if (friendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     avatar->setPixmap(pic);
 }
@@ -610,68 +644,80 @@ void ChatForm::onAvatarChange(uint32_t friendId, const QPixmap &pic)
 GenericNetCamView *ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
-    NetCamView* view = new NetCamView(f->getFriendID(), this);
-    view->show(Core::getInstance()->getAv()->getVideoSourceFromCall(f->getFriendID()), f->getDisplayedName());
+    uint32_t friendId = f->getFriendId();
+    NetCamView* view = new NetCamView(friendId, this);
+    CoreAV* av = Core::getInstance()->getAv();
+    VideoSource* source = av->getVideoSourceFromCall(friendId);
+    view->show(source, f->getDisplayedName());
     return view;
 }
 
 void ChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     if (ev->mimeData()->hasUrls())
+    {
         ev->acceptProposedAction();
+    }
 }
 
 void ChatForm::dropEvent(QDropEvent *ev)
 {
-    if (ev->mimeData()->hasUrls())
+    if (!ev->mimeData()->hasUrls())
     {
-        Core* core = Core::getInstance();
-        for (QUrl url : ev->mimeData()->urls())
+        return;
+    }
+
+    Core* core = Core::getInstance();
+    for (QUrl url : ev->mimeData()->urls())
+    {
+        QFileInfo info(url.path());
+
+        QFile file(info.absoluteFilePath());
+        bool correctLength = url.toString().length() < TOX_MAX_MESSAGE_LENGTH;
+        if (url.isValid() && !url.isLocalFile() && correctLength)
         {
-            QFileInfo info(url.path());
+            SendMessageStr(url.toString());
+            continue;
+        }
 
-            QFile file(info.absoluteFilePath());
-            if (url.isValid() && !url.isLocalFile() && (url.toString().length() < TOX_MAX_MESSAGE_LENGTH))
-            {
-                SendMessageStr(url.toString());
-                continue;
-            }
-
+        if (!file.exists() || !file.open(QIODevice::ReadOnly))
+        {
+            info.setFile(url.toLocalFile());
+            file.setFileName(info.absoluteFilePath());
             if (!file.exists() || !file.open(QIODevice::ReadOnly))
             {
-                info.setFile(url.toLocalFile());
-                file.setFileName(info.absoluteFilePath());
-                if (!file.exists() || !file.open(QIODevice::ReadOnly))
-                {
-                    QMessageBox::warning(this, tr("Unable to open"),
-                                         tr("qTox wasn't able to open %1")
-                                         .arg(info.fileName()));
-                    continue;
-                }
-            }
-
-            if (file.isSequential())
-            {
-                QMessageBox::critical(0, tr("Bad idea"),
-                                      tr("You're trying to send a sequential"
-                                         " file, which is not going to work!"));
-                file.close();
+                QMessageBox::warning(this, tr("Unable to open"),
+                                     tr("qTox wasn't able to open %1")
+                                     .arg(info.fileName()));
                 continue;
             }
+        }
 
+        if (file.isSequential())
+        {
+            QMessageBox::critical(0, tr("Bad idea"),
+                                  tr("You're trying to send a sequential"
+                                     " file, which is not going to work!"));
             file.close();
+            continue;
+        }
 
-            if (info.exists())
-                core->sendFile(f->getFriendID(), info.fileName(),
-                               info.absoluteFilePath(), info.size());
+        file.close();
+
+        if (info.exists())
+        {
+            core->sendFile(f->getFriendId(), info.fileName(),
+                           info.absoluteFilePath(), info.size());
         }
     }
 }
 
-void ChatForm::onAvatarRemoved(uint32_t FriendId)
+void ChatForm::onAvatarRemoved(uint32_t friendId)
 {
-    if (FriendId != f->getFriendID())
+    if (friendId != f->getFriendId())
+    {
         return;
+    }
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 }
@@ -778,9 +824,9 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
             {
                 int rec;
                 if (!isAction)
-                    rec = Core::getInstance()->sendMessage(f->getFriendID(), msg->toString());
+                    rec = Core::getInstance()->sendMessage(f->getFriendId(), msg->toString());
                 else
-                    rec = Core::getInstance()->sendAction(f->getFriendID(), msg->toString());
+                    rec = Core::getInstance()->sendAction(f->getFriendId(), msg->toString());
 
                 getOfflineMsgEngine()->registerReceipt(rec, it.id, msg);
             }
@@ -841,7 +887,7 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
         file.close();
         QFileInfo fi(file);
 
-        Core::getInstance()->sendFile(f->getFriendID(), fi.fileName(),
+        Core::getInstance()->sendFile(f->getFriendId(), fi.fileName(),
                                       fi.filePath(), filesize);
     }
     else
@@ -1048,9 +1094,9 @@ void ChatForm::SendMessageStr(QString msg)
 
         int rec;
         if (isAction)
-            rec = Core::getInstance()->sendAction(f->getFriendID(), qt_msg);
+            rec = Core::getInstance()->sendAction(f->getFriendId(), qt_msg);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
+            rec = Core::getInstance()->sendMessage(f->getFriendId(), qt_msg);
 
 
         Profile* profile = Nexus::getProfile();

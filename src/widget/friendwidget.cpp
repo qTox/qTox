@@ -291,21 +291,21 @@ void FriendWidget::updateStatusLight()
     Friend* f = FriendList::findFriend(friendId);
     Status status = f->getStatus();
 
-    if (status == Status::Online && f->getEventFlag() == 0)
+    if (status == Status::Online && !f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
-    else if (status == Status::Online && f->getEventFlag() == 1)
+    else if (status == Status::Online && f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
-    else if (status == Status::Away && f->getEventFlag() == 0)
+    else if (status == Status::Away && !f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_away.svg"));
-    else if (status == Status::Away && f->getEventFlag() == 1)
+    else if (status == Status::Away && f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.svg"));
-    else if (status == Status::Busy && f->getEventFlag() == 0)
+    else if (status == Status::Busy && !f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_busy.svg"));
-    else if (status == Status::Busy && f->getEventFlag() == 1)
+    else if (status == Status::Busy && f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.svg"));
-    else if (status == Status::Offline && f->getEventFlag() == 0)
+    else if (status == Status::Offline && !f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
-    else if (status == Status::Offline && f->getEventFlag() == 1)
+    else if (status == Status::Offline && f->getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
 
     if (f->getEventFlag())
@@ -328,16 +328,23 @@ QString FriendWidget::getStatusString() const
     Friend* f = FriendList::findFriend(friendId);
     Status status = f->getStatus();
 
-    if (f->getEventFlag() == 1)
+    if (f->getEventFlag())
+    {
         return tr("New message");
-    else if (status == Status::Online)
+    }
+
+    switch (status)
+    {
+    case Status::Online:
         return tr("Online");
-    else if (status == Status::Away)
+    case Status::Away:
         return tr("Away");
-    else if (status == Status::Busy)
+    case Status::Busy:
         return tr("Busy");
-    else if (status == Status::Offline)
+    case Status::Offline:
         return tr("Offline");
+    }
+
     return QString::null;
 }
 

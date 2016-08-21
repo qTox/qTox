@@ -180,7 +180,9 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     ContentDialog* lastDialog = getFriendDialog(friendId);
 
     if (lastDialog != nullptr)
+    {
         lastDialog->removeFriend(friendId);
+    }
 
     friendList.insert(friendId, std::make_tuple(this, friendWidget));
 
@@ -202,7 +204,9 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     ContentDialog* lastDialog = getGroupDialog(groupId);
 
     if (lastDialog != nullptr)
+    {
         lastDialog->removeGroup(groupId);
+    }
 
     groupList.insert(groupId, std::make_tuple(this, groupWidget));
 
@@ -547,7 +551,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendID();
+        int friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
@@ -582,7 +586,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendID();
+        int friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeFriend(friendId);
@@ -646,7 +650,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 
         if (widget->getFriend() != nullptr)
         {
-            removeFriend(widget->getFriend()->getFriendID());
+            removeFriend(widget->getFriend()->getFriendId());
             Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
         }
         else

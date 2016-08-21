@@ -106,10 +106,16 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         }
         QString messageText = val.msg->toString();
         int rec;
+        uint32_t friendId = f->getFriendId();
+        Core *core = Core::getInstance();
         if (val.msg->isAction())
-            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
+        {
+            rec = core->sendAction(friendId, messageText);
+        }
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+        {
+            rec = core->sendMessage(friendId, messageText);
+        }
 
         registerReceipt(rec, key, val.msg);
     }

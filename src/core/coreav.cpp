@@ -175,8 +175,8 @@ bool CoreAV::anyActiveCalls() const
  */
 bool CoreAV::isCallActive(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? !(calls[f->getFriendID()].inactive)
+    return f && calls.contains(f->getFriendId())
+            ? !(calls[f->getFriendId()].inactive)
             : false;
 }
 
@@ -194,8 +194,8 @@ bool CoreAV::isCallActive(const Group* g) const
 
 bool CoreAV::isCallVideoEnabled(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].videoEnabled
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].videoEnabled
             : false;
 }
 
@@ -422,9 +422,9 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
  */
 void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    if (f && calls.contains(f->getFriendID()))
+    if (f && calls.contains(f->getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendID()];
+        ToxCall& call = calls[f->getFriendId()];
         call.muteMic = !call.muteMic;
     }
 }
@@ -435,9 +435,9 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
  */
 void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    if (f && calls.contains(f->getFriendID()))
+    if (f && calls.contains(f->getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendID()];
+        ToxCall& call = calls[f->getFriendId()];
         call.muteVol = !call.muteVol;
     }
 }
@@ -604,8 +604,8 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
  */
 bool CoreAV::isCallInputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].muteMic
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].muteMic
             : false;
 }
 
@@ -616,8 +616,8 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
  */
 bool CoreAV::isCallOutputMuted(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].muteVol
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].muteVol
             : false;
 }
 
