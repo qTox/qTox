@@ -19,9 +19,8 @@
 
 
 #include "friend.h"
-#include "friendlist.h"
-#include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
+#include "widget/friendwidget.h"
 #include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
@@ -30,16 +29,20 @@
 #include "src/grouplist.h"
 #include "src/group.h"
 
-Friend::Friend(uint32_t FriendId, const ToxPk& FriendPk)
-    : userName{Core::getInstance()->getPeerName(FriendPk)}
-    , friendPk(FriendPk), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
-
+Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
+    : userName{Core::getInstance()->getPeerName(friendPk)}
+    , userAlias(Settings::getInstance().getFriendAlias(friendPk))
+    , friendPk(friendPk)
+    , friendId(friendId)
+    , hasNewEvents(false)
+    , friendStatus(Status::Offline)
 {
-    if (userName.size() == 0)
-        userName = FriendPk.toString();
+    if (userName.isEmpty())
+    {
+        userName = friendPk.toString();
+    }
 
-    userAlias = Settings::getInstance().getFriendAlias(FriendPk);
+    userAlias = Settings::getInstance().getFriendAlias(friendPk);
 
     chatForm = new ChatForm(this);
 }
@@ -129,17 +132,17 @@ const ToxPk& Friend::getPublicKey() const
     return friendPk;
 }
 
-uint32_t Friend::getFriendID() const
+uint32_t Friend::getFriendId() const
 {
     return friendId;
 }
 
-void Friend::setEventFlag(int f)
+void Friend::setEventFlag(bool flag)
 {
-    hasNewEvents = f;
+    hasNewEvents = flag;
 }
 
-int Friend::getEventFlag() const
+bool Friend::getEventFlag() const
 {
     return hasNewEvents;
 }
