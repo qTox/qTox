@@ -530,7 +530,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendID();
+        int friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
@@ -565,7 +565,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendID();
+        int friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeFriend(friendId);
@@ -623,7 +623,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 
         if (widget->getFriend())
         {
-            removeFriend(widget->getFriend()->getFriendID());
+            removeFriend(widget->getFriend()->getFriendId());
             Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
         }
         else
