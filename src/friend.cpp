@@ -129,7 +129,7 @@ const ToxId &Friend::getToxId() const
     return userID;
 }
 
-uint32_t Friend::getFriendID() const
+uint32_t Friend::getFriendId() const
 {
     return friendId;
 }
