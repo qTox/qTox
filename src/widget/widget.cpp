@@ -1176,16 +1176,16 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
-    ContentDialog *contentDialog = ContentDialog::getFriendDialog(frnd->getFriendID());
+    ContentDialog *contentDialog = ContentDialog::getFriendDialog(frnd->getFriendId());
     bool isSeparate = Settings::getInstance().getSeparateWindow();
-    FriendWidget* widget = friendWidgets[frnd->getFriendID()];
+    FriendWidget* widget = friendWidgets[frnd->getFriendId()];
     bool isCurrent = activeChatroomWidget == widget;
     if (!contentDialog && !isSeparate && isCurrent)
     {
         onAddClicked();
     }
 
-    FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendID(), frnd->getDisplayedName());
+    FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendId(), frnd->getDisplayedName());
 
     friendWidget->setStatusMsg(widget->getStatusMsg());
 
@@ -1203,7 +1203,7 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
     QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getToxId().toString());
     if (!avatar.isNull())
-        friendWidget->onAvatarChange(frnd->getFriendID(), avatar);
+        friendWidget->onAvatarChange(frnd->getFriendId(), avatar);
 }
 
 void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
@@ -1400,7 +1400,7 @@ void Widget::updateFriendActivity(Friend *frnd)
         // Update old activity before after new one. Store old date first.
         QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getToxId());
         Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
-        contactListWidget->moveWidget(friendWidgets[frnd->getFriendID()], frnd->getStatus());
+        contactListWidget->moveWidget(friendWidgets[frnd->getFriendId()], frnd->getStatus());
         contactListWidget->updateActivityDate(oldDate);
     }
 }
@@ -1423,7 +1423,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         }
     }
 
-    FriendWidget *widget = friendWidgets[f->getFriendID()];
+    FriendWidget *widget = friendWidgets[f->getFriendId()];
     widget->setAsInactiveChatroom();
     if (widget == activeChatroomWidget)
     {
@@ -1433,13 +1433,13 @@ void Widget::removeFriend(Friend* f, bool fake)
 
     contactListWidget->removeFriendWidget(widget);
 
-    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendID());
+    ContentDialog* lastDialog = ContentDialog::getFriendDialog(f->getFriendId());
 
     if (lastDialog != nullptr)
-        lastDialog->removeFriend(f->getFriendID());
+        lastDialog->removeFriend(f->getFriendId());
 
-    FriendList::removeFriend(f->getFriendID(), fake);
-    Nexus::getCore()->removeFriend(f->getFriendID(), fake);
+    FriendList::removeFriend(f->getFriendId(), fake);
+    Nexus::getCore()->removeFriend(f->getFriendId(), fake);
 
     delete f;
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
@@ -1477,7 +1477,7 @@ void Widget::onDialogShown(GenericChatroomWidget* widget)
 
 void Widget::onFriendDialogShown(Friend* f)
 {
-    int friendId = f->getFriendID();
+    int friendId = f->getFriendId();
     onDialogShown(friendWidgets[friendId]);
 }
 
@@ -1575,7 +1575,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     if (f != nullptr)
     {
         QClipboard *clipboard = QApplication::clipboard();
-        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
+        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendId()), QClipboard::Clipboard);
     }
 }
 
@@ -2063,7 +2063,7 @@ void Widget::reloadTheme()
 
     for (Friend* f : FriendList::getAllFriends())
     {
-        int friendId = f->getFriendID();
+        int friendId = f->getFriendId();
         friendWidgets[friendId]->reloadTheme();
     }
 
