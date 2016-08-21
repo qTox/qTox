@@ -47,11 +47,11 @@ public:
     void setStatusMessage(QString message);
     QString getStatusMessage();
 
-    void setEventFlag(int f);
-    int getEventFlag() const;
+    void setEventFlag(bool f);
+    bool getEventFlag() const;
 
     const ToxId &getToxId() const;
-    uint32_t getFriendID() const;
+    uint32_t getFriendId() const;
 
     void setStatus(Status s);
     Status getStatus() const;
@@ -66,10 +66,12 @@ signals:
     void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
 
 private:
-    QString userAlias, userName, statusMessage;
+    QString userName;
+    QString userAlias;
+    QString statusMessage;
     ToxId userID;
     uint32_t friendId;
-    int hasNewEvents;
+    bool hasNewEvents;
     Status friendStatus;
 
     FriendWidget* widget;
