@@ -270,7 +270,7 @@ private:
     QPointer<QWidget> contentWidget;
     QPointer<AddFriendForm> addFriendForm;
     QPointer<GroupInviteForm> groupInviteForm;
-    QPointer<ProfileForm> profileForm;
+    QPointer<ContentWidget> profileForm;
     QPointer<SettingsWidget> settingsWidget;
     QPointer<FilesForm> filesForm;
     QPointer<GenericChatForm> activeChat;
