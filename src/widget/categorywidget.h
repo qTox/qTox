@@ -46,7 +46,10 @@ public:
     bool hasChatrooms() const;
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-    void search(const QString &searchString, bool updateAll = false, bool hideOnline = false, bool hideOffline = false);
+    void search(const QString &searchString, bool updateAll = false,
+                bool hideOnline = false, bool hideOffline = false);
+
+    void moveFriendWidgets(FriendListWidget* friendList);
 
 public slots:
     void onCompactChanged(bool compact);
@@ -59,7 +62,6 @@ protected:
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
-    void moveFriendWidgets(FriendListWidget* friendList);
     void emitChatroomWidget(QLayout *layout, int index);
 
 private:
