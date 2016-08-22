@@ -78,6 +78,7 @@ private slots:
 private:
     CircleWidget* createCircleWidget(int id = -1);
     QLayout* nextLayout(QLayout* layout, bool forward) const;
+    void moveFriends(QLayout *layout);
 
     Mode mode;
     bool groupsOnTop;

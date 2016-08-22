@@ -46,9 +46,11 @@ public:
     bool hasChatrooms() const;
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-    void search(const QString &searchString, bool updateAll = false, bool hideOnline = false, bool hideOffline = false);
+    void search(const QString &searchString, bool updateAll = false,
+                bool hideOnline = false, bool hideOffline = false);
 
     void initLayout();
+    void moveFriendWidgets(FriendListWidget* friendList);
 
 protected:
     virtual void leaveEvent(QEvent* event) final override;
@@ -58,7 +60,6 @@ protected:
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
-    void moveFriendWidgets(FriendListWidget* friendList);
     void emitChatroomWidget(QLayout *layout, int index);
 
 private:
