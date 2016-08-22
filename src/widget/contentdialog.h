@@ -75,6 +75,7 @@ public:
 #ifdef Q_OS_MAC
 signals:
     void activated();
+    void windowStateChanged(Qt::WindowStates state);
 #endif
 
 public slots:
