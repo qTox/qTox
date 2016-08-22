@@ -13,55 +13,55 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>مٌعطل</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>قم بتشغيل أي ملف صوتي أثناء تغيير الصوت الخارج.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>إستخدم شريط التمرير لضبط الكسب الخاص بجهاز الإدخال من %1dB إلى %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>أختر المنطقة</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>الشاشة 1%</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">إعدادات الصوت</translation>
+        <translation>إعدادات الصوت</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">كسب</translation>
+        <translation>الكسب</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">جهاز مكبر الصوت</translation>
+        <translation>جهاز مكبر الصوت</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">استخدام شريط التمرير لضبط مستوى الصوت من السماعة.</translation>
+        <translation>استخدام شريط التمرير لضبط مستوى الصوت الخاص بالسماعة.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">جهاز التسجيل</translation>
+        <translation>جهاز التسجيل</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">الصوت</translation>
+        <translation>الصوت</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">اعدادات الفيديو</translation>
+        <translation>اعدادات الفيديو</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">جهاز الفيديو</translation>
+        <translation>جهاز الفيديو</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,15 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">ضع الدقة المناسبة للكاميرا.</translation>
+        <translation>ضع الدقة المناسبة للكاميرا.
+أعلى القيم هي أفضل جودة قد يحصل عليها أصدقائك.
+ملاحظة على الرقم من الحصول على أفضل جودة هناك إحتياج لإنترنت أفضل.
+في بعض الأحيان الإتصال قد لا يكون جيداً بما يكفي للتعامل مع أعلى جودة للفيديو,
+مما قد يؤدي إلى مشاكل في مكالمات الفيديو.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">الدقة</translation>
+        <translation>الدقة</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">إعادة الكشف عن الأجهزة</translation>
+        <translation>إعادة فحص الأجهزة</translation>
     </message>
 </context>
 <context>
@@ -111,6 +115,18 @@ which may lead to problems with video calls.</source>
         <source>report it</source>
         <translation>الإبلاغ عنه</translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -141,10 +157,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Authors</source>
         <translation>المؤلفون</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;المؤلف الأصلي: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;رؤية القائمة الكاملة &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;المساهمين&lt;/span&gt;&lt;/a&gt; في جيتهوب Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -231,11 +243,6 @@ which may lead to problems with video calls.</source>
         <translation>لا تستطيع اضافة نفسك كصديق!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>هذا المعرف غير مستخدم</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>المعرف (ID)</translation>
@@ -268,12 +275,6 @@ which may lead to problems with video calls.</source>
         <translation>%1 هنا! هل تود التحدث؟</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation>كيوتوكس (qTox) يحتاج إلى استخدام نظام أسماء النطاقات (DNS) للتوكس، ولكن لا يمكن القيام بذلك من خلال وكيل (البروكسي).
-هل تود تجاهل الوكيل (البروكسي) والاتصال بالإنترنت مباشرة؟</translation>
-    </message>
-    <message>
         <source>Add a friend</source>
         <translation>إضافة صديق</translation>
     </message>
@@ -289,12 +290,59 @@ which may lead to problems with video calls.</source>
         <source>Reject</source>
         <translation>رفض</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">هذا المعرف غير مستخدم</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>خصائص</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">نعم</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">لا</translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">المكالمة نشطة</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">لا تستطيع قطع الاتصال اثناء المكالمة!</translation>
     </message>
 </context>
 <context>
@@ -309,12 +357,62 @@ which may lead to problems with video calls.</source>
         <translation>اجعل توكس متنقل</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ملاحظة مهمة&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;اذا كنت&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt; فعلا &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; لا تعرف ماذا تفعل&lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt; لا  &lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; تغير شيئ هنا. التغيرات التي تحدث هنا قد تؤدي الى مشاكل في البرنامج وفقد الملفات , مثل السجل&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>إعادة الاعدادات الافتراضية</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">إعدادات الإتصال</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">تفعيل IPv6 (موصى به )</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">تعطيلها بهذا يسمح، على سبيل المثال، استخدام التوكس خلال التور &quot;Tox&quot;. فإنه يضيف تحميله إلى الشبكة توكس&quot;Tox&quot; ولكن، حتى يتم إلغائة إلا عند الضرورة.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">تفعيل UDP (موصى ب ه)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">نوع الوكيل(بروكسي):</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">العنوان:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">المنفذ:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">لا شيئ</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">إعادة الإتصال</translation>
     </message>
 </context>
 <context>
@@ -794,23 +892,9 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>GeneralForm</name>
     <message>
-        <source>None</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>اختيار مسار الحفظ التلقائي</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>المكالمة نشطة</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>لا تستطيع قطع الاتصال اثناء المكالمة!</translation>
     </message>
     <message>
         <source>General</source>
@@ -915,215 +999,24 @@ instead of closing itself.</source>
         <translation>قبول تلقائي للملفات</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>المحادثة</translation>
-    </message>
-    <message>
         <source>On new message:</source>
         <translation>عند وصول رسالة:</translation>
-    </message>
-    <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>تشغيل الصوت عند التوصل برسالة جديدة.</translation>
     </message>
     <message>
         <source>Play sound</source>
         <translation>تشغيل صوت</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>فتح نافذة qTox عند التوصل برسالة جديدة .</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>افتح النافذة</translation>
-    </message>
-    <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>التركيز على نافذة qTox عند التوصل برسالة.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>التركيز على النافذة</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>إظهار تغيرات حالات جهات الإتصال</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>الاشعار عن الرسائل الجديدة في المجموعات.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>اشعارات المجموعات</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>إذا فعلتها, المجموعات ستصبح فوق قائمة الأصدقاء, خلاف ذلك, ستكون المجموعات تحت الأصدقاء المتصلين.</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>ضع المجموعات اعلى من قائمه الاصدقاء</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>الرسائل التي ترسلها الى الاصدقاء غير متصلين سترسل عند دخولهم.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
         <translation>ارسال رساله الى صديق غير متصل</translation>
     </message>
     <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>سيتم عرض جهات الاتصال بوضع مضغوط.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>اظهار القائمه بالوضع المضغوط</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>خاصيه النوافذ المتعدد</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>افتح كل محادثه في نافذه مستقله</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>المظهر</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>إستخدام الإبتسامات</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>حزمة الإبتسامات:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>حجم الإبتسامات:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> بكسل</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>السِمة:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>لون السِمة:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>صيغة الوقت:</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>صيغة التاريخ:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>إعدادات الإتصال</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>تفعيل IPv6 (موصى به )</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>تعطيلها بهذا يسمح، على سبيل المثال، استخدام التوكس خلال التور &quot;Tox&quot;. فإنه يضيف تحميله إلى الشبكة توكس&quot;Tox&quot; ولكن، حتى يتم إلغائة إلا عند الضرورة.</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>تفعيل UDP (موصى ب ه)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>نوع الوكيل(بروكسي):</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>العنوان:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>المنفذ:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>لا شيئ</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>إعادة الإتصال</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation>نص عادي</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation>إظهار أحرف التنسيق</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation>عدم إظهار أحرف التنسيق</translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation>تشغيل الصوت في حين الحالة مشغول</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1186,7 +1079,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>إقتباس الخط المحدد</translation>
     </message>
 </context>
 <context>
@@ -1273,7 +1166,7 @@ will be sent to them when they appear online to you.</source>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>تم دعوته بواسطة %1 على %2 في %3.</translation>
     </message>
 </context>
 <context>
@@ -1640,7 +1533,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>CAPS-LOCK مُفعل</translation>
     </message>
 </context>
 <context>
@@ -1702,6 +1595,10 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     <message>
         <source>Generate random NoSpam</source>
         <translation>إنشاء منع الرسائل المزعجة &quot;NoSpam&quot; بشكل عشوائي</translation>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">خصوصية</translation>
     </message>
 </context>
 <context>
@@ -1932,19 +1829,19 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>الملف غير موجود</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>الملف الشخصي غير موجود</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">ملف شخصي مستورد</translation>
+        <translation>تم إستيراد الملف الشخصي</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.نجحت اضافته</translation>
+        <translation>%1.tox تمت إضافته</translation>
     </message>
 </context>
 <context>
@@ -1956,19 +1853,19 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>موافق</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>لا</translation>
     </message>
 </context>
 <context>
@@ -2167,34 +2064,6 @@ It will be installed when qTox restarts.</source>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>انتهى توقيت عملية الاتصال</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>هذا العنوان غير موجود</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>خطأ اثناء البحث عن DNS</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>لم يتم العثور على السجل النصي</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>عدد غير متوقع من المهام الموجودة في السجل النصي</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2222,6 +2091,166 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">لا شيئ</translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">المحادثة</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">الخط المستخدم:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished">بكسل</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">الحجم: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished">قد لا يتم إستعمال تصميم النص الجديد حتى يتم إعادة تشغيل qTox.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">نمط تنسيق الخط:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished">قم بتحديد نمط الخط الذي تفضله.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">نص عادي</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished">إظهار أحرف التنسيق</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished">عدم إظهار أحرف التنسيق</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">رسالة جديدة</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">فتح نافذة qTox عند التوصل برسالة جديدة .</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">افتح النافذة</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">التركيز على نافذة qTox عند التوصل برسالة.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">التركيز على النافذة</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">الاشعار عن الرسائل الجديدة في المجموعات.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">اشعارات المجموعات</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">إذا فعلتها, المجموعات ستصبح فوق قائمة الأصدقاء, خلاف ذلك, ستكون المجموعات تحت الأصدقاء المتصلين.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">ضع المجموعات اعلى من قائمه الاصدقاء</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">سيتم عرض جهات الاتصال بوضع مضغوط.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">اظهار القائمه بالوضع المضغوط</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">خاصيه النوافذ المتعدد</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">افتح كل محادثه في نافذه مستقله</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">إستخدام الإبتسامات</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">حزمة الإبتسامات:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">حجم الإبتسامات:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> بكسل</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">المظهر</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">السِمة:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">لون السِمة:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">صيغة الوقت:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">صيغة التاريخ:</translation>
     </message>
 </context>
 <context>
@@ -2453,7 +2482,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>عرض</translation>
     </message>
 </context>
 </TS>
