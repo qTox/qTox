@@ -280,8 +280,13 @@ bool CameraSource::openDevice()
 
     if (!device)
     {
-        qWarning() << "Failed to open device!";
-        return false;
+        // fallback if opening with mode settings fails
+        device = CameraDevice::open(deviceName);
+        if (!device)
+        {
+            qWarning() << "Failed to open device!";
+            return false;
+        }
     }
 
     // We need to open the device as many time as we already have subscribers,
