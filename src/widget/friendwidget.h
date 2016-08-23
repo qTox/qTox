@@ -44,11 +44,13 @@ signals:
     void friendWidgetClicked(FriendWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
+    void contextMenuCalled(QContextMenuEvent * event);
 
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
     void setAlias(const QString& alias);
+    void onContextMenuCalled(QContextMenuEvent * event);
 
 protected:
     virtual void mousePressEvent(QMouseEvent* ev) override;
