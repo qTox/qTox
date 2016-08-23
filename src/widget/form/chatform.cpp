@@ -40,32 +40,33 @@
 #include <cassert>
 
 #include "src/audio/audio.h"
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/friend.h"
-#include "src/widget/style.h"
-#include "src/persistence/settings.h"
-#include "src/core/cstring.h"
-#include "src/widget/tool/callconfirmwidget.h"
-#include "src/widget/friendwidget.h"
-#include "src/widget/form/loadhistorydialog.h"
-#include "src/widget/tool/chattextedit.h"
-#include "src/widget/widget.h"
-#include "src/widget/maskablepixmapwidget.h"
-#include "src/widget/tool/croppinglabel.h"
+#include "src/chatlog/chatlinecontentproxy.h"
+#include "src/chatlog/chatlog.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/chatlog/content/filetransferwidget.h"
-#include "src/chatlog/chatlinecontentproxy.h"
 #include "src/chatlog/content/text.h"
-#include "src/chatlog/chatlog.h"
-#include "src/video/netcamview.h"
-#include "src/widget/tool/screenshotgrabber.h"
-#include "src/widget/tool/flyoutoverlaywidget.h"
-#include "src/widget/translator.h"
-#include "src/video/videosource.h"
-#include "src/video/camerasource.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/core/cstring.h"
+#include "src/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/video/camerasource.h"
+#include "src/video/netcamview.h"
+#include "src/video/videosource.h"
+#include "src/widget/contentdialog.h"
+#include "src/widget/form/loadhistorydialog.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/callconfirmwidget.h"
+#include "src/widget/tool/chattextedit.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/tool/flyoutoverlaywidget.h"
+#include "src/widget/tool/screenshotgrabber.h"
+#include "src/widget/translator.h"
+#include "src/widget/widget.h"
 
 const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
 
@@ -285,9 +286,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     Widget::getInstance()->updateFriendActivity(f);
 }
 
-void ChatForm::onAvInvite(uint32_t FriendId, bool video)
+void ChatForm::onAvInvite(uint32_t friendId, bool video)
 {
-    if (FriendId != f->getFriendId())
+    if (friendId != f->getFriendId())
         return;
 
     qDebug() << "onAvInvite";
@@ -323,13 +324,18 @@ void ChatForm::onAvInvite(uint32_t FriendId, bool video)
             connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
         }
 
-        if (f->getFriendWidget()->chatFormIsSet(false))
+        if (ContentDialog::existsFriendWidget(friendId, false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
-        Widget::getInstance()->newFriendMessageAlert(FriendId, false);
+       insertChatMessage(ChatMessage::createChatInfoMessage(
+                              tr("%1 calling").arg(f->getDisplayedName()),
+                              ChatMessage::INFO,
+                              QDateTime::currentDateTime()));
+
+        Widget::getInstance()->newFriendMessageAlert(friendId, false);
         Audio& audio = Audio::getInstance();
         audio.startLoop();
         audio.playMono16Sound(QStringLiteral(":/audio/ToxicIncomingCall.pcm"));
