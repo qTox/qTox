@@ -912,6 +912,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
+    connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(friendForm, &GenericChatForm::sendMessage, core, &Core::sendMessage);
     connect(friendForm, &GenericChatForm::sendAction, core, &Core::sendAction);
@@ -1080,6 +1081,10 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 
     connect(friendWidget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
     connect(friendWidget, SIGNAL(copyFriendIdToClipboard(int)), this, SLOT(copyFriendIdToClipboard(int)));
+    connect(friendWidget, &FriendWidget::contextMenuCalled, widget, [=](QContextMenuEvent * event)
+    {
+        emit widget->contextMenuCalled(event);
+    });
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, [=](GenericChatroomWidget *w, bool group)
     {
         Q_UNUSED(w);
