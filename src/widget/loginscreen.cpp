@@ -191,16 +191,15 @@ void LoginScreen::onLoginUsernameSelected(const QString &name)
         ui->loginPassword->show();
         // there is no way to do autologin if profile is encrypted, and
         // visible option confuses users into thinking that it is possible,
-        // thus disable it (and hope that users won't think that it's a bug)
-        ui->autoLoginCB->setEnabled(false);
-        ui->autoLoginCB->setToolTip(tr("Password protected profiles can't be automatically loaded."));
+        // thus hide it
+        ui->autoLoginCB->hide();
     }
     else
     {
         ui->loginPasswordLabel->hide();
         ui->loginPassword->hide();
-        ui->autoLoginCB->setEnabled(true);
-        ui->autoLoginCB->setToolTip("");
+        ui->autoLoginCB->show();
+        ui->autoLoginCB->setToolTip(tr("Password protected profiles can't be automatically loaded."));
     }
 }
 
