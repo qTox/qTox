@@ -1021,6 +1021,7 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
+    connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
 
     // Try to get the avatar from the cache
@@ -1274,6 +1275,12 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     // Signal transmission from the created `friendWidget` (which shown in
     // ContentDialog) to the `widget` (which shown in main widget)
     // FIXME: emit should be removed
+    connect(friendWidget, &FriendWidget::contextMenuCalled,
+            widget, [=](QContextMenuEvent * event)
+    {
+        emit widget->contextMenuCalled(event);
+    });
+
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked,
             this, [=](GenericChatroomWidget *w, bool group)
     {
