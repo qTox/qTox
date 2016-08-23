@@ -44,6 +44,14 @@
 #include <QCollator>
 #include <cassert>
 
+/**
+ * @class FriendWidget
+ *
+ * Widget, which displays brief information about friend.
+ * For example, used on friend list.
+ * When you click should open the chat with friend. Widget has a context menu.
+ */
+
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)
     , isDefaultAvatar{true}
@@ -62,7 +70,25 @@ FriendWidget::FriendWidget(int FriendId, QString id)
             this, &FriendWidget::onCompactLayoutChanged);
 }
 
+/**
+ * @brief FriendWidget::contextMenuEvent
+ * @param event Describe a context menu event
+ *
+ * Default context menu event handler.
+ * Redirect all event information to the signal.
+ */
 void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
+{
+    emit contextMenuCalled(event);
+}
+
+/**
+ * @brief FriendWidget::onContextMenuCalled
+ * @param event Redirected from native contextMenuEvent
+ *
+ * Context menu handler. Always should be called to FriendWidget from FriendList
+ */
+void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
 {
     if (!active)
         setBackgroundRole(QPalette::Highlight);
@@ -114,7 +140,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     FriendListWidget *friendList;
 
     if (circleWidget == nullptr)
-        friendList = qobject_cast<FriendListWidget*>(FriendList::findFriend(friendId)->getFriendWidget()->parentWidget());
+        friendList = qobject_cast<FriendListWidget*>(this->parentWidget());
     else
         friendList = qobject_cast<FriendListWidget*>(circleWidget->parentWidget());
 
@@ -170,106 +196,105 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     if (!active)
         setBackgroundRole(QPalette::Window);
 
-    if (selectedItem)
+    if (!selectedItem)
+        return;
+
+    if (selectedItem == setAlias)
     {
-        if (selectedItem == setAlias)
+        nameLabel->editBegin();
+    }
+    else if (selectedItem == removeFriendAction)
+    {
+        emit removeFriend(friendId);
+    }
+    else if (selectedItem == openChatWindow)
+    {
+        emit chatroomWidgetClicked(this, true);
+    }
+    else if (selectedItem == removeChatWindow)
+    {
+        ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
+        contentDialog->removeFriend(friendId);
+    }
+    else if (selectedItem == autoAccept)
+    {
+        if (!autoAccept->isChecked())
         {
-            nameLabel->editBegin();
+            qDebug() << "not checked";
+            dir = QDir::homePath();
+            autoAccept->setChecked(false);
+            Settings::getInstance().setAutoAcceptDir(id, "");
         }
-        else if (selectedItem == removeFriendAction)
+        else if (autoAccept->isChecked())
         {
-            emit removeFriend(friendId);
-            return;
-        }
-        else if (selectedItem == openChatWindow)
-        {
-            emit chatroomWidgetClicked(this, true);
-            return;
-        }
-        else if (selectedItem == removeChatWindow)
-        {
-            ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
-            contentDialog->removeFriend(friendId);
-            return;
-        }
-        else if (selectedItem == autoAccept)
-        {
-            if (!autoAccept->isChecked())
-            {
-                qDebug() << "not checked";
-                dir = QDir::homePath();
-                autoAccept->setChecked(false);
-                Settings::getInstance().setAutoAcceptDir(id, "");
-            }
-            else if (autoAccept->isChecked())
-            {
-                dir = QFileDialog::getExistingDirectory(0,
-                                                        tr("Choose an auto accept directory","popup title"),
-                                                        dir,
-                                                        QFileDialog::DontUseNativeDialog);
-                autoAccept->setChecked(true);
-                qDebug() << "setting auto accept dir for" << friendId << "to" << dir;
-                Settings::getInstance().setAutoAcceptDir(id, dir);
-            }
-        }
-        else if (selectedItem == aboutWindow)
-        {
-            AboutUser *aboutUser = new AboutUser(id, Widget::getInstance());
-            aboutUser->setFriend(FriendList::findFriend(friendId));
-            aboutUser->show();
-        }
-        else if (selectedItem == newGroupAction)
-        {
-            int groupId = Core::getInstance()->createGroup();
-            Core::getInstance()->groupInviteFriend(friendId, groupId);
-        }
-        else if (selectedItem == newCircleAction)
-        {
-            if (circleWidget != nullptr)
-                circleWidget->updateStatus();
+            dir = QFileDialog::getExistingDirectory(
+                        0, tr("Choose an auto accept directory", "popup title"),
+                        dir, QFileDialog::DontUseNativeDialog);
 
-            if (friendList != nullptr)
-                friendList->addCircleWidget(FriendList::findFriend(friendId)->getFriendWidget());
-            else
-                Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+            autoAccept->setChecked(true);
+            qDebug() << "Setting auto accept dir for" << friendId << "to" << dir;
+            Settings::getInstance().setAutoAcceptDir(id, dir);
         }
-        else if (groupActions.contains(selectedItem))
+    }
+    else if (selectedItem == aboutWindow)
+    {
+        AboutUser *aboutUser = new AboutUser(id, Widget::getInstance());
+        aboutUser->setFriend(FriendList::findFriend(friendId));
+        aboutUser->show();
+    }
+    else if (selectedItem == newGroupAction)
+    {
+        int groupId = Core::getInstance()->createGroup();
+        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    }
+    else if (selectedItem == newCircleAction)
+    {
+        if (circleWidget != nullptr)
+            circleWidget->updateStatus();
+
+        if (friendList != nullptr)
+            friendList->addCircleWidget(this);
+        else
+            Settings::getInstance().setFriendCircleID(id, Settings::getInstance().addCircle());
+    }
+    else if (groupActions.contains(selectedItem))
+    {
+        Group* group = groupActions[selectedItem];
+        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
+    }
+    else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
+    {
+        if (friendList)
+            friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+        else
+            Settings::getInstance().setFriendCircleID(id, -1);
+
+        if (circleWidget)
         {
-            Group* group = groupActions[selectedItem];
-            Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
+            circleWidget->updateStatus();
+            Widget::getInstance()->searchCircle(circleWidget);
         }
-        else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
-        {
-            if (friendList != nullptr)
-                friendList->moveWidget(FriendList::findFriend(friendId)->getFriendWidget(), FriendList::findFriend(friendId)->getStatus(), true);
-            else
-                Settings::getInstance().setFriendCircleID(id, -1);
+    }
+    else if (circleActions.contains(selectedItem))
+    {
+        CircleWidget* circle = CircleWidget::getFromID(circleActions[selectedItem]);
 
-            if (circleWidget)
-            {
-                circleWidget->updateStatus();
-                Widget::getInstance()->searchCircle(circleWidget);
-            }
+        if (circle)
+        {
+            circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
+            circle->setExpanded(true);
+            Widget::getInstance()->searchCircle(circle);
+            Settings::getInstance().savePersonal();
         }
-        else if (circleActions.contains(selectedItem))
+        else
         {
-            CircleWidget* circle = CircleWidget::getFromID(circleActions[selectedItem]);
+            Settings::getInstance().setFriendCircleID(id, circleActions[selectedItem]);
+        }
 
-            if (circle != nullptr)
-            {
-                circle->addFriendWidget(FriendList::findFriend(friendId)->getFriendWidget(), FriendList::findFriend(friendId)->getStatus());
-                circle->setExpanded(true);
-                Widget::getInstance()->searchCircle(circle);
-                Settings::getInstance().savePersonal();
-            }
-            else
-                Settings::getInstance().setFriendCircleID(id, circleActions[selectedItem]);
-
-            if (circleWidget != nullptr)
-            {
-                circleWidget->updateStatus();
-                Widget::getInstance()->searchCircle(circleWidget);
-            }
+        if (circleWidget)
+        {
+            circleWidget->updateStatus();
+            Widget::getInstance()->searchCircle(circleWidget);
         }
     }
 }
