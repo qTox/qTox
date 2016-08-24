@@ -20,8 +20,6 @@
 
 #include "friend.h"
 #include "friendlist.h"
-#include "widget/friendwidget.h"
-#include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
@@ -36,16 +34,10 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     , friendId(FriendId)
     , hasNewEvents(0)
     , friendStatus(Status::Offline)
-    , widget(new FriendWidget(friendId, getDisplayedName()))
     , offlineEngine(this)
 {
     if (userName.isEmpty())
         userName = UserId.publicKey;
-}
-
-Friend::~Friend()
-{
-    delete widget;
 }
 
 /**
@@ -69,42 +61,18 @@ void Friend::setName(QString name)
         userName = name;
         emit nameChanged(userName);
     }
-
-    // TODO: the following is old code -> refactor/remove
-    if (userAlias.isEmpty())
-    {
-        widget->setName(name);
-
-        if (widget->isActive())
-            GUI::setWindowTitle(name);
-
-        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
-    }
 }
 
 void Friend::setAlias(QString name)
 {
     userAlias = name;
-    QString dispName = userAlias.isEmpty() ? userName : userAlias;
 
-    widget->setName(dispName);
-
-    if (widget->isActive())
-            GUI::setWindowTitle(dispName);
-
-    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
-
-    for (Group *g : GroupList::getAllGroups())
-    {
-        g->regeneratePeerList();
-    }
+    emit displayedNameChanged(friendId);
 }
 
 void Friend::setStatusMessage(QString message)
 {
     statusMessage = message;
-    // TODO: connect FriendWidget to signal
-    widget->setStatusMsg(message);
     emit newStatusMessage(message);
 }
 
@@ -155,21 +123,6 @@ void Friend::setStatus(Status s)
 Status Friend::getStatus() const
 {
     return friendStatus;
-}
-
-void Friend::setFriendWidget(FriendWidget *widget)
-{
-    this->widget = widget;
-}
-
-FriendWidget *Friend::getFriendWidget()
-{
-    return widget;
-}
-
-const FriendWidget *Friend::getFriendWidget() const
-{
-    return widget;
 }
 
 /**

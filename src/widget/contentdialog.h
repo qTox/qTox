@@ -97,7 +97,7 @@ protected:
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
-    void updateFriendWidget(FriendWidget* w, Status s);
+    void updateFriendWidget(uint32_t friendId);
     void updateGroupWidget(GroupWidget* w);
     void onGroupchatPositionChanged(bool top);
 

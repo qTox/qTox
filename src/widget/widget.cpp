@@ -909,7 +909,6 @@ void Widget::addFriend(int friendId, const QString &userId)
     
     friendWidgets[newfriend] = widget;
 
-    newfriend->setFriendWidget(widget);
     newfriend->loadHistory();
 
     QDate activityDate = s.getFriendActivity(newfriend->getToxId());
@@ -923,6 +922,13 @@ void Widget::addFriend(int friendId, const QString &userId)
     Core* core = Nexus::getCore();
     CoreAV* coreav = core->getAv();
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
+    connect(newfriend, &Friend::displayedNameChanged, this, []()
+    {
+        for (Group *g : GroupList::getAllGroups())
+        {
+            g->regeneratePeerList();
+        }
+    });
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
@@ -1005,6 +1011,8 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     str.remove(QChar()); // null terminator...
     f->setStatusMessage(str);
 
+    friendWidgets[f]->setStatusMsg(message);
+
     ContentDialog::updateFriendStatusMessage(friendId, message);
 }
 
@@ -1020,8 +1028,18 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     f->setName(str);
 }
 
-void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
+void Widget::onFriendDisplayChanged(uint32_t friendId)
 {
+    Friend *f = FriendList::findFriend(friendId);
+    FriendWidget *friendWidget = friendWidgets[f];
+    Status s = f->getStatus();
+
+    QString name = f->getDisplayedName();
+    friendWidget->setName(name);
+
+    if (friendWidget->isActive())
+        GUI::setWindowTitle(name);
+
     contactListWidget->moveWidget(friendWidget, s);
     FilterCriteria filter = getFilterCriteria();
     switch (s)

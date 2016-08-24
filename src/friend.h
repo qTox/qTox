@@ -36,7 +36,6 @@ class Friend : public QObject
 public:
     Friend(uint32_t FriendId, const ToxId &UserId);
     Friend(const Friend& other)=delete;
-    ~Friend();
 
     Friend& operator=(const Friend& other) = delete;
 
@@ -59,18 +58,13 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    void setFriendWidget(FriendWidget* widget);
-
-    FriendWidget *getFriendWidget();
-    const FriendWidget *getFriendWidget() const;
-
     const OfflineMsgEngine& getOfflineMsgEngine() const;
     void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
     void dischargeReceipt(int receipt);
 
 signals:
     void nameChanged(const QString& name);
-    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    void displayedNameChanged(uint32_t friendId);
     void statusChanged(uint32_t friendId, Status status);
     void newStatusMessage(const QString& message);
     void loadChatHistory();
@@ -84,7 +78,7 @@ private:
     QString userAlias;
     QString statusMessage;
     ToxId userID;
-    quint32 friendId;
+    uint32_t friendId;
     int hasNewEvents;
     Status friendStatus;
 
