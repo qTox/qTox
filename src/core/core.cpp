@@ -174,6 +174,9 @@ void Core::makeTox(QByteArray savedata)
     {
         case TOX_ERR_NEW_OK:
             break;
+        case TOX_ERR_NEW_LOAD_BAD_FORMAT:
+            qWarning() << "failed to parse Tox save data";
+            break;
         case TOX_ERR_NEW_PORT_ALLOC:
             if (enableIPv6)
             {
@@ -191,7 +194,8 @@ void Core::makeTox(QByteArray savedata)
             return;
         case TOX_ERR_NEW_PROXY_BAD_HOST:
         case TOX_ERR_NEW_PROXY_BAD_PORT:
-            qCritical() << "bad proxy";
+        case TOX_ERR_NEW_PROXY_BAD_TYPE:
+            qCritical() << "bad proxy, error code:" << tox_err;
             emit badProxy();
             return;
         case TOX_ERR_NEW_PROXY_NOT_FOUND:
@@ -199,14 +203,19 @@ void Core::makeTox(QByteArray savedata)
             emit badProxy();
             return;
         case TOX_ERR_NEW_LOAD_ENCRYPTED:
-            qCritical() << "load data is encrypted";
+            qCritical() << "attempted to load encrypted Tox save data";
             emit failedToStart();
             return;
-        case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-            qWarning() << "bad load data format";
-            break;
+        case TOX_ERR_NEW_MALLOC:
+            qCritical() << "memory allocation failed";
+            emit failedToStart();
+            return;
+        case TOX_ERR_NEW_NULL:
+            qCritical() << "a parameter was null";
+            emit failedToStart();
+            return;
         default:
-            qCritical() << "Tox core failed to start";
+            qCritical() << "Tox core failed to start, unknown error code:" << tox_err;
             emit failedToStart();
             return;
     }
