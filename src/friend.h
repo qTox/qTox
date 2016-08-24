@@ -33,18 +33,17 @@ class Friend : public QObject
     Q_OBJECT
 public:
     Friend(uint32_t FriendId, const ToxId &UserId);
-    Friend(const Friend& other)=delete;
+    Friend(const Friend& other) = delete;
     ~Friend();
-    Friend& operator=(const Friend& other)=delete;
 
-    void loadHistory();
+    Friend& operator=(const Friend& other) = delete;
 
     void setName(QString name);
-    void setAlias(QString name);
+    void setAlias(const QString& name);
     QString getDisplayedName() const;
     bool hasAlias() const;
 
-    void setStatusMessage(QString message);
+    void setStatusMessage(const QString& message);
     QString getStatusMessage();
 
     void setEventFlag(int f);
@@ -56,23 +55,24 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm *getChatForm();
-
-    void setFriendWidget(FriendWidget* widget);
-    FriendWidget *getFriendWidget();
-    const FriendWidget *getFriendWidget() const;
+    ChatForm* getChatForm();
 
 signals:
-    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    // TODO: move signals to DB object
+    void nameChanged(uint32_t friendId, const QString& name);
+    void aliasChanged(uint32_t friendId, const QString& alias);
+    void statusChanged(uint32_t friendId, Status status);
+    void newStatusMessage(const QString& message);
 
 private:
-    QString userAlias, userName, statusMessage;
+    QString userName;
+    QString userAlias;
+    QString statusMessage;
     ToxId userID;
     uint32_t friendId;
     int hasNewEvents;
     Status friendStatus;
 
-    FriendWidget* widget;
     ChatForm* chatForm;
 };
 

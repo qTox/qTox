@@ -52,7 +52,6 @@ public:
     void setActive(bool active);
 
     void setName(const QString& name);
-    void setStatusMsg(const QString& status);
     QString getStatusMsg() const;
     QString getTitle() const;
 
@@ -60,6 +59,7 @@ public:
 
 public slots:
 	void compactChange(bool compact);
+    void setStatusMsg(const QString& status);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
