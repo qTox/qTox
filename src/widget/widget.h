@@ -155,7 +155,7 @@ public slots:
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
-    void onFriendDisplayChanged(FriendWidget* friendWidget, Status s);
+    void onFriendAliasChanged(uint32_t friendId, QString alias);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void updateFriendActivity(Friend* frnd);

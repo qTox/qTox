@@ -154,7 +154,7 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
 
     Friend* frnd = friendWidget->getFriend();
-    connect(frnd, &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
+    connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
     connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
     connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
@@ -197,7 +197,7 @@ void ContentDialog::removeFriend(int friendId)
         return;
 
     FriendWidget* chatroomWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
-    disconnect(chatroomWidget->getFriend(), &Friend::displayedNameChanged, this, &ContentDialog::updateFriendWidget);
+    disconnect(chatroomWidget->getFriend(), &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
 
     // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
@@ -644,11 +644,15 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     updateTitle(widget);
 }
 
-void ContentDialog::updateFriendWidget(FriendWidget *w, Status s)
+void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 {
-    FriendWidget* friendWidget = static_cast<FriendWidget*>(std::get<1>(friendList.find(w->friendId).value()));
-    friendWidget->setName(w->getName());
-    friendLayout->addFriendWidget(friendWidget, s);
+    Friend *f = FriendList::findFriend(friendId);
+    GenericChatroomWidget *widget = std::get<1>(friendList.find(friendId).value());
+    FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
+    friendWidget->setName(alias);
+
+    Status status = f->getStatus();
+    friendLayout->addFriendWidget(friendWidget, status);
 }
 
 void ContentDialog::updateGroupWidget(GroupWidget *w)
