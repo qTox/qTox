@@ -1004,7 +1004,6 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     friendWidgets[friendId] = widget;
 
-    newfriend->setFriendWidget(widget);
     newfriend->loadHistory();
 
     const Settings& s = Settings::getInstance();
@@ -1018,15 +1017,27 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(friendPk));
 
-    connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
-    connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
-    connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
-    connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
-    connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
-    connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+    connect(newfriend, &Friend::aliasChanged,
+            this, &Widget::onFriendAliasChanged);
+    connect(newfriend, &Friend::nameChanged,
+            this, &Widget::onFriendAliasChanged);
+
+    connect(widget, &FriendWidget::chatroomWidgetClicked,
+            this, &Widget::onChatroomWidgetClicked);
+    connect(widget, &FriendWidget::chatroomWidgetClicked,
+            friendForm, &ChatForm::focusInput);
+    connect(widget, &FriendWidget::copyFriendIdToClipboard,
+            this, &Widget::copyFriendIdToClipboard);
+    connect(widget, &FriendWidget::contextMenuCalled,
+            widget, &FriendWidget::onContextMenuCalled);
+    connect(widget, SIGNAL(removeFriend(int)),
+            this, SLOT(removeFriend(int)));
+
     Core* core = Core::getInstance();
-    connect(core, &Core::friendAvatarChanged, widget, &FriendWidget::onAvatarChange);
-    connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
+    connect(core, &Core::friendAvatarChanged, 
+            widget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, 
+            widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk.toString());
@@ -1099,10 +1110,11 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     }
 
     QString str = message;
-    str.replace('\n', ' ');
-    str.remove('\r');
-    str.remove(QChar((char)0)); // null terminator...
+    str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setStatusMessage(str);
+
+    friendWidgets[friendId]->setStatusMsg(str);
+    f->getChatForm()->setStatusMessage(str);
 
     ContentDialog::updateFriendStatusMessage(friendId, message);
 }
@@ -1116,19 +1128,35 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     }
 
     QString str = username;
-    str.replace('\n', ' ');
-    str.remove('\r');
-    str.remove(QChar((char)0)); // null terminator...
+    str.replace('\n', ' ').remove('\r').remove(QChar('\0'));
     f->setName(str);
 }
 
-void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
+void Widget::onFriendAliasChanged(uint32_t friendId, const QString& alias)
 {
+    Friend *f = FriendList::findFriend(friendId);
+    FriendWidget *friendWidget = friendWidgets[friendId];
+
+    friendWidget->setName(alias);
+
+    if (friendWidget->isActive())
+    {
+        GUI::setWindowTitle(alias);
+    }
+
+    Status s = f->getStatus();
     contactListWidget->moveWidget(friendWidget, s);
     int criteria = getFilterCriteria();
-    bool filter = s == Status::Offline ?
-                filterOffline(criteria) : filterOnline(criteria);
+    bool filter = s == Status::Offline ? filterOffline(criteria)
+                                       : filterOnline(criteria);
     friendWidget->searchName(ui->searchContactText->text(), filter);
+
+    ChatForm* friendForm = f->getChatForm();
+    friendForm->setName(alias);
+    for (Group *g : GroupList::getAllGroups())
+    {
+        g->regeneratePeerList();
+    }
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
