@@ -324,7 +324,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
             connect(callButton, &QPushButton::clicked, this, &ChatForm::onAnswerCallTriggered);
         }
 
-        if (ContentDialog::existsFriendWidget(friendId, false))
+    if (ContentDialog::friendWidgetExists(friendId, false))
             callConfirm->show();
 
         connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
