@@ -368,7 +368,7 @@ ContentDialog* ContentDialog::current()
     return currentDialog;
 }
 
-bool ContentDialog::existsFriendWidget(int friendId, bool focus)
+bool ContentDialog::friendWidgetExists(int friendId, bool focus)
 {
     return existsWidget(friendId, focus, friendList);
 }
