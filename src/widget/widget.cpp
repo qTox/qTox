@@ -1003,7 +1003,6 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     friendWidgets[friendId] = widget;
 
-    newfriend->setFriendWidget(widget);
     newfriend->loadHistory();
 
     const Settings& s = Settings::getInstance();
@@ -1017,7 +1016,16 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(friendPk));
 
-    connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
+    connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
+    connect(newfriend, &Friend::aliasChanged, this, [=](uint32_t id, QString name)
+    {
+        Q_UNUSED(id);
+        friendForm->setName(name);
+        for (Group *g : GroupList::getAllGroups())
+        {
+            g->regeneratePeerList();
+        }
+    });
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
@@ -1100,6 +1108,8 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     str.remove(QChar((char)0)); // null terminator...
     f->setStatusMessage(str);
 
+    friendWidgets[friendId]->setStatusMsg(message);
+
     ContentDialog::updateFriendStatusMessage(friendId, message);
 }
 
@@ -1118,12 +1128,23 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     f->setName(str);
 }
 
-void Widget::onFriendDisplayChanged(FriendWidget *friendWidget, Status s)
+void Widget::onFriendAliasChanged(uint32_t friendId, QString alias)
 {
+    Friend *f = FriendList::findFriend(friendId);
+    FriendWidget *friendWidget = friendWidgets[friendId];
+    Status s = f->getStatus();
+
+    friendWidget->setName(alias);
+
+    if (friendWidget->isActive())
+    {
+        GUI::setWindowTitle(alias);
+    }
+
     contactListWidget->moveWidget(friendWidget, s);
     int criteria = getFilterCriteria();
-    bool filter = s == Status::Offline ?
-                filterOffline(criteria) : filterOnline(criteria);
+    bool filter = s == Status::Offline ? filterOffline(criteria)
+                                       : filterOnline(criteria);
     friendWidget->searchName(ui->searchContactText->text(), filter);
 }
 
