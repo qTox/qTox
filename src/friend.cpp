@@ -19,7 +19,6 @@
 
 
 #include "friend.h"
-#include "friendlist.h"
 #include "widget/form/chatform.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
@@ -33,7 +32,7 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     , userAlias(Settings::getInstance().getFriendAlias(UserId))
     , userID(UserId)
     , friendId(FriendId)
-    , hasNewEvents(0)
+    , hasNewEvents(false)
     , friendStatus(Status::Offline)
 {
     if (userName.isEmpty())
@@ -110,12 +109,12 @@ uint32_t Friend::getFriendId() const
     return friendId;
 }
 
-void Friend::setEventFlag(int flag)
+void Friend::setEventFlag(bool flag)
 {
     hasNewEvents = flag;
 }
 
-int Friend::getEventFlag() const
+bool Friend::getEventFlag() const
 {
     return hasNewEvents;
 }
