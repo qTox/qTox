@@ -20,9 +20,7 @@
 
 #include "friend.h"
 #include "friendlist.h"
-#include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
-#include "widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
@@ -31,15 +29,15 @@
 #include "src/group.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
-    : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
-
+    : userName(Core::getInstance()->getPeerName(UserId))
+    , userAlias(Settings::getInstance().getFriendAlias(UserId))
+    , userID(UserId)
+    , friendId(FriendId)
+    , hasNewEvents(0)
+    , friendStatus(Status::Offline)
 {
-    if (userName.size() == 0)
+    if (userName.isEmpty())
         userName = UserId.publicKey;
-
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
 
     chatForm = new ChatForm(this);
 }
@@ -47,63 +45,41 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 Friend::~Friend()
 {
     delete chatForm;
-    delete widget;
-}
-
-/**
- * @brief Loads the friend's chat history if enabled
- */
-void Friend::loadHistory()
-{
-    if (Nexus::getProfile()->isHistoryEnabled())
-    {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
-    }
 }
 
 void Friend::setName(QString name)
 {
-   if (name.isEmpty())
-       name = userID.publicKey;
-
-    userName = name;
-    if (userAlias.size() == 0)
+    if (name.isEmpty())
     {
-        widget->setName(name);
+        name = userID.publicKey;
+    }
+
+    if (userName != name && userAlias.isEmpty())
+    {
+        userName = name;
         chatForm->setName(name);
-
-        if (widget->isActive())
-            GUI::setWindowTitle(name);
-
-        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
+        emit nameChanged(friendId, userName);
     }
 }
 
-void Friend::setAlias(QString name)
+void Friend::setAlias(const QString& alias)
 {
-    userAlias = name;
-    QString dispName = userAlias.size() == 0 ? userName : userAlias;
-
-    widget->setName(dispName);
-    chatForm->setName(dispName);
-
-    if (widget->isActive())
-            GUI::setWindowTitle(dispName);
-
-    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
-
-    for (Group *g : GroupList::getAllGroups())
+    if (userAlias != alias)
     {
-        g->regeneratePeerList();
+        userAlias = alias;
+        chatForm->setName(alias);
+        emit aliasChanged(friendId, alias);
     }
 }
 
-void Friend::setStatusMessage(QString message)
+void Friend::setStatusMessage(const QString& message)
 {
-    statusMessage = message;
-    widget->setStatusMsg(message);
-    chatForm->setStatusMessage(message);
+    if (statusMessage != message)
+    {
+        statusMessage = message;
+        chatForm->setStatusMessage(message);
+        emit newStatusMessage(message);
+    }
 }
 
 QString Friend::getStatusMessage()
@@ -134,9 +110,9 @@ uint32_t Friend::getFriendId() const
     return friendId;
 }
 
-void Friend::setEventFlag(int f)
+void Friend::setEventFlag(int flag)
 {
-    hasNewEvents = f;
+    hasNewEvents = flag;
 }
 
 int Friend::getEventFlag() const
@@ -146,7 +122,11 @@ int Friend::getEventFlag() const
 
 void Friend::setStatus(Status s)
 {
-    friendStatus = s;
+    if (friendStatus != s)
+    {
+        friendStatus = s;
+        emit statusChanged(friendId, friendStatus);
+    }
 }
 
 Status Friend::getStatus() const
@@ -154,22 +134,7 @@ Status Friend::getStatus() const
     return friendStatus;
 }
 
-void Friend::setFriendWidget(FriendWidget *widget)
-{
-    this->widget = widget;
-}
-
-ChatForm *Friend::getChatForm()
+ChatForm* Friend::getChatForm()
 {
     return chatForm;
-}
-
-FriendWidget *Friend::getFriendWidget()
-{
-    return widget;
-}
-
-const FriendWidget *Friend::getFriendWidget() const
-{
-    return widget;
 }
