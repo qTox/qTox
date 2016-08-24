@@ -44,7 +44,7 @@ class ChatForm : public GenericChatForm
 public:
     explicit ChatForm(Friend* chatFriend);
     ~ChatForm();
-    void setStatusMessage(QString newMessage);
+    void setStatusMessage(const QString& newMessage);
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);

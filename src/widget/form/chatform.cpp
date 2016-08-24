@@ -182,7 +182,7 @@ ChatForm::~ChatForm()
     delete netcam;
 }
 
-void ChatForm::setStatusMessage(QString newMessage)
+void ChatForm::setStatusMessage(const QString& newMessage)
 {
     statusMessageLabel->setText(newMessage);
     // for long messsages

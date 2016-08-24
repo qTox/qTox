@@ -33,9 +33,9 @@ class Friend : public QObject
     Q_OBJECT
 public:
     Friend(uint32_t FriendId, const ToxPk& FriendPk);
-    Friend(const Friend& other)=delete;
+    Friend(const Friend& other) = delete;
     ~Friend();
-    Friend& operator=(const Friend& other)=delete;
+    Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
 
@@ -58,12 +58,15 @@ public:
 
     ChatForm *getChatForm();
 
-    void setFriendWidget(FriendWidget* widget);
-    FriendWidget *getFriendWidget();
-    const FriendWidget *getFriendWidget() const;
-
 signals:
-    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    // TODO: move signals to DB object
+    void nameChanged(uint32_t friendId, const QString& name);
+    void aliasChanged(uint32_t friendId, QString alias);
+    void statusChanged(uint32_t friendId, Status status);
+    void statusMessageChanged(uint32_t friendId, const QString& message);
+    void loadChatHistory();
+
+public slots:
 
 private:
     QString userName;
