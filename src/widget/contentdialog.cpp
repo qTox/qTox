@@ -644,11 +644,16 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     updateTitle(widget);
 }
 
-void ContentDialog::updateFriendWidget(FriendWidget *w, Status s)
+void ContentDialog::updateFriendWidget(uint32_t friendId)
 {
-    FriendWidget* friendWidget = static_cast<FriendWidget*>(std::get<1>(friendList.find(w->friendId).value()));
-    friendWidget->setName(w->getName());
-    friendLayout->addFriendWidget(friendWidget, s);
+    Friend *f = FriendList::findFriend(friendId);
+    GenericChatroomWidget *widget = std::get<1>(friendList.find(friendId).value());
+    FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
+    QString name = f->getDisplayedName();
+    friendWidget->setName(name);
+
+    Status status = f->getStatus();
+    friendLayout->addFriendWidget(friendWidget, status);
 }
 
 void ContentDialog::updateGroupWidget(GroupWidget *w)
