@@ -41,7 +41,7 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 }
 
 /**
- * @brief Loads the friend's chat history if enabled
+ * @brief Loads the friend's chat history if enabled.
  */
 void Friend::loadHistory()
 {
@@ -49,6 +49,12 @@ void Friend::loadHistory()
         emit loadChatHistory();
 }
 
+/**
+ * @brief Friend::setName
+ * @param name New name to friend.
+ *
+ * Change the real username of friend.
+ */
 void Friend::setName(QString name)
 {
     if (name.isEmpty())
@@ -61,6 +67,13 @@ void Friend::setName(QString name)
     }
 }
 
+/**
+ * @brief Friend::setAlias
+ * @param alias New alias to friend.
+ *
+ * Set new displayed name to friend.
+ * Alias will override friend name in friend list.
+ */
 void Friend::setAlias(QString alias)
 {
     if (userAlias != alias)
@@ -70,6 +83,12 @@ void Friend::setAlias(QString alias)
     }
 }
 
+/**
+ * @brief Friend::setStatusMessage
+ * @param message New status message.
+ *
+ * Change showed friend status message.
+ */
 void Friend::setStatusMessage(QString message)
 {
     if (statusMessage != message)
@@ -79,41 +98,75 @@ void Friend::setStatusMessage(QString message)
     }
 }
 
+/**
+ * @brief Friend::getStatusMessage
+ * @return Friend status message.
+ */
 QString Friend::getStatusMessage()
 {
     return statusMessage;
 }
 
+/**
+ * @brief Friend::getDisplayedName
+ * @return Friend displayed name.
+ *
+ * Return friend alias if setted, username otherwise.
+ */
 QString Friend::getDisplayedName() const
 {
     return userAlias.isEmpty() ? userName : userAlias;
 }
 
+/**
+ * @brief Friend::hasAlias
+ * @return True, if user sets alias for this friend, false otherwise.
+ */
 bool Friend::hasAlias() const
 {
     return !userAlias.isEmpty();
 }
 
+/**
+ * @brief Friend::getToxId
+ * @return ToxId of current friend.
+ */
 const ToxId &Friend::getToxId() const
 {
     return userID;
 }
 
+/**
+ * @brief Friend::getFriendId
+ * @return Return friend id.
+ */
 uint32_t Friend::getFriendId() const
 {
     return friendId;
 }
 
+/**
+ * @brief Friend::setEventFlag
+ * @param f True if friend has new event, false otherwise.
+ */
 void Friend::setEventFlag(bool flag)
 {
     hasNewEvents = flag;
 }
 
+/**
+ * @brief Friend::getEventFlag
+ * @return Return true, if friend has new event, false otherwise.
+ */
 bool Friend::getEventFlag() const
 {
     return hasNewEvents;
 }
 
+/**
+ * @brief Friend::setStatus
+ * @param s New status.
+ */
 void Friend::setStatus(Status s)
 {
     if (friendStatus != s)
@@ -123,6 +176,10 @@ void Friend::setStatus(Status s)
     }
 }
 
+/**
+ * @brief Friend::getStatus
+ * @return Status of current friend.
+ */
 Status Friend::getStatus() const
 {
     return friendStatus;
