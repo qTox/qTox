@@ -64,7 +64,7 @@ public:
     void onVideoHide();
 
     static ContentDialog* current();
-    static bool existsFriendWidget(int friendId, bool focus);
+    static bool friendWidgetExists(int friendId, bool focus);
     static bool existsGroupWidget(int groupId, bool focus);
     static void updateFriendStatus(int friendId);
     static void updateFriendStatusMessage(int friendId, const QString &message);

@@ -385,7 +385,7 @@ void FriendWidget::search(const QString &searchString, bool hide)
 
 bool FriendWidget::chatFormIsSet(bool focus) const
 {
-    return ContentDialog::existsFriendWidget(friendId, focus);
+    return ContentDialog::friendWidgetExists(friendId, focus);
 }
 
 void FriendWidget::setChatForm()
