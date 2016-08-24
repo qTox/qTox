@@ -292,7 +292,7 @@ private:
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
 
-    QMap<Friend*, FriendWidget*> friendWidgets;
+    QMap<int, FriendWidget*> friendWidgets;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;

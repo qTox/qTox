@@ -893,7 +893,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     QString name = newfriend->getDisplayedName();
     FriendWidget *widget = new FriendWidget(friendId, name);
     
-    friendWidgets[newfriend] = widget;
+    friendWidgets[friendId] = widget;
 
     newfriend->loadHistory();
 
@@ -969,7 +969,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     bool isActualChange = f->getStatus() != status;
 
-    FriendWidget *widget = friendWidgets[f];
+    FriendWidget *widget = friendWidgets[friendId];
     if (isActualChange)
     {
         if (f->getStatus() == Status::Offline)
@@ -997,7 +997,7 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     str.remove(QChar()); // null terminator...
     f->setStatusMessage(str);
 
-    friendWidgets[f]->setStatusMsg(message);
+    friendWidgets[friendId]->setStatusMsg(message);
 
     ContentDialog::updateFriendStatusMessage(friendId, message);
 }
@@ -1017,7 +1017,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
 void Widget::onFriendAliasChanged(uint32_t friendId, QString alias)
 {
     Friend *f = FriendList::findFriend(friendId);
-    FriendWidget *friendWidget = friendWidgets[f];
+    FriendWidget *friendWidget = friendWidgets[friendId];
     Status s = f->getStatus();
 
     friendWidget->setName(alias);
@@ -1090,7 +1090,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
 
 void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
 {
-    FriendWidget *widget = friendWidgets[frnd];
+    FriendWidget *widget = friendWidgets[frnd->getFriendId()];
     FriendWidget* friendWidget = dialog->addFriend(frnd->getFriendId(),
                                                    frnd->getDisplayedName());
 
@@ -1178,7 +1178,7 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
 
     if (newMessageAlert(currentWindow, hasActive, sound))
     {
-        FriendWidget *widget = friendWidgets[f];
+        FriendWidget *widget = friendWidgets[friendId];
         f->setEventFlag(true);
         widget->updateStatusLight();
         friendList->trackWidget(widget);
@@ -1321,7 +1321,7 @@ void Widget::updateFriendActivity(Friend *frnd)
         // Update old activity before after new one. Store old date first.
         QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getToxId());
         Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
-        contactListWidget->moveWidget(friendWidgets[frnd], frnd->getStatus());
+        contactListWidget->moveWidget(friendWidgets[frnd->getFriendId()], frnd->getStatus());
         contactListWidget->updateActivityDate(oldDate);
     }
 }
@@ -1340,7 +1340,7 @@ void Widget::removeFriend(Friend* f, bool fake)
             Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
     }
 
-    FriendWidget *widget = friendWidgets[f];
+    FriendWidget *widget = friendWidgets[f->getFriendId()];
     widget->setAsInactiveChatroom();
     if (!activeChat)
         onAddClicked();
@@ -1392,7 +1392,8 @@ void Widget::onDialogShown(GenericChatroomWidget *widget)
 
 void Widget::onFriendDialogShown(Friend *f)
 {
-    onDialogShown(friendWidgets[f]);
+    int friendId = f->getFriendId();
+    onDialogShown(friendWidgets[friendId]);
 }
 
 void Widget::onGroupDialogShown(Group *g)
@@ -1986,10 +1987,15 @@ void Widget::reloadTheme()
     contactListWidget->reDraw();
 
     for (Friend* f : FriendList::getAllFriends())
-        friendWidgets[f]->reloadTheme();
+    {
+        int friendId = f->getFriendId();
+        friendWidgets[friendId]->reloadTheme();
+    }
 
     for (Group* g : GroupList::getAllGroups())
+    {
         g->getGroupWidget()->reloadTheme();
+    }
 }
 
 void Widget::nextContact()
