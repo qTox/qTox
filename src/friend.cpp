@@ -19,7 +19,7 @@
 
 
 #include "friend.h"
-#include "friendlist.h"
+
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
@@ -104,12 +104,12 @@ uint32_t Friend::getFriendId() const
     return friendId;
 }
 
-void Friend::setEventFlag(int flag)
+void Friend::setEventFlag(bool flag)
 {
     hasNewEvents = flag;
 }
 
-int Friend::getEventFlag() const
+bool Friend::getEventFlag() const
 {
     return hasNewEvents;
 }
