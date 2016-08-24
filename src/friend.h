@@ -49,8 +49,8 @@ public:
     void setStatusMessage(QString message);
     QString getStatusMessage();
 
-    void setEventFlag(int f);
-    int getEventFlag() const;
+    void setEventFlag(bool f);
+    bool getEventFlag() const;
 
     const ToxId &getToxId() const;
     uint32_t getFriendId() const;
@@ -80,7 +80,7 @@ private:
     QString statusMessage;
     ToxId userID;
     uint32_t friendId;
-    int hasNewEvents;
+    bool hasNewEvents;
     Status friendStatus;
 
     OfflineMsgEngine offlineEngine;
