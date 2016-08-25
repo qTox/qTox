@@ -24,7 +24,8 @@ sudo add-apt-repository -y ppa:beineri/opt-qt532-trusty
 sudo apt-get update -qq
 
 # install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
-sudo apt-get install -y \
+# `--force-yes` since we don't care about GPG failing to work with short IDs
+sudo apt-get install -y --force-yes \
     automake \
     autotools-dev \
     build-essential \
