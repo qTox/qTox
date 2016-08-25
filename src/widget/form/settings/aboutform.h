@@ -24,6 +24,7 @@
 
 class Core;
 class QTimer;
+class QString;
 
 namespace Ui {
 class AboutSettings;
@@ -50,6 +51,7 @@ private slots:
 private:
     void retranslateUi();
     void replaceVersions();
+    inline QString createLink(QString path, QString text) const;
 
 private:
     Ui::AboutSettings* bodyUI;
