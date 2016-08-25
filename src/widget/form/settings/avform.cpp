@@ -30,6 +30,7 @@
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 
+#include <QtConcurrent/QtConcurrent>
 #include <QDebug>
 #include <QShowEvent>
 #include <map>
@@ -117,8 +118,8 @@ void AVForm::showEvent(QShowEvent* event)
 {
     getAudioOutDevices();
     getAudioInDevices();
-    createVideoSurface();
     getVideoDevices();
+    createVideoSurface();
 
     if (!subscribedToAudioIn) {
         // TODO: This should not be done in show/hide events
@@ -201,8 +202,8 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     for (int i = 0; i < allVideoModes.size(); ++i)
     {
         VideoMode mode = allVideoModes[i];
-        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
+//        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+//        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         // PS3-Cam protection, everything above 60fps makes no sense
         if (mode.FPS > 60)
@@ -279,8 +280,8 @@ void AVForm::fillCameraModesComboBox()
         VideoMode mode = videoModes[i];
 
         QString str;
-        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
+//        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
+//        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s\n", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         if (mode.height && mode.width)
             str += QString("%1p").arg(mode.height);
@@ -545,6 +546,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
+
     camVideoSurface = new VideoSurface(QPixmap(), CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
@@ -556,12 +558,16 @@ void AVForm::killVideoSurface()
 {
     if (!camVideoSurface)
         return;
+
     QLayoutItem *child;
     while ((child = gridLayout->takeAt(0)) != 0)
         delete child;
 
     camVideoSurface->close();
-    delete camVideoSurface;
+    QtConcurrent::run([this]()
+    {
+        delete camVideoSurface;
+    });
     camVideoSurface = nullptr;
 }
 

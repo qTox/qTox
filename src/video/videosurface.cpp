@@ -26,6 +26,7 @@
 #include "src/core/core.h"
 #include "src/widget/style.h"
 
+#include <QtConcurrent/QtConcurrentRun>
 #include <QPainter>
 #include <QLabel>
 #include <QDebug>
@@ -60,6 +61,7 @@ VideoSurface::VideoSurface(const QPixmap& avatar, VideoSource *source, QWidget* 
 
 VideoSurface::~VideoSurface()
 {
+    QMutexLocker l(&bigLock);
     unsubscribe();
 }
 
@@ -80,9 +82,14 @@ void VideoSurface::setSource(VideoSource *src)
     if (source == src)
         return;
 
-    unsubscribe();
-    source = src;
-    subscribe();
+    // To don't block GUI thread.
+    QtConcurrent::run([this, src]()
+    {
+        QMutexLocker l(&bigLock);
+        unsubscribe();
+        source = src;
+        subscribe();
+    });
 }
 
 QRect VideoSurface::getBoundingRect() const
@@ -110,6 +117,7 @@ QPixmap VideoSurface::getAvatar() const
 
 void VideoSurface::subscribe()
 {
+    QMutexLocker l(&subscribeLock);
     if (source && hasSubscribed++ == 0)
     {
         source->subscribe();
@@ -120,6 +128,7 @@ void VideoSurface::subscribe()
 
 void VideoSurface::unsubscribe()
 {
+    QMutexLocker l(&subscribeLock);
     if (!source || hasSubscribed == 0)
         return;
 

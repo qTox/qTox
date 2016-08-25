@@ -20,9 +20,12 @@
 #ifndef SELFCAMVIEW_H
 #define SELFCAMVIEW_H
 
-#include <QWidget>
 #include <memory>
 #include <atomic>
+#include <QMutex>
+#include <QThread>
+#include <QWidget>
+
 #include "src/video/videosource.h"
 
 class VideoSurface : public QWidget
@@ -62,6 +65,8 @@ private:
     void lock();
     void unlock();
 
+    QMutex subscribeLock;
+    QMutex bigLock;
     QRect boundingRect;
     VideoSource* source;
     std::shared_ptr<VideoFrame> lastFrame;
