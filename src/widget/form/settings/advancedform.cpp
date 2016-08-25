@@ -35,6 +35,13 @@
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 
+/**
+ * @class AdvancedForm
+ *
+ * This form contains all connection settings.
+ * Is also contains "Reset settings" button and "Make portable" checkbox.
+ */
+
 AdvancedForm::AdvancedForm()
   : GenericForm(QPixmap(":/img/settings/general.png"))
   , bodyUI (new Ui::AdvancedSettings)
@@ -144,6 +151,9 @@ void AdvancedForm::on_reconnectButton_clicked()
     Nexus::getProfile()->restartCore();
 }
 
+/**
+ * @brief Retranslate all elements in the form.
+ */
 void AdvancedForm::retranslateUi()
 {
     int proxyType = bodyUI->proxyType->currentIndex();

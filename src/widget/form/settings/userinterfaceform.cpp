@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -56,10 +56,10 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
 /**
- * @brief UserInterfaceForm::UserInterfaceForm
+ * @brief Constructor of UserInterfaceForm.
  * @param myParent Setting widget which will contain this form as tab.
  *
- * Constructor of UserInterfaceForm. Restores all controls from the settings.
+ * Restores all controls from the settings.
  */
 UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     GenericForm(QPixmap(":/img/settings/general.png"))
@@ -288,7 +288,7 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
 }
 
 /**
- * @brief Retranslate all elements on the form.
+ * @brief Retranslate all elements in the form.
  */
 void UserInterfaceForm::retranslateUi()
 {

@@ -28,6 +28,16 @@
 #include "src/net/autoupdate.h"
 #include "src/widget/translator.h"
 
+/**
+ * @class AboutForm
+ *
+ * This form contains information about qTox and libraries versions, external
+ * links and licence text. Shows progress during an update.
+ */
+
+/**
+ * @brief Constructor of AboutForm.
+ */
 AboutForm::AboutForm()
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::AboutSettings)
@@ -52,6 +62,12 @@ AboutForm::AboutForm()
     Translator::registerHandler(std::bind(&AboutForm::retranslateUi, this), this);
 }
 
+/**
+ * @brief Update versions and links.
+ *
+ * Update commit hash if built with git, show author and known issues info
+ * It also updates qTox, toxcore and Qt versions.
+ */
 void AboutForm::replaceVersions()
 {
     // TODO: When we finally have stable releases: build-in a way to tell
@@ -115,6 +131,12 @@ void AboutForm::replaceVersions()
     bodyUI->authorInfo->setText(authorInfo);
 }
 
+/**
+ * @brief Creates hyperlink with specific style.
+ * @param path The URL of the page the link goes to.
+ * @param text Text, which will be clickable.
+ * @return Hyperlink to paste.
+ */
 QString AboutForm::createLink(QString path, QString text) const
 {
     return QString::fromUtf8("<a href=\"%1\" style=\"text-decoration: underline; color:#0000ff;\">%2</a>")
@@ -127,6 +149,9 @@ AboutForm::~AboutForm()
     delete bodyUI;
 }
 
+/**
+ * @brief Update information about update.
+ */
 void AboutForm::showUpdateProgress()
 {
     QString version = AutoUpdater::getProgressVersion();
@@ -160,6 +185,9 @@ void AboutForm::showEvent(QShowEvent *)
     progressTimer->start();
 }
 
+/**
+ * @brief Retranslate all elements in the form.
+ */
 void AboutForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
