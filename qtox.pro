@@ -94,7 +94,7 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -ltoxdns -lsodium -lvpx -lpthread
+    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -lsodium -lvpx -lpthread
     LIBS += -L$$PWD/libs/lib -lavdevice -lavformat -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
     LIBS += -lqrencode -lsqlcipher -lcrypto
     LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
@@ -105,7 +105,7 @@ win32 {
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
         LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia -framework ApplicationServices
         LIBS += -lqrencode -lsqlcipher
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
@@ -142,12 +142,12 @@ win32 {
 
         # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
-            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
+            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
             LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
             LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
             LIBS += -lqrencode -lsqlcipher
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -ltoxdns -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
+            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
             LIBS += -lqrencode -lsqlcipher
         }
 
@@ -156,7 +156,7 @@ win32 {
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxdns.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
+            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
             contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
                 LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
             }
@@ -275,7 +275,6 @@ HEADERS  += \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
     src/net/toxuri.h \
-    src/net/toxdns.h \
     src/net/autoupdate.h \
     src/net/toxme.h \
     src/net/avatarbroadcaster.h \
@@ -397,7 +396,6 @@ SOURCES += \
     src/chatlog/pixmapcache.cpp \
     src/net/autoupdate.cpp \
     src/net/toxuri.cpp \
-    src/net/toxdns.cpp \
     src/net/toxme.cpp \
     src/net/avatarbroadcaster.cpp \
     src/persistence/historykeeper.cpp \
