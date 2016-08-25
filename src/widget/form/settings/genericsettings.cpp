@@ -5,6 +5,13 @@
 #include <QEvent>
 #include <QSpinBox>
 
+/**
+ * @class GenericForm
+ *
+ * This is abstract class used as superclass for all settings forms.
+ * It provides correct behaviour of controls for settings forms.
+ */
+
 GenericForm::GenericForm(const QPixmap &icon)
     : formIcon(icon)
 {
@@ -15,12 +22,16 @@ QPixmap GenericForm::getFormIcon()
     return formIcon;
 }
 
+/**
+ * @brief Prevent stealing mouse wheel scroll.
+ *
+ * Scrolling event won't be transmitted to comboboxes or spinboxes.
+ * You can scroll through general settings without accidentially changing
+ * theme / skin / icons etc.
+ * @see GenericForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
+ */
 void GenericForm::eventsInit()
 {
-    // prevent stealing mouse wheel scroll
-    // scrolling event won't be transmitted to comboboxes or qspinboxes when scrolling
-    // you can scroll through general settings without accidentially changing theme/skin/icons etc.
-    // @see GenericForm::eventFilter(QObject *o, QEvent *e) at the bottom of this file for more
     for (QComboBox *cb : findChildren<QComboBox*>())
     {
         cb->installEventFilter(this);
@@ -37,6 +48,12 @@ void GenericForm::eventsInit()
         cb->installEventFilter(this);
 }
 
+/**
+ * @brief Ignore scroll on different controls.
+ * @param o Object which has been installed for the watched object.
+ * @param e Event object.
+ * @return True to stop it being handled further, false otherwise.
+ */
 bool GenericForm::eventFilter(QObject *o, QEvent *e)
 {
     if ((e->type() == QEvent::Wheel) &&
@@ -47,5 +64,6 @@ bool GenericForm::eventFilter(QObject *o, QEvent *e)
         e->ignore();
         return true;
     }
+
     return QWidget::eventFilter(o, e);
 }

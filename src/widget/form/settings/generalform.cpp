@@ -98,6 +98,11 @@ static QStringList langs = {"Arabic",
                             "Українська",
                             "简体中文"};
 
+/**
+ * @class GeneralForm
+ *
+ * This form contains all settings that are not suited to other forms
+ */
 GeneralForm::GeneralForm(SettingsWidget *myParent)
     : GenericForm(QPixmap(":/img/settings/general.png"))
     , bodyUI(new Ui::GeneralSettings)
@@ -248,6 +253,9 @@ void GeneralForm::on_checkUpdates_stateChanged()
     Settings::getInstance().setCheckUpdates(bodyUI->checkUpdates->isChecked());
 }
 
+/**
+ * @brief Retranslate all elements in the form.
+ */
 void GeneralForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
