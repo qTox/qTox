@@ -56,10 +56,10 @@ static QStringList timeFormats = {"hh:mm AP", "hh:mm", "hh:mm:ss AP", "hh:mm:ss"
 static QStringList dateFormats = {"yyyy-MM-dd", "dd-MM-yyyy", "d-MM-yyyy", "dddd d-MM-yyyy", "dddd d-MM", "dddd dd MMMM"};
 
 /**
- * @brief UserInterfaceForm::UserInterfaceForm
+ * @brief Constructor of UserInterfaceForm.
  * @param myParent Setting widget which will contain this form as tab.
  *
- * Constructor of UserInterfaceForm. Restores all controls from the settings.
+ * Restores all controls from the settings.
  */
 UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     GenericForm(QPixmap(":/img/settings/general.png"))
