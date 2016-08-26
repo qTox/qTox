@@ -24,7 +24,6 @@
 #include "src/widget/form/settingswidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/form/setpassworddialog.h"
-#include "src/widget/contentlayout.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/widget.h"
 #include "src/widget/gui.h"
@@ -48,28 +47,32 @@
 #include <QMenu>
 #include <QMouseEvent>
 
-ProfileForm::ProfileForm(QWidget *parent) :
-    QWidget{parent}, qr{nullptr}
+ProfileForm::ProfileForm(QWidget *parent)
+    : ContentWidget(parent)
+    , bodyUI(new Ui::IdentitySettings)
+    , nameLabel(new QLabel)
+    , head(new QWidget(this))
+    , core(Core::getInstance())
+    , qr(nullptr)
 {
-    bodyUI = new Ui::IdentitySettings;
-    bodyUI->setupUi(this);
-    core = Core::getInstance();
+    const Settings& s = Settings::getInstance();
 
-    head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
-    head->setLayout(headLayout);
+    QWidget* body = new QWidget(this);
+    bodyUI->setupUi(body);
+    setupLayout(head, body);
 
-    QLabel* imgLabel = new QLabel();
+    QHBoxLayout* headLayout = new QHBoxLayout(head);
+
+    QLabel* imgLabel = new QLabel;
+    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png")
+                        .scaledToHeight(40, Qt::SmoothTransformation));
     headLayout->addWidget(imgLabel);
 
-    nameLabel = new QLabel();
     QFont bold;
     bold.setBold(true);
     nameLabel->setFont(bold);
     headLayout->addWidget(nameLabel);
     headLayout->addStretch(1);
-
-    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
     toxId = new ClickableTE();
@@ -84,7 +87,7 @@ ProfileForm::ProfileForm(QWidget *parent) :
 
     /* Toxme section init */
     bodyUI->toxmeServersList->addItem("toxme.io");
-    QString toxmeInfo = Settings::getInstance().getToxmeInfo();
+    QString toxmeInfo = s.getToxmeInfo();
     if (toxmeInfo.isEmpty()) // User not registered
         showRegisterToxme();
     else
@@ -95,6 +98,17 @@ ProfileForm::ProfileForm(QWidget *parent) :
     QRegExp re("[^@ ]+");
     QRegExpValidator* validator = new QRegExpValidator(re, this);
     bodyUI->toxmeUsername->setValidator(validator);
+
+    prFileLabelUpdate();
+    QString DirPath = s.getMakeToxPortable()
+                      ? QApplication::applicationDirPath()
+                      : QDir(s.getSettingsDirPath()).path().trimmed();
+    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
+    bodyUI->dirPrLink->setOpenExternalLinks(true);
+    bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
+    bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
+    bodyUI->userName->setFocus();
+    bodyUI->userName->selectAll();
 
     profilePicture = new MaskablePixmapWidget(this, QSize(64, 64), ":/img/avatar_mask.svg");
     profilePicture->setPixmap(QPixmap(":/img/contact_dark.svg"));
@@ -153,7 +167,6 @@ ProfileForm::~ProfileForm()
     Translator::unregister(this);
     delete qr;
     delete bodyUI;
-    head->deleteLater();
 }
 
 bool ProfileForm::isShown() const
@@ -165,29 +178,6 @@ bool ProfileForm::isShown() const
     }
 
     return false;
-}
-
-void ProfileForm::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainHead->layout()->addWidget(head);
-    contentLayout->mainContent->layout()->addWidget(this);
-    head->show();
-    QWidget::show();
-    prFileLabelUpdate();
-    bool portable = Settings::getInstance().getMakeToxPortable();
-    QString defaultPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
-    QString appPath = QApplication::applicationDirPath();
-    QString dirPath = portable ? appPath : defaultPath;
-
-    QString dirPrLink = tr("Current profile location: %1")
-            .arg(QString("<a href=\"file://%1\">%1</a>").arg(dirPath));
-
-    bodyUI->dirPrLink->setText(dirPrLink);
-    bodyUI->dirPrLink->setOpenExternalLinks(true);
-    bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
-    bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
-    bodyUI->userName->setFocus();
-    bodyUI->userName->selectAll();
 }
 
 bool ProfileForm::eventFilter(QObject *object, QEvent *event)
