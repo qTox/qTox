@@ -101,7 +101,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
 
     int currentPack = bodyUI->smileyPackBrowser->findData(s.getSmileyPack());
     bodyUI->smileyPackBrowser->setCurrentIndex(currentPack);
-    reloadSmiles();
+    reloadSmiley();
     bodyUI->smileyPackBrowser->setEnabled(bodyUI->useEmoticons->isChecked());
 
     bodyUI->styleBrowser->addItem(tr("None"));
@@ -198,13 +198,13 @@ void UserInterfaceForm::on_smileyPackBrowser_currentIndexChanged(int index)
 {
     QString filename = bodyUI->smileyPackBrowser->itemData(index).toString();
     Settings::getInstance().setSmileyPack(filename);
-    reloadSmiles();
+    reloadSmiley();
 }
 
 /**
- * @brief Reload smiles and size information.
+ * @brief Reload smiley and size information.
  */
-void UserInterfaceForm::reloadSmiles()
+void UserInterfaceForm::reloadSmiley()
 {
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
 
@@ -215,16 +215,16 @@ void UserInterfaceForm::reloadSmiles()
         return;
     }
 
-    QStringList smiles;
+    QStringList smiley;
     for (int i = 0; i < emoticons.size(); i++)
-        smiles.push_front(emoticons.at(i).first());
+        smiley.push_front(emoticons.at(i).first());
 
     const QSize size(18,18);
     for (int i = 0; i < smileLabels.size(); i++)
     {
-        QIcon icon = SmileyPack::getInstance().getAsIcon(smiles[i]);
+        QIcon icon = SmileyPack::getInstance().getAsIcon(smiley[i]);
         smileLabels[i]->setPixmap(icon.pixmap(size));
-        smileLabels[i]->setToolTip(smiles[i]);
+        smileLabels[i]->setToolTip(smiley[i]);
     }
 
     //set maximum size of emoji
@@ -235,7 +235,7 @@ void UserInterfaceForm::reloadSmiles()
                        desktop.geometry().width() / sideSize);
     QSize maxSize(maxSide, maxSide);
 
-    QIcon icon = SmileyPack::getInstance().getAsIcon(smiles[0]);
+    QIcon icon = SmileyPack::getInstance().getAsIcon(smiley[0]);
     QSize actualSize = icon.actualSize(maxSize);
     bodyUI->emoticonSize->setMaximum(actualSize.width());
 }
