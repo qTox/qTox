@@ -38,11 +38,11 @@ public:
     }
 
 private slots:
-    void onEnableLoggingUpdated();
-    void onTypingNotificationEnabledUpdated();
-    void setNospam();
-    void generateRandomNospam();
-    void onNospamEdit();
+    void on_cbKeepHistory_stateChanged();
+    void on_cbTypingNotification_stateChanged();
+    void on_nospamLineEdit_editingFinished();
+    void on_randomNosapamButton_clicked();
+    void on_nospamLineEdit_textChanged();
     virtual void showEvent(QShowEvent*) final override;
 
 private:

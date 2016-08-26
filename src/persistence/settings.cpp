@@ -135,11 +135,15 @@ void Settings::loadGlobal()
 
     QSettings s(filePath, QSettings::IniFormat);
     s.setIniCodec("UTF-8");
+
     s.beginGroup("Login");
+    {
         autoLogin = s.value("autoLogin", false).toBool();
+    }
     s.endGroup();
 
     s.beginGroup("DHT Server");
+    {
         if (s.value("useCustomList").toBool())
         {
             useCustomDhtList = true;
@@ -159,21 +163,33 @@ void Settings::loadGlobal()
         }
         else
         {
-            useCustomDhtList=false;
+            useCustomDhtList = false;
         }
+    }
     s.endGroup();
 
     s.beginGroup("General");
-        enableIPv6 = s.value("enableIPv6", true).toBool();
+    {
+        {
+            // TODO: values in this block are moved -> remove in future
+            enableIPv6 = s.value("enableIPv6", true).toBool();
+            makeToxPortable = s.value("makeToxPortable", false).toBool();
+            forceTCP = s.value("forceTCP", false).toBool();
+            proxyType = static_cast<ProxyType>(s.value("proxyType", 0).toInt());
+            proxyAddr = s.value("proxyAddr", "").toString();
+            proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
+            showWindow = s.value("showWindow", true).toBool();
+            showInFront = s.value("showInFront", false).toBool();
+            groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
+            separateWindow = s.value("separateWindow", false).toBool();
+            dontGroupWindows = s.value("dontGroupWindows", true).toBool();
+            groupchatPosition = s.value("groupchatPosition", true).toBool();
+        }
+
         translation = s.value("translation", "en").toString();
         showSystemTray = s.value("showSystemTray", true).toBool();
-        makeToxPortable = s.value("makeToxPortable", false).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();
-        forceTCP = s.value("forceTCP", false).toBool();
-        proxyType = static_cast<ProxyType>(s.value("proxyType", 0).toInt());
-        proxyAddr = s.value("proxyAddr", "").toString();
-        proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
         if (currentProfile.isEmpty())
         {
             currentProfile = s.value("currentProfile", "").toString();
@@ -181,41 +197,51 @@ void Settings::loadGlobal()
         }
         autoAwayTime = s.value("autoAwayTime", 10).toInt();
         checkUpdates = s.value("checkUpdates", true).toBool();
-        showWindow = s.value("showWindow", true).toBool();
-        showInFront = s.value("showInFront", false).toBool();
         notifySound = s.value("notifySound", true).toBool();
         busySound = s.value("busySound", false).toBool();
-        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
-        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
-                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(), QStandardPaths::LocateDirectory)
-                                      ).toString();
-        separateWindow = s.value("separateWindow", false).toBool();
-        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
-        groupchatPosition = s.value("groupchatPosition", true).toBool();
+        globalAutoAcceptDir = s.value("globalAutoAcceptDir", QStandardPaths::locate(
+                                          QStandardPaths::HomeLocation,
+                                          QString(),
+                                          QStandardPaths::LocateDirectory)).toString();
         stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
+    }
     s.endGroup();
 
     s.beginGroup("Advanced");
-        Db::syncType sType = static_cast<Db::syncType>(s.value("dbSyncType", 2).toInt());
+    {
+        makeToxPortable = s.value("makeToxPortable", false).toBool();
+        enableIPv6 = s.value("enableIPv6", true).toBool();
+        forceTCP = s.value("forceTCP", false).toBool();
+        int type = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
+        Db::syncType sType = static_cast<Db::syncType>(type);
         setDbSyncType(sType);
+    }
     s.endGroup();
 
     s.beginGroup("Widgets");
+    {
         QList<QString> objectNames = s.childKeys();
         for (const QString& name : objectNames)
             widgetSettings[name] = s.value(name).toByteArray();
-
+    }
     s.endGroup();
 
     s.beginGroup("GUI");
+    {
+        showWindow = s.value("showWindow", true).toBool();
+        showInFront = s.value("showInFront", false).toBool();
+        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
+        groupchatPosition = s.value("groupchatPosition", true).toBool();
+        separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
+
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
         if (!SmileyPack::isValid(smileyPack))
-        {
             smileyPack = DEFAULT_SMILEYS;
-        }
+
         emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
@@ -235,6 +261,7 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
+    }
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -244,29 +271,35 @@ void Settings::loadGlobal()
     s.endGroup();
 
     s.beginGroup("State");
+    {
         windowGeometry = s.value("windowGeometry", QByteArray()).toByteArray();
         windowState = s.value("windowState", QByteArray()).toByteArray();
         splitterState = s.value("splitterState", QByteArray()).toByteArray();
         dialogGeometry = s.value("dialogGeometry", QByteArray()).toByteArray();
         dialogSplitterState = s.value("dialogSplitterState", QByteArray()).toByteArray();
         dialogSettingsGeometry = s.value("dialogSettingsGeometry", QByteArray()).toByteArray();
+    }
     s.endGroup();
 
     s.beginGroup("Audio");
+    {
         inDev = s.value("inDev", "").toString();
         audioInDevEnabled = s.value("audioInDevEnabled", true).toBool();
         outDev = s.value("outDev", "").toString();
         audioOutDevEnabled = s.value("audioOutDevEnabled", true).toBool();
         audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
+    }
     s.endGroup();
 
     s.beginGroup("Video");
+    {
         videoDev = s.value("videoDev", "").toString();
         camVideoRes = s.value("camVideoRes", QRect()).toRect();
         screenRegion = s.value("screenRegion", QRect()).toRect();
         screenGrabbed = s.value("screenGrabbed", false).toBool();
         camVideoFPS = static_cast<quint16>(s.value("camVideoFPS", 0).toUInt());
+    }
     s.endGroup();
 
     // Read the embedded DHT bootstrap nodes list if needed
@@ -323,11 +356,14 @@ void Settings::loadPersonal(Profile* profile)
     friendLst.clear();
 
     ps.beginGroup("Privacy");
+    {
         typingNotification = ps.value("typingNotification", true).toBool();
         enableLogging = ps.value("enableLogging", true).toBool();
+    }
     ps.endGroup();
 
     ps.beginGroup("Friends");
+    {
         int size = ps.beginReadArray("Friend");
         friendLst.reserve(size);
         for (int i = 0; i < size; i ++)
@@ -346,10 +382,12 @@ void Settings::loadPersonal(Profile* profile)
             friendLst[ToxId(fp.addr).publicKey] = fp;
         }
         ps.endArray();
+    }
     ps.endGroup();
 
     ps.beginGroup("Requests");
-        size = ps.beginReadArray("Request");
+    {
+        int size = ps.beginReadArray("Request");
         friendRequests.clear();
         friendRequests.reserve(size);
         for (int i = 0; i < size; i ++)
@@ -362,14 +400,34 @@ void Settings::loadPersonal(Profile* profile)
             friendRequests.push_back(request);
         }
         ps.endArray();
+    }
     ps.endGroup();
 
+    // TODO: values in this group are moved -> remove in future
     ps.beginGroup("General");
+    {
         compactLayout = ps.value("compactLayout", true).toBool();
+    }
+    ps.endGroup();
+
+    ps.beginGroup("GUI");
+    {
+        compactLayout = ps.value("compactLayout", true).toBool();
+    }
+    ps.endGroup();
+
+    ps.beginGroup("Proxy");
+    {
+        int type = ps.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt();
+        setProxyType(static_cast<ProxyType>(type));
+        proxyAddr = ps.value("proxyAddr", "").toString();
+        proxyPort = static_cast<quint16>(ps.value("proxyPort", 0).toUInt());
+    }
     ps.endGroup();
 
     ps.beginGroup("Circles");
-        size = ps.beginReadArray("Circle");
+    {
+        int size = ps.beginReadArray("Circle");
         circleLst.clear();
         circleLst.reserve(size);
         for (int i = 0; i < size; i ++)
@@ -381,14 +439,31 @@ void Settings::loadPersonal(Profile* profile)
             circleLst.push_back(cp);
         }
         ps.endArray();
+    }
     ps.endGroup();
 
     ps.beginGroup("Toxme");
+    {
         toxmeInfo = ps.value("info", "").toString();
         toxmeBio  = ps.value("bio", "").toString();
         toxmePriv = ps.value("priv", false).toBool();
         toxmePass = ps.value("pass", "").toString();
+    }
     ps.endGroup();
+}
+
+void Settings::resetToDefault()
+{
+    // To stop saving
+    loaded = false;
+
+    // Remove file with profile settings
+    QDir dir(getSettingsDirPath());
+    Profile *profile = Nexus::getProfile();
+    QString localPath = dir.filePath(profile->getName() + ".ini");
+    QFile local(localPath);
+    if (local.exists())
+        local.remove();
 }
 
 /**
@@ -400,6 +475,9 @@ void Settings::saveGlobal()
         return (void) QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
 
     QMutexLocker locker{&bigLock};
+    if (!loaded)
+        return;
+
     QString path = getSettingsDirPath() + globalSettingsFile;
     qDebug() << "Saving global settings at " + path;
 
@@ -409,10 +487,13 @@ void Settings::saveGlobal()
     s.clear();
 
     s.beginGroup("Login");
+    {
         s.setValue("autoLogin", autoLogin);
+    }
     s.endGroup();
 
     s.beginGroup("DHT Server");
+    {
         s.setValue("useCustomList", useCustomDhtList);
         s.beginWriteArray("dhtServerList", dhtServerList.size());
         for (int i = 0; i < dhtServerList.size(); i ++)
@@ -424,47 +505,53 @@ void Settings::saveGlobal()
             s.setValue("port", dhtServerList[i].port);
         }
         s.endArray();
+    }
     s.endGroup();
 
     s.beginGroup("General");
-        s.setValue("enableIPv6", enableIPv6);
+    {
         s.setValue("translation",translation);
-        s.setValue("makeToxPortable",makeToxPortable);
         s.setValue("showSystemTray", showSystemTray);
         s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
-        s.setValue("proxyType", static_cast<int>(proxyType));
-        s.setValue("forceTCP", forceTCP);
-        s.setValue("proxyAddr", proxyAddr);
-        s.setValue("proxyPort", proxyPort);
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
         s.setValue("checkUpdates", checkUpdates);
-        s.setValue("showWindow", showWindow);
-        s.setValue("showInFront", showInFront);
         s.setValue("notifySound", notifySound);
         s.setValue("busySound", busySound);
-        s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("fauxOfflineMessaging", fauxOfflineMessaging);
-        s.setValue("separateWindow", separateWindow);
-        s.setValue("dontGroupWindows", dontGroupWindows);
-        s.setValue("groupchatPosition", groupchatPosition);
         s.setValue("autoSaveEnabled", autoSaveEnabled);
         s.setValue("globalAutoAcceptDir", globalAutoAcceptDir);
         s.setValue("stylePreference", static_cast<int>(stylePreference));
+    }
     s.endGroup();
 
     s.beginGroup("Advanced");
+    {
+        s.setValue("makeToxPortable",makeToxPortable);
+        s.setValue("enableIPv6", enableIPv6);
+        s.setValue("forceTCP", forceTCP);
         s.setValue("dbSyncType", static_cast<int>(dbSyncType));
+    }
     s.endGroup();
 
     s.beginGroup("Widgets");
-    const QList<QString> widgetNames = widgetSettings.keys();
-    for (const QString& name : widgetNames)
-        s.setValue(name, widgetSettings.value(name));
+    {
+        const QList<QString> widgetNames = widgetSettings.keys();
+        for (const QString& name : widgetNames)
+            s.setValue(name, widgetSettings.value(name));
+    }
     s.endGroup();
 
     s.beginGroup("GUI");
+    {
+        s.setValue("showWindow", showWindow);
+        s.setValue("showInFront", showInFront);
+        s.setValue("groupAlwaysNotify", groupAlwaysNotify);
+        s.setValue("separateWindow", separateWindow);
+        s.setValue("dontGroupWindows", dontGroupWindows);
+        s.setValue("groupchatPosition", groupchatPosition);
+
         s.setValue("smileyPack", smileyPack);
         s.setValue("emojiFontPointSize", emojiFontPointSize);
         s.setValue("firstColumnHandlePos", firstColumnHandlePos);
@@ -478,6 +565,7 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+    }
     s.endGroup();
 
     s.beginGroup("Chat");
@@ -487,29 +575,35 @@ void Settings::saveGlobal()
     s.endGroup();
 
     s.beginGroup("State");
+    {
         s.setValue("windowGeometry", windowGeometry);
         s.setValue("windowState", windowState);
         s.setValue("splitterState", splitterState);
         s.setValue("dialogGeometry", dialogGeometry);
         s.setValue("dialogSplitterState", dialogSplitterState);
         s.setValue("dialogSettingsGeometry", dialogSettingsGeometry);
+    }
     s.endGroup();
 
     s.beginGroup("Audio");
+    {
         s.setValue("inDev", inDev);
         s.setValue("audioInDevEnabled", audioInDevEnabled);
         s.setValue("outDev", outDev);
         s.setValue("audioOutDevEnabled", audioOutDevEnabled);
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
+    }
     s.endGroup();
 
     s.beginGroup("Video");
+    {
         s.setValue("videoDev", videoDev);
         s.setValue("camVideoRes", camVideoRes);
         s.setValue("camVideoFPS", camVideoFPS);
         s.setValue("screenRegion", screenRegion);
         s.setValue("screenGrabbed", screenGrabbed);
+    }
     s.endGroup();
 }
 
@@ -542,6 +636,8 @@ void Settings::savePersonal(QString profileName, const QString &password)
                                                 Q_ARG(QString, profileName), Q_ARG(QString, password));
 
     QMutexLocker locker{&bigLock};
+    if (!loaded)
+        return;
 
     QString path = getSettingsDirPath() + profileName + ".ini";
 
@@ -549,6 +645,7 @@ void Settings::savePersonal(QString profileName, const QString &password)
 
     SettingsSerializer ps(path, password);
     ps.beginGroup("Friends");
+    {
         ps.beginWriteArray("Friend", friendLst.size());
         int index = 0;
         for (auto& frnd : friendLst)
@@ -566,11 +663,13 @@ void Settings::savePersonal(QString profileName, const QString &password)
             ++index;
         }
         ps.endArray();
+    }
     ps.endGroup();
 
     ps.beginGroup("Requests");
+    {
         ps.beginWriteArray("Request", friendRequests.size());
-        index = 0;
+        int index = 0;
         for (auto& request : friendRequests)
         {
             ps.setArrayIndex(index);
@@ -581,15 +680,27 @@ void Settings::savePersonal(QString profileName, const QString &password)
             ++index;
         }
         ps.endArray();
+    }
     ps.endGroup();
 
-    ps.beginGroup("General");
+    ps.beginGroup("GUI");
+    {
         ps.setValue("compactLayout", compactLayout);
+    }
+    ps.endGroup();
+
+    ps.beginGroup("Proxy");
+    {
+        ps.setValue("proxyType", static_cast<int>(proxyType));
+        ps.setValue("proxyAddr", proxyAddr);
+        ps.setValue("proxyPort", proxyPort);
+    }
     ps.endGroup();
 
     ps.beginGroup("Circles");
+    {
         ps.beginWriteArray("Circle", circleLst.size());
-        index = 0;
+        int index = 0;
         for (auto& circle : circleLst)
         {
             ps.setArrayIndex(index);
@@ -598,18 +709,23 @@ void Settings::savePersonal(QString profileName, const QString &password)
             index++;
         }
         ps.endArray();
+    }
     ps.endGroup();
 
     ps.beginGroup("Privacy");
+    {
         ps.setValue("typingNotification", typingNotification);
         ps.setValue("enableLogging", enableLogging);
+    }
     ps.endGroup();
 
     ps.beginGroup("Toxme");
+    {
         ps.setValue("info", toxmeInfo);
         ps.setValue("bio", toxmeBio);
         ps.setValue("priv", toxmePriv);
         ps.setValue("pass", toxmePass);
+    }
     ps.endGroup();
 
     ps.save();

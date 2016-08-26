@@ -18,18 +18,21 @@
 */
 
 #include "settingswidget.h"
-#include "src/widget/widget.h"
+
+#include <QTabWidget>
+#include <QLabel>
+#include <QWindow>
+
 #include "src/video/camerasource.h"
+#include "src/widget/widget.h"
 #include "src/widget/form/settings/generalform.h"
+#include "src/widget/form/settings/userinterfaceform.h"
 #include "src/widget/form/settings/privacyform.h"
 #include "src/widget/form/settings/avform.h"
 #include "src/widget/form/settings/advancedform.h"
 #include "src/widget/form/settings/aboutform.h"
 #include "src/widget/translator.h"
 #include "src/widget/contentlayout.h"
-#include <QTabWidget>
-#include <QLabel>
-#include <QWindow>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
@@ -37,36 +40,20 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     // block all signals during initialization, including child widgets
     blockSignals(true);
 
-    body = new QWidget();
     QVBoxLayout* bodyLayout = new QVBoxLayout();
-    body->setLayout(bodyLayout);
-
-    head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
-    head->setLayout(headLayout);
-
-    imgLabel = new QLabel();
-    headLayout->addWidget(imgLabel);
-
-    nameLabel = new QLabel();
-    QFont bold;
-    bold.setBold(true);
-    nameLabel->setFont(bold);
-    headLayout->addWidget(nameLabel);
-    headLayout->addStretch(1);
 
     settingsWidgets = new QTabWidget(this);
     settingsWidgets->setTabPosition(QTabWidget::North);
-
     bodyLayout->addWidget(settingsWidgets);
 
     GeneralForm* gfrm = new GeneralForm(this);
-    PrivacyForm* pfrm = new PrivacyForm;
-    AVForm* avfrm = new AVForm;
-    AdvancedForm *expfrm = new AdvancedForm;
-    AboutForm *abtfrm = new AboutForm;
+    UserInterfaceForm* uifrm = new UserInterfaceForm(this);
+    PrivacyForm* pfrm = new PrivacyForm();
+    AVForm* avfrm = new AVForm();
+    AdvancedForm *expfrm = new AdvancedForm();
+    AboutForm *abtfrm = new AboutForm();
 
-    cfgForms = {{ gfrm, pfrm, avfrm, expfrm, abtfrm }};
+    cfgForms = {{ gfrm, uifrm, pfrm, avfrm, expfrm, abtfrm }};
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
@@ -84,8 +71,7 @@ SettingsWidget::~SettingsWidget()
 
 void SettingsWidget::setBodyHeadStyle(QString style)
 {
-    head->setStyle(QStyleFactory::create(style));
-    body->setStyle(QStyleFactory::create(style));
+    settingsWidgets->setStyle(QStyleFactory::create(style));
 }
 
 void SettingsWidget::showAbout()
@@ -95,9 +81,9 @@ void SettingsWidget::showAbout()
 
 bool SettingsWidget::isShown() const
 {
-    if (body->isVisible())
+    if (settingsWidgets->isVisible())
     {
-        body->window()->windowHandle()->alert(0);
+        settingsWidgets->window()->windowHandle()->alert(0);
         return true;
     }
 
@@ -106,25 +92,18 @@ bool SettingsWidget::isShown() const
 
 void SettingsWidget::show(ContentLayout* contentLayout)
 {
-    contentLayout->mainContent->layout()->addWidget(body);
-    contentLayout->mainHead->layout()->addWidget(head);
-    body->show();
-    head->show();
+    contentLayout->mainContent->layout()->addWidget(settingsWidgets);
+    settingsWidgets->show();
     onTabChanged(settingsWidgets->currentIndex());
 }
 
 void SettingsWidget::onTabChanged(int index)
 {
-    this->settingsWidgets->setCurrentIndex(index);
-    GenericForm* currentWidget = static_cast<GenericForm*>(this->settingsWidgets->widget(index));
-    nameLabel->setText(currentWidget->getFormName());
-    imgLabel->setPixmap(currentWidget->getFormIcon().scaledToHeight(40, Qt::SmoothTransformation));
+    settingsWidgets->setCurrentIndex(index);
 }
 
 void SettingsWidget::retranslateUi()
 {
-    GenericForm* currentWidget = static_cast<GenericForm*>(settingsWidgets->currentWidget());
-    nameLabel->setText(currentWidget->getFormName());
-    for (size_t i=0; i<cfgForms.size(); i++)
+    for (size_t i = 0; i < cfgForms.size(); i++)
         settingsWidgets->setTabText(i, cfgForms[i]->getFormName());
 }

@@ -54,10 +54,8 @@ private:
     void retranslateUi();
 
 private:
-    QWidget *head, *body;
     QTabWidget *settingsWidgets;
-    QLabel *nameLabel, *imgLabel;
-    std::array<GenericForm*, 5> cfgForms;
+    std::array<GenericForm*, 6> cfgForms;
     int currentIndex;
 };
 

@@ -40,56 +40,29 @@ public:
     }
 
 private slots:
-    void onEnableIPv6Updated();
-    void onTranslationUpdated();
-    void onAutorunUpdated();
-    void onSetShowSystemTray();
-    void onSetAutostartInTray();
-    void onSetCloseToTray();
-    void onSetLightTrayIcon();
-    void onSmileyBrowserIndexChanged(int index);
-    void onUDPUpdated();
-    void onProxyAddrEdited();
-    void onProxyPortEdited(int port);
-    void onUseProxyUpdated();
-    void onEmoticonSizeChanged();
-    void onStyleSelected(QString style);
-    void onTimestampSelected(int index);
-    void onDateFormatSelected(int index);
-    void onStyleUpdated();
-    void onSetStatusChange();
-    void onAutoAwayChanged();
-    void onUseEmoticonsChange();
-    void onSetMinimizeToTray();
-    void onReconnectClicked();
-    void onAutoAcceptFileChange();
-    void onAutoSaveDirChange();
-    void onCheckUpdateChanged();
-    void onShowWindowChanged();
-    void onSetShowInFront();
-    void onSetNotifySound();
-    void onSetBusySound();
-    void onSetGroupAlwaysNotify();
-    void onFauxOfflineMessaging();
-    void onCompactLayout();
-    void onSeparateWindowChanged();
-    void onDontGroupWindowsChanged();
-    void onGroupchatPositionChanged();
-    void onThemeColorChanged(int);
+    void on_transComboBox_currentIndexChanged(int index);
+    void on_cbAutorun_stateChanged();
+    void on_showSystemTray_stateChanged();
+    void on_startInTray_stateChanged();
+    void on_closeToTray_stateChanged();
+    void on_lightTrayIcon_stateChanged();
+    void on_autoAwaySpinBox_editingFinished();
+    void on_minimizeToTray_stateChanged();
+    void on_notifySound_stateChanged();
+    void on_busySound_stateChanged();
+    void on_statusChanges_stateChanged();
+    void on_cbFauxOfflineMessaging_stateChanged();
 
-    void on_txtChatFont_currentFontChanged(const QFont& f);
-    void on_txtChatFontSize_valueChanged(int px);
+    void on_autoacceptFiles_stateChanged();
+    void on_autoSaveFilesDir_clicked();
+    void on_checkUpdates_stateChanged();
 
 private:
     void retranslateUi();
 
 private:
     Ui::GeneralSettings *bodyUI;
-    void reloadSmiles();
     SettingsWidget *parent;
-
-protected:
-    bool eventFilter(QObject *o, QEvent *e) final override;
 };
 
 #endif

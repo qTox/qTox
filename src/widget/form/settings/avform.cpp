@@ -19,24 +19,24 @@
 
 #include "avform.h"
 
+#include <map>
+#include <cassert>
+
+#include <QDebug>
+#include <QDesktopWidget>
+#include <QScreen>
+#include <QShowEvent>
+
 #include "src/audio/audio.h"
-#include "src/persistence/settings.h"
-#include "src/video/camerasource.h"
-#include "src/video/cameradevice.h"
-#include "src/video/videosurface.h"
-#include "src/widget/translator.h"
-#include "src/widget/tool/screenshotgrabber.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
-
-#include <QDesktopWidget>
-#include <QDebug>
-#include <QScreen>
-#include <QShowEvent>
-#include <cassert>
-#include <map>
-
+#include "src/persistence/settings.h"
+#include "src/video/cameradevice.h"
+#include "src/video/camerasource.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/screenshotgrabber.h"
+#include "src/widget/translator.h"
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER
@@ -78,11 +78,7 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-        cb->installEventFilter(this);
-        cb->setFocusPolicy(Qt::StrongFocus);
-    }
+    eventsInit();
 
     QDesktopWidget *desktop = QApplication::desktop();
     connect(desktop, &QDesktopWidget::resized, this, &AVForm::rescanDevices);
@@ -565,18 +561,6 @@ void AVForm::killVideoSurface()
     camVideoSurface->close();
     delete camVideoSurface;
     camVideoSurface = nullptr;
-}
-
-bool AVForm::eventFilter(QObject *o, QEvent *e)
-{
-    if ((e->type() == QEvent::Wheel) &&
-         (qobject_cast<QComboBox*>(o) || qobject_cast<QAbstractSpinBox*>(o) ||
-          qobject_cast<QSlider*>(o)))
-    {
-        e->ignore();
-        return true;
-    }
-    return QWidget::eventFilter(o, e);
 }
 
 void AVForm::retranslateUi()

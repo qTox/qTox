@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>418</width>
-    <height>476</height>
+    <width>505</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,25 +24,15 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>398</width>
-        <height>456</height>
+        <width>489</width>
+        <height>549</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QCheckBox" name="cbMakeToxPortable">
-         <property name="toolTip">
-          <string extracomment="describes makeToxPortable checkbox">Save settings to the working directory instead of the usual conf dir</string>
-         </property>
-         <property name="text">
-          <string>Make Tox portable</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QLabel" name="warningLabel">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string notr="true">{IMPORTANT NOTE HERE}</string>
          </property>
          <property name="textFormat">
           <enum>Qt::RichText</enum>
@@ -55,7 +45,149 @@
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignTop">
+       <item>
+        <widget class="QGroupBox" name="ProtableGroup">
+         <property name="title">
+          <string>Portable</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="cbMakeToxPortable">
+            <property name="toolTip">
+             <string extracomment="describes makeToxPortable checkbox">Save settings to the working directory instead of the usual conf dir</string>
+            </property>
+            <property name="text">
+             <string>Make Tox portable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="connectionGroup">
+         <property name="title">
+          <string>Connection Settings</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayoutProxy">
+          <property name="topMargin">
+           <number>9</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_5">
+            <item>
+             <widget class="QCheckBox" name="cbEnableIPv6">
+              <property name="text">
+               <string extracomment="Text on a checkbox to enable IPv6">Enable IPv6 (recommended)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="cbEnableUDP">
+              <property name="toolTip">
+               <string extracomment="force tcp checkbox tooltip">Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</string>
+              </property>
+              <property name="text">
+               <string extracomment="Text on checkbox to disable UDP">Enable UDP (recommended)</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QGridLayout" name="proxyLayout">
+            <item row="1" column="0">
+             <widget class="QLabel" name="proxyTypeLabel">
+              <property name="text">
+               <string>Proxy type:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="3">
+             <widget class="QSpinBox" name="proxyPort">
+              <property name="minimum">
+               <number>0</number>
+              </property>
+              <property name="maximum">
+               <number>65535</number>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="proxyAddrLabel">
+              <property name="text">
+               <string extracomment="Text on proxy addr label">Address:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="proxyAddr"/>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="proxyPortLabel">
+              <property name="text">
+               <string extracomment="Text on proxy port label">Port:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1" colspan="3">
+             <widget class="QComboBox" name="proxyType">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <item>
+               <property name="text">
+                <string>None</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>SOCKS5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>HTTP</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="reconnectButton">
+              <property name="text">
+               <string comment="reconnect button">Reconnect</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="resetButton">
          <property name="text">
           <string>Reset to default settings</string>

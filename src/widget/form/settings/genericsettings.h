@@ -24,14 +24,15 @@ class GenericForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericForm(const QPixmap &icon) : formIcon(icon) {;}
+    explicit GenericForm(const QPixmap &icon);
     virtual ~GenericForm() {}
 
     virtual QString getFormName() = 0;
-    QPixmap getFormIcon()
-    {
-        return formIcon;
-    }
+    QPixmap getFormIcon();
+
+protected:
+    bool eventFilter(QObject *o, QEvent *e) final override;
+    void eventsInit();
 
 protected:
     QPixmap formIcon;
