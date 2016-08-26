@@ -25,12 +25,12 @@
 #include <QTimer>
 #include <QVBoxLayout>
 #include "src/core/core.h"
+#include "src/widget/contentwidget.h"
 #include "src/widget/qrwidget.h"
 
 class CroppingLabel;
 class Core;
 class MaskablePixmapWidget;
-class ContentLayout;
 
 namespace Ui {
 class IdentitySettings;
@@ -51,14 +51,12 @@ protected:
     }
 };
 
-class ProfileForm : public QWidget
+class ProfileForm : public ContentWidget
 {
     Q_OBJECT
 public:
     explicit ProfileForm(QWidget *parent = nullptr);
     ~ProfileForm();
-    virtual void show() final{}
-    void show(ContentLayout* contentLayout);
     bool isShown() const;
 
 signals:

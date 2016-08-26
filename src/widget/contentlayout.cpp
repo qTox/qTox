@@ -23,18 +23,26 @@
 #include <QStyleFactory>
 #include <QFrame>
 
-ContentLayout::ContentLayout()
-    : QVBoxLayout()
-{
-    init();
-}
+/**
+ * @class   ContentLayout
+ * @brief   Provides a fixed 2-row (header, body) layout.
+ *
+ * The header and body widgets are set by calling the @a setup() method and
+ * are not owned by the layout. The parent widget is responsible for deletion.
+ * Header and body are separated by a thin horizontal line to visually separate
+ * them.
+ */
 
-ContentLayout::ContentLayout(QWidget *parent)
-    : QVBoxLayout(parent)
+/**
+ * @brief       Creates a palette and applies it to the widget.
+ * @param[in]   widget  the created palette will be applied to this widget
+ */
+void ContentLayout::createPalette(QWidget* widget)
 {
-    init();
+    // TODO: the palette has to be set by the style implementation instead
+    //       of using a fixed one.
+    QPalette palette = widget->palette();
 
-    QPalette palette = parent->palette();
     palette.setBrush(QPalette::WindowText, QColor(0, 0, 0));
     palette.setBrush(QPalette::Button, QColor(255, 255, 255));
     palette.setBrush(QPalette::Light, QColor(255, 255, 255));
@@ -55,7 +63,27 @@ ContentLayout::ContentLayout(QWidget *parent)
     palette.setBrush(QPalette::Disabled, QPalette::Text, QColor(127, 127, 127));
     palette.setBrush(QPalette::Disabled, QPalette::ButtonText, QColor(127, 127, 127));
 
-    parent->setPalette(palette);
+    widget->setPalette(palette);
+}
+
+/**
+ * @brief   ContentLayout constructor
+ *
+ * The layout has to be inserted into another layout or parented by a widget
+ * before geometry management will work.
+ */
+ContentLayout::ContentLayout()
+    : QVBoxLayout()
+{
+    init();
+}
+
+ContentLayout::ContentLayout(QWidget *parent)
+    : QVBoxLayout(parent)
+{
+    init();
+
+    createPalette(parent);
 }
 
 ContentLayout::~ContentLayout()
@@ -66,6 +94,10 @@ ContentLayout::~ContentLayout()
     mainContent->deleteLater();
 }
 
+/**
+ * @brief   Clears the layout by removing all layout items.
+ * @note    Ownership of the items contents doesn't change.
+ */
 void ContentLayout::clear()
 {
     QLayoutItem* item;

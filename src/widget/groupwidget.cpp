@@ -220,10 +220,10 @@ bool GroupWidget::chatFormIsSet(bool focus) const
     return ContentDialog::existsGroupWidget(groupId, focus) || g->getChatForm()->isVisible();
 }
 
-void GroupWidget::setChatForm(ContentLayout* contentLayout)
+void GroupWidget::setChatForm()
 {
     Group* g = GroupList::findGroup(groupId);
-    g->getChatForm()->show(contentLayout);
+    g->getChatForm()->show();
 }
 
 void GroupWidget::resetEventFlags()
