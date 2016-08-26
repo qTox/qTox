@@ -21,6 +21,8 @@
 #include "core.h"
 #include "coreav.h"
 #include "src/audio/audio.h"
+#include "src/friend.h"
+#include "src/group.h"
 #include "src/persistence/settings.h"
 #include "src/video/videoframe.h"
 #include "src/video/corevideosource.h"
@@ -164,6 +166,28 @@ void CoreAV::process()
 bool CoreAV::anyActiveCalls()
 {
     return !calls.isEmpty();
+}
+
+/**
+ * @brief Checks the call status for a Tox friend.
+ * @param f     the friend to check
+ * @return true, if call is active for the friend; false otherwise
+ */
+bool CoreAV::isCallActive(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendID());
+}
+
+/**
+ * @brief Checks the call status for a Tox group.
+ * @param g     the group to check
+ * @return true, if the call is active for the group; false otherwise
+ */
+bool CoreAV::isCallActive(const Group* g) const
+{
+    return (g && groupCalls.contains(g->getGroupId()))
+            ? !(groupCalls[g->getGroupId()].inactive)
+            : false;
 }
 
 bool CoreAV::isCallVideoEnabled(uint32_t friendNum)
@@ -388,16 +412,30 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
 }
 
-void CoreAV::micMuteToggle(uint32_t callId)
+/**
+ * @brief Toggles the mute state of the call's input (microphone).
+ * @param f     the friend assigned to the call
+ */
+void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    if (calls.contains(callId))
-        calls[callId].muteMic = !calls[callId].muteMic;
+    if (f && calls.contains(f->getFriendID()))
+    {
+        ToxCall& call = calls[f->getFriendID()];
+        call.muteMic = !call.muteMic;
+    }
 }
 
-void CoreAV::volMuteToggle(uint32_t callId)
+/**
+ * @brief Toggles the mute state of the call's output (speaker).
+ * @param f     the friend assigned to the call
+ */
+void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    if (calls.contains(callId))
-        calls[callId].muteVol = !calls[callId].muteVol;
+    if (f && calls.contains(f->getFriendID()))
+    {
+        ToxCall& call = calls[f->getFriendID()];
+        call.muteVol = !call.muteVol;
+    }
 }
 
 /**
@@ -499,34 +537,50 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t *pcm, size_t samples,
     return true;
 }
 
-void CoreAV::disableGroupCallMic(int groupId)
+/**
+ * @brief Mutes or unmutes the group call's input (microphone).
+ * @param g     the group
+ * @param mute  mute/unmute
+ */
+void CoreAV::muteCallInput(const Group* g, bool mute)
 {
-    groupCalls[groupId].muteMic = true;
+    if (g && groupCalls.contains(g->getGroupId()))
+        groupCalls[g->getGroupId()].muteMic = mute;
 }
 
-void CoreAV::disableGroupCallVol(int groupId)
+/**
+ * @brief Mutes or unmutes the group call's output (speaker).
+ * @param g     the group
+ * @param mute  mute/unmute
+ */
+void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
-    groupCalls[groupId].muteVol = true;
+    if (g && groupCalls.contains(g->getGroupId()))
+        groupCalls[g->getGroupId()].muteVol = mute;
 }
 
-void CoreAV::enableGroupCallMic(int groupId)
+/**
+ * @brief Returns the group calls input (microphone) state.
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isGroupCallInputMuted(const Group* g) const
 {
-    groupCalls[groupId].muteMic = false;
+    return g && groupCalls.contains(g->getGroupId())
+            ? groupCalls[g->getGroupId()].muteMic
+            : false;
 }
 
-void CoreAV::enableGroupCallVol(int groupId)
+/**
+ * @brief Returns the group calls output (speaker) state.
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 {
-    groupCalls[groupId].muteVol = false;
-}
-
-bool CoreAV::isGroupCallMicEnabled(int groupId) const
-{
-    return !groupCalls[groupId].muteMic;
-}
-
-bool CoreAV::isGroupCallVolEnabled(int groupId) const
-{
-    return !groupCalls[groupId].muteVol;
+    return g && groupCalls.contains(g->getGroupId())
+            ? groupCalls[g->getGroupId()].muteVol
+            : false;
 }
 
 /**
@@ -537,6 +591,30 @@ bool CoreAV::isGroupCallVolEnabled(int groupId) const
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
+}
+
+/**
+ * @brief Returns the calls input (microphone) mute state.
+ * @param f  the friend to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isCallInputMuted(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendID())
+            ? calls[f->getFriendID()].muteMic
+            : false;
+}
+
+/**
+ * @brief Returns the calls output (speaker) mute state.
+ * @param friendId  the friend to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isCallOutputMuted(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendID())
+            ? calls[f->getFriendID()].muteVol
+            : false;
 }
 
 /**

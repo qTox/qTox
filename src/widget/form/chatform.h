@@ -52,7 +52,6 @@ public:
     void setFriendTyping(bool isTyping);
 
 signals:
-    void sendFile(uint32_t friendId, QString, QString, long long);
     void aliasChanged(const QString& alias);
 
 public slots:
@@ -87,7 +86,6 @@ private slots:
     void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
-    void onEnableCallButtons();
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
@@ -95,13 +93,13 @@ private slots:
     void onCopyStatusMessage();
 
 private:
+    void updateMuteMicButton();
+    void updateMuteVolButton();
     void retranslateUi();
     void showOutgoingCall(bool video);
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
-    void enableCallButtons();
-    void disableCallButtons();
     void updateCallButtons();
     void SendMessageStr(QString msg);
 
@@ -114,20 +112,18 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private:
-    CoreAV* coreav;
     Friend* f;
     CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel *callDuration;
     QPointer<QTimer> callDurationTimer;
     QTimer typingTimer;
-    QPointer<QTimer> disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    CallConfirmWidget *callConfirm;
+    QPointer<CallConfirmWidget> callConfirm;
     bool isTyping;
 };
 
