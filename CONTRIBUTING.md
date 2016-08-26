@@ -29,29 +29,115 @@ Qt:
   will (very likely) be **ignored**. :fearful:
 
 
-# Opening a pull request
+# How to start contributing
+## Before you start…
 
-### Must read
+Before you start contributing, first decide for a specific topic you want to
+work on. Pull requests, which are spanning multiple topics (e.g. "general qTox
+code cleanup") or introduce fundamental architectural changes are rare and
+require additional attention and maintenance. Please also read the following
+simple rules we need to keep qTox a "smooth experience" for everybody involved.
+
+## Must read:
 * Use [**commit message format**](#commit-message-format).
 * Read our [**coding guidelines**](#coding-guidelines).
 * Keep the title **short** and provide a **clear** description about what your
   pull request does.
 * Provide **screenshots** for UI related changes.
-* Keep your git commit history **clean** and **precise**. Commits like
-  `xxx fixup` should not appear.
+* Keep your git commit history **clean** and **precise** by continuously
+  rebasing/amending your PR. Commits like `xxx fixup` are not needed and
+  rejected during review.
 * Commit message should state not only what has been changed, but also why a
   change is needed.
 * If your commit fixes a reported issue (for example #4134), add the following
-  message to the commit `Fixes #4134.`.
-  [Here is an example](https://github.com/qTox/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
+  message to the commit `Fixes #4134.`.  [Here is an
+  example](https://github.com/qTox/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
 
-### Good to know
+## How to open a pull request
+1. Fork the qTox repository on Github to your existing account.
+2. Open a Terminal and do the following steps:
+```bash
+# Go to a directory of your choice, where the qTox directory will be created:
+cd /to/the/directory
+
+# Clone the forked repo:
+git clone git@github.com:<YOUR_USER>/qTox.git
+
+# Add the "upstream" remote to be able to fetch from the qTox upstream repository:
+git remote add upstream https://github.com/qTox/qTox.git
+
+# Point the local "master" branch to the "upstream" repository
+git branch master --set-upstream-to=upstream/master
+```
+
+You're now all set to create your first pull request! Hooray! :)
+
+Still in Terminal, do the following steps to actually create the pull request:
+
+```bash
+# Fetch from the "upstream" repository:
+git fetch upstream master:master
+
+# Checkout a local branch on up-to-date "master" and give it a sane name, e.g.:
+git checkout -b feat/brandnew-feature master
+```
+
+Now do your changes and commit them by your heart's desire. When you think
+you're ready to push for the first time, do the following:
+
+```bash
+# Push to the new upstream branch and link it for synchronization
+git push -u origin feat/brandnew-feature
+
+# From now on, you can simply…
+git push
+# ...to your brand new pull request.
+```
+
+That's it! Happy contributing!
+
+## How to deal with large amounts of merge conflicts
+
+Usually you want to avoid conflicts and they should be rare. If conflicts
+appear anyway, they are usually easy enough to solve quickly and safely.
+However, if you find yourself in a situation with large amounts of merge
+conflicts, this is an indication that you're doing something wrong and you
+should change your strategy. Still… you probably don't want to throw away and
+lose all your valuable work. So don't worry, there's a way to get out of that
+mess. The basic idea is to divide the conflicts into smaller – easier to solve
+– chunks and probably several (topic) branches. Here's a little "Rule of Thumb"
+list to get out of it:
+
+1. Split your commit history into topic related chunks (by
+   rebasing/cherry-picking "good" commits).
+2. Split "API" and "UI" (widget related) changes into separate commits.
+3. Probably split PR into several smaller ones.
+
+In addition it helps to regularly keep rebasing on the upstream repository's
+recent master branch. If you don't have the upstream remote in your repo, add
+it as described in [How to open a pull request](#how-to-open-a-pull-request).
+
+~~~bash
+# If not on PR branch, check it out:
+git checkout my/pr-branch
+
+# Now fetch master ALWAYS from upstream repo
+git fetch upstream master:master
+
+# Last, rebase PR branch onto master…
+git rebase -i master
+
+# …and, if everything's clear, force push to YOUR repo (your "origin" Git remote)
+git push -f
+~~~
+
+## Good to know
 * **Search** the pull request history! Others might have already implemented
   your idea and it could be waiting to be merged (or have been rejected
   already). Save your precious time by doing a search first.
-* When resolving merge conflicts, do `git rebase <target_branch_name>`, don't do
-  `git pull`. Then you can start fixing the conflicts.
-  [Here is a good explanation](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
+* When resolving merge conflicts, do `git rebase <target_branch_name>`, don't
+  do `git pull`. Then you can start fixing the conflicts.  [Here is a good
+  explanation](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
 
 
 ## <a name="commit"></a> Git Commit Guidelines
