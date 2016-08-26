@@ -30,8 +30,11 @@
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 
+#include <QDesktopWidget>
 #include <QDebug>
+#include <QScreen>
 #include <QShowEvent>
+#include <cassert>
 #include <map>
 
 
@@ -56,12 +59,7 @@ AVForm::AVForm()
     btnPlayTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
-    connect(rescanButton, &QPushButton::clicked, this, [=]()
-    {
-        getAudioInDevices();
-        getAudioOutDevices();
-        getVideoDevices();
-    });
+    connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
 
     playbackSlider->setTracking(false);
     playbackSlider->setValue(s.getOutVolume());
@@ -85,6 +83,10 @@ AVForm::AVForm()
         cb->installEventFilter(this);
         cb->setFocusPolicy(Qt::StrongFocus);
     }
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    connect(desktop, &QDesktopWidget::resized, this, &AVForm::rescanDevices);
+    connect(desktop, &QDesktopWidget::screenCountChanged, this, &AVForm::rescanDevices);
 
     Translator::registerHandler(std::bind(&AVForm::retranslateUi, this), this);
 }
@@ -137,19 +139,19 @@ void AVForm::open(const QString &devName, const VideoMode &mode)
     camera.open(devName, mode);
 }
 
+void AVForm::rescanDevices()
+{
+    getAudioInDevices();
+    getAudioOutDevices();
+    getVideoDevices();
+}
+
 void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
 {
-    if (index < 0 || index >= videoModes.size())
-    {
-        qWarning() << "Invalid mode index";
-        return;
-    }
+    assert(0 <= index && index < videoModes.size());
     int devIndex = videoDevCombobox->currentIndex();
-    if (devIndex < 0 || devIndex >= videoDeviceList.size())
-    {
-        qWarning() << "Invalid device index";
-        return;
-    }
+    assert(0 <= devIndex && devIndex < videoDeviceList.size());
+
     QString devName = videoDeviceList[devIndex].first;
     VideoMode mode = videoModes[index];
 
@@ -170,6 +172,11 @@ void AVForm::on_videoModescomboBox_currentIndexChanged(int index)
             VideoMode mode(region);
             mode.width = mode.width / 2 * 2;
             mode.height = mode.height / 2 * 2;
+
+            // Needed, if the virtual screen origin is the top left corner of the primary screen
+            QRect screen = QApplication::primaryScreen()->virtualGeometry();
+            mode.x += screen.x();
+            mode.y += screen.y();
 
             Settings::getInstance().setScreenRegion(mode.toRect());
             Settings::getInstance().setScreenGrabbed(true);
@@ -201,8 +208,6 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
     for (int i = 0; i < allVideoModes.size(); ++i)
     {
         VideoMode mode = allVideoModes[i];
-        QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);
-        qDebug("width: %d, height: %d, FPS: %f, pixel format: %s", mode.width, mode.height, mode.FPS, pixelFormat.toStdString().c_str());
 
         // PS3-Cam protection, everything above 60fps makes no sense
         if (mode.FPS > 60)
@@ -271,6 +276,7 @@ void AVForm::selectBestModes(QVector<VideoMode> &allVideoModes)
 
 void AVForm::fillCameraModesComboBox()
 {
+    qDebug() << "selected Modes:";
     bool previouslyBlocked = videoModescomboBox->blockSignals(true);
     videoModescomboBox->clear();
 
@@ -342,7 +348,7 @@ void AVForm::updateVideoModes(int curIndex)
 {
     if (curIndex < 0 || curIndex >= videoDeviceList.size())
     {
-        qWarning() << "Invalid index";
+        qWarning() << "Invalid index:" << curIndex;
         return;
     }
     QString devName = videoDeviceList[curIndex].first;
@@ -361,8 +367,6 @@ void AVForm::updateVideoModes(int curIndex)
     {
         selectBestModes(allVideoModes);
         videoModes = allVideoModes;
-
-        qDebug("selected Modes:");
         fillCameraModesComboBox();
     }
 
@@ -399,11 +403,7 @@ void AVForm::updateVideoModes(int curIndex)
 
 void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
 {
-    if (index < 0 || index >= videoDeviceList.size())
-    {
-        qWarning() << "Invalid index";
-        return;
-    }
+    assert(0 <= index && index < videoDeviceList.size());
 
     Settings::getInstance().setScreenGrabbed(false);
     QString dev = videoDeviceList[index].first;
@@ -545,6 +545,7 @@ void AVForm::createVideoSurface()
 {
     if (camVideoSurface)
         return;
+
     camVideoSurface = new VideoSurface(QPixmap(), CamFrame);
     camVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     camVideoSurface->setMinimumSize(QSize(160, 120));
@@ -556,6 +557,7 @@ void AVForm::killVideoSurface()
 {
     if (!camVideoSurface)
         return;
+
     QLayoutItem *child;
     while ((child = gridLayout->takeAt(0)) != 0)
         delete child;
