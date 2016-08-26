@@ -24,6 +24,7 @@
 #include <QPointer>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
+
 #include "src/core/corestructs.h"
 #include "genericchatitemwidget.h"
 
@@ -137,8 +138,7 @@ public:
 
 public slots:
     void onShowSettings();
-    void onSeparateWindowClicked(bool separate);
-    void onSeparateWindowChanged(bool separate, bool clicked);
+    void onSeparateWindowChanged(bool separate);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();
@@ -254,14 +254,12 @@ private:
     QAction *actionShow;
 
     QMenu* filterMenu;
-
     QActionGroup* filterGroup;
     QAction* filterAllAction;
     QAction* filterOnlineAction;
     QAction* filterOfflineAction;
     QAction* filterFriendsAction;
     QAction* filterGroupsAction;
-
     QActionGroup* filterDisplayGroup;
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
@@ -270,7 +268,6 @@ private:
 
     Qt::Edge contentArrangement;
     QPointer<QWidget> contentWidget;
-    QPointer<ContentLayout> contentLayout;
     QPointer<AddFriendForm> addFriendForm;
     QPointer<GroupInviteForm> groupInviteForm;
     QPointer<ProfileForm> profileForm;
@@ -278,8 +275,8 @@ private:
     QPointer<FilesForm> filesForm;
     QPointer<GenericChatForm> activeChat;
 
-    FriendListWidget *contactListWidget;
-    MaskablePixmapWidget *profilePicture;
+    FriendListWidget* contactListWidget;
+    MaskablePixmapWidget* profilePicture;
 
     bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;

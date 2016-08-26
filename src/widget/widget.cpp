@@ -234,19 +234,6 @@ void Widget::init()
     reloadTheme();
     updateIcons();
 
-    filesForm = new FilesForm();
-    addFriendForm = new AddFriendForm;
-    groupInviteForm = new GroupInviteForm;
-    profileForm = new ProfileForm();
-
-    //connect logout tray menu action
-    connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
-
-    const Settings& s = Settings::getInstance();
-    Core* core = Nexus::getCore();
-    connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
-    connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
-    connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
     connect(addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
     connect(groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
     connect(transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);
@@ -255,8 +242,6 @@ void Widget::init()
     connect(nameLabel, &CroppingLabel::clicked, this, &Widget::showProfile);
     connect(statusLabel, &CroppingLabel::editFinished, this, &Widget::onStatusMessageChanged);
     connect(mainSplitter, &QSplitter::splitterMoved, this, &Widget::onSplitterMoved);
-    connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequested);
-    connect(groupInviteForm, &GroupInviteForm::groupCreate, Core::getInstance(), &Core::createGroup);
     connect(timer, &QTimer::timeout, this, &Widget::onUserAwayCheck);
     connect(timer, &QTimer::timeout, this, &Widget::onEventIconTick);
     connect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
@@ -336,13 +321,13 @@ void Widget::init()
 
     QAction* preferencesAction = viewMenu->menu()->addAction(QString());
     preferencesAction->setMenuRole(QAction::PreferencesRole);
-    connect(preferencesAction, &QAction::triggered, this, &Widget::onSettingsClicked);
+    connect(preferencesAction, &QAction::triggered, this, &Widget::onShowSettings);
 
     QAction* aboutAction = viewMenu->menu()->addAction(QString());
     aboutAction->setMenuRole(QAction::AboutRole);
     connect(aboutAction, &QAction::triggered, [this]()
     {
-        onSettingsClicked();
+        onShowSettings();
         settingsWidget->showAbout();
     });
 
@@ -356,11 +341,6 @@ void Widget::init()
 
     connect(this, &Widget::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
 #endif
-
-    onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
-
-    if (contentLayout)
-        onAddClicked();
 
     //restore window state
     restoreGeometry(Settings::getInstance().getWindowGeometry());
@@ -385,25 +365,23 @@ void Widget::init()
     groupInvitesButton = nullptr;
     unreadGroupInvites = 0;
 
-    connect(addFriendForm, &AddFriendForm::friendRequested, this, &Widget::friendRequestsUpdate);
-    connect(addFriendForm, &AddFriendForm::friendRequestsSeen, this, &Widget::friendRequestsUpdate);
-    connect(addFriendForm, &AddFriendForm::friendRequestAccepted, this, &Widget::friendRequestAccepted);
-    connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen, this, &Widget::groupInvitesClear);
-    connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted, this, &Widget::onGroupInviteAccepted);
-
     // settings
+    const Settings& s = Settings::getInstance();
     connect(&s, &Settings::showSystemTrayChanged,
             this, &Widget::onSetShowSystemTray);
     connect(&s, &Settings::separateWindowChanged,
-            this, &Widget::onSeparateWindowClicked);
+            this, &Widget::onSeparateWindowChanged);
     connect(&s, &Settings::groupchatPositionChanged,
             contactListWidget, &FriendListWidget::onGroupchatPositionChanged);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
 
-    if (!Settings::getInstance().getShowSystemTray())
-        show();
+    if (!s.getSeparateWindow())
+        onAddClicked();
+
+    if (s.getShowSystemTray())
+        hide();
 
 #ifdef Q_OS_MAC
     Nexus::getInstance().updateWindows();
@@ -522,10 +500,6 @@ Widget::~Widget()
         icon->hide();
 
     delete icon;
-    delete profileForm;
-    delete addFriendForm;
-    delete groupInviteForm;
-    delete filesForm;
     delete timer;
     delete offlineMsgTimer;
 
@@ -670,72 +644,28 @@ void Widget::onStatusSet(Status status)
     updateIcons();
 }
 
-void Widget::onSeparateWindowClicked(bool separate)
+void Widget::onSeparateWindowChanged(bool separate)
 {
-    onSeparateWindowChanged(separate, true);
-}
-
-void Widget::onSeparateWindowChanged(bool separate, bool clicked)
-{
-    if (!separate)
+    if (separate)
     {
-        QWindowList windowList = QGuiApplication::topLevelWindows();
-
-        for (QWindow* window : windowList)
-        {
-            if (window->objectName() == "detachedWindow")
-                window->close();
-        }
-
-        QWidget* contentWidget = new QWidget(this);
-        contentLayout = new ContentLayout(contentWidget);
-        mainSplitter->addWidget(contentWidget);
-
-        setMinimumWidth(775);
-
-        onAddClicked();
+        showContentWidget(contentWidget);
     }
     else
     {
-        int width = friendList->size().width();
-        QSize size;
-        QPoint pos;
-
-        if (contentLayout)
+        QWindow* focusWindow = QApplication::focusWindow();
+        for (QWindow* w : QApplication::topLevelWindows())
         {
-            pos = mapToGlobal(mainSplitter->widget(1)->pos());
-            size = mainSplitter->widget(1)->size();
-        }
-
-        if (contentLayout)
-        {
-            contentLayout->clear();
-            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
-            contentLayout->parentWidget()->hide();
-            contentLayout->parentWidget()->deleteLater();
-            contentLayout->deleteLater();
-        }
-
-        setMinimumWidth(tooliconsZone->sizeHint().width());
-
-        if (clicked)
-        {
-            showNormal();
-            resize(width, height());
-
-            if (settingsWidget)
+            if (w != focusWindow &&
+                w->objectName() != QStringLiteral("MainWindowWindow"))
             {
-                ContentLayout* contentLayout = createContentDialog((DialogType::SettingDialog));
-                contentLayout->parentWidget()->resize(size);
-                contentLayout->parentWidget()->move(pos);
-                settingsWidget->show(contentLayout);
-                setActiveToolMenuButton(ActiveToolMenuButton::None);
+                w->close();
             }
         }
 
-        setWindowTitle(QString());
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
+        QWidget* tlw = QApplication::activeWindow();
+        showContentWidget(tlw, tlw->windowTitle());
     }
+
 }
 
 void Widget::setWindowTitle(const QString& title)
@@ -771,56 +701,57 @@ void Widget::forceShow()
 
 void Widget::onAddClicked()
 {
-    if (Settings::getInstance().getSeparateWindow())
+    if (!addFriendForm)
     {
-        if (!addFriendForm->isShown())
-            addFriendForm->show(createContentDialog(DialogType::AddDialog));
+        addFriendForm = new AddFriendForm(this);
 
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
+        connect(addFriendForm, &AddFriendForm::friendRequested,
+                this, &Widget::friendRequested);
+        connect(addFriendForm, &AddFriendForm::friendRequested,
+                this, &Widget::friendRequestsUpdate);
+        connect(addFriendForm, &AddFriendForm::friendRequestsSeen,
+                this, &Widget::friendRequestsUpdate);
+        connect(addFriendForm, &AddFriendForm::friendRequestAccepted,
+                this, &Widget::friendRequestAccepted);
     }
-    else
-    {
-        hideMainForms(nullptr);
-        addFriendForm->show(contentLayout);
-        setWindowTitle(fromDialogType(DialogType::AddDialog));
-        setActiveToolMenuButton(ActiveToolMenuButton::AddButton);
-    }
+
+    showContentWidget(addFriendForm, fromDialogType(DialogType::AddDialog),
+             ActiveToolMenuButton::AddButton);
 }
 
 void Widget::onGroupClicked()
 {
-    if (Settings::getInstance().getSeparateWindow())
+    if (!groupInviteForm)
     {
-        if (!groupInviteForm->isShown())
-            groupInviteForm->show(createContentDialog(DialogType::GroupDialog));
+        groupInviteForm = new GroupInviteForm(this);
 
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
+        connect(groupInviteForm, &GroupInviteForm::groupCreate,
+                Core::getInstance(), &Core::createGroup);
+        connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen,
+                this, &Widget::groupInvitesClear);
+        connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted,
+                this, &Widget::onGroupInviteAccepted);
     }
-    else
-    {
-        hideMainForms(nullptr);
-        groupInviteForm->show(contentLayout);
-        setWindowTitle(fromDialogType(DialogType::GroupDialog));
-        setActiveToolMenuButton(ActiveToolMenuButton::GroupButton);
-    }
+
+    showContentWidget(groupInviteForm, fromDialogType(DialogType::GroupDialog),
+             ActiveToolMenuButton::GroupButton);
 }
 
 void Widget::onTransferClicked()
 {
-    if (Settings::getInstance().getSeparateWindow())
+    if (!filesForm)
     {
-        if (!filesForm->isShown())
-            filesForm->show(createContentDialog(DialogType::TransferDialog));
+        filesForm = new FilesForm(this);
 
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
+        Core* core = Nexus::getCore();
+        connect(core, &Core::fileDownloadFinished,
+                filesForm, &FilesForm::onFileDownloadComplete);
+        connect(core, &Core::fileUploadFinished,
+                filesForm, &FilesForm::onFileUploadComplete);
     }
-    else
-    {
-        hideMainForms(nullptr);
-        filesForm->show(contentLayout);
-        setWindowTitle(fromDialogType(DialogType::TransferDialog));
-        setActiveToolMenuButton(ActiveToolMenuButton::TransferButton);
-    }
+
+    showContentWidget(filesForm, fromDialogType(DialogType::TransferDialog),
+             ActiveToolMenuButton::TransferButton);
 }
 
 void Widget::confirmExecutableOpen(const QFileInfo &file)
@@ -892,48 +823,31 @@ void Widget::onIconClick(QSystemTrayIcon::ActivationReason reason)
 void Widget::onShowSettings()
 {
     if (!settingsWidget)
+    {
         settingsWidget = new SettingsWidget(this);
-
-    if (Settings::getInstance().getSeparateWindow())
-    {
-        if (!settingsWidget->isShown())
-            settingsWidget->show(createContentDialog(DialogType::SettingDialog));
-
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
         settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     }
-    else
-    {
-        hideMainForms(nullptr);
-        settingsWidget->show(contentLayout);
-        setWindowTitle(fromDialogType(DialogType::SettingDialog));
-        setActiveToolMenuButton(ActiveToolMenuButton::SettingButton);
-    }
+
+    showContentWidget(settingsWidget, fromDialogType(DialogType::SettingDialog),
+             ActiveToolMenuButton::SettingButton);
 }
 
-void Widget::showProfile() // onAvatarClicked, onUsernameClicked
+void Widget::showProfile()
 {
-    if (Settings::getInstance().getSeparateWindow())
+    if (!profileForm)
     {
-        if (!profileForm->isShown())
-            profileForm->show(createContentDialog(DialogType::ProfileDialog));
+        profileForm = new ProfileForm(this);
 
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
-        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
+        connect(actionLogout, &QAction::triggered, profileForm,
+                &ProfileForm::onLogoutClicked);
+
+        Core* core = Nexus::getCore();
+        connect(core, &Core::selfAvatarChanged,
+                profileForm, &ProfileForm::onSelfAvatarLoaded);
     }
-    else
-    {
-        hideMainForms(nullptr);
-        profileForm->show(contentLayout);
-        setWindowTitle(fromDialogType(DialogType::ProfileDialog));
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
-    }
-}
 
-{
-
-
-
+    showContentWidget(profileForm, fromDialogType(DialogType::ProfileDialog),
+             ActiveToolMenuButton::None);
 }
 
 void Widget::setUsername(const QString& username)
@@ -1204,7 +1118,8 @@ bool Widget::newFriendMessageAlert(int friendId, bool sound)
     }
     else
     {
-        if (Settings::getInstance().getSeparateWindow() && Settings::getInstance().getShowWindow())
+        if (Settings::getInstance().getSeparateWindow() &&
+            Settings::getInstance().getShowWindow())
         {
             if (Settings::getInstance().getDontGroupWindows())
             {
@@ -1343,6 +1258,20 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
 
 void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
 {
+    if (!addFriendForm)
+    {
+        addFriendForm = new AddFriendForm(this);
+
+        connect(addFriendForm, &AddFriendForm::friendRequested,
+                this, &Widget::friendRequested);
+        connect(addFriendForm, &AddFriendForm::friendRequested,
+                this, &Widget::friendRequestsUpdate);
+        connect(addFriendForm, &AddFriendForm::friendRequestsSeen,
+                this, &Widget::friendRequestsUpdate);
+        connect(addFriendForm, &AddFriendForm::friendRequestAccepted,
+                this, &Widget::friendRequestAccepted);
+    }
+
     if (addFriendForm->addFriendRequest(userId, message))
     {
         friendRequestsUpdate();
@@ -1391,7 +1320,8 @@ void Widget::removeFriend(Friend* f, bool fake)
     Nexus::getCore()->removeFriend(f->getFriendID(), fake);
 
     delete f;
-    if (contentLayout && contentLayout->mainHead->layout()->isEmpty())
+
+    if (!Settings::getInstance().getSeparateWindow())
         onAddClicked();
 
     contactListWidget->reDraw();
@@ -1481,7 +1411,6 @@ ContentLayout* Widget::createContentDialog(DialogType type)
     dialog->setAttribute(Qt::WA_DeleteOnClose);
     ContentLayout* contentLayoutDialog = new ContentLayout(dialog);
 
-    dialog->setObjectName("detached");
     dialog->setLayout(contentLayoutDialog);
     dialog->layout()->setMargin(0);
     dialog->layout()->setSpacing(0);
@@ -1517,6 +1446,19 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
         ++unreadGroupInvites;
         groupInvitesUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
+
+        if (!groupInviteForm)
+        {
+            groupInviteForm = new GroupInviteForm(this);
+
+            connect(groupInviteForm, &GroupInviteForm::groupCreate,
+                    Core::getInstance(), &Core::createGroup);
+            connect(groupInviteForm, &GroupInviteForm::groupInvitesSeen,
+                    this, &Widget::groupInvitesClear);
+            connect(groupInviteForm, &GroupInviteForm::groupInviteAccepted,
+                    this, &Widget::onGroupInviteAccepted);
+        }
+
         groupInviteForm->addGroupInvite(friendId, type, invite);
     }
     else
@@ -1629,7 +1571,8 @@ void Widget::removeGroup(Group* g, bool fake)
 
     Nexus::getCore()->removeGroup(g->getGroupId(), fake);
     delete g;
-    if (contentLayout && contentLayout->mainHead->layout()->isEmpty())
+
+    if (!Settings::getInstance().getSeparateWindow())
         onAddClicked();
 
     contactListWidget->reDraw();
