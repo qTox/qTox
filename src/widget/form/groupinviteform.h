@@ -23,9 +23,11 @@
 #include <QWidget>
 #include <QDateTime>
 #include <QSet>
+#include <QScrollArea>
+
+#include "src/widget/contentwidget.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/gui.h"
-#include <QScrollArea>
 
 class QLabel;
 class QVBoxLayout;
@@ -33,18 +35,15 @@ class QPushButton;
 class QGroupBox;
 class QSignalMapper;
 
-class ContentLayout;
-
 namespace Ui {class MainWindow;}
 
-class GroupInviteForm : public QWidget
+class GroupInviteForm : public ContentWidget
 {
     Q_OBJECT
 public:
-    GroupInviteForm();
+    explicit GroupInviteForm(QWidget* parent = nullptr);
     ~GroupInviteForm();
 
-    void show(ContentLayout* contentLayout);
     void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
     bool isShown() const;
 
@@ -77,6 +76,7 @@ private:
     };
 
     QWidget* headWidget;
+    QWidget* bodyWidget;
     QLabel* headLabel;
     QPushButton* createButton;
     QGroupBox* inviteBox;

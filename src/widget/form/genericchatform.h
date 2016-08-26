@@ -25,8 +25,9 @@
 #include <QDateTime>
 #include <QMenu>
 #include "src/core/corestructs.h"
-#include "src/chatlog/chatmessage.h"
 #include "src/core/toxid.h"
+#include "src/chatlog/chatmessage.h"
+#include "src/widget/contentwidget.h"
 
 /**
  * Spacing in px inserted when the author of the last message changes
@@ -43,7 +44,6 @@ class ChatLog;
 class MaskablePixmapWidget;
 class Widget;
 class FlyoutOverlayWidget;
-class ContentLayout;
 class QSplitter;
 class GenericNetCamView;
 
@@ -51,22 +51,19 @@ namespace Ui {
     class MainWindow;
 }
 
-class GenericChatForm : public QWidget
+class GenericChatForm : public ContentWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(QWidget *parent = 0);
+    explicit GenericChatForm(QWidget *parent = 0,
+                             Qt::WindowFlags f = Qt::WindowFlags());
     ~GenericChatForm();
 
     void setName(const QString &newName);
-    virtual void show() final{}
-    virtual void show(ContentLayout* contentLayout);
 
     ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
 
-    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
-    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
     bool isEmpty();
 
     ChatLog* getChatLog() const;
@@ -80,6 +77,8 @@ signals:
 
 public slots:
     void focusInput();
+    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
+    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -106,14 +105,16 @@ protected:
     QString resolveToxId(const ToxId &id);
     void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
-    virtual void hideEvent(QHideEvent* event) override;
-    virtual void showEvent(QShowEvent *) override;
-    virtual bool event(QEvent *) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    void hideEvent(QHideEvent* event) override;
+    void showEvent(QShowEvent *) override;
+    bool event(QEvent *) final override;
+    void resizeEvent(QResizeEvent* event) final override;
+    bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction* saveChatAction, *clearAction, *quoteAction;
+    QAction* saveChatAction;
+    QAction* clearAction;
+    QAction* quoteAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;
@@ -121,17 +122,22 @@ protected:
     int curRow;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
-    QWidget *headWidget;
-    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QWidget* headWidget;
+    QWidget* bodyWidget;
+    QPushButton* fileButton;
+    QPushButton* screenshotButton;
+    QPushButton* emoteButton;
+    QPushButton* callButton;
+    QPushButton* videoButton;
+    QPushButton* volButton;
+    QPushButton* micButton;
     FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     ChatLog *chatWidget;
     QDateTime earliestMessage;
-    QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
-    bool audioInputFlag;
-    bool audioOutputFlag;
+    QDateTime historyBaselineDate = QDateTime::currentDateTime();
     QSplitter* bodySplitter;
     GenericNetCamView* netcam;
 };
