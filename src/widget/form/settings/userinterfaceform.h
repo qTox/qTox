@@ -58,7 +58,7 @@ private slots:
 
 private:
     void retranslateUi();
-    void reloadSmiles();
+    void reloadSmileys();
 
 private:
     QList<QLabel*> smileLabels;
