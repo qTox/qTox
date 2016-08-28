@@ -41,6 +41,7 @@
  * @deprecated See the History class instead
  * @warning DO NOT USE!
  */
+// TODO: remove backwards compatibility in 2018
 
 static HistoryKeeper *historyInstance = nullptr;
 QMutex HistoryKeeper::historyMutex;
