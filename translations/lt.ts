@@ -17,51 +17,51 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Keičiant išvesties garsį, groti bandomąjį garsą.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudokite slinktuką, kad nustatytumėte savo įvesties įrenginio stiprinimą rėžyje nuo %1dB iki %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasirinkti sritį</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekranas %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Garso nustatymai</translation>
+        <translation>Garso nustatymai</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Stiprinimas</translation>
+        <translation>Stiprinimas</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Atkūrimo įrenginys</translation>
+        <translation>Atkūrimo įrenginys</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Slinktuku galite nustatyti garsiakalbių garsį.</translation>
+        <translation>Naudokite slinktuką, kad nustatytumėte savo garsiakalbių garsį.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Įrašymo įrenginys</translation>
+        <translation>Įrašymo įrenginys</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Garsis</translation>
+        <translation>Garsis</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Vaizdo nustatymai</translation>
+        <translation>Vaizdo nustatymai</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Vaizdo įrenginys</translation>
+        <translation>Vaizdo įrenginys</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,7 +69,7 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Nustatykite vaizdo kameros raišką.
+        <translation>Nustatykite vaizdo kameros raišką.
 Kuo didesnė reikšmė, tuo geresnę vaizdo kokybę matys jūsų kontaktai.
 Geresnei vaizdo kokybei atitinkamai reikia geresnio interneto ryšio.
 Jeigu jūsų interneto ryšys yra per prastas, turėsite keblumų su aukštesnės kokybės
@@ -77,7 +77,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Raiška</translation>
+        <translation>Raiška</translation>
     </message>
     <message>
         <source>Rescan devices</source>
@@ -109,11 +109,23 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation>Kaip parašyti naudingą klaidos pranešimą</translation>
+        <translation>Kaip parašyti naudingą pranešimą apie klaidą</translation>
     </message>
     <message>
         <source>report it</source>
         <translation>pranešti apie tai</translation>
+    </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -145,10 +157,6 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Authors</source>
         <translation>Kūrėjai</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Projekto pradininkas: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Visą &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;talkininkų sąrašą&lt;/span&gt;&lt;/a&gt; rasite Github svetainėje&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -187,7 +195,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Numatytas katalogas failams išsaugoti:</translation>
+        <translation>Numatytasis katalogas failams išsaugoti:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -235,15 +243,9 @@ vaizdo skambučiais.</translation>
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox naudoja Tox DNS, bet tai neįmanoma per įgaliotąjį (proxy) serverį.
-    Ignoruoti įgaliotąjį serverį ir jungtis prie interneto tiesiogiai?</translation>
-    </message>
-    <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation>76 šešioliktainės sistemos skaitmenys arba vardas@adresas.lt</translation>
+        <translation>76 šešioliktainės sistemos skaitmenys arba vardas@pavyzdys.lt</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -273,11 +275,6 @@ vaizdo skambučiais.</translation>
         <translation>Negalite naudoti savo Tox ID!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Tokio Tox ID nėra</translation>
-    </message>
-    <message>
         <source>Add a friend</source>
         <translation>Pridėti kontaktą</translation>
     </message>
@@ -293,6 +290,11 @@ vaizdo skambučiais.</translation>
         <source>Reject</source>
         <translation>Atmesti</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Tokio Tox ID nėra</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -300,25 +302,117 @@ vaizdo skambučiais.</translation>
         <source>Advanced</source>
         <translation>Kita</translation>
     </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Taip</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Ne</translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Vyksta pokalbis</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Vykstant pokalbiui atsijungti negalite!</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Nuostatas saugoti veikiamajame kataloge, o ne įprastame nuostatų kataloge</translation>
+        <translation>Įrašyti nustatymus į darbinį katalogą, vietoj įprasto konfigūracijos katalogo</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
         <translation>Leisti persinešti Tox programą</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;SVARBUS PRANEŠIMAS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Nebent &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;tikrai&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; išmanote kaip elgtis, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;nieko&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; čia nekeiskite. Pakeitimai gali sukelti problemų naudotis qTox bei net duomenų (pvz., pokalbių žurnalo) praradimą.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Atstatyti numatytuosius nustatymus</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Ryšio nuostatos</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Įjungti IPv6 (rekomenduojama)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">Įjungti UDP (rekomenduojama)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Įgaliotojo serverio tipas:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Adresas:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Prievadas:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Prisijungti iš naujo</translation>
     </message>
 </context>
 <context>
@@ -329,7 +423,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation>qTox nepavyko atidaryti %1</translation>
+        <translation>qTox nepavyko atverti %1</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
@@ -345,7 +439,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation>Nepavyko atidaryti</translation>
+        <translation>Nepavyko atverti</translation>
     </message>
     <message>
         <source>Bad idea</source>
@@ -377,7 +471,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation>Skambiname: %1</translation>
+        <translation>Skambiname %1</translation>
     </message>
     <message>
         <source>Cancel video call</source>
@@ -405,7 +499,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation>Nepavyko nusiųsti failo „%1“</translation>
+        <translation>Nepavyko išsiųsti failo „%1“</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
@@ -414,7 +508,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation>Nepavyko išsaugoti momentinės ekrano kopijos</translation>
+        <translation>Nepavyko įrašyti ekrano kopijos</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -469,7 +563,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation>Atidaryti visus atskirame lange</translation>
+        <translation>Atverti visus atskirame lange</translation>
     </message>
 </context>
 <context>
@@ -480,7 +574,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
-        <translation>Turite parašyti žinutę adresatui</translation>
+        <translation>Turite parašyti adresatui žinutę su savo užklausa</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -523,7 +617,7 @@ History will be disabled!</source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
         <translation>
-Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Bet kada galite vėl įjungti šifravimą nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
+Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Šifravimą bet kada galite įjungti vėl, nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -543,7 +637,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     </message>
     <message>
         <source>10Mb</source>
-        <translation>10 MB</translation>
+        <translation>10 Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
@@ -555,7 +649,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     </message>
     <message>
         <source>Filename</source>
-        <translation>Pavadinimas</translation>
+        <translation>Failo pavadinimas</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
@@ -565,12 +659,12 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation>Priimti failą</translation>
+        <translation>Priimkite, kad gautumėte šį failą</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Įrašyti failo čia neleidžiama</translation>
+        <translation>Vieta nėra skirta rašymui</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
@@ -580,11 +674,11 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation>Siuntimas atkuriamas...</translation>
+        <translation>Siuntimas pratęsiamas...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation>Atšaukti siuntimą</translation>
+        <translation>Atsisakyti siuntimo</translation>
     </message>
     <message>
         <source>Pause transfer</source>
@@ -597,15 +691,15 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     </message>
     <message>
         <source>Open file</source>
-        <translation>Atidaryti failą</translation>
+        <translation>Atverti failą</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation>Atidaryti katalogą</translation>
+        <translation>Atverti katalogą</translation>
     </message>
     <message>
         <source>Resume transfer</source>
-        <translation>Atkurti siuntimą</translation>
+        <translation>Pratęsti siuntimą</translation>
     </message>
     <message>
         <source>Accept transfer</source>
@@ -614,7 +708,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation>Išsaugoti failą</translation>
+        <translation>Įrašyti failą</translation>
     </message>
 </context>
 <context>
@@ -622,15 +716,15 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation>Baigti siųsti failai</translation>
+        <translation>Persiųsti failai</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation>Parsiųsti</translation>
+        <translation>Atsiųsti</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation>Nusiųsti</translation>
+        <translation>Išsiųsti</translation>
     </message>
 </context>
 <context>
@@ -675,7 +769,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation>Kažkas nori su Jumis bendrauti</translation>
+        <translation>Kažkas nori su jumis bendrauti</translation>
     </message>
     <message>
         <source>User ID:</source>
@@ -683,7 +777,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation>Prisistatymo žinutė:</translation>
+        <translation>Kontakto užklausos žinutė:</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -749,7 +843,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Pasirinkite priimamų failų katalogą</translation>
+        <translation>Pasirinkite katalogą priimamiems failams</translation>
     </message>
     <message>
         <source>New message</source>
@@ -802,23 +896,9 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
         <translation>Bendrosios</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Nėra</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Pasirinkite priimamų failų katalogą</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Vyksta pokalbis</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Vykstant pokalbiui atsijungti negalite!</translation>
     </message>
 </context>
 <context>
@@ -904,26 +984,8 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Automatiškai „pasišalinęs“ po („0“ išjungia):</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Susirašinėjimas</translation>
-    </message>
-    <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>Paleisti garso signalą gavus žinutę.</translation>
-    </message>
-    <message>
         <source>Play sound</source>
         <translation>Paleisti garso signalą</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Visada rodyti pranešimus apie naujas žinutes grupių pokalbiuose.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Visada pranešti apie grupių pokalbius</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -947,190 +1009,16 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Automatiškai priimti failus</translation>
     </message>
     <message>
-        <source>Theme</source>
-        <translation>Apipavidalinimas</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Naudoti jaustukus</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Ryšio nuostatos</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Įjungti IPv6 (rekomenduojama)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
-    </message>
-    <message>
         <source>On new message:</source>
         <translation>Gavus žinutę:</translation>
-    </message>
-    <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Sufokusuoti qTox langą gavus žinutę.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Sufokusuoti langą</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
         <translation>Numatytas katalogas failams išsaugoti:</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Atverti qTox langą gavus naują žinutę, jei qTox yra paslėptas.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Atverti langą</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Jei pažymėta, grupių pokalbiai bus rodomi kontaktų sąrašo viršuje, priešingu atveju – apačioje.</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>Rodyti grupių pokalbius viršuje</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Žinutės, kurias siunčiate neprisijungusiems kontaktams,
-bus nusiųstos jiems prisijungus.</translation>
-    </message>
-    <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Jūsų kontaktų sąrašas bus rodomas glaustuoju režimu.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Glaudesnis kontaktų sąrašas</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>Atskirų langų režimas</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>Kiekvieną pokalbį atverti atskirame lange</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Jaustukų rinkinys:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Jaustukų dydis:</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Stilius:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Apipavidalinimo spalva:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Laiko formatas:</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>Datos formatas:</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Įjungti UDP (rekomenduojama)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Įgaliotojo serverio tipas:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adresas:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Prievadas:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Nėra</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Prisijungti iš naujo</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation>Neformatuotas tekstas</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation>Rodyti formatavimo simbolius</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation>Nerodyti formatavimo simbolių</translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation>Net jei įjungta būsena „Užsiėmęs“</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation>Standartinis šriftas:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation>px</translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation>Dydis: </translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1280,7 +1168,7 @@ bus nusiųstos jiems prisijungus.</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esate pakviesti naudotojo %1, %2 ties %3.</translation>
     </message>
 </context>
 <context>
@@ -1713,6 +1601,10 @@ Save format changes are possible, which may result in data loss.</source>
         <translation>Pokalbių žurnalo funkcija dar nestabili.
 Failo formatas dar gali pasikeisti, todėl galite prarasti sukauptus duomenis.</translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Privatumas</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -1942,11 +1834,11 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Failo nėra</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilio nėra</translation>
     </message>
     <message>
         <source>Profile imported</source>
@@ -1961,7 +1853,7 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1969,16 +1861,16 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Taip</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
@@ -2177,34 +2069,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Ryšio sudaryti nepavyko</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Tokio adreso nėra</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Klaida gaunant DNS duomenis</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS įrašas nerastas</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Netinkamas DNS įrašas</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2232,6 +2096,166 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Atšaukti</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Susirašinėjimas</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">Standartinis šriftas:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished">px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">Dydis: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished">Naujoji teksto stiliaus nuostata negali būti įkelta tol, kol qTox nebus paleista iš naujo.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">Teksto stiliaus formatas:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished">Pasirinkite teksto stiliaus nuostatą.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">Neformatuotas tekstas</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished">Rodyti formatavimo simbolius</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished">Nerodyti formatavimo simbolių</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Nauja žintutė</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Atverti qTox langą gavus naują žinutę, jei qTox yra paslėptas.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Atverti langą</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Sufokusuoti qTox langą gavus žinutę.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Sufokusuoti langą</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Visada rodyti pranešimus apie naujas žinutes grupių pokalbiuose.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Visada pranešti apie grupių pokalbius</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">Jei pažymėta, grupių pokalbiai bus rodomi kontaktų sąrašo viršuje, priešingu atveju – apačioje.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">Rodyti grupių pokalbius viršuje</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Jūsų kontaktų sąrašas bus rodomas glaustuoju režimu.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Glaudesnis kontaktų sąrašas</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">Atskirų langų režimas</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">Kiekvieną pokalbį atverti atskirame lange</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Naudoti jaustukus</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Jaustukų rinkinys:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Jaustukų dydis:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Apipavidalinimas</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Stilius:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Apipavidalinimo spalva:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Laiko formatas:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Datos formatas:</translation>
     </message>
 </context>
 <context>
