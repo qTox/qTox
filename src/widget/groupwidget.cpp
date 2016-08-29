@@ -219,7 +219,7 @@ Group* GroupWidget::getGroup() const
 
 bool GroupWidget::chatFormIsSet(bool focus) const
 {
-    return ContentDialog::existsGroupWidget(groupId, focus);
+    return ContentDialog::groupWidgetExists(groupId, focus);
 }
 
 void GroupWidget::setChatForm()

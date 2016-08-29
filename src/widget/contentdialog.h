@@ -65,7 +65,7 @@ public:
 
     static ContentDialog* current();
     static bool friendWidgetExists(int friendId, bool focus);
-    static bool existsGroupWidget(int groupId, bool focus);
+    static bool groupWidgetExists(int groupId, bool focus);
     static void updateFriendStatus(int friendId);
     static void updateFriendStatusMessage(int friendId, const QString &message);
     static void updateGroupStatus(int groupId);
