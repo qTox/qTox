@@ -112,7 +112,7 @@ Core* Core::getInstance()
     return Nexus::getCore();
 }
 
-CoreAV *Core::getAv()
+CoreAV *Core::getAv() const
 {
     return av;
 }
