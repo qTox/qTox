@@ -44,10 +44,10 @@ public slots:
     void reposition();
 
 protected:
-    virtual void paintEvent(QPaintEvent* event) final override;
-    virtual void showEvent(QShowEvent* event) final override;
-    virtual void hideEvent(QHideEvent* event) final override;
-    virtual bool eventFilter(QObject *, QEvent* event) final override;
+    void paintEvent(QPaintEvent* event) final;
+    void showEvent(QShowEvent* event) final;
+    void hideEvent(QHideEvent* event) final;
+    bool eventFilter(QObject *, QEvent* event) final;
 
 private:
     const QWidget* anchor;
