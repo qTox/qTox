@@ -465,11 +465,21 @@ void ChatForm::updateCallButtons()
             callButton->setObjectName("green");
             callButton->setToolTip(tr("Start audio call"));
         }
+        else
+        {
+            callButton->setObjectName("");
+            callButton->setToolTip("");
+        }
 
         if (videoButton->isEnabled())
         {
             videoButton->setObjectName("green");
             videoButton->setToolTip(tr("Start video call"));
+        }
+        else
+        {
+            videoButton->setObjectName("");
+            videoButton->setToolTip("");
         }
     }
 
@@ -863,7 +873,6 @@ void ChatForm::updateMuteMicButton()
     }
     else
     {
-        micButton->setObjectName("");
         micButton->setToolTip("");
     }
 
@@ -893,7 +902,6 @@ void ChatForm::updateMuteVolButton()
     }
     else
     {
-        volButton->setObjectName("");
         volButton->setToolTip("");
     }
 
