@@ -1,14 +1,15 @@
 QAbstractButton
 {
-    background-color: transparent;
-    background-image: url(":/ui/micButton/micButton.png");
-    background-repeat: none; 
+    border-radius: 5px;
     border: none;
+    background-image: url(":/ui/micButton/micButton.svg");
+    background-repeat: none;
+    background-position: center;
 }
 
 QAbstractButton:disabled
 {
-    background-image: url(":/ui/micButton/micButtonDisabled.png");
+    background-color: #919191;
 }
 
 QAbstractButton:focus
@@ -16,12 +17,47 @@ QAbstractButton:focus
     outline: none;
 }
 
+QAbstractButton#green
+{
+    background-color: #6bc260;
+}
+
 QAbstractButton#green:hover
 {
-    background-image: url(":/ui/micButton/micButtonHover.png");
+    background-color: #79c76f;
+}
+
+QAbstractButton#green:pressed
+{
+    background-color: #51b244;
 }
 
 QAbstractButton#red
 {
-    background-image: url(":/ui/micButton/micButtonPressed.png");
+    background-color: #c84e4e;
+}
+
+QAbstractButton#red:hover
+{
+    background-color: #e87474;
+}
+
+QAbstractButton#red:pressed
+{
+    background-color: #df3b3b;
+}
+
+QAbstractButton#yellow
+{
+    background-color: #e6e465;
+}
+
+QAbstractButton#yellow:hover
+{
+    background-color: #e8e774;
+}
+
+QAbstractButton#yellow:pressed
+{
+    background-color: #e3e155;
 }
