@@ -48,11 +48,11 @@ public:
     GroupChatForm *getChatForm();
     GroupWidget *getGroupWidget();
 
-    void setEventFlag(int f);
-    int getEventFlag() const;
+    void setEventFlag(bool f);
+    bool getEventFlag() const;
 
-    void setMentionedFlag(int f);
-    int getMentionedFlag() const;
+    void setMentionedFlag(bool f);
+    bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
@@ -69,7 +69,8 @@ private:
     GroupChatForm* chatForm;
     QStringList peers;
     QMap<QString, QString> toxids;
-    int hasNewMessages, userWasMentioned;
+    bool hasNewMessages;
+    bool userWasMentioned;
     int groupId;
     int nPeers;
     int selfPeerNum = -1;
