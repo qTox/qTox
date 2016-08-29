@@ -878,8 +878,15 @@ void ChatForm::updateMuteMicButton()
             micButton->setToolTip(tr("Mute microphone"));
         }
     }
+    else
+    {
+        micButton->setObjectName("");
+        micButton->setToolTip("");
+    }
 
-    micButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/micButton/micButton.css")));
+    QString stylePath = QStringLiteral(":/ui/micButton/micButton.css");
+    QString style = Style::getStylesheet(stylePath);
+    micButton->setStyleSheet(style);
 }
 
 void ChatForm::updateMuteVolButton()
@@ -888,7 +895,7 @@ void ChatForm::updateMuteVolButton()
 
     volButton->setEnabled(av->isCallActive(f));
 
-    if (videoButton->isEnabled())
+    if (volButton->isEnabled())
     {
         if (av->isCallOutputMuted(f))
         {
@@ -901,8 +908,15 @@ void ChatForm::updateMuteVolButton()
             volButton->setToolTip(tr("Mute call"));
         }
     }
+    else
+    {
+        volButton->setObjectName("");
+        volButton->setToolTip("");
+    }
 
-    volButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/volButton/volButton.css")));
+    QString stylePath = QStringLiteral(":/ui/volButton/volButton.css");
+    QString style = Style::getStylesheet(stylePath);
+    volButton->setStyleSheet(style);
 }
 
 void ChatForm::startCounter()
