@@ -373,7 +373,7 @@ bool ContentDialog::friendWidgetExists(int friendId, bool focus)
     return existsWidget(friendId, focus, friendList);
 }
 
-bool ContentDialog::existsGroupWidget(int groupId, bool focus)
+bool ContentDialog::groupWidgetExists(int groupId, bool focus)
 {
     return existsWidget(groupId, focus, groupList);
 }
