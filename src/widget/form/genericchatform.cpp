@@ -94,14 +94,17 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     screenshotButton = new QPushButton;
     callButton = new QPushButton();
     callButton->setFixedSize(50,40);
+
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
+
     volButton = new QPushButton();
-    //volButton->setFixedSize(25,20);
-    volButton->setToolTip("");
+    volButton->setFixedSize(22, 18);
+
     micButton = new QPushButton();
-    // micButton->setFixedSize(25,20);
-    micButton->setToolTip("");
+    micButton->setFixedSize(22, 18);
+    // TODO: Make updateCallButtons (see ChatForm) abstract
+    //       and call here to set tooltips.
 
     fileFlyout = new FlyoutOverlayWidget;
     QHBoxLayout *fileLayout = new QHBoxLayout(fileFlyout);
@@ -162,9 +165,8 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
 
-    micButtonsLayout->setSpacing(0);
+    micButtonsLayout->setSpacing(4);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
-    micButtonsLayout->addSpacing(4);
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
 
     buttonsLayout->addLayout(micButtonsLayout, 0, 0, 2, 1, Qt::AlignTop | Qt::AlignRight);

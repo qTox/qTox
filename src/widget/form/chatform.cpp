@@ -914,7 +914,6 @@ void ChatForm::updateMuteMicButton()
     const CoreAV* av = Core::getInstance()->getAv();
 
     micButton->setEnabled(av->isCallActive(f));
-
     if (micButton->isEnabled())
     {
         if (av->isCallInputMuted(f))
@@ -928,8 +927,15 @@ void ChatForm::updateMuteMicButton()
             micButton->setToolTip(tr("Mute microphone"));
         }
     }
+    else
+    {
+        micButton->setObjectName("");
+        micButton->setToolTip(tr("Microphone can be muted only during a call"));
+    }
 
-    micButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/micButton/micButton.css")));
+    QString stylePath = QStringLiteral(":/ui/micButton/micButton.css");
+    QString style = Style::getStylesheet(stylePath);
+    micButton->setStyleSheet(style);
 }
 
 void ChatForm::updateMuteVolButton()
@@ -937,8 +943,7 @@ void ChatForm::updateMuteVolButton()
     const CoreAV* av = Core::getInstance()->getAv();
 
     volButton->setEnabled(av->isCallActive(f));
-
-    if (videoButton->isEnabled())
+    if (volButton->isEnabled())
     {
         if (av->isCallOutputMuted(f))
         {
@@ -957,7 +962,9 @@ void ChatForm::updateMuteVolButton()
         volButton->setToolTip(tr("Sound can be disabled only during a call"));
     }
 
-    volButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/volButton/volButton.css")));
+    QString stylePath = QStringLiteral(":/ui/volButton/volButton.css");
+    QString style = Style::getStylesheet(stylePath);
+    volButton->setStyleSheet(style);
 }
 
 void ChatForm::startCounter()
