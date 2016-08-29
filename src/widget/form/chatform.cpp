@@ -951,6 +951,11 @@ void ChatForm::updateMuteVolButton()
             volButton->setToolTip(tr("Mute call"));
         }
     }
+    else
+    {
+        volButton->setObjectName("");
+        volButton->setToolTip(tr("Sound can be disabled only during a call"));
+    }
 
     volButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/volButton/volButton.css")));
 }
