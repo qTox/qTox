@@ -62,6 +62,9 @@ public:
     void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
     void dischargeReceipt(int receipt);
 
+    void clearOfflineReceipts();
+    void deliverOfflineMsgs();
+
 signals:
     // TODO: move signals to DB object
     void nameChanged(const QString& name);
@@ -69,10 +72,6 @@ signals:
     void statusChanged(uint32_t friendId, Status status);
     void newStatusMessage(const QString& message);
     void loadChatHistory();
-
-public slots:
-    void clearOfflineReceipts();
-    void deliverOfflineMsgs();
 
 private:
     QString userName;

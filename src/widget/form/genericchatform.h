@@ -72,8 +72,6 @@ public:
 signals:
     void sendMessage(uint32_t, QString);
     void sendAction(uint32_t, QString);
-    void chatAreaCleared();
-    void messageInserted();
 
 public slots:
     void focusInput();
@@ -86,7 +84,7 @@ protected slots:
     void onEmoteInsertRequested(QString str);
     void onSaveLogClicked();
     void onCopyLogClicked();
-    void clearChatArea(bool);
+    virtual void clearChatArea(bool);
     void clearChatArea();
     void onSelectAllClicked();
     void showFileMenu();
@@ -103,16 +101,18 @@ protected:
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
     QString resolveToxId(const ToxId &id);
-    void insertChatMessage(ChatMessage::Ptr msg);
+    virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
-    virtual void hideEvent(QHideEvent* event) override;
-    virtual void showEvent(QShowEvent *) override;
-    virtual bool event(QEvent *) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual bool eventFilter(QObject* object, QEvent* event) final override;
+    void hideEvent(QHideEvent* event) override;
+    void showEvent(QShowEvent *) override;
+    bool event(QEvent *) final override;
+    void resizeEvent(QResizeEvent* event) final override;
+    bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction* saveChatAction, *clearAction, *quoteAction;
+    QAction* saveChatAction;
+    QAction* clearAction;
+    QAction* quoteAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;
@@ -122,18 +122,22 @@ protected:
     MaskablePixmapWidget *avatar;
     QWidget* headWidget;
     QWidget* bodyWidget;
-    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QPushButton* fileButton;
+    QPushButton* screenshotButton;
+    QPushButton* emoteButton;
+    QPushButton* callButton;
+    QPushButton* videoButton;
+    QPushButton* volButton;
+    QPushButton* micButton;
     FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     ChatLog *chatWidget;
     QDateTime earliestMessage;
-    QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
-    bool audioInputFlag;
-    bool audioOutputFlag;
+    QDateTime historyBaselineDate = QDateTime::currentDateTime();
     QSplitter* bodySplitter;
-    GenericNetCamView* netcam;
+    QPointer<GenericNetCamView> netcam;
 };
 
 #endif // GENERICCHATFORM_H
