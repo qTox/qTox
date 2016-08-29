@@ -146,22 +146,22 @@ bool Group::isSelfPeerNumber(int num) const
     return num == selfPeerNum;
 }
 
-void Group::setEventFlag(int f)
+void Group::setEventFlag(bool f)
 {
     hasNewMessages = f;
 }
 
-int Group::getEventFlag() const
+bool Group::getEventFlag() const
 {
     return hasNewMessages;
 }
 
-void Group::setMentionedFlag(int f)
+void Group::setMentionedFlag(bool f)
 {
     userWasMentioned = f;
 }
 
-int Group::getMentionedFlag() const
+bool Group::getMentionedFlag() const
 {
     return userWasMentioned;
 }
