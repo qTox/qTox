@@ -1028,33 +1028,29 @@ void Widget::onFriendAliasChanged(uint32_t friendId, QString alias)
     }
 }
 
-void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool group)
+void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool g)
 {
     widget->resetEventFlags();
     widget->updateStatusLight();
 
-    if (widget->chatFormIsSet(true) && !group)
+    if (widget->chatFormIsSet(true) && !g)
         return;
 
     GenericChatForm* chatWidget = nullptr;
     Friend* frnd = widget->getFriend();
+    Group *group = widget->getGroup();
 
     if (frnd)
-    {
         chatWidget = new ChatForm(frnd);
-    }
     else
-    {
-        Group* g = widget->getGroup();
-        chatWidget = g->getChatForm();
-    }
+        chatWidget = new GroupChatForm(group);
 
-    if (chatWidget)
-    {
-        activeChat = chatWidget;
-        widget->setAsActiveChatroom();
+    activeChat = chatWidget;
+    widget->setAsActiveChatroom();
+    if (frnd)
         frnd->setEventFlag(false);
-    }
+    else
+        group->setEventFlag(false);
 
     showContentWidget(chatWidget, chatWidget->windowTitle());
 }
