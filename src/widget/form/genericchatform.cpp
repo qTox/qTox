@@ -94,10 +94,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
     volButton = new QPushButton();
-    //volButton->setFixedSize(25,20);
     volButton->setToolTip("");
     micButton = new QPushButton();
-    // micButton->setFixedSize(25,20);
     micButton->setToolTip("");
 
     fileFlyout = new FlyoutOverlayWidget;
@@ -127,10 +125,12 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     QString volButtonStylesheet = Style::getStylesheet(":/ui/volButton/volButton.css");
     volButton->setObjectName("grey");
     volButton->setStyleSheet(volButtonStylesheet);
+    volButton->setMaximumWidth(22);
 
     QString micButtonStylesheet = Style::getStylesheet(":/ui/micButton/micButton.css");
     micButton->setObjectName("grey");
     micButton->setStyleSheet(micButtonStylesheet);
+    micButton->setMaximumWidth(22);
 
     setLayout(mainLayout);
 
