@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4867"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="27.5"
+   height="22.5"
+   viewBox="0 0 27.5 22.5"
+   sodipodi:docname="micButton.svg">
+  <metadata
+     id="metadata4873">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4871" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="963"
+     id="namedview4869"
+     showgrid="false"
+     inkscape:zoom="22.627418"
+     inkscape:cx="13.694084"
+     inkscape:cy="12.845575"
+     inkscape:window-x="0"
+     inkscape:window-y="106"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4867" />
+  <g
+     id="g4144"
+     transform="matrix(0.76,0,0,0.76,3.3064861,2.7057204)">
+    <rect
+       ry="2.6881006"
+       y="1.2870765"
+       x="9.962924"
+       height="13.585805"
+       width="7.5794492"
+       id="rect5419"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.70899999;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       rx="0.33368644"
+       ry="0.65545553"
+       y="19.949682"
+       x="8.5805082"
+       height="1.3109111"
+       width="10.344279"
+       id="rect5423"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.70899999;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       ry="0"
+       rx="0"
+       y="17.113348"
+       x="12.513242"
+       height="3.5990469"
+       width="2.1451259"
+       id="rect5427"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.70899999;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="csc"
+       inkscape:connector-curvature="0"
+       id="path5431"
+       d="m 7.0765239,9.8278885 c 0,0 -0.9033248,7.8098235 6.4139421,7.8098235 7.317267,0 7.022576,-7.8534036 7.022576,-7.8534036"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.89999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>
