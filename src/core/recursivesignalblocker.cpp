@@ -20,7 +20,9 @@
 #include "recursivesignalblocker.h"
 
 #include <QObject>
+#if HAVE_QSIGNAL_BLOCKER
 #include <QSignalBlocker>
+#endif
 
 /**
 @class  RecursiveSignalBlocker
@@ -37,14 +39,19 @@ blocker gets destroyed. According to QSignalBlocker, we are also exception safe.
 */
 RecursiveSignalBlocker::RecursiveSignalBlocker(QObject* object)
 {
+#if HAVE_QSIGNAL_BLOCKER
     recursiveBlock(object);
+#endif
 }
 
 RecursiveSignalBlocker::~RecursiveSignalBlocker()
 {
+#if HAVE_QSIGNAL_BLOCKER
     qDeleteAll(mBlockers);
+#endif
 }
 
+#if HAVE_QSIGNAL_BLOCKER
 /**
 @brief      Recursively blocks all signals of the object.
 @param[in]  object  the object to block
@@ -58,3 +65,4 @@ void RecursiveSignalBlocker::recursiveBlock(QObject* object)
         recursiveBlock(child);
     }
 }
+#endif
