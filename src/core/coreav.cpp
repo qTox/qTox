@@ -21,6 +21,8 @@
 #include "core.h"
 #include "coreav.h"
 #include "src/audio/audio.h"
+#include "src/friend.h"
+#include "src/group.h"
 #include "src/persistence/settings.h"
 #include "src/video/videoframe.h"
 #include "src/video/corevideosource.h"
@@ -157,19 +159,43 @@ void CoreAV::process()
 }
 
 /**
- * @brief Check, that and calls are active now
- * @return True is any calls are currently active, False otherwise
- * @note A call about to start is not yet active
+ * @brief Check, if any calls are currently active.
+ * @return true if any calls are currently active, false otherwise
+ * @note A call about to start is not yet active.
  */
-bool CoreAV::anyActiveCalls()
+bool CoreAV::anyActiveCalls() const
 {
     return !calls.isEmpty();
 }
 
-bool CoreAV::isCallVideoEnabled(uint32_t friendNum)
+/**
+ * @brief Checks the call status for a Tox friend.
+ * @param f     the friend to check
+ * @return true, if call is active for the friend; false otherwise
+ */
+bool CoreAV::isCallActive(const Friend* f) const
 {
-    assert(calls.contains(friendNum));
-    return calls[friendNum].videoEnabled;
+    return f && calls.contains(f->getFriendId());
+}
+
+/**
+ * @brief Checks the call status for a Tox group.
+ * @param g     the group to check
+ * @return true, if the call is active for the group; false otherwise
+ */
+bool CoreAV::isCallActive(const Group* g) const
+{
+    return (g && groupCalls.contains(g->getGroupId()))
+            ? !(groupCalls[g->getGroupId()].inactive)
+            : false;
+}
+
+bool CoreAV::isCallVideoEnabled(const Friend* f) const
+{
+
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].videoEnabled
+            : false;
 }
 
 bool CoreAV::answerCall(uint32_t friendNum)
@@ -269,7 +295,9 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         qWarning() << QString("Failed to cancel call with %1").arg(friendNum);
         return false;
     }
+
     calls.remove(friendNum);
+    emit avEnd(friendNum);
     return true;
 }
 
@@ -290,7 +318,6 @@ void CoreAV::timeoutCall(uint32_t friendNum)
         return;
     }
     qDebug() << "Call with friend"<<friendNum<<"timed out";
-    emit avEnd(friendNum);
 }
 
 /**
@@ -388,16 +415,30 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         qDebug() << "toxav_video_send_frame error: Lock busy, dropping frame";
 }
 
-void CoreAV::micMuteToggle(uint32_t callId)
+/**
+ * @brief Toggles the mute state of the call's input (microphone).
+ * @param f     the friend assigned to the call
+ */
+void CoreAV::toggleMuteCallInput(const Friend* f)
 {
-    if (calls.contains(callId))
-        calls[callId].muteMic = !calls[callId].muteMic;
+    if (f && calls.contains(f->getFriendId()))
+    {
+        ToxCall& call = calls[f->getFriendId()];
+        call.muteMic = !call.muteMic;
+    }
 }
 
-void CoreAV::volMuteToggle(uint32_t callId)
+/**
+ * @brief Toggles the mute state of the call's output (speaker).
+ * @param f     the friend assigned to the call
+ */
+void CoreAV::toggleMuteCallOutput(const Friend* f)
 {
-    if (calls.contains(callId))
-        calls[callId].muteVol = !calls[callId].muteVol;
+    if (f && calls.contains(f->getFriendId()))
+    {
+        ToxCall& call = calls[f->getFriendId()];
+        call.muteVol = !call.muteVol;
+    }
 }
 
 /**
@@ -499,34 +540,50 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t *pcm, size_t samples,
     return true;
 }
 
-void CoreAV::disableGroupCallMic(int groupId)
+/**
+ * @brief Mutes or unmutes the group call's input (microphone).
+ * @param g     the group
+ * @param mute  mute/unmute
+ */
+void CoreAV::muteCallInput(const Group* g, bool mute)
 {
-    groupCalls[groupId].muteMic = true;
+    if (g && groupCalls.contains(g->getGroupId()))
+        groupCalls[g->getGroupId()].muteMic = mute;
 }
 
-void CoreAV::disableGroupCallVol(int groupId)
+/**
+ * @brief Mutes or unmutes the group call's output (speaker).
+ * @param g     the group
+ * @param mute  mute/unmute
+ */
+void CoreAV::muteCallOutput(const Group* g, bool mute)
 {
-    groupCalls[groupId].muteVol = true;
+    if (g && groupCalls.contains(g->getGroupId()))
+        groupCalls[g->getGroupId()].muteVol = mute;
 }
 
-void CoreAV::enableGroupCallMic(int groupId)
+/**
+ * @brief Returns the group calls input (microphone) state.
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isGroupCallInputMuted(const Group* g) const
 {
-    groupCalls[groupId].muteMic = false;
+    return g && groupCalls.contains(g->getGroupId())
+            ? groupCalls[g->getGroupId()].muteMic
+            : false;
 }
 
-void CoreAV::enableGroupCallVol(int groupId)
+/**
+ * @brief Returns the group calls output (speaker) state.
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isGroupCallOutputMuted(const Group* g) const
 {
-    groupCalls[groupId].muteVol = false;
-}
-
-bool CoreAV::isGroupCallMicEnabled(int groupId) const
-{
-    return !groupCalls[groupId].muteMic;
-}
-
-bool CoreAV::isGroupCallVolEnabled(int groupId) const
-{
-    return !groupCalls[groupId].muteVol;
+    return g && groupCalls.contains(g->getGroupId())
+            ? groupCalls[g->getGroupId()].muteVol
+            : false;
 }
 
 /**
@@ -537,6 +594,30 @@ bool CoreAV::isGroupCallVolEnabled(int groupId) const
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
+}
+
+/**
+ * @brief Returns the calls input (microphone) mute state.
+ * @param f  the friend to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isCallInputMuted(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].muteMic
+            : false;
+}
+
+/**
+ * @brief Returns the calls output (speaker) mute state.
+ * @param friendId  the friend to check
+ * @return true when muted; false otherwise
+ */
+bool CoreAV::isCallOutputMuted(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendId())
+            ? calls[f->getFriendId()].muteVol
+            : false;
 }
 
 /**

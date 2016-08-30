@@ -20,18 +20,18 @@
 #ifndef ADDFRIENDFORM_H
 #define ADDFRIENDFORM_H
 
-#include <QVBoxLayout>
+#include <src/widget/contentwidget.h>
+
 #include <QLabel>
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QPushButton>
 #include <QSet>
+#include <QVBoxLayout>
 
 class QTabWidget;
 
-class ContentLayout;
-
-class AddFriendForm : public QObject
+class AddFriendForm : public ContentWidget
 {
     Q_OBJECT
 public:
@@ -42,13 +42,12 @@ public:
         GroupInvite = 2
     };
 
-    AddFriendForm();
+    AddFriendForm(QWidget* parent = nullptr);
     AddFriendForm(const AddFriendForm&) = delete;
     AddFriendForm& operator=(const AddFriendForm&) = delete;
     ~AddFriendForm();
 
     bool isShown() const;
-    void show(ContentLayout* contentLayout);
     QString getMessage() const;
     void setMode(Mode mode);
 
@@ -83,7 +82,6 @@ private:
     QPushButton sendButton;
     QLineEdit toxId;
     QTextEdit message;
-    QVBoxLayout layout, headLayout;
     QWidget *head, *main;
     QString lastUsername;
     QTabWidget* tabWidget;
