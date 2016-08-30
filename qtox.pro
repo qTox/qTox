@@ -75,6 +75,16 @@ contains(JENKINS,YES) {
     INCLUDEPATH += libs/include
 }
 
+DEFINES += TEST_BUILD
+QMAKE_CXXFLAGS += --coverage
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+QMAKE_LDFLAGS += -fprofile-arcs -ftest-coverage
+LIBS += -lgcov -lgtest -lgmock
+
+
+SOURCES += \
+    tests/friendTest.cpp
+
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h
     SOURCES += src/platform/timer_osx.cpp \
