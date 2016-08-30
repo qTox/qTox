@@ -16,6 +16,10 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     ui->label_4->hide();
     ui->aliases->hide();
 
+#if QT_MAJOR_VERSION > 5 || QT_MAJOR_VERSION == 5 && QT_MINOR_VERSION >= 3
+    ui->note->setPlaceholderText(tr("You can save comment about this contact here."));
+#endif
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);

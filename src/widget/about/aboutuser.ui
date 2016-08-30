@@ -205,9 +205,6 @@
         <property name="plainText">
          <string/>
         </property>
-        <property name="placeholderText">
-         <string>You can save comment about this contact here.</string>
-        </property>
        </widget>
       </item>
      </layout>
