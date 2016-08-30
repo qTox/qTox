@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 #endif
 
     qsrand(time(0));
-    Settings::getInstance();
+    Settings::getInstance().loadGlobal();
     Translator::translate();
 
     // Process arguments

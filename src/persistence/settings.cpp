@@ -71,7 +71,6 @@ Settings::Settings() :
     settingsThread->setObjectName("qTox Settings");
     settingsThread->start(QThread::LowPriority);
     moveToThread(settingsThread);
-    loadGlobal();
 }
 
 Settings::~Settings()

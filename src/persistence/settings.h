@@ -147,7 +147,7 @@ public:
 
     void loadGlobal();
     void loadPersonal();
-    void loadPersonal(Profile *profile);
+    virtual void loadPersonal(Profile *profile);
 
     void resetToDefault();
 
@@ -444,8 +444,8 @@ public:
     QString getFriendAddress(const QString& publicKey) const;
     void updateFriendAddress(const QString& newAddr);
 
-    QString getFriendAlias(const ToxId& id) const;
-    void setFriendAlias(const ToxId& id, const QString& alias);
+    virtual QString getFriendAlias(const ToxId& id) const;
+    virtual void setFriendAlias(const ToxId& id, const QString& alias);
 
     int getFriendCircleID(const ToxId& id) const;
     void setFriendCircleID(const ToxId& id, int circleID);
@@ -509,9 +509,9 @@ public:
 
     static uint32_t makeProfileId(const QString& profile);
 
-private:
+protected:
     Settings();
-    ~Settings();
+    virtual ~Settings();
     Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
 
@@ -637,9 +637,11 @@ private:
     int themeColor;
 
     static QMutex bigLock;
-    static Settings* settings;
     static const QString globalSettingsFile;
     static QThread* settingsThread;
+
+protected:
+    static Settings* settings;
 };
 
 #endif // SETTINGS_HPP
