@@ -163,6 +163,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     // initialize chat
     loadHistory(QDateTime::currentDateTime().addDays(-7),
                 f->getStatus() != Status::Offline);
+
+    if (av->isCallVideoEnabled(f))
+    {
+        showNetcam();
+    }
+
     updateCallButtons();
 }
 
