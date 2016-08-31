@@ -21,6 +21,7 @@
 #define GROUPCHATFORM_H
 
 #include "genericchatform.h"
+
 #include <QMap>
 
 namespace Ui {class MainWindow;}
@@ -49,12 +50,11 @@ private slots:
     void onCallClicked();
 
 protected:
-    virtual GenericNetCamView* createNetcam() final override;
-    virtual void keyPressEvent(QKeyEvent* ev) final override;
-    virtual void keyReleaseEvent(QKeyEvent* ev) final override;
-    // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
-    virtual void dropEvent(QDropEvent* ev) final override;
+    GenericNetCamView* createNetcam() final override;
+    void keyPressEvent(QKeyEvent* ev) final override;
+    void keyReleaseEvent(QKeyEvent* ev) final override;
+    void dragEnterEvent(QDragEnterEvent* ev) final override;
+    void dropEvent(QDropEvent* ev) final override;
 
 private:
     void retranslateUi();
