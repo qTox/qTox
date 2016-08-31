@@ -31,9 +31,8 @@ public:
     bool importProfile(const QString &path);
     bool importProfile();
 
-signals:
-
-public slots:
+private:
+    bool askQuestion(QString title, QString message);
 };
 
 #endif // PROFILEIMPORTER_H
