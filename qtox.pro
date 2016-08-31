@@ -373,7 +373,9 @@ HEADERS  += \
     src/widget/tool/profileimporter.h \
     src/widget/passwordedit.h \
     src/widget/form/settings/userinterfaceform.h \
-    tests/mocks/mockSettings.h
+    tests/mocks/mockSettings.h \
+    tests/mocks/mockCore.h \
+    tests/mocks/mockProfile.h
 
 SOURCES += \
     src/ipc.cpp \
