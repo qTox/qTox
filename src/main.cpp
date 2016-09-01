@@ -19,15 +19,16 @@
 
 #include "widget/widget.h"
 #include "persistence/settings.h"
-#include "src/nexus.h"
-#include "src/ipc.h"
-#include "src/net/toxuri.h"
-#include "src/net/autoupdate.h"
-#include "src/persistence/toxsave.h"
-#include "src/persistence/profile.h"
-#include "src/widget/loginscreen.h"
-#include "src/widget/translator.h"
-#include "src/video/camerasource.h"
+#include "core/core.h"
+#include "nexus.h"
+#include "ipc.h"
+#include "net/toxuri.h"
+#include "net/autoupdate.h"
+#include "persistence/toxsave.h"
+#include "persistence/profile.h"
+#include "widget/loginscreen.h"
+#include "widget/translator.h"
+#include "video/camerasource.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
@@ -40,6 +41,8 @@
 
 #include <sodium.h>
 #include <stdio.h>
+
+#include <gtest/gtest.h>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
@@ -116,7 +119,6 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 
 int main(int argc, char *argv[])
 {
-
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
@@ -129,6 +131,11 @@ int main(int argc, char *argv[])
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
+#ifdef TEST_BUILD
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+#endif
+
 #if defined(Q_OS_OSX)
     // TODO: Add setting to enable this feature.
     //osx::moveToAppFolder();
@@ -136,7 +143,7 @@ int main(int argc, char *argv[])
 #endif
 
     qsrand(time(0));
-    Settings::getInstance();
+    Settings::getInstance().loadGlobal();
     Translator::translate();
 
     // Process arguments

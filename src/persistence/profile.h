@@ -37,7 +37,7 @@ class Profile
 public:
     static Profile* loadProfile(QString name, const QString &password = QString());
     static Profile* createProfile(QString name, QString password);
-    ~Profile();
+    virtual ~Profile();
 
     Core* getCore();
     QString getName() const;
@@ -77,12 +77,12 @@ public:
     static bool exists(QString name);
     static bool isEncrypted(QString name);
 
-private:
+protected:
     Profile(QString name, const QString &password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
-private:
+protected:
     Core* core;
     QThread* coreThread;
     QString name, password;

@@ -48,7 +48,7 @@ public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance();
     CoreAV* getAv();
-    ~Core();
+    virtual ~Core();
 
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
@@ -57,7 +57,7 @@ public:
 
     static QByteArray getSaltFromFile(QString filename);
 
-    QString getPeerName(const ToxId& id) const;
+    virtual QString getPeerName(const ToxId& id) const;
 
     QVector<uint32_t> getFriendList() const;
     int getGroupNumberPeers(int groupId) const;

@@ -75,6 +75,16 @@ contains(JENKINS,YES) {
     INCLUDEPATH += libs/include
 }
 
+DEFINES += TEST_BUILD
+QMAKE_CXXFLAGS += --coverage
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+QMAKE_LDFLAGS += -fprofile-arcs -ftest-coverage
+LIBS += -lgcov -lgtest -lgmock
+
+
+SOURCES += \
+    tests/friendTest.cpp
+
 contains(DEFINES, QTOX_PLATFORM_EXT) {
     HEADERS += src/platform/timer.h
     SOURCES += src/platform/timer_osx.cpp \
@@ -362,7 +372,10 @@ HEADERS  += \
     src/widget/form/groupinviteform.h \
     src/widget/tool/profileimporter.h \
     src/widget/passwordedit.h \
-    src/widget/form/settings/userinterfaceform.h
+    src/widget/form/settings/userinterfaceform.h \
+    tests/mocks/mockSettings.h \
+    tests/mocks/mockCore.h \
+    tests/mocks/mockProfile.h
 
 SOURCES += \
     src/ipc.cpp \
