@@ -131,6 +131,11 @@ int main(int argc, char *argv[])
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
+#ifdef TEST_BUILD
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+#endif
+
 #if defined(Q_OS_OSX)
     // TODO: Add setting to enable this feature.
     //osx::moveToAppFolder();
@@ -288,14 +293,6 @@ int main(int argc, char *argv[])
     }
 
     Nexus::getInstance().start();
-
-#ifdef TEST_BUILD
-    while(!Core::getInstance()->isReady())
-        QThread::yieldCurrentThread();
-
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-#endif
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
