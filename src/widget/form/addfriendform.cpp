@@ -30,7 +30,6 @@
 #include "src/nexus.h"
 #include "src/core/core.h"
 #include "src/core/cdata.h"
-#include "src/net/toxdns.h"
 #include "src/net/toxme.h"
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
@@ -162,29 +161,20 @@ void AddFriendForm::onSendTriggered()
     if (!ToxId::isToxId(id))
     {
         ToxId toxId = Toxme::lookup(id); // Try Toxme
-        if (toxId.toString().isEmpty())  // If it isn't supported
+        if (toxId.toString().isEmpty())
         {
-            qDebug() << "Toxme didn't return a ToxID, trying ToxDNS";
-            if (Settings::getInstance().getProxyType() != Settings::ProxyType::ptNone)
-            {
-                QMessageBox::StandardButton btn = QMessageBox::warning(main, "qTox", tr("qTox needs to use the Tox DNS, but can't do it through a proxy.\n\
-    Ignore the proxy and connect to the Internet directly?"), QMessageBox::Yes|QMessageBox::No, QMessageBox::No);
-                if (btn != QMessageBox::Yes)
-                    return;
-            }
-            toxId = ToxDNS::resolveToxAddress(id, true); // Use ToxDNS
-            if (toxId.toString().isEmpty())
-            {
-                GUI::showWarning(tr("Couldn't add friend"), tr("This Tox ID does not exist","DNS error"));
-                return;
-            }
+            GUI::showWarning(tr("Couldn't add friend"),
+                             tr("This Tox ID does not exist", "Toxme error"));
+            return;
         }
         id = toxId.toString();
     }
 
     deleteFriendRequest(id);
     if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
-        GUI::showWarning(tr("Couldn't add friend"), tr("You can't add yourself as a friend!","When trying to add your own Tox ID as friend"));
+        GUI::showWarning(tr("Couldn't add friend"),
+                         tr("You can't add yourself as a friend!",
+                            "When trying to add your own Tox ID as friend"));
     else
         emit friendRequested(id, getMessage());
 

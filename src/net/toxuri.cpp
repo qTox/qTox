@@ -19,7 +19,6 @@
 
 
 #include "src/net/toxuri.h"
-#include "src/net/toxdns.h"
 #include "src/net/toxme.h"
 #include "src/widget/tool/friendrequestdialog.h"
 #include "src/nexus.h"
@@ -68,12 +67,10 @@ bool handleToxURI(const QString &toxURI)
     QString toxId = Toxme::lookup(toxaddr).toString();
     if (toxId.isEmpty())
     {
-        toxId = ToxDNS::resolveToxAddress(toxaddr, true).toString();
-        if (toxId.isEmpty())
-        {
-            QMessageBox::warning(0, "qTox", toxaddr + " is not a valid Tox address.");
-            return false;
-        }
+        QMessageBox::warning(0, "qTox",
+                             ToxURIDialog::tr("%1 is not a valid Toxme address.")
+                             .arg(toxaddr));
+        return false;
     }
 
     ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
