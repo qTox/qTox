@@ -77,7 +77,7 @@ can have different nicknames, status messages and friends.
   a new password if your profile does not have one.
 
 ## Friends' options
-In the friend's window you can custom some options for this friend specifically.
+In the friend's window you can customize some options for this friend specifically.
 * _Auto answer:_ chooses the way to autoaccept audio and video calls.
 	* _Manual:_ All calls must be manually accepted
 	* _Audio:_ Only audio calls will be automatically accepted. Video call must be manually accepted.
