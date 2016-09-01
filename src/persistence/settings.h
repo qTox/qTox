@@ -137,7 +137,7 @@ public:
             None     = 0x00,
             Audio    = 0x01,
             Video    = 0x02,
-            AV       = 0x03,
+            AV       = Audio | Video,
 
         };
         Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
