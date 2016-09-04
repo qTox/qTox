@@ -58,10 +58,20 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
             && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
+    QString file = ctxt.file;
+    // We're not using QT_MESSAGELOG_FILE here, because that can be 0, NULL, or
+    // nullptr in release builds.
+    QString path = QString(__FILE__);
+    path = path.left(path.lastIndexOf('/') + 1);
+    if (file.startsWith(path))
+    {
+        file = file.mid(path.length());
+    }
+
     // Time should be in UTC to save user privacy on log sharing
     QTime time = QDateTime::currentDateTime().toUTC().time();
     QString LogMsg = QString("[%1 UTC] %2:%3 : ")
-                .arg(time.toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
+                .arg(time.toString("HH:mm:ss.zzz")).arg(file).arg(ctxt.line);
     switch (type)
     {
         case QtDebugMsg:
