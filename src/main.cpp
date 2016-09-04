@@ -45,6 +45,11 @@
 #include "platform/install_osx.h"
 #endif
 
+#if defined(Q_OS_WIN32) && defined(QT_STATIC)
+#include <QtPlugin>
+Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin);
+#endif
+
 #ifdef LOG_TO_FILE
 static QAtomicPointer<FILE> logFileFile = nullptr;
 static QList<QByteArray>* logBuffer = new QList<QByteArray>();   //Store log messages until log file opened
