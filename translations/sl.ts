@@ -115,6 +115,18 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -148,10 +160,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -254,16 +262,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <translation>Samega sebe ne moreš dodati med stike!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Ta Tox ID ne obstaja</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -292,12 +290,59 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <source>Reject</source>
         <translation type="unfinished">Zavrni</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Ta Tox ID ne obstaja</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Napredno</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Klic je aktiven</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Ne moreš se odjaviti med klicem!</translation>
     </message>
 </context>
 <context>
@@ -312,12 +357,62 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <translation>Naredi Tox prenosen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;POMEMBNO SPOROČILO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Razen če &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;res&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; veste kaj delate, prosim &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;NE&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; spreminjajte teh nastavitev. Spremembe lahko povzročijo težave s qTox in lahko izgubite podatke, recimo zgodovino.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Ponastavi na začetne nastavitve</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Nastavitve povezave</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Omogoči IPv6 (priporočeno)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">Omogoči UDP (priporočeno)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Vrsta proxy-ja:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Naslov:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Brez</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Ponovno poveži</translation>
     </message>
 </context>
 <context>
@@ -801,23 +896,9 @@ Onemogočitev zgodovine pogovorov bo ohranila trenutno šifrinano zgodovino; če
         <translation>Splošno</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Brez</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Izberi mapo za avtomatsko sprejemanje datotek</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Klic je aktiven</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Ne moreš se odjaviti med klicem!</translation>
     </message>
 </context>
 <context>
@@ -913,19 +994,6 @@ namesto da bi ostal med programi.</translation>
         <translation>Odsoten po X minutah (0 za izklop):</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Pogovor</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Vedno sporoči o novih sporočilih v skupinah.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Obvestila za skupine</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Pokaži spremembe statusa stika</translation>
     </message>
@@ -934,107 +1002,9 @@ namesto da bi ostal med programi.</translation>
         <translation>Ob novih sporočilih:</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Fokusiraj qTox ko dobiš sporočilo.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Fokusiraj okno</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translatorcomment>Preveri</translatorcomment>
         <translation>Pošiljanje sporočil nedosegljivim</translation>
-    </message>
-    <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Tvoj seznam stiko bo prikazan zgoščeno.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Zgoščen prikaz stikov</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>Tema</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Uporabi smajlije</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translatorcomment>Preveri</translatorcomment>
-        <translation>Smajli paket:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Velikost smajlijev:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Stil:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Barva teme:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Oblika časa:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Nastavitve povezave</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translatorcomment>Preveri</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Omogoči UDP (priporočeno)</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Omogoči IPv6 (priporočeno)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Vrsta proxy-ja:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Naslov:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Brez</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Ponovno poveži</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1045,93 +1015,11 @@ namesto da bi ostal med programi.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Play sound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1706,6 +1594,10 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Generate random NoSpam</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Zasebnost</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -2170,35 +2062,6 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Povezava je prekinjena</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Ta naslov ne obstaja</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Napaka pri iskanju DNS</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translatorcomment>Preveri</translatorcomment>
-        <translation>Zapis ni bil najden</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Nepričakovano število vrednosti v zapisu</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2226,6 +2089,166 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Prekliči</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Brez</translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Pogovor</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Fokusiraj qTox ko dobiš sporočilo.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Fokusiraj okno</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Vedno sporoči o novih sporočilih v skupinah.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Obvestila za skupine</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Tvoj seznam stiko bo prikazan zgoščeno.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Zgoščen prikaz stikov</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Uporabi smajlije</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Smajli paket:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Velikost smajlijev:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Tema</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Stil:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Barva teme:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Oblika časa:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

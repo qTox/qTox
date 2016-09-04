@@ -115,6 +115,18 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -149,10 +161,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>Authors</source>
         <translation>Szerzők</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -254,16 +262,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Nem tudja hozzáadni önmagát partnerként!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Ez a Tox ID nem létezik</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation type="unfinished">Partner hozzáadása sikertelen</translation>
     </message>
@@ -292,12 +290,59 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Reject</source>
         <translation type="unfinished">Elutasítás</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Ez a Tox ID nem létezik</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>Haladó</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Hívás aktív</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">A megszakítás az aktív hívás közben nem lehetséges!</translation>
     </message>
 </context>
 <context>
@@ -312,12 +357,62 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Hordozható Tox létrehozása</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;FONTOS MEGJEGYZÉS&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Amíg nem tudja &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;biztosan&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;, hogy mit csinál, kérem, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ne&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; változtasson itt semmit! A változtatások problémát okozhatnak a qToxnak, és elveszhetnek az adatok, pl. az előzmények.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Beállítások visszaállítása alapértelmezettre</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Csatlakozási beállítások</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">IPv6 engedélyezése (ajánlott)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Tiltsa le, ha pl. Tort használ a programhoz. Ez terhelést jelent a Tox hálózatra, csakis akkor használja az opciót bejelöletlenül, ha szükséges.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">UDP engedélyezése (ajánlott)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Proxy típusa:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Cím:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Port:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Nincs</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Újracsatlakozás</translation>
     </message>
 </context>
 <context>
@@ -801,23 +896,9 @@ A chat előzmény letiltása sértetlenül hagyja a titkosított előzményeket 
         <translation>Általános</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Nincs</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Válasszon egy mappát az automatikus elfogadáshoz</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Hívás aktív</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>A megszakítás az aktív hívás közben nem lehetséges!</translation>
     </message>
 </context>
 <context>
@@ -912,19 +993,6 @@ a rendszertálca helyett.</translation>
         <translation>Automatikus távollét (0 a letiltáshoz):</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Chat</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Mindig értesít új üzenetekről a csoportos chatekben.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Csoportos chatek mindig értesíthetnek</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Mutassa a partnerek állapotváltozásait</translation>
     </message>
@@ -933,104 +1001,8 @@ a rendszertálca helyett.</translation>
         <translation>Új üzenet esetén:</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Fókuszáljon a qToxra, ha üzenet érkezik.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Fókusz az ablakra</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translation>Imitált offline üzenetküldés</translation>
-    </message>
-    <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Az Ön partnerlistája tömör módban lesz mutatva.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Tömör partnerlista</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>Téma</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Emotikonok használata</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Emotikon csomag:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Emotikon méret:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> pixel</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Stílus:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Téma színe:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Időbélyeg formátum:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Csatlakozási beállítások</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Tiltsa le, ha pl. Tort használ a programhoz. Ez terhelést jelent a Tox hálózatra, csakis akkor használja az opciót bejelöletlenül, ha szükséges.</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP engedélyezése (ajánlott)</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>IPv6 engedélyezése (ajánlott)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Proxy típusa:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Cím:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Nincs</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Újracsatlakozás</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1041,94 +1013,12 @@ a rendszertálca helyett.</translation>
         <translation type="unfinished">Alapértelmezett mappa a fájlok mentéséhez:</translation>
     </message>
     <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>Hang lejátszása üzenet érkezésekor.</translation>
-    </message>
-    <message>
         <source>Play sound</source>
         <translation type="unfinished">Hang lejátszása</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">qTox ablak megnyitása üzenet érkezésekor, ha nincs aktív ablak.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Ablak megnyitása</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation type="unfinished">Dátum formátuma:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation type="unfinished">Egyszerű szöveg</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation type="unfinished">Hangjelzés míg Elfoglalt</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation>Betűtípus:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation>px</translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation>Méret: </translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1700,6 +1590,10 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Generate random NoSpam</source>
         <translation>Véletlenszerű NoSpam generálása</translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Adatvédelem</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -2164,34 +2058,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Időtúllépés a kapcsolatban</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Ez a cím nem létezik</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Hiba történt a DNS feloldása közben</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>DNS szövegbejegyzés nem található</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Váratlan számérték a szövegbejegyzésben</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2219,6 +2085,166 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Mégsem</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Nincs</translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Chat</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">Betűtípus:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished">px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">Méret: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">Egyszerű szöveg</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Új üzenet</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">qTox ablak megnyitása üzenet érkezésekor, ha nincs aktív ablak.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Ablak megnyitása</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Fókuszáljon a qToxra, ha üzenet érkezik.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Fókusz az ablakra</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Mindig értesít új üzenetekről a csoportos chatekben.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Csoportos chatek mindig értesíthetnek</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Az Ön partnerlistája tömör módban lesz mutatva.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Tömör partnerlista</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Emotikonok használata</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Emotikon csomag:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Emotikon méret:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> pixel</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Téma</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Stílus:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Téma színe:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Időbélyeg formátum:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Dátum formátuma:</translation>
     </message>
 </context>
 <context>

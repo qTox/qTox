@@ -115,6 +115,18 @@ which may lead to problems with video calls.</source>
         <source>About</source>
         <translation>За програмата</translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -149,10 +161,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Authors</source>
         <translation>Автори</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Основател на проекта: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Вижте пълен лист със &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;сътрудници&lt;/span&gt;&lt;/a&gt; в Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -250,17 +258,6 @@ which may lead to problems with video calls.</source>
         <translation>Не можете да добавите себе си като приятел!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Този Tox ID не съществува</translation>
-    </message>
-    <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox трябва да използва Tox DNS, но неможе през прокси.
-    Искате ли да се премахне проксито и да се свържете към Интернет директно?</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t add friend</source>
         <translation>Неуспешно прибавяне на приятел</translation>
     </message>
@@ -294,12 +291,59 @@ which may lead to problems with video calls.</source>
         <source>Reject</source>
         <translation>Отхвърлям</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Този Tox ID не съществува</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
         <translation>За напреднали</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Обадете се активно</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Вие не можете да излезнете, докато повикването е активно!</translation>
     </message>
 </context>
 <context>
@@ -314,12 +358,62 @@ which may lead to problems with video calls.</source>
         <translation>Направете Tox портативен</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ВНИМАНИЕ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Освен ако &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;наистина&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; знаете какво правите, моля &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;не&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; променяйте нищо тук. Промените направени тук могат да доведат до проблеми с qTox и дори да доведат до загуба на данни, като например история.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Възстановяване на настройки по подразбиране</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Настройки за връзка</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">Активиране на IPv6 (Препоръчително)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Изключването на тази опция позволява, примерно, писане през Tor. Обаче по този начин се прибавя товар към Tox мрежата, затова я изключвайте само, ако е нужно.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">Активиране на UDP (Препоръчително)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Тип прокси:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Адрес:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Порт:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Нищо</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Свържете се отново</translation>
     </message>
 </context>
 <context>
@@ -807,23 +901,9 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Общи</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation>Нищо</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Изберете папка за автоматично приемане</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Обадете се активно</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Вие не можете да излезнете, докато повикването е активно!</translation>
     </message>
 </context>
 <context>
@@ -847,63 +927,6 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Set to 0 to disable</source>
         <translation>Посочете 0, за да забраните</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Използвай емотикони</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Комплект от емотикони:</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Стил:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Цвят на тема:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Формат на дата и час:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Настройки за връзка</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Изключването на тази опция позволява, примерно, писане през Tor. Обаче по този начин се прибавя товар към Tox мрежата, затова я изключвайте само, ако е нужно.</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>Активиране на IPv6 (Препоръчително)</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>Активиране на UDP (Препоръчително)</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Нищо</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Свържете се отново</translation>
     </message>
     <message>
         <source>Start in tray</source>
@@ -979,64 +1002,12 @@ instead of system taskbar.</source>
         <translation>Вашето състояние се променя на Отсъстващ след определен период на бездействие.</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Чат</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Винаги уведомявай за нови съобщения в групови чатове.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Групови чатове винаги уведомявай</translation>
-    </message>
-    <message>
         <source>On new message:</source>
         <translation>На ново съобщение:</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Фокусирай qTox когато получиш ново съобщение.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Фокусирай прозореца</translation>
-    </message>
-    <message>
         <source>Faux offline messaging</source>
         <translation>Faux писане извън линия</translation>
-    </message>
-    <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Вашия лист с контакти ще бъде показан в сбит вид.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Сбит лист с контакти</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>Тема</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Размер на емотикони:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> px</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Тип прокси:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Адрес:</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1047,95 +1018,12 @@ instead of system taskbar.</source>
         <translation>Директория по подразбиране за запазване на файлове:</translation>
     </message>
     <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>Възпроизвеждане на звук при получаване на съобщение.</translation>
-    </message>
-    <message>
         <source>Play sound</source>
         <translation>Възпроизвеждане на звук</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Отвори прозореца на qTox, когато получиш ново съобщение и няма отворен прозорец все още.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Отвори прозорец</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Ако е маркирано, групови чатове ще се поставят най-отгоре на листа с приятели, а ако не е маркирано ще се поставят под приятелите, които са онлайн.</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>Постави групови чатове на върха на листа с приятели</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Съобщения, които се опитваш да пратиш на твоите приятели, когато не са на линия
-ще бъдат пратени когато се появат на линия за тебе.</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>Режим с много прозорци</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>Отвори всеки чат в индивидуален прозорец</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>Формат на дата:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Порт:</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation>Обикновен текст</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation>Покажи форматиращи символи</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation>Не показвай форматиращи символи</translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation>Възпроизвеждане на звук докато зададен Зает</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation>Основен шрифт:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation>px</translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation>Размер: </translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Новите предпочитания за стил на текста може да не се заредят, докато не рестартирате qTox.</translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished">Формат на стил на текста:</translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation>Изберете предпочитания за стил на тескта.</translation>
     </message>
 </context>
 <context>
@@ -1714,6 +1602,10 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Generate random NoSpam</source>
         <translation>Генерирайте произволен NoSpam</translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Поверителност</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -2178,34 +2070,6 @@ It will be installed when qTox restarts.</source>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Връзката изтече</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Не съществува такъв адрес</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Грешка при заявка към DNS</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>Не е намерен текстов запис</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Неочакван брой стойности в текстов запис</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2233,6 +2097,166 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Отложи</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Нищо</translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Чат</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">Основен шрифт:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished">px</translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">Размер: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished">Новите предпочитания за стил на текста може да не се заредят, докато не рестартирате qTox.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">Формат на стил на текста:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished">Изберете предпочитания за стил на тескта.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">Обикновен текст</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished">Покажи форматиращи символи</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished">Не показвай форматиращи символи</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Ново съобщение</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Отвори прозореца на qTox, когато получиш ново съобщение и няма отворен прозорец все още.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Отвори прозорец</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Фокусирай qTox когато получиш ново съобщение.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Фокусирай прозореца</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Винаги уведомявай за нови съобщения в групови чатове.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Групови чатове винаги уведомявай</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">Ако е маркирано, групови чатове ще се поставят най-отгоре на листа с приятели, а ако не е маркирано ще се поставят под приятелите, които са онлайн.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">Постави групови чатове на върха на листа с приятели</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Вашия лист с контакти ще бъде показан в сбит вид.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Сбит лист с контакти</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">Режим с много прозорци</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">Отвори всеки чат в индивидуален прозорец</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Използвай емотикони</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Комплект от емотикони:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Размер на емотикони:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> px</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Тема</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Стил:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Цвят на тема:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Формат на дата и час:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Формат на дата:</translation>
     </message>
 </context>
 <context>

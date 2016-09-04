@@ -115,6 +115,18 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <comment>%1 is the version of the update</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -138,10 +150,6 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Authors</source>
         <translatorcomment>Değiştirilebilir</translatorcomment>
         <translation>Yazarlar</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esas yazar: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Bu yazılıma katkıda bulunanların tam listesi için, Github&apos;da &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; kısmını inceleyiniz.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -236,11 +244,6 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation>Kendinizi, arkadaşınız olarak ekleyemezsiniz!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Böyle bir Tox kimliği yoktur</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
         <translation>Tox kimliği</translation>
@@ -274,11 +277,6 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation>Selam, ben %1, biraz toxlayalım mı?</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add a friend</source>
         <translation type="unfinished">Arkadaş ekle</translation>
     </message>
@@ -294,6 +292,11 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Reject</source>
         <translation type="unfinished">Reddet</translation>
     </message>
+    <message>
+        <source>This Tox ID does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Böyle bir Tox kimliği yoktur</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -301,6 +304,48 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Advanced</source>
         <translatorcomment>Ya da basitçe gelişmiş, ileri seviye denilebilir, alışılageldiği üzere</translatorcomment>
         <translation>İleri-düzey Ayarlar</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Görüşme etkin</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Bir görüşme etkin iken bağlantıyı kesemezsiniz!</translation>
     </message>
 </context>
 <context>
@@ -315,12 +360,62 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation>qTox&apos;u taşınabilir hale getir</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;ÖNEMLİ&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Eğer, &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;gerçekten&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; ne yaptığınızın farkında değilseniz, lütfen burada herhangi bir ayarı &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;değiştirmeyin.&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; Burada yapacağınız herhangi bir değişiklik qTox kurulumunuza veya verilerinize zarar verebilir. (örneğin sohbet geçmişi)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Varsayılana ayarla</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Bağlantı Ayarları</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">IPv6&apos;yı etkinleştir (önerilir)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Bunu devredışı bırakmak, Tor ağından haberleşmeyi mümkün kılar, fakat Tox ağına daha çok yük bindirir. Bu yüzden sadece gerekli olduğunda işareti kaldırın.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">UDP&apos;yi etkinleştir (önerillir)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Vekil tipi:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Adres:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Bağlantı noktası:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Hiçbiri</translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished">SOCKS5</translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished">HTTP</translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Yeniden bağlan</translation>
     </message>
 </context>
 <context>
@@ -799,23 +894,9 @@ Disabling chat history now will leave the encrypted history intact (but not usab
 <context>
     <name>GeneralForm</name>
     <message>
-        <source>None</source>
-        <translation>Hiçbiri</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Sormadan kabul edilen aktarımlar için dizin belirle</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Görüşme etkin</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Bir görüşme etkin iken bağlantıyı kesemezsiniz!</translation>
     </message>
     <message>
         <source>General</source>
@@ -920,214 +1001,23 @@ instead of closing itself.</source>
         <translation>Alınacak dosyalar için onay bekleme</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Sohbet</translation>
-    </message>
-    <message>
         <source>On new message:</source>
         <translation>Yeni bir ileti geldiğinde:</translation>
-    </message>
-    <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>İleti aldığında ses çıkar.</translation>
     </message>
     <message>
         <source>Play sound</source>
         <translation>Ses çıkar</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Bir ileti alındığında, açık olan hiç bir qTox penceresi yoksa qTox&apos;un penceresini aç.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Pencere aç</translation>
-    </message>
-    <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>İleti alındığında qTox penceresini öne çıkar.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Pencereyi öne çıkar</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Kişilerin durum değişimi göster</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Grup sohbetlerindeki yeni iletileri her zaman bildir.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Grup sohbetlerindeki iletileri her zaman bildir</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>İşaretlendiğinde, grup sohbetleri, arkadan listesinin başında, işaretlenmediğinde çevrimiçi kişilerin altında görünecektir.</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>Grup sohbetlerini arkadaş listesinin başında göster</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Çevrimiçi olmayan arkadaşlarınıza gönderdiğiniz iletiler, size çevrimiçi göründüklerinde iletilecek.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
         <translation>Çevrimdışı iletileri faksla</translation>
     </message>
     <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Arkadaşlarınız, listede, yüzeysel olarak görünecek.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Yüzeysel arkadaş listesi</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>Çok pencereli düzen</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>Her sohbeti ayrı pencerede aç</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>Tema</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Yüz ifadelerini kullan</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Yüz ifadesi paketi:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Yüz ifadesi boyutu:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation>px</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Biçim:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Tema rengi:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Zaman biçimi:</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>Tarih biçimi:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Bağlantı Ayarları</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>IPv6&apos;yı etkinleştir (önerilir)</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Bunu devredışı bırakmak, Tor ağından haberleşmeyi mümkün kılar, fakat Tox ağına daha çok yük bindirir. Bu yüzden sadece gerekli olduğunda işareti kaldırın.</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP&apos;yi etkinleştir (önerillir)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Vekil tipi:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adres:</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Bağlantı noktası:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Hiçbiri</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation>SOCKS5</translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation>HTTP</translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Yeniden bağlan</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1698,6 +1588,10 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
         <source>Generate random NoSpam</source>
         <translation>Rastgele NoSpam üret</translation>
     </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Gizlilik</translation>
+    </message>
 </context>
 <context>
     <name>ProfileForm</name>
@@ -2159,34 +2053,6 @@ It will be installed when qTox restarts.</source>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Bağlantı zaman aşımına uğradı</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Bu adres mevcut değil</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>DNS aranırken bir hata oldu</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>Metin kaydı bulunamadı</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Metin kaydında beklenmeyen sayıda değer var</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2214,6 +2080,166 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>İptal</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">Hiçbiri</translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Sohbet</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Yeni ileti</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Bir ileti alındığında, açık olan hiç bir qTox penceresi yoksa qTox&apos;un penceresini aç.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Pencere aç</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">İleti alındığında qTox penceresini öne çıkar.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Pencereyi öne çıkar</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Grup sohbetlerindeki yeni iletileri her zaman bildir.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Grup sohbetlerindeki iletileri her zaman bildir</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">İşaretlendiğinde, grup sohbetleri, arkadan listesinin başında, işaretlenmediğinde çevrimiçi kişilerin altında görünecektir.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">Grup sohbetlerini arkadaş listesinin başında göster</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Arkadaşlarınız, listede, yüzeysel olarak görünecek.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Yüzeysel arkadaş listesi</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">Çok pencereli düzen</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">Her sohbeti ayrı pencerede aç</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Yüz ifadelerini kullan</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Yüz ifadesi paketi:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Yüz ifadesi boyutu:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished">px</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Tema</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Biçim:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Tema rengi:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Zaman biçimi:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Tarih biçimi:</translation>
     </message>
 </context>
 <context>

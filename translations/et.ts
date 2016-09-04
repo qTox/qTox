@@ -399,7 +399,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Määramata</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -2107,7 +2107,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Määramata</translation>
     </message>
     <message>
         <source>User Interface</source>

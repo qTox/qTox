@@ -115,6 +115,18 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translatorcomment>Linktext für Bugreport</translatorcomment>
         <translation type="unfinished">melde sie</translation>
     </message>
+    <message>
+        <source>Original author: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -145,10 +157,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Authors</source>
         <translation>Entwickler</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Original author: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;See a full list of &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;contributors&lt;/span&gt;&lt;/a&gt; at Github&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ursprünglich entwickelt von: &lt;a href=&quot;https://github.com/tux3&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;tux3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alle Mitwirkenden findest du unter &lt;a href=&quot;https://github.com/qTox/qTox/graphs/contributors&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Contributors&lt;/span&gt;&lt;/a&gt; auf GitHub.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Known Issues</source>
@@ -235,12 +243,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Tox ID</translation>
     </message>
     <message>
-        <source>qTox needs to use the Tox DNS, but can&apos;t do it through a proxy.
-    Ignore the proxy and connect to the Internet directly?</source>
-        <translation>qTox verwendet Tox-DNS, um eine Verbindung herzustellen, kann das bei aktiviertem Proxyserver aber nicht.
-Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werden?</translation>
-    </message>
-    <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
         <translation>entweder 76 hexadezimale Zeichen oder name@example.com</translation>
@@ -290,8 +292,8 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     </message>
     <message>
         <source>This Tox ID does not exist</source>
-        <comment>DNS error</comment>
-        <translation>Diese Tox ID existiert nicht</translation>
+        <comment>Toxme error</comment>
+        <translation type="unfinished">Diese Tox ID existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -299,6 +301,48 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
     <message>
         <source>Advanced</source>
         <translation>Erweitert</translation>
+    </message>
+    <message>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>really</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IMPORTANT NOTE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All settings will be reset to default. Are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Ja</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Nein</translation>
+    </message>
+    <message>
+        <source>Call active</source>
+        <comment>popup title</comment>
+        <translation type="unfinished">Anruf aktiv</translation>
+    </message>
+    <message>
+        <source>You can&apos;t disconnect while a call is active!</source>
+        <comment>popup text</comment>
+        <translation type="unfinished">Du kannst dich nicht abmelden solange ein Anruf aktiv ist!</translation>
     </message>
 </context>
 <context>
@@ -313,17 +357,62 @@ Soll der Proxyserver ignoriert werden und eine Direktverbindung hergestellt werd
         <translation>Tox portabel machen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;IMPORTANT NOTE&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;Unless you &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;really&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; know what you are doing, please do &lt;/span&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;not&lt;/span&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt; change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;
-&lt;body style=&quot;font-weight:400; color:#500;&quot;&gt;
-&lt;p&gt;Wichtiger Hinweis:&lt;/p&gt;
-&lt;p&gt;Bitte beachte, dass diese Einstellungen nur geändert werden sollten, wenn du weißt, was du tust! Ansonsten kann es zu Problemen und sogar Datenverlust wie z. B. Verlust der Gesprächsverläufe kommen!&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Reset to default settings</source>
         <translation>Einstellungen zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Portable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection Settings</source>
+        <translation type="unfinished">Verbindungseinstellungen</translation>
+    </message>
+    <message>
+        <source>Enable IPv6 (recommended)</source>
+        <extracomment>Text on a checkbox to enable IPv6</extracomment>
+        <translation type="unfinished">IPv6 aktivieren (Empfohlen)</translation>
+    </message>
+    <message>
+        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
+        <extracomment>force tcp checkbox tooltip</extracomment>
+        <translation type="unfinished">Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
+    </message>
+    <message>
+        <source>Enable UDP (recommended)</source>
+        <extracomment>Text on checkbox to disable UDP</extracomment>
+        <translation type="unfinished">UDP aktivieren (Empfohlen)</translation>
+    </message>
+    <message>
+        <source>Proxy type:</source>
+        <translation type="unfinished">Proxy-Typ:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <extracomment>Text on proxy addr label</extracomment>
+        <translation type="unfinished">Adresse:</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <extracomment>Text on proxy port label</extracomment>
+        <translation type="unfinished">Port:</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SOCKS5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reconnect</source>
+        <comment>reconnect button</comment>
+        <translation type="unfinished">Erneut verbinden</translation>
     </message>
 </context>
 <context>
@@ -816,24 +905,9 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
         <translation>Allgemeines</translation>
     </message>
     <message>
-        <source>None</source>
-        <translatorcomment>Grundstil</translatorcomment>
-        <translation>Standard</translation>
-    </message>
-    <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
         <translation>Datei-Speicherort angeben</translation>
-    </message>
-    <message>
-        <source>Call active</source>
-        <comment>popup title</comment>
-        <translation>Anruf aktiv</translation>
-    </message>
-    <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
-        <comment>popup text</comment>
-        <translation>Du kannst dich nicht abmelden solange ein Anruf aktiv ist!</translation>
     </message>
 </context>
 <context>
@@ -926,19 +1000,6 @@ instead of system taskbar.</source>
         <translation>Automatisch abwesend nach (Aus = 0):</translation>
     </message>
     <message>
-        <source>Chat</source>
-        <translation>Chat</translation>
-    </message>
-    <message>
-        <source>Always notify about new messages in groupchats.</source>
-        <comment>toolTip for Group chat always notify</comment>
-        <translation>Du wirst benachrichtigt, wenn neue Nachrichten in Gruppenchats eingehen.</translation>
-    </message>
-    <message>
-        <source>Group chats always notify</source>
-        <translation>Gruppenchat-Benachrichtigungen</translation>
-    </message>
-    <message>
         <source>Show contacts&apos; status changes</source>
         <translation>Hinweis bei Statusänderungen</translation>
     </message>
@@ -947,204 +1008,24 @@ instead of system taskbar.</source>
         <translation>Bei neuen Nachrichten:</translation>
     </message>
     <message>
-        <source>Focus qTox when you receive message.</source>
-        <comment>toolTip for Focus window setting</comment>
-        <translation>Fenster wird fokussiert, wenn neue Nachrichten eingehen.</translation>
-    </message>
-    <message>
-        <source>Focus window</source>
-        <translation>Fokussiere das Fenster</translation>
-    </message>
-    <message>
-        <source>Play a sound when you recieve message.</source>
-        <comment>toolTip for Notify sound setting</comment>
-        <translation>Bei Eingang neuer Nachrichten wird ein Ton abgespielt.</translation>
-    </message>
-    <message>
         <source>Play sound</source>
         <translation>Spiele einen Ton ab</translation>
-    </message>
-    <message>
-        <source>Messages you are trying to send to your friends when they are not online
-will be sent to them when they appear online to you.</source>
-        <comment>toolTip for Faux offline messaging setting</comment>
-        <translation>Nachrichten, die du versendest, während der entsprechende Kontakt nicht online ist,
-werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
         <translation>Pseudo-Offline-Nachrichten</translation>
     </message>
     <message>
-        <source>Your contact list will be shown in compact mode.</source>
-        <comment>toolTip for compact layout setting</comment>
-        <translation>Die Kontaktliste wird kompakter dargestellt.</translation>
-    </message>
-    <message>
-        <source>Compact contact list</source>
-        <translation>Kompakte Kontaktliste</translation>
-    </message>
-    <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
-        <comment>toolTip for groupchat positioning</comment>
-        <translation>Gruppenchats werden über den normalen Kontakten platziert.</translation>
-    </message>
-    <message>
         <source>Start qTox on operating system startup (current profile).</source>
         <translation>Mit Betriebssystem starten (aktuelles Profil).</translation>
-    </message>
-    <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
-        <comment>tooltip for Show window setting</comment>
-        <translation>Öffne qTox bei neuen Nachrichten, sollte noch kein Fenster geöffnet sein.</translation>
-    </message>
-    <message>
-        <source>Open window</source>
-        <translation>Öffne Fenster</translation>
-    </message>
-    <message>
-        <source>Multiple windows mode</source>
-        <translation>Mehrfenster-Modus</translation>
-    </message>
-    <message>
-        <source>Open each chat in an individual window</source>
-        <translation>Jeden Chat in einem separaten Fenster öffnen</translation>
-    </message>
-    <message>
-        <source>Place groupchats at top of friend list</source>
-        <translation>Gruppenchats oben</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
         <translation>Standardordner für Dateien:</translation>
     </message>
     <message>
-        <source>Theme</source>
-        <translation>Aussehen</translation>
-    </message>
-    <message>
-        <source>Use emoticons</source>
-        <translation>Emoticons verwenden</translation>
-    </message>
-    <message>
-        <source>Smiley Pack:</source>
-        <extracomment>Text on smiley pack label</extracomment>
-        <translation>Smiley-Art:</translation>
-    </message>
-    <message>
-        <source>Emoticon size:</source>
-        <translation>Smileygröße:</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation> Pixel</translation>
-    </message>
-    <message>
-        <source>Style:</source>
-        <translation>Grundstil:</translation>
-    </message>
-    <message>
-        <source>Theme color:</source>
-        <translation>Grundfarbe:</translation>
-    </message>
-    <message>
-        <source>Timestamp format:</source>
-        <translation>Zeitstempelformat:</translation>
-    </message>
-    <message>
-        <source>Date format:</source>
-        <translation>Datumsformat:</translation>
-    </message>
-    <message>
-        <source>Connection Settings</source>
-        <translation>Verbindungseinstellungen</translation>
-    </message>
-    <message>
-        <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
-        <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
-    </message>
-    <message>
-        <source>Enable UDP (recommended)</source>
-        <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP aktivieren (Empfohlen)</translation>
-    </message>
-    <message>
-        <source>Port:</source>
-        <extracomment>Text on proxy port label</extracomment>
-        <translation>Port:</translation>
-    </message>
-    <message>
-        <source>Enable IPv6 (recommended)</source>
-        <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>IPv6 aktivieren (Empfohlen)</translation>
-    </message>
-    <message>
-        <source>Proxy type:</source>
-        <translation>Proxy-Typ:</translation>
-    </message>
-    <message>
-        <source>Address:</source>
-        <extracomment>Text on proxy addr label</extracomment>
-        <translation>Adresse:</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Kein Proxy</translation>
-    </message>
-    <message>
-        <source>SOCKS5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>HTTP</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Reconnect</source>
-        <comment>reconnect button</comment>
-        <translation>Erneut verbinden</translation>
-    </message>
-    <message>
-        <source>Plaintext</source>
-        <translation>Klartext</translation>
-    </message>
-    <message>
-        <source>Show formatting characters</source>
-        <translation>Formatierungszeichen anzeigen</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show formatting characters</source>
-        <translation>Formatierungszeichen nicht anzeigen</translation>
-    </message>
-    <message>
         <source>Play sound while Busy</source>
         <translation>Auch Ton abspielen während man „beschäftigt“ ist</translation>
-    </message>
-    <message>
-        <source>Base font:</source>
-        <translation>Schriftart:</translation>
-    </message>
-    <message>
-        <source>px</source>
-        <translatorcomment>Keine Übersetzung notwendig</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Size: </source>
-        <translation>Größe: </translation>
-    </message>
-    <message>
-        <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
-    </message>
-    <message>
-        <source>Text Style format:</source>
-        <translation>Text Stilformat:</translation>
-    </message>
-    <message>
-        <source>Select text styling preference.</source>
-        <translation>Wählen Sie die Textstil Einstellung.</translation>
     </message>
 </context>
 <context>
@@ -1294,7 +1175,7 @@ werden übertragen, sobald ihr beide online seid.</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-         <translation>Eingeladen von %1 am %2 um %3.</translation>
+        <translation>Eingeladen von %1 am %2 um %3.</translation>
     </message>
 </context>
 <context>
@@ -1725,6 +1606,10 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>Wenn aktiviert, wird der Gesprächsverlauf dauerhaft gesichert.</translation>
+    </message>
+    <message>
+        <source>Privacy</source>
+        <translation type="unfinished">Privatsphäre</translation>
     </message>
 </context>
 <context>
@@ -2190,34 +2075,6 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
 </context>
 <context>
-    <name>ToxDNS</name>
-    <message>
-        <source>The connection timed out</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Eine Zeitüberschreitung in der Verbindung ist aufgetreten</translation>
-    </message>
-    <message>
-        <source>This address does not exist</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Diese Adresse existiert nicht</translation>
-    </message>
-    <message>
-        <source>Error while looking up DNS</source>
-        <comment>The DNS gives the Tox ID associated to toxme.se addresses</comment>
-        <translation>Beim Nachschlagen der Adresse ist ein Fehler aufgetreten</translation>
-    </message>
-    <message>
-        <source>No text record found</source>
-        <comment>Error with the DNS</comment>
-        <translation>Kein Texteintrag gefunden</translation>
-    </message>
-    <message>
-        <source>Unexpected number of values in text record</source>
-        <comment>Error with the DNS</comment>
-        <translation>Unerwartete Anzahl an Einträgen im Texteintrag</translation>
-    </message>
-</context>
-<context>
     <name>ToxURIDialog</name>
     <message>
         <source>Add a friend</source>
@@ -2245,6 +2102,166 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceForm</name>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User Interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UserInterfaceSettings</name>
+    <message>
+        <source>Chat</source>
+        <translation type="unfinished">Chat</translation>
+    </message>
+    <message>
+        <source>Base font:</source>
+        <translation type="unfinished">Schriftart:</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size: </source>
+        <translation type="unfinished">Größe: </translation>
+    </message>
+    <message>
+        <source>New text styling preference may not load until qTox restarts.</source>
+        <translation type="unfinished">Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
+    </message>
+    <message>
+        <source>Text Style format:</source>
+        <translation type="unfinished">Text Stilformat:</translation>
+    </message>
+    <message>
+        <source>Select text styling preference.</source>
+        <translation type="unfinished">Wählen Sie die Textstil Einstellung.</translation>
+    </message>
+    <message>
+        <source>Plaintext</source>
+        <translation type="unfinished">Klartext</translation>
+    </message>
+    <message>
+        <source>Show formatting characters</source>
+        <translation type="unfinished">Formatierungszeichen anzeigen</translation>
+    </message>
+    <message>
+        <source>Don&apos;t show formatting characters</source>
+        <translation type="unfinished">Formatierungszeichen nicht anzeigen</translation>
+    </message>
+    <message>
+        <source>New message</source>
+        <translation type="unfinished">Neue Nachricht</translation>
+    </message>
+    <message>
+        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <comment>tooltip for Show window setting</comment>
+        <translation type="unfinished">Öffne qTox bei neuen Nachrichten, sollte noch kein Fenster geöffnet sein.</translation>
+    </message>
+    <message>
+        <source>Open window</source>
+        <translation type="unfinished">Öffne Fenster</translation>
+    </message>
+    <message>
+        <source>Focus qTox when you receive message.</source>
+        <comment>toolTip for Focus window setting</comment>
+        <translation type="unfinished">Fenster wird fokussiert, wenn neue Nachrichten eingehen.</translation>
+    </message>
+    <message>
+        <source>Focus window</source>
+        <translation type="unfinished">Fokussiere das Fenster</translation>
+    </message>
+    <message>
+        <source>Contact list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Always notify about new messages in groupchats.</source>
+        <comment>toolTip for Group chat always notify</comment>
+        <translation type="unfinished">Du wirst benachrichtigt, wenn neue Nachrichten in Gruppenchats eingehen.</translation>
+    </message>
+    <message>
+        <source>Group chats always notify</source>
+        <translation type="unfinished">Gruppenchat-Benachrichtigungen</translation>
+    </message>
+    <message>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <comment>toolTip for groupchat positioning</comment>
+        <translation type="unfinished">Gruppenchats werden über den normalen Kontakten platziert.</translation>
+    </message>
+    <message>
+        <source>Place groupchats at top of friend list</source>
+        <translation type="unfinished">Gruppenchats oben</translation>
+    </message>
+    <message>
+        <source>Your contact list will be shown in compact mode.</source>
+        <comment>toolTip for compact layout setting</comment>
+        <translation type="unfinished">Die Kontaktliste wird kompakter dargestellt.</translation>
+    </message>
+    <message>
+        <source>Compact contact list</source>
+        <translation type="unfinished">Kompakte Kontaktliste</translation>
+    </message>
+    <message>
+        <source>Multiple windows mode</source>
+        <translation type="unfinished">Mehrfenster-Modus</translation>
+    </message>
+    <message>
+        <source>Open each chat in an individual window</source>
+        <translation type="unfinished">Jeden Chat in einem separaten Fenster öffnen</translation>
+    </message>
+    <message>
+        <source>Emoticons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use emoticons</source>
+        <translation type="unfinished">Emoticons verwenden</translation>
+    </message>
+    <message>
+        <source>Smiley Pack:</source>
+        <extracomment>Text on smiley pack label</extracomment>
+        <translation type="unfinished">Smiley-Art:</translation>
+    </message>
+    <message>
+        <source>Emoticon size:</source>
+        <translation type="unfinished">Smileygröße:</translation>
+    </message>
+    <message>
+        <source> px</source>
+        <translation type="unfinished"> Pixel</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation type="unfinished">Aussehen</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished">Grundstil:</translation>
+    </message>
+    <message>
+        <source>Theme color:</source>
+        <translation type="unfinished">Grundfarbe:</translation>
+    </message>
+    <message>
+        <source>Timestamp format:</source>
+        <translation type="unfinished">Zeitstempelformat:</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation type="unfinished">Datumsformat:</translation>
     </message>
 </context>
 <context>

@@ -399,7 +399,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aucune</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -2103,7 +2103,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aucune</translation>
     </message>
     <message>
         <source>User Interface</source>

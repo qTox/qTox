@@ -399,7 +399,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Joks</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -2106,7 +2106,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Joks</translation>
     </message>
     <message>
         <source>User Interface</source>
