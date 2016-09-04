@@ -568,12 +568,11 @@ void Widget::moveEvent(QMoveEvent *event)
     QWidget::moveEvent(event);
 }
 
-void Widget::closeEvent(QCloseEvent *event)
+void Widget::hideEvent(QHideEvent *event)
 {
     if (Settings::getInstance().getShowSystemTray() && Settings::getInstance().getCloseToTray())
     {
-        event->ignore();
-        this->hide();
+        QWidget::hideEvent(event);
     }
     else
     {
@@ -584,7 +583,7 @@ void Widget::closeEvent(QCloseEvent *event)
         }
         saveWindowGeometry();
         saveSplitterGeometry();
-        QWidget::closeEvent(event);
+        QWidget::hideEvent(event);
         qApp->quit();
     }
 }
