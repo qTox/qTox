@@ -69,7 +69,7 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
         micButton->setVisible(false);
     }
 
-    nameLabel->setText(group->getGroupWidget()->getName());
+    nameLabel->setText(group->getName());
 
     nusersLabel->setFont(Style::getFont(Style::Medium));
     nusersLabel->setObjectName("statusLabel");
