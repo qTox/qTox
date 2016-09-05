@@ -24,35 +24,48 @@
 #include <windows.h>
 #include <string>
 
+#ifdef UNICODE
+/**
+ * tstring is either std::wstring or std::string, depending on whether the user
+ * is building a Unicode or Multi-Byte version of qTox. This makes the code
+ * easier to reuse and compatible with both setups.
+ */
+using tstring = std::wstring;
+static inline tstring toTString(QString s) { return s.toStdWString(); }
+#else
+using tstring = std::string;
+static inline tstring toTString(QString s) { return s.toStdString(); }
+#endif
+
 namespace Platform
 {
-    inline std::wstring currentCommandLine()
+    inline tstring currentCommandLine()
     {
-        return ("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -p \"" +
-                Settings::getInstance().getCurrentProfile() + "\"").toStdWString();
+        return toTString("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -p \"" +
+                         Settings::getInstance().getCurrentProfile() + "\"");
     }
 
-    inline std::wstring currentRegistryKeyName()
+    inline tstring currentRegistryKeyName()
     {
-        return (QString("qTox - ") + Settings::getInstance().getCurrentProfile()).toStdWString();
+        return toTString("qTox - " + Settings::getInstance().getCurrentProfile());
     }
 }
 
 bool Platform::setAutorun(bool on)
 {
     HKEY key = 0;
-    if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-                    0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
+    if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
+                     0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
         return false;
 
     bool result = false;
-    std::wstring keyName = currentRegistryKeyName();
+    tstring keyName = currentRegistryKeyName();
 
     if (on)
     {
-        std::wstring path = currentCommandLine();
+        tstring path = currentCommandLine();
         result = RegSetValueEx(key, keyName.c_str(), 0, REG_SZ, (PBYTE)path.c_str(),
-                               path.length() * sizeof(wchar_t)) == ERROR_SUCCESS;
+                               path.length() * sizeof(TCHAR)) == ERROR_SUCCESS;
     }
     else
         result = RegDeleteValue(key, keyName.c_str()) == ERROR_SUCCESS;
@@ -64,13 +77,13 @@ bool Platform::setAutorun(bool on)
 bool Platform::getAutorun()
 {
     HKEY key = 0;
-    if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-                    0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
+    if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
+                     0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
         return false;
 
-    std::wstring keyName = currentRegistryKeyName();;
+    tstring keyName = currentRegistryKeyName();
 
-    wchar_t path[MAX_PATH] = { 0 };
+    TCHAR path[MAX_PATH] = { 0 };
     DWORD length = sizeof(path);
     DWORD type = REG_SZ;
     bool result = false;
