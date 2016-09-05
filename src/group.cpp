@@ -27,12 +27,15 @@
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
+Group::Group(int groupId, QString name, bool isAvGroupchat)
+    : groupId(groupId)
+    , avGroupchat(isAvGroupchat)
+    , nPeers(0)
+    , name(name)
 {
-    //in groupchats, we only notify on messages containing your name <-- dumb
-    // sound notifications should be on all messages, but system popup notification
-    // on naming is appropriate
+    // in groupchats, we only notify on messages containing your name <-- dumb
+    // sound notifications should be on all messages, but system popup
+    // notification on naming is appropriate
     hasNewMessages = 0;
     userWasMentioned = 0;
 }
@@ -66,6 +69,7 @@ void Group::updatePeer(int peerId, QString name)
 
 void Group::setName(const QString& name)
 {
+    this->name = name;
     chatForm->setName(name);
 
     if (widget->isActive())
@@ -76,7 +80,7 @@ void Group::setName(const QString& name)
 
 QString Group::getName() const
 {
-    return widget->getName();
+    return name;
 }
 
 void Group::regeneratePeerList()

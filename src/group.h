@@ -74,11 +74,11 @@ private:
     QMap<QString, QString> toxids;
     bool hasNewMessages;
     bool userWasMentioned;
+    bool avGroupchat;
     int groupId;
     int nPeers;
     int selfPeerNum = -1;
-    bool avGroupchat;
-
+    QString name;
 };
 
 #endif // GROUP_H

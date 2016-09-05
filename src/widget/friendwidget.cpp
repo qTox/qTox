@@ -115,18 +115,18 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
     QAction* newGroupAction = inviteMenu->addAction(tr("To new group"));
     inviteMenu->addSeparator();
-    QMap<QAction*, Group*> groupActions;
+    QMap<QAction*, int> groupActions;
 
     for (Group* group : GroupList::getAllGroups())
     {
         int maxNameLen = 30;
-        QString name = group->getGroupWidget()->getName();
-        if ( name.length() > maxNameLen )
-        {
+        QString name = group->getName();
+        if (name.length() > maxNameLen)
             name = name.left(maxNameLen).trimmed() + "..";
-        }
-        QAction* groupAction = inviteMenu->addAction(tr("Invite to group '%1'").arg(name));
-        groupActions[groupAction] =  group;
+
+        QString actionText = tr("Invite to group '%1'").arg(name);
+        QAction* groupAction = inviteMenu->addAction(actionText);
+        groupActions[groupAction] = group->getGroupId();
     }
 
     int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId());
