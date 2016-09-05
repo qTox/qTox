@@ -54,16 +54,11 @@ void Group::updatePeer(int peerId, QString name)
     toxids[toxid] = name;
 
     Friend *f = FriendList::findFriend(id);
-    if (f != nullptr && f->hasAlias())
+    if (f && f->hasAlias())
     {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
-    }
-    else
-    {
-        widget->onUserListChanged();
-        chatForm->onUserListChanged();
-        emit userListChanged(getGroupWidget());
+        QString name = f->getDisplayedName();
+        peers[peerId] = name;
+        toxids[toxid] = name;
     }
 }
 

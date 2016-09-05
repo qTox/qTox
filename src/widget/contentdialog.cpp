@@ -657,8 +657,12 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 
 void ContentDialog::updateGroupWidget(GroupWidget *w)
 {
-    std::get<1>(groupList.find(w->groupId).value())->setName(w->getName());
-    static_cast<GroupWidget*>(std::get<1>(groupList.find(w->groupId).value()))->onUserListChanged();
+    int groupId = w->groupId;
+    GenericChatroomWidget* widget = std::get<1>(groupList.find(groupId).value());
+    widget->setName(w->getName());
+
+    GroupWidget *groupWidget = static_cast<GroupWidget*>(widget);
+    groupWidget->onUserListChanged();
 }
 
 void ContentDialog::onGroupchatPositionChanged(bool top)
