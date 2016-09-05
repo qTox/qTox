@@ -45,6 +45,7 @@ class GenericChatForm;
 class GenericChatItemWidget;
 class Group;
 class GroupInviteForm;
+class GroupWidget;
 class Core;
 class Camera;
 class MaskablePixmapWidget;
@@ -293,6 +294,7 @@ private:
     unsigned int unreadGroupInvites;
 
     QMap<int, FriendWidget*> friendWidgets;
+    QMap<int, GroupWidget*> groupWidgets;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;

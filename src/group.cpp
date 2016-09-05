@@ -30,9 +30,6 @@
 Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
     : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
 {
-    widget = new GroupWidget(groupId, Name);
-    chatForm = new GroupChatForm(this);
-
     //in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification
     // on naming is appropriate
@@ -144,6 +141,16 @@ QStringList Group::getPeerList() const
 bool Group::isSelfPeerNumber(int num) const
 {
     return num == selfPeerNum;
+}
+
+void Group::setChatForm(GroupChatForm *form)
+{
+    chatForm = form;
+}
+
+void Group::setGroupWidget(GroupWidget *widget)
+{
+    this->widget = widget;
 }
 
 void Group::setEventFlag(bool f)

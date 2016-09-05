@@ -1648,23 +1648,28 @@ Group *Widget::createGroup(int groupId)
     }
 
     bool enabled = coreAv->isGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
+    Group* newGroup = GroupList::addGroup(groupId, groupName, enabled);
+    GroupWidget *widget = new GroupWidget(groupId, groupName);
+    newGroup->setGroupWidget(widget);
+    GroupChatForm *chatForm = new GroupChatForm(newGroup);
+    newGroup->setChatForm(chatForm);
+    groupWidgets[groupId] = widget;
 
-    contactListWidget->addGroupWidget(newgroup->getGroupWidget());
-    newgroup->getGroupWidget()->updateStatusLight();
+    contactListWidget->addGroupWidget(newGroup->getGroupWidget());
+    newGroup->getGroupWidget()->updateStatusLight();
     contactListWidget->activateWindow();
 
-    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
-    connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
-    connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));
-    connect(newgroup->getChatForm(), &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
-    connect(newgroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
-    connect(newgroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
+    connect(newGroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
+    connect(newGroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
+    connect(newGroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newGroup->getChatForm(), SLOT(focusInput()));
+    connect(newGroup->getChatForm(), &GroupChatForm::sendMessage, core, &Core::sendGroupMessage);
+    connect(newGroup->getChatForm(), &GroupChatForm::sendAction, core, &Core::sendGroupAction);
+    connect(newGroup->getChatForm(), &GroupChatForm::groupTitleChanged, core, &Core::changeGroupTitle);
 
     FilterCriteria filter = getFilterCriteria();
-    newgroup->getGroupWidget()->searchName(searchContactText->text(), filterGroups(filter));
+    newGroup->getGroupWidget()->searchName(searchContactText->text(), filterGroups(filter));
 
-    return newgroup;
+    return newGroup;
 }
 
 void Widget::onEmptyGroupCreated(int groupId)
