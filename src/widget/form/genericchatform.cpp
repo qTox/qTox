@@ -31,7 +31,6 @@
 #include "src/chatlog/content/timestamp.h"
 #include "src/core/core.h"
 #include "src/friend.h"
-#include "src/friendlist.h"
 #include "src/group.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
@@ -435,7 +434,7 @@ void GenericChatForm::onSelectAllClicked()
 
 QString GenericChatForm::resolveToxId(const ToxId &id)
 {
-    Friend *f = FriendList::findFriend(id);
+    Friend *f = Friend::get(id);
     if (f)
         return f->getDisplayedName();
 

@@ -18,18 +18,19 @@
 */
 
 #include "netcamview.h"
-#include "camerasource.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/core/core.h"
-#include "src/video/videosurface.h"
-#include "src/widget/tool/movablewidget.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/profile.h"
-#include "src/nexus.h"
-#include <QLabel>
+
 #include <QBoxLayout>
 #include <QFrame>
+#include <QLabel>
+
+#include "camerasource.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/movablewidget.h"
 
 NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
@@ -37,7 +38,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     , friendId{friendId}
     , e(false)
 {
-    QString id = FriendList::findFriend(friendId)->getToxId().toString();
+    QString id = Friend::get(friendId)->getToxId().toString();
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);

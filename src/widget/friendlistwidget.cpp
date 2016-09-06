@@ -18,20 +18,22 @@
 */
 
 #include "friendlistwidget.h"
-#include "friendlistlayout.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/persistence/settings.h"
-#include "friendwidget.h"
-#include "groupwidget.h"
-#include "circlewidget.h"
-#include "widget.h"
+
+#include <cassert>
+
 #include <QGridLayout>
 #include <QMimeData>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QTimer>
-#include <cassert>
+
+#include "circlewidget.h"
+#include "friendlistlayout.h"
+#include "friendwidget.h"
+#include "groupwidget.h"
+#include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "widget.h"
 
 enum Time : int
 {
@@ -342,7 +344,7 @@ void FriendListWidget::moveFriends(QLayout *layout)
         else if (friendWidget)
         {
             int friendId = friendWidget->friendId;
-            Friend *contact = FriendList::findFriend(friendId);
+            Friend *contact = Friend::get(friendId);
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
 
@@ -376,7 +378,7 @@ void FriendListWidget::addFriendWidget(FriendWidget* w, Status s, int circleInde
 
 void FriendListWidget::removeFriendWidget(FriendWidget* w)
 {
-    Friend* contact = FriendList::findFriend(w->friendId);
+    Friend* contact = Friend::get(w->friendId);
     if (mode == Activity)
     {
         QDate activityDate = getDateFriend(contact);
@@ -409,7 +411,7 @@ void FriendListWidget::addCircleWidget(FriendWidget* friendWidget)
     {
         if (friendWidget != nullptr)
         {
-            Friend *f = FriendList::findFriend(friendWidget->friendId);
+            Friend *f = Friend::get(friendWidget->friendId);
             ToxId toxId = f->getToxId();
             int circleId = Settings::getInstance().getFriendCircleID(toxId);
             CircleWidget* circleOriginal = CircleWidget::getFromID(circleId);
@@ -504,7 +506,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         if (friendWidget == nullptr)
             return;
 
-        QDate activityDate = getDateFriend(FriendList::findFriend(friendWidget->friendId));
+        QDate activityDate = getDateFriend(Friend::get(friendWidget->friendId));
         index = getTime(activityDate);
         CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
 
@@ -550,7 +552,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
     if (friendWidget != nullptr)
     {
-        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId()));
+        circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(Friend::get(friendWidget->friendId)->getToxId()));
         if (circleWidget != nullptr)
         {
             if (circleWidget->cycleContacts(friendWidget, forward))
@@ -636,7 +638,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 void FriendListWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     ToxId toxId(event->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (frnd)
         event->acceptProposedAction();
 }
@@ -651,7 +653,7 @@ void FriendListWidget::dropEvent(QDropEvent* event)
 
     // Check, that user have friend with same toxid
     ToxId toxId(event->mimeData()->text());
-    Friend *f = FriendList::findFriend(toxId);
+    Friend *f = Friend::get(toxId);
     if (!f)
         return;
 
@@ -680,7 +682,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
 {
     if (mode == Name)
     {
-        Friend *f = FriendList::findFriend(widget->friendId);
+        Friend *f = Friend::get(widget->friendId);
         int circleId = Settings::getInstance().getFriendCircleID(f->getToxId());
         CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
 
@@ -697,7 +699,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
     }
     else
     {
-        Friend* contact = FriendList::findFriend(widget->friendId);
+        Friend* contact = Friend::get(widget->friendId);
         QDate activityDate = getDateFriend(contact);
         Time time = getTime(activityDate);
         QWidget *w = activityLayout->itemAt(time)->widget();

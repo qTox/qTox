@@ -18,17 +18,17 @@
 */
 
 #include "videosurface.h"
-#include "src/video/videoframe.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/widget/friendwidget.h"
-#include "src/persistence/settings.h"
-#include "src/core/core.h"
-#include "src/widget/style.h"
 
 #include <QPainter>
 #include <QLabel>
 #include <QDebug>
+
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "src/video/videoframe.h"
+#include "src/widget/friendwidget.h"
+#include "src/widget/style.h"
 
 /**
  * @var std::atomic_bool VideoSurface::frameLock
