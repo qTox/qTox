@@ -47,9 +47,7 @@ public:
 
     // TODO: Remove
     void setChatForm(GroupChatForm *form);
-    void setGroupWidget(GroupWidget *widget);
     GroupChatForm *getChatForm();
-    GroupWidget *getGroupWidget();
 
     void setEventFlag(bool f);
     bool getEventFlag() const;
@@ -64,21 +62,20 @@ public:
     QString resolveToxId(const ToxId &id) const;
 
 signals:
-    void titleChanged(GroupWidget* widget);
-    void userListChanged(GroupWidget* widget);
+    void titleChanged(int groupId, const QString& name);
+    void userListChanged(int groupId, const QString& name);
 
 private:
-    GroupWidget* widget;
-    GroupChatForm* chatForm;
-    QStringList peers;
-    QMap<QString, QString> toxids;
+    int groupId;
     bool hasNewMessages;
     bool userWasMentioned;
     bool avGroupchat;
-    int groupId;
     int nPeers;
     int selfPeerNum = -1;
     QString name;
+    GroupChatForm* chatForm;
+    QStringList peers;
+    QMap<QString, QString> toxids;
 };
 
 #endif // GROUP_H

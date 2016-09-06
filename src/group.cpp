@@ -18,12 +18,10 @@
 */
 
 #include "group.h"
-#include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
 #include "src/core/core.h"
-#include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
@@ -43,7 +41,6 @@ Group::Group(int groupId, QString name, bool isAvGroupchat)
 Group::~Group()
 {
     delete chatForm;
-    widget->deleteLater();
 }
 
 void Group::updatePeer(int peerId, QString name)
@@ -65,12 +62,7 @@ void Group::updatePeer(int peerId, QString name)
 void Group::setName(const QString& name)
 {
     this->name = name;
-    chatForm->setName(name);
-
-    if (widget->isActive())
-        GUI::setWindowTitle(name);
-
-    emit titleChanged(this->getGroupWidget());
+    emit titleChanged(groupId, name);
 }
 
 QString Group::getName() const
@@ -102,9 +94,7 @@ void Group::regeneratePeerList()
         }
     }
 
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-    emit userListChanged(getGroupWidget());
+    emit userListChanged(groupId, name);
 }
 
 bool Group::isAvGroupchat() const
@@ -127,11 +117,6 @@ GroupChatForm *Group::getChatForm()
     return chatForm;
 }
 
-GroupWidget *Group::getGroupWidget()
-{
-    return widget;
-}
-
 QStringList Group::getPeerList() const
 {
     return peers;
@@ -145,11 +130,6 @@ bool Group::isSelfPeerNumber(int num) const
 void Group::setChatForm(GroupChatForm *form)
 {
     chatForm = form;
-}
-
-void Group::setGroupWidget(GroupWidget *widget)
-{
-    this->widget = widget;
 }
 
 void Group::setEventFlag(bool f)

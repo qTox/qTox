@@ -655,11 +655,10 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
     friendLayout->addFriendWidget(friendWidget, status);
 }
 
-void ContentDialog::updateGroupWidget(GroupWidget *w)
+void ContentDialog::updateGroupWidget(int groupId, const QString& name)
 {
-    int groupId = w->groupId;
     GenericChatroomWidget* widget = std::get<1>(groupList.find(groupId).value());
-    widget->setName(w->getName());
+    widget->setName(name);
 
     GroupWidget *groupWidget = static_cast<GroupWidget*>(widget);
     groupWidget->onUserListChanged();

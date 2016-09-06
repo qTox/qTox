@@ -496,6 +496,12 @@ Widget::~Widget()
 
     FriendList::clear();
     GroupList::clear();
+    for (FriendWidget* widget : friendWidgets)
+        widget->deleteLater();
+
+    for (GroupWidget* widget : groupWidgets)
+        widget->deleteLater();
+
     delete trayMenu;
     instance = nullptr;
 }
@@ -1571,10 +1577,7 @@ void Widget::onGroupNamelistChanged(int groupId, int peernumber, uint8_t Change)
             name = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         g->updatePeer(peernumber, name);
-        GroupWidget* widget = groupWidgets[groupId];
-        emit g->userListChanged(widget);
-        if (widget)
-            widget->onUserListChanged();
+        emit g->userListChanged(groupId, g->getName());
     }
 }
 
@@ -1665,7 +1668,6 @@ Group *Widget::createGroup(int groupId)
     bool enabled = coreAv->isGroupAvEnabled(groupId);
     Group* newGroup = GroupList::addGroup(groupId, groupName, enabled);
     GroupWidget *widget = new GroupWidget(groupId, groupName);
-    newGroup->setGroupWidget(widget);
     GroupChatForm *chatForm = new GroupChatForm(newGroup);
     newGroup->setChatForm(chatForm);
     groupWidgets[groupId] = widget;
@@ -1674,6 +1676,21 @@ Group *Widget::createGroup(int groupId)
     widget->updateStatusLight();
     contactListWidget->activateWindow();
 
+    connect(newGroup, &Group::titleChanged, this, [=](int groupId, const QString& name)
+    {
+        Q_UNUSED(groupId);
+        chatForm->setName(name);
+
+        if (widget->isActive())
+            GUI::setWindowTitle(name);
+    });
+    connect(newGroup, &Group::userListChanged, this, [=](int groupId, const QString& name)
+    {
+        Q_UNUSED(groupId);
+        Q_UNUSED(name);
+        chatForm->onUserListChanged();
+        widget->onUserListChanged();
+    });
     connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
     connect(widget, SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(widget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), chatForm, SLOT(focusInput()));

@@ -99,7 +99,7 @@ protected:
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
     void updateFriendWidget(uint32_t friendId, QString alias);
-    void updateGroupWidget(GroupWidget* w);
+    void updateGroupWidget(int groupId, const QString& name);
     void onGroupchatPositionChanged(bool top);
 
 private:

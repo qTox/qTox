@@ -259,8 +259,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     }
     else if (groupActions.contains(selectedItem))
     {
-        Group* group = groupActions[selectedItem];
-        Core::getInstance()->groupInviteFriend(friendId, group->getGroupId());
+        int groupId = groupActions[selectedItem];
+        Core::getInstance()->groupInviteFriend(friendId, groupId);
     }
     else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
     {
