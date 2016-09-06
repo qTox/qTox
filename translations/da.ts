@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiveret</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Afspil en testlyd når lydstyrken ændres.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -29,11 +29,11 @@
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skærm %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Audioindstillinger</translation>
+        <translation>Lydindstillinger</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -49,11 +49,11 @@
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished"></translation>
+        <translation>Optageenhed</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Lydstyrke</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -105,11 +105,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv Brugbare Fejlrapporter</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>rapportér det</translation>
     </message>
     <message>
         <source>Original author: %1</source>
@@ -1151,11 +1151,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Opret ny gruppe</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppeinvitationer</translation>
     </message>
     <message>
         <source>Join</source>
@@ -2433,7 +2433,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gruppeinvitationer</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
