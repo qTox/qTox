@@ -244,7 +244,6 @@ RESOURCES += res.qrc \
 
 HEADERS  += \
     src/friend.h \
-    src/friendlist.h \
     src/group.h \
     src/grouplist.h \
     src/ipc.h \
@@ -368,7 +367,6 @@ HEADERS  += \
 SOURCES += \
     src/ipc.cpp \
     src/friend.cpp \
-    src/friendlist.cpp \
     src/group.cpp \
     src/grouplist.cpp \
     src/main.cpp \

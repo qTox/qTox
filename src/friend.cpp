@@ -21,7 +21,6 @@
 #include "friend.h"
 
 #include "src/core/core.h"
-#include "friendlist.h"
 #include "src/group.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
