@@ -19,27 +19,26 @@
 
 #include "groupwidget.h"
 
-#include <QPalette>
-#include <QMenu>
-#include <QContextMenuEvent>
-#include <QDragEnterEvent>
-#include <QMimeData>
 #include <QApplication>
+#include <QContextMenuEvent>
 #include <QDrag>
+#include <QDragEnterEvent>
+#include <QMenu>
+#include <QMimeData>
+#include <QPalette>
 
 #include "contentdialog.h"
 #include "form/groupchatform.h"
+#include "friendwidget.h"
 #include "maskablepixmapwidget.h"
 #include "src/core/core.h"
 #include "src/friend.h"
-#include "src/friendlist.h"
 #include "src/group.h"
 #include "src/grouplist.h"
 #include "src/persistence/settings.h"
-#include "src/widget/friendwidget.h"
-#include "src/widget/style.h"
-#include "src/widget/translator.h"
+#include "style.h"
 #include "tool/croppinglabel.h"
+#include "translator.h"
 
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
@@ -238,7 +237,7 @@ void GroupWidget::resetEventFlags()
 void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (frnd)
         ev->acceptProposedAction();
 
@@ -255,7 +254,7 @@ void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 void GroupWidget::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (!frnd)
         return;
 
