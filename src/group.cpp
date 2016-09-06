@@ -22,7 +22,6 @@
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "friend.h"
-#include "grouplist.h"
 #include "src/core/core.h"
 #include "widget/gui.h"
 #include <QDebug>

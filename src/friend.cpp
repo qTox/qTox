@@ -22,7 +22,6 @@
 
 #include "src/core/core.h"
 #include "src/group.h"
-#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
 #include "src/nexus.h"

@@ -29,18 +29,17 @@
 #include "contentlayout.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
-#include "style.h"
-#include "widget.h"
-#include "tool/adjustingscrollarea.h"
-#include "src/persistence/settings.h"
+#include "src/core/core.h"
 #include "src/friend.h"
 #include "src/group.h"
-#include "src/grouplist.h"
+#include "src/persistence/settings.h"
 #include "src/widget/form/chatform.h"
-#include "src/core/core.h"
-#include "src/widget/friendlistlayout.h"
 #include "src/widget/form/settingswidget.h"
+#include "src/widget/friendlistlayout.h"
 #include "src/widget/translator.h"
+#include "style.h"
+#include "tool/adjustingscrollarea.h"
+#include "widget.h"
 
 QPointer<ContentDialog> ContentDialog::currentDialog;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
@@ -220,7 +219,7 @@ void ContentDialog::removeFriend(int friendId)
 
 void ContentDialog::removeGroup(int groupId)
 {
-    Group* group = GroupList::findGroup(groupId);
+    Group* group = Group::get(groupId);
 
     if (group)
     {
@@ -532,7 +531,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
             return;
 
         int groupId = event->mimeData()->data("groupId").toInt();
-        Group *contact = GroupList::findGroup(groupId);
+        Group *contact = Group::get(groupId);
         if (!contact)
             return;
 
@@ -568,7 +567,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
             return;
 
         int groupId = event->mimeData()->data("groupId").toInt();
-        Group *contact = GroupList::findGroup(groupId);
+        Group *contact = Group::get(groupId);
         if (!contact)
             return;
 
