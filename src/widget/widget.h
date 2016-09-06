@@ -161,7 +161,7 @@ signals:
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;
     virtual bool event(QEvent * e) final override;
-    virtual void closeEvent(QCloseEvent *event) final override;
+    virtual void hideEvent(QHideEvent *event) final override;
     virtual void changeEvent(QEvent *event) final override;
     virtual void resizeEvent(QResizeEvent *event) final override;
     virtual void moveEvent(QMoveEvent *event) final override;
