@@ -435,7 +435,7 @@ void GenericChatForm::onSelectAllClicked()
 
 QString GenericChatForm::resolveToxId(const ToxId &id)
 {
-    Friend *f = FriendList::findFriend(id);
+    Friend *f = Friend::get(id);
     if (f)
         return f->getDisplayedName();
 

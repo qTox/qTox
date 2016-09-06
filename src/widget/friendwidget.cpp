@@ -96,7 +96,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     installEventFilter(this); // Disable leave event.
 
     QPoint pos = event->globalPos();
-    ToxId id = FriendList::findFriend(friendId)->getToxId();
+    ToxId id = Friend::get(friendId)->getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QAction* openChatWindow = nullptr;
@@ -129,7 +129,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
         groupActions[groupAction] =  group;
     }
 
-    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId());
+    int circleId = Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId());
     CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
 
     QMenu* circleMenu = nullptr;
@@ -239,7 +239,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     else if (selectedItem == aboutWindow)
     {
         AboutUser *aboutUser = new AboutUser(id, Widget::getInstance());
-        aboutUser->setFriend(FriendList::findFriend(friendId));
+        aboutUser->setFriend(Friend::get(friendId));
         aboutUser->show();
     }
     else if (selectedItem == newGroupAction)
@@ -265,7 +265,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
     {
         if (friendList)
-            friendList->moveWidget(this, FriendList::findFriend(friendId)->getStatus(), true);
+            friendList->moveWidget(this, Friend::get(friendId)->getStatus(), true);
         else
             Settings::getInstance().setFriendCircleID(id, -1);
 
@@ -281,7 +281,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
 
         if (circle)
         {
-            circle->addFriendWidget(this, FriendList::findFriend(friendId)->getStatus());
+            circle->addFriendWidget(this, Friend::get(friendId)->getStatus());
             circle->setExpanded(true);
             Widget::getInstance()->searchCircle(circle);
             Settings::getInstance().savePersonal();
@@ -317,7 +317,7 @@ void FriendWidget::setAsInactiveChatroom()
 
 void FriendWidget::updateStatusLight()
 {
-    Friend* f = FriendList::findFriend(friendId);
+    Friend* f = Friend::get(friendId);
     Status status = f->getStatus();
 
     if (status == Status::Online && !f->getEventFlag())
@@ -339,11 +339,11 @@ void FriendWidget::updateStatusLight()
 
     if (f->getEventFlag())
     {
-        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId()));
         if (circleWidget != nullptr)
             circleWidget->setExpanded(true);
 
-        Widget::getInstance()->updateFriendActivity(FriendList::findFriend(friendId));
+        Widget::getInstance()->updateFriendActivity(Friend::get(friendId));
     }
 
     if (!f->getEventFlag())
@@ -354,7 +354,7 @@ void FriendWidget::updateStatusLight()
 
 QString FriendWidget::getStatusString() const
 {
-    Friend* f = FriendList::findFriend(friendId);
+    Friend* f = Friend::get(friendId);
     Status status = f->getStatus();
 
     if (f->getEventFlag())
@@ -372,13 +372,13 @@ QString FriendWidget::getStatusString() const
 
 Friend* FriendWidget::getFriend() const
 {
-    return FriendList::findFriend(friendId);
+    return Friend::get(friendId);
 }
 
 void FriendWidget::search(const QString &searchString, bool hide)
 {
     searchName(searchString, hide);
-    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId()));
     if (circleWidget != nullptr)
         circleWidget->search(searchString);
 }
@@ -395,7 +395,7 @@ void FriendWidget::setChatForm()
 
 void FriendWidget::resetEventFlags()
 {
-    Friend* f = FriendList::findFriend(friendId);
+    Friend* f = Friend::get(friendId);
     f->setEventFlag(false);
 }
 
@@ -449,7 +449,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 void FriendWidget::setAlias(const QString& _alias)
 {
     QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
-    Friend* f = FriendList::findFriend(friendId);
+    Friend* f = Friend::get(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getToxId(), alias);
     Settings::getInstance().savePersonal();

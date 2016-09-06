@@ -282,7 +282,7 @@ void GroupChatForm::peerAudioPlaying(int peer)
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (frnd)
         ev->acceptProposedAction();
 }
@@ -290,7 +290,7 @@ void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 void GroupChatForm::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (!frnd)
         return;
 

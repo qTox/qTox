@@ -258,7 +258,7 @@ void GroupNetCamView::findActivePeer()
 
 void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
-    Friend* f = FriendList::findFriend(FriendId);
+    Friend* f = Friend::get(FriendId);
 
     for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
     {

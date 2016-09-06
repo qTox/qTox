@@ -151,7 +151,7 @@ ContentDialog::~ContentDialog()
 FriendWidget* ContentDialog::addFriend(int friendId, QString id)
 {
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
-    friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
+    friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
 
     Friend* frnd = friendWidget->getFriend();
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
@@ -385,7 +385,7 @@ void ContentDialog::updateFriendStatus(int friendId)
     if (contentDialog != nullptr)
     {
         FriendWidget* friendWidget = static_cast<FriendWidget*>(std::get<1>(friendList.find(friendId).value()));
-        contentDialog->friendLayout->addFriendWidget(friendWidget, FriendList::findFriend(friendId)->getStatus());
+        contentDialog->friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
     }
 }
 
@@ -516,7 +516,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = FriendList::findFriend(toxId);
+        Friend *contact = Friend::get(toxId);
         if (!contact)
             return;
 
@@ -551,7 +551,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = FriendList::findFriend(toxId);
+        Friend *contact = Friend::get(toxId);
         if (!contact)
             return;
 
@@ -646,7 +646,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 
 void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 {
-    Friend *f = FriendList::findFriend(friendId);
+    Friend *f = Friend::get(friendId);
     GenericChatroomWidget *widget = std::get<1>(friendList.find(friendId).value());
     FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
     friendWidget->setName(alias);

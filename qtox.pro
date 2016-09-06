@@ -368,7 +368,6 @@ HEADERS  += \
 SOURCES += \
     src/ipc.cpp \
     src/friend.cpp \
-    src/friendlist.cpp \
     src/group.cpp \
     src/grouplist.cpp \
     src/main.cpp \
