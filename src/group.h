@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -35,8 +35,12 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name, bool IsAvGroupchat);
-    virtual ~Group();
+    static Group* get(int groupId);
+    static void remove(int groupId);
+
+public:
+    explicit Group(int GroupId, const QString& Name, bool IsAvGroupchat);
+    ~Group();
 
     bool isAvGroupchat() const;
     int getGroupId() const;
