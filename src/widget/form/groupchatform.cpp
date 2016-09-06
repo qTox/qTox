@@ -26,7 +26,6 @@
 #include "tabcompleter.h"
 #include "src/group.h"
 #include "src/friend.h"
-#include "src/friendlist.h"
 #include "src/widget/groupwidget.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/maskablepixmapwidget.h"
@@ -283,7 +282,7 @@ void GroupChatForm::peerAudioPlaying(int peer)
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (frnd)
         ev->acceptProposedAction();
 }
@@ -291,7 +290,7 @@ void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 void GroupChatForm::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (!frnd)
         return;
 

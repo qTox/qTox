@@ -18,21 +18,22 @@
 */
 
 #include "groupnetcamview.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/video/videosurface.h"
-#include "src/persistence/profile.h"
-#include "src/audio/audio.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
+
 #include <QBoxLayout>
+#include <QDebug>
+#include <QMap>
 #include <QScrollArea>
 #include <QSplitter>
 #include <QTimer>
-#include <QMap>
 
-#include <QDebug>
+#include "src/audio/audio.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/croppinglabel.h"
+
 class LabeledVideo : public QFrame
 {
 public:
@@ -258,7 +259,7 @@ void GroupNetCamView::findActivePeer()
 
 void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
-    Friend* f = FriendList::findFriend(FriendId);
+    Friend* f = Friend::get(FriendId);
 
     for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
     {
