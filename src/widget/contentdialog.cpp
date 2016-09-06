@@ -221,7 +221,7 @@ void ContentDialog::removeFriend(int friendId)
 
 void ContentDialog::removeGroup(int groupId)
 {
-    Group* group = GroupList::findGroup(groupId);
+    Group* group = Group::get(groupId);
 
     if (group)
     {
@@ -533,7 +533,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
             return;
 
         int groupId = event->mimeData()->data("groupId").toInt();
-        Group *contact = GroupList::findGroup(groupId);
+        Group *contact = Group::get(groupId);
         if (!contact)
             return;
 
@@ -569,7 +569,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
             return;
 
         int groupId = event->mimeData()->data("groupId").toInt();
-        Group *contact = GroupList::findGroup(groupId);
+        Group *contact = Group::get(groupId);
         if (!contact)
             return;
 

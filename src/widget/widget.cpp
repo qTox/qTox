@@ -497,7 +497,8 @@ Widget::~Widget()
     for (Friend* f : Friend::getAll())
         delete f;
 
-    GroupList::clear();
+    for (Group* g : Group::getAll())
+        delete g;
 
     delete trayMenu;
     instance = nullptr;
@@ -911,7 +912,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::aliasChanged, this, []()
     {
-        for (Group *g : GroupList::getAllGroups())
+        for (Group *g : Group::getAll())
         {
             g->regeneratePeerList();
         }
@@ -1191,7 +1192,7 @@ bool Widget::newGroupMessageAlert(int groupId, bool notify)
     bool hasActive;
     QWidget* currentWindow;
     ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
-    Group* g =  GroupList::findGroup(groupId);
+    Group* g =  Group::get(groupId);
 
     if (contentDialog != nullptr)
     {
@@ -1321,7 +1322,7 @@ void Widget::removeFriend(Friend* f, bool fake)
         ask.exec();
 
         if (!ask.accepted())
-               return;
+            return;
 
         if (ask.removeHistory())
             Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
@@ -1345,8 +1346,6 @@ void Widget::removeFriend(Friend* f, bool fake)
         Nexus::getCore()->removeFriend(f->getFriendId(), fake);
     }
 
-    delete f;
-
     if (!Settings::getInstance().getSeparateWindow())
         onAddClicked();
 
@@ -1366,7 +1365,7 @@ void Widget::clearContactsList()
     for (Friend* f : friends)
         removeFriend(f, true);
 
-    QList<Group*> groups = GroupList::getAllGroups();
+    QList<Group*> groups = Group::getAll();
     for (Group* g : groups)
         removeGroup(g, true);
 }
@@ -1524,7 +1523,7 @@ void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray in
 
 void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction)
 {
-    Group* g = GroupList::findGroup(groupnumber);
+    Group* g = Group::get(groupnumber);
     if (!g)
         return;
 
@@ -1541,7 +1540,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 
 void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Change)
 {
-    Group* g = GroupList::findGroup(groupnumber);
+    Group* g = Group::get(groupnumber);
     if (!g)
     {
         qDebug() << "onGroupNamelistChanged: Group "<<groupnumber<<" not found, creating it";
@@ -1578,7 +1577,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
 
 void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const QString& title)
 {
-    Group* g = GroupList::findGroup(groupnumber);
+    Group* g = Group::get(groupnumber);
     if (!g)
         return;
 
@@ -1593,7 +1592,7 @@ void Widget::onGroupTitleChanged(int groupnumber, const QString& author, const Q
 
 void Widget::onGroupPeerAudioPlaying(int groupnumber, int peernumber)
 {
-    Group* g = GroupList::findGroup(groupnumber);
+    Group* g = Group::get(groupnumber);
     if (!g)
         return;
 
@@ -1606,30 +1605,29 @@ void Widget::removeGroup(Group* g, bool fake)
     if (g->getChatForm() == activeChat)
         onAddClicked();
 
-    GroupList::removeGroup(g->getGroupId(), fake);
-
-    ContentDialog* contentDialog = ContentDialog::getGroupDialog(g->getGroupId());
+    uint32_t groupId = g->getGroupId();
+    ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
 
     if (contentDialog != nullptr)
-        contentDialog->removeGroup(g->getGroupId());
+        contentDialog->removeGroup(groupId);
 
-    Nexus::getCore()->removeGroup(g->getGroupId(), fake);
-    delete g;
+    Nexus::getCore()->removeGroup(groupId, fake);
 
     if (!Settings::getInstance().getSeparateWindow())
         onAddClicked();
 
+    delete g;
     contactListWidget->reDraw();
 }
 
 void Widget::removeGroup(int groupId)
 {
-    removeGroup(GroupList::findGroup(groupId));
+    removeGroup(Group::get(groupId));
 }
 
 Group *Widget::createGroup(int groupId)
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     if (g)
     {
         qWarning() << "Group already exists";
@@ -1654,7 +1652,7 @@ Group *Widget::createGroup(int groupId)
     }
 
     bool enabled = coreAv->isGroupAvEnabled(groupId);
-    Group* newgroup = GroupList::addGroup(groupId, groupName, enabled);
+    Group* newgroup = new Group(groupId, groupName, enabled);
 
     contactListWidget->addGroupWidget(newgroup->getGroupWidget());
     newgroup->getGroupWidget()->updateStatusLight();
@@ -1855,7 +1853,7 @@ void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int 
 void Widget::onGroupSendResult(int groupId, const QString& message, int result)
 {
     Q_UNUSED(message)
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     if (!g)
         return;
 
@@ -1982,7 +1980,7 @@ void Widget::reloadTheme()
         friendWidgets[friendId]->reloadTheme();
     }
 
-    for (Group* g : GroupList::getAllGroups())
+    for (Group* g : Group::getAll())
     {
         g->getGroupWidget()->reloadTheme();
     }

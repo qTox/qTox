@@ -61,7 +61,7 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     {
         if (!newName.isEmpty())
         {
-            Group* g = GroupList::findGroup(groupId);
+            Group* g = Group::get(groupId);
             emit renameRequested(this, newName);
             emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
         }
@@ -158,7 +158,7 @@ void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
 
 void GroupWidget::onUserListChanged()
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     if (g)
     {
         int peersCount = g->getPeersCount();
@@ -183,7 +183,7 @@ void GroupWidget::setAsInactiveChatroom()
 
 void GroupWidget::updateStatusLight()
 {
-    Group *g = GroupList::findGroup(groupId);
+    Group *g = Group::get(groupId);
 
     if (!g->getEventFlag())
     {
@@ -199,7 +199,7 @@ void GroupWidget::updateStatusLight()
 
 QString GroupWidget::getStatusString() const
 {
-    Group *g = GroupList::findGroup(groupId);
+    Group *g = Group::get(groupId);
 
     if (!g->getEventFlag())
         return "Online";
@@ -214,7 +214,7 @@ void GroupWidget::editName()
 
 Group* GroupWidget::getGroup() const
 {
-    return GroupList::findGroup(groupId);
+    return Group::get(groupId);
 }
 
 bool GroupWidget::chatFormIsSet(bool focus) const
@@ -224,13 +224,13 @@ bool GroupWidget::chatFormIsSet(bool focus) const
 
 void GroupWidget::setChatForm()
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     g->getChatForm()->show();
 }
 
 void GroupWidget::resetEventFlags()
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     g->setEventFlag(false);
     g->setMentionedFlag(false);
 }
@@ -273,7 +273,7 @@ void GroupWidget::setName(const QString& name)
 
 void GroupWidget::retranslateUi()
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group* g = Group::get(groupId);
     if (g)
     {
         int peersCount = g->getPeersCount();
