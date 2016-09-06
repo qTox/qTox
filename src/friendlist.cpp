@@ -33,7 +33,7 @@ Friend* FriendList::addFriend(int friendId, const ToxId& userId)
     if (friendChecker != friendList.end())
         qWarning() << "addFriend: friendId already taken";
 
-    Friend* newfriend = new Friend(friendId, userId);
+    Friend* newfriend = Friend::add(friendId, userId);
     friendList[friendId] = newfriend;
     tox2id[userId.publicKey] = friendId;
 
