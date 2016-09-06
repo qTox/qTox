@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -21,11 +21,31 @@
 #include "friend.h"
 
 #include "src/core/core.h"
+#include "friendlist.h"
+#include "src/group.h"
+#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
-#include "src/grouplist.h"
-#include "src/group.h"
+
+/**
+ * @brief Looks up a friend in the friend list.
+ * @param friendId  the lookup ID
+ * @return the friend if found; nullptr otherwise
+ */
+Friend* Friend::get(int friendId)
+{
+    return FriendList::findFriend(friendId);
+}
+
+/**
+ * @brief Removes a friend from the friend list.
+ * @param friendId  the friend's ID
+ */
+void Friend::remove(int friendId)
+{
+    FriendList::removeFriend(friendId);
+}
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)}
