@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,17 +18,31 @@
 */
 
 #include "group.h"
+
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
+#include "grouplist.h"
 #include "src/core/core.h"
 #include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
+Group* Group::get(int groupId)
+{
+    return GroupList::findGroup(groupId);
+}
+
+void Group::remove(int groupId)
+{
+    GroupList::removeGroup(groupId);
+}
+
+Group::Group(int GroupId, const QString& Name, bool IsAvGroupchat)
+    : groupId(GroupId)
+    , nPeers{0}
+    , avGroupchat{IsAvGroupchat}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
