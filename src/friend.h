@@ -35,12 +35,12 @@ class Friend : public QObject
     Q_OBJECT
 public:
     static Friend* get(int friendId);
-    static void remove(int friendId);
+    static Friend* get(const ToxId& userId);
+    static QList<Friend*> getAll();
 
 public:
-    Friend(const Friend& other) = delete;
-    Friend& operator=(const Friend& other) = delete;
-
+    Friend(int friendId, const ToxId& userId);
+    ~Friend();
     void loadHistory();
 
     void setName(QString name);
@@ -76,15 +76,13 @@ signals:
     void loadChatHistory();
 
 private:
-    QString userName;
-    QString userAlias;
-    QString statusMessage;
-    ToxId userID;
-    uint32_t friendId;
-    bool hasNewEvents;
-    Status friendStatus;
+    class Private;
+    Private* data;
+    static QHash<uint32_t, Friend::Private*> friendList;
+    static QHash<QString, uint32_t> tox2id;
 
-    OfflineMsgEngine offlineEngine;
+private:
+    Friend(Private* data);
 };
 
 #endif // FRIEND_H

@@ -496,6 +496,7 @@ Widget::~Widget()
 
     FriendList::clear();
     GroupList::clear();
+
     delete trayMenu;
     instance = nullptr;
 }
