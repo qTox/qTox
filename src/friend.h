@@ -34,9 +34,11 @@ class Friend : public QObject
 {
     Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxId &UserId);
-    Friend(const Friend& other)=delete;
+    static Friend* get(int friendId);
+    static void remove(int friendId);
 
+public:
+    Friend(const Friend& other) = delete;
     Friend& operator=(const Friend& other) = delete;
 
     void loadHistory();
