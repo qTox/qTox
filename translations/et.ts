@@ -101,7 +101,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Loetelu tuntud vigadest asub Githubis meie %1. Kui sa leiad qToxis vea või haavatavuse turvalisuses, siis palun %3 vastavalt juhendile meie wiki artiklis %2.</translation>
+        <translation>Loetelu teadaolevatest vigadest asub Githubis meie %1. Kui sa leiad qToxis vea või turvaaugu, siis palun %3 vastavalt juhendile meie wiki artiklis %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -117,15 +117,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Esialgne autor: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaata %1 täielikku nimistut keskkonnas Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>kaastöölised</translation>
     </message>
 </context>
 <context>
@@ -304,27 +304,27 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kui sa %1 tea, mida teed, siis palun %2 muuda siin midagi. Siin tehtud muudatused võivad põhjustada probleeme qToxi töös ja isegi sinu andmete, nt ajaloo, kadumise.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>tõesti</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>ära</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>TÄHTIS TEADE</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähtesta seaded</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Taastatakse vaikeseaded. Kas oled kindel, et tahad seda teha?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -362,7 +362,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Teisaldatav</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -1159,7 +1159,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Grupi kutsed</translation>
+        <translation type="unfinished">Grupi kutsed</translation>
     </message>
     <message>
         <source>Join</source>
@@ -2100,7 +2100,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 pole õige Toxme aadress.</translation>
     </message>
 </context>
 <context>
@@ -2111,7 +2111,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Kasutajaliides</translation>
     </message>
 </context>
 <context>
@@ -2180,7 +2180,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktide nimistu</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
@@ -2219,7 +2219,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Tujunäod</translation>
     </message>
     <message>
         <source>Use emoticons</source>
