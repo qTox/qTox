@@ -238,7 +238,7 @@ void GroupWidget::resetEventFlags()
 void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (frnd)
         ev->acceptProposedAction();
 
@@ -255,7 +255,7 @@ void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 void GroupWidget::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = FriendList::findFriend(toxId);
+    Friend *frnd = Friend::get(toxId);
     if (!frnd)
         return;
 
