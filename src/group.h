@@ -22,6 +22,7 @@
 
 #include <QMap>
 #include <QObject>
+#include <QSharedDataPointer>
 #include <QStringList>
 
 #define RETRY_PEER_INFO_INTERVAL 500
@@ -36,10 +37,10 @@ class Group : public QObject
     Q_OBJECT
 public:
     static Group* get(int groupId);
-    static void remove(int groupId);
+    static QList<Group *> getAll();
 
 public:
-    explicit Group(int GroupId, const QString& Name, bool IsAvGroupchat);
+    Group(int groupId, const QString &name, bool isAvGroupchat);
     ~Group();
 
     bool isAvGroupchat() const;
@@ -69,17 +70,12 @@ signals:
     void userListChanged(GroupWidget* widget);
 
 private:
-    GroupWidget* widget;
-    GroupChatForm* chatForm;
-    QStringList peers;
-    QMap<QString, QString> toxids;
-    bool hasNewMessages;
-    bool userWasMentioned;
-    int groupId;
-    int nPeers;
-    int selfPeerNum = -1;
-    bool avGroupchat;
+    class Private;
+    Private* data;
+    static QHash<uint32_t, Group::Private*> groupList;
 
+private:
+    explicit Group(Private* data);
 };
 
 #endif // GROUP_H
