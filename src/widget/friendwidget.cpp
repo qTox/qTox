@@ -117,7 +117,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     inviteMenu->addSeparator();
     QMap<QAction*, Group*> groupActions;
 
-    for (Group* group : GroupList::getAllGroups())
+    for (Group* group : Group::getAll())
     {
         int maxNameLen = 30;
         QString name = group->getGroupWidget()->getName();

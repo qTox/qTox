@@ -369,7 +369,6 @@ SOURCES += \
     src/ipc.cpp \
     src/friend.cpp \
     src/group.cpp \
-    src/grouplist.cpp \
     src/main.cpp \
     src/nexus.cpp \
     src/audio/audio.cpp \

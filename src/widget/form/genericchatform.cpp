@@ -439,7 +439,7 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
     if (f)
         return f->getDisplayedName();
 
-    for (Group *it : GroupList::getAllGroups())
+    for (Group *it : Group::getAll())
     {
         QString res = it->resolveToxId(id);
         if (res.size())
