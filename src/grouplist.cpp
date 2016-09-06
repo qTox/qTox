@@ -30,7 +30,7 @@ Group* GroupList::addGroup(int groupId, const QString& name, bool isAvGroupchat)
     if (checker != groupList.end())
         qWarning() << "addGroup: groupId already taken";
 
-    Group* newGroup = new Group(groupId, name, isAvGroupchat);
+    Group* newGroup = Group::add(groupId, name, isAvGroupchat);
     groupList[groupId] = newGroup;
 
     return newGroup;

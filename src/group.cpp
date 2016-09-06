@@ -29,163 +29,227 @@
 #include <QDebug>
 #include <QTimer>
 
+class Group::Private
+{
+public:
+    Private(int groupId, const QString& name, bool isAvGroupchat)
+        : groupId(groupId)
+        , nPeers(0)
+        , avGroupchat(isAvGroupchat)
+
+    {
+        widget = new GroupWidget(groupId, name);
+        chatForm = new GroupChatForm(new Group(this));
+
+        //in groupchats, we only notify on messages containing your name <-- dumb
+        // sound notifications should be on all messages, but system popup notification
+        // on naming is appropriate
+        hasNewMessages = 0;
+        userWasMentioned = 0;
+    }
+
+    ~Private()
+    {
+        delete chatForm;
+        widget->deleteLater();
+    }
+
+    GroupWidget* widget;
+    GroupChatForm* chatForm;
+    QStringList peers;
+    QMap<QString, QString> toxids;
+    bool hasNewMessages;
+    bool userWasMentioned;
+    int groupId;
+    int nPeers;
+    int selfPeerNum = -1;
+    bool avGroupchat;
+};
+
+QHash<int, Group::Private*> Group::groupList;
+
+Group* Group::add(int groupId, const QString& name, bool isAvGroupchat)
+{
+    auto checker = groupList.find(groupId);
+    if (checker != groupList.end())
+        qWarning() << "addGroup: groupId already taken";
+
+    Group::Private* newData = new Group::Private(groupId, name, isAvGroupchat);
+    groupList[groupId] = newData;
+
+    return new Group(newData);
+}
+
 Group* Group::get(int groupId)
 {
-    return GroupList::findGroup(groupId);
+    auto g_it = groupList.find(groupId);
+    if (g_it == groupList.end())
+        return nullptr;
+
+    return new Group(*g_it);
 }
 
 void Group::remove(int groupId)
 {
-    GroupList::removeGroup(groupId);
+    auto g_it = groupList.find(groupId);
+    if (g_it != groupList.end())
+    {
+        delete *g_it;
+        groupList.erase(g_it);
+    }
 }
 
-Group::Group(int GroupId, const QString& Name, bool IsAvGroupchat)
-    : groupId(GroupId)
-    , nPeers{0}
-    , avGroupchat{IsAvGroupchat}
+QList<Group*> Group::getAll()
 {
-    widget = new GroupWidget(groupId, Name);
-    chatForm = new GroupChatForm(this);
+    QList<Group*> res;
 
-    //in groupchats, we only notify on messages containing your name <-- dumb
-    // sound notifications should be on all messages, but system popup notification
-    // on naming is appropriate
-    hasNewMessages = 0;
-    userWasMentioned = 0;
+    for (Private* it : groupList)
+    {
+        Group *group = new Group(it);
+        res.append(group);
+    }
+
+    return res;
 }
 
-Group::~Group()
+void Group::removeAll()
 {
-    delete chatForm;
-    widget->deleteLater();
+    for (Group::Private* group : groupList)
+        delete group;
+
+    groupList.clear();
 }
+
+Group::Group(Group::Private* data)
+    : data(data)
+{}
 
 void Group::updatePeer(int peerId, QString name)
 {
-    ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
+    ToxId id = Core::getInstance()->getGroupPeerToxId(data->groupId, peerId);
     QString toxid = id.publicKey;
-    peers[peerId] = name;
-    toxids[toxid] = name;
+    data->peers[peerId] = name;
+    data->toxids[toxid] = name;
 
     Friend *f = Friend::get(id);
     if (f != nullptr && f->hasAlias())
     {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
+        data->peers[peerId] = f->getDisplayedName();
+        data->toxids[toxid] = f->getDisplayedName();
     }
     else
     {
-        widget->onUserListChanged();
-        chatForm->onUserListChanged();
+        data->widget->onUserListChanged();
+        data->chatForm->onUserListChanged();
         emit userListChanged(getGroupWidget());
     }
 }
 
 void Group::setName(const QString& name)
 {
-    chatForm->setName(name);
+    data->chatForm->setName(name);
 
-    if (widget->isActive())
+    if (data->widget->isActive())
         GUI::setWindowTitle(name);
 
-    emit titleChanged(this->getGroupWidget());
+    emit titleChanged(data->widget);
 }
 
 QString Group::getName() const
 {
-    return widget->getName();
+    return data->widget->getName();
 }
 
 void Group::regeneratePeerList()
 {
-    peers = Core::getInstance()->getGroupPeerNames(groupId);
-    toxids.clear();
-    nPeers = peers.size();
-    for (int i = 0; i < nPeers; i++)
+    data->peers = Core::getInstance()->getGroupPeerNames(data->groupId);
+    data->toxids.clear();
+    data->nPeers = data->peers.size();
+    for (int i = 0; i < data->nPeers; i++)
     {
-        ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
+        ToxId id = Core::getInstance()->getGroupPeerToxId(data->groupId, i);
         if (id.isSelf())
-            selfPeerNum = i;
+            data->selfPeerNum = i;
 
         QString toxid = id.publicKey;
-        toxids[toxid] = peers[i];
-        if (toxids[toxid].isEmpty())
-            toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+        data->toxids[toxid] = data->peers[i];
+        if (data->toxids[toxid].isEmpty())
+            data->toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         Friend *f = Friend::get(id);
         if (f != nullptr && f->hasAlias())
         {
-            peers[i] = f->getDisplayedName();
-            toxids[toxid] = f->getDisplayedName();
+            data->peers[i] = f->getDisplayedName();
+            data->toxids[toxid] = f->getDisplayedName();
         }
     }
 
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
+    data->widget->onUserListChanged();
+    data->chatForm->onUserListChanged();
     emit userListChanged(getGroupWidget());
 }
 
 bool Group::isAvGroupchat() const
 {
-    return avGroupchat;
+    return data->avGroupchat;
 }
 
 int Group::getGroupId() const
 {
-    return groupId;
+    return data->groupId;
 }
 
 int Group::getPeersCount() const
 {
-    return nPeers;
+    return data->nPeers;
 }
 
 GroupChatForm *Group::getChatForm()
 {
-    return chatForm;
+    return data->chatForm;
 }
 
 GroupWidget *Group::getGroupWidget()
 {
-    return widget;
+    return data->widget;
 }
 
 QStringList Group::getPeerList() const
 {
-    return peers;
+    return data->peers;
 }
 
 bool Group::isSelfPeerNumber(int num) const
 {
-    return num == selfPeerNum;
+    return num == data->selfPeerNum;
 }
 
 void Group::setEventFlag(bool f)
 {
-    hasNewMessages = f;
+    data->hasNewMessages = f;
 }
 
 bool Group::getEventFlag() const
 {
-    return hasNewMessages;
+    return data->hasNewMessages;
 }
 
 void Group::setMentionedFlag(bool f)
 {
-    userWasMentioned = f;
+    data->userWasMentioned = f;
 }
 
 bool Group::getMentionedFlag() const
 {
-    return userWasMentioned;
+    return data->userWasMentioned;
 }
 
 QString Group::resolveToxId(const ToxId &id) const
 {
     QString key = id.publicKey;
-    auto it = toxids.find(key);
+    auto it = data->toxids.find(key);
 
-    if (it != toxids.end())
+    if (it != data->toxids.end())
         return *it;
 
     return QString();

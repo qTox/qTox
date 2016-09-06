@@ -35,13 +35,13 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
+    static Group* add(int groupId, const QString &name, bool isAvGroupchat);
     static Group* get(int groupId);
+    static QList<Group *> getAll();
     static void remove(int groupId);
+    static void removeAll();
 
 public:
-    explicit Group(int GroupId, const QString& Name, bool IsAvGroupchat);
-    ~Group();
-
     bool isAvGroupchat() const;
     int getGroupId() const;
     int getPeersCount() const;
@@ -69,17 +69,12 @@ signals:
     void userListChanged(GroupWidget* widget);
 
 private:
-    GroupWidget* widget;
-    GroupChatForm* chatForm;
-    QStringList peers;
-    QMap<QString, QString> toxids;
-    bool hasNewMessages;
-    bool userWasMentioned;
-    int groupId;
-    int nPeers;
-    int selfPeerNum = -1;
-    bool avGroupchat;
+    class Private;
+    Group::Private* data;
+    static QHash<int, Group::Private*> groupList;
 
+private:
+    explicit Group(Group::Private* data);
 };
 
 #endif // GROUP_H
