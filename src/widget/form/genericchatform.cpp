@@ -32,7 +32,6 @@
 #include "src/core/core.h"
 #include "src/friend.h"
 #include "src/group.h"
-#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/smileypack.h"
 #include "src/video/genericnetcamview.h"
@@ -438,7 +437,7 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
     if (f)
         return f->getDisplayedName();
 
-    for (Group *it : GroupList::getAllGroups())
+    for (Group *it : Group::getAll())
     {
         QString res = it->resolveToxId(id);
         if (res.size())

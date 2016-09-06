@@ -245,7 +245,6 @@ RESOURCES += res.qrc \
 HEADERS  += \
     src/friend.h \
     src/group.h \
-    src/grouplist.h \
     src/ipc.h \
     src/nexus.h \
     src/audio/audio.h \
@@ -368,7 +367,6 @@ SOURCES += \
     src/ipc.cpp \
     src/friend.cpp \
     src/group.cpp \
-    src/grouplist.cpp \
     src/main.cpp \
     src/nexus.cpp \
     src/audio/audio.cpp \

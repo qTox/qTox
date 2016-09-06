@@ -40,7 +40,6 @@
 #include "src/core/core.h"
 #include "src/friend.h"
 #include "src/group.h"
-#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "style.h"
 #include "tool/croppinglabel.h"
@@ -119,7 +118,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     inviteMenu->addSeparator();
     QMap<QAction*, Group*> groupActions;
 
-    for (Group* group : GroupList::getAllGroups())
+    for (Group* group : Group::getAll())
     {
         int maxNameLen = 30;
         QString name = group->getGroupWidget()->getName();
