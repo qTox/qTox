@@ -31,6 +31,20 @@ is directly aimed at you, and not sent to everyone, that is:
 * status change (`Online`/`Away`/`Busy`/`Offline`)
 * status message change
 
+### Contact details
+
+Contact details can be accessed by right-clicking on a contact and picking the
+`Show details` option.
+
+Some of the informations listed are:
+
+* avatar
+* name
+* status message
+* Public Key (PK) – note that PK is only a part of Tox ID and alone can't be
+  used to add the contact e.g. on a different profile. Part not known by qTox
+  is the [NoSpam](#nospam).
+
 
 ## User Profile
 Your User Profile contains everything you share with other people on Tox. You
