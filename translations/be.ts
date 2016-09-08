@@ -119,15 +119,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Першы аўтар: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Глядзіце поўны спіс %1 на Гітхабе</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>удзельнікі</translation>
     </message>
 </context>
 <context>
@@ -295,7 +295,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Гэты Tox ID не існуе</translation>
+        <translation>Гэты Tox ID не існуе</translation>
     </message>
 </context>
 <context>
@@ -306,45 +306,45 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Пакуль вы %1 не ведаце, што вы робіце, калі ласка, %2 змяняйце тут нічога. Змены, зробленыя тут, могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>на самай справе</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>не</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>ВАЖНАЯ ЗАЎВАГА</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Скінуць налады</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Усе налады будуць скінуты да агаданых. Вы ўпэўнены?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Так</translation>
+        <translation>Так</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Не</translation>
+        <translation>Не</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Актыўны выклік</translation>
+        <translation>Актыўны выклік</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Вы не можаце адключыцца пакуль выклік актыўны!</translation>
+        <translation>Вы не можаце адключыцца пакуль выклік актыўны!</translation>
     </message>
 </context>
 <context>
@@ -364,57 +364,57 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Партатыўнасць</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Налады злучэння</translation>
+        <translation>Налады злучэння</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Уключыць IPv6 (рэкамендуецца)</translation>
+        <translation>Уключыць IPv6 (рэкамендуецца)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Адключэнне дазваляе, напрыклад, выкарыстоўваць Tox паверх Tor. Але гэта павялічвае нагрузку на сетку Tox. Адключайце толькі, калі гэта неабходна.</translation>
+        <translation>Адключэнне дазваляе, напрыклад, выкарыстоўваць Tox паверх Tor. Але гэта павялічвае нагрузку на сетку Tox. Адключайце толькі, калі гэта неабходна.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Уключыць UDP (рэкамендуецца)</translation>
+        <translation>Уключыць UDP (рэкамендуецца)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Тып проксі:</translation>
+        <translation>Тып проксі:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Адрас:</translation>
+        <translation>Адрас:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Порт:</translation>
+        <translation>Порт:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Адсутнічае</translation>
+        <translation>Адсутнічае</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Перазлучыцца</translation>
+        <translation>Перазлучыцца</translation>
     </message>
 </context>
 <context>
@@ -1610,7 +1610,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Прыватнасць</translation>
+        <translation>Прыватнасць</translation>
     </message>
 </context>
 <context>
@@ -2106,163 +2106,163 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 — некарэктны Toxme-адрас.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Адсутнічае</translation>
+        <translation>Адсутнічае</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтэрфейс карыстальніка</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Чат</translation>
+        <translation>Чат</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Базавы шрыфт:</translation>
+        <translation>Базавы шрыфт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Памер: </translation>
+        <translation>Памер: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Новы стыль тэксту будзе загружаны пасля перазагрузкі qTox.</translation>
+        <translation>Новы стыль тэксту будзе загружаны пасля перазагрузкі qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Фармат тэксту:</translation>
+        <translation>Фармат тэксту:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Выберыце стыль тэксту.</translation>
+        <translation>Выберыце стыль тэксту.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Просты тэкст</translation>
+        <translation>Просты тэкст</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Паказаць сімвалы фарматавання</translation>
+        <translation>Паказаць сімвалы фарматавання</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Не паказаць сімвалы фарматавання</translation>
+        <translation>Не паказаць сімвалы фарматавання</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Новае паведамленне</translation>
+        <translation>Новае паведамленне</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Адкрыць акно qTox, калі вы атрымліваеце новае паведамленне і вакно не адкрыта.</translation>
+        <translation>Адкрыць акно qTox, калі вы атрымліваеце новае паведамленне і вакно не адкрыта.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Адкрыць акно</translation>
+        <translation>Адкрыць акно</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Факусаваць на qTox, калі вы атрымліваеце паведамленне.</translation>
+        <translation>Факусаваць на qTox, калі вы атрымаеце паведамленне.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Факусаваць на вакно</translation>
+        <translation>Факусаваць на вакно</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Спіс кантактаў</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Заўсёды апавяшчаць аб новых паведамленнях у групавых чатах.</translation>
+        <translation>Заўсёды апавяшчаць аб новых паведамленнях у групавых чатах.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Заўсёды апавяшчаць у групавых чатах</translation>
+        <translation>Заўсёды апавяшчаць у групавых чатах</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Калі ўключаны, групавыя чаты будуць размешчаны наверсе спісу кантактаў, інакш яны будуць размешчаны ніжэй сяброў у сеціве.</translation>
+        <translation>Калі ўключаны, групавыя чаты будуць размешчаны наверсе спісу кантактаў, інакш яны будуць размешчаны ніжэй сяброў у сеціве.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Размясціць групавыя чаты наверсе спісу сяброў</translation>
+        <translation>Размясціць групавыя чаты наверсе спісу сяброў</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Ваш спіс кантактаў будзе паказаны ў кампакным рэжыме.</translation>
+        <translation>Ваш спіс кантактаў будзе паказаны ў кампакным рэжыме.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Кампактны спіс кантактаў</translation>
+        <translation>Кампактны спіс кантактаў</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Шматаконны рэжым</translation>
+        <translation>Шматаконны рэжым</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Адкрываць кожны чат у асобным акне</translation>
+        <translation>Адкрываць кожны чат у асобным акне</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Смайлікі</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Выкарыстоўваць смайлікі</translation>
+        <translation>Выкарыстоўваць смайлікі</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Пакет смайлікаў:</translation>
+        <translation>Пакет смайлікаў:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Памер смайлікаў:</translation>
+        <translation>Памер смайлікаў:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Тэма</translation>
+        <translation>Тэма</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Стыль:</translation>
+        <translation>Стыль:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Колер тэмы:</translation>
+        <translation>Колер тэмы:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Фармат часу:</translation>
+        <translation>Фармат часу:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Фармат даты:</translation>
+        <translation>Фармат даты:</translation>
     </message>
 </context>
 <context>
