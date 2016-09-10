@@ -303,8 +303,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Edasijõudnud</translation>
     </message>
     <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
-        <translation>Kui sa %1 tea, mida teed, siis palun %2 muuda siin midagi. Siin tehtud muudatused võivad põhjustada probleeme qToxi töös ja isegi sinu andmete, nt ajaloo, kadumise.&lt;/p&gt;</translation>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
+        <translation>Kui sa %1 tea, mida teed, siis palun %2 muuda siin midagi. Siin tehtud muudatused võivad põhjustada probleeme qToxi töös ja isegi sinu andmete, nt ajaloo, kadumise.</translation>
     </message>
     <message>
         <source>really</source>

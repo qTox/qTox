@@ -303,7 +303,7 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished">上級者向け</translation>
     </message>
     <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
