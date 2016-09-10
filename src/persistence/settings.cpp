@@ -108,11 +108,14 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    if (QFile(qApp->applicationDirPath()+QDir::separator()+globalSettingsFile).exists())
+    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator()
+            + globalSettingsFile;
+
+    if (QFile(localSettingsPath).exists())
     {
-        QSettings ps(qApp->applicationDirPath()+QDir::separator()+globalSettingsFile, QSettings::IniFormat);
+        QSettings ps(localSettingsPath, QSettings::IniFormat);
         ps.setIniCodec("UTF-8");
-        ps.beginGroup("General");
+        ps.beginGroup("Advanced");
             makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
     }
