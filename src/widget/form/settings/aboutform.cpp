@@ -77,10 +77,15 @@ void AboutForm::replaceVersions()
             QString::number(TOX_VERSION_MINOR) + "." +
             QString::number(TOX_VERSION_PATCH);
 
-    bodyUI->youareusing->setText(bodyUI->youareusing->text().replace("$GIT_DESCRIBE", QString(GIT_DESCRIBE)));
-    bodyUI->gitVersion->setText(bodyUI->gitVersion->text().replace("$GIT_VERSION", QString(GIT_VERSION)));
-    bodyUI->toxCoreVersion->setText(bodyUI->toxCoreVersion->text().replace("$TOXCOREVERSION", TOXCORE_VERSION));
-    bodyUI->qtVersion->setText(bodyUI->qtVersion->text().replace("$QTVERSION", QT_VERSION_STR));
+    bodyUI->youAreUsing->setText(tr("You are using qTox version %1.")
+                                 .arg(QString(GIT_DESCRIBE)));
+
+    QString commitLink = "https://github.com/qTox/qTox/commit/" + QString(GIT_VERSION);
+    bodyUI->gitVersion->setText(tr("Commit hash: %1")
+                                .arg(createLink(commitLink, QString(GIT_VERSION))));
+
+    bodyUI->toxCoreVersion->setText(tr("toxcore version: %1").arg(TOXCORE_VERSION));
+    bodyUI->qtVersion->setText(tr("Qt version: %1").arg(QT_VERSION_STR));
 
     QString issueBody = QString(
             "##### Brief Description\n\n"
