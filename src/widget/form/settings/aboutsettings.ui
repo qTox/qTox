@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>514</width>
-        <height>537</height>
+        <width>496</width>
+        <height>554</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0,0">
@@ -70,7 +70,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>toxcore version: $TOXCOREVERSION</string>
+             <string notr="true">{TOXCOREVERSION}</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -85,7 +85,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Qt version: $QTVERSION</string>
+             <string notr="true">{QTVERSION}</string>
             </property>
             <property name="textInteractionFlags">
              <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
@@ -109,7 +109,7 @@
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</string>
+             <string notr="true">{GIT_VERSION}</string>
             </property>
             <property name="openExternalLinks">
              <bool>true</bool>
@@ -120,7 +120,7 @@
            </widget>
           </item>
           <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="youareusing">
+           <widget class="QLabel" name="youAreUsing">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -136,7 +136,7 @@
              <enum>QFrame::NoFrame</enum>
             </property>
             <property name="text">
-             <string>You are using qTox version $GIT_DESCRIBE.</string>
+             <string notr="true">{GIT_DESCRIBE}</string>
             </property>
             <property name="indent">
              <number>-1</number>
