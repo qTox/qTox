@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Карыстайцеся паўзунком для змянення ўзмацнення вашай прылады запісу ў дыяпазоне ад %1 дБ да %2 дБ.</translation>
+        <translation>Карыстайцеся паўзунком для змянення ўзмацнення вашай прылады запісу ў дыяпазоне ад %1 дБ да %2 дБ.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -305,8 +305,8 @@ which may lead to problems with video calls.</source>
         <translation>Пашыраныя</translation>
     </message>
     <message>
-        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.&lt;/p&gt;</source>
-        <translation>Пакуль вы %1 не ведаце, што вы робіце, калі ласка, %2 змяняйце тут нічога. Змены, зробленыя тут, могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.&lt;/p&gt;</translation>
+        <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
+        <translation>Пакуль вы %1 не ведаце, што вы робіце, калі ласка, %2 змяняйце тут нічога. Змены, зробленыя тут, могуць прывесці да праблем з qTox і нават да страты вашых дадзеных, напрыклад, гісторыі.</translation>
     </message>
     <message>
         <source>really</source>
