@@ -174,9 +174,15 @@ void ProfileForm::show(ContentLayout* contentLayout)
     head->show();
     QWidget::show();
     prFileLabelUpdate();
-    QString DirPath = Settings::getInstance().getMakeToxPortable() ? QApplication::applicationDirPath() :
-                                                                    QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
-    bodyUI->dirPrLink->setText(bodyUI->dirPrLink->text().replace("Dir_Path",DirPath));
+    bool portable = Settings::getInstance().getMakeToxPortable();
+    QString defaultPath = QDir(Settings::getInstance().getSettingsDirPath()).path().trimmed();
+    QString appPath = QApplication::applicationDirPath();
+    QString dirPath = portable ? appPath : defaultPath;
+
+    QString dirPrLink = tr("Current profile location: %1")
+            .arg(QString("<a href=\"file://%1\">%1</a>").arg(dirPath));
+
+    bodyUI->dirPrLink->setText(dirPrLink);
     bodyUI->dirPrLink->setOpenExternalLinks(true);
     bodyUI->dirPrLink->setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::TextSelectableByMouse);
     bodyUI->dirPrLink->setMaximumSize(bodyUI->dirPrLink->sizeHint());
