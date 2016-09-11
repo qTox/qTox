@@ -17,7 +17,6 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "friend.h"
 
 #include "src/core/core.h"
@@ -66,9 +65,11 @@ QHash<uint32_t, Friend::Private*> Friend::friendList;
 QHash<QString, uint32_t> Friend::tox2id;
 
 /**
- * @brief Friend constructor, add a friend in the friend list.
- * @param friendId the friend's ID.
- * @param userId the friend's ToxId.
+ * @brief Friend constructor.
+ * @param friendId The friend's ID.
+ * @param userId The friend's ToxId.
+ *
+ * Add new friend in the friend list.
  */
 Friend::Friend(int friendId, const ToxId& userId)
 {
@@ -83,7 +84,7 @@ Friend::Friend(int friendId, const ToxId& userId)
 
 /**
  * @brief Friend constructor, without adding friend to db.
- * @param Private friend data.
+ * @param data Private friend data.
  */
 Friend::Friend(Friend::Private *data)
     : data(data)
@@ -91,8 +92,9 @@ Friend::Friend(Friend::Private *data)
 }
 
 /**
- * @brief Friend destructor, removes a friend from the friend list.
- * @param friendId the friend's ID.
+ * @brief Friend destructor.
+ *
+ * Removes a friend from the friend list.
  */
 Friend::~Friend()
 {
@@ -106,8 +108,8 @@ Friend::~Friend()
 
 /**
  * @brief Looks up a friend in the friend list.
- * @param friendId the lookup ID.
- * @return the friend if found; nullptr otherwise.
+ * @param friendId The lookup ID.
+ * @return The friend if found; nullptr otherwise.
  */
 Friend* Friend::get(int friendId)
 {
@@ -121,7 +123,7 @@ Friend* Friend::get(int friendId)
 
 /**
  * @brief Looks up a friend in the friend list.
- * @param userId the lookup Tox Id.
+ * @param userId The lookup Tox Id.
  * @return the friend if found; nullptr otherwise.
  */
 Friend* Friend::get(const ToxId &userId)
@@ -137,6 +139,10 @@ Friend* Friend::get(const ToxId &userId)
     return nullptr;
 }
 
+/**
+ * @brief Get list of all existing friends.
+ * @return List of all existing friends.
+ */
 QList<Friend*> Friend::getAll()
 {
     QList<Friend*> result;
@@ -242,7 +248,7 @@ const ToxId &Friend::getToxId() const
 
 /**
  * @brief Get friend id.
- * @return Return friend id.
+ * @return Friend id.
  */
 uint32_t Friend::getFriendId() const
 {
@@ -291,28 +297,44 @@ Status Friend::getStatus() const
 
 /**
  * @brief Returns the friend's @a OfflineMessageEngine.
- * @return a const reference to the offline engine
+ * @return A const reference to the offline engine
  */
 const OfflineMsgEngine& Friend::getOfflineMsgEngine() const
 {
     return data->offlineEngine;
 }
 
+/**
+ * @brief Register new offline message in @a OfflineMsgEngine.
+ * @param rec Receipt ID.
+ * @param id Message ID.
+ * @param msg Message to register.
+ */
 void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
 {
     data->offlineEngine.registerReceipt(rec, id, msg);
 }
 
+/**
+ * @brief Discharge offline message from @a OfflineMsgEngine.
+ * @param receipt Receipt ID.
+ */
 void Friend::dischargeReceipt(int receipt)
 {
     data->offlineEngine.dischargeReceipt(receipt);
 }
 
+/**
+ * @brief Remove all offline receipts from @a OfflineMsgEngine.
+ */
 void Friend::clearOfflineReceipts()
 {
     data->offlineEngine.removeAllReceipts();
 }
 
+/**
+ * @brief Deliver all offline messages from @a OfflineMsgEngine.
+ */
 void Friend::deliverOfflineMsgs()
 {
     data->offlineEngine.deliverOfflineMsgs();
