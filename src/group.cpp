@@ -66,6 +66,14 @@ public:
 
 QHash<uint32_t, Group::Private*> Group::groupList;
 
+/**
+ * @brief Group constructor.
+ * @param groupId The group's ID.
+ * @param name Name of the group.
+ * @param isAvGroupchat True, if is AV groupchat, false, otherwise.
+ *
+ * Add new group in the group list.
+ */
 Group::Group(int groupId, const QString& name, bool isAvGroupchat)
 {
     auto checker = groupList.find(groupId);
@@ -76,6 +84,20 @@ Group::Group(int groupId, const QString& name, bool isAvGroupchat)
     groupList[groupId] = data;
 }
 
+/**
+ * @brief Group constructor, without adding group to db.
+ * @param data Private group data.
+ */
+Group::Group(Group::Private* data)
+    : data(data)
+{
+}
+
+/**
+ * @brief Group destructor.
+ *
+ * Removes a group from the group list.
+ */
 Group::~Group()
 {
     auto g_it = groupList.find(data->groupId);
@@ -86,6 +108,11 @@ Group::~Group()
     groupList.erase(g_it);
 }
 
+/**
+ * @brief Looks up a group in the friend list.
+ * @param groupId The lookup ID.
+ * @return The group if found; nullptr otherwise.
+ */
 Group* Group::get(int groupId)
 {
     auto g_it = groupList.find(groupId);
@@ -95,6 +122,10 @@ Group* Group::get(int groupId)
     return new Group(*g_it);
 }
 
+/**
+ * @brief Get list of all existing groups.
+ * @return List of all existing groups.
+ */
 QList<Group*> Group::getAll()
 {
     QList<Group*> res;
@@ -108,10 +139,13 @@ QList<Group*> Group::getAll()
     return res;
 }
 
-Group::Group(Group::Private* data)
-    : data(data)
-{}
-
+/**
+ * @brief Update friend name in the group.
+ * @param peerId Peer ID.
+ * @param name Peer name.
+ *
+ * Set new name if peer already exist, add peer otherwise.
+ */
 void Group::updatePeer(int peerId, QString name)
 {
     ToxId id = Core::getInstance()->getGroupPeerToxId(data->groupId, peerId);
@@ -133,6 +167,10 @@ void Group::updatePeer(int peerId, QString name)
     }
 }
 
+/**
+ * @brief Set displayed name of group.
+ * @param name New group name.
+ */
 void Group::setName(const QString& name)
 {
     data->chatForm->setName(name);
@@ -143,11 +181,18 @@ void Group::setName(const QString& name)
     emit titleChanged(data->widget);
 }
 
+/**
+ * @brief Return name, which should be displayed.
+ * @return Group displayed name.
+ */
 QString Group::getName() const
 {
     return data->widget->getName();
 }
 
+/**
+ * @brief Regenerate list of peers in the group.
+ */
 void Group::regeneratePeerList()
 {
     data->peers = Core::getInstance()->getGroupPeerNames(data->groupId);
@@ -165,7 +210,7 @@ void Group::regeneratePeerList()
             data->toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         Friend *f = Friend::get(id);
-        if (f != nullptr && f->hasAlias())
+        if (f && f->hasAlias())
         {
             data->peers[i] = f->getDisplayedName();
             data->toxids[toxid] = f->getDisplayedName();
@@ -177,16 +222,28 @@ void Group::regeneratePeerList()
     emit userListChanged(getGroupWidget());
 }
 
+/**
+ * @brief Get information about audio/video in the group.
+ * @return True if group support audio/video, false otherwise.
+ */
 bool Group::isAvGroupchat() const
 {
     return data->avGroupchat;
 }
 
+/**
+ * @brief Get group ID.
+ * @return Group ID.
+ */
 int Group::getGroupId() const
 {
     return data->groupId;
 }
 
+/**
+ * @brief Get peers count.
+ * @return Count of peers in groupchat.
+ */
 int Group::getPeersCount() const
 {
     return data->nPeers;
@@ -202,36 +259,66 @@ GroupWidget *Group::getGroupWidget()
     return data->widget;
 }
 
+/**
+ * @brief Get peer list
+ * @return List of peer's names in group.
+ */
 QStringList Group::getPeerList() const
 {
     return data->peers;
 }
 
+/**
+ * @brief Check, that self user have this number in group.
+ * @param num Peer ID.
+ * @return True if self user stored in group by "num" ID.
+ */
 bool Group::isSelfPeerNumber(int num) const
 {
     return num == data->selfPeerNum;
 }
 
-void Group::setEventFlag(bool f)
+/**
+ * @brief Set event flag
+ * @param flag True if group has new event, false otherwise.
+ */
+void Group::setEventFlag(bool flag)
 {
-    data->hasNewMessages = f;
+    data->hasNewMessages = flag;
 }
 
+/**
+ * @brief Get event flag.
+ * @return Return true, if group has new event, false otherwise.
+ */
 bool Group::getEventFlag() const
 {
     return data->hasNewMessages;
 }
 
+/**
+ * @brief Set mentioned flag
+ * @param flag True if someone mentione user in group, false otherwise.
+ */
 void Group::setMentionedFlag(bool f)
 {
     data->userWasMentioned = f;
 }
 
+/**
+ * @brief Get mentioned flag.
+ * @return Return true, if someone mentione user in group, false otherwise.
+ */
 bool Group::getMentionedFlag() const
 {
     return data->userWasMentioned;
 }
 
+/**
+ * @brief Get name of peer with a certain id.
+ * @param id Tox ID of peer.
+ * @return Name of peer.
+ */
 QString Group::resolveToxId(const ToxId &id) const
 {
     QString key = id.publicKey;
