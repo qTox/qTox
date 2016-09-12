@@ -1,11 +1,14 @@
 #include "rawdatabase.h"
-#include <QDebug>
-#include <QMetaObject>
-#include <QMutexLocker>
-#include <QCoreApplication>
-#include <QFile>
+
 #include <cassert>
 #include <tox/toxencryptsave.h>
+
+#include <QCoreApplication>
+#include <QDebug>
+#include <QFile>
+#include <QMetaObject>
+#include <QMutexLocker>
+#include <QRegularExpression>
 
 /// The two following defines are required to use SQLCipher
 /// They are used by the sqlite3.h header
@@ -13,6 +16,7 @@
 #define SQLITE_TEMP_STORE 2
 
 #include <sqlcipher/sqlite3.h>
+
 
 /**
  * @class RawDatabase
@@ -413,7 +417,7 @@ bool RawDatabase::remove()
         return ret;
     }
 
-    qDebug() << "Removing database "<<path;
+    qDebug() << "Removing database "<< path;
     close();
     return QFile::remove(path);
 }
@@ -488,7 +492,8 @@ void RawDatabase::process()
                                        query.query.size() - static_cast<int>(compileTail - query.query.data()),
                                        &stmt, &compileTail)) != SQLITE_OK)
                 {
-                    qWarning() << "Failed to prepare statement"<<query.query<<"with error"<<r;
+                    qWarning() << "Failed to prepare statement" << anonymizeQuery(query.query)
+                               << "with error" << r;
                     goto cleanupStatements;
                 }
                 query.statements += stmt;
@@ -497,7 +502,8 @@ void RawDatabase::process()
                 int nParams = sqlite3_bind_parameter_count(stmt);
                 if (query.blobs.size() < curParam+nParams)
                 {
-                    qWarning() << "Not enough parameters to bind to query "<<query.query;
+                    qWarning() << "Not enough parameters to bind to query "
+                               << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
                 for (int i=0; i<nParams; ++i)
@@ -505,7 +511,8 @@ void RawDatabase::process()
                     const QByteArray& blob = query.blobs[curParam+i];
                     if (sqlite3_bind_blob(stmt, i+1, blob.data(), blob.size(), SQLITE_STATIC) != SQLITE_OK)
                     {
-                        qWarning() << "Failed to bind param"<<curParam+i<<"to query "<<query.query;
+                        qWarning() << "Failed to bind param" << curParam + i
+                                   << "to query" << anonymizeQuery(query.query);
                         goto cleanupStatements;
                     }
                 }
@@ -533,24 +540,25 @@ void RawDatabase::process()
                         query.rowCallback(row);
                     }
                 } while (result == SQLITE_ROW);
+
                 if (result == SQLITE_ERROR)
                 {
-                    qWarning() << "Error executing query "<<query.query;
+                    qWarning() << "Error executing query" << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
                 else if (result == SQLITE_MISUSE)
                 {
-                    qWarning() << "Misuse executing query "<<query.query;
+                    qWarning() << "Misuse executing query" << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
                 else if (result == SQLITE_CONSTRAINT)
                 {
-                    qWarning() << "Constraint error executing query "<<query.query;
+                    qWarning() << "Constraint error executing query" << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
                 else if (result != SQLITE_DONE)
                 {
-                    qWarning() << "Unknown error"<<result<<"executing query "<<query.query;
+                    qWarning() << "Unknown error"<<result<<"executing query" << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
             }
@@ -575,6 +583,22 @@ void RawDatabase::process()
         if (trans.done != nullptr)
             trans.done->store(true, std::memory_order_release);
     }
+}
+
+/**
+ * @brief Hides public keys and timestamps in query.
+ * @param query Source query, which should be anonymized.
+ * @return Query without timestamps and public keys.
+ */
+QString RawDatabase::anonymizeQuery(const QByteArray& query)
+{
+    QString queryString(query);
+    queryString.replace(QRegularExpression("chat.public_key='[A-F0-9]{64}'"),
+                        "char.public_key='<HERE IS PUBLIC KEY>'");
+    queryString.replace(QRegularExpression("timestamp BETWEEN \\d{5,} AND \\d{5,}"),
+                        "timestamp BETWEEN <START HERE> AND <END HERE>");
+
+    return queryString;
 }
 
 /**
