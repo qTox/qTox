@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>AVForm</name>
     <message>
@@ -118,14 +118,30 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Исходный автор: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный список %1 доступен на Github</translation>
     </message>
     <message>
         <source>contributors</source>
+        <translation>контрибьюторов</translation>
+    </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -136,10 +152,6 @@ which may lead to problems with video calls.</source>
         <translation>Версия</translation>
     </message>
     <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Вы используете qTox версии $GIT_DESCRIBE.</translation>
-    </message>
-    <message>
         <source>Downloading update: %p%</source>
         <translation>Загрузка обновления:  %p%</translation>
     </message>
@@ -148,24 +160,12 @@ which may lead to problems with video calls.</source>
         <translation>Лицензия</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Хэш коммита: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Версия toxcore: $TOXCOREVERSION</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Авторы</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Известные проблемы</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Версия Qt: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -296,7 +296,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Такого Tox ID не существует</translation>
+        <translation>Несуществующий Tox ID</translation>
     </message>
 </context>
 <context>
@@ -307,45 +307,45 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если вы %1 в том, что вы делаете, пожалуйста ничего %2 меняйте. Изменения могут привести к проблемам в работе qTox и даже потере данных (например, истории сообщений).</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>не уверены</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>не</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>ОБРАТИТЕ ВНИМАНИЕ</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Вернуть стандартные настройки</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Все настройки будут сброшены на настройки по умолчанию. Вы уверены?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Да</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Идёт звонок</translation>
+        <translation>Идёт звонок</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Нельзя отключиться пока идёт звонок!</translation>
+        <translation>Вы не можете отключиться во время звонка!</translation>
     </message>
 </context>
 <context>
@@ -353,7 +353,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Сохранять настройки в рабочую директорию вместо страндартной папки настроек</translation>
+        <translation>Сохранять настройки в рабочую директорию вместо стандартной папки настроек</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -365,57 +365,57 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Портативный</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Настройки соединения</translation>
+        <translation>Настройки соединения</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Включить IPv6 (реком.)</translation>
+        <translation>Включить IPv6 (реком.)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Отключение позволяет, например, использовать Tox поверх Tor. Однако это добавляет нагрузку на сеть Tox, так что отключайте только в случае необходимости.</translation>
+        <translation>Отключение позволяет, например, использовать Tox поверх Tor. Однако это добавляет нагрузку на сеть Tox, так что отключайте только в случае необходимости.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Включить UDP (реком.)</translation>
+        <translation>Включить UDP (реком.)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Прокси:</translation>
+        <translation>Прокси:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Адрес:</translation>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Порт:</translation>
+        <translation>Порт:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Отсутствует</translation>
+        <translation>Отсутствует</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Переподключиться</translation>
+        <translation>Переподключиться</translation>
     </message>
 </context>
 <context>
@@ -1253,10 +1253,6 @@ Share it with your friends to communicate.</source>
         <translation>Профиль</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Текущее расположение профиля:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Переименовать профиль.</translation>
@@ -1608,7 +1604,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Конфиденциальность</translation>
+        <translation>Конфиденциальность</translation>
     </message>
 </context>
 <context>
@@ -1803,6 +1799,10 @@ Share it with your friends to communicate.</source>
         <source>Set profile password</source>
         <comment>button text</comment>
         <translation>Установить пароль для профиля</translation>
+    </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2017,16 +2017,16 @@ It will be installed when qTox restarts.</source>
         <translation>Удалить друга</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вы действительно хотите удалить &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; из вашего списка контактов?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Также удалить историю переписки</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2107,163 +2107,163 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 не является корректным адресом Toxme.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Отсутствует</translation>
+        <translation>Отсутствует</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний вид</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Чат</translation>
+        <translation>Чат</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Основной шрифт:</translation>
+        <translation>Основной шрифт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Размер: </translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
+        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Формат текстовых сообщений:</translation>
+        <translation>Формат текстовых сообщений:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Выберите формат текстовых сообщений.</translation>
+        <translation>Выберите формат текстовых сообщений.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Обычный текст</translation>
+        <translation>Обычный текст</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Отображать символы форматирования</translation>
+        <translation>Отображать символы форматирования</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Не отображать символы форматирования</translation>
+        <translation>Не отображать символы форматирования</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Новое сообщение</translation>
+        <translation>Новое сообщение</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Открывать окно qTox&apos;s, когда вы получили новое сообщение и ещё ни одного окна открыто не было.</translation>
+        <translation>Открывать окно qTox, при получении нового сообщения если оно еще не было открыто.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Открыть окно</translation>
+        <translation>Открыть окно</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Передать фокус окну, когда вы получаете сообщение.</translation>
+        <translation>Передать фокус окну, при получении сообщения.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Активизировать окно</translation>
+        <translation>Активизировать окно</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список контактов</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Оповещать о новых сообщениях в групповых чатах.</translation>
+        <translation>Всегда оповещать о новых сообщениях в групповых чатах.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Сообщать о всех сообщениях в групповых чатах</translation>
+        <translation>Сообщать о всех сообщениях в групповых чатах</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Если отмечено, групповые беседы будут размещаться вверху списка контактов, выше списка друзей в сети.</translation>
+        <translation>Если выбрано, групповые чаты будут размещаться вверху списка контактов, иначе размещение будет под списком активных контактов.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Поместить групповые беседы вверху контакт-листа</translation>
+        <translation>Поместить групповые чаты вверху контакт-листа</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Ваш список контактов будет показан в компактном виде.</translation>
+        <translation>Ваш список контактов будет показан в компактном виде.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Компактный список контактов</translation>
+        <translation>Компактный список контактов</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Многооконный режим</translation>
+        <translation>Многооконный режим</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Открывать каждый разговор в отдельном окне</translation>
+        <translation>Открывать каждый чат в отдельном окне</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Смайлики</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Использовать смайлики</translation>
+        <translation>Использовать смайлики</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Набор смайликов:</translation>
+        <translation>Набор смайликов:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Размер смайликов:</translation>
+        <translation>Размер смайликов:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> пк</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Тема</translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Стиль:</translation>
+        <translation>Стиль:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Цветовая схема:</translation>
+        <translation>Цветовая схема:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Формат времени:</translation>
+        <translation>Формат времени:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Формат даты:</translation>
+        <translation>Формат даты:</translation>
     </message>
 </context>
 <context>
