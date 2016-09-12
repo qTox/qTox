@@ -64,6 +64,8 @@ protected slots:
     bool open(const QString& path, const QString& hexKey = {});
     void close();
     void process();
+private:
+    QString anonymizeQuery(const QByteArray& query);
 
 protected:
     static QString deriveKey(const QString &password);
