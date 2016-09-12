@@ -534,31 +534,30 @@ void RawDatabase::process()
                     if (result == SQLITE_ROW && query.rowCallback)
                     {
                         QVector<QVariant> row;
-                        for (int i=0; i<column_count; ++i)
+                        for (int i = 0; i < column_count; ++i)
                             row += extractData(stmt, i);
 
                         query.rowCallback(row);
                     }
                 } while (result == SQLITE_ROW);
 
-                if (result == SQLITE_ERROR)
-                {
-                    qWarning() << "Error executing query" << anonymizeQuery(query.query);
+                if (result == SQLITE_DONE)
+                    continue;
+
+                QString anonQuery = anonymizeQuery(query.query);
+                switch (result) {
+                case SQLITE_ERROR:
+                    qWarning() << "Error executing query" << anonQuery;
                     goto cleanupStatements;
-                }
-                else if (result == SQLITE_MISUSE)
-                {
-                    qWarning() << "Misuse executing query" << anonymizeQuery(query.query);
+                case SQLITE_MISUSE:
+                    qWarning() << "Misuse executing query" << anonQuery;
                     goto cleanupStatements;
-                }
-                else if (result == SQLITE_CONSTRAINT)
-                {
-                    qWarning() << "Constraint error executing query" << anonymizeQuery(query.query);
+                case SQLITE_CONSTRAINT:
+                    qWarning() << "Constraint error executing query" << anonQuery;
                     goto cleanupStatements;
-                }
-                else if (result != SQLITE_DONE)
-                {
-                    qWarning() << "Unknown error"<<result<<"executing query" << anonymizeQuery(query.query);
+                default:
+                    qWarning() << "Unknown error" << result
+                               << "executing query" << anonQuery;
                     goto cleanupStatements;
                 }
             }
