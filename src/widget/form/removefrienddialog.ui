@@ -23,7 +23,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string notr="true">{Text message}</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
