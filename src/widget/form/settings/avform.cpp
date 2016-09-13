@@ -458,7 +458,7 @@ void AVForm::getAudioInDevices()
     int idx = Settings::getInstance().getAudioInDevEnabled()
               ? deviceNames.indexOf(Settings::getInstance().getInDev())
               : 0;
-    inDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    inDevCombobox->setCurrentIndex(idx <= 0 ? 1 : idx);
 }
 
 void AVForm::getAudioOutDevices()
@@ -474,7 +474,7 @@ void AVForm::getAudioOutDevices()
     int idx = Settings::getInstance().getAudioOutDevEnabled()
               ? deviceNames.indexOf(Settings::getInstance().getOutDev())
               : 0;
-    outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    outDevCombobox->setCurrentIndex(idx <= 0 ? 1 : idx);
 }
 
 void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
