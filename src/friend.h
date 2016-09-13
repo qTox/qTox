@@ -33,14 +33,26 @@ class Friend
 {
 public:
     typedef uint32_t ID;
-    static Friend* get(ID friendId);
-    static Friend* get(const ToxId& userId);
-    static QList<Friend*> getAll();
+    class Private;
+
+    static Friend get(ID friendId);
+    static Friend get(const ToxId& userId);
+    static QList<Friend> getAll();
+    static void remove(ID friendId);
 
 public:
     Friend(ID friendId, const ToxId& userId);
+    Friend(Private* data = nullptr);
+    Friend(const Friend& other);
+    Friend(Friend&& other);
     ~Friend();
+
+    Friend& operator=(const Friend& other);
+    Friend& operator=(Friend&& other);
+
+    bool isValid() const;
     void loadHistory();
+    void destroy();
 
     void setName(QString name);
     void setAlias(QString name);
@@ -67,13 +79,9 @@ public:
     void deliverOfflineMsgs();
 
 private:
-    class Private;
-    Private* data;
+    QExplicitlySharedDataPointer<Private> data;
     static QHash<ID, Friend::Private*> friendList;
     static QHash<QString, ID> tox2id;
-
-private:
-    Friend(Private* data);
 };
 
 #endif // FRIEND_H

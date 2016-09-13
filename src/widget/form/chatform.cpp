@@ -66,13 +66,13 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-ChatForm::ChatForm(Friend* chatFriend)
+ChatForm::ChatForm(Friend chatFriend)
     : f(chatFriend)
     , callDuration(new QLabel(this))
     , isTyping(false)
 {
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
-    nameLabel->setText(f->getDisplayedName());
+    nameLabel->setText(f.getDisplayedName());
 
     statusMessageLabel = new CroppingLabel;
     statusMessageLabel->setObjectName("statusLabel");
@@ -139,7 +139,7 @@ ChatForm::ChatForm(Friend* chatFriend)
         }
     });
     connect(&typingTimer, &QTimer::timeout, this, [=]{
-        Core::getInstance()->sendTyping(f->getFriendId(), false);
+        Core::getInstance()->sendTyping(f.getFriendId(), false);
         isTyping = false;
     });
     connect(nameLabel, &CroppingLabel::editFinished,
@@ -160,7 +160,7 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     // initialize chat
     loadHistory(QDateTime::currentDateTime().addDays(-7),
-                f->getStatus() != Status::Offline);
+                f.getStatus() != Status::Offline);
 
     if (av->isCallVideoEnabled(f))
     {
@@ -194,7 +194,7 @@ void ChatForm::onTextEditChanged()
     if (!Settings::getInstance().getTypingNotification())
     {
         if (isTyping)
-            Core::getInstance()->sendTyping(f->getFriendId(), false);
+            Core::getInstance()->sendTyping(f.getFriendId(), false);
 
         isTyping = false;
         return;
@@ -204,11 +204,11 @@ void ChatForm::onTextEditChanged()
     {
         typingTimer.start(3000);
         if (!isTyping)
-            Core::getInstance()->sendTyping(f->getFriendId(), (isTyping = true));
+            Core::getInstance()->sendTyping(f.getFriendId(), (isTyping = true));
     }
     else
     {
-        Core::getInstance()->sendTyping(f->getFriendId(), (isTyping = false));
+        Core::getInstance()->sendTyping(f.getFriendId(), (isTyping = false));
     }
 }
 
@@ -248,14 +248,14 @@ void ChatForm::onAttachClicked()
         file.close();
         QFileInfo fi(path);
 
-        core->sendFile(f->getFriendId(), fi.fileName(), path,
+        core->sendFile(f.getFriendId(), fi.fileName(), path,
                        filesize);
     }
 }
 
 void ChatForm::startFileSend(ToxFile file)
 {
-    if (file.friendId != f->getFriendId())
+    if (file.friendId != f.getFriendId())
         return;
 
     QString name;
@@ -273,16 +273,16 @@ void ChatForm::startFileSend(ToxFile file)
 
 void ChatForm::onFileRecvRequest(ToxFile file)
 {
-    if (file.friendId != f->getFriendId())
+    if (file.friendId != f.getFriendId())
         return;
 
     Widget::getInstance()->newFriendMessageAlert(file.friendId);
 
     QString name;
-    ToxId friendId = f->getToxId();
+    ToxId friendId = f.getToxId();
     if (friendId != previousId)
     {
-        name = f->getDisplayedName();
+        name = f.getDisplayedName();
         previousId = friendId;
     }
 
@@ -294,9 +294,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
 
     // there is auto-accept for that conact
-    if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty())
+    if (!Settings::getInstance().getAutoAcceptDir(f.getToxId()).isEmpty())
     {
-        tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
+        tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f.getToxId()));
     }
     else if (Settings::getInstance().getAutoSaveEnabled())
     {   //global autosave to global directory
@@ -308,17 +308,17 @@ void ChatForm::onFileRecvRequest(ToxFile file)
 
 void ChatForm::onAvInvite(Friend::ID friendId, bool video)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
-    callConfirm = new CallConfirmWidget(video ? videoButton : callButton, *f);
+    callConfirm = new CallConfirmWidget(video ? videoButton : callButton, f);
     callConfirm->show();
 
     connect(callConfirm, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
     connect(callConfirm, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
 
     insertChatMessage(ChatMessage::createChatInfoMessage(
-                          tr("%1 calling").arg(f->getDisplayedName()),
+                          tr("%1 calling").arg(f.getDisplayedName()),
                           ChatMessage::INFO,
                           QDateTime::currentDateTime()));
 
@@ -330,7 +330,7 @@ void ChatForm::onAvInvite(Friend::ID friendId, bool video)
 
 void ChatForm::onAvStart(Friend::ID friendId, bool video)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     if (video)
@@ -344,7 +344,7 @@ void ChatForm::onAvStart(Friend::ID friendId, bool video)
 
 void ChatForm::onAvEnd(Friend::ID friendId)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     delete callConfirm;
@@ -375,7 +375,7 @@ void ChatForm::showOutgoingCall(bool video)
         callButton->setToolTip(tr("Cancel audio call"));
     }
 
-    addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()),
+    addSystemInfoMessage(tr("Calling %1").arg(f.getDisplayedName()),
                          ChatMessage::INFO,
                          QDateTime::currentDateTime());
 
@@ -391,7 +391,7 @@ void ChatForm::onAnswerCallTriggered()
     updateCallButtons();
 
     CoreAV* av = Core::getInstance()->getAv();
-    if (!av->answerCall(f->getFriendId()))
+    if (!av->answerCall(f.getFriendId()))
     {
         updateCallButtons();
         stopCounter();
@@ -399,7 +399,7 @@ void ChatForm::onAnswerCallTriggered()
         return;
     }
 
-    onAvStart(f->getFriendId(), av->isCallVideoEnabled(f));
+    onAvStart(f.getFriendId(), av->isCallVideoEnabled(f));
 }
 
 void ChatForm::onRejectCallTriggered()
@@ -409,7 +409,7 @@ void ChatForm::onRejectCallTriggered()
     Audio::getInstance().stopLoop();
 
     CoreAV* av = Core::getInstance()->getAv();
-    av->cancelCall(f->getFriendId());
+    av->cancelCall(f.getFriendId());
 }
 
 void ChatForm::onCallTriggered()
@@ -417,9 +417,9 @@ void ChatForm::onCallTriggered()
     CoreAV* av = Core::getInstance()->getAv();
     if (av->isCallActive(f))
     {
-        av->cancelCall(f->getFriendId());
+        av->cancelCall(f.getFriendId());
     }
-    else if (av->startCall(f->getFriendId(), false))
+    else if (av->startCall(f.getFriendId(), false))
     {
         showOutgoingCall(false);
     }
@@ -432,9 +432,9 @@ void ChatForm::onVideoCallTriggered()
     {
         // TODO: We want to activate video on the active call.
         if (av->isCallVideoEnabled(f))
-            av->cancelCall(f->getFriendId());
+            av->cancelCall(f.getFriendId());
     }
-    else if (av->startCall(f->getFriendId(), true))
+    else if (av->startCall(f.getFriendId(), true))
     {
         showOutgoingCall(true);
     }
@@ -456,7 +456,7 @@ void ChatForm::updateCallButtons()
     }
     else
     {
-        const Status fs = f->getStatus();
+        const Status fs = f.getStatus();
         callButton->setEnabled(fs != Status::Offline);
         videoButton->setEnabled(fs != Status::Offline);
 
@@ -508,7 +508,7 @@ void ChatForm::onVolMuteToggle()
 
 void ChatForm::onFileSendFailed(Friend::ID friendId, const QString &fname)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
@@ -516,7 +516,7 @@ void ChatForm::onFileSendFailed(Friend::ID friendId, const QString &fname)
 
 void ChatForm::onFriendStatusChanged(Friend::ID friendId, Status status)
 {
-    if(friendId != f->getFriendId())
+    if(friendId != f.getFriendId())
         return;
 
     if (status == Status::Offline)
@@ -547,48 +547,48 @@ void ChatForm::onFriendStatusChanged(Friend::ID friendId, Status status)
         }
 
         addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
-                             .arg(f->getDisplayedName()).arg(fStatus),
+                             .arg(f.getDisplayedName()).arg(fStatus),
                              ChatMessage::INFO, QDateTime::currentDateTime());
     }
 }
 
 void ChatForm::onFriendTypingChanged(Friend::ID friendId, bool isTyping)
 {
-    if (friendId == f->getFriendId())
+    if (friendId == f.getFriendId())
         setFriendTyping(isTyping);
 }
 
 void ChatForm::onFriendNameChanged(quint32 friendId, const QString& name)
 {
-    if (friendId == f->getFriendId())
+    if (friendId == f.getFriendId())
         setName(name);
 }
 
 void ChatForm::onFriendMessageReceived(Friend::ID friendId, const QString& message,
                                        bool isAction)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getToxId(), message, isAction, timestamp, true);
+    addMessage(f.getToxId(), message, isAction, timestamp, true);
 }
 
 void ChatForm::onStatusMessage(quint32 friendId, const QString& message)
 {
-    if (friendId == f->getFriendId())
+    if (friendId == f.getFriendId())
         setStatusMessage(message);
 }
 
 void ChatForm::onReceiptReceived(Friend::ID friendId, int receipt)
 {
-    if (friendId == f->getFriendId())
-        f->dischargeReceipt(receipt);
+    if (friendId == f.getFriendId())
+        f.dischargeReceipt(receipt);
 }
 
 void ChatForm::onAvatarChange(Friend::ID friendId, const QPixmap &pic)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     avatar->setPixmap(pic);
@@ -597,8 +597,10 @@ void ChatForm::onAvatarChange(Friend::ID friendId, const QPixmap &pic)
 GenericNetCamView *ChatForm::createNetcam()
 {
     qDebug() << "creating netcam";
-    NetCamView* view = new NetCamView(f->getFriendId(), this);
-    view->show(Core::getInstance()->getAv()->getVideoSourceFromCall(f->getFriendId()), f->getDisplayedName());
+    NetCamView* view = new NetCamView(f.getFriendId(), this);
+    CoreAV* coreAV = Core::getInstance()->getAv();
+    VideoSource* source = coreAV->getVideoSourceFromCall(f.getFriendId());
+    view->show(source, f.getDisplayedName());
     return view;
 }
 
@@ -649,7 +651,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
             file.close();
 
             if (info.exists())
-                core->sendFile(f->getFriendId(), info.fileName(),
+                core->sendFile(f.getFriendId(), info.fileName(),
                                info.absoluteFilePath(), info.size());
         }
     }
@@ -657,7 +659,7 @@ void ChatForm::dropEvent(QDropEvent *ev)
 
 void ChatForm::onAvatarRemoved(Friend::ID friendId)
 {
-    if (friendId != f->getFriendId())
+    if (friendId != f.getFriendId())
         return;
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
@@ -666,17 +668,17 @@ void ChatForm::onAvatarRemoved(Friend::ID friendId)
 void ChatForm::clearChatArea(bool notInForm)
 {
     GenericChatForm::clearChatArea(notInForm);
-    f->clearOfflineReceipts();
+    f.clearOfflineReceipts();
 }
 
 void ChatForm::onDeliverOfflineMessages()
 {
-    f->deliverOfflineMsgs();
+    f.deliverOfflineMsgs();
 }
 
 void ChatForm::onLoadChatHistory(uint32_t friendId)
 {
-    if (friendId == f->getFriendId())
+    if (friendId == f.getFriendId())
         loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 
@@ -699,7 +701,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
     }
 
-    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().publicKey, since, now);
+    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f.getToxId().publicKey, since, now);
 
     ToxId storedPrevId = previousId;
     ToxId prevId;
@@ -743,11 +745,11 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
             {
                 int rec;
                 if (!isAction)
-                    rec = Core::getInstance()->sendMessage(f->getFriendId(), msg->toString());
+                    rec = Core::getInstance()->sendMessage(f.getFriendId(), msg->toString());
                 else
-                    rec = Core::getInstance()->sendAction(f->getFriendId(), msg->toString());
+                    rec = Core::getInstance()->sendAction(f.getFriendId(), msg->toString());
 
-                f->registerReceipt(rec, it.id, msg);
+                f.registerReceipt(rec, it.id, msg);
             }
         }
         historyMessages.append(msg);
@@ -806,7 +808,7 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
         file.close();
         QFileInfo fi(file);
 
-        Core::getInstance()->sendFile(f->getFriendId(), fi.fileName(),
+        Core::getInstance()->sendFile(f.getFriendId(), fi.fileName(),
                                       fi.filePath(), filesize);
     }
     else
@@ -925,7 +927,7 @@ void ChatForm::stopCounter()
 {
     if (callDurationTimer)
     {
-        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f->getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
+        addSystemInfoMessage(tr("Call with %1 ended. %2").arg(f.getDisplayedName(),secondsToDHMS(timeElapsed.elapsed()/1000)),
                              ChatMessage::INFO, QDateTime::currentDateTime());
         callDurationTimer->stop();
         callDuration->setText("");
@@ -967,7 +969,7 @@ void ChatForm::setFriendTyping(bool isTyping)
     chatWidget->setTypingNotificationVisible(isTyping);
 
     Text* text = static_cast<Text*>(chatWidget->getTypingNotification()->getContent(1));
-    text->setText("<div class=typing>" + tr("%1 is typing").arg(f->getDisplayedName().toHtmlEscaped()) + "</div>");
+    text->setText("<div class=typing>" + tr("%1 is typing").arg(f.getDisplayedName().toHtmlEscaped()) + "</div>");
 }
 
 void ChatForm::showEvent(QShowEvent* event)
@@ -1011,21 +1013,22 @@ void ChatForm::SendMessageStr(QString msg)
 
         int rec;
         if (isAction)
-            rec = Core::getInstance()->sendAction(f->getFriendId(), qt_msg);
+            rec = Core::getInstance()->sendAction(f.getFriendId(), qt_msg);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendId(), qt_msg);
+            rec = Core::getInstance()->sendMessage(f.getFriendId(), qt_msg);
 
 
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled())
         {
+            QString fPK = f.getToxId().publicKey;
+            QString selfPK = Core::getInstance()->getSelfId().publicKey;
+            QString name = Core::getInstance()->getUsername();
             profile->getHistory()->addNewMessage(
-                        f->getToxId().publicKey, qt_msg_hist,
-                        Core::getInstance()->getSelfId().publicKey, timestamp,
-                        status, Core::getInstance()->getUsername(),
-                        [this, rec, ma](int64_t id)
+                        fPK, qt_msg_hist, selfPK, timestamp,
+                        status, name, [this, rec, ma](int64_t id)
             {
-                f->registerReceipt(rec, id, ma);
+                f.registerReceipt(rec, id, ma);
             });
         }
         else

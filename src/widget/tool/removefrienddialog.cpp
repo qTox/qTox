@@ -2,13 +2,13 @@
 #include <QPushButton>
 
 
-RemoveFriendDialog::RemoveFriendDialog(QWidget *parent, const Friend *f)
+RemoveFriendDialog::RemoveFriendDialog(QWidget *parent, const Friend f)
     : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setAttribute(Qt::WA_QuitOnClose, false);
     ui.setupUi(this);
-    ui.label->setText(ui.label->text().replace("&lt;name&gt;", f->getDisplayedName().toHtmlEscaped()));
+    ui.label->setText(ui.label->text().replace("&lt;name&gt;", f.getDisplayedName().toHtmlEscaped()));
     auto removeButton = ui.buttonBox->button(QDialogButtonBox::Ok);
     auto cancelButton = ui.buttonBox->button(QDialogButtonBox::Cancel);
     removeButton->setText(tr("Remove"));
