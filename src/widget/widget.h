@@ -33,10 +33,12 @@
 #define PIXELS_TO_ACT 7
 
 class AddFriendForm;
+class Camera;
+class CircleWidget;
 class ContentDialog;
 class ContentLayout;
 class ContentWidget;
-class CircleWidget;
+class Core;
 class FilesForm;
 class Friend;
 class FriendListWidget;
@@ -45,8 +47,6 @@ class GenericChatForm;
 class GenericChatItemWidget;
 class Group;
 class GroupInviteForm;
-class Core;
-class Camera;
 class MaskablePixmapWidget;
 class ProfileForm;
 class QActionGroup;
@@ -101,7 +101,7 @@ public:
     Camera* getCamera();
 
     void showUpdateDownloadProgress();
-    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addFriendDialog(Friend frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(uint32_t friendId, bool sound = true);
     bool newGroupMessageAlert(int groupId, bool notify);
@@ -146,7 +146,7 @@ public slots:
     void onStatusSet(Status status);
     void onFailedToStartCore();
     void onBadProxyCore();
-    void onSelfAvatarLoaded(const QPixmap &pic);
+    void onSelfAvatarLoaded(const QPixmap& pic);
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
     void addFriend(uint32_t friendId, const QString& userId);
@@ -158,8 +158,8 @@ public slots:
     void onFriendAliasChanged(uint32_t friendId, QString alias);
     void onFriendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
-    void onFriendDialogShown(Friend* f);
-    void updateFriendActivity(Friend* frnd);
+    void onFriendDialogShown(const Friend& f);
+    void updateFriendActivity(const Friend& frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(uint32_t friendId, uint8_t type, QByteArray invite);
@@ -227,7 +227,7 @@ private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     Group *createGroup(int groupId);
-    void removeFriend(Friend* f, bool fake = false);
+    void removeFriend(Friend f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();

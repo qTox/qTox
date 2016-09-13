@@ -150,7 +150,8 @@ ContentDialog::~ContentDialog()
 FriendWidget* ContentDialog::addFriend(Friend::ID friendId, QString id)
 {
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
-    friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
+    Status status = Friend::get(friendId).getStatus();
+    friendLayout->addFriendWidget(friendWidget, status);
 
     Core* core = Core::getInstance();
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
@@ -277,7 +278,7 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
 
     int index;
     QLayout* currentLayout;
-    if (activeChatroomWidget->getFriend())
+    if (activeChatroomWidget->getFriend().isValid())
     {
         currentLayout = friendLayout->getLayoutOnline();
         index = friendLayout->indexOfFriendWidget(activeChatroomWidget, true);
@@ -378,8 +379,10 @@ void ContentDialog::updateFriendStatus(Friend::ID friendId)
     ContentDialog* contentDialog = getFriendDialog(friendId);
     if (contentDialog != nullptr)
     {
-        FriendWidget* friendWidget = static_cast<FriendWidget*>(std::get<1>(friendList.find(friendId).value()));
-        contentDialog->friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
+        GenericChatroomWidget* widget = std::get<1>(friendList.find(friendId).value());
+        FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
+        Status status = Friend::get(friendId).getStatus();
+        contentDialog->friendLayout->addFriendWidget(friendWidget, status);
     }
 }
 
@@ -426,13 +429,13 @@ void ContentDialog::updateTitleAndStatusIcon(const QString& username)
         setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
 
         // it's null when it's a groupchat
-        if (displayWidget->getFriend() == nullptr)
+        if (displayWidget->getFriend().isValid())
         {
             setWindowIcon(QIcon(":/img/group.svg"));
             return;
         }
 
-        Status currentStatus = displayWidget->getFriend()->getStatus();
+        Status currentStatus = displayWidget->getFriend().getStatus();
 
         switch(currentStatus) {
             case Status::Online:
@@ -480,10 +483,10 @@ bool ContentDialog::event(QEvent* event)
             activeChatroomWidget->updateStatusLight();
             updateTitle(activeChatroomWidget);
 
-            Friend* frnd = activeChatroomWidget->getFriend();
+            Friend frnd = activeChatroomWidget->getFriend();
             Group* group = activeChatroomWidget->getGroup();
 
-            if (frnd)
+            if (frnd.isValid())
                 emit friendDialogShown(frnd);
             else
                 emit groupDialogShown(group);
@@ -510,11 +513,11 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = Friend::get(toxId);
-        if (!contact)
+        Friend contact = Friend::get(toxId);
+        if (!contact.isValid())
             return;
 
-        Friend::ID friendId = contact->getFriendId();
+        Friend::ID friendId = contact.getFriendId();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
@@ -545,11 +548,11 @@ void ContentDialog::dropEvent(QDropEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = Friend::get(toxId);
-        if (!contact)
+        Friend contact = Friend::get(toxId);
+        if (!contact.isValid())
             return;
 
-        Friend::ID friendId = contact->getFriendId();
+        Friend::ID friendId = contact.getFriendId();
         auto iter = friendList.find(friendId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeFriend(friendId);
@@ -605,9 +608,9 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
         ContentDialog* contentDialog = new ContentDialog(this);
         contentDialog->show();
 
-        if (widget->getFriend())
+        if (widget->getFriend().isValid())
         {
-            removeFriend(widget->getFriend()->getFriendId());
+            removeFriend(widget->getFriend().getFriendId());
             Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
         }
         else
@@ -640,12 +643,12 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
 
 void ContentDialog::updateFriendWidget(Friend::ID friendId, QString alias)
 {
-    Friend *f = Friend::get(friendId);
+    Friend f = Friend::get(friendId);
     GenericChatroomWidget *widget = std::get<1>(friendList.find(friendId).value());
     FriendWidget* friendWidget = static_cast<FriendWidget*>(widget);
     friendWidget->setName(alias);
 
-    Status status = f->getStatus();
+    Status status = f.getStatus();
     friendLayout->addFriendWidget(friendWidget, status);
 }
 

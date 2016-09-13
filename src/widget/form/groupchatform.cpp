@@ -282,19 +282,19 @@ void GroupChatForm::peerAudioPlaying(int peer)
 void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = Friend::get(toxId);
-    if (frnd)
+    Friend frnd = Friend::get(toxId);
+    if (frnd.isValid())
         ev->acceptProposedAction();
 }
 
 void GroupChatForm::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
-    Friend *frnd = Friend::get(toxId);
-    if (!frnd)
+    Friend frnd = Friend::get(toxId);
+    if (!frnd.isValid())
         return;
 
-    Friend::ID friendId = frnd->getFriendId();
+    Friend::ID friendId = frnd.getFriendId();
     int groupId = group->getGroupId();
     Core::getInstance()->groupInviteFriend(friendId, groupId);
 }
