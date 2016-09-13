@@ -49,9 +49,9 @@ public:
     const ToxAV* getToxAv() const;
 
     bool anyActiveCalls() const;
-    bool isCallActive(const Friend* f) const;
+    bool isCallActive(const Friend& f) const;
     bool isCallActive(const Group* g) const;
-    bool isCallVideoEnabled(const Friend* f) const;
+    bool isCallVideoEnabled(const Friend& f) const;
     bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
@@ -68,10 +68,10 @@ public:
     bool isGroupCallOutputMuted(const Group* g) const;
     bool isGroupAvEnabled(int groupNum) const;
 
-    bool isCallInputMuted(const Friend* f) const;
-    bool isCallOutputMuted(const Friend* f) const;
-    void toggleMuteCallInput(const Friend* f);
-    void toggleMuteCallOutput(const Friend* f);
+    bool isCallInputMuted(const Friend& f) const;
+    bool isCallOutputMuted(const Friend& f) const;
+    void toggleMuteCallInput(const Friend& f);
+    void toggleMuteCallOutput(const Friend& f);
 
     static void groupCallCallback(void* tox, int group, int peer,
                                   const int16_t* data, unsigned samples,
