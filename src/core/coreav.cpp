@@ -173,9 +173,9 @@ bool CoreAV::anyActiveCalls() const
  * @param f     the friend to check
  * @return true, if call is active for the friend; false otherwise
  */
-bool CoreAV::isCallActive(const Friend* f) const
+bool CoreAV::isCallActive(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendId());
+    return f.isValid() && calls.contains(f.getFriendId());
 }
 
 /**
@@ -190,11 +190,10 @@ bool CoreAV::isCallActive(const Group* g) const
             : false;
 }
 
-bool CoreAV::isCallVideoEnabled(const Friend* f) const
+bool CoreAV::isCallVideoEnabled(const Friend& f) const
 {
-
-    return f && calls.contains(f->getFriendId())
-            ? calls[f->getFriendId()].videoEnabled
+    return f.isValid() && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].videoEnabled
             : false;
 }
 
@@ -419,11 +418,11 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
  * @brief Toggles the mute state of the call's input (microphone).
  * @param f     the friend assigned to the call
  */
-void CoreAV::toggleMuteCallInput(const Friend* f)
+void CoreAV::toggleMuteCallInput(const Friend& f)
 {
-    if (f && calls.contains(f->getFriendId()))
+    if (f.isValid() && calls.contains(f.getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendId()];
+        ToxCall& call = calls[f.getFriendId()];
         call.muteMic = !call.muteMic;
     }
 }
@@ -432,11 +431,11 @@ void CoreAV::toggleMuteCallInput(const Friend* f)
  * @brief Toggles the mute state of the call's output (speaker).
  * @param f     the friend assigned to the call
  */
-void CoreAV::toggleMuteCallOutput(const Friend* f)
+void CoreAV::toggleMuteCallOutput(const Friend& f)
 {
-    if (f && calls.contains(f->getFriendId()))
+    if (f.isValid() && calls.contains(f.getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendId()];
+        ToxCall& call = calls[f.getFriendId()];
         call.muteVol = !call.muteVol;
     }
 }
@@ -601,10 +600,10 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
  * @param f  the friend to check
  * @return true when muted; false otherwise
  */
-bool CoreAV::isCallInputMuted(const Friend* f) const
+bool CoreAV::isCallInputMuted(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendId())
-            ? calls[f->getFriendId()].muteMic
+    return f.isValid() && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].muteMic
             : false;
 }
 
@@ -613,10 +612,10 @@ bool CoreAV::isCallInputMuted(const Friend* f) const
  * @param friendId  the friend to check
  * @return true when muted; false otherwise
  */
-bool CoreAV::isCallOutputMuted(const Friend* f) const
+bool CoreAV::isCallOutputMuted(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendId())
-            ? calls[f->getFriendId()].muteVol
+    return f.isValid() && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].muteVol
             : false;
 }
 

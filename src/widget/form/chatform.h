@@ -26,11 +26,11 @@
 #include <QTimer>
 #include <QElapsedTimer>
 
+#include "src/friend.h"
 #include "genericchatform.h"
 #include "src/core/corestructs.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
-class Friend;
 class FileTransferInstance;
 class QPixmap;
 class CallConfirmWidget;
@@ -42,7 +42,7 @@ class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit ChatForm(Friend* chatFriend);
+    explicit ChatForm(Friend chatFriend);
     ~ChatForm();
 
     void setStatusMessage(QString newMessage);
@@ -114,8 +114,7 @@ protected:
     void showEvent(QShowEvent* event) final override;
 
 private:
-
-    Friend* f;
+    Friend f;
     CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel *callDuration;

@@ -98,7 +98,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     installEventFilter(this); // Disable leave event.
 
     QPoint pos = event->globalPos();
-    ToxId id = Friend::get(friendId)->getToxId();
+    ToxId id = Friend::get(friendId).getToxId();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QAction* openChatWindow = nullptr;
@@ -131,7 +131,8 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
         groupActions[groupAction] =  group;
     }
 
-    int circleId = Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId());
+    ToxId toxId = Friend::get(friendId).getToxId();
+    int circleId = Settings::getInstance().getFriendCircleID(toxId);
     CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
 
     QMenu* circleMenu = nullptr;
@@ -267,7 +268,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
     else if (removeCircleAction != nullptr && selectedItem == removeCircleAction)
     {
         if (friendList)
-            friendList->moveWidget(this, Friend::get(friendId)->getStatus(), true);
+            friendList->moveWidget(this, Friend::get(friendId).getStatus(), true);
         else
             Settings::getInstance().setFriendCircleID(id, -1);
 
@@ -283,7 +284,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
 
         if (circle)
         {
-            circle->addFriendWidget(this, Friend::get(friendId)->getStatus());
+            circle->addFriendWidget(this, Friend::get(friendId).getStatus());
             circle->setExpanded(true);
             Widget::getInstance()->searchCircle(circle);
             Settings::getInstance().savePersonal();
@@ -319,36 +320,38 @@ void FriendWidget::setAsInactiveChatroom()
 
 void FriendWidget::updateStatusLight()
 {
-    Friend* f = Friend::get(friendId);
-    Status status = f->getStatus();
+    Friend f = Friend::get(friendId);
+    Status status = f.getStatus();
 
-    if (status == Status::Online && !f->getEventFlag())
+    if (status == Status::Online && !f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
-    else if (status == Status::Online && f->getEventFlag())
+    else if (status == Status::Online && f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
-    else if (status == Status::Away && !f->getEventFlag())
+    else if (status == Status::Away && !f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_away.svg"));
-    else if (status == Status::Away && f->getEventFlag())
+    else if (status == Status::Away && f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_away_notification.svg"));
-    else if (status == Status::Busy && !f->getEventFlag())
+    else if (status == Status::Busy && !f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_busy.svg"));
-    else if (status == Status::Busy && f->getEventFlag())
+    else if (status == Status::Busy && f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_busy_notification.svg"));
-    else if (status == Status::Offline && !f->getEventFlag())
+    else if (status == Status::Offline && !f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_offline.svg"));
-    else if (status == Status::Offline && f->getEventFlag())
+    else if (status == Status::Offline && f.getEventFlag())
         statusPic.setPixmap(QPixmap(":img/status/dot_offline_notification.svg"));
 
-    if (f->getEventFlag())
+    if (f.getEventFlag())
     {
-        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId()));
+        ToxId toxId = Friend::get(friendId).getToxId();
+        int circleId = Settings::getInstance().getFriendCircleID(toxId);
+        CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
         if (circleWidget != nullptr)
             circleWidget->setExpanded(true);
 
         Widget::getInstance()->updateFriendActivity(Friend::get(friendId));
     }
 
-    if (!f->getEventFlag())
+    if (!f.getEventFlag())
         statusPic.setMargin(3);
     else
         statusPic.setMargin(0);
@@ -356,10 +359,10 @@ void FriendWidget::updateStatusLight()
 
 QString FriendWidget::getStatusString() const
 {
-    Friend* f = Friend::get(friendId);
-    Status status = f->getStatus();
+    Friend f = Friend::get(friendId);
+    Status status = f.getStatus();
 
-    if (f->getEventFlag())
+    if (f.getEventFlag())
         return tr("New message");
     else if (status == Status::Online)
         return tr("Online");
@@ -369,10 +372,11 @@ QString FriendWidget::getStatusString() const
         return tr("Busy");
     else if (status == Status::Offline)
         return tr("Offline");
+
     return QString::null;
 }
 
-Friend* FriendWidget::getFriend() const
+Friend FriendWidget::getFriend() const
 {
     return Friend::get(friendId);
 }
@@ -380,7 +384,9 @@ Friend* FriendWidget::getFriend() const
 void FriendWidget::search(const QString &searchString, bool hide)
 {
     searchName(searchString, hide);
-    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(Friend::get(friendId)->getToxId()));
+    ToxId toxId = Friend::get(friendId).getToxId();
+    int circleId = Settings::getInstance().getFriendCircleID(toxId);
+    CircleWidget* circleWidget = CircleWidget::getFromID(circleId);
     if (circleWidget != nullptr)
         circleWidget->search(searchString);
 }
@@ -397,8 +403,8 @@ void FriendWidget::setChatForm()
 
 void FriendWidget::resetEventFlags()
 {
-    Friend* f = Friend::get(friendId);
-    f->setEventFlag(false);
+    Friend f = Friend::get(friendId);
+    f.setEventFlag(false);
 }
 
 void FriendWidget::onAvatarChange(Friend::ID friendId, const QPixmap& pic)
@@ -439,7 +445,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
         QMimeData* mdata = new QMimeData;
-        mdata->setText(getFriend()->getToxId().toString());
+        mdata->setText(getFriend().getToxId().toString());
 
         QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
@@ -451,8 +457,8 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
 void FriendWidget::setAlias(const QString& _alias)
 {
     QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
-    Friend* f = Friend::get(friendId);
-    f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(f->getToxId(), alias);
+    Friend f = Friend::get(friendId);
+    f.setAlias(alias);
+    Settings::getInstance().setFriendAlias(f.getToxId(), alias);
     Settings::getInstance().savePersonal();
 }
