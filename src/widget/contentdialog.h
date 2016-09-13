@@ -75,7 +75,7 @@ public:
     static ContentDialog* getGroupDialog(int groupId);
 
 signals:
-    void friendDialogShown(Friend *f);
+    void friendDialogShown(const Friend& f);
     void groupDialogShown(Group *g);
 #ifdef Q_OS_MAC
     void activated();

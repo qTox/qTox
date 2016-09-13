@@ -25,7 +25,7 @@
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
 
-class Friend::Private
+class Friend::Private : public QSharedData
 {
 public:
     Private(Friend::ID friendId, const ToxId& userId)
@@ -67,9 +67,48 @@ Friend::Friend(Friend::ID friendId, const ToxId& userId)
     if (friendChecker != friendList.end())
         qWarning() << "addFriend: friendId already taken";
 
-    data = new Friend::Private(friendId, userId);
-    friendList[friendId] = data;
+    Friend::Private* priv = new Friend::Private(friendId, userId);
+    data = priv;
+    friendList[friendId] = priv;
     tox2id[userId.publicKey] = friendId;
+}
+
+Friend::Friend(const Friend& other)
+    : QObject(other.parent())
+    , data(other.data)
+{
+
+}
+
+Friend::Friend(Friend &&other)
+{
+    data = std::move(other.data);
+}
+
+Friend::~Friend()
+{
+
+}
+
+Friend &Friend::operator=(const Friend& other)
+{
+    data = other.data;
+    return *this;
+}
+
+bool Friend::operator==(const Friend &other)
+{
+    return data == other.data;
+}
+
+bool Friend::operator!=(const Friend &other)
+{
+    return !(*this == other);
+}
+
+bool Friend::isValid() const
+{
+    return data == nullptr;
 }
 
 /**
@@ -82,32 +121,14 @@ Friend::Friend(Friend::Private *data)
 }
 
 /**
- * @brief Friend destructor.
- *
- * Removes a friend from the friend list.
- */
-Friend::~Friend()
-{
-    auto f_it = friendList.find(data->friendId);
-    if (f_it == friendList.end())
-        return;
-
-    delete *f_it;
-    friendList.erase(f_it);
-}
-
-/**
  * @brief Looks up a friend in the friend list.
  * @param friendId The lookup ID.
  * @return The friend if found; nullptr otherwise.
  */
-Friend* Friend::get(Friend::ID friendId)
+Friend Friend::get(Friend::ID friendId)
 {
-    auto f_it = friendList.find(friendId);
-    if (f_it == friendList.end())
-        return nullptr;
-
-    Friend* f = new Friend(*f_it);
+    Private* priv = friendList[friendId];
+    Friend f(priv);
     return f;
 }
 
@@ -116,30 +137,42 @@ Friend* Friend::get(Friend::ID friendId)
  * @param userId The lookup Tox Id.
  * @return the friend if found; nullptr otherwise.
  */
-Friend* Friend::get(const ToxId& userId)
+Friend Friend::get(const ToxId& userId)
 {
     auto id = tox2id.find(userId.publicKey);
     if (id == tox2id.end())
         return nullptr;
 
-    Friend *f = get(*id);
-    if (f && f->getToxId() == userId)
+    Friend f = get(*id);
+    if (f.getToxId() == userId)
         return f;
 
-    return nullptr;
+    return Friend();
 }
 
 /**
  * @brief Get list of all existing friends.
  * @return List of all existing friends.
  */
-QList<Friend*> Friend::getAll()
+QList<Friend> Friend::getAll()
 {
-    QList<Friend*> result;
+    QList<Friend> result;
     for (Friend::Private* data : friendList)
-        result.append(new Friend(data));
+        result.append(Friend(data));
 
     return result;
+}
+
+void Friend::remove(Friend::ID friendId)
+{
+    get(friendId).destroy();
+
+    auto f_it = friendList.find(friendId);
+    if (f_it == friendList.end())
+        return;
+
+//    delete *f_it;
+    friendList.erase(f_it);
 }
 
 /**
@@ -149,6 +182,15 @@ void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
         emit loadChatHistory();
+}
+
+/**
+ * @brief Removes a friend from the friend list.
+ */
+void Friend::destroy()
+{
+//    delete data.data();
+    data = nullptr;
 }
 
 /**

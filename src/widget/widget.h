@@ -27,6 +27,7 @@
 #include <QSystemTrayIcon>
 #include <QFileInfo>
 
+#include "src/friend.h"
 #include "genericchatitemwidget.h"
 #include "src/core/corestructs.h"
 
@@ -38,7 +39,6 @@ class ContentLayout;
 class ContentWidget;
 class CircleWidget;
 class FilesForm;
-class Friend;
 class FriendListWidget;
 class FriendWidget;
 class GenericChatForm;
@@ -101,7 +101,7 @@ public:
     Camera* getCamera();
 
     void showUpdateDownloadProgress();
-    void addFriendDialog(Friend* frnd, ContentDialog* dialog);
+    void addFriendDialog(Friend frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
     bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
@@ -158,7 +158,7 @@ public slots:
     void onFriendAliasChanged(uint32_t friendId, QString alias);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
-    void updateFriendActivity(Friend* frnd);
+    void updateFriendActivity(Friend frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onEmptyGroupCreated(int groupId);
     void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
@@ -170,8 +170,8 @@ public slots:
     void onGroupSendResult(int groupId, const QString& message, int result);
     void nextContact();
     void previousContact();
-    void onFriendDialogShown(Friend *f);
-    void onGroupDialogShown(Group *g);
+    void onFriendDialogShown(const Friend& f);
+    void onGroupDialogShown(Group* g);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -227,7 +227,7 @@ private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     Group *createGroup(int groupId);
-    void removeFriend(Friend* f, bool fake = false);
+    void removeFriend(Friend f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();
     void saveSplitterGeometry();
