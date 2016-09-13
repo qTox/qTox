@@ -174,7 +174,7 @@ void Settings::loadGlobal()
     s.beginGroup("General");
     {
         {
-            // TODO: values in this block are moved -> remove in future
+            // TODO: values in this block are moved -> remove @ v1.8
             enableIPv6 = s.value("enableIPv6", true).toBool();
             makeToxPortable = s.value("makeToxPortable", false).toBool();
             forceTCP = s.value("forceTCP", false).toBool();
@@ -214,9 +214,11 @@ void Settings::loadGlobal()
 
     s.beginGroup("Advanced");
     {
-        makeToxPortable = s.value("makeToxPortable", false).toBool();
-        enableIPv6 = s.value("enableIPv6", true).toBool();
-        forceTCP = s.value("forceTCP", false).toBool();
+        // TODO: Default values in this block should be changed @ v1.8
+        makeToxPortable = s.value("makeToxPortable", makeToxPortable).toBool();
+        enableIPv6 = s.value("enableIPv6", enableIPv6).toBool();
+        forceTCP = s.value("forceTCP", forceTCP).toBool();
+
         int type = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
         Db::syncType sType = static_cast<Db::syncType>(type);
         setDbSyncType(sType);
@@ -233,12 +235,13 @@ void Settings::loadGlobal()
 
     s.beginGroup("GUI");
     {
-        showWindow = s.value("showWindow", true).toBool();
-        showInFront = s.value("showInFront", false).toBool();
-        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
-        groupchatPosition = s.value("groupchatPosition", true).toBool();
-        separateWindow = s.value("separateWindow", false).toBool();
-        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
+        // TODO: Default values in this block should be changed @ v1.8
+        showWindow = s.value("showWindow", showWindow).toBool();
+        showInFront = s.value("showInFront", showInFront).toBool();
+        groupAlwaysNotify = s.value("groupAlwaysNotify", groupAlwaysNotify).toBool();
+        groupchatPosition = s.value("groupchatPosition", groupchatPosition).toBool();
+        separateWindow = s.value("separateWindow", separateWindow).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", dontGroupWindows).toBool();
 
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
@@ -406,7 +409,7 @@ void Settings::loadPersonal(Profile* profile)
     }
     ps.endGroup();
 
-    // TODO: values in this group are moved -> remove in future
+    // TODO: values in this group are moved -> remove @ v1.8
     ps.beginGroup("General");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
@@ -415,16 +418,17 @@ void Settings::loadPersonal(Profile* profile)
 
     ps.beginGroup("GUI");
     {
-        compactLayout = ps.value("compactLayout", true).toBool();
+        // TODO: Default values in this block should be changed @ v1.8
+        compactLayout = ps.value("compactLayout", compactLayout).toBool();
     }
     ps.endGroup();
 
     ps.beginGroup("Proxy");
     {
-        int type = ps.value("proxyType", static_cast<int>(ProxyType::ptNone)).toInt();
+        int type = ps.value("proxyType", static_cast<int>(getProxyType())).toInt();
         setProxyType(static_cast<ProxyType>(type));
-        proxyAddr = ps.value("proxyAddr", "").toString();
-        proxyPort = static_cast<quint16>(ps.value("proxyPort", 0).toUInt());
+        proxyAddr = ps.value("proxyAddr", proxyAddr).toString();
+        proxyPort = static_cast<quint16>(ps.value("proxyPort", proxyPort).toUInt());
     }
     ps.endGroup();
 
