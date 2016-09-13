@@ -43,8 +43,8 @@ public:
     virtual void setChatForm() = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
-    virtual Friend* getFriend() const{return nullptr;}
-    virtual Group* getGroup() const{return nullptr;}
+    virtual Friend getFriend() const;
+    virtual Group* getGroup() const;
 
     virtual bool eventFilter(QObject *, QEvent *) final override;
 

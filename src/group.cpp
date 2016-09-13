@@ -66,11 +66,11 @@ void Group::updatePeer(int peerId, QString name)
     peers[peerId] = name;
     toxids[toxid] = name;
 
-    Friend *f = Friend::get(id);
-    if (f != nullptr && f->hasAlias())
+    Friend f = Friend::get(id);
+    if (f.isValid() && f.hasAlias())
     {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
+        peers[peerId] = f.getDisplayedName();
+        toxids[toxid] = f.getDisplayedName();
     }
     else
     {
@@ -111,11 +111,11 @@ void Group::regeneratePeerList()
         if (toxids[toxid].isEmpty())
             toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
-        Friend *f = Friend::get(id);
-        if (f != nullptr && f->hasAlias())
+        Friend f = Friend::get(id);
+        if (f.isValid() && f.hasAlias())
         {
-            peers[i] = f->getDisplayedName();
-            toxids[toxid] = f->getDisplayedName();
+            peers[i] = f.getDisplayedName();
+            toxids[toxid] = f.getDisplayedName();
         }
     }
 
