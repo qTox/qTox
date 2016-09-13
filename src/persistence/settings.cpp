@@ -171,6 +171,42 @@ void Settings::loadGlobal()
     }
     s.endGroup();
 
+    s.beginGroup("GUI");
+    {
+        showWindow = s.value("showWindow", true).toBool();
+        showInFront = s.value("showInFront", false).toBool();
+        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
+        groupchatPosition = s.value("groupchatPosition", true).toBool();
+        separateWindow = s.value("separateWindow", false).toBool();
+        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
+
+        const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
+        smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
+        if (!SmileyPack::isValid(smileyPack))
+            smileyPack = DEFAULT_SMILEYS;
+
+        emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
+        firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
+        secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
+        timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
+        dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
+        minimizeOnClose = s.value("minimizeOnClose", false).toBool();
+        minimizeToTray = s.value("minimizeToTray", false).toBool();
+        lightTrayIcon = s.value("lightTrayIcon", false).toBool();
+        useEmoticons = s.value("useEmoticons", true).toBool();
+        statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
+        themeColor = s.value("themeColor", 0).toInt();
+        style = s.value("style", "").toString();
+        if (style == "") // Default to Fusion if available, otherwise no style
+        {
+            if (QStyleFactory::keys().contains("Fusion"))
+                style = "Fusion";
+            else
+                style = "None";
+        }
+    }
+    s.endGroup();
+
     s.beginGroup("General");
     {
         {
@@ -228,42 +264,6 @@ void Settings::loadGlobal()
         QList<QString> objectNames = s.childKeys();
         for (const QString& name : objectNames)
             widgetSettings[name] = s.value(name).toByteArray();
-    }
-    s.endGroup();
-
-    s.beginGroup("GUI");
-    {
-        showWindow = s.value("showWindow", true).toBool();
-        showInFront = s.value("showInFront", false).toBool();
-        groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
-        groupchatPosition = s.value("groupchatPosition", true).toBool();
-        separateWindow = s.value("separateWindow", false).toBool();
-        dontGroupWindows = s.value("dontGroupWindows", true).toBool();
-
-        const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
-        smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
-        if (!SmileyPack::isValid(smileyPack))
-            smileyPack = DEFAULT_SMILEYS;
-
-        emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
-        firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
-        secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
-        timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
-        dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
-        minimizeOnClose = s.value("minimizeOnClose", false).toBool();
-        minimizeToTray = s.value("minimizeToTray", false).toBool();
-        lightTrayIcon = s.value("lightTrayIcon", false).toBool();
-        useEmoticons = s.value("useEmoticons", true).toBool();
-        statusChangeNotificationEnabled = s.value("statusChangeNotificationEnabled", false).toBool();
-        themeColor = s.value("themeColor", 0).toInt();
-        style = s.value("style", "").toString();
-        if (style == "") // Default to Fusion if available, otherwise no style
-        {
-            if (QStyleFactory::keys().contains("Fusion"))
-                style = "Fusion";
-            else
-                style = "None";
-        }
     }
     s.endGroup();
 
@@ -406,14 +406,14 @@ void Settings::loadPersonal(Profile* profile)
     }
     ps.endGroup();
 
-    // TODO: values in this group are moved -> remove in future
-    ps.beginGroup("General");
+    ps.beginGroup("GUI");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
     }
     ps.endGroup();
 
-    ps.beginGroup("GUI");
+    // TODO: values in this group are moved -> remove in future
+    ps.beginGroup("General");
     {
         compactLayout = ps.value("compactLayout", true).toBool();
     }
