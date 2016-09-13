@@ -455,10 +455,14 @@ void AVForm::getAudioInDevices()
     inDevCombobox->addItems(deviceNames);
     inDevCombobox->blockSignals(false);
 
-    int idx = Settings::getInstance().getAudioInDevEnabled()
-              ? deviceNames.indexOf(Settings::getInstance().getInDev())
-              : 0;
-    inDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    int idx = 0;
+    if (Settings::getInstance().getAudioInDevEnabled() && deviceNames.size() > 1)
+    {
+        idx = deviceNames.indexOf(Settings::getInstance().getInDev()) + 1;
+        if (idx <= 0)
+            idx = 1;
+    }
+    inDevCombobox->setCurrentIndex(idx);
 }
 
 void AVForm::getAudioOutDevices()
@@ -471,10 +475,14 @@ void AVForm::getAudioOutDevices()
     outDevCombobox->addItems(deviceNames);
     outDevCombobox->blockSignals(false);
 
-    int idx = Settings::getInstance().getAudioOutDevEnabled()
-              ? deviceNames.indexOf(Settings::getInstance().getOutDev())
-              : 0;
-    outDevCombobox->setCurrentIndex(idx < 0 ? 1 : idx);
+    int idx = 0;
+    if (Settings::getInstance().getAudioOutDevEnabled() && deviceNames.size() > 1)
+    {
+        idx = deviceNames.indexOf(Settings::getInstance().getOutDev()) + 1;
+        if (idx <= 0)
+            idx = 1;
+    }
+    outDevCombobox->setCurrentIndex(idx);
 }
 
 void AVForm::on_inDevCombobox_currentIndexChanged(int deviceIndex)
