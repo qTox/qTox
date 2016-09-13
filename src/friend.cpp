@@ -28,7 +28,7 @@
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
 
-class Friend::Private
+class Friend::Private : public QSharedData
 {
 public:
     Private(Friend::ID friendId, const ToxId& userId)
@@ -84,11 +84,38 @@ Friend::Friend(Friend::ID friendId, const ToxId& userId)
     data = new Friend::Private(friendId, userId);
 }
 
+Friend::Friend(const Friend& other)
+    : data(other.data)
+{
+}
+
+Friend::Friend(Friend &&other)
+{
+    data = std::move(other.data);
+}
+
+bool Friend::isValid() const
+{
+    return data == nullptr;
+}
+
 /**
  * @brief Friend destructor.
  */
 Friend::~Friend()
 {
+}
+
+Friend& Friend::operator=(const Friend &other)
+{
+    data = other.data;
+    return *this;
+}
+
+Friend& Friend::operator=(Friend &&other)
+{
+    data = std::move(other.data);
+    return *this;
 }
 
 /**
@@ -105,14 +132,9 @@ Friend::Friend(Friend::Private *data)
  * @param friendId The lookup ID.
  * @return The friend if found; nullptr otherwise.
  */
-Friend* Friend::get(Friend::ID friendId)
+Friend Friend::get(Friend::ID friendId)
 {
-    auto f_it = friendList.find(friendId);
-    if (f_it == friendList.end())
-        return nullptr;
-
-    Friend* f = new Friend(*f_it);
-    return f;
+    return friendList[friendId];
 }
 
 /**
@@ -120,14 +142,14 @@ Friend* Friend::get(Friend::ID friendId)
  * @param userId The lookup Tox Id.
  * @return the friend if found; nullptr otherwise.
  */
-Friend* Friend::get(const ToxId& userId)
+Friend Friend::get(const ToxId& userId)
 {
     auto id = tox2id.find(userId.publicKey);
     if (id == tox2id.end())
         return nullptr;
 
-    Friend *f = get(*id);
-    if (f && f->getToxId() == userId)
+    Friend f = get(*id);
+    if (f.getToxId() == userId)
         return f;
 
     return nullptr;
@@ -137,13 +159,20 @@ Friend* Friend::get(const ToxId& userId)
  * @brief Get list of all existing friends.
  * @return List of all existing friends.
  */
-QList<Friend*> Friend::getAll()
+QList<Friend> Friend::getAll()
 {
-    QList<Friend*> result;
+    QList<Friend> result;
     for (Friend::Private* data : friendList)
-        result.append(new Friend(data));
+    {
+        result.append(data);
+    }
 
     return result;
+}
+
+void Friend::remove(Friend::ID friendId)
+{
+    get(friendId).destroy();
 }
 
 /**
@@ -159,11 +188,22 @@ void Friend::loadHistory()
 }
 
 /**
+ * @brief Removes a friend from the friend list.
+ */
+void Friend::destroy()
+{
+    data = nullptr;
+}
+
+/**
  * @brief Change the real username of friend.
  * @param name New name to friend.
  */
 void Friend::setName(QString name)
 {
+    if (!data)
+        return;
+
     if (name.isEmpty())
         name = data->userId.publicKey;
 
@@ -179,6 +219,9 @@ void Friend::setName(QString name)
  */
 void Friend::setAlias(QString alias)
 {
+    if (!data)
+        return;
+
     if (data->userAlias != alias)
     {
         data->userAlias = alias;
@@ -196,6 +239,9 @@ void Friend::setAlias(QString alias)
  */
 void Friend::setStatusMessage(QString message)
 {
+    if (!data)
+        return;
+
     if (data->statusMessage != message)
         data->statusMessage = message;
 }
@@ -206,6 +252,9 @@ void Friend::setStatusMessage(QString message)
  */
 QString Friend::getStatusMessage()
 {
+    if (!data)
+        return QString();
+
     return data->statusMessage;
 }
 
@@ -217,6 +266,9 @@ QString Friend::getStatusMessage()
  */
 QString Friend::getDisplayedName() const
 {
+    if (!data)
+        return QString();
+
     return data->userAlias.isEmpty() ? data->userName : data->userAlias;
 }
 
@@ -226,6 +278,9 @@ QString Friend::getDisplayedName() const
  */
 bool Friend::hasAlias() const
 {
+    if (!data)
+        return false;
+
     return !data->userAlias.isEmpty();
 }
 
@@ -256,6 +311,9 @@ Friend::ID Friend::getFriendId() const
  */
 void Friend::setEventFlag(bool flag)
 {
+    if (!data)
+        return;
+
     data->hasNewEvents = flag;
 }
 
@@ -265,6 +323,9 @@ void Friend::setEventFlag(bool flag)
  */
 bool Friend::getEventFlag() const
 {
+    if (!data)
+        return false;
+
     return data->hasNewEvents;
 }
 
@@ -274,6 +335,9 @@ bool Friend::getEventFlag() const
  */
 void Friend::setStatus(Status s)
 {
+    if (!data)
+        return;
+
     if (data->friendStatus != s)
         data->friendStatus = s;
 }
@@ -284,6 +348,9 @@ void Friend::setStatus(Status s)
  */
 Status Friend::getStatus() const
 {
+    if (!data)
+        return Status::Offline;
+
     return data->friendStatus;
 }
 
@@ -304,6 +371,9 @@ const OfflineMsgEngine& Friend::getOfflineMsgEngine() const
  */
 void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
 {
+    if (!data)
+        return;
+
     data->offlineEngine.registerReceipt(rec, id, msg);
 }
 
@@ -313,6 +383,9 @@ void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
  */
 void Friend::dischargeReceipt(int receipt)
 {
+    if (!data)
+        return;
+
     data->offlineEngine.dischargeReceipt(receipt);
 }
 
@@ -321,6 +394,9 @@ void Friend::dischargeReceipt(int receipt)
  */
 void Friend::clearOfflineReceipts()
 {
+    if (!data)
+        return;
+
     data->offlineEngine.removeAllReceipts();
 }
 
@@ -329,5 +405,8 @@ void Friend::clearOfflineReceipts()
  */
 void Friend::deliverOfflineMsgs()
 {
+    if (!data)
+        return;
+
     data->offlineEngine.deliverOfflineMsgs();
 }
