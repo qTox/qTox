@@ -79,7 +79,7 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onFileSendFailed(quint32 FriendId, const QString &fname);
+    void onFileSendFailed(quint32 friendId, const QString& fname);
     void onFriendStatusChanged(quint32 friendId, Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
     void onFriendNameChanged(const QString& name);

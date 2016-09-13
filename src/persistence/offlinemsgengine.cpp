@@ -18,13 +18,15 @@
 */
 
 #include "offlinemsgengine.h"
-#include "src/friend.h"
-#include "src/persistence/settings.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
+
 #include <QMutexLocker>
 #include <QTimer>
+
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
 
 /**
  * @var static const int OfflineMsgEngine::offlineTimeout
@@ -38,9 +40,9 @@
 const int OfflineMsgEngine::offlineTimeout = 20000;
 QMutex OfflineMsgEngine::globalMutex;
 
-OfflineMsgEngine::OfflineMsgEngine(Friend *frnd) :
+OfflineMsgEngine::OfflineMsgEngine(Friend::ID friendId) :
     mutex(QMutex::Recursive),
-    f(frnd)
+    friendId(friendId)
 {
 }
 
@@ -84,7 +86,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     if (!Settings::getInstance().getFauxOfflineMessaging())
         return;
 
-    if (f->getStatus() == Status::Offline)
+    if (Friend::get(friendId).getStatus() == Status::Offline)
         return;
 
     if (undeliveredMsgs.size() == 0)
@@ -107,9 +109,9 @@ void OfflineMsgEngine::deliverOfflineMsgs()
         QString messageText = val.msg->toString();
         int rec;
         if (val.msg->isAction())
-            rec = Core::getInstance()->sendAction(f->getFriendId(), messageText);
+            rec = Core::getInstance()->sendAction(friendId, messageText);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendId(), messageText);
+            rec = Core::getInstance()->sendMessage(friendId, messageText);
 
         registerReceipt(rec, key, val.msg);
     }

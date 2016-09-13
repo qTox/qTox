@@ -32,7 +32,7 @@
 #include "src/video/videosurface.h"
 #include "src/widget/tool/movablewidget.h"
 
-NetCamView::NetCamView(int friendId, QWidget* parent)
+NetCamView::NetCamView(Friend::ID friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
     , friendId{friendId}
@@ -80,9 +80,9 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
         selfVideoSurface->setAvatar(pixmap);
     });
 
-    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
+    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](Friend::ID friendId, const QPixmap& pixmap)
     {
-        if (this->friendId == FriendId)
+        if (this->friendId == friendId)
             videoSurface->setAvatar(pixmap);
     });
 
