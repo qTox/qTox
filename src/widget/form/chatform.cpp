@@ -308,7 +308,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     Widget::getInstance()->updateFriendActivity(f);
 }
 
-void ChatForm::onAvInvite(uint32_t friendId, bool video)
+void ChatForm::onAvInvite(Friend::ID friendId, bool video)
 {
     if (friendId != f->getFriendId())
         return;
@@ -345,9 +345,9 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
     }
 }
 
-void ChatForm::onAvStart(uint32_t FriendId, bool video)
+void ChatForm::onAvStart(Friend::ID friendId, bool video)
 {
-    if (FriendId != f->getFriendId())
+    if (friendId != f->getFriendId())
         return;
 
     if (video)
@@ -359,9 +359,9 @@ void ChatForm::onAvStart(uint32_t FriendId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvEnd(uint32_t FriendId)
+void ChatForm::onAvEnd(Friend::ID friendId)
 {
-    if (FriendId != f->getFriendId())
+    if (friendId != f->getFriendId())
         return;
 
     delete callConfirm;
@@ -523,15 +523,15 @@ void ChatForm::onVolMuteToggle()
     updateMuteVolButton();
 }
 
-void ChatForm::onFileSendFailed(uint32_t FriendId, const QString &fname)
+void ChatForm::onFileSendFailed(Friend::ID friendId, const QString &fname)
 {
-    if (FriendId != f->getFriendId())
+    if (friendId != f->getFriendId())
         return;
 
     addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR, QDateTime::currentDateTime());
 }
 
-void ChatForm::onFriendStatusChanged(quint32 friendId, Status status)
+void ChatForm::onFriendStatusChanged(Friend::ID friendId, Status status)
 {
     Q_UNUSED(friendId);
 
@@ -571,7 +571,7 @@ void ChatForm::onFriendStatusChanged(quint32 friendId, Status status)
     }
 }
 
-void ChatForm::onFriendTypingChanged(quint32 friendId, bool isTyping)
+void ChatForm::onFriendTypingChanged(Friend::ID friendId, bool isTyping)
 {
     if (friendId == f->getFriendId())
         setFriendTyping(isTyping);
@@ -583,7 +583,7 @@ void ChatForm::onFriendNameChanged(const QString& name)
         setName(name);
 }
 
-void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
+void ChatForm::onFriendMessageReceived(Friend::ID friendId, const QString& message,
                                        bool isAction)
 {
     if (friendId != f->getFriendId())
@@ -599,15 +599,15 @@ void ChatForm::onStatusMessage(const QString& message)
         setStatusMessage(message);
 }
 
-void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
+void ChatForm::onReceiptReceived(Friend::ID friendId, int receipt)
 {
     if (friendId == f->getFriendId())
         f->dischargeReceipt(receipt);
 }
 
-void ChatForm::onAvatarChange(uint32_t FriendId, const QPixmap &pic)
+void ChatForm::onAvatarChange(Friend::ID friendId, const QPixmap &pic)
 {
-    if (FriendId != f->getFriendId())
+    if (sender() != f)
         return;
 
     avatar->setPixmap(pic);
@@ -674,9 +674,9 @@ void ChatForm::dropEvent(QDropEvent *ev)
     }
 }
 
-void ChatForm::onAvatarRemoved(uint32_t FriendId)
+void ChatForm::onAvatarRemoved(Friend::ID friendId)
 {
-    if (FriendId != f->getFriendId())
+    if (friendId != f->getFriendId())
         return;
 
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));

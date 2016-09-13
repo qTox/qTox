@@ -294,7 +294,7 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
     if (!frnd)
         return;
 
-    int friendId = frnd->getFriendId();
+    Friend::ID friendId = frnd->getFriendId();
     int groupId = group->getGroupId();
     Core::getInstance()->groupInviteFriend(friendId, groupId);
 }

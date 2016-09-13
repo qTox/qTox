@@ -54,8 +54,8 @@
  * When you click should open the chat with friend. Widget has a context menu.
  */
 
-FriendWidget::FriendWidget(int FriendId, QString id)
-    : friendId(FriendId)
+FriendWidget::FriendWidget(Friend::ID friendId, QString id)
+    : friendId(friendId)
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {
@@ -401,18 +401,18 @@ void FriendWidget::resetEventFlags()
     f->setEventFlag(false);
 }
 
-void FriendWidget::onAvatarChange(int FriendId, const QPixmap& pic)
+void FriendWidget::onAvatarChange(Friend::ID friendId, const QPixmap& pic)
 {
-    if (FriendId != friendId)
+    if (this->friendId != friendId)
         return;
 
     isDefaultAvatar = false;
     avatar->setPixmap(pic);
 }
 
-void FriendWidget::onAvatarRemoved(int FriendId)
+void FriendWidget::onAvatarRemoved(Friend::ID friendId)
 {
-    if (FriendId != friendId)
+    if (this->friendId != friendId)
         return;
 
     isDefaultAvatar = true;

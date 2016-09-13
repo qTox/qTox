@@ -343,8 +343,8 @@ void FriendListWidget::moveFriends(QLayout *layout)
         }
         else if (friendWidget)
         {
-            int friendId = friendWidget->friendId;
-            Friend *contact = Friend::get(friendId);
+            Friend::ID friendId = friendWidget->friendId;
+            Friend* contact = Friend::get(friendId);
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
 

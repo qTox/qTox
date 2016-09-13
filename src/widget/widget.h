@@ -103,7 +103,7 @@ public:
     void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
-    bool newFriendMessageAlert(int friendId, bool sound=true);
+    bool newFriendMessageAlert(uint32_t friendId, bool sound = true);
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
@@ -120,7 +120,7 @@ public:
 
     void reloadTheme();
     static QString getStatusIconPath(Status status);
-    static inline QIcon prepareIcon(QString path, int w=0, int h=0);
+    static inline QIcon prepareIcon(QString path, int w = 0, int h = 0);
     static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
@@ -149,29 +149,29 @@ public slots:
     void onSelfAvatarLoaded(const QPixmap &pic);
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
-    void addFriend(int friendId, const QString& userId);
+    void addFriend(uint32_t friendId, const QString& userId);
     void addFriendFailed(const QString& userId, const QString& errorInfo = QString());
-    void onFriendshipChanged(int friendId);
-    void onFriendStatusChanged(int friendId, Status status);
-    void onFriendStatusMessageChanged(int friendId, const QString& message);
-    void onFriendUsernameChanged(int friendId, const QString& username);
+    void onFriendshipChanged(uint32_t friendId);
+    void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onFriendStatusMessageChanged(uint32_t friendId, const QString& message);
+    void onFriendUsernameChanged(uint32_t friendId, const QString& username);
     void onFriendAliasChanged(uint32_t friendId, QString alias);
-    void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
+    void onFriendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
+    void onFriendDialogShown(Friend* f);
     void updateFriendActivity(Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onEmptyGroupCreated(int groupId);
-    void onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite);
-    void onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
+    void onGroupInviteReceived(uint32_t friendId, uint8_t type, QByteArray invite);
+    void onGroupInviteAccepted(uint32_t friendId, uint8_t type, QByteArray invite);
     void onGroupMessageReceived(int groupnumber, int peernumber, const QString& message, bool isAction);
     void onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t change);
     void onGroupTitleChanged(int groupnumber, const QString& author, const QString& title);
     void onGroupPeerAudioPlaying(int groupnumber, int peernumber);
     void onGroupSendResult(int groupId, const QString& message, int result);
+    void onGroupDialogShown(Group* g);
     void nextContact();
     void previousContact();
-    void onFriendDialogShown(Friend *f);
-    void onGroupDialogShown(Group *g);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -192,8 +192,8 @@ private slots:
     void showProfile();
     void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
-    void removeFriend(int friendId);
-    void copyFriendIdToClipboard(int friendId);
+    void removeFriend(uint32_t friendId);
+    void copyFriendIdToClipboard(uint32_t friendId);
     void removeGroup(int groupId);
     void setStatusOnline();
     void setStatusAway();
