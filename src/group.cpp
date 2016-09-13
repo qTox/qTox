@@ -32,7 +32,7 @@
 class Group::Private
 {
 public:
-    Private(int groupId, const QString& name, bool isAvGroupchat)
+    Private(Group::ID groupId, const QString& name, bool isAvGroupchat)
         : groupId(groupId)
         , nPeers(0)
         , avGroupchat(isAvGroupchat)
@@ -66,7 +66,7 @@ public:
     bool avGroupchat;
 };
 
-QHash<uint32_t, Group::Private*> Group::groupList;
+QHash<Group::ID, Group::Private*> Group::groupList;
 
 /**
  * @brief Group constructor.
@@ -76,7 +76,7 @@ QHash<uint32_t, Group::Private*> Group::groupList;
  *
  * Add new group in the group list.
  */
-Group::Group(int groupId, const QString& name, bool isAvGroupchat)
+Group::Group(Group::ID groupId, const QString& name, bool isAvGroupchat)
 {
     auto checker = groupList.find(groupId);
     if (checker != groupList.end())
@@ -115,7 +115,7 @@ Group::~Group()
  * @param groupId The lookup ID.
  * @return The group if found; nullptr otherwise.
  */
-Group* Group::get(int groupId)
+Group* Group::get(Group::ID groupId)
 {
     auto g_it = groupList.find(groupId);
     if (g_it == groupList.end())
