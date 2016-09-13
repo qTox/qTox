@@ -50,11 +50,11 @@ public:
                            Qt::WindowFlags f = Qt::WindowFlags());
     ~ContentDialog();
 
-    FriendWidget* addFriend(int friendId, QString id);
+    FriendWidget* addFriend(uint32_t friendId, QString id);
     GroupWidget* addGroup(int groupId, const QString& name);
-    void removeFriend(int friendId);
+    void removeFriend(uint32_t friendId);
     void removeGroup(int groupId);
-    bool hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget);
+    bool hasFriendWidget(uint32_t friendId, GenericChatroomWidget* chatroomWidget);
     bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
@@ -64,14 +64,14 @@ public:
     void onVideoHide();
 
     static ContentDialog* current();
-    static bool friendWidgetExists(int friendId, bool focus);
+    static bool friendWidgetExists(uint32_t friendId, bool focus);
     static bool groupWidgetExists(int groupId, bool focus);
-    static void updateFriendStatus(int friendId);
-    static void updateFriendStatusMessage(int friendId, const QString &message);
+    static void updateFriendStatus(uint32_t friendId);
+    static void updateFriendStatusMessage(uint32_t friendId, const QString &message);
     static void updateGroupStatus(int groupId);
-    static bool isFriendWidgetActive(int friendId);
+    static bool isFriendWidgetActive(uint32_t friendId);
     static bool isGroupWidgetActive(int groupId);
-    static ContentDialog* getFriendDialog(int friendId);
+    static ContentDialog* getFriendDialog(uint32_t friendId);
     static ContentDialog* getGroupDialog(int groupId);
 
 signals:

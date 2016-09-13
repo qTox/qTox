@@ -44,12 +44,12 @@ public:
     explicit GroupInviteForm(QWidget* parent = nullptr);
     ~GroupInviteForm();
 
-    void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
+    void addGroupInvite(uint32_t friendId, uint8_t type, QByteArray invite);
     bool isShown() const;
 
 signals:
     void groupCreate(uint8_t type);
-    void groupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite);
+    void groupInviteAccepted(uint32_t friendId, uint8_t type, QByteArray invite);
     void groupInvitesSeen();
 
 protected:
@@ -69,7 +69,7 @@ private:
 private:
     struct GroupInvite
     {
-        int32_t friendId;
+        uint32_t friendId;
         uint8_t type;
         QByteArray invite;
         QDateTime time;

@@ -20,6 +20,7 @@
 #include "groupinviteform.h"
 
 #include <tox/tox.h>
+
 #include <QDebug>
 #include <QSignalMapper>
 #include <QPushButton>
@@ -28,7 +29,9 @@
 #include <QDateTime>
 #include <QLabel>
 #include <QWindow>
+
 #include "ui_mainwindow.h"
+#include "src/friend.h"
 #include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
@@ -95,7 +98,7 @@ bool GroupInviteForm::isShown() const
     return false;
 }
 
-void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
+void GroupInviteForm::addGroupInvite(Friend::ID friendId, uint8_t type, QByteArray invite)
 {
     QWidget* groupWidget = new QWidget(this);
     QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);
