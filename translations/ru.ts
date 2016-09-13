@@ -126,7 +126,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>contributors</source>
-        <translation>контрибьюторов</translation>
+        <translation>разработчиков</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -296,7 +296,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation>Несуществующий Tox ID</translation>
+        <translation>Такого Tox ID не существует</translation>
     </message>
 </context>
 <context>
@@ -323,11 +323,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>Вернуть стандартные настройки</translation>
+        <translation>Сброс настроек</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Все настройки будут сброшены на настройки по умолчанию. Вы уверены?</translation>
+        <translation>Все настройки будут сброшены в исходное состояние. Вы уверены?</translation>
     </message>
     <message>
         <source>Yes</source>
