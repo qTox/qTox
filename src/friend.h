@@ -28,18 +28,18 @@
 #include "src/persistence/offlinemsgengine.h"
 
 class FriendWidget;
-class OfflineMsgEngine;
 
 class Friend : public QObject
 {
     Q_OBJECT
 public:
-    static Friend* get(int friendId);
+    typedef uint32_t ID;
+    static Friend* get(ID friendId);
     static Friend* get(const ToxId& userId);
     static QList<Friend*> getAll();
 
 public:
-    Friend(int friendId, const ToxId& userId);
+    Friend(ID friendId, const ToxId& userId);
     ~Friend();
     void loadHistory();
 
@@ -54,8 +54,8 @@ public:
     void setEventFlag(bool f);
     bool getEventFlag() const;
 
-    const ToxId &getToxId() const;
-    uint32_t getFriendId() const;
+    const ToxId& getToxId() const;
+    ID getFriendId() const;
 
     void setStatus(Status s);
     Status getStatus() const;
@@ -70,16 +70,16 @@ public:
 signals:
     // TODO: move signals to DB object
     void nameChanged(const QString& name);
-    void aliasChanged(uint32_t friendId, QString alias);
-    void statusChanged(uint32_t friendId, Status status);
+    void aliasChanged(ID friendId, QString alias);
+    void statusChanged(ID friendId, Status status);
     void newStatusMessage(const QString& message);
     void loadChatHistory();
 
 private:
     class Private;
     Private* data;
-    static QHash<uint32_t, Friend::Private*> friendList;
-    static QHash<QString, uint32_t> tox2id;
+    static QHash<ID, Friend::Private*> friendList;
+    static QHash<QString, ID> tox2id;
 
 private:
     Friend(Private* data);

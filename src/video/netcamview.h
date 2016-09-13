@@ -34,7 +34,7 @@ class NetCamView : public GenericNetCamView
     Q_OBJECT
 
 public:
-    NetCamView(int friendId, QWidget *parent=0);
+    NetCamView(uint32_t friendId, QWidget *parent=0);
     ~NetCamView();
 
     virtual void show(VideoSource* source, const QString& title);
@@ -54,7 +54,7 @@ private:
 
     VideoSurface* selfVideoSurface;
     MovableWidget* selfFrame;
-    int friendId;
+    uint32_t friendId;
     bool e;
     QVector<QMetaObject::Connection> connections;
 };

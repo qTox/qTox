@@ -147,7 +147,7 @@ ContentDialog::~ContentDialog()
     Translator::unregister(this);
 }
 
-FriendWidget* ContentDialog::addFriend(int friendId, QString id)
+FriendWidget* ContentDialog::addFriend(Friend::ID friendId, QString id)
 {
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
@@ -188,7 +188,7 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     return groupWidget;
 }
 
-void ContentDialog::removeFriend(int friendId)
+void ContentDialog::removeFriend(Friend::ID friendId)
 {
     auto iter = friendList.find(friendId);
 
@@ -253,7 +253,7 @@ void ContentDialog::removeGroup(int groupId)
     }
 }
 
-bool ContentDialog::hasFriendWidget(int friendId, GenericChatroomWidget* chatroomWidget)
+bool ContentDialog::hasFriendWidget(Friend::ID friendId, GenericChatroomWidget* chatroomWidget)
 {
     return hasWidget(friendId, chatroomWidget, friendList);
 }
@@ -367,7 +367,7 @@ ContentDialog* ContentDialog::current()
     return currentDialog;
 }
 
-bool ContentDialog::friendWidgetExists(int friendId, bool focus)
+bool ContentDialog::friendWidgetExists(Friend::ID friendId, bool focus)
 {
     return existsWidget(friendId, focus, friendList);
 }
@@ -377,7 +377,7 @@ bool ContentDialog::groupWidgetExists(int groupId, bool focus)
     return existsWidget(groupId, focus, groupList);
 }
 
-void ContentDialog::updateFriendStatus(int friendId)
+void ContentDialog::updateFriendStatus(Friend::ID friendId)
 {
     updateStatus(friendId, friendList);
     ContentDialog* contentDialog = getFriendDialog(friendId);
@@ -388,7 +388,7 @@ void ContentDialog::updateFriendStatus(int friendId)
     }
 }
 
-void ContentDialog::updateFriendStatusMessage(int friendId, const QString &message)
+void ContentDialog::updateFriendStatusMessage(Friend::ID friendId, const QString &message)
 {
     auto iter = friendList.find(friendId);
 
@@ -403,7 +403,7 @@ void ContentDialog::updateGroupStatus(int groupId)
     updateStatus(groupId, groupList);
 }
 
-bool ContentDialog::isFriendWidgetActive(int friendId)
+bool ContentDialog::isFriendWidgetActive(Friend::ID friendId)
 {
     return isWidgetActive(friendId, friendList);
 }
@@ -413,7 +413,7 @@ bool ContentDialog::isGroupWidgetActive(int groupId)
     return isWidgetActive(groupId, groupList);
 }
 
-ContentDialog* ContentDialog::getFriendDialog(int friendId)
+ContentDialog* ContentDialog::getFriendDialog(Friend::ID friendId)
 {
     return getDialog(friendId, friendList);
 }
@@ -519,7 +519,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendId();
+        Friend::ID friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
 
         // If friend is already in a dialog then you can't drop friend where it already is.
@@ -554,7 +554,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
         if (!contact)
             return;
 
-        int friendId = contact->getFriendId();
+        Friend::ID friendId = contact->getFriendId();
         auto iter = friendList.find(friendId);
         if (iter != friendList.end())
             std::get<0>(iter.value())->removeFriend(friendId);
@@ -643,7 +643,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool 
     updateTitle(widget);
 }
 
-void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
+void ContentDialog::updateFriendWidget(Friend::ID friendId, QString alias)
 {
     Friend *f = Friend::get(friendId);
     GenericChatroomWidget *widget = std::get<1>(friendList.find(friendId).value());

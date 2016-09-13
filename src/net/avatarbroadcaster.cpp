@@ -19,9 +19,12 @@
 
 
 #include "avatarbroadcaster.h"
-#include "src/core/core.h"
+
 #include <QObject>
 #include <QDebug>
+
+#include "src/core/core.h"
+#include "src/friend.h"
 
 /**
  * @class AvatarBroadcaster
@@ -32,10 +35,10 @@
  */
 
 QByteArray AvatarBroadcaster::avatarData;
-QMap<uint32_t, bool> AvatarBroadcaster::friendsSentTo;
+QMap<Friend::ID, bool> AvatarBroadcaster::friendsSentTo;
 
 static QMetaObject::Connection autoBroadcastConn;
-static auto autoBroadcast = [](uint32_t friendId, Status)
+static auto autoBroadcast = [](Friend::ID friendId, Status)
 {
     AvatarBroadcaster::sendAvatarTo(friendId);
 };
@@ -52,8 +55,8 @@ void AvatarBroadcaster::setAvatar(QByteArray data)
     avatarData = data;
     friendsSentTo.clear();
 
-    QVector<uint32_t> friends = Core::getInstance()->getFriendList();
-    for (uint32_t friendId : friends)
+    QVector<Friend::ID> friends = Core::getInstance()->getFriendList();
+    for (Friend::ID friendId : friends)
         sendAvatarTo(friendId);
 }
 
@@ -61,7 +64,7 @@ void AvatarBroadcaster::setAvatar(QByteArray data)
  * @brief Send our current avatar to this friend, if not already sent
  * @param friendId Id of friend to send avatar.
  */
-void AvatarBroadcaster::sendAvatarTo(uint32_t friendId)
+void AvatarBroadcaster::sendAvatarTo(Friend::ID friendId)
 {
     if (friendsSentTo.contains(friendId) && friendsSentTo[friendId])
         return;

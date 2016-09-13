@@ -885,7 +885,7 @@ void Widget::reloadHistory()
     }
 }
 
-void Widget::addFriend(int friendId, const QString &userId)
+void Widget::addFriend(Friend::ID friendId, const QString &userId)
 {
     Settings& s = Settings::getInstance();
     ToxId userToxId = ToxId(userId);
@@ -943,13 +943,13 @@ void Widget::addFriendFailed(const QString&, const QString& errorInfo)
     QMessageBox::critical(0,"Error",info);
 }
 
-void Widget::onFriendshipChanged(int friendId)
+void Widget::onFriendshipChanged(Friend::ID friendId)
 {
     Friend* who = Friend::get(friendId);
     updateFriendActivity(who);
 }
 
-void Widget::onFriendStatusChanged(int friendId, Status status)
+void Widget::onFriendStatusChanged(Friend::ID friendId, Status status)
 {
     Friend* f = Friend::get(friendId);
     if (!f)
@@ -974,7 +974,7 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
     ContentDialog::updateFriendStatus(friendId);
 }
 
-void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
+void Widget::onFriendStatusMessageChanged(Friend::ID friendId, const QString& message)
 {
     Friend* f = Friend::get(friendId);
     if (!f)
@@ -990,7 +990,7 @@ void Widget::onFriendStatusMessageChanged(int friendId, const QString& message)
     ContentDialog::updateFriendStatusMessage(friendId, message);
 }
 
-void Widget::onFriendUsernameChanged(int friendId, const QString& username)
+void Widget::onFriendUsernameChanged(Friend::ID friendId, const QString& username)
 {
     Friend* f = Friend::get(friendId);
     if (!f)
@@ -1002,7 +1002,7 @@ void Widget::onFriendUsernameChanged(int friendId, const QString& username)
     f->setName(str);
 }
 
-void Widget::onFriendAliasChanged(uint32_t friendId, QString alias)
+void Widget::onFriendAliasChanged(Friend::ID friendId, QString alias)
 {
     Friend *f = Friend::get(friendId);
     FriendWidget *friendWidget = friendWidgets[friendId];
@@ -1059,7 +1059,7 @@ void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool newWind
     showContentWidget(chatWidget, chatWidget->windowTitle());
 }
 
-void Widget::onFriendMessageReceived(int friendId, const QString& message, bool isAction)
+void Widget::onFriendMessageReceived(Friend::ID friendId, const QString& message, bool isAction)
 {
     Friend* f = Friend::get(friendId);
     if (!f)
@@ -1123,7 +1123,7 @@ void Widget::addGroupDialog(Group *group, ContentDialog *dialog)
     emit widget->chatroomWidgetClicked(widget, false);
 }
 
-bool Widget::newFriendMessageAlert(int friendId, bool sound)
+bool Widget::newFriendMessageAlert(Friend::ID friendId, bool sound)
 {
     bool hasActive;
     QWidget* currentWindow;
@@ -1352,7 +1352,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     contactListWidget->reDraw();
 }
 
-void Widget::removeFriend(int friendId)
+void Widget::removeFriend(Friend::ID friendId)
 {
     removeFriend(Friend::get(friendId), false);
 }
@@ -1379,9 +1379,9 @@ void Widget::onDialogShown(GenericChatroomWidget *widget)
     resetIcon();
 }
 
-void Widget::onFriendDialogShown(Friend *f)
+void Widget::onFriendDialogShown(Friend* f)
 {
-    int friendId = f->getFriendId();
+    Friend::ID friendId = f->getFriendId();
     onDialogShown(friendWidgets[friendId]);
 }
 
@@ -1470,7 +1470,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     return contentLayoutDialog;
 }
 
-void Widget::copyFriendIdToClipboard(int friendId)
+void Widget::copyFriendIdToClipboard(Friend::ID friendId)
 {
     Friend* f = Friend::get(friendId);
     if (f != nullptr)
@@ -1480,7 +1480,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     }
 }
 
-void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
+void Widget::onGroupInviteReceived(Friend::ID friendId, uint8_t type, QByteArray invite)
 {
     updateFriendActivity(Friend::get(friendId));
 
@@ -1511,7 +1511,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
     }
 }
 
-void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite)
+void Widget::onGroupInviteAccepted(Friend::ID friendId, uint8_t type, QByteArray invite)
 {
     int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
     if (groupId < 0)
@@ -1842,7 +1842,7 @@ void Widget::setStatusBusy()
     Nexus::getCore()->setStatus(Status::Busy);
 }
 
-void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int messageId)
+void Widget::onMessageSendResult(Friend::ID friendId, const QString& message, int messageId)
 {
     Q_UNUSED(message)
     Q_UNUSED(messageId)
@@ -1977,7 +1977,7 @@ void Widget::reloadTheme()
 
     for (Friend* f : Friend::getAll())
     {
-        int friendId = f->getFriendId();
+        Friend::ID friendId = f->getFriendId();
         friendWidgets[friendId]->reloadTheme();
     }
 
