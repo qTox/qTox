@@ -11,7 +11,7 @@ class RemoveFriendDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RemoveFriendDialog(QWidget *parent, const Friend* f);
+    explicit RemoveFriendDialog(QWidget *parent, Friend f);
 
     inline bool removeHistory()
     {
