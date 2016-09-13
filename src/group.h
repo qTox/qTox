@@ -36,11 +36,12 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
-    static Group* get(int groupId);
+    typedef uint32_t ID;
+    static Group* get(ID groupId);
     static QList<Group *> getAll();
 
 public:
-    Group(int groupId, const QString &name, bool isAvGroupchat);
+    Group(ID groupId, const QString &name, bool isAvGroupchat);
     ~Group();
 
     bool isAvGroupchat() const;
@@ -72,7 +73,7 @@ signals:
 private:
     class Private;
     Private* data;
-    static QHash<uint32_t, Group::Private*> groupList;
+    static QHash<ID, Group::Private*> groupList;
 
 private:
     explicit Group(Private* data);

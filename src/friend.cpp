@@ -28,7 +28,7 @@
 class Friend::Private
 {
 public:
-    Private(uint32_t friendId, const ToxId &userId)
+    Private(Friend::ID friendId, const ToxId& userId)
         : userName(Core::getInstance()->getPeerName(userId))
         , userAlias(Settings::getInstance().getFriendAlias(userId))
         , userId(userId)
@@ -45,14 +45,14 @@ public:
     QString userAlias;
     QString statusMessage;
     ToxId userId;
-    uint32_t friendId;
+    Friend::ID friendId;
     bool hasNewEvents;
     Status friendStatus;
     OfflineMsgEngine offlineEngine;
 };
 
-QHash<uint32_t, Friend::Private*> Friend::friendList;
-QHash<QString, uint32_t> Friend::tox2id;
+QHash<Friend::ID, Friend::Private*> Friend::friendList;
+QHash<QString, Friend::ID> Friend::tox2id;
 
 /**
  * @brief Friend constructor.
@@ -61,7 +61,7 @@ QHash<QString, uint32_t> Friend::tox2id;
  *
  * Add new friend in the friend list.
  */
-Friend::Friend(int friendId, const ToxId& userId)
+Friend::Friend(Friend::ID friendId, const ToxId& userId)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
@@ -101,7 +101,7 @@ Friend::~Friend()
  * @param friendId The lookup ID.
  * @return The friend if found; nullptr otherwise.
  */
-Friend* Friend::get(int friendId)
+Friend* Friend::get(Friend::ID friendId)
 {
     auto f_it = friendList.find(friendId);
     if (f_it == friendList.end())
@@ -116,7 +116,7 @@ Friend* Friend::get(int friendId)
  * @param userId The lookup Tox Id.
  * @return the friend if found; nullptr otherwise.
  */
-Friend* Friend::get(const ToxId &userId)
+Friend* Friend::get(const ToxId& userId)
 {
     auto id = tox2id.find(userId.publicKey);
     if (id == tox2id.end())
@@ -231,7 +231,7 @@ bool Friend::hasAlias() const
  * @brief Get ToxId
  * @return ToxId of current friend.
  */
-const ToxId &Friend::getToxId() const
+const ToxId& Friend::getToxId() const
 {
     return data->userId;
 }
