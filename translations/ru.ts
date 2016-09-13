@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>AVForm</name>
     <message>
@@ -122,11 +122,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный список %1 доступен на Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>разработчиков</translation>
     </message>
 </context>
 <context>
@@ -296,7 +296,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Такого Tox ID не существует</translation>
+        <translation>Такого Tox ID не существует</translation>
     </message>
 </context>
 <context>
@@ -307,35 +307,35 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если вы %1 в том что вы делаете, пожалуйста %2 изменяйте настройки на этой закладке. Изменения внесенные в этой закладке могут привести к проблемам работоспособности программы и потере личных данных (истории сообщений).</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>неуверены</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>не изменяйте</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>ВАЖНОЕ ЗАМЕЧАНИЕ</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Сброс настроек</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Все настройки будут сброшены в исходное состояние. Вы уверены?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Да</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -365,7 +365,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Портативный</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -1608,7 +1608,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Конфиденциальность</translation>
+        <translation>Конфиденциальность</translation>
     </message>
 </context>
 <context>
@@ -2107,74 +2107,74 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 не является корректным Toxme адресом.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Отсутствует</translation>
+        <translation>Отсутствует</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Интерфейс</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Чат</translation>
+        <translation>Чат</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Основной шрифт:</translation>
+        <translation>Основной шрифт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Размер: </translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
+        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Формат текстовых сообщений:</translation>
+        <translation>Формат текстовых сообщений:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Выберите формат текстовых сообщений.</translation>
+        <translation>Выберите формат текстовых сообщений.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Обычный текст</translation>
+        <translation>Обычный текст</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Отображать символы форматирования</translation>
+        <translation>Отображать символы форматирования</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Не отображать символы форматирования</translation>
+        <translation>Не отображать символы форматирования</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Новое сообщение</translation>
+        <translation>Новое сообщение</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Открывать окно qTox&apos;s, когда вы получили новое сообщение и ещё ни одного окна открыто не было.</translation>
+        <translation>Открывать окно qTox&apos;s, когда вы получили новое сообщение и ещё ни одного окна открыто не было.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Открыть окно</translation>
+        <translation>Открыть окно</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
@@ -2183,7 +2183,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Активизировать окно</translation>
+        <translation>Активизировать окно</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2192,7 +2192,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Оповещать о новых сообщениях в групповых чатах.</translation>
+        <translation>Оповещать о новых сообщениях в групповых чатах.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
@@ -2243,27 +2243,27 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> пк</translation>
+        <translation> пк</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Тема</translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Стиль:</translation>
+        <translation>Стиль:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Цветовая схема:</translation>
+        <translation>Цветовая схема:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Формат времени:</translation>
+        <translation>Формат времени:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Формат даты:</translation>
+        <translation>Формат даты:</translation>
     </message>
 </context>
 <context>
