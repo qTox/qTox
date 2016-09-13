@@ -259,14 +259,13 @@ void GroupNetCamView::findActivePeer()
 
 void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
-    Friend* f = Friend::get(FriendId);
+    Friend f = Friend::get(FriendId);
 
     for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
     {
-        if (Core::getInstance()->getGroupPeerToxId(group, i) == f->getToxId())
+        if (Core::getInstance()->getGroupPeerToxId(group, i) == f.getToxId())
         {
             auto peerVideo = videoList.find(i);
-
             if (peerVideo != videoList.end())
             {
                 peerVideo.value().video->getVideoSurface()->setAvatar(pixmap);

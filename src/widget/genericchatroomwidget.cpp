@@ -18,12 +18,15 @@
 */
 
 #include "genericchatroomwidget.h"
-#include "src/widget/style.h"
-#include "src/persistence/settings.h"
-#include "maskablepixmapwidget.h"
-#include "src/widget/tool/croppinglabel.h"
+
 #include <QBoxLayout>
 #include <QMouseEvent>
+
+#include "maskablepixmapwidget.h"
+#include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/croppinglabel.h"
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     : GenericChatItemWidget(parent)
@@ -49,6 +52,16 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     reloadTheme();
 
     onCompactLayoutChanged(s.getCompactLayout());
+}
+
+Friend GenericChatroomWidget::getFriend() const
+{
+    return nullptr;
+}
+
+Group* GenericChatroomWidget::getGroup() const
+{
+    return nullptr;
 }
 
 bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
