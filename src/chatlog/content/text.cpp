@@ -152,8 +152,6 @@ void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWid
 {
     if (doc)
     {
-        painter->setClipRect(boundingRect());
-
         // draw selection
         QAbstractTextDocumentLayout::PaintContext ctx;
         QAbstractTextDocumentLayout::Selection sel;
