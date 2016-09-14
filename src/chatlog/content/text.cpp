@@ -293,7 +293,7 @@ void Text::freeResources()
 QSizeF Text::idealSize()
 {
     if (doc)
-        return QSizeF(qMin(doc->idealWidth(), width), doc->size().height());
+        return doc->size();
 
     return size;
 }
