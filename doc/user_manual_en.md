@@ -31,7 +31,30 @@ is directly aimed at you, and not sent to everyone, that is:
 * status change (`Online`/`Away`/`Busy`/`Offline`)
 * status message change
 
-### Contact details
+### Contact menu
+
+Can be accessed by right-clicking on a contact or [circle](#circles). When
+right-clicking on a contact appears menu has the following options:
+
+* __Open chat in a new window:__ opens a new window for the chosen contact.
+* __Invite to group:__ offers an option to create a new groupchat and
+  automatically invite the contact to it, or to invite friend to an already
+  existing groupchat.
+* __Move to circle:__ offers an option to move contact to a new
+  [circle](#circles), or to an existing one.
+* __Set alias:__ set alias that will be displayed instead of contact's name.
+* __Auto accept files from this friend:__ option to automatically save files
+  from given contact in a chosen directory.
+* __Remove friend:__ option to remove contact. Confirmation is needed to remove
+  the friend.
+* __Show details:__ show [details](#contact-details) of a friend.
+
+#### Circles
+
+Circles allow to group contacts together and give the circle a name. Contact
+can be either in one of circles, or not in any circle.
+
+#### Contact details
 
 Contact details can be accessed by right-clicking on a contact and picking the
 `Show details` option.
