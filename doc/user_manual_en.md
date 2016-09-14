@@ -76,9 +76,9 @@ following settings:
 
 ### Public Information
 
-* _Name:_ This is your nickname which everyone who is on your contact list can
+* __Name:__ This is your nickname which everyone who is on your contact list can
   see.
-* _Status:_ You can post a status message here, which again everyone on your
+* __Status:__ You can post a status message here, which again everyone on your
   contact list can see.
 
 #### Avatar
@@ -100,103 +100,105 @@ image" button copies into your clipboard.
 qTox allows you to use multiple Tox IDs with different profiles, each of which
 can have different nicknames, status messages and friends.
 
-+ _Current profile:_ Shows the filename which stores your information.
-+ _Current profile location:_ Shows the path to the profile file.
-+ _Rename:_ Allows you to rename your profile. Your nickname and profile name
++ __Current profile:__ Shows the filename which stores your information.
++ __Current profile location:__ Shows the path to the profile file.
++ __Rename:__ Allows you to rename your profile. Your nickname and profile name
   don't have to be the same.
-+ _Delete:_ Deletes your profile and the corresponding chat history.
-+ _Export:_ Allows you to export your profile in a format compatible with other
-  Tox clients. You can also manually back up your \*.tox files.
-+ _Logout:_ Close your current profile and show the login window.
-+ _Remove password:_ Removes the existing password for your profile. If the
++ __Delete:__ Deletes your profile and the corresponding chat history.
++ __Export:__ Allows you to export your profile in a format compatible with
+  other Tox clients. You can also manually back up your \*.tox files.
++ __Logout:__ Close your current profile and show the login window.
++ __Remove password:__ Removes the existing password for your profile. If the
   profile already has no password, you will be notified.
-+ _Change password:_ Allows you to either change an existing password, or create
-  a new password if your profile does not have one.
++ __Change password:__ Allows you to either change an existing password, or
+  create a new password if your profile does not have one.
 
 ## Settings
 ### General
 
-* _Language:_ Changes which language the qTox interface uses.
-* _Autostart:_ If set, qTox will start when you login on your computer. qTox
+* __Language:__ Changes which language the qTox interface uses.
+* __Autostart:__ If set, qTox will start when you login on your computer. qTox
   will also automatically open the profile which was active when you ticked the
-  checkbox, but this only works if your profile isn't encrypted (has no password
-  set).
-* _Light icon:_ If set, qTox will use a different icon, which is easier to see
-  on black backgrounds.
-* _Show system tray icon:_ If set, qTox will show its icon in your system tray.
-    * _Start in tray:_ On start, qTox will only show its tray icon and no
+  checkbox, but this only works if your profile isn't encrypted (has no
+  password set).
+* __Light icon:__ If set, qTox will use a different icon, which is easier to
+  see on black backgrounds.
+* __Show system tray icon:__ If set, qTox will show its icon in your system
+  tray.
+    * __Start in tray:__ On start, qTox will only show its tray icon and no
       window.
-    * _Minimize to tray:_ The minimize button on the top right, will minimize
+    * __Minimize to tray:__ The minimize button on the top right, will minimize
       qTox to its tray icon. There won't be a taskbar item.
-    * __Close to tray__: The close button on the top right will minimize qTox to
-      its tray icon. There won't be a taskbar item.
-* _Play sound:_ If checked, qTox will play a sound when you get a new message.
-    * __Play sound while Busy__: If checked, qTox will play a sound even when
-      your status is set to `Busy`.
-* _Show contacts' status changes:_ If set, qTox will show contact status changes
-  in your chat window.
-* _Faux offline messaging:_ If enabled, qTox will attempt to send messages when
-  a currently offline contact comes online again.
-* _Auto away after (0 to disable):_ After the specified amount of time, qTox
+    * __Close to tray__: The close button on the top right will minimize
+      qTox to its tray icon. There won't be a taskbar item.
+* __Play sound:__ If checked, qTox will play a sound when you get a new
+  message.
+    * __Play sound while Busy__: If checked, qTox will play a sound even
+      when your status is set to `Busy`.
+* __Show contacts' status changes:__ If set, qTox will show contact status
+  changes in your chat window.
+* __Faux offline messaging:__ If enabled, qTox will attempt to send messages
+  when a currently offline contact comes online again.
+* __Auto away after (0 to disable):__ After the specified amount of time, qTox
   will set your status to "Away". A setting of 0 will never change your status.
-* _Default directory to save files:_ Allows you to specify the default
+* __Default directory to save files:__ Allows you to specify the default
   destination for incoming file transfers.
-* _Autoaccept files:_ If set, qTox will automatically accept file transfers and
-  put them in the directory specified above.
+* __Autoaccept files:__ If set, qTox will automatically accept file transfers
+  and put them in the directory specified above.
 
 ### User Interface
 #### Chat
 
-* _Base font:_ You can set a non-default font and its size for the chat. New
+* __Base font:__ You can set a non-default font and its size for the chat. New
   font setting will be used for new messages, and all messages after qTox
   restart.
-* _Text Style format:_ see [Message styling](#message-styling) section.
+* __Text Style format:__ see [Message styling](#message-styling) section.
 
 #### New message
 
-* _Open window:_ If checked, the qTox window will be opened when you receive a
+* __Open window:__ If checked, the qTox window will be opened when you receive a
   new message. If you use the multiple windows mode, see
   [Multi Window Mode](#multi-window-mode) for details.
-    * _Focus window:_ If checked, the qTox window will additionally be focused
+    * __Focus window:__ If checked, the qTox window will additionally be focused
       when you receive a new message.
 
 #### Contact list
 
-* _Group chats always notify:_ If set, qTox will notify you on every new message
-  in a groupchat.
-* _Place groupchats at top of friend list:_ If checked, your groupchats will be
-  at the top of the contacts list instead of being sorted with your other
+* __Group chats always notify:__ If set, qTox will notify you on every new
+  message in a groupchat.
+* __Place groupchats at top of friend list:__ If checked, your groupchats will
+  be at the top of the contacts list instead of being sorted with your other
   contacts.
-* _Compact contact list:_ If set, qTox will use a contact list layout which
+* __Compact contact list:__ If set, qTox will use a contact list layout which
   takes up less screen space.
-* _Multiple windows mode:_ If enabled, the qTox user interface will be split
-  into multiple independent windows. For details see
-  [Multi Window Mode](#multi-window-mode).
-    * _Open each chat in an individual window:_ If checked, a new window will be
-      opened for every chat you open. If you manually grouped the chat into
+* __Multiple windows mode:__ If enabled, the qTox user interface will be split
+  into multiple independent windows. For details see [Multi Window
+  Mode](#multi-window-mode).
+    * __Open each chat in an individual window:__ If checked, a new window will
+      be opened for every chat you open. If you manually grouped the chat into
       another window, the window which hosts the chat will be focused.
 
 #### Emoticons
 
-* _Use emoticons:_ If enabled, qTox will replace smileys ( e.g. `:-)` )  with
+* __Use emoticons:__ If enabled, qTox will replace smileys ( e.g. `:-)` )  with
   corresponding graphical emoticons.
-* _Smiley Pack:_ Allows you to choose from different sets of shipped emoticon
+* __Smiley Pack:__ Allows you to choose from different sets of shipped emoticon
   styles.
-* _Emoticon size:_ Allows you to change the size of the emoticons.
+* __Emoticon size:__ Allows you to change the size of the emoticons.
 
 #### Theme
 
-* _Style:_ Changes the appearance of qTox.
-* _Theme color:_ Changes the colors qTox uses.
-* _Timestamp format:_ Change the format in which qTox displays message
+* __Style:__ Changes the appearance of qTox.
+* __Theme color:__ Changes the colors qTox uses.
+* __Timestamp format:__ Change the format in which qTox displays message
   timestamps.
-* _Date format:_ Same as above for the date.
+* __Date format:__ Same as above for the date.
 
 ### Privacy
 
-* _Send typing notifications:_ If enabled, notify your chat partner when you are
-  currently typing.
-* _Keep chat history:_ If enabled, qTox will save your sent and received
+* __Send typing notifications:__ If enabled, notify your chat partner when you
+  are currently typing.
+* __Keep chat history:__ If enabled, qTox will save your sent and received
   messages. Encrypt your profile, if you want to encrypt the chat history.
 
 #### NoSpam
@@ -210,40 +212,41 @@ found in your [User Profile](#user-profile).
 ### Audio/Video
 #### Audio Settings
 
-* _Playback device:_ Select the device qTox should use for all audio output
+* __Playback device:__ Select the device qTox should use for all audio output
   (notifications, calls, etc).
-* _Volume:_ Here you can adjust the playback volume to your needs.
-* _Capture device:_ Select the device qTox should use for audio input in calls.
-* _Gain:_ Set the input volume of your microphone with this slider. When you
+* __Volume:__ Here you can adjust the playback volume to your needs.
+* __Capture device:__ Select the device qTox should use for audio input in
+  calls.
+* __Gain:__ Set the input volume of your microphone with this slider. When you
   are talking normally, the displayed volume indicator should be in the green
   range.
 
 #### Video Settings
 
-* _Video device:_ Select the video device qTox should use for video calls.
+* __Video device:__ Select the video device qTox should use for video calls.
   "None" will show a dummy picture to your chat partner. "Desktop" will stream
   the content of your screen.
-* _Resolution:_ You can select from the available resolutions and frame rates
+* __Resolution:__ You can select from the available resolutions and frame rates
   here. Higher resolutions provide more quality, but if the bandwidth of your
   connection is low, the video may get choppy.
 
 If you set up everything correctly, you should see the preview of your video
 device in the box below.
 
-* _Rescan devices:_ Use this button to search for newly attached devices, e.g.
+* __Rescan devices:__ Use this button to search for newly attached devices, e.g.
   you plugged in a webcam.
 
 ### Advanced
 #### Portable
 
-* _Make Tox portable:_ If enabled, qTox will load/save user data from the
+* __Make Tox portable:__ If enabled, qTox will load/save user data from the
   working directory, instead of ` ~/.config/tox/ `.
 
 #### Connection Settings
 
-* _Enable IPv6 (recommended):_ If enabled, qTox will use IPv4 and IPv6
+* __Enable IPv6 (recommended):__ If enabled, qTox will use IPv4 and IPv6
   protocols, whichever is available. If disabled, qTox will only use IPv4.
-* _Enable UDP (recommended):_ If enabled, qTox will use TCP and UDP protocols.
+* __Enable UDP (recommended):__ If enabled, qTox will use TCP and UDP protocols.
   If disabled, qTox will only use TCP, which lowers the amount of open
   connections and slightly decreases required bandwidth, but is also slower and
   puts more load on other network participants.
@@ -251,24 +254,24 @@ device in the box below.
 Most users will want both options enabled, but if qTox negatively impacts your
 router or connection, you can try to disable them.
 
-* _Proxy type:_ If you want to use a proxy, set the type here. "None" disables
+* __Proxy type:__ If you want to use a proxy, set the type here. "None" disables
   the proxy.
-* _Address:_ If you use a proxy, enter the address here.
-* _Port:_ If you use a proxy, enter the port here.
-* _Reconnect:_ Reconnect to the Tox network, e.g. if you changed the proxy
+* __Address:__ If you use a proxy, enter the address here.
+* __Port:__ If you use a proxy, enter the port here.
+* __Reconnect:__ Reconnect to the Tox network, e.g. if you changed the proxy
   settings.
 
 ---
 
-* _Reset to default settings:_ Use this button to revert any changes you made to
+* __Reset to default settings:__ Use this button to revert any changes you made to
   the qTox settings.
 
 ### About
-* _Version:_ Shows the version of qTox and the libraries it depends on. Please
+* __Version:__ Shows the version of qTox and the libraries it depends on. Please
   append this information to every bug report.
-* _License:_ Shows the license under which the code of qTox is available.
-* _Authors:_ Lists the people who developed this shiny piece of software.
-* _Known Issues:_ Links to our list of known issues and improvements.
+* __License:__ Shows the license under which the code of qTox is available.
+* __Authors:__ Lists the people who developed this shiny piece of software.
+* __Known Issues:__ Links to our list of known issues and improvements.
 
 ## Groupchats
 
