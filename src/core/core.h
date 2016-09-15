@@ -143,10 +143,12 @@ signals:
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);
     void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
+    void friendAliasChanged(uint32_t friendId, const QString& alias);
     void friendAvatarRemoved(uint32_t friendId);
 
     void friendRemoved(uint32_t friendId);
 
+    void friendLoadChatHistory(uint32_t friendId);
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
