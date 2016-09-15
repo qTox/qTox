@@ -151,10 +151,10 @@ ChatForm::ChatForm(Friend* chatFriend)
         emit aliasChanged(newName);
     });
 
-    connect(f, &Friend::nameChanged, this, &ChatForm::onFriendNameChanged);
-    connect(f, &Friend::statusChanged, this, &ChatForm::onFriendStatusChanged);
-    connect(f, &Friend::newStatusMessage, this, &ChatForm::onStatusMessage);
-    connect(f, &Friend::loadChatHistory, this, &ChatForm::onLoadChatHistory);
+    connect(core, &Core::friendUsernameChanged, this, &ChatForm::onFriendNameChanged);
+    connect(core, &Core::friendStatusChanged, this, &ChatForm::onFriendStatusChanged);
+    connect(core, &Core::friendStatusMessageChanged, this, &ChatForm::onStatusMessage);
+    connect(core, &Core::friendLoadChatHistory, this, &ChatForm::onLoadChatHistory);
 
     setAcceptDrops(true);
     retranslateUi();
@@ -533,9 +533,7 @@ void ChatForm::onFileSendFailed(Friend::ID friendId, const QString &fname)
 
 void ChatForm::onFriendStatusChanged(Friend::ID friendId, Status status)
 {
-    Q_UNUSED(friendId);
-
-    if(sender() != f)
+    if(friendId != f->getFriendId())
         return;
 
     if (status == Status::Offline)
@@ -577,9 +575,9 @@ void ChatForm::onFriendTypingChanged(Friend::ID friendId, bool isTyping)
         setFriendTyping(isTyping);
 }
 
-void ChatForm::onFriendNameChanged(const QString& name)
+void ChatForm::onFriendNameChanged(quint32 friendId, const QString& name)
 {
-    if (sender() == f)
+    if (friendId == f->getFriendId())
         setName(name);
 }
 
@@ -593,9 +591,9 @@ void ChatForm::onFriendMessageReceived(Friend::ID friendId, const QString& messa
     addMessage(f->getToxId(), message, isAction, timestamp, true);
 }
 
-void ChatForm::onStatusMessage(const QString& message)
+void ChatForm::onStatusMessage(quint32 friendId, const QString& message)
 {
-    if (sender() == f)
+    if (friendId == f->getFriendId())
         setStatusMessage(message);
 }
 
@@ -607,7 +605,7 @@ void ChatForm::onReceiptReceived(Friend::ID friendId, int receipt)
 
 void ChatForm::onAvatarChange(Friend::ID friendId, const QPixmap &pic)
 {
-    if (sender() != f)
+    if (friendId != f->getFriendId())
         return;
 
     avatar->setPixmap(pic);
@@ -693,9 +691,9 @@ void ChatForm::onDeliverOfflineMessages()
     f->deliverOfflineMsgs();
 }
 
-void ChatForm::onLoadChatHistory()
+void ChatForm::onLoadChatHistory(uint32_t friendId)
 {
-    if (sender() == f)
+    if (friendId == f->getFriendId())
         loadHistory(QDateTime::currentDateTime().addDays(-7), true);
 }
 

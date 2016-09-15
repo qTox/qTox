@@ -85,27 +85,19 @@ Friend::Friend(Friend::ID friendId, const ToxId& userId)
 }
 
 /**
+ * @brief Friend destructor.
+ */
+Friend::~Friend()
+{
+}
+
+/**
  * @brief Friend constructor, without adding friend to db.
  * @param data Private friend data.
  */
 Friend::Friend(Friend::Private *data)
     : data(data)
 {
-}
-
-/**
- * @brief Friend destructor.
- *
- * Removes a friend from the friend list.
- */
-Friend::~Friend()
-{
-    auto f_it = friendList.find(data->friendId);
-    if (f_it == friendList.end())
-        return;
-
-    delete *f_it;
-    friendList.erase(f_it);
 }
 
 /**
@@ -160,7 +152,10 @@ QList<Friend*> Friend::getAll()
 void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
-        emit loadChatHistory();
+    {
+        Core* core = Core::getInstance();
+        emit core->friendLoadChatHistory(data->friendId);
+    }
 }
 
 /**
@@ -173,10 +168,7 @@ void Friend::setName(QString name)
         name = data->userId.publicKey;
 
     if (data->userName != name)
-    {
         data->userName = name;
-        emit nameChanged(name);
-    }
 }
 
 /**
@@ -190,7 +182,8 @@ void Friend::setAlias(QString alias)
     if (data->userAlias != alias)
     {
         data->userAlias = alias;
-        emit aliasChanged(data->friendId, alias);
+        Core* core = Core::getInstance();
+        emit core->friendAliasChanged(data->friendId, alias);
     }
 }
 
@@ -204,10 +197,7 @@ void Friend::setAlias(QString alias)
 void Friend::setStatusMessage(QString message)
 {
     if (data->statusMessage != message)
-    {
         data->statusMessage = message;
-        emit newStatusMessage(message);
-    }
 }
 
 /**
@@ -285,10 +275,7 @@ bool Friend::getEventFlag() const
 void Friend::setStatus(Status s)
 {
     if (data->friendStatus != s)
-    {
         data->friendStatus = s;
-        emit statusChanged(data->friendId, data->friendStatus);
-    }
 }
 
 /**
