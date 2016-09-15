@@ -252,7 +252,7 @@ void Settings::loadGlobal()
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
-        dateFormat = s.value("dateFormat", "dddd, MMMM d, yyyy").toString();
+        dateFormat = s.value("dateFormat", "yyyy-MM-dd").toString();
         minimizeOnClose = s.value("minimizeOnClose", false).toBool();
         minimizeToTray = s.value("minimizeToTray", false).toBool();
         lightTrayIcon = s.value("lightTrayIcon", false).toBool();
