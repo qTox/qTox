@@ -907,14 +907,7 @@ void Widget::addFriend(Friend::ID friendId, const QString &userId)
 
     contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(newfriend->getToxId()));
 
-    connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
-    connect(newfriend, &Friend::aliasChanged, this, []()
-    {
-        for (Group *g : GroupList::getAllGroups())
-        {
-            g->regeneratePeerList();
-        }
-    });
+    connect(Core::getInstance(), &Core::friendAliasChanged, this, &Widget::onFriendAliasChanged);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);

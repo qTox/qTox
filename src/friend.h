@@ -29,9 +29,8 @@
 
 class FriendWidget;
 
-class Friend : public QObject
+class Friend
 {
-    Q_OBJECT
 public:
     typedef uint32_t ID;
     static Friend* get(ID friendId);
@@ -66,14 +65,6 @@ public:
 
     void clearOfflineReceipts();
     void deliverOfflineMsgs();
-
-signals:
-    // TODO: move signals to DB object
-    void nameChanged(const QString& name);
-    void aliasChanged(ID friendId, QString alias);
-    void statusChanged(ID friendId, Status status);
-    void newStatusMessage(const QString& message);
-    void loadChatHistory();
 
 private:
     class Private;
