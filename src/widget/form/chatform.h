@@ -59,17 +59,16 @@ signals:
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onAvInvite(uint32_t FriendId, bool video);
-    void onAvStart(uint32_t FriendId, bool video);
-    void onAvEnd(uint32_t FriendId);
-    void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
-    void onAvatarRemoved(uint32_t FriendId);
+    void onAvInvite(uint32_t friendId, bool video);
+    void onAvStart(uint32_t friendId, bool video);
+    void onAvEnd(uint32_t friendId);
+    void onAvatarChange(uint32_t friendId, const QPixmap& pic);
+    void onAvatarRemoved(uint32_t friendId);
 
 private slots:
     void clearChatArea(bool notInForm) override final;
 
     void onDeliverOfflineMessages();
-    void onLoadChatHistory();
     void onSendTriggered();
     void onTextEditChanged();
     void onAttachClicked();
@@ -79,13 +78,14 @@ private slots:
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onFileSendFailed(quint32 friendId, const QString& fname);
+    void onLoadChatHistory(quint32 friendId);
+    void onFileSendFailed(quint32 friendId, const QString &fname);
     void onFriendStatusChanged(quint32 friendId, Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
-    void onFriendNameChanged(const QString& name);
+    void onFriendNameChanged(quint32 friendId, const QString& name);
     void onFriendMessageReceived(quint32 friendId, const QString& message,
                                  bool isAction);
-    void onStatusMessage(const QString& message);
+    void onStatusMessage(quint32 friendId, const QString& message);
     void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();

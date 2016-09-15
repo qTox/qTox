@@ -152,11 +152,11 @@ FriendWidget* ContentDialog::addFriend(Friend::ID friendId, QString id)
     FriendWidget* friendWidget = new FriendWidget(friendId, id);
     friendLayout->addFriendWidget(friendWidget, Friend::get(friendId)->getStatus());
 
-    Friend* frnd = friendWidget->getFriend();
-    connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
+    Core* core = Core::getInstance();
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::onChatroomWidgetClicked);
-    connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
-    connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
+    connect(core, &Core::friendAliasChanged, this, &ContentDialog::updateFriendWidget);
+    connect(core, &Core::friendAvatarChanged, friendWidget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, friendWidget, &FriendWidget::onAvatarRemoved);
 
     ContentDialog* lastDialog = getFriendDialog(friendId);
 
@@ -196,7 +196,6 @@ void ContentDialog::removeFriend(Friend::ID friendId)
         return;
 
     FriendWidget* chatroomWidget = static_cast<FriendWidget*>(std::get<1>(iter.value()));
-    disconnect(chatroomWidget->getFriend(), &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
 
     // Need to find replacement to show here instead.
     if (activeChatroomWidget == chatroomWidget)
@@ -209,13 +208,9 @@ void ContentDialog::removeFriend(Friend::ID friendId)
     friendList.remove(friendId);
 
     if (chatroomWidgetCount() == 0)
-    {
         deleteLater();
-    }
     else
-    {
         update();
-    }
 }
 
 void ContentDialog::removeGroup(int groupId)
