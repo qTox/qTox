@@ -496,67 +496,8 @@ becoming a hacker
 <a name="windows" />
 ## Windows
 
-### Qt
-
-Download the Qt online installer for Windows from
-[qt.io](https://www.qt.io/download-open-source/). While installation you have
-to assemble your Qt toolchain. Take the most recent version of Qt compiled with
-MinGW. Although the installer provides its own bundled MinGW compiler toolchain
-its recommend installing it separately because Qt is missing MSYS which is
-needed to compile and install OpenAL. Thus you can - if needed - deselect the
-tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
-decided to choose another location, replace corresponding parts.
-
-### MinGW
-
-Download the MinGW installer for Windows from
-[sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
-sure to install MSYS (a set of Unix tools for Windows). The following steps
-assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
-version of MinGW, corresponds to the version of the QT component!
-
-### Wget
-
-Download the Wget installer for Windows from
-http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
-steps assume that Wget is installed at `C:\Program Files\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
-
-### UnZip
-
-Download the UnZip installer for Windows from
-http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
-steps assume that UnZip is installed at `C:\Program Files\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
-
-### Setting up Path
-
-Add MinGW/MSYS/CMake binaries to the system path to make them globally
-accessible. Open `Control Panel` -> `System and Security` -> `System` ->
-`Advanced system settings` -> `Environment Variables...` (or run `sysdm.cpl`
-select tab `Advanced system settings` -> button `Environment Variables`). In the
-second box search for the `PATH` variable and press `Edit...`. The input box
-`Variable value:` should already contain some directories. Each directory is
-separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin;C:\Program Files (x86)\GnuWin32\bin`.
-The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically.
-
-### Cloning the Repository
-
-Clone the repository (https://github.com/qTox/qTox.git) with your preferred  Git
-client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task
-(you may need to add the path to the `git.exe` system variable Path). The
-following steps assume that you cloned the repository at `C:\qTox`. If you
-decided to choose another location, replace corresponding parts.
-
-### Getting dependencies
-Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
-dependencies compile them and put to appropriate directories.
-
+### VirtualBox
+Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) for Windows.  This will allow you to virtualize a Linux environment.  It is recommended to download and install Ubuntu Desktop edition.  To do this download an [Ubuntu ISO](http://www.ubuntu.com/download/desktop).  Then open up VirtualBox and select "New". Select "Linux" for "Type" and "Ubuntu (64-bit)" for "Version".  After this configure the amount of RAM you'd like to allocate, and how much memory for the "virtual" hard disk.  "Start" your virtual machine and target your Ubuntu iso.  You will then need to go through the installation process.  After installing Ubuntu your virtual machine will reboot, proceed to then follow the instructions for [Ubuntu](https://github.com/qTox/qTox/blob/master/INSTALL.md#ubuntu-1504-1).
 
 
 [OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
