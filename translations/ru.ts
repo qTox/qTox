@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>AVForm</name>
     <message>
@@ -130,19 +130,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы используете qTox версии %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Хэш коммита: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия Qt: %1</translation>
     </message>
 </context>
 <context>
@@ -1802,7 +1802,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к текущему профилю: %1</translation>
     </message>
 </context>
 <context>
@@ -2026,7 +2026,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить %1 из вашего списка контактов?</translation>
     </message>
 </context>
 <context>
