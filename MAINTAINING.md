@@ -121,6 +121,73 @@ Note:
   duplicate of, tag with higher `duplicates:#`
 
 
+# Translations from Weblate
+
+Weblate provides an easy way for people to translate qTox. On one hand, it does
+require a bit more attention & regular checking whether there are new
+translations, on the other, it lessened problems that were happening with
+"manual" way of providing translations.
+
+To get translations into qTox:
+
+1. Add Weblate: `git remote add weblate git://git.weblate.org/qtox.git`
+2. Fetch newest: `git fetch weblate`
+3. Check what has been changed compared to master: `git log --no-merges
+   master..weblate/master`
+4. Cherry-pick from the oldest commit.
+   - check if there are multiple commits from the same author for the same
+     translation. If there are, cherry-pick them accordingly:
+     
+     ```
+     git cherry-pick <commit1> <commit2>
+     ```
+     
+5. If there were multiple commits, squash them into a single one, and rename
+   remaining to
+   
+   ```
+   feat(l10n): update $LANGUAGE from Weblate
+   ```
+   
+6. Update translation file that was changed to get rid of Weblate's formatting
+   using [`./tools/update-translation-files.sh`], e.g.:
+   
+   ```
+   ./tools/update-translation-files.sh en
+   ```
+   
+7. Commit those changes using `--amend`:
+   
+   ```
+   git commit --amend translations/en.ts
+   ```
+   
+8. For translations that haven't yet been cherry-picked repeat steps 4-7.
+9. Once done with cherry-picking, update all translation files, so that
+   Weblate would get newest strings that changed in qTox:
+   
+   ```
+   ./tools/update-translation-files.sh ALL
+   ```
+   
+10. Once PR with translation gets merged, `Reset` Weblate to current `master`,
+    since without reset there would be a git conflict that would prevent
+    Weblate from getting new strings.
+    
+**It's a good idea to lock translations on Weblate while they're in merge
+process, so that no translation effort would be lost when resetting Weblate.**
+
+## Vim macro to rename commits
+
+Renames a single commit. To add it in Vim under register `t`:
+
+```
+:let @t='ggd4wifeat(l10n): update ^[A<80>kb translation from Weblate^[jVjd'
+```
+
+To invoke when editing a commit message: `@t`
+
+
 # How to become a maintainer?
 
 Contribute, review & test pull requests, be active, oh and don't forget to
@@ -137,3 +204,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`CONTRIBUTING.md`]: /CONTRIBUTING.md
 [`merge-pr.sh`]: /merge-pr.sh
 [`test-pr.sh`]: /test-pr.sh
+[`./tools/update-translation-files.sh`]: /tools/update-translation-files.sh
