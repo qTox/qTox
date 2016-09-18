@@ -543,7 +543,9 @@ second box search for the `PATH` variable and press `Edit...`. The input box
 separated with a semicolon. Extend the input box by adding
 `;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically.
+by installer automatically. Make sure that paths containing alternative `sh`, 
+`bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
+`PATH` or build may fail.
 
 ### Cloning the Repository
 
