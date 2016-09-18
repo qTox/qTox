@@ -21,9 +21,22 @@
 # Needed, since Weblate cannot do it automatically.
 
 # Usage:
-#   ./tools/$script_name
+#   ./tools/$script_name [ALL|lang]
 
-for translation in translations/*.ts
-do
-    lupdate -pro qtox.pro -no-obsolete -locations none -ts $translation
-done
+set -eu -o pipefail
+
+readonly COMMIT_MSG="chore(i18n): update translation files for weblate"
+readonly LUPDATE_CMD="lupdate -pro qtox.pro -no-obsolete -locations none -ts"
+
+if [[ "$@" = "ALL" ]]
+then
+    for translation in translations/*.ts
+    do
+        $LUPDATE_CMD "$translation"
+    done
+
+    git add translations/*.ts
+    git commit --author -m "$COMMIT_MSG"
+else
+    $LUPDATE_CMD "translations/$@.ts"
+fi
