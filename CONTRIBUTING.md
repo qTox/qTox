@@ -268,6 +268,22 @@ git config --global commit.gpgsign true
 
 Use `C++11`.
 
+## Includes
+
+On the project level, include files starting with the root directory of the
+repository, e.g. `src/core/core.h` from `src/widget/widget.cpp`:
+
+```C++
+#include "src/core/core.h"
+```
+
+If including files from operating systems libraries or frameworks use `<>`
+tags, e.g. `cstdio` from `src/main.cpp`:
+
+```C++
+#include <cstdio>
+```
+
 ## Coding style
 
 ```C++
@@ -310,7 +326,7 @@ QObject notToMentionThatWeUseCamelCase;
 
 E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
-## Documentaion
+## Documentation
 
 If you added a new function, also add a doxygen comment before the
 implementation. If you changed an old function, make sure the doxygen comment
