@@ -268,6 +268,30 @@ git config --global commit.gpgsign true
 
 Use `C++11`.
 
+## Includes
+
+On the project level, include files starting with the root directory of the
+repository, e.g. `src/core/core.h` from `src/widget/widget.cpp`:
+
+```C++
+#include "src/core/core.h"
+```
+
+Do **not** use `<>` tags to include files on the project level, e.g.
+`src/core/core.h` from `src/widget/widget.cpp`:
+
+```C++
+#include <core.h>    // WRONG
+```
+
+If including files from the operating system, external libraries, frameworks
+or Qt classes use `<>` tags, e.g. `cstdio` and `QString` from `src/main.cpp`:
+
+```C++
+#include <cstdio>
+#include <QString>
+```
+
 ## Coding style
 
 ```C++
@@ -310,7 +334,6 @@ QObject notToMentionThatWeUseCamelCase;
 
 E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
-
 ## Dynamic casts / RTTI
 
 qTox is compiled without support for RTTI, as such PRs making use of
@@ -324,7 +347,7 @@ behaves very much like C++'s `dynamic_cast()` but without the RTTI overhead.
 
 Enforced with `-fno-rtti`.
 
-## Documentaion
+## Documentation
 
 If you added a new function, also add a doxygen comment before the
 implementation. If you changed an old function, make sure the doxygen comment
