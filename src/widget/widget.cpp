@@ -2274,7 +2274,7 @@ void Widget::retranslateUi()
     actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
     if (!Settings::getInstance().getSeparateWindow())
-        setWindowTitle(fromDialogType(AddDialog));
+        setWindowTitle(fromDialogType(SettingDialog));
 
     friendRequestsUpdate();
     groupInvitesUpdate();
