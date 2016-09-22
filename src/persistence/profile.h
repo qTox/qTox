@@ -25,6 +25,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QPixmap>
+#include <QObject>
 #include <tox/toxencryptsave.h>
 #include <memory>
 #include "src/persistence/history.h"
@@ -32,8 +33,10 @@
 class Core;
 class QThread;
 
-class Profile
+class Profile : public QObject
 {
+    Q_OBJECT
+
 public:
     static Profile* loadProfile(QString name, const QString& password = QString());
     static Profile* createProfile(QString name, QString password);
@@ -78,6 +81,8 @@ public:
     static bool isEncrypted(QString name);
     static QString getDbPath(const QString& profileName);
 
+private slots:
+    void loadDatabase(const QString& id);
 private:
     Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);
