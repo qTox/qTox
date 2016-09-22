@@ -239,8 +239,14 @@ macx {
     LIBPATH += /usr/local/lib
 }
 
-RESOURCES += res.qrc \
-    smileys/smileys.qrc
+RESOURCES += res.qrc
+
+!contains(SMILEYS, NO) {
+    RESOURCES += smileys/emojione.qrc
+    !contains(SMILEYS, MIN) {
+        RESOURCES += smileys/smileys.qrc
+    }
+}
 
 HEADERS  += \
     src/friend.h \
