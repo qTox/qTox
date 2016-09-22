@@ -18,106 +18,115 @@
 */
 
 #include "offlinemsgengine.h"
-#include "src/friend.h"
-#include "src/persistence/settings.h"
+
 #include "src/core/core.h"
+#include "src/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+
 #include <QMutexLocker>
-#include <QTimer>
 
-/**
- * @var static const int OfflineMsgEngine::offlineTimeout
- * @brief timeout after which faux offline messages get to be re-sent.
- * Originally was 2s, but since that was causing lots of duplicated
- * messages on receiving end, make qTox be more lazy about re-sending
- * should be 20s.
- */
-
-
-const int OfflineMsgEngine::offlineTimeout = 20000;
 QMutex OfflineMsgEngine::globalMutex;
 
-OfflineMsgEngine::OfflineMsgEngine(Friend *frnd) :
-    mutex(QMutex::Recursive),
-    f(frnd)
+class OfflineMsgEngine::Private
+{
+public:
+    Private(Friend* frnd)
+        : f(frnd)
+    {
+    }
+
+    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
+                         const QDateTime& ts = QDateTime::currentDateTime())
+    {
+        receipts[receipt] = messageID;
+        undeliveredMsgs[messageID] = {msg, ts, receipt};
+    }
+
+public:
+    Friend* f;
+    QHash<int, int64_t> receipts;
+    QMap<int64_t, MsgPtr> undeliveredMsgs;
+    mutable QMutex mutex;
+};
+
+OfflineMsgEngine::OfflineMsgEngine(Friend *frnd)
+    : d(new Private(frnd))
 {
 }
 
 OfflineMsgEngine::~OfflineMsgEngine()
 {
+    delete d;
 }
 
 void OfflineMsgEngine::dischargeReceipt(int receipt)
 {
-    QMutexLocker ml(&mutex);
+    QMutexLocker ml(&d->mutex);
 
     Profile* profile = Nexus::getProfile();
-    auto it = receipts.find(receipt);
-    if (it != receipts.end())
+    auto it = d->receipts.find(receipt);
+    if (it != d->receipts.end())
     {
-        int mID = it.value();
-        auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end())
+        int64_t mID = it.value();
+        auto msgIt = d->undeliveredMsgs.find(mID);
+        if (msgIt != d->undeliveredMsgs.end())
         {
             if (profile->isHistoryEnabled())
                 profile->getHistory()->markAsSent(mID);
             msgIt.value().msg->markAsSent(QDateTime::currentDateTime());
-            undeliveredMsgs.erase(msgIt);
+            d->undeliveredMsgs.erase(msgIt);
         }
-        receipts.erase(it);
+        d->receipts.erase(it);
     }
 }
 
-void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg, const QDateTime &timestamp)
+void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID,
+                                       ChatMessage::Ptr msg,
+                                       const QDateTime &ts)
 {
-    QMutexLocker ml(&mutex);
-
-    receipts[receipt] = messageID;
-    undeliveredMsgs[messageID] = {msg, timestamp, receipt};
+    QMutexLocker ml(&d->mutex);
+    d->registerReceipt(receipt, messageID, msg, ts);
 }
 
 void OfflineMsgEngine::deliverOfflineMsgs()
 {
-    QMutexLocker ml(&mutex);
+    QMutexLocker ml(&d->mutex);
 
     if (!Settings::getInstance().getFauxOfflineMessaging())
         return;
 
-    if (f->getStatus() == Status::Offline)
+    if (d->f->getStatus() == Status::Offline)
         return;
 
-    if (undeliveredMsgs.size() == 0)
+    if (d->undeliveredMsgs.size() == 0)
         return;
 
-    QMap<int64_t, MsgPtr> msgs = undeliveredMsgs;
-    removeAllReceipts();
-    undeliveredMsgs.clear();
+    QMap<int64_t, MsgPtr> msgs = d->undeliveredMsgs;
+    d->receipts.clear();
+    d->undeliveredMsgs.clear();
 
     for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)
     {
         auto val = iter.value();
         auto key = iter.key();
 
-        if (val.timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout)
-        {
-            registerReceipt(val.receipt, key, val.msg, val.timestamp);
-            continue;
-        }
         QString messageText = val.msg->toString();
         int rec;
         if (val.msg->isAction())
-            rec = Core::getInstance()->sendAction(f->getFriendID(), messageText);
+            rec = Core::getInstance()->sendAction(d->f->getFriendID(),
+                                                  messageText);
         else
-            rec = Core::getInstance()->sendMessage(f->getFriendID(), messageText);
+            rec = Core::getInstance()->sendMessage(d->f->getFriendID(),
+                                                   messageText);
 
-        registerReceipt(rec, key, val.msg);
+        d->registerReceipt(rec, key, val.msg);
     }
 }
 
 void OfflineMsgEngine::removeAllReceipts()
 {
-    QMutexLocker ml(&mutex);
-
-    receipts.clear();
+    QMutexLocker ml(&d->mutex);
+    d->receipts.clear();
 }

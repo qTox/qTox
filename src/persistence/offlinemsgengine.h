@@ -39,25 +39,22 @@ public:
     static QMutex globalMutex;
 
     void dischargeReceipt(int receipt);
-    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg, const QDateTime &timestamp = QDateTime::currentDateTime());
+    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
+                         const QDateTime &ts = QDateTime::currentDateTime());
 
 public slots:
     void deliverOfflineMsgs();
     void removeAllReceipts();
 
 private:
+    class Private;
+    Private* d;
+
     struct MsgPtr {
         ChatMessage::Ptr msg;
         QDateTime timestamp;
         int receipt;
     };
-
-    QMutex mutex;
-    Friend* f;
-    QHash<int, int64_t> receipts;
-    QMap<int64_t, MsgPtr> undeliveredMsgs;
-
-    static const int offlineTimeout;
 };
 
 #endif // OFFLINEMSGENGINE_H
