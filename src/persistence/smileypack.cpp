@@ -68,8 +68,10 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
-QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &paths)
+QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &pathsParam)
 {
+    QStringList paths = QStringList(pathsParam);
+    paths << Settings::getInstance().getSettingsDirPath() + QDir::separator() + "emoji";
     QList<QPair<QString, QString> > smileyPacks;
 
     for (QString path : paths)

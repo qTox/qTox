@@ -37,7 +37,7 @@ class SmileyPack : public QObject
     Q_OBJECT
 public:
     static SmileyPack& getInstance();
-    static QList<QPair<QString, QString> > listSmileyPacks(const QStringList& paths = SMILEYPACK_SEARCH_PATHS);
+    static QList<QPair<QString, QString> > listSmileyPacks(const QStringList& pathsParam = SMILEYPACK_SEARCH_PATHS);
     static bool isValid(const QString& filename);
 
     QString smileyfied(QString msg);
