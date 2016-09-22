@@ -56,7 +56,6 @@ QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile)
     : name{name}, password{password}
-    , database(std::make_shared<RawDatabase>(getDbPath(name), password))
     , newProfile{isNewProfile}, isRemoved{false}
 {
     if (!password.isEmpty())
@@ -68,22 +67,10 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile)
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personal settings (Nexus will do
-    // it), so we always load the history, and if it fails we can't change the
-    // setting now, but we keep a nullptr
-    if (database->isOpen())
-    {
-        history.reset(new History(database));
-    }
-    else
-    {
-        qWarning() << "Failed to open history for profile" << name;
-        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-    }
-
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
     core = new Core(coreThread, *this);
+    QObject::connect(core, &Core::idSet, this, &Profile::loadDatabase, Qt::QueuedConnection);
     core->moveToThread(coreThread);
     QObject::connect(coreThread, &QThread::started, core, &Core::start);
 }
@@ -512,6 +499,34 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
     return pic;
 }
 
+void Profile::loadDatabase(const QString& id)
+{
+    if(isRemoved)
+    {
+        qDebug() << "Can't load database of removed profile";
+        return;
+    }
+
+    QByteArray salt = QByteArray::fromHex(ToxId {id}.publicKey.toUtf8());
+    if(salt.size() != TOX_PASS_SALT_LENGTH)
+    {
+        qWarning() << "Couldn't compute salt from public key" << name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+    }
+    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
+    // the history, and if it fails we can't change the setting now, but we keep a nullptr
+    database = std::make_shared<RawDatabase>(getDbPath(name), password, salt);
+    if (database && database->isOpen())
+    {
+        history.reset(new History(database));
+    }
+    else
+    {
+        qWarning() << "Failed to open database for profile" << name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+    }
+}
+
 /**
  * @brief Save an avatar to cache.
  * @param pic Picture to save.
@@ -688,13 +703,21 @@ QVector<QString> Profile::remove()
     }
 
     QString dbPath = getDbPath(name);
-    if (database->isOpen() && !database->remove() && QFile::exists(dbPath))
+    if (database && database->isOpen() && !database->remove() && QFile::exists(dbPath))
     {
         ret.push_back(dbPath);
         qWarning() << "Could not remove file " << dbPath;
     }
-    history.release();
-    database.reset();
+
+    if (history)
+    {
+        history.release();
+    }
+
+    if (database)
+    {
+        database.reset();
+    }
 
     return ret;
 }
