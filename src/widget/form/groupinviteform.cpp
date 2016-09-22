@@ -44,7 +44,11 @@ GroupInviteForm::GroupInviteForm()
     createButton = new QPushButton(this);
     connect(createButton, &QPushButton::released, [this]()
     {
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+        emit groupCreate(TOX_CONFERENCE_TYPE_AV);
+#else
         emit groupCreate(TOX_GROUPCHAT_TYPE_AV);
+#endif
     });
 
     inviteBox = new QGroupBox(this);

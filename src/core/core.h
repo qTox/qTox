@@ -102,7 +102,11 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
+#else
     int createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
+#endif
 
     void removeFriend(uint32_t friendId, bool fake = false);
     void removeGroup(int groupId, bool fake = false);
