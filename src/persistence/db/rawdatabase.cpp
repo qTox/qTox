@@ -91,15 +91,37 @@
  * @param password If empty, the database will be opened unencrypted.
  * Otherwise we will use toxencryptsave to derive a key and encrypt the database.
  */
-RawDatabase::RawDatabase(const QString &path, const QString& password)
-    : workerThread{new QThread}, path{path}, currentHexKey{deriveKey(password)}
+RawDatabase::RawDatabase(const QString& path, const QString& password, const QByteArray& salt)
+    : workerThread{new QThread}
+    , path{path}
+    , currentSalt{salt}     // we need the salt later if a new password should be set
+    , currentHexKey{deriveKey(password, salt)}
 {
     workerThread->setObjectName("qTox Database");
     moveToThread(workerThread.get());
     workerThread->start();
 
-    if (!open(path, currentHexKey))
+    // first try with the new salt
+    if (open(path, currentHexKey))
+    {
         return;
+    }
+
+    // fall back to the old salt
+    currentHexKey = deriveKey(password);
+    if(open(path, currentHexKey))
+    {
+        // still using old salt, upgrade
+        if(setPassword(password))
+        {
+            qDebug() << "Successfully upgraded to dynamic salt";
+        }
+        qWarning() << "Failed to set password with new salt";
+    }
+    else
+    {
+        qDebug() << "Failed to open database with old salt";
+    }
 }
 
 RawDatabase::~RawDatabase()
@@ -313,7 +335,7 @@ bool RawDatabase::setPassword(const QString& password)
 
     if (!password.isEmpty())
     {
-        QString newHexKey = deriveKey(password);
+        QString newHexKey = deriveKey(password, currentSalt);
         if (!currentHexKey.isEmpty())
         {
             if (!execNow("PRAGMA rekey = \"x'"+newHexKey+"'\""))
@@ -445,6 +467,7 @@ bool RawDatabase::remove()
  * @brief Derives a 256bit key from the password and returns it hex-encoded
  * @param password Password to decrypt database
  * @return String representation of key
+ * @deprecated deprecated on 2016-11-06
  */
 QString RawDatabase::deriveKey(const QString &password)
 {
@@ -457,8 +480,37 @@ QString RawDatabase::deriveKey(const QString &password)
 
     static const uint8_t expandConstant[TOX_PASS_SALT_LENGTH+1] = "L'ignorance est le pire des maux";
     TOX_PASS_KEY key;
-    tox_derive_key_with_salt((uint8_t*)passData.data(), passData.size(), expandConstant, &key, nullptr);
-    return QByteArray((char*)key.key, 32).toHex();
+    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()), static_cast<std::size_t>(passData.size()), expandConstant, &key, nullptr);
+    return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
+}
+
+/**
+ * @brief Derives a 256bit key from the password and returns it hex-encoded
+ * @param password Password to decrypt database
+ * @param salt Salt to improve password strength, must be TOX_PASS_SALT_LENGTH bytes
+ * @return String representation of key
+ */
+QString RawDatabase::deriveKey(const QString& password, const QByteArray& salt)
+{
+    if (password.isEmpty())
+    {
+        return {};
+    }
+
+    if (salt.length() != TOX_PASS_SALT_LENGTH)
+    {
+        qWarning() << "Salt length doesn't match toxencryptsave expections";
+        return {};
+    }
+
+    QByteArray passData = password.toUtf8();
+
+    static_assert(TOX_PASS_KEY_LENGTH >= 32, "toxcore must provide 256bit or longer keys");
+
+    TOX_PASS_KEY key;
+    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()), static_cast<std::size_t>(passData.size()),
+                             reinterpret_cast<const uint8_t*>(salt.constData()), &key, nullptr);
+    return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
 }
 
 /**
