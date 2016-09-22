@@ -1026,7 +1026,8 @@ void Widget::onFriendAliasChanged(Friend::ID friendId, QString alias)
         break;
     }
 
-    GroupList::clear();
+    for (Group* group : GroupList::getAllGroups())
+        Group::remove(group);
 }
 
 void Widget::onChatroomWidgetClicked(GenericChatroomWidget *widget, bool newWindow)
@@ -1369,7 +1370,9 @@ void Widget::clearContactsList()
     for (Friend f : friends)
         removeFriend(f, true);
 
-    GroupList::clear();
+    QList<Group*> groups = GroupList::getAllGroups();
+    for (Group* g : groups)
+        removeGroup(g, true);
 }
 
 void Widget::onDialogShown(GenericChatroomWidget *widget)
