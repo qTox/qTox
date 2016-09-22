@@ -33,24 +33,32 @@
 #include <QDomElement>
 #include <QBuffer>
 #include <QStringBuilder>
+#include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+
+#define EMOTICONS_SUB_DIR (QString)"emoticons"
 
 /**
  * @class SmileyPack
  * @brief Maps emoticons to smileys.
  *
- * @var QHash<QString, QString> SmileyPack::filenameTable
+ * @var SmileyPack::filenameTable
  * @brief Matches an emoticon to its corresponding smiley ie. ":)" -> "happy.png"
  *
- * @var QHash<QString, QIcon> SmileyPack::iconCache
+ * @var SmileyPack::iconCache
  * @brief representation of a smiley ie. "happy.png" -> data
  *
- * @var QList<QStringList> SmileyPack::emoticons
+ * @var SmileyPack::emoticons
  * @brief {{ ":)", ":-)" }, {":(", ...}, ... }
  *
- * @var QString SmileyPack::path
+ * @var SmileyPack::path
  * @brief directory containing the cfg and image files
+ *
+ * @var SmileyPack::defaultPaths
+ * @brief Contains all directories where smileys could be found
  */
+
+QStringList SmileyPack::defaultPaths = loadDefaultPaths();
 
 SmileyPack::SmileyPack()
 {
@@ -68,7 +76,41 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
-QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &paths)
+QStringList SmileyPack::loadDefaultPaths()
+{
+    QStringList paths = QStringList{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons"};
+    // qTox should find emoticons next to the binary
+    paths.append('.' + QDir::separator() + EMOTICONS_SUB_DIR);
+
+    // qTox exclusive emoticons
+    for(auto qtoxPath : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
+    {
+        qtoxPath += QDir::separator() + EMOTICONS_SUB_DIR;
+        if(!paths.contains(qtoxPath))
+        {
+            paths << qtoxPath;
+        }
+    }
+
+    // system wide emoticons
+    for(auto genericPath : QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation))
+    {
+        genericPath += QDir::separator() + EMOTICONS_SUB_DIR;
+        if(!paths.contains(genericPath))
+        {
+            paths << genericPath;
+        }
+    }
+
+    return paths;
+}
+
+QList<QPair<QString, QString>> SmileyPack::listSmileyPacks()
+{
+    return listSmileyPacks(defaultPaths);
+}
+
+QList<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
 {
     QList<QPair<QString, QString> > smileyPacks;
 
@@ -90,15 +132,8 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
             {
                 QString packageName = dir.dirName();
                 QString absPath = entries[0].absoluteFilePath();
-                QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(absPath);
-
-                if (relPath.leftRef(2) == "..")
-                {
-                    if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
-                        smileyPacks << QPair<QString, QString>(packageName, absPath);
-                    else if (!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
-                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
-                }
+                if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                    smileyPacks << QPair<QString, QString>(packageName, absPath);
             }
             dir.cdUp();
         }
@@ -107,7 +142,7 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
     return smileyPacks;
 }
 
-bool SmileyPack::isValid(const QString &filename)
+bool SmileyPack::isValid(const QString& filename)
 {
     return QFile(filename).exists();
 }
@@ -217,18 +252,18 @@ QList<QStringList> SmileyPack::getEmoticons() const
     return emoticons;
 }
 
-QString SmileyPack::getAsRichText(const QString &key)
+QString SmileyPack::getAsRichText(const QString& key)
 {
     return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
 }
 
-QIcon SmileyPack::getAsIcon(const QString &key)
+QIcon SmileyPack::getAsIcon(const QString& key)
 {
     QMutexLocker locker(&loadingMutex);
     return getCachedSmiley(key);
 }
 
-void SmileyPack::cacheSmiley(const QString &name)
+void SmileyPack::cacheSmiley(const QString& name)
 {
     QString filename = QDir(path).filePath(name);
 
@@ -237,7 +272,7 @@ void SmileyPack::cacheSmiley(const QString &name)
     iconCache.insert(name, icon);
 }
 
-QIcon SmileyPack::getCachedSmiley(const QString &key)
+QIcon SmileyPack::getCachedSmiley(const QString& key)
 {
     // valid key?
     if (!filenameTable.contains(key))
