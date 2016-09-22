@@ -27,17 +27,14 @@
 #include <QIcon>
 #include <QMutex>
 
-#define SMILEYPACK_SEARCH_PATHS                                                                                             \
-    {                                                                                                                       \
-        ":/smileys", "./smileys", "/usr/share/qtox/smileys", "/usr/share/emoticons", "~/.kde4/share/emoticons", "~/.kde/share/emoticons" \
-    }
-
 class SmileyPack : public QObject
 {
     Q_OBJECT
+
 public:
     static SmileyPack& getInstance();
-    static QList<QPair<QString, QString> > listSmileyPacks(const QStringList& paths = SMILEYPACK_SEARCH_PATHS);
+    static QList<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
+    static QList<QPair<QString, QString>> listSmileyPacks();
     static bool isValid(const QString& filename);
 
     QString smileyfied(QString msg);
@@ -56,11 +53,13 @@ private:
     bool load(const QString& filename);
     void cacheSmiley(const QString& name);
     QIcon getCachedSmiley(const QString& key);
+    static QStringList loadDefaultPaths();
 
     QHash<QString, QString> filenameTable;
     QHash<QString, QIcon> iconCache;
     QList<QStringList> emoticons;
     QString path;
+    static QStringList defaultPaths;
     mutable QMutex loadingMutex;
 };
 
