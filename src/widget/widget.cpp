@@ -1367,7 +1367,9 @@ void Widget::clearContactsList()
     for (Friend f : friends)
         removeFriend(f, true);
 
-    GroupList::clear();
+    QList<Group*> groups = GroupList::getAllGroups();
+    for (Group* g : groups)
+        removeGroup(g, true);
 }
 
 void Widget::onDialogShown(GenericChatroomWidget *widget)
