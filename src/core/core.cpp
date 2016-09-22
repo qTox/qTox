@@ -357,7 +357,7 @@ void Core::process()
     }
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
-    tox_iterate(tox);
+    tox_iterate(tox, getInstance());
 
 #ifdef DEBUG
     //we want to see the debug messages immediately
