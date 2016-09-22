@@ -9,6 +9,7 @@
 * [Quotes](#quotes)
 * [Multi Window Mode](#multi-window-mode)
 * [Keyboard Shortcuts](#keyboard-shortcuts)
+* [Emoji Packs](#emoji-packs)
 
 
 ## Contact list
@@ -357,3 +358,12 @@ The following shortcuts are currently supported:
 | `CTRL` + `TAB` | Switch to the next contact |
 | `CTRL` + `SHIFT` + `TAB` | Switch to the previous contact|
 | `ALT` + `q` | Quote selected text |
+
+## Emoji Packs
+
+qTox provides support for custom emoji packs. To install a new emoji pack
+put it in `%AppData%/Local/emoticons` for Windows or `~/.local/share/emoticons`
+for Linux. If these directories don't exist, you have to create them. The emoji
+files have to be in a subfolder also containing `emoticon.xml`, see the
+structure of https://github.com/qTox/qTox/tree/v1.5.2/smileys for further
+information.
