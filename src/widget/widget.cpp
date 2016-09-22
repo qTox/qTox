@@ -1520,7 +1520,11 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     updateFriendActivity(FriendList::findFriend(friendId));
 
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    if (type == TOX_CONFERENCE_TYPE_TEXT || type == TOX_CONFERENCE_TYPE_AV)
+#else
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
+#endif
     {
         ++unreadGroupInvites;
         groupInvitesUpdate();
@@ -1572,23 +1576,35 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
             return;
     }
 
-
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    TOX_CONFERENCE_STATE_CHANGE change = static_cast<TOX_CONFERENCE_STATE_CHANGE>(Change);
+    if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_JOIN)
+#else
     TOX_CHAT_CHANGE change = static_cast<TOX_CHAT_CHANGE>(Change);
     if (change == TOX_CHAT_CHANGE_PEER_ADD)
+#endif
     {
         // g->addPeer(peernumber,name);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "white", QDateTime::currentDateTime());
-        // we can't display these messages until irungentoo fixes peernumbers
+        // we can't display these messages until toxcore fixes peernumbers
         // https://github.com/irungentoo/toxcore/issues/1128
     }
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT)
+#else
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
+#endif
     {
         // g->removePeer(peernumber);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "white", QDateTime::currentDateTime());
     }
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_NAME_CHANGE) // core overwrites old name before telling us it changed...
+#else
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
+#endif
     {
         QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
         if (name.isEmpty())
