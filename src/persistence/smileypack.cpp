@@ -33,7 +33,10 @@
 #include <QDomElement>
 #include <QBuffer>
 #include <QStringBuilder>
+#include <QStandardPaths>
 #include <QtConcurrent/QtConcurrentRun>
+
+#define EMOTICONS_SUB_DIR (QString)"emoticons"
 
 /**
  * @class SmileyPack
@@ -50,7 +53,12 @@
  *
  * @var QString SmileyPack::path
  * @brief directory containing the cfg and image files
+ *
+ * @var QStringList SmileyPack::defaultPaths
+ * @brief Contains all directories where smileys could be found
  */
+
+QStringList SmileyPack::defaultPaths = loadDefaultPaths();
 
 SmileyPack::SmileyPack()
 {
@@ -66,6 +74,40 @@ SmileyPack& SmileyPack::getInstance()
 {
     static SmileyPack smileyPack;
     return smileyPack;
+}
+
+QStringList SmileyPack::loadDefaultPaths()
+{
+    QStringList paths = QStringList{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons"};
+    // qTox should find emoticons next to the binary
+    paths.append("." + QDir::separator() + EMOTICONS_SUB_DIR);
+
+    // qTox exclusive emoticons
+    for(auto qtoxPath : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
+    {
+        qtoxPath += QDir::separator() + EMOTICONS_SUB_DIR;
+        if(!paths.contains(qtoxPath))
+        {
+            paths << qtoxPath;
+        }
+    }
+
+    // system wide emoticons
+    for(auto genericPath : QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation))
+    {
+        genericPath += QDir::separator() + EMOTICONS_SUB_DIR;
+        if(!paths.contains(genericPath))
+        {
+            paths << genericPath;
+        }
+    }
+
+    return paths;
+}
+
+QList<QPair<QString, QString> > SmileyPack::listSmileyPacks()
+{
+    return listSmileyPacks(defaultPaths);
 }
 
 QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &paths)
@@ -90,15 +132,8 @@ QList<QPair<QString, QString> > SmileyPack::listSmileyPacks(const QStringList &p
             {
                 QString packageName = dir.dirName();
                 QString absPath = entries[0].absoluteFilePath();
-                QString relPath = QDir(QCoreApplication::applicationDirPath()).relativeFilePath(absPath);
-
-                if (relPath.leftRef(2) == "..")
-                {
-                    if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
-                        smileyPacks << QPair<QString, QString>(packageName, absPath);
-                    else if (!smileyPacks.contains(QPair<QString, QString>(packageName, relPath)))
-                        smileyPacks << QPair<QString, QString>(packageName, relPath); // use relative path for subdirectories
-                }
+                if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                    smileyPacks << QPair<QString, QString>(packageName, absPath);
             }
             dir.cdUp();
         }
