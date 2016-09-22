@@ -194,27 +194,35 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
-    static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
+    static void onFriendRequest(Tox* tox, const uint8_t* cUserId,
+                                const uint8_t* cMessage, size_t cMessageSize,
+                                void* core);
+    static void onFriendMessage(Tox* tox, uint32_t friendId,
+                                TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
-    static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
-                                const uint8_t* cMessage, size_t cMessageSize, void* core);
-    static void onFriendNameChange(Tox* tox, uint32_t friendId, const uint8_t* cName,
-                                   size_t cNameSize, void* core);
-    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping, void* core);
-    static void onStatusMessageChanged(Tox* tox, uint32_t friendId, const uint8_t* cMessage,
+    static void onFriendNameChange(Tox* tox, uint32_t friendId,
+                                   const uint8_t* cName, size_t cNameSize,
+                                   void* core);
+    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping,
+                                     void* core);
+    static void onStatusMessageChanged(Tox* tox, uint32_t friendId,
+                                       const uint8_t* cMessage,
                                        size_t cMessageSize, void* core);
-    static void onUserStatusChanged(Tox* tox, uint32_t friendId, TOX_USER_STATUS userstatus, void* core);
-    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status, void* core);
-    static void onGroupAction(Tox* tox, int groupnumber, int peernumber, const uint8_t * action,
-                              uint16_t length, void* core);
-    static void onGroupInvite(Tox *tox, int32_t friendId, uint8_t type, const uint8_t *data,
-                              uint16_t length, void *userdata);
-    static void onGroupMessage(Tox *tox, int groupnumber, int friendgroupnumber,
-                               const uint8_t * message, uint16_t length, void *userdata);
-    static void onGroupNamelistChange(Tox *tox, int groupId, int peerId, uint8_t change, void *core);
-    static void onGroupTitleChange(Tox*, int groupnumber, int peernumber,
-                                   const uint8_t* title, uint8_t len, void* _core);
-    static void onReadReceiptCallback(Tox *tox, uint32_t friendId, uint32_t receipt, void *core);
+    static void onUserStatusChanged(Tox* tox, uint32_t friendId,
+                                    TOX_USER_STATUS userstatus, void* core);
+    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId,
+                                          TOX_CONNECTION status, void* core);
+    static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
+                              const uint8_t* data, size_t length, void* core);
+    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId,
+                               TOX_MESSAGE_TYPE type, const uint8_t* message,
+                               size_t length, void* core);
+    static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
+                                      TOX_CONFERENCE_STATE_CHANGE change, void* core);
+    static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
+                                   const uint8_t* title, size_t length, void* core);
+    static void onReadReceiptCallback(Tox* tox, uint32_t friendId,
+                                      uint32_t receipt, void *core);
 
     bool checkConnection();
 
