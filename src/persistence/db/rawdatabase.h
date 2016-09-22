@@ -41,7 +41,7 @@ public:
     };
 
 public:
-    RawDatabase(const QString& path, const QString& password);
+    RawDatabase(const QString& path, const QString& password, const QByteArray& salt);
     ~RawDatabase();
     bool isOpen();
 
@@ -68,7 +68,8 @@ private:
     QString anonymizeQuery(const QByteArray& query);
 
 protected:
-    static QString deriveKey(const QString &password);
+    static QString deriveKey(const QString& password, const QByteArray& salt);
+    static QString deriveKey(const QString& password);
     static QVariant extractData(sqlite3_stmt* stmt, int col);
 
 private:
@@ -85,6 +86,7 @@ private:
     QQueue<Transaction> pendingTransactions;
     QMutex transactionsMutex;
     QString path;
+    QByteArray currentSalt;
     QString currentHexKey;
 };
 
