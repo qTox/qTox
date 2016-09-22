@@ -357,7 +357,11 @@ void Core::process()
     }
 
     static int tolerance = CORE_DISCONNECT_TOLERANCE;
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    tox_iterate(tox, getInstance());
+#else
     tox_iterate(tox);
+#endif
 
 #ifdef DEBUG
     //we want to see the debug messages immediately
