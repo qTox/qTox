@@ -288,22 +288,22 @@ void Core::start()
 
     loadFriends();
 
-    tox_callback_friend_request(tox, onFriendRequest, this);
-    tox_callback_friend_message(tox, onFriendMessage, this);
-    tox_callback_friend_name(tox, onFriendNameChange, this);
-    tox_callback_friend_typing(tox, onFriendTypingChange, this);
-    tox_callback_friend_status_message(tox, onStatusMessageChanged, this);
-    tox_callback_friend_status(tox, onUserStatusChanged, this);
-    tox_callback_friend_connection_status(tox, onConnectionStatusChanged, this);
-    tox_callback_friend_read_receipt(tox, onReadReceiptCallback, this);
+    tox_callback_friend_request(tox, onFriendRequest);
+    tox_callback_friend_message(tox, onFriendMessage);
+    tox_callback_friend_name(tox, onFriendNameChange);
+    tox_callback_friend_typing(tox, onFriendTypingChange);
+    tox_callback_friend_status_message(tox, onStatusMessageChanged);
+    tox_callback_friend_status(tox, onUserStatusChanged);
+    tox_callback_friend_connection_status(tox, onConnectionStatusChanged);
+    tox_callback_friend_read_receipt(tox, onReadReceiptCallback);
     tox_callback_conference_invite(tox, onGroupInvite);
     tox_callback_conference_message(tox, onGroupMessage);
     tox_callback_conference_namelist_change(tox, onGroupNamelistChange);
     tox_callback_conference_title(tox, onGroupTitleChange);
-    tox_callback_file_chunk_request(tox, CoreFile::onFileDataCallback, this);
-    tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback, this);
-    tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback, this);
-    tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback, this);
+    tox_callback_file_chunk_request(tox, CoreFile::onFileDataCallback);
+    tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
+    tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback);
+    tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback);
 
     QPixmap pic = profile.loadAvatar();
     if (!pic.isNull() && !pic.size().isEmpty())
@@ -503,24 +503,20 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNEC
     CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, friendStatus != Status::Offline);
 }
 
-void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
+void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type,
+                         const uint8_t *data, size_t length, void* _core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(action, length), true);
-}
-
-void Core::onGroupInvite(Tox*, int32_t friendNumber, uint8_t type, const uint8_t *data, uint16_t length,void *core)
-{
     QByteArray pk((char*)data, length);
     if (type == TOX_CONFERENCE_TYPE_TEXT)
     {
-        qDebug() << QString("Text group invite by %1").arg(friendNumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendNumber,type,pk);
+        qDebug() << QString("Text group invite by %1").arg(friendId);
+        emit core->groupInviteReceived(friendId, type, pk);
     }
     else if (type == TOX_CONFERENCE_TYPE_AV)
     {
-        qDebug() << QString("AV group invite by %1").arg(friendNumber);
-        emit static_cast<Core*>(core)->groupInviteReceived(friendNumber,type,pk);
+        qDebug() << QString("AV group invite by %1").arg(friendId);
+        emit core->groupInviteReceived(friendId, type, pk);
     }
     else
     {
@@ -528,31 +524,35 @@ void Core::onGroupInvite(Tox*, int32_t friendNumber, uint8_t type, const uint8_t
     }
 }
 
-void Core::onGroupMessage(Tox*, int groupnumber, int peernumber, const uint8_t * message, uint16_t length, void *_core)
+void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
+                          const uint8_t* _message, size_t length, void* _core)
 {
     Core* core = static_cast<Core*>(_core);
-    emit core->groupMessageReceived(groupnumber, peernumber, CString::toString(message, length), false);
+    QString message = CString::toString(_message, length);
+    bool isAction;
+    isAction = type == TOX_MESSAGE_TYPE_ACTION;
+    emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
-void Core::onGroupNamelistChange(Tox*, int groupnumber, int peernumber, uint8_t change, void *core)
+void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
+                                 TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
-    qDebug() << QString("Group namelist change %1:%2 %3").arg(groupnumber).arg(peernumber).arg(change);
-    emit static_cast<Core*>(core)->groupNamelistChanged(groupnumber, peernumber, change);
+    qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
+    emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }
 
-void Core::onGroupTitleChange(Tox*, int groupnumber, int peernumber, const uint8_t* title, uint8_t len, void* _core)
+void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId,
+                              const uint8_t* _title, size_t length, void* _core)
 {
     Core* core = static_cast<Core*>(_core);
-    QString author;
-    if (peernumber >= 0)
-        author = core->getGroupPeerName(groupnumber, peernumber);
-
-    emit core->groupTitleChanged(groupnumber, author, CString::toString(title, len));
+    QString author = core->getGroupPeerName(groupId, peerId);
+    QString title = CString::toString(_title, length);
+    emit core->groupTitleChanged(groupId, author, title);
 }
 
-void Core::onReadReceiptCallback(Tox*, uint32_t friendnumber, uint32_t receipt, void *core)
+void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void *core)
 {
-     emit static_cast<Core*>(core)->receiptRecieved(friendnumber, receipt);
+     emit static_cast<Core*>(core)->receiptRecieved(friendId, receipt);
 }
 
 void Core::acceptFriendRequest(const QString& userId)
