@@ -2273,8 +2273,8 @@ void Widget::retranslateUi()
     actionQuit->setText(tr("Exit", "Tray action menu to exit tox"));
     actionShow->setText(tr("Show", "Tray action menu to show qTox window"));
 
-    if (!Settings::getInstance().getSeparateWindow())
-        setWindowTitle(fromDialogType(AddDialog));
+    //if (!Settings::getInstance().getSeparateWindow())
+    //    setWindowTitle(fromDialogType(AddDialog));
 
     friendRequestsUpdate();
     groupInvitesUpdate();
