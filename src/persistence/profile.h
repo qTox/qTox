@@ -25,6 +25,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QPixmap>
+#include <QObject>
 #include <tox/toxencryptsave.h>
 #include <memory>
 #include "src/persistence/history.h"
@@ -32,8 +33,9 @@
 class Core;
 class QThread;
 
-class Profile
+class Profile : public QObject
 {
+    Q_OBJECT
 public:
     static Profile* loadProfile(QString name, const QString& password = QString());
     static Profile* createProfile(QString name, QString password);
@@ -83,12 +85,15 @@ private:
     static QVector<QString> getFilesByExt(QString extension);
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
+private slots:
+    void loadDatabase(const QString& id);
+
 private:
     Core* core;
     QThread* coreThread;
     QString name, password;
     TOX_PASS_KEY passkey;
-    RawDatabase database;
+    std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;
     bool isRemoved;

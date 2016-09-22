@@ -12,6 +12,8 @@
 #include <memory>
 #include <atomic>
 
+#include <tox/toxencryptsave.h>
+
 struct sqlite3;
 struct sqlite3_stmt;
 
@@ -41,7 +43,7 @@ public:
     };
 
 public:
-    RawDatabase(const QString& path, const QString& password);
+    RawDatabase(const QString& path, const QString& password, const QByteArray& salt);
     ~RawDatabase();
     bool isOpen();
 
@@ -68,7 +70,8 @@ private:
     QString anonymizeQuery(const QByteArray& query);
 
 protected:
-    static QString deriveKey(const QString &password);
+    static QString deriveKey(const QString& password, QByteArray &salt);
+    static QString deriveKey(const QString& password);
     static QVariant extractData(sqlite3_stmt* stmt, int col);
 
 private:
@@ -86,6 +89,7 @@ private:
     QMutex transactionsMutex;
     QString path;
     QString currentHexKey;
+    QByteArray currentSalt;
 };
 
 #endif // RAWDATABASE_H

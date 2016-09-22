@@ -56,7 +56,7 @@ QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile)
     : name{name}, password{password}
-    , database(getDbPath(name), password)
+    , database{nullptr}
     , newProfile{isNewProfile}, isRemoved{false}
 {
     if (!password.isEmpty())
@@ -68,22 +68,11 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile)
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personal settings (Nexus will do
-    // it), so we always load the history, and if it fails we can't change the
-    // setting now, but we keep a nullptr
-    if (database.isOpen())
-    {
-        history.reset(new History(database));
-    }
-    else
-    {
-        qWarning() << "Failed to open history for profile"<<name;
-        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-    }
-
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
     core = new Core(coreThread, *this);
+    // we need our own public key to load the encrypted database
+    QObject::connect(core, &Core::idSet, this, &Profile::loadDatabase, Qt::QueuedConnection);
     core->moveToThread(coreThread);
     QObject::connect(coreThread, &QThread::started, core, &Core::start);
 }
@@ -445,6 +434,28 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
 }
 
+void Profile::loadDatabase(const QString &id)
+{
+    QByteArray salt = QByteArray::fromHex(core->getSelfId().publicKey.toLocal8Bit());
+    if(salt.size() != TOX_PASS_SALT_LENGTH)
+    {
+        qWarning() << "Couldn't compute salt from public key" << name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+    }
+    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
+    // the history, and if it fails we can't change the setting now, but we keep a nullptr
+    database.reset(new RawDatabase(getDbPath(name), password, salt));
+    if (database->isOpen())
+    {
+        history.reset(new History(*(database.get())));
+    }
+    else
+    {
+        qWarning() << "Failed to open history for profile" << name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+    }
+}
+
 /**
  * @brief Get our avatar from cache.
  * @return Avatar as QPixmap.
@@ -688,7 +699,7 @@ QVector<QString> Profile::remove()
     }
 
     QString dbPath = getDbPath(name);
-    if (database.isOpen() && !database.remove() && QFile::exists(dbPath))
+    if (database && database->isOpen() && !database->remove() && QFile::exists(dbPath))
     {
         ret.push_back(dbPath);
         qWarning() << "Could not remove file " << dbPath;
@@ -715,7 +726,10 @@ bool Profile::rename(QString newName)
 
     QFile::rename(path + ".tox", newPath + ".tox");
     QFile::rename(path + ".ini", newPath + ".ini");
-    database.rename(newName);
+    if(database)
+    {
+        database->rename(newName);
+    }
 
     bool resetAutorun = Settings::getInstance().getAutorun();
     Settings::getInstance().setAutorun(false);
@@ -779,7 +793,7 @@ void Profile::setPassword(const QString& newPassword)
     passkey = *core->createPasskey(password);
     saveToxSave();
 
-    database.setPassword(newPassword);
+    database->setPassword(newPassword);
     Nexus::getDesktopGUI()->reloadHistory();
 
     saveAvatar(avatar, core->getSelfId().publicKey);
