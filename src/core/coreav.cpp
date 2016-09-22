@@ -594,7 +594,10 @@ bool CoreAV::isGroupCallOutputMuted(const Group* g) const
  */
 bool CoreAV::isGroupAvEnabled(int groupId) const
 {
-    return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;
+    Tox* tox = Core::getInstance()->tox;
+    TOX_ERR_CONFERENCE_GET_TYPE error;
+    TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox, groupId, &error);
+    return type == TOX_CONFERENCE_TYPE_AV;
 }
 
 /**
