@@ -358,7 +358,7 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
             continue;
         }
 
-        GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
+        GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
 
         if (chatWidget != nullptr && chatWidget != activeChatroomWidget)
             onChatroomWidgetClicked(chatWidget, false);

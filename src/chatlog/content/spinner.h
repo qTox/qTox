@@ -28,7 +28,7 @@
 
 class QVariantAnimation;
 
-class Spinner : public QObject, public ChatLineContent
+class Spinner : public ChatLineContent
 {
     Q_OBJECT
 public:

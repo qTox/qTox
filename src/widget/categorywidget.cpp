@@ -30,7 +30,7 @@
 
 void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
 {
-    GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
+    GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
     if (chatWidget != nullptr)
         emit chatWidget->chatroomWidgetClicked(chatWidget);
 }
@@ -199,7 +199,7 @@ bool CategoryWidget::cycleContacts(FriendWidget* activeChatroomWidget, bool forw
     int index = -1;
     QLayout* currentLayout = nullptr;
 
-    FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
+    FriendWidget* friendWidget = qobject_cast<FriendWidget*>(activeChatroomWidget);
     if (friendWidget == nullptr)
         return false;
 
@@ -236,7 +236,7 @@ bool CategoryWidget::cycleContacts(FriendWidget* activeChatroomWidget, bool forw
             continue;
         }
 
-        GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
+        GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
         if (chatWidget != nullptr)
             emit chatWidget->chatroomWidgetClicked(chatWidget);
         return true;
