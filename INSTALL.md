@@ -170,12 +170,13 @@ sudo apt-get install git
 Afterwards open a new terminal, change to a directory of your choice and clone
 the repository:
 ```bash
-cd /home/user/qTox
+cd /home/$USER/qTox
 git clone https://github.com/qTox/qTox.git qTox
 ```
 
-The following steps assumes that you cloned the repository at `/home/user/qTox`.
-If you decided to choose another location, replace corresponding parts.
+The following steps assumes that you cloned the repository at
+`/home/$USER/qTox`.  If you decided to choose another location, replace
+corresponding parts.
 
 
 <a name="other-deps" />
