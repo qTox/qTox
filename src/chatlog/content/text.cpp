@@ -150,33 +150,31 @@ QRectF Text::boundingRect() const
 
 void Text::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    if (doc)
+
+    if (!doc)
+        return;
+
+    painter->setClipRect(boundingRect());
+
+    // draw selection
+    QAbstractTextDocumentLayout::PaintContext ctx;
+    QAbstractTextDocumentLayout::Selection sel;
+
+    if (hasSelection())
     {
-        painter->setClipRect(boundingRect());
-
-        // draw selection
-        QAbstractTextDocumentLayout::PaintContext ctx;
-        QAbstractTextDocumentLayout::Selection sel;
-
-        if (hasSelection())
-        {
-            sel.cursor = QTextCursor(doc);
-            sel.cursor.setPosition(getSelectionStart());
-            sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
-        }
-
-        const QColor selectionColor = QColor::fromRgbF(0.23, 0.68, 0.91);
-        sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
-        sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
-        ctx.selections.append(sel);
-        ctx.palette.setColor(QPalette::Text, color);
-
-        // draw text
-        doc->documentLayout()->draw(painter, ctx);
+        sel.cursor = QTextCursor(doc);
+        sel.cursor.setPosition(getSelectionStart());
+        sel.cursor.setPosition(getSelectionEnd(), QTextCursor::KeepAnchor);
     }
 
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    const QColor selectionColor = QColor::fromRgbF(0.23, 0.68, 0.91);
+    sel.format.setBackground(selectionColor.lighter(selectionHasFocus ? 100 : 160));
+    sel.format.setForeground(selectionHasFocus ? Qt::white : Qt::black);
+    ctx.selections.append(sel);
+    ctx.palette.setColor(QPalette::Text, color);
+
+    // draw text
+    doc->documentLayout()->draw(painter, ctx);
 }
 
 void Text::visibilityChanged(bool visible)
@@ -293,7 +291,7 @@ void Text::freeResources()
 QSizeF Text::idealSize()
 {
     if (doc)
-        return QSizeF(qMin(doc->idealWidth(), width), doc->size().height());
+        return doc->size();
 
     return size;
 }
