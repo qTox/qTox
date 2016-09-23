@@ -51,39 +51,31 @@ idea of the general look and features.
 - File transfers, with previewing of images
 - Audio calls, including group calls
 - Video calls
-- Tox DNS and Tox URI support
-- Translations in 26 languages
+- ToxMe and Tox URI support
+- Translations in 30 languages [](← TODO: add `over` when there'll be more)
 - Avatars
 - Faux offline messages
 - History
 - Screenshots
 - Emoticons
-- Auto-updates on Windows and Mac, packages on Linux
+- Auto-updates on Windows and packages on Linux
 - And many more options!
 
 
-#### Meetings
+#### Organizational stuff
 
-Time & place where qTox committee gathers to discuss. Meetings happen every
-week on Saturday, `16:00 UTC±00:00` on IRC channel [#qtox@freenode].
+Happens in both IRC channel [#qtox@freenode] and on [qTox-dev mailing list].
+If you are interested in participating, **join the channel** and **subscribe to
+the mailing list**.
 
-Logs from the meetings will be posted at least to the mailing list.
+There are available [IRC logs].
 
-Committee members are active maintainers.
-
-Currently they are:
-
-* @agilob
-* @antis81
-* @sudden6
-* @TheSpiritXIII
-* @tux3
-* @zetok
 
 [![Build Status](https://travis-ci.org/qTox/qTox.svg?branch=master)](https://travis-ci.org/qTox/qTox)
 
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-
 [**64 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
 [**32 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[IRC logs]: https://github.com/qTox/qtox-irc-logs
+[qTox-dev mailing list]: https://lists.tox.chat/listinfo/qtox-dev
