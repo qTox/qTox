@@ -260,7 +260,7 @@ void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
     Friend* f = FriendList::findFriend(FriendId);
 
-    for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
+    for (uint32_t i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
     {
         if (Core::getInstance()->getGroupPeerToxId(group, i) == f->getToxId())
         {

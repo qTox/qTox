@@ -540,6 +540,17 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
     Tox* tox = Core::getInstance()->tox;
     TOX_ERR_CONFERENCE_GET_TYPE error;
     TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox, groupId, &error);
+    switch (error)
+    {
+    case TOX_ERR_CONFERENCE_GET_TYPE_OK:
+        break;
+    case TOX_ERR_CONFERENCE_GET_TYPE_CONFERENCE_NOT_FOUND:
+        qCritical() <<  "Conference not found";
+        break;
+    default:
+        break;
+    }
+
     return type == TOX_CONFERENCE_TYPE_AV;
 #else
     return tox_group_get_type(Core::getInstance()->tox, groupId) == TOX_GROUPCHAT_TYPE_AV;

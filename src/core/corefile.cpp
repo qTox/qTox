@@ -81,13 +81,31 @@ void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& d
     uint8_t avatarHash[TOX_HASH_LENGTH];
     tox_hash(avatarHash, (uint8_t*)data.data(), data.size());
     uint64_t filesize = data.size();
-    TOX_ERR_FILE_SEND err;
-    uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
-                                         avatarHash, avatarHash, TOX_HASH_LENGTH, &err);
 
-    if (fileNum == std::numeric_limits<uint32_t>::max())
+    TOX_ERR_FILE_SEND error;
+    uint32_t fileNum = tox_file_send(core->tox, friendId, TOX_FILE_KIND_AVATAR, filesize,
+                                         avatarHash, avatarHash, TOX_HASH_LENGTH, &error);
+
+    switch (error)
     {
-        qWarning() << "sendAvatarFile: Can't create the Tox file sender, error"<<err;
+    case TOX_ERR_FILE_SEND_OK:
+        break;
+    case TOX_ERR_FILE_SEND_FRIEND_NOT_CONNECTED:
+        qCritical() << "Friend not connected";
+        return;
+    case TOX_ERR_FILE_SEND_FRIEND_NOT_FOUND:
+        qCritical() << "Friend not found";
+        return;
+    case TOX_ERR_FILE_SEND_NAME_TOO_LONG:
+        qCritical() << "Name too long";
+        return;
+    case TOX_ERR_FILE_SEND_NULL:
+        qCritical() << "Send null";
+        return;
+    case TOX_ERR_FILE_SEND_TOO_MANY:
+        qCritical() << "To many ougoing transfer";
+        return;
+    default:
         return;
     }
 
