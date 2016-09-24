@@ -974,7 +974,7 @@ void ChatForm::SendMessageStr(QString msg)
 
     bool isAction = msg.startsWith("/me ", Qt::CaseInsensitive);
     if (isAction)
-        msg = msg = msg.right(msg.length() - 4);
+        msg = msg.right(msg.length() - 4);
 
     QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
@@ -996,14 +996,18 @@ void ChatForm::SendMessageStr(QString msg)
         else
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
-
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled())
         {
-            auto* offMsgEngine = getOfflineMsgEngine();
-            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
-                                        [offMsgEngine,rec,ma](int64_t id)
+            Core* core = Core::getInstance();
+            auto* offMsgEngine = offlineEngine;
+            profile->getHistory()->addNewMessage(f->getToxId().publicKey,
+                                                 qt_msg_hist,
+                                                 core->getSelfId().publicKey,
+                                                 timestamp, status,
+                                                 core->getUsername(),
+                                                 [offMsgEngine,rec,ma]
+                                                 (int64_t id)
             {
                 offMsgEngine->registerReceipt(rec, id, ma);
             });
