@@ -49,7 +49,7 @@ int GenericChatItemLayout::indexOfSortedWidget(GenericChatItemWidget* widget) co
     if (index >= layout->count())
         return -1;
 
-    GenericChatItemWidget* atMid = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+    GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
     assert(atMid != nullptr);
 
     if (atMid == widget)
@@ -73,7 +73,7 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
     if (layout->itemAt(index) == nullptr)
         return;
 
-    GenericChatItemWidget* atMid = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+    GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
     assert(atMid != nullptr);
 
     if (atMid == widget)
@@ -84,7 +84,7 @@ void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
 {
     for (int index = 0; index < layout->count(); ++index)
     {
-        GenericChatItemWidget* widgetAt = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+        GenericChatItemWidget* widgetAt = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
         assert(widgetAt != nullptr);
 
         widgetAt->searchName(searchString, hideAll);
@@ -103,7 +103,7 @@ int GenericChatItemLayout::indexOfClosestSortedWidget(GenericChatItemWidget* wid
     while (min < max)
     {
         int mid = (max - min) / 2 + min;
-        GenericChatItemWidget* atMid = dynamic_cast<GenericChatItemWidget*>(layout->itemAt(mid)->widget());
+        GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(mid)->widget());
         assert(atMid != nullptr);
 
         bool lessThan = false;

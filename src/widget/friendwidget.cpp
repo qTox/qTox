@@ -110,9 +110,9 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     FriendListWidget *friendList;
 
     if (circleWidget == nullptr)
-        friendList = dynamic_cast<FriendListWidget*>(FriendList::findFriend(friendId)->getFriendWidget()->parentWidget());
+        friendList = qobject_cast<FriendListWidget*>(FriendList::findFriend(friendId)->getFriendWidget()->parentWidget());
     else
-        friendList = dynamic_cast<FriendListWidget*>(circleWidget->parentWidget());
+        friendList = qobject_cast<FriendListWidget*>(circleWidget->parentWidget());
 
     circleMenu = menu.addMenu(tr("Move to circle...", "Menu to move a friend into a different circle"));
 

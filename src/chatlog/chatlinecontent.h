@@ -24,8 +24,11 @@
 
 class ChatLine;
 
-class ChatLineContent : public QGraphicsItem
+class ChatLineContent : public QObject, public QGraphicsItem
 {
+    Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
+
 public:
     enum GraphicsItemType
     {

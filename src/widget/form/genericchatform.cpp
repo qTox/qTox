@@ -265,7 +265,7 @@ QDate GenericChatForm::getLatestDate() const
 
     if (chatLine)
     {
-        Timestamp* timestamp = dynamic_cast<Timestamp*>(chatLine->getContent(2));
+        Timestamp* timestamp = qobject_cast<Timestamp*>(chatLine->getContent(2));
 
         if (timestamp)
             return timestamp->getTime().date();
@@ -409,7 +409,7 @@ void GenericChatForm::onSaveLogClicked()
     auto lines = chatWidget->getLines();
     for (ChatLine::Ptr l : lines)
     {
-        Timestamp* rightCol = dynamic_cast<Timestamp*>(l->getContent(2));
+        Timestamp* rightCol = qobject_cast<Timestamp*>(l->getContent(2));
 
         if (!rightCol)
             return;

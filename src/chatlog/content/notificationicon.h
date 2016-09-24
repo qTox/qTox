@@ -27,7 +27,7 @@
 
 class QTimer;
 
-class NotificationIcon : public QObject,  public ChatLineContent
+class NotificationIcon : public ChatLineContent
 {
     Q_OBJECT
 public:

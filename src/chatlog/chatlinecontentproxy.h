@@ -27,6 +27,8 @@ class FileTransferWidget;
 
 class ChatLineContentProxy : public ChatLineContent
 {
+    Q_OBJECT
+
 public:
     enum ChatLineContentProxyType
     {

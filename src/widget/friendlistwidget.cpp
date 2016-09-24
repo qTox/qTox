@@ -296,13 +296,13 @@ void FriendListWidget::setMode(Mode mode)
         {
             QDate activityDate = getDateFriend(contact);
             Time time = getTime(activityDate);
-            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         }
 
         for (int i = 0; i < activityLayout->count(); ++i)
         {
-            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
+            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
             categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
@@ -354,7 +354,7 @@ void FriendListWidget::removeFriendWidget(FriendWidget* w)
     {
         QDate activityDate = getDateFriend(contact);
         Time time = getTime(activityDate);
-        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
         categoryWidget->removeFriendWidget(w, contact->getStatus());
         categoryWidget->setVisible(categoryWidget->hasChatrooms());
     }
@@ -467,7 +467,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         return;
 
     int index = -1;
-    FriendWidget* friendWidget = dynamic_cast<FriendWidget*>(activeChatroomWidget);
+    FriendWidget* friendWidget = qobject_cast<FriendWidget*>(activeChatroomWidget);
 
     if (mode == Activity)
     {
@@ -476,7 +476,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
         QDate activityDate = getDateFriend(FriendList::findFriend(friendWidget->friendId));
         index = getTime(activityDate);
-        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
 
         if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward))
             return;
@@ -497,7 +497,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
                 continue;
             }
 
-            CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
 
             if (categoryWidget != nullptr)
             {
@@ -542,7 +542,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
     }
     else
     {
-        GroupWidget* groupWidget = dynamic_cast<GroupWidget*>(activeChatroomWidget);
+        GroupWidget* groupWidget = qobject_cast<GroupWidget*>(activeChatroomWidget);
         if (groupWidget != nullptr)
         {
             currentLayout = groupLayout.getLayout();
@@ -575,7 +575,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         // Go to the actual next index.
         if (currentLayout == listLayout->getLayoutOnline() || currentLayout == listLayout->getLayoutOffline() || currentLayout == groupLayout.getLayout())
         {
-            GenericChatroomWidget* chatWidget = dynamic_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
+            GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
 
             if (chatWidget != nullptr)
                 emit chatWidget->chatroomWidgetClicked(chatWidget);
@@ -584,7 +584,7 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
         }
         else if (currentLayout == circleLayout->getLayout())
         {
-            circleWidget = dynamic_cast<CircleWidget*>(currentLayout->itemAt(index)->widget());
+            circleWidget = qobject_cast<CircleWidget*>(currentLayout->itemAt(index)->widget());
             if (circleWidget != nullptr)
             {
                 if (!circleWidget->cycleContacts(forward))
@@ -664,7 +664,7 @@ void FriendListWidget::moveWidget(FriendWidget* w, Status s, bool add)
         Friend* contact = FriendList::findFriend(w->friendId);
         QDate activityDate = getDateFriend(contact);
         Time time = getTime(activityDate);
-        CategoryWidget* categoryWidget = dynamic_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
         categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         categoryWidget->show();
     }
