@@ -61,7 +61,7 @@ public:
     QString getPeerName(const ToxId& id) const;
 
     QVector<uint32_t> getFriendList() const;
-    int getGroupNumberPeers(int groupId) const;
+    uint32_t getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     ToxId getGroupPeerToxId(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
@@ -72,7 +72,7 @@ public:
     bool isFriendOnline(uint32_t friendId) const;
     bool hasFriendWithAddress(const QString &addr) const;
     bool hasFriendWithPublicKey(const QString &pubkey) const;
-    int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
+    uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
@@ -253,6 +253,10 @@ private:
 #endif
 
     void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
+    bool parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const;
+#endif
     bool checkConnection();
 
     void checkEncryptedHistory();
