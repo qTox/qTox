@@ -621,7 +621,7 @@ void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void *core)
 #endif
 {
-     emit static_cast<Core*>(core)->receiptRecieved(friendId, receipt);
+    emit static_cast<Core*>(core)->receiptRecieved(friendId, receipt);
 }
 
 void Core::acceptFriendRequest(const QString& userId)
@@ -712,7 +712,7 @@ void Core::sendTyping(uint32_t friendId, bool typing)
         emit failedToSetTyping(typing);
 }
 
-void Core::sendGroupMessage(int groupId, const QString& message)
+void Core::sendGroupMessageWithType(int groupId, const QString &message, TOX_MESSAGE_TYPE type)
 {
     QList<CString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
 
@@ -720,37 +720,34 @@ void Core::sendGroupMessage(int groupId, const QString& message)
     {
 #if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
         TOX_ERR_CONFERENCE_SEND_MESSAGE error;
-
-        bool success = tox_conference_send_message(tox, groupId, TOX_MESSAGE_TYPE_NORMAL,
+        bool success = tox_conference_send_message(tox, groupId, type,
                                               cMsg.data(), cMsg.size(), &error);
 
         if (!success)
+        {
 #else
-        int ret = tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+        int ret;
+        if (type == TOX_MESSAGE_TYPE_NORMAL)
+            ret = tox_group_message_send(tox, groupId, cMsg.data(), cMsg.size());
+        else
+            ret = tox_group_action_send(tox, groupId, cMsg.data(), cMsg.size());
+
         if (ret == -1)
+        {
 #endif
             emit groupSentResult(groupId, message, -1);
+        }
     }
+}
+
+void Core::sendGroupMessage(int groupId, const QString& message)
+{
+    sendGroupMessageWithType(groupId, message, TOX_MESSAGE_TYPE_NORMAL);
 }
 
 void Core::sendGroupAction(int groupId, const QString& message)
 {
-    QList<CString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
-
-    for (auto &cMsg :cMessages)
-    {
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
-        TOX_ERR_CONFERENCE_SEND_MESSAGE error;
-        bool success = tox_conference_send_message(tox, groupId, TOX_MESSAGE_TYPE_ACTION,
-                                              cMsg.data(), cMsg.size(), &error);
-
-        if (!success)
-#else
-        int ret = tox_group_action_send(tox, groupId, cMsg.data(), cMsg.size());
-        if (ret == -1)
-#endif
-            emit groupSentResult(groupId, message, -1);
-    }
+    sendGroupMessageWithType(groupId, message, TOX_MESSAGE_TYPE_ACTION);
 }
 
 void Core::changeGroupTitle(int groupId, const QString& title)
