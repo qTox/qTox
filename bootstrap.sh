@@ -129,7 +129,7 @@ remove_build_dirs
 ############### install step ###############
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
-    git clone https://github.com/irungentoo/toxcore.git \
+    git clone https://github.com/toktok/c-toxcore.git \
         "${BASE_DIR}/${TOX_CORE_DIR}" --depth 1
 
     pushd ${BASE_DIR}/${TOX_CORE_DIR}

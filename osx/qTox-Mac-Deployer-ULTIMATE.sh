@@ -130,7 +130,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --depth=1 https://github.com/irungentoo/toxcore
+        git clone --depth=1 https://github.com/toktok/c-toxcore toxcore
     fi
     # qTox
     if [[ $TRAVIS = true ]]
@@ -273,7 +273,7 @@ helpme() {
     echo "-b  | --build     -- Builds qTox in: ${BUILD_DIR}"
     echo "-d  | --deploy    -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
     echo "-bs | --bootstrap -- Performs bootstrap steps."
-    fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/irungentoo/toxcore | https://github.com/qTox/qTox"
+    fcho "Issues with Toxcore or qTox should be reported to their respective repos: https://github.com/toktok/c-toxcore | https://github.com/qTox/qTox"
     exit 0
 }
 
