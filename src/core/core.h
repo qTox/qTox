@@ -113,11 +113,11 @@ public slots:
     void setStatusMessage(const QString& message);
     void setAvatar(const QByteArray& data);
 
-     int sendMessage(uint32_t friendId, const QString& message);
+    int sendMessage(uint32_t friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
     void changeGroupTitle(int groupId, const QString& title);
-     int sendAction(uint32_t friendId, const QString& action);
+    int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
@@ -251,6 +251,7 @@ private:
     static void onReadReceiptCallback(Tox *tox, uint32_t friendId, uint32_t receipt, void *core);
 #endif
 
+    void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
     bool checkConnection();
 
     void checkEncryptedHistory();
