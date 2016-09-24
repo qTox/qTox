@@ -163,13 +163,13 @@ bool CategoryWidget::cycleContacts(bool forward)
     }
     if (forward)
     {
-        if (listLayout->getLayoutOnline()->count() != 0)
+        if (!listLayout->getLayoutOnline()->isEmpty())
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), 0);
             return true;
         }
-        else if (listLayout->getLayoutOffline()->count() != 0)
+        else if (!listLayout->getLayoutOffline()->isEmpty())
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), 0);
@@ -178,13 +178,13 @@ bool CategoryWidget::cycleContacts(bool forward)
     }
     else
     {
-        if (listLayout->getLayoutOffline()->count() != 0)
+        if (!listLayout->getLayoutOffline()->isEmpty())
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOffline(), listLayout->getLayoutOffline()->count() - 1);
             return true;
         }
-        else if (listLayout->getLayoutOnline()->count() != 0)
+        else if (!listLayout->getLayoutOnline()->isEmpty())
         {
             setExpanded(true);
             emitChatroomWidget(listLayout->getLayoutOnline(), listLayout->getLayoutOnline()->count() - 1);

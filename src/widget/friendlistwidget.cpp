@@ -308,11 +308,11 @@ void FriendListWidget::setMode(Mode mode)
 
         listLayout->removeItem(listLayout->getLayoutOnline());
         listLayout->removeItem(listLayout->getLayoutOffline());
-        listLayout->removeItem(circleLayout->getLayout());
-        listLayout->insertLayout(1, activityLayout);
 
         if (circleLayout != nullptr)
         {
+            listLayout->removeItem(circleLayout->getLayout());
+
             QLayoutItem* item;
             while ((item = circleLayout->getLayout()->takeAt(0)) != nullptr)
             {
@@ -322,6 +322,8 @@ void FriendListWidget::setMode(Mode mode)
             delete circleLayout;
             circleLayout = nullptr;
         }
+
+        listLayout->insertLayout(1, activityLayout);
 
         reDraw();
     }
