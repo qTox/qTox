@@ -40,7 +40,7 @@ FORMS    += \
 CONFIG   += c++11
 CONFIG   += link_pkgconfig
 
-QMAKE_CXXFLAGS += -fno-exceptions
+QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
 QMAKE_RESOURCE_FLAGS += -compress 9 -threshold 0
 
 # Rules for creating/updating {ts|qm}-files
