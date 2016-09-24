@@ -310,6 +310,20 @@ QObject notToMentionThatWeUseCamelCase;
 
 E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
+
+## Dynamic casts / RTTI
+
+qTox is compiled without support for RTTI, as such PRs making use of
+`dynamic_cast()` will fail to compile and may be rejected on this basis. For
+manipulating Qt-based objects, use `qobject_cast()` instead.
+
+Compiling qTox without RTTI support gives up to 5-6% size reductions on
+compiled binary files. The usage of `dynamic_cast()` can also be completely
+mitigated when dealing with Qt objects through use of `qobject_cast()` which
+behaves very much like C++'s `dynamic_cast()` but without the RTTI overhead.
+
+Enforced with `-fno-rtti`.
+
 ## Documentaion
 
 If you added a new function, also add a doxygen comment before the
