@@ -71,6 +71,16 @@ Save format changes are possible, which may result in data loss.</string>
          </layout>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pbClearKeychain">
+         <property name="toolTip">
+          <string>Clear this profile's password from the keychain password storage</string>
+         </property>
+         <property name="text">
+          <string>Clear Password from Keychain</string>
+         </property>
+        </widget>
+       </item>
        <item alignment="Qt::AlignTop">
         <widget class="QGroupBox" name="nospamGroup">
          <property name="toolTip">
