@@ -160,3 +160,17 @@ void AdvancedForm::retranslateUi()
     bodyUI->retranslateUi(this);
     bodyUI->proxyType->setCurrentIndex(proxyType);
 }
+
+
+void AdvancedForm::on_spinStartUDPPort_valueChanged(int port)
+{
+    bodyUI->spinEndUDPPort->setValue(port+100);
+    Settings::getInstance().setStartUDPPort(port);
+}
+
+
+void AdvancedForm::on_spinEndUDPPort_valueChanged(int port)
+{
+    Settings::getInstance().setEndUDPPort(port);
+}
+
