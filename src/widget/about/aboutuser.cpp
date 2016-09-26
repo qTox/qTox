@@ -17,16 +17,20 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     ui->aliases->hide();
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
-    connect(ui->autoaccept, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptClicked);
+    connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptDirClicked);
+    connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
     this->toxId = toxId;
     QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
-    ui->autoaccept->setChecked(!dir.isEmpty());
-    ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
+    ui->autoacceptfile->setChecked(!dir.isEmpty());
 
-    if(ui->autoaccept->isChecked())
+    ui->autoacceptcall->setCurrentIndex(Settings::getInstance().getAutoAcceptCall(this->toxId));
+
+    ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
+
+    if(ui->autoacceptfile->isChecked())
         ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
 }
 
@@ -48,17 +52,17 @@ void AboutUser::setFriend(Friend *f)
 
 }
 
-void AboutUser::onAutoAcceptClicked()
+void AboutUser::onAutoAcceptDirClicked()
 {
     QString dir;
-    if (!ui->autoaccept->isChecked())
+    if (!ui->autoacceptfile->isChecked())
     {
         dir = QDir::homePath();
-        ui->autoaccept->setChecked(false);
+        ui->autoacceptfile->setChecked(false);
         Settings::getInstance().setAutoAcceptDir(this->toxId, "");
         ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     }
-    else if (ui->autoaccept->isChecked())
+    else if (ui->autoacceptfile->isChecked())
     {
         dir = QFileDialog::getExistingDirectory(this,
                                                 tr("Choose an auto accept directory", "popup title"),
@@ -66,14 +70,20 @@ void AboutUser::onAutoAcceptClicked()
                                                 QFileDialog::DontUseNativeDialog);
         if(dir.isEmpty())
         {
-            ui->autoaccept->setChecked(false);
+            ui->autoacceptfile->setChecked(false);
             return; // user canellced
         }
         Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
         ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
     }
     Settings::getInstance().saveGlobal();
-    ui->selectSaveDir->setEnabled(ui->autoaccept->isChecked());
+    ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
+}
+
+void AboutUser::onAutoAcceptCallClicked()
+{
+    Settings::getInstance().setAutoAcceptCall(this->toxId,Settings::AutoAcceptCallFlags(QFlag(ui->autoacceptcall->currentIndex())));
+    Settings::getInstance().savePersonal();
 }
 
 void AboutUser::onSelectDirClicked()
@@ -83,9 +93,9 @@ void AboutUser::onSelectDirClicked()
                                             tr("Choose an auto accept directory", "popup title"),
                                             dir,
                                             QFileDialog::DontUseNativeDialog);
-    ui->autoaccept->setChecked(true);
+    ui->autoacceptfile->setChecked(true);
     Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
-    Settings::getInstance().saveGlobal();
+    Settings::getInstance().savePersonal();
 }
 
 /**

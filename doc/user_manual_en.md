@@ -112,6 +112,13 @@ can have different nicknames, status messages and friends.
 + __Change password:__ Allows you to either change an existing password, or
   create a new password if your profile does not have one.
 
+## Friends' options
+In the friend's window you can customize some options for this friend specifically.
+* _Auto answer:_ chooses the way to autoaccept audio and video calls.
+	* _Manual:_ All calls must be manually accepted.
+	* _Audio:_ Only audio calls will be automatically accepted. Video calls must be manually accepted.
+	* _Audio + video:_ All calls will be automatically accepted.
+
 ## Settings
 ### General
 
