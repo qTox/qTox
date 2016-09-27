@@ -64,6 +64,9 @@ AdvancedForm::AdvancedForm()
     bodyUI->proxyType->setCurrentIndex(index);
     on_proxyType_currentIndexChanged(index);
 
+    bodyUI->spinStartUDPPort->setValue(s.getStartUDPPort());
+    bodyUI->spinEndUDPPort->setValue(s.getEndUDPPort());
+
     QString warningBody = tr("Unless you %1 know what you are doing, "
                              "please do %2 change anything here. Changes "
                              "made here may lead to problems with qTox, and even "
@@ -159,4 +162,34 @@ void AdvancedForm::retranslateUi()
     int proxyType = bodyUI->proxyType->currentIndex();
     bodyUI->retranslateUi(this);
     bodyUI->proxyType->setCurrentIndex(proxyType);
+}
+
+
+void AdvancedForm::on_spinStartUDPPort_editingFinished()
+{
+    int startPort = bodyUI->spinStartUDPPort->value();
+    int endPort = bodyUI->spinEndUDPPort->value();
+
+    if ( endPort < startPort )
+    {
+        bodyUI->spinEndUDPPort->setValue(startPort + 100);
+    }
+    Settings::getInstance().setStartUDPPort(startPort);
+    Settings::getInstance().setEndUDPPort(endPort);
+}
+
+void AdvancedForm::on_spinEndUDPPort_editingFinished()
+{
+    int startPort = bodyUI->spinStartUDPPort->value();
+    int endPort = bodyUI->spinEndUDPPort->value();
+
+    if ( endPort < startPort )
+    {
+        QMessageBox::warning(this, tr("Start port should be lower than end port", "popup title"),
+                        tr("You should swap start and end port.\nThe end port have to be higher than the start port", "popup text"));
+        return;
+    }
+    Settings::getInstance().setStartUDPPort(startPort);
+    Settings::getInstance().setEndUDPPort(endPort);
+
 }
