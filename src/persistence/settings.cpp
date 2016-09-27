@@ -2291,8 +2291,7 @@ void Settings::removeFriendRequest(int index)
 
 void Settings::readFriendRequest(int index)
 {
-
-
+    QMutexLocker locker{&bigLock};
     friendRequests[index].read = true;
 }
 
