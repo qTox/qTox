@@ -64,6 +64,9 @@ AdvancedForm::AdvancedForm()
     bodyUI->proxyType->setCurrentIndex(index);
     on_proxyType_currentIndexChanged(index);
 
+    bodyUI->spinStartUDPPort->setValue(s.getStartUDPPort());
+    bodyUI->spinEndUDPPort->setValue(s.getEndUDPPort());
+
     QString warningBody = tr("Unless you %1 know what you are doing, "
                              "please do %2 change anything here. Changes "
                              "made here may lead to problems with qTox, and even "
