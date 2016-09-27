@@ -50,6 +50,10 @@ private slots:
     void on_proxyPort_valueChanged(int port);
     void on_proxyType_currentIndexChanged(int index);
     void on_reconnectButton_clicked();
+    // Network
+    void on_spinStartUDPPort_editingFinished();
+    void on_spinEndUDPPort_editingFinished();
+    void on_spinStartUDPPort_valueChanged(const QString &arg1);
 
 private:
     void retranslateUi();
