@@ -2347,12 +2347,16 @@ quint16 Settings::getStartUDPPort() const
 
 void Settings::setStartUDPPort(quint16 port)
 {
-        QMutexLocker locker{&bigLock};
-        if(port<0 || port>65535)
-        {
-            startUDPPort = port;
-            emit startUDPPortChanged(port);
-        }
+    QMutexLocker locker{&bigLock};
+    if(port>=1000 && port<=65535)
+    {
+        startUDPPort = port;
+
+    }
+    else{
+        startUDPPort = 0;
+    }
+    emit startUDPPortChanged(port);
 }
 
 quint16 Settings::getEndUDPPort() const
@@ -2363,12 +2367,15 @@ quint16 Settings::getEndUDPPort() const
 
 void Settings::setEndUDPPort(quint16 port)
 {
-        QMutexLocker locker{&bigLock};
-        if(port>=0 && port<=65535)
-        {
-            endUDPPort = port;
-            emit endUDPPortChanged(port);
-        }
+    QMutexLocker locker{&bigLock};
+    if(port>=1000 && port<=65535)
+    {
+        endUDPPort = port;
+
+    }else{
+        endUDPPort = 0;
+    }
+    emit endUDPPortChanged(port);
 }
 
 /**
