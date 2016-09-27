@@ -50,6 +50,9 @@ private slots:
     void on_proxyPort_valueChanged(int port);
     void on_proxyType_currentIndexChanged(int index);
     void on_reconnectButton_clicked();
+    // Network
+    void on_spinStartUDPPort_valueChanged(int port);
+    void on_spinEndUDPPort_valueChanged(int port);
 
 private:
     void retranslateUi();

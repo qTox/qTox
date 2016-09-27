@@ -128,6 +128,13 @@ class Settings : public QObject
     Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS
                WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
 
+   // Network
+    Q_PROPERTY(quint16 startUDPPort READ getStartUDPPort
+               WRITE setStartUDPPort NOTIFY startUDPPortChanged FINAL)
+    Q_PROPERTY(quint16 endUDPPort READ getEndUDPPort
+               WRITE setEndUDPPort NOTIFY endUDPPortChanged FINAL)
+
+
 public:
     enum class ProxyType {ptNone = 0, ptSOCKS5 = 1, ptHTTP = 2};
     enum class StyleType {NONE = 0, WITH_CHARS = 1, WITHOUT_CHARS = 2};
@@ -241,6 +248,10 @@ signals:
     void screenRegionChanged(const QRect& region);
     void screenGrabbedChanged(bool enabled);
     void camVideoFPSChanged(quint16 fps);
+
+    // Network
+    void startUDPPortChanged(quint16 startPort);
+    void endUDPPortChanged(quint16 endPort);
 
 public:
     const QList<DhtServer>& getDhtServerList() const;
@@ -473,6 +484,13 @@ public:
     bool getAutoLogin() const;
     void setAutoLogin(bool state);
 
+    // Network
+    quint16 getStartUDPPort() const;
+    void setStartUDPPort(quint16 port);
+
+    quint16 getEndUDPPort() const;
+    void setEndUDPPort(quint16 port);
+
     int getCircleCount() const;
     int addCircle(const QString& name = QString());
     int removeCircle(int id);
@@ -613,6 +631,10 @@ private:
     QRect screenRegion;
     bool screenGrabbed;
     unsigned short camVideoFPS;
+
+    // Network
+    quint16 startUDPPort;
+    quint16 endUDPPort;
 
     struct friendProp
     {
