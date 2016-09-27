@@ -20,7 +20,25 @@
 set -e -o pipefail
 
 # Build OSX
-bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
-bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
-bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
-bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
+build() {
+    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
+    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
+    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
+    bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -dmg
+}
+
+# check if binary was built
+check() {
+    local BIN_NAME="qTox.dmg"
+    if [[ ! -s "$BIN_NAME" ]]
+    then
+        echo "There's no $BIN_NAME !"
+        exit 1
+    fi
+}
+
+main() {
+    build
+    check
+}
+main
