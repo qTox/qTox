@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>489</width>
-        <height>549</height>
+        <width>485</width>
+        <height>545</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -58,6 +58,36 @@
             </property>
             <property name="text">
              <string>Make Tox portable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="title">
+          <string>Network</string>
+         </property>
+         <layout class="QHBoxLayout" name="NetworkGroup">
+          <item>
+           <widget class="QLabel" name="PortRangeLabel">
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Port range ( start port - end port ) :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinStartUDPPort">
+            <property name="maximum">
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinEndUDPPort">
+            <property name="maximum">
+             <number>65535</number>
             </property>
            </widget>
           </item>
