@@ -535,6 +535,10 @@ void AVForm::on_playbackSlider_valueChanged(int value)
 void AVForm::on_btnPlayTestSound_clicked(bool checked)
 {
     mPlayTestSound = checked;
+
+    Audio& audio = Audio::getInstance();
+    if (mPlayTestSound && audio.isOutputReady())
+               audio.playMono16Sound(Audio::getSound(Audio::Sound::Test));
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int value)
