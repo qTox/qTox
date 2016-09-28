@@ -43,6 +43,9 @@ private slots:
     // Portable
     void on_cbMakeToxPortable_stateChanged();
     void on_resetButton_clicked();
+    // Debug
+    void on_btnCopyDebug_clicked();
+    void on_btnExportLog_clicked();
     // Connection
     void on_cbEnableIPv6_stateChanged();
     void on_cbEnableUDP_stateChanged();
