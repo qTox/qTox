@@ -5,15 +5,15 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Audio/Video</translation>
+        <translation>Audio/video</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Standaard resolutie</translation>
+        <translation>Standaardresolutie</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Uitgeschakeld</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
@@ -127,20 +127,28 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Je gebruikt qTox-versie %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished">Commit hash: %1</translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">toxcore versie: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Qt-versie: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Versie</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>toxcore versie: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>License</source>
@@ -153,14 +161,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Known Issues</source>
         <translation>Bekende problemen</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Qt-versie: $QTVERSION</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Je gebruikt qTox-versie $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -229,6 +229,22 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Gespreksgeschiedenis met %1 verwijderd!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1246,10 +1262,6 @@ Deel dit met je vrienden om te communiceren.</translation>
         <translation>Profiel</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Huidige profiel locatie:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Profiel hernoemen.</translation>
@@ -1794,6 +1806,10 @@ Deel dit met je vrienden om te communiceren.</translation>
         <comment>button text</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Huidige profiel locatie: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2004,16 +2020,16 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Verwijder vriend</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Weet je zeker dat je &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; uit je contactenlijst wilt verwijderen?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Verwijder ook de gespreksgeschiedenis</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Verwijder</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Weet je zeker dat je %1 uit je contactenlijst wilt verwijderen?</translation>
     </message>
 </context>
 <context>
