@@ -35,7 +35,7 @@ SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
 INSTALL_DIR=libs
 
 # just for convenience
-BASE_DIR=${SCRIPT_DIR}/${INSTALL_DIR}
+BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
 
 # directory names of cloned repositories
 TOX_CORE_DIR=libtoxcore-latest
@@ -110,13 +110,13 @@ echo "keep build files            : ${KEEP_BUILD_FILES}"
 
 ############### prepare step ###############
 # create BASE_DIR directory if necessary
-mkdir -p ${BASE_DIR}
+mkdir -p "${BASE_DIR}"
 
 
 # remove not needed dirs
 remove_build_dirs() {
-    rm -rf ${BASE_DIR}/${TOX_CORE_DIR}
-    rm -rf ${BASE_DIR}/${SQLCIPHER_DIR}
+    rm -rf "${BASE_DIR}/${TOX_CORE_DIR}"
+    rm -rf "${BASE_DIR}/${SQLCIPHER_DIR}"
 }
 
 
@@ -130,7 +130,7 @@ remove_build_dirs
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
     git clone https://github.com/irungentoo/toxcore.git \
-        ${BASE_DIR}/${TOX_CORE_DIR} --depth 1
+        "${BASE_DIR}/${TOX_CORE_DIR}" --depth 1
 
     pushd ${BASE_DIR}/${TOX_CORE_DIR}
     ./autogen.sh
@@ -168,11 +168,11 @@ fi
 #install sqlcipher
 if [[ $INSTALL_SQLCIPHER = "true" ]]; then
     git clone https://github.com/sqlcipher/sqlcipher.git \
-        ${BASE_DIR}/${SQLCIPHER_DIR} \
+        "${BASE_DIR}/${SQLCIPHER_DIR}" \
         --depth 1 \
         --branch v3.4.0
 
-    pushd ${BASE_DIR}/${SQLCIPHER_DIR}
+    pushd "${BASE_DIR}/${SQLCIPHER_DIR}"
     autoreconf -if
 
     if [[ $SYSTEM_WIDE = "false" ]]; then
