@@ -24,6 +24,8 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
+#include <QClipboard>
+#include <QFileDialog>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -90,6 +92,64 @@ AdvancedForm::~AdvancedForm()
 void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+}
+void AdvancedForm::on_btnExportLog_clicked()
+{
+    QString savefile = QFileDialog::getSaveFileName(this, tr("Save File"),QDir::homePath(),tr("Logs (*.log)"), 0 ,QFileDialog::DontUseNativeDialog);
+
+    if (savefile.isNull() || savefile.isEmpty())
+    {
+        qDebug() << "Debug log save file was not properly chosen";
+        return;
+    }
+
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logfile = logFileDir + "qtox.log";
+
+    QFile file(logfile);
+    if (file.exists())
+        qDebug() << "Found debug log for copying";
+    else
+        qDebug() << "No debug file found";
+
+    QFile::copy(logfile, savefile);
+    QFile copyfile(savefile);
+    if (copyfile.exists())
+        qDebug() << "Successfully copied to: " << savefile;
+    else
+        qDebug() << "File was not copied";  
+}
+
+void AdvancedForm::on_btnCopyDebug_clicked()
+{
+    QString debugtext;
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logfile = logFileDir + "qtox.log";
+
+    QFile file(logfile);
+    if (file.exists())
+        qDebug() << "Found debug log for copying";
+    else
+        qDebug() << "No debug file found";
+
+    QClipboard* clipboard = QApplication::clipboard();
+    if (clipboard)
+    {
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream in(&file);
+            debugtext = in.readAll();
+        }
+        file.close();
+
+        clipboard->setText(debugtext, QClipboard::Clipboard);
+        qDebug() << "Debug log copied to clipboard";
+    }
+    else
+    {
+        qDebug() << "Unable to access clipboard";
+    }
+
 }
 
 void AdvancedForm::on_resetButton_clicked()
