@@ -28,6 +28,8 @@
 #include <QMutex>
 #include <QTimer>
 
+#include <cassert>
+
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
  #include <OpenAL/alc.h>
@@ -42,6 +44,27 @@
 #include <AL/alext.h>
 #endif
 
+/**
+ * @class Audio
+ *
+ * @enum Audio::Sound
+ * @brief Provides the added sound variable for the audio class for use in the getSound function.
+ *
+ * @var Sound
+ * @brief Holds the name of the requested sound for the getSound function.
+ * @value NewMessage: Returns the new message notification sound.
+ * @value Test: Returns the test sound.
+ * @value IncomingCall: Returns the incoming call sound.
+ *
+ * @fn inline statuic Qstring getSound(Sound s)
+ * @brief Function to get the path for requested sound.
+ *
+ * @param s
+ * @brief Name of sound to get the path of.
+ * @return The path of the requested sound.
+ *
+ */
+
 class Audio : public QObject
 {
     Q_OBJECT
@@ -49,6 +72,22 @@ class Audio : public QObject
     class Private;
 
 public:
+
+    enum class Sound { NewMessage, Test, IncomingCall };
+
+    inline static QString getSound(Sound s) {
+        switch (s)
+        {
+        case Sound::Test:
+            return QStringLiteral(":/audio/notification.pcm");
+        case Sound::NewMessage:
+            return QStringLiteral(":/audio/notification.pcm");
+        case Sound::IncomingCall:
+            return QStringLiteral(":/audio/ToxIncomingCall.pcm");
+        }
+        assert(false);
+        return QString();
+    }
     static Audio& getInstance();
 
     qreal outputVolume() const;
