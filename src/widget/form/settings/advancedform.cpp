@@ -24,6 +24,8 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
+#include <QClipboard>
+#include <QFileDialog>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -90,6 +92,51 @@ AdvancedForm::~AdvancedForm()
 void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 {
     Settings::getInstance().setMakeToxPortable(bodyUI->cbMakeToxPortable->isChecked());
+}
+void AdvancedForm::on_btnExportLog_clicked()
+{
+    QString savefile = QFileDialog::getSaveFileName(this, tr("Save File"),QDir::homePath(),tr("Logs (*.log)"), 0 ,QFileDialog::DontUseNativeDialog);
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logfile = logFileDir + "qtox.log";
+
+    QFile file(logfile);
+    if (file.exists())
+        qDebug() << "Found debug log for copying";
+    else
+        qDebug() << "No debug file found";
+
+    QFile::copy(logfile, savefile);
+    QFile copyfile(savefile);
+    if (copyfile.exists())
+        qDebug() << "Successfully copied to: " << savefile;
+    else
+        qDebug() << "File was not copied";  
+}
+
+void AdvancedForm::on_btnCopyDebug_clicked()
+{
+    QString debugtext;
+    QString logFileDir = Settings::getInstance().getAppCacheDirPath();
+    QString logfile = logFileDir + "qtox.log";
+
+    QFile file(logfile);
+    if (file.exists())
+        qDebug() << "Found debug log for copying";
+    else
+        qDebug() << "No debug file found";
+
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream in(&file);
+        debugtext = in.readAll();
+    }
+    file.close();
+
+    QClipboard* clipboard = QApplication::clipboard();
+
+        if (clipboard)
+            clipboard->setText(debugtext, QClipboard::Clipboard);
 }
 
 void AdvancedForm::on_resetButton_clicked()
