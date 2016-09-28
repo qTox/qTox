@@ -88,6 +88,20 @@ private:
 /**
  * @class Audio
  *
+ * @enum Audio::Sound
+ * @brief Provides the different sounds for use in the getSound function.
+ * @see getSound
+ *
+ * @value NewMessage Returns the new message notification sound.
+ * @value Test Returns the test sound.
+ * @value IncomingCall Returns the incoming call sound.
+ *
+ * @fn QString Audio::getSound(Sound s)
+ * @brief Function to get the path of the requested sound.
+ *
+ * @param s Name of the sound to get the path of.
+ * @return The path of the requested sound.
+ *
  * @fn void Audio::frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
  *
  * When there are input subscribers, we regularly emit captured audio frames with this signal
