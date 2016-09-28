@@ -73,10 +73,10 @@
           <item>
            <widget class="QLabel" name="PortRangeLabel">
             <property name="toolTip">
-             <string>set the UDP port range used by qTox </string>
+             <string>Set the UDP port range used by qTox</string>
             </property>
             <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Port range ( start port - end port ) :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             <string>Port range ( start port - end port ) :</string>
             </property>
            </widget>
           </item>
