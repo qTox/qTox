@@ -28,6 +28,8 @@
 #include <QMutex>
 #include <QTimer>
 
+#include <cassert>
+
 #if defined(__APPLE__) && defined(__MACH__)
  #include <OpenAL/al.h>
  #include <OpenAL/alc.h>
@@ -49,6 +51,22 @@ class Audio : public QObject
     class Private;
 
 public:
+
+    enum class Sound { NewMessage, Test, IncomingCall };
+
+    inline static QString getSound(Sound s) {
+        switch (s)
+        {
+        case Sound::Test:
+            return QStringLiteral(":/audio/notification.pcm");
+        case Sound::NewMessage:
+            return QStringLiteral(":/audio/notification.pcm");
+        case Sound::IncomingCall:
+            return QStringLiteral(":/audio/ToxIncomingCall.pcm");
+        }
+        assert(false);
+        return QString();
+    }
     static Audio& getInstance();
 
     qreal outputVolume() const;
