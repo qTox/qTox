@@ -33,6 +33,24 @@
 #include <cassert>
 
 /**
+ * @class Audio
+ *
+ * @enum Audio::Sound
+ * @brief Provides the added sound variable for the audio class for use in the getSound function.
+ *
+ * @value NewMessage Returns the new message notification sound.
+ * @value Test Returns the test sound.
+ * @value IncomingCall Returns the incoming call sound.
+ *
+ * @fn QString Audio::getSound(Sound s)
+ * @brief Function to get the path for requested sound.
+ *
+ * @param s Name of sound to get the path of.
+ * @return The path of the requested sound.
+ *
+ */
+
+/**
  * @class Audio::Private
  *
  * @brief Encapsulates private audio framework from public qTox Audio API.
