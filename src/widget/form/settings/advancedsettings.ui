@@ -24,8 +24,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>489</width>
-        <height>549</height>
+        <width>485</width>
+        <height>545</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -58,6 +58,29 @@
             </property>
             <property name="text">
              <string>Make Tox portable</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="DebugGroup">
+         <property name="title">
+          <string>Debug</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="btnExportLog">
+            <property name="text">
+             <string>Export Debug Log</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnCopyDebug">
+            <property name="text">
+             <string>Copy Debug Log</string>
             </property>
            </widget>
           </item>
