@@ -62,11 +62,20 @@ cd ../ffmpeg
 wget http://ffmpeg.org/releases/ffmpeg-2.8.5.tar.bz2
 tar xf ffmpeg*
 cd ffmpeg*
+# enabled:
+# v4l2 -> webcam
+# x11grab_xcb -> screen grabbing
+# demuxers, decoders and parsers needed for webcams:
+# mjpeg, h264
+
 ./configure --prefix="$PREFIX_DIR" \
     --disable-avfilter \
     --disable-avresample \
     --disable-bzlib \
+    --disable-bsfs \
     --disable-dct \
+    --disable-decoders \
+    --disable-demuxers \
     --disable-doc \
     --disable-dwt \
     --disable-encoders \
@@ -74,12 +83,15 @@ cd ffmpeg*
     --disable-fft \
     --disable-filters \
     --disable-iconv \
+    --disable-indevs \
     --disable-lsp \
     --disable-lzma \
     --disable-lzo \
     --disable-mdct \
     --disable-muxers \
     --disable-network \
+    --disable-outdevs \
+    --disable-parsers \
     --disable-postproc \
     --disable-programs \
     --disable-protocols \
@@ -94,7 +106,15 @@ cd ffmpeg*
     --disable-yasm \
     --disable-zlib \
     --enable-shared \
-    --enable-memalign-hack
+    --enable-memalign-hack \
+    --enable-indev=v4l2 \
+    --enable-indev=x11grab_xcb \
+    --enable-demuxer=h264 \
+    --enable-demuxer=mjpeg \
+    --enable-parser=h264 \
+    --enable-parser=mjpeg \
+    --enable-decoder=h264 \
+    --enable-decoder=mjpeg
 
 make -j$(nproc)
 make install
@@ -127,12 +147,12 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
 # first build qTox without support for optional dependencies
 echo '*** BUILDING "MINIMAL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES SMILEYS=NO
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
-make -j10
+make -j$(nproc)
 # clean it up, and build normal version
 make clean
 echo '*** BUILDING "FULL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX"
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" SMILEYS=MIN
 # ↓ with $(nproc) fails, since travis gives 32 threads, and it leads to OOM
-make -j10
+make -j$(nproc)
