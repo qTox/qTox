@@ -167,7 +167,7 @@
      <item row="5" column="0" colspan="2">
       <widget class="QCheckBox" name="autoacceptfile">
        <property name="text">
-        <string>Auto accept file</string>
+        <string>Auto accept files</string>
        </property>
       </widget>
      </item>
