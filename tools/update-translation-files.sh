@@ -36,7 +36,7 @@ then
     done
 
     git add translations/*.ts
-    git commit --author -m "$COMMIT_MSG"
+    git commit -m "$COMMIT_MSG"
 else
     $LUPDATE_CMD "translations/$@.ts"
 fi
