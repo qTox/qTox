@@ -127,24 +127,28 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>contributors</source>
         <translation>kaastöölised</translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Kasutad qToxi versiooni %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished">Commit räsi: %1</translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">TOXcore'i versioon: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Qt versioon: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Versioon</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>TOXcore&apos;i versioon: $TOXCOREVERSION</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit räsi: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Kasutad qToxi versiooni $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -161,10 +165,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Known Issues</source>
         <translation>Teadaolevad probleemid</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Qt versioon: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -229,6 +229,22 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1248,10 +1264,6 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
         <translation>Profiil</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Käesoleva profiili asukoht:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Nimeta profiil ümber.</translation>
@@ -1799,6 +1811,10 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
         <comment>button text</comment>
         <translation>Määra profiili salasõna</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Käesoleva profiili asukoht: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2010,16 +2026,16 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <translation>Eemalda sõber</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Oled kindel, et soovid &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; oma kontaktide nimekirjast eemaldada?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Kustuta ka vestluste ajalugu</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Eemalda</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
     </message>
 </context>
 <context>

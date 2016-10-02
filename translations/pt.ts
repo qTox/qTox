@@ -126,6 +126,22 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
@@ -144,22 +160,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     <message>
         <source>Known Issues</source>
         <translation>Problemas Conhecidos</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -227,6 +227,22 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1323,10 +1339,6 @@ Profile does not contain your history.</source>
         <source>Update</source>
         <translation type="unfinished">Atualizar</translation>
     </message>
-    <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1789,6 +1801,10 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <comment>button text</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -1999,15 +2015,15 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation type="unfinished">Remover contato</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

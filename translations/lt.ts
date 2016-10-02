@@ -127,16 +127,28 @@ vaizdo skambučiais.</translation>
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Naudojate qTox versiją: %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">toxcore versija: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Qt versija: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Versija</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Naudojate qTox versiją: $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -147,24 +159,12 @@ vaizdo skambučiais.</translation>
         <translation>Licencija</translation>
     </message>
     <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>toxcore versija: $TOXCOREVERSION</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Atnaujinimo maiša (&lt;i&gt;hash&lt;/i&gt;): &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Kūrėjai</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Žinomos klaidos</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Qt versija: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -229,6 +229,22 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Pokalbių su %1 žurnalas išvalytas!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1233,10 +1249,6 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <translation>Profilis</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Aktyvaus profilio saugojimo vieta:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Pervadinti profilį.</translation>
@@ -1799,6 +1811,10 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <comment>button text</comment>
         <translation>Nustatyti profilio slaptažodį</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Aktyvaus profilio saugojimo vieta: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2009,16 +2025,16 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Pašalinti kontaktą</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ar tikrai norite pašalinti &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; iš kontaktų sąrašo?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Išvalyti pokalbių žurnalą</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Pašalinti</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Ar tikrai norite pašalinti %1 iš kontaktų sąrašo?</translation>
     </message>
 </context>
 <context>
