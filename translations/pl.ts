@@ -234,6 +234,22 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <source>Chat history with %1 removed!</source>
         <translation>Historia rozmów z %1 usunięta!</translation>
     </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>

@@ -127,24 +127,28 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Stai utilizzando la versione %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished">Commit hash: %1</translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">Versione toxcore: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Versione Qt: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Versione</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Stai utilizzando la versione $GIT_DESCRIBE.</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Versione toxcore: $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>License</source>
@@ -157,10 +161,6 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>Known Issues</source>
         <translation>Problemi Noti</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Versione Qt: $QTVERSION</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -229,6 +229,22 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Cronologia chat con %1 rimossa!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1238,10 +1254,6 @@ Puoi condividere questo codice QR al posto del tuo Tox ID.</translation>
         <translation>Profilo</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Posizione del profilo attuale:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Rinomina profilo.</translation>
@@ -1796,6 +1808,10 @@ Condividilo con chi vuoi comunicare.</translation>
         <comment>button text</comment>
         <translation>Imposta una password per il profilo</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Posizione del profilo attuale: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2006,16 +2022,16 @@ Verrà installata al riavvio del programma.</translation>
         <translation>Rimuovi contatto</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sei sicuro di voler rimuovere &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; dalla tua lista contatti?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Rimuovi anche la cronologia chat</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Rimuovi</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Sei sicuro di voler rimuovere %1 dalla tua lista contatti?</translation>
     </message>
 </context>
 <context>

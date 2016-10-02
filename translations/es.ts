@@ -127,16 +127,28 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Estás usando qTox versión %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">Versión de toxcore: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Versión de Qt: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Versión</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Estás usando qTox versión $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -147,24 +159,12 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Licencia</translation>
     </message>
     <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Versión de toxcore: $TOXCOREVERSION</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Autores</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Problemas Conocidos</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Versión de Qt: $QTVERSION</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -229,6 +229,22 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>¡El historial de chat con %1 fue eliminado!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1266,10 +1282,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>Copiar imagen</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Ubicación del perfil actual:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
         <translation>Renombrar</translation>
@@ -1796,6 +1808,10 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <comment>button text</comment>
         <translation>Establecer contraseña del perfil</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Ubicación del perfil actual: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2006,16 +2022,16 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Eliminar amigo</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;¿Estás seguro de que deseas eliminar a &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; de tu lista de contactos?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Eliminar también el historial de chat</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">¿Estás seguro de que deseas eliminar a %1 de tu lista de contactos?</translation>
     </message>
 </context>
 <context>

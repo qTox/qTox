@@ -127,20 +127,28 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Vous utilisez qTox version %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished">Identifiant de changement : %1</translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">Version de toxcore : %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Version de Qt : %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Version</translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Identifiant de changement : &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Version de toxcore : $TOXCOREVERSION</translation>
     </message>
     <message>
         <source>License</source>
@@ -153,14 +161,6 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Known Issues</source>
         <translation>Problèmes connus</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Version de Qt : $QTVERSION</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Vous utilisez qTox version $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -229,6 +229,22 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>L&apos;historique de la dicussion avec %1 a été effacé !</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1246,10 +1262,6 @@ Vous pouvez la partager avec vos contacts.</translation>
         <translation>Profil</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Emplacement actuel de votre profil : Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Renommer le profil.</translation>
@@ -1796,6 +1808,10 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
         <comment>button text</comment>
         <translation>Choix du mot de passe pour le profil</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Emplacement actuel de votre profil : %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2006,16 +2022,16 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>Supprimer ce contact</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Êtes-vous sûr de vouloir supprimer &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; de votre liste de contacts ?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Supprimer aussi l&apos;historique de discussion</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Êtes-vous sûr de vouloir supprimer %1 de votre liste de contacts ?</translation>
     </message>
 </context>
 <context>

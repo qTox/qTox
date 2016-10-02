@@ -127,27 +127,27 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -228,6 +228,22 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1302,10 +1318,6 @@ Profil ne sadrži vašu povijest.</translation>
         <translation type="unfinished">Profil</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation type="unfinished"></translation>
@@ -1791,6 +1803,10 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
         <comment>button text</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2001,15 +2017,15 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation type="unfinished">Ukloni prijatelja</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

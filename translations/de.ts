@@ -127,16 +127,28 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>contributors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>You are using qTox version %1.</source>
+        <translation type="unfinished">Du verwendest qTox %1.</translation>
+    </message>
+    <message>
+        <source>Commit hash: %1</source>
+        <translation type="unfinished">Commit-Hash: %1</translation>
+    </message>
+    <message>
+        <source>toxcore version: %1</source>
+        <translation type="unfinished">Toxcore-Version: %1</translation>
+    </message>
+    <message>
+        <source>Qt version: %1</source>
+        <translation type="unfinished">Qt-Version: %1</translation>
+    </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
         <translation>Version</translation>
-    </message>
-    <message>
-        <source>You are using qTox version $GIT_DESCRIBE.</source>
-        <translation>Du verwendest qTox $GIT_DESCRIBE.</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -147,24 +159,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Lizenz</translation>
     </message>
     <message>
-        <source>Commit hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</source>
-        <translation>Commit-Hash: &lt;a href=&quot;https://github.com/qTox/qTox/commit/$GIT_VERSION&quot;&gt;$GIT_VERSION&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <source>toxcore version: $TOXCOREVERSION</source>
-        <translation>Toxcore-Version: $TOXCOREVERSION</translation>
-    </message>
-    <message>
         <source>Authors</source>
         <translation>Entwickler</translation>
     </message>
     <message>
         <source>Known Issues</source>
         <translation>Bekannte Probleme</translation>
-    </message>
-    <message>
-        <source>Qt version: $QTVERSION</source>
-        <translation>Qt-Version: $QTVERSION</translation>
     </message>
 </context>
 <context>
@@ -229,6 +229,22 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Chat history with %1 removed!</source>
         <translation>Gesprächsverlauf mit %1 wurde gelöscht!</translation>
+    </message>
+    <message>
+        <source>Auto accept call :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -399,7 +415,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keine Kamera ausgewählt</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -1242,10 +1258,6 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
         <translation>Profil</translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Current profile location:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;a href=&quot;file:///Dir_Path&quot;&gt;&lt;span style=&quot; text-decoration: NONE; color:#000000;&quot;&gt;Aktuelles Profil in:  Dir_Path&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
         <translation>Profil umbenennen.</translation>
@@ -1805,6 +1817,10 @@ Teile sie einfach deinen Bekannten mit!</translation>
         <comment>button text</comment>
         <translation>Profil mit Passwort schützen</translation>
     </message>
+    <message>
+        <source>Current profile location: %1</source>
+        <translation type="unfinished">Aktuelles Profil in: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2015,16 +2031,16 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Kontakt löschen</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Are you sure you want to remove &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; from your contacts list?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bist du dir sicher, dass du &lt;span style=&quot; font-weight:600;&quot;&gt;&amp;lt;name&amp;gt;&lt;/span&gt; von deiner Kontaktliste löschen möchtest?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Also remove chat history</source>
         <translation>Gesprächsverlauf ebenfalls löschen</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove %1 from your contacts list?</source>
+        <translation type="unfinished">Bist du dir sicher, dass du %1 von deiner Kontaktliste löschen möchtest?</translation>
     </message>
 </context>
 <context>
@@ -2112,7 +2128,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Keine Kamera ausgewählt</translation>
     </message>
     <message>
         <source>User Interface</source>
