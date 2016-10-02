@@ -170,7 +170,7 @@ void AdvancedForm::on_spinStartUDPPort_editingFinished()
     int startPort = bodyUI->spinStartUDPPort->value();
     int endPort = bodyUI->spinEndUDPPort->value();
 
-    if ( endPort < startPort )
+    if (endPort < startPort)
     {
         bodyUI->spinEndUDPPort->setValue(startPort + 100);
     }
@@ -183,7 +183,7 @@ void AdvancedForm::on_spinEndUDPPort_editingFinished()
     int startPort = bodyUI->spinStartUDPPort->value();
     int endPort = bodyUI->spinEndUDPPort->value();
 
-    if ( endPort < startPort )
+    if (endPort < startPort)
     {
         QMessageBox::warning(this, tr("Start port should be lower than end port", "popup title"),
                         tr("You should swap start and end port.\nThe end port have to be higher than the start port", "popup text"));

@@ -2395,7 +2395,7 @@ quint16 Settings::getEndUDPPort() const
 void Settings::setEndUDPPort(quint16 port)
 {
     QMutexLocker locker{&bigLock};
-    if(port > 1023 && port <= 65535)
+    if (port > 1023 && port <= 65535)
     {
         endUDPPort = port;
         emit endUDPPortChanged(port);
