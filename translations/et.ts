@@ -137,7 +137,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">TOXcore'i versioon: %1</translation>
+        <translation type="unfinished">TOXcore&apos;i versioon: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
@@ -232,19 +232,19 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Võta kõne automaatselt vastu :</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Käsitsi</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Heli</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Heli + Video</translation>
     </message>
 </context>
 <context>
