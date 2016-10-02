@@ -287,6 +287,7 @@ bool CameraSource::openDevice()
             qWarning() << "Failed to open device!";
             return false;
         }
+        qWarning() << "Selected video mode could not be opened!";
     }
 
     // We need to open the device as many time as we already have subscribers,
