@@ -131,19 +131,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Вы выкарыстоўваеце qTox версіі %1.</translation>
+        <translation>Вы выкарыстоўваеце qTox версіі %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Хэш фіксавання: %1</translation>
+        <translation>Хэш фіксавання: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">Версія toxcore: %1</translation>
+        <translation>Версія toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Версія Qt: %1</translation>
+        <translation>Версія Qt: %1</translation>
     </message>
 </context>
 <context>
@@ -234,19 +234,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўтаматычна прымаць выклік :</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Уручную</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўдыя</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўдыя + відэа</translation>
     </message>
 </context>
 <context>
@@ -1820,7 +1820,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Размяшчэнне бягучага профілю: %1</translation>
+        <translation>Размяшчэнне бягучага профілю: %1</translation>
     </message>
 </context>
 <context>
@@ -2041,7 +2041,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Вы сапраўды хочаце выдаліць %1 з вашага спісу кантактаў?</translation>
+        <translation>Вы сапраўды хочаце выдаліць %1 з вашага спісу кантактаў?</translation>
     </message>
 </context>
 <context>
