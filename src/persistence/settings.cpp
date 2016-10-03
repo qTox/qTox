@@ -248,7 +248,7 @@ void Settings::loadGlobal()
         if (!SmileyPack::isValid(smileyPack))
             smileyPack = DEFAULT_SMILEYS;
 
-        emojiFontPointSize = s.value("emojiFontPointSize", 16).toInt();
+        emojiFontPointSize = s.value("emojiFontPointSize", 24).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();
         secondColumnHandlePosFromRight = s.value("secondColumnHandlePosFromRight", 50).toInt();
         timestampFormat = s.value("timestampFormat", "hh:mm:ss").toString();
