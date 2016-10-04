@@ -122,13 +122,11 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
                 << ql.timeFormat(QLocale::LongFormat)
                 << "hh:mm AP" << "hh:mm:ss AP" << "hh:mm:ss";
     timeFormats.removeDuplicates();
+    bodyUI->timestamp->addItems(timeFormats);
 
-    for (QString format : timeFormats)
-    {
-        QString timeExample = QTime::currentTime().toString(format);
-        QString element = QString("%1 - %2").arg(format, timeExample);
-        bodyUI->timestamp->addItem(element, format);
-    }
+    QString timeFormat = s.getTimestampFormat();
+    bodyUI->timestamp->setCurrentText(timeFormat);
+    on_timestamp_editTextChanged(timeFormat);
 
     QStringList dateFormats;
     dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
@@ -139,16 +137,11 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
                 << "dd-MM-yyyy" << "d-MM-yyyy" << "dddd dd-MM-yyyy" << "dddd d-MM";
 
     dateFormats.removeDuplicates();
+    bodyUI->dateFormats->addItems(dateFormats);
 
-    for (QString format : dateFormats)
-    {
-        QString dateExample = QDate::currentDate().toString(format);
-        QString element = QString("%1 - %2").arg(format, dateExample);
-        bodyUI->dateFormats->addItem(element, format);
-    }
-
-    bodyUI->timestamp->setCurrentText(QString("%1 - %2").arg(s.getTimestampFormat(), QTime::currentTime().toString(s.getTimestampFormat())));
-    bodyUI->dateFormats->setCurrentText(QString("%1 - %2").arg(s.getDateFormat(), QDate::currentDate().toString(s.getDateFormat())));
+    QString dateFormat = s.getDateFormat();
+    bodyUI->dateFormats->setCurrentText(dateFormat);
+    on_dateFormats_editTextChanged(dateFormat);
 
     eventsInit();
     Translator::registerHandler(std::bind(&UserInterfaceForm::retranslateUi, this), this);
@@ -176,32 +169,20 @@ void UserInterfaceForm::on_emoticonSize_editingFinished()
     Settings::getInstance().setEmojiFontPointSize(bodyUI->emoticonSize->value());
 }
 
-void UserInterfaceForm::on_timestamp_currentIndexChanged(int index)
+void UserInterfaceForm::on_timestamp_editTextChanged(const QString& format)
 {
-    Q_UNUSED(index)
-    QString format = bodyUI->timestamp->currentData().toString();
+    QString timeExample = QTime::currentTime().toString(format);
+    bodyUI->timeExample->setText(timeExample);
+
     Settings::getInstance().setTimestampFormat(format);
     Translator::translate();
 }
 
-void UserInterfaceForm::on_timestamp_editTextChanged(const QString &format)
+void UserInterfaceForm::on_dateFormats_editTextChanged(const QString& format)
 {
-    Settings::getInstance().setTimestampFormat(format);
-    Translator::translate();
-}
+    QString dateExample = QDate::currentDate().toString(format);
+    bodyUI->dateExample->setText(dateExample);
 
-void UserInterfaceForm::on_dateFormats_currentIndexChanged()
-{
-    QString format = bodyUI->dateFormats->currentData().toString();
-    qDebug() << format;
-    Settings::getInstance().setDateFormat(format);
-    Translator::translate();
-}
-
-void UserInterfaceForm::on_dateFormats_editTextChanged()
-{
-    QString format = bodyUI->dateFormats->currentText();
-    qDebug() << format;
     Settings::getInstance().setDateFormat(format);
     Translator::translate();
 }
