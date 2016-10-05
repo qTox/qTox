@@ -38,9 +38,13 @@ FORMS    += \
     src/widget/about/aboutuser.ui
 
 CONFIG   += c++11
+CONFIG   += warn_on exceptions_off rtti_off
 CONFIG   += link_pkgconfig
+# undocumented, but just works™
+CONFIG   += silent
 
-QMAKE_CXXFLAGS += -fno-exceptions -fno-rtti
+# needed, since `rtti_off` doesn't work
+QMAKE_CXXFLAGS += -fno-rtti
 QMAKE_RESOURCE_FLAGS += -compress 9 -threshold 0
 
 # Rules for creating/updating {ts|qm}-files
