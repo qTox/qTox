@@ -34,6 +34,25 @@ Builds other than installer/packages don't receive updates automatically, so
 make sure you get back to this site and regularly download the latest version of
 qTox.
 
+### Help us
+
+If you're wondering how could you help, fear not, there are plenty of ways
+:smile:
+
+Some of them are:
+
+* Spread the good word about qTox to make it more popular :smile:
+* Have an opinion? Make sure to [voice it in the issues that need it] :wink:
+* Fixing [easy issues]
+* [Testing] and [reporting bugs]
+* [Easy] translating
+* [Reviewing and testing pull requests] – you don't need to be able to code to
+  do that :wink:
+* [Coding]
+
+If you want to contribute code, you probably will be interested in [issues that
+need help].
+
 
 #### Screenshots
 Note: The screenshots may not always be up to date, but they should give a good
@@ -79,6 +98,14 @@ There are [IRC logs] available.
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
 [**64 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
 [**32 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[Coding]: https://github.com/qTox/qTox/blob/master/CONTRIBUTING.md#how-to-start-contributing
+[easy issues]: https://github.com/qTox/qTox/labels/E-easy
+[Easy]: https://github.com/qTox/qTox/blob/master/translations/README.md
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
+[issues that need help]: https://github.com/qTox/qTox/labels/help%20wanted
 [qTox-dev mailing list]: https://lists.tox.chat/listinfo/qtox-dev
+[reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
+[Reviewing and testing pull requests]: https://github.com/qTox/qTox/pulls
 [Roadmap]: https://github.com/qTox/qTox/milestones
+[Testing]: https://github.com/qTox/qTox/wiki/Testing
+[voice it in the issues that need it]: https://github.com/qTox/qTox/labels/I-feedback-wanted
