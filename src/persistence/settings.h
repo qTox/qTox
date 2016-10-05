@@ -139,7 +139,7 @@ public:
             Video    = 0x02,
             AV       = Audio | Video
         };
-        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall);
+        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall)
 
 public:
     static Settings& getInstance();
