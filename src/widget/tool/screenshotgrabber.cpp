@@ -167,8 +167,10 @@ void ScreenshotGrabber::setupScene()
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Click and drag to select a region. Press <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
-                              "Help text shown when no region has been selected yet"));
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.",
+                              "Help text shown when no region has been selected yet")
+                           .arg(QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
     adjustTooltipPosition();
 }
 
