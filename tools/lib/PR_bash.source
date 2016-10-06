@@ -22,8 +22,8 @@
 
 set -e -o pipefail
 
+# check if supplied var is a number; if not exit
 is_pr_number() {
-    # check if supplied var is a number; if not exit
     [[ "$@" =~ ^[[:digit:]]+$ ]]
 }
 
@@ -92,9 +92,14 @@ after_merge_failure_msg() {
     echo ""
 }
 
+# force delete merged and fetched branches
+rm_obsolete_branch() {
+    git branch -D {$merge_branch,}$PR 2>/dev/null || true
+}
 
 get_sources() {
     add_remote
+    rm_obsolete_branch
     git fetch $remote_name && \
     git checkout master && \
     git rebase $remote_name/master master && \
