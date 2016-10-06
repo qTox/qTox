@@ -25,6 +25,7 @@
 #include <QFileDialog>
 #include <QFont>
 #include <QMessageBox>
+#include <QRegularExpressionValidator>
 #include <QStandardPaths>
 #include <QStyleFactory>
 #include <QTime>
@@ -124,8 +125,15 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     timeFormats.removeDuplicates();
     bodyUI->timestamp->addItems(timeFormats);
 
+    QRegularExpression re(QString("^[^\\n]{0,%0}$").arg(MAX_FORMAT_LENGTH));
+    QRegularExpressionValidator* validator = new QRegularExpressionValidator(re, this);
     QString timeFormat = s.getTimestampFormat();
+
+    if (!re.match(timeFormat).hasMatch())
+        timeFormat = timeFormats[0];
+
     bodyUI->timestamp->setCurrentText(timeFormat);
+    bodyUI->timestamp->setValidator(validator);
     on_timestamp_editTextChanged(timeFormat);
 
     QStringList dateFormats;
@@ -140,7 +148,11 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->dateFormats->addItems(dateFormats);
 
     QString dateFormat = s.getDateFormat();
+    if (!re.match(dateFormat).hasMatch())
+        dateFormat = dateFormats[0];
+
     bodyUI->dateFormats->setCurrentText(dateFormat);
+    bodyUI->dateFormats->setValidator(validator);
     on_dateFormats_editTextChanged(dateFormat);
 
     eventsInit();
