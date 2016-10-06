@@ -64,6 +64,7 @@ private:
     QList<QLabel*> smileLabels;
     SettingsWidget* parent;
     Ui::UserInterfaceSettings *bodyUI;
+    const int MAX_FORMAT_LENGTH = 128;
 };
 
 #endif

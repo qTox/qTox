@@ -124,8 +124,15 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     timeFormats.removeDuplicates();
     bodyUI->timestamp->addItems(timeFormats);
 
+    QRegularExpression re(QString("[^\\n]{0,%0}").arg(MAX_FORMAT_LENGTH));
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(re);
     QString timeFormat = s.getTimestampFormat();
+
+    if (!re.globalMatch(timeFormat).isValid())
+        timeFormat = timeFormats[0];
+
     bodyUI->timestamp->setCurrentText(timeFormat);
+    bodyUI->timestamp->setValidator(validator);
     on_timestamp_editTextChanged(timeFormat);
 
     QStringList dateFormats;
@@ -140,7 +147,11 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     bodyUI->dateFormats->addItems(dateFormats);
 
     QString dateFormat = s.getDateFormat();
+    if (!re.globalMatch(dateFormat).isValid())
+        dateFormat = dateFormats[0];
+
     bodyUI->dateFormats->setCurrentText(dateFormat);
+    bodyUI->dateFormats->setValidator(validator);
     on_dateFormats_editTextChanged(dateFormat);
 
     eventsInit();
