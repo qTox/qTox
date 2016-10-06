@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Desabilitado</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir um som ao mudar de volume.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -25,11 +25,11 @@
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar região</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tela %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
@@ -37,31 +37,31 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ganho</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Dispositivo de Reprodução</translation>
+        <translation>Dispositivo de Reprodução</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Deslize para ajustar o volume dos seus auto-falantes.</translation>
+        <translation>Deslize para ajustar o volume dos auto-falantes.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Dispositivo de Captura</translation>
+        <translation>Dispositivo de Captura</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Configurações de Vídeo</translation>
+        <translation>Configurações de Vídeo</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Dispositivo de Vídeo</translation>
+        <translation>Dispositivo de Vídeo</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,18 +69,18 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Define a resolução da sua câmera.
+        <translation>Define a resolução da sua câmera.
 Valores mais altos fornecem uma qualidade melhor.
 Observe no entanto que uma qualidade de vídeo maior exige uma conexão melhor com a internet.
-Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo maior, que pode levar a problemas em chamadas de vídeo.</translation>
+Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo maior, que pode acarretar em problemas nas chamadas de vídeo.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Resolução</translation>
+        <translation>Resolução</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Re-escanear</translation>
     </message>
 </context>
 <context>
@@ -91,44 +91,44 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma lista de problemas conhecidos encontra-se em nosso %1 no Github. Se encontrar um bug ou vulnerabilidades no qTox, por favor %3 segundo as normas descritas no artigo &quot;%2&quot; de nossa wiki.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
+        <translation>bug-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Escrevendo reportagem de bug útil</translation>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>reportar</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Reinicie o qTox para instalar a versão %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox está baixando a atualização %1</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Autor original: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Veja uma lista completa de %1 no Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>contribuidores</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Você está usando a versão %1 do qTox.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -136,11 +136,11 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>versão do toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão do Qt: %1</translation>
     </message>
 </context>
 <context>
@@ -163,94 +163,94 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixando atualização: %p%</translation>
     </message>
 </context>
 <context>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Diálogo</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>nome de usuário</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>mensagem de status</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Chave pública:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias usados:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>HISTÓRICO DE ALIASES</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diretório padrão para salvar arquivos:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceitar automaticamente desabilitado para esse contato</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceitar arquivos automaticamente</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Apagar histórico (Operação irreversível!)</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Notas</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Você pode salvar comentários sobre esse contato aqui.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Escolher um diretório para aceitar arquivos automaticamente</translation>
+        <translation>Escolher um diretório para salvar arquivos aceitados automaticamente</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Histórico apagado</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished"></translation>
+        <translation>O histórico de conversas com %1 foi apagado!</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Aceitar chamada automaticamente:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manual</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Áudio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Áudio + Vídeo</translation>
     </message>
 </context>
 <context>
     <name>AddFriendForm</name>
     <message>
         <source>Add Friends</source>
-        <translation>Adicionar Contatos</translation>
+        <translation>Adicionar aos Contatos</translation>
     </message>
     <message>
         <source>Tox ID</source>
@@ -264,7 +264,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Send friend request</source>
-        <translation>Enviar pedido</translation>
+        <translation>Enviar pedido de amizade</translation>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
@@ -283,32 +283,32 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ou 76 caracteres hexadecimais ou nome@exemplo.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato inválido de ID Tox</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished">Adicionar um contato</translation>
+        <translation>Adicionar um contato</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Solicitações de amizade</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Aceitar</translation>
+        <translation>Aceitar</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished">Rejeitar</translation>
+        <translation>Rejeitar</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Este ID Tox não existe</translation>
+        <translation>Este ID Tox não existe</translation>
     </message>
 </context>
 <context>
@@ -319,45 +319,45 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>A menos que você %1 saiva o que está fazendo, por favor %2 faça alterações aqui. Mudanças podem levar a problemas com o qTox, e até perda de suas informações, como histórico.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>realmente</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>não</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NOTIFICAÇÃO IMPORTANTE</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Redefinir configurações</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas configurações serão redefinidas para o padrão. Deseja prosseguir?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Sim</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Não</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Chamada ativa</translation>
+        <translation>Chamada ativa</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Você não pode desconectar enquanto uma chamada estiver ativa!</translation>
+        <translation>Você não pode desconectar enquanto uma chamada estiver ativa!</translation>
     </message>
 </context>
 <context>
@@ -365,7 +365,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Armazena as configurações no diretório de trabalho ao invés do diretório de configurações usual</translation>
+        <translation>Armazena as configurações no diretório atual ao invés do diretório de configurações prédefinido</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -373,61 +373,61 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Restaurar às configurações padrão</translation>
+        <translation>Restaurar às configurações padrões</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Portátil</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Configuraçẽs da Conexão</translation>
+        <translation>Configuraçẽs de Conexão</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Habilitar IPv6 (recomendado)</translation>
+        <translation>Habilitar IPv6 (recomendado)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Desabilitar esta opção permite, por exemplo, utilizar a rede Tor. Ela adiciona mais dados à rede Tor no entanto, portanto desmarque apenas se necessário.</translation>
+        <translation>Desabilitar esta opção permite, por exemplo, utilizar a rede Tor. Ela adiciona mais dados à rede Tor no entanto, portanto desmarque apenas se necessário.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Habilitar UDP (recomendado)</translation>
+        <translation>Habilitar UDP (recomendado)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Tipo de proxy:</translation>
+        <translation>Tipo de proxy:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Endereço:</translation>
+        <translation>Endereço:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Nenhum</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Reconectar</translation>
+        <translation>Reconectar</translation>
     </message>
 </context>
 <context>
@@ -451,7 +451,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     <message>
         <source>Accept video call</source>
         <translatorcomment>Chamada de vídeo ou vídeochamada? Ou vídeo-chamada?</translatorcomment>
-        <translation type="unfinished">Aceitar chamada de vídeo</translation>
+        <translation>Aceitar chamada de vídeo</translation>
     </message>
     <message>
         <source>Accept audio call</source>
@@ -463,7 +463,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminar chamada de vídeo</translation>
+        <translation>Terminar chamada de vídeo</translation>
     </message>
     <message>
         <source>End audio call</source>
@@ -479,7 +479,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Cancel video call</source>
-        <translation type="unfinished">Cancelar chamada de vídeo</translation>
+        <translation>Cancelar chamada de vídeo</translation>
     </message>
     <message>
         <source>Cancel audio call</source>
@@ -495,11 +495,11 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished">Reativar microfone</translation>
+        <translation>Desmutar microfone</translation>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Reativar chamada</translation>
+        <translation>Desmutar chamada</translation>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
@@ -520,27 +520,27 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Duração da chamada:</translation>
+        <translation>Duração da chamada: </translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossível abrir</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished"></translation>
+        <translation>Má idéia</translation>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamando %1</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 está digitando</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
 </context>
 <context>
@@ -552,12 +552,12 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     <message>
         <source>Select all</source>
         <translatorcomment>Tudo ou todos?</translatorcomment>
-        <translation type="unfinished">Selecionar tudo</translation>
+        <translation>Selecionar tudo</translation>
     </message>
     <message>
         <source>pending</source>
         <translatorcomment>Plural? Singular?</translatorcomment>
-        <translation type="unfinished">pendente</translation>
+        <translation>pendente</translation>
     </message>
 </context>
 <context>
@@ -581,14 +581,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualiade de vídeo 
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir tudo em uma nova janela</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Toxing on qTox</translation>
+        <translation>Toxing com qTox</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -633,7 +633,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Desabilitando o histórico de conversas agora deixará seu histórico criptografado intacto (mas não usável). Caso você lembre a senha posteriormente, você pode reabilitar a criptografia na aba de Privacidade com a senha correta para o histórico.</translation>
+        <translation>
+Desabilitando o histórico de conversas agora deixará seu histórico criptografado intacto (mas não usável). Caso você lembre a senha posteriormente, poderá reabilitar a criptografia na aba de Privacidade com a senha correta para o histórico.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -649,7 +650,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation>Form</translation>
+        <translation type="unfinished">Formulário</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -675,7 +676,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished">Aceite para receber este arquivo</translation>
+        <translation>Aceite recebimento deste arquivo</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -716,15 +717,15 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pausado</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir arquivo</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir pasta do arquivo</translation>
     </message>
 </context>
 <context>
@@ -740,7 +741,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Transferências</translation>
     </message>
 </context>
 <context>
@@ -871,23 +872,23 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir conversa em uma nova janela</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>Retirar conversa desta janela</translation>
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Para um novo grupo</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Convidar ao grupo &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar detalhes</translation>
     </message>
 </context>
 <context>
@@ -983,7 +984,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished">Seu status será alterado para Ausente após o período de inatividade.</translation>
+        <translation>Seu status é alterado para Ausente após o período de inatividade.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
@@ -995,7 +996,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished">Mostrar alterações no status de contatos</translation>
+        <translation>Mostrar alterações no status de contatos</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
@@ -1024,15 +1025,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar qTox com o sistema operacional (usando atual perfil).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>Diretório de arquivos salvos padrão:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Reproduzir som enquanto Ocupado</translation>
     </message>
 </context>
 <context>
@@ -1071,46 +1072,46 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished">Iniciar chamada de áudio</translation>
+        <translation>Iniciar chamada de áudio</translation>
     </message>
     <message>
         <source>Accept audio call</source>
-        <translation type="unfinished">Aceitar chamada de áudio</translation>
+        <translation>Aceitar chamada de áudio</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Finalizar chamada de audio</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished">Iniciar chamada de vídeo</translation>
+        <translation>Iniciar chamada de vídeo</translation>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">Aceitar chamada de vídeo</translation>
+        <translation>Aceitar chamada de vídeo</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">Terminar chamada de vídeo</translation>
+        <translation>Finalizar chamada de vídeo</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Citar texto selecionado</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished">Vídeo Tox</translation>
+        <translation>Vídeo Tox</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar mensagens</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Esconder mensagens</translation>
     </message>
 </context>
 <context>
@@ -1118,7 +1119,7 @@ instead of system taskbar.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Vazio&gt;</translation>
     </message>
 </context>
 <context>
@@ -1141,11 +1142,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Unmute call</source>
-        <translation type="unfinished">Reativar chamada</translation>
+        <translation>Desmutar chamada</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>Terminar chamda de áudio</translation>
+        <translation>Terminar chamada de áudio</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
@@ -1155,34 +1156,34 @@ instead of system taskbar.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>1 usuário em chat</translation>
     </message>
 </context>
 <context>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupos</translation>
+        <translation>Grupos</translation>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Criar um novo grupo</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Convites à grupos</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Unir-se</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Recusar</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Convidado por %1 a %2 às %3.</translation>
     </message>
 </context>
 <context>
@@ -1202,15 +1203,15 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir conversa em outra janela</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Retirar conversa desta janela</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 usuário em chat</translation>
     </message>
 </context>
 <context>
@@ -1867,11 +1868,11 @@ Compartilhe com seus contatos para se comunicar.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sim</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Não</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2030,13 +2031,23 @@ Ela será instalada quando o qTox for reiniciado.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
+        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2443,12 +2454,12 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Convites à grupos</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Vazio&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
