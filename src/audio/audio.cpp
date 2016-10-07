@@ -352,9 +352,10 @@ bool Audio::initInput(const QString& deviceName)
     const uint32_t chnls = AUDIO_CHANNELS;
     const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
 
-    const ALchar* tmpDevName = deviceName.isEmpty()
+    const QByteArray qDevName = deviceName.toUtf8();
+    const ALchar* tmpDevName = qDevName.isEmpty()
                                ? nullptr
-                               : deviceName.toUtf8().constData();
+                               : qDevName.constData();
     alInDev = alcCaptureOpenDevice(tmpDevName, sampleRate, stereoFlag, bufSize);
 
     // Restart the capture if necessary
@@ -386,9 +387,10 @@ bool Audio::initOutput(const QString& deviceName)
     qDebug() << "Opening audio output" << deviceName;
     assert(!alOutDev);
 
-    const ALchar* tmpDevName = deviceName.isEmpty()
+    const QByteArray qDevName = deviceName.toUtf8();
+    const ALchar* tmpDevName = qDevName.isEmpty()
                                ? nullptr
-                               : deviceName.toUtf8().constData();
+                               : qDevName.constData();
     alOutDev = alcOpenDevice(tmpDevName);
 
     if (!alOutDev)
