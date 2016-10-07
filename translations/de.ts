@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Audioeinstellungen</translation>
+        <translation>Audioeinstellungen</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -41,11 +41,11 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Wiedergabegerät</translation>
+        <translation>Wiedergabegerät</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Verwende den Schieber, um die Wiedergabelautstärke anzupassen.</translation>
+        <translation>Verwende den Schieberegler, um die Wiedergabelautstärke anzupassen.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -79,7 +79,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Geräte aktualisieren</translation>
+        <translation>Geräte aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -113,7 +113,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>report it</source>
         <translatorcomment>Linktext für Bugreport</translatorcomment>
-        <translation type="unfinished">melde sie</translation>
+        <translation>Melden</translation>
     </message>
     <message>
         <source>Original author: %1</source>
@@ -125,7 +125,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitwirkende</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -358,7 +358,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Du kannst dich nicht abmelden solange ein Anruf aktiv ist!</translation>
+        <translation>Du kannst dich nicht abmelden, solange ein Anruf aktiv ist!</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1641,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation>Kann die Datei nicht öffnen.</translation>
+        <translation>Datei kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <source>Current profile: </source>
@@ -2046,14 +2046,24 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke die &lt;b&gt;Leertaste&lt;/b&gt;, um das qTox-Fenster auszublenden/anzuzeigen. Drücke &lt;b&gt;Escape&lt;/b&gt;, um abzubrechen.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Drücke &lt;b&gt;Enter&lt;/b&gt;, um einen Screenshot des ausgewählten Ausschnitts zu senden, die &lt;b&gt;Leertaste&lt;/b&gt;, um das qTox-Fenster auszublenden/einzublenden oder &lt;b&gt;Escape&lt;/b&gt;, um abzubrechen.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke die %1, um das qTox-Fenster auszublenden/anzuzeigen. Drücke %2, um abzubrechen.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Leertaste</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>
@@ -2201,7 +2211,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktliste</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
@@ -2273,11 +2283,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Zeitstempelformat:</translation>
+        <translation>Zeitstempelformat:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Datumsformat:</translation>
+        <translation>Datumsformat:</translation>
     </message>
 </context>
 <context>
@@ -2299,7 +2309,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
-        <translation>Es ist ein Fehler aufgetreten, und die Anwendung kann nicht gestartet werden.</translation>
+        <translation>Toxcore konnte nicht gestartet werden, die Anwendung wird beendet nachdem sie diese Nachricht geschlossen haben.</translation>
     </message>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
