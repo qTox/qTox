@@ -53,6 +53,11 @@ git config --global alias.logs 'log --show-signature'
   be signed, and websites can fairly well mess things up.
 - **always** test PR that is being merged.
 - **always** GPG-sign PR that you're merging.
+  
+  Commits that are about to be merged don't have to be signed, but merge-commit
+  **must** be signed. To simplify the process, and ensure that things are done
+  "right", it's preferable to use the [`merge-pr.sh`] script, which does that
+  for you automatically.
 - **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
   
   You don't have to use it, but then you're running into risk of breaking
@@ -61,11 +66,6 @@ git config --global alias.logs 'log --show-signature'
   
   Risk, that can be avoided when one doesn't type manually merge message :wink:
 - **might want** to use [`test-pr.sh`].
-  
-  Commits that are about to be merged don't have to be signed, but merge-commit
-  **must** be signed. To simplify process, and ensure that things are done
-  "right", it's preferable to use [`merge-pr.sh`] script, which does that for
-  you automatically.
 - give a PR some "breathing space" right after it's created – i.e. merging
   something right away can lead to bugs & regressions suddenly popping up, thus
   it's preferable to wait at least a day or so, to let people test & comment on
@@ -79,26 +79,6 @@ git config --global alias.logs 'log --show-signature'
   remove the label.
 - if PR doesn't apply properly on top of current master (when using
   [`merge-pr.sh`] script), request a rebase and tag PR with `PR-needs-rebase`.
-
-## Reviews
-
-Currently `reviewable.io` is being used to review changes that land in qTox.
-
-How to review:
-
-1. Click on the `Reviewable` button in pull request.
-2. Once Reviewable opens, comment on the lines that need changes.
-3. Mark as reviewed only those files that don't require any changes – this
-   makes it easier to see which files need to be changed & reviewed again once
-   change is made.
-4. If pull request is good to be merged, press `LGTM` button in Reviewable.
-5. Once you're done with evaluating PR, press `Publish` to make comments
-   visible on GitHub.
-
-Note:
-
-* when no one is assigned to the PR, *anyone* can review it
-* when there are assigned people, only they can mark review as passed
 
 
 # Issues
