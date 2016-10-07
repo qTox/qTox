@@ -246,6 +246,55 @@ Include every section of the body that is relevant for your commit.
 space or two newlines. The rest of the commit message is then used for this.
 
 
+## Reviews
+
+Currently `reviewable.io` is being used to review changes that land in qTox.
+
+How to review:
+
+1. Click on the `Reviewable` button in [pull request].
+2. Once Reviewable opens, comment on the lines that need changes.
+3. Mark as reviewed only those files that don't require any changes – this
+   makes it easier to see which files need to be changed & reviewed again once
+   change is made.
+4. If pull request is good to be merged, press `LGTM` button in Reviewable.
+5. Once you're done with evaluating PR, press `Publish` to make comments
+   visible on GitHub.
+
+When responding to review:
+
+1. Click on the `Reviewable` button in [pull request].
+2. Once you push changes to the pull request, make drafts of responses to the
+   change requests.
+   - if you're just informing that you've made a requested change, use
+     `Reviewable`'s provided `Done` button.
+   - if you want discuss the change, write a response draft.
+3. When discussion points are addressed, press `Publish` button to make
+   response visible on GitHub.
+
+Note:
+
+* when no one is assigned to the PR, *anyone* can review it
+* when there are assigned people, only they can mark review as passed
+
+### Testing PRs
+
+The easiest way is to use [`test-pr.sh`] script to get PR merged on top of
+current `master`.  E.g. to get pull request `#1234`:
+
+```bash
+./test-pr.sh 1234
+```
+
+That should create branches named `1234` and `test1234`. `test1234` is what you
+would want to test.  If script fails to merge branch because of conflicts, fret
+not, it doesn't need testing until PR author fixes merge conflicts.  You might
+want to leave a comment on the PR saying that it needs a rebase :smile:
+
+As for testing itself, there's a nice entry on the wiki:
+https://github.com/qTox/qTox/wiki/Testing
+
+
 ## Git config
 
 *Not a requirement, just a friendly tip. :wink:*
@@ -425,3 +474,7 @@ https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.a
 Symbols that should be forbidden for filenames under Windows:
 
 `<` `>` `:` `"` `/` `\` `|` `?` `*`
+
+
+[pull request]: https://github.com/qTox/qTox/pulls
+[`test-pr.sh`]: /test-pr.sh
