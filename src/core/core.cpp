@@ -136,7 +136,8 @@ void Core::makeTox(QByteArray savedata)
     tox_options_default(&toxOptions);
     toxOptions.ipv6_enabled = enableIPv6;
     toxOptions.udp_enabled = !forceTCP;
-    toxOptions.start_port = toxOptions.end_port = 0;
+    toxOptions.start_port = Settings::getInstance().getStartUDPPort();
+    toxOptions.end_port = Settings::getInstance().getEndUDPPort();
 
     // No proxy by default
     toxOptions.proxy_type = TOX_PROXY_TYPE_NONE;
