@@ -3,7 +3,6 @@ qTox
 
  [**User Manual**](/doc/user_manual_en.md) **|**
  [**Install**](/INSTALL.md) **|**
- [**Contribute**](https://github.com/qTox/qTox/wiki#contributing) **|**
  [**Report bugs**](https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports) **|**
  [**Translate**](/translations/README.md) **|**
  [**Jenkins builds**](https://build.tox.chat/) **|**
@@ -104,7 +103,7 @@ There are [IRC logs] available.
 [issues that need help]: https://github.com/qTox/qTox/labels/help%20wanted
 [qTox-dev mailing list]: https://lists.tox.chat/listinfo/qtox-dev
 [reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
-[Reviewing and testing pull requests]: https://github.com/qTox/qTox/pulls
+[Reviewing and testing pull requests]: /CONTRIBUTING.md#reviews
 [Roadmap]: https://github.com/qTox/qTox/milestones
 [Testing]: https://github.com/qTox/qTox/wiki/Testing
 [Translating, it's easy]: https://github.com/qTox/qTox/blob/master/translations/README.md
