@@ -167,17 +167,24 @@ void ScreenshotGrabber::setupScene()
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.",
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press %1 to "
+                              "hide/show qTox window, or %2 to cancel.",
                               "Help text shown when no region has been selected yet")
                            .arg(QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
-                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
+                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard")))
+                           );
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(tr("Press <b>Enter</b> to send a screenshot of the selection, <b>Space</b> to hide/show qTox window, or <b>Escape</b> to cancel.",
-                              "Help text shown when a region has been selected"));
+    helperTooltip->setHtml(tr("Press %1 to send a screenshot of the selection, "
+                              "%2 to hide/show qTox window, or %3 to cancel.",
+                              "Help text shown when a region has been selected")
+                           .arg(QString("<b>%1</b>").arg(tr("Enter", "[Enter] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard")))
+                           );
     adjustTooltipPosition();
 }
 
