@@ -2040,14 +2040,24 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Paspauskite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. &lt;b&gt;Tarpo&lt;/b&gt; klavišas (de)aktyvuoja qTox langą, o veiksmą atšauksite paspaudę &lt;b&gt;Escape&lt;/b&gt; klavišą.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Paspaudę &lt;b&gt;Enter&lt;/b&gt; klavišą nusiųsite pasirinktos ekrano srities kopiją, o &lt;b&gt;Tarpo&lt;/b&gt; klavišu (de)aktyvuosite qTox langą. Veiksmą atšauksite paspaudę &lt;b&gt;Escape&lt;/b&gt; klavišą.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Paspauskite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. %1 klavišas (de)aktyvuoja qTox langą, o veiksmą atšauksite paspaudę %2 klavišą.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Tarpo</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>

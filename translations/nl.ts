@@ -2035,14 +2035,24 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Klik en sleep om een gebied te selecteren. Druk op &lt;b&gt;Space&lt;/b&gt; om het qTox scherm te verbergen, of &lt;b&gt;Escape&lt;/b&gt; om te annuleren.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Druk op &lt;b&gt;Enter&lt;/b&gt; om een schermafbeelding te sturen van de selectie, &lt;b&gt;Space&lt;/b&gt; om het qTox scherm te verbergen/herstellen, of &lt;b&gt;Escape&lt;/b&gt; om te annuleren.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Klik en sleep om een gebied te selecteren. Druk op %1 om het qTox scherm te verbergen, of %2 om te annuleren.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Space</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>

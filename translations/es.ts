@@ -2037,14 +2037,24 @@ Será instalada cuando reinicies qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Cliquea y arrastra para seleccionar una región. Presiona &lt;b&gt;Espacio&lt;/b&gt; para mostar/ocultar la ventana de qTox, o &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Presiona &lt;b&gt;Enter&lt;/b&gt; para enviar una captura de pantalla de la selección, &lt;b&gt;Espacio&lt;/b&gt; para mostar/ocultar la ventana de qTox, o &lt;b&gt;Escape&lt;/b&gt; para cancelar.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Cliquea y arrastra para seleccionar una región. Presiona %1 para mostar/ocultar la ventana de qTox, o %2 para cancelar.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Espacio</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>

@@ -2037,14 +2037,24 @@ Verrà installata al riavvio del programma.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Fare clic e trascinare per selezionare una regione. Premere &lt;b&gt; Spazio&lt;/ b&gt; per nascondere/mostrare la finestra qTox, o &lt;b&gt;Escape&lt;/ b&gt; per annullare.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Fare clic e trascinare per selezionare una regione. Premere %1 per nascondere/mostrare la finestra qTox, o %2 per annullare.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Spazio</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>
