@@ -2047,14 +2047,24 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Клікніце і перацягніце для выбару рэгіёна. Націсніце &lt;b&gt;прабел&lt;/b&gt; каб схаваць/паказаць акно qTox ці &lt;b&gt;Escape&lt;/b&gt; каб адмяніць.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Націсніце &lt;b&gt;ўвод&lt;/b&gt; каб адправіць здымак абранай вобласці, &lt;b&gt;прабел&lt;/b&gt; каб схаваць/паказаць акно qTox ці &lt;b&gt;Escape&lt;/b&gt; каб адмяніць.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Клікніце і перацягніце для выбару рэгіёна. Націсніце %1 каб схаваць/паказаць акно qTox ці %2 каб адмяніць.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">прабел</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>

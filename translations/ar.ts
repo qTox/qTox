@@ -2035,14 +2035,24 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>اضغط وافلت للتحديد. اضغط &lt;b&gt;مسافة&lt;/b&gt; لـ اخفاء/إظهار نافذة qTox او &lt;b&gt;Esc&lt;/b&gt; للالغاء.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>اضغط &lt;b&gt;Enter&lt;/b&gt; لارسال لقطة الشاشة المحددةاضغط &lt;b&gt;مسافة&lt;/b&gt; لـ اخفاء/إظهار نافذة qTox او &lt;b&gt;Esc&lt;/b&gt; للالغاء.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">اضغط وافلت للتحديد. اضغط %1 لـ اخفاء/إظهار نافذة qTox او %2  للالغاء.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">مسافة</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Esc</translation>
     </message>
 </context>
 <context>

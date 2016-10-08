@@ -2024,14 +2024,24 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Click and drag to select a region. Press &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when no region has been selected yet</comment>
-        <translation>Bir alanı seçmek için tıklayıp sürükleyin. Tox penceresini gösterip gizlemek için &lt;b&gt; Space&lt;b&gt; tuşuna, iptal etmek için &lt;b&gt;Escape&lt;b&gt; tuşuna basın.</translation>
-    </message>
-    <message>
         <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
         <translation>Seçilen alanın ekran-görüntüsü almak için &lt;b&gt;Enter&lt;b&gt; tuşuna basın. Tox penceresini gösterip gizlemek için &lt;b&gt; Space&lt;b&gt; tuşuna, iptal etmek için &lt;b&gt;Escape&lt;b&gt; tuşuna basın.</translation>
+    </message>
+    <message>
+        <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
+        <comment>Help text shown when no region has been selected yet</comment>
+        <translation type="unfinished">Bir alanı seçmek için tıklayıp sürükleyin. Tox penceresini gösterip gizlemek için %1 tuşuna, iptal etmek için %2 tuşuna basın.</translation>
+    </message>
+    <message>
+        <source>Space</source>
+        <comment>[Space] key on the keyboard</comment>
+        <translation type="unfinished">Space</translation>
+    </message>
+    <message>
+        <source>Escape</source>
+        <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished">Escape</translation>
     </message>
 </context>
 <context>
