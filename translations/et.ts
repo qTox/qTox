@@ -129,19 +129,19 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Kasutad qToxi versiooni %1.</translation>
+        <translation>Kasutad qToxi versiooni %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Commit räsi: %1</translation>
+        <translation>Commit räsi: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">TOXcore&apos;i versioon: %1</translation>
+        <translation>toxcore&apos;i versioon: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt versioon: %1</translation>
+        <translation>Qt versioon: %1</translation>
     </message>
 </context>
 <context>
@@ -236,7 +236,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Käsitsi</translation>
+        <translation>Käsitsi</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -309,7 +309,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Sellist Tox ID-d pole olemas</translation>
+        <translation>Sellist Tox ID-d pole olemas</translation>
     </message>
 </context>
 <context>
@@ -344,21 +344,29 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Jah</translation>
+        <translation>Jah</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Ei</translation>
+        <translation>Ei</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Kõne käib</translation>
+        <translation>Kõne käib</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Sa ei saa võrgust lahkuda, kui kõne käib!</translation>
+        <translation>Sa ei saa võrgust lahkuda, kui kõne käib!</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -382,36 +390,36 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Ühenduse seaded</translation>
+        <translation>Ühenduse seaded</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Toeta IPv6 protokolli (soovitatav)</translation>
+        <translation>Toeta IPv6 protokolli (soovitatav)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku, seega lülita välja vaid vajaduse korral.</translation>
+        <translation type="unfinished">Selle väljalülitamine võimaldab näiteks kasutada toxi üle Tor võrgu. Samas koormab väljalülitamine Toxi võrku. Teisisõnu, lülita valik mitteaktiivseks vaid vajaduse korral.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Toeta UDP protokolli</translation>
+        <translation>Toeta UDP protokolli (soovitatav)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Puhverserveri tüüp:</translation>
+        <translation>Puhverserveri tüüp:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Aadress:</translation>
+        <translation>Aadress:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Port:</translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <source>None</source>
@@ -419,16 +427,28 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Ühendu uuesti</translation>
+        <translation>Ühendu uuesti</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1175,7 +1195,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">Grupi kutsed</translation>
+        <translation>Grupikutsed</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1615,7 +1635,7 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Privaatsus</translation>
+        <translation>Privaatsus</translation>
     </message>
 </context>
 <context>
@@ -1813,7 +1833,7 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Käesoleva profiili asukoht: %1</translation>
+        <translation type="unfinished">Profiili asukoht: %1</translation>
     </message>
 </context>
 <context>
@@ -2035,16 +2055,11 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
+        <translation>Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
     </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
-    <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Vajuta &lt;b&gt;Enter&lt;/b&gt; klahvi, et valitud alast kuvatõmmist saata, &lt;b&gt;tühikut&lt;/b&gt;, et peita/kuvada qToxi akent või &lt;b&gt;Escape&lt;/b&gt; klahvi, et katkestada.</translation>
-    </message>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
@@ -2059,6 +2074,16 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Vajuta %1 klahvi, et valitud alast kuvatõmmist saata, %2, et peita/kuvada qToxi akent või %3 klahvi, et katkestada.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>
@@ -2133,7 +2158,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Määramata</translation>
+        <translation>Määramata</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2144,7 +2169,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Vestlus</translation>
+        <translation>Vestlus</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2152,15 +2177,15 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Suurus: </translation>
+        <translation>Suurus: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox käivitatakse uuesti.</translation>
+        <translation>Uued tekstikujunduse eelistused võivad aktiveeruda alles siis, kui qTox uuesti käivitatakse.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2172,7 +2197,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Lihttekst</translation>
+        <translation>Lihttekst</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
@@ -2184,7 +2209,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Uus sõnum</translation>
+        <translation>Uus sõnum</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -2193,16 +2218,16 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Ava aken</translation>
+        <translation>Ava aken</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Sõnumi saabumisel sea fookus qToxi aknale.</translation>
+        <translation>Sõnumi saabumisel sea fookus qToxi aknale.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Sea fookus aknale</translation>
+        <translation>Sea fookus aknale</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2215,7 +2240,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Grupivestluste puhul teavita alati</translation>
+        <translation>Grupivestluste puhul teavita alati</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2224,7 +2249,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Aseta grupivestlused sõbranimekirja algusesse</translation>
+        <translation>Aseta grupivestlused sõbranimekirja algusesse</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
@@ -2233,15 +2258,15 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Kompaktne kontaktide nimekiri</translation>
+        <translation>Kompaktne kontaktide nimekiri</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Mitme akna tugi</translation>
+        <translation>Mitme akna tugi</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Ava iga vestlus eraldi aknas</translation>
+        <translation>Ava iga vestlus eraldi aknas</translation>
     </message>
     <message>
         <source>Emoticons</source>
@@ -2262,27 +2287,27 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Teema</translation>
+        <translation>Teema</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Stiil:</translation>
+        <translation>Stiil:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Teema värv:</translation>
+        <translation>Teema värv:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Ajatempli vorming:</translation>
+        <translation>Ajatempli vorming:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Kuupäeva vorming:</translation>
+        <translation>Kuupäeva vorming:</translation>
     </message>
 </context>
 <context>
