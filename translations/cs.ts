@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished">Přehrát testovací zvuk při změne hlasitosti výstupu.</translation>
+        <translation>Přehrát testovací zvuk při změne hlasitosti výstupu.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Nastavení zvuku</translation>
+        <translation>Nastavení zvuku</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -53,15 +53,15 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Hlasitost</translation>
+        <translation>Hlasitost</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Nastavení videa</translation>
+        <translation>Nastavení videa</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Video zařízení</translation>
+        <translation>Video zařízení</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -77,11 +77,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Rozlišení</translation>
+        <translation>Rozlišení</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Znovu načíst zařízení</translation>
+        <translation>Znovu načíst zařízení</translation>
     </message>
 </context>
 <context>
@@ -117,7 +117,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Původní autor: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -187,11 +187,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Použité aliasy:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">HISTORIE ALIASŮ</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -207,7 +207,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit historii (operaci nelze vrátit zpět!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -215,7 +215,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zde můžete uložit poznámku o kontaktu.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -224,15 +224,15 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Historie odstraněna</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Historie konverzace s %1 odstraněna!</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automaticky přijímat hovor :</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -296,7 +296,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádosti o přátelství</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -344,11 +344,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -359,6 +359,14 @@ může způsobovat problémy během videohovorů.</translation>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation type="unfinished">Nelze se odpojit dokud je hovor aktivní!</translation>
+    </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -429,6 +437,18 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Znovu připojit</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -871,15 +891,15 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít konverzaci v novém okně</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit konverzaci z tohoto okna</translation>
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Do nové skupiny</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
@@ -1097,7 +1117,7 @@ místo do spuštěných programů.</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Citovat vybraný text</translation>
     </message>
 </context>
 <context>
@@ -1157,7 +1177,7 @@ místo do spuštěných programů.</translation>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 uživatel v konverzaci</translation>
     </message>
 </context>
 <context>
@@ -1180,7 +1200,7 @@ místo do spuštěných programů.</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Odmítnout</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
@@ -1204,15 +1224,15 @@ místo do spuštěných programů.</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít konverzaci v novém okně</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstranit konverzaci z tohoto okna</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 uživatel v konverzaci</translation>
     </message>
 </context>
 <context>
@@ -1312,7 +1332,7 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toxme registrace</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1328,7 +1348,7 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezobrazovat mé jméno ve veřejném seznamu</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1430,11 +1450,11 @@ Pokud narazíte na tento problém, prosím zašlete jej.</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatické načtení</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovat</translation>
     </message>
     <message>
         <source>Load</source>
@@ -1450,7 +1470,7 @@ Pokud narazíte na tento problém, prosím zašlete jej.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nelze načíst profil</translation>
     </message>
     <message>
         <source>There is no selected profile.
@@ -1545,7 +1565,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>CAPS-LOCK ZAPNUTÝ</translation>
     </message>
 </context>
 <context>
@@ -1560,7 +1580,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete trvale odstranit celou historii konverzace?</translation>
     </message>
 </context>
 <context>
@@ -1872,11 +1892,11 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ano</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ne</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2035,11 +2055,6 @@ Bude nainstalována po restartu qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished"></translation>
@@ -2052,6 +2067,16 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
