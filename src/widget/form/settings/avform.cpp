@@ -528,13 +528,17 @@ void AVForm::on_playbackSlider_valueChanged(int value)
         audio.setOutputVolume(percentage);
 
         if (mPlayTestSound)
-            audio.playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
+            audio.playMono16Sound(Audio::getSound(Audio::Sound::Test));
     }
 }
 
 void AVForm::on_btnPlayTestSound_clicked(bool checked)
 {
     mPlayTestSound = checked;
+
+    Audio& audio = Audio::getInstance();
+    if (mPlayTestSound && audio.isOutputReady())
+        audio.playMono16Sound(Audio::getSound(Audio::Sound::Test));
 }
 
 void AVForm::on_microphoneSlider_valueChanged(int value)
