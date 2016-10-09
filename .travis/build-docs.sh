@@ -19,8 +19,8 @@
 # Fail out on error
 set -eu -o pipefail
 
-# Obtain doxygen
-sudo apt-get install doxygen
+# Obtain doxygen and its deps
+sudo apt-get install doxygen graphviz
 
 GIT_DESC=$(git describe --tags 2> /dev/null)
 GIT_CHASH=$(git rev-parse HEAD)
