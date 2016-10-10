@@ -128,13 +128,13 @@ QFont Style::getFont(Style::Font font)
     static int defSize = QFontInfo(QFont()).pixelSize();
 
     static QFont fonts[] = {
-        appFont(defSize + 2, QFont::Bold),      // extra big
-        appFont(defSize    , QFont::Normal),    // big
-        appFont(defSize    , QFont::Bold),      // big bold
-        appFont(defSize - 1, QFont::Normal),    // medium
-        appFont(defSize - 1, QFont::Bold),      // medium bold
-        appFont(defSize - 2, QFont::Normal),    // small
-        appFont(defSize - 2, QFont::Light),     // small light
+        appFont(defSize + 3, QFont::Bold),      // extra big
+        appFont(defSize + 1, QFont::Normal),    // big
+        appFont(defSize + 1, QFont::Bold),      // big bold
+        appFont(defSize    , QFont::Normal),    // medium
+        appFont(defSize    , QFont::Bold),      // medium bold
+        appFont(defSize - 1, QFont::Normal),    // small
+        appFont(defSize - 1, QFont::Light),     // small light
     };
 
     return fonts[font];
