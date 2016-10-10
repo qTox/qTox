@@ -367,6 +367,14 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <comment>popup text</comment>
         <translation>Nie możesz się rozłączyć w trakcie rozmowy!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -437,6 +445,18 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Połącz ponownie</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2079,24 +2099,29 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Wciśnij &lt;b&gt;Enter&lt;/b&gt; by wysłać screenshot zaznaczonego obszaru, &lt;b&gt;spację&lt;/b&gt; by ukryć/pokazać okno qToxa, lub &lt;b&gt;Escape&lt;/b&gt; by anulować.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Kliknij i przeciągnij aby wybrać obszar. Wciśnij %1 by ukryć/pokazać okno qToxa, lub %2 by anulować.</translation>
+        <translation>Kliknij i przeciągnij aby wybrać obszar. Wciśnij %1 by ukryć/pokazać okno qToxa, lub %2 by anulować.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">spację</translation>
+        <translation>spację</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation>Wciśnij %1 by wysłać screenshot zaznaczonego obszaru, %2 by ukryć/pokazać okno qToxa, lub %3 by anulować.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation>Enter</translation>
     </message>
 </context>
 <context>

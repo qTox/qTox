@@ -360,6 +360,14 @@ vaizdo skambučiais.</translation>
         <comment>popup text</comment>
         <translation type="unfinished">Vykstant pokalbiui atsijungti negalite!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -429,6 +437,18 @@ vaizdo skambučiais.</translation>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Prisijungti iš naujo</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2040,11 +2060,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Paspaudę &lt;b&gt;Enter&lt;/b&gt; klavišą nusiųsite pasirinktos ekrano srities kopiją, o &lt;b&gt;Tarpo&lt;/b&gt; klavišu (de)aktyvuosite qTox langą. Veiksmą atšauksite paspaudę &lt;b&gt;Escape&lt;/b&gt; klavišą.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Paspauskite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. %1 klavišas (de)aktyvuoja qTox langą, o veiksmą atšauksite paspaudę %2 klavišą.</translation>
@@ -2058,6 +2073,16 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Paspaudę %1 klavišą nusiųsite pasirinktos ekrano srities kopiją, o %2 klavišu (de)aktyvuosite qTox langą. Veiksmą atšauksite paspaudę %3 klavišą.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>

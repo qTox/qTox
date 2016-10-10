@@ -363,6 +363,14 @@ which may lead to problems with video calls.</source>
         <comment>popup text</comment>
         <translation>Вы не можете отключиться во время звонка!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -432,6 +440,18 @@ which may lead to problems with video calls.</source>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation>Переподключиться</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2048,11 +2068,6 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Нажмите &lt;b&gt;Ввод&lt;/b&gt;, чтобы отправить скриншот выбранной области, &lt;b&gt;Пробел&lt;/b&gt;, чтобы скрыть/показать окно qTox, или клавишу &lt;b&gt;Escape&lt;/b&gt; для отмены.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Обведите область с зажатой левой клавишей. Нажмите %1, чтобы скрыть/показать окно qTox или %2 для отмены.</translation>
@@ -2066,6 +2081,16 @@ It will be installed when qTox restarts.</source>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Нажмите %1, чтобы отправить скриншот выбранной области, %2, чтобы скрыть/показать окно qTox, или клавишу %3 для отмены.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Ввод</translation>
     </message>
 </context>
 <context>

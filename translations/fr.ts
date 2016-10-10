@@ -360,6 +360,14 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <comment>popup text</comment>
         <translation type="unfinished">Vous ne pouvez pas vous déconnecter avec un appel en cours !</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -429,6 +437,18 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Se reconnecter</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2037,11 +2057,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Appuyer sur &lt;b&gt;Entrée&lt;/b&gt; pour envoyer une capture de la zone choisie, &lt;b&gt;Espace&lt;/b&gt; pour masquer/afficher la fenêtre de qTox, ou &lt;b&gt;Echap&lt;/b&gt; pour annuler.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Cliquez et tirez pour sélectionner une zone. Appuyez sur %1 pour masquer/afficher la fenêtre de qTox, ou %2 pour annuler.</translation>
@@ -2055,6 +2070,16 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Echap</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Appuyer sur %1 pour envoyer une capture de la zone choisie, %2 pour masquer/afficher la fenêtre de qTox, ou %3 pour annuler.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Entrée</translation>
     </message>
 </context>
 <context>

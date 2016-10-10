@@ -360,6 +360,14 @@ which may lead to problems with video calls.</source>
         <comment>popup text</comment>
         <translation type="unfinished">通話中に切断できません！</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -429,6 +437,18 @@ which may lead to problems with video calls.</source>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">再接続</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2030,11 +2050,6 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">&lt;b&gt;Enter&lt;/b&gt;キーを押し、範囲のスクリーンショットを送信します。&lt;b&gt;Space&lt;/b&gt;でqToxウィンドウを表示・非表示、&lt;b&gt;Escape&lt;/b&gt;でキャンセルします。</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">クリックとドラッグで範囲を選択します。%1 でqToxウィンドウを表示・非表示、%2でキャンセルします。</translation>
@@ -2048,6 +2063,16 @@ It will be installed when qTox restarts.</source>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">%1キーを押し、範囲のスクリーンショットを送信します。%2でqToxウィンドウを表示・非表示、%3でキャンセルします。</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>

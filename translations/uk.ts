@@ -367,6 +367,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <comment>popup text</comment>
         <translation type="unfinished">Ви не можете від&apos;єднатись під час активного дзвінка!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -436,6 +444,18 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Повторно під&apos;єднатись</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2050,11 +2070,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Натисніть &lt;b&gt;Enter&lt;/b&gt; щоб надіслати знімок вибраної області, &lt;b&gt;Space&lt;/b&gt; щоб відобразити/приховати вікно qTox, або &lt;b&gt;Escape&lt;/b&gt; для скасування.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Клікніть та перетягніть вказівник миші, щоб обрати область. Натисніть %1 щоб відобразити/приховати вікно qTox, або %2 для скасування.</translation>
@@ -2068,6 +2083,16 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Натисніть %1 щоб надіслати знімок вибраної області, %2 щоб відобразити/приховати вікно qTox, або %3 для скасування.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>

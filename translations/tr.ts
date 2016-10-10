@@ -363,6 +363,14 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <comment>popup text</comment>
         <translation type="unfinished">Bir görüşme etkin iken bağlantıyı kesemezsiniz!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -432,6 +440,18 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Yeniden bağlan</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2024,11 +2044,6 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Seçilen alanın ekran-görüntüsü almak için &lt;b&gt;Enter&lt;b&gt; tuşuna basın. Tox penceresini gösterip gizlemek için &lt;b&gt; Space&lt;b&gt; tuşuna, iptal etmek için &lt;b&gt;Escape&lt;b&gt; tuşuna basın.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Bir alanı seçmek için tıklayıp sürükleyin. Tox penceresini gösterip gizlemek için %1 tuşuna, iptal etmek için %2 tuşuna basın.</translation>
@@ -2042,6 +2057,16 @@ It will be installed when qTox restarts.</source>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Seçilen alanın ekran-görüntüsü almak için %1 tuşuna basın. Tox penceresini gösterip gizlemek için %2 tuşuna, iptal etmek için %3 tuşuna basın.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>

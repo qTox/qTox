@@ -360,6 +360,14 @@ which may lead to problems with video calls.</source>
         <comment>popup text</comment>
         <translation type="unfinished">لا تستطيع قطع الاتصال اثناء المكالمة!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -429,6 +437,18 @@ which may lead to problems with video calls.</source>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">إعادة الإتصال</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2035,11 +2055,6 @@ It will be installed when qTox restarts.</source>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>اضغط &lt;b&gt;Enter&lt;/b&gt; لارسال لقطة الشاشة المحددةاضغط &lt;b&gt;مسافة&lt;/b&gt; لـ اخفاء/إظهار نافذة qTox او &lt;b&gt;Esc&lt;/b&gt; للالغاء.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">اضغط وافلت للتحديد. اضغط %1 لـ اخفاء/إظهار نافذة qTox او %2  للالغاء.</translation>
@@ -2053,6 +2068,16 @@ It will be installed when qTox restarts.</source>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Esc</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">اضغط %1 لارسال لقطة الشاشة المحددةاضغط %2 لـ اخفاء/إظهار نافذة qTox او %3 للالغاء.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>

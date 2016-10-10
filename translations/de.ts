@@ -360,6 +360,14 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <comment>popup text</comment>
         <translation>Du kannst dich nicht abmelden, solange ein Anruf aktiv ist!</translation>
     </message>
+    <message>
+        <source>Save File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logs (*.log)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedSettings</name>
@@ -429,6 +437,18 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>Reconnect</source>
         <comment>reconnect button</comment>
         <translation type="unfinished">Erneut verbinden</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export Debug Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Debug Log</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2046,11 +2066,6 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
 <context>
     <name>ScreenshotGrabber</name>
     <message>
-        <source>Press &lt;b&gt;Enter&lt;/b&gt; to send a screenshot of the selection, &lt;b&gt;Space&lt;/b&gt; to hide/show qTox window, or &lt;b&gt;Escape&lt;/b&gt; to cancel.</source>
-        <comment>Help text shown when a region has been selected</comment>
-        <translation>Drücke &lt;b&gt;Enter&lt;/b&gt;, um einen Screenshot des ausgewählten Ausschnitts zu senden, die &lt;b&gt;Leertaste&lt;/b&gt;, um das qTox-Fenster auszublenden/einzublenden oder &lt;b&gt;Escape&lt;/b&gt;, um abzubrechen.</translation>
-    </message>
-    <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
         <translation type="unfinished">Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke die %1, um das qTox-Fenster auszublenden/anzuzeigen. Drücke %2, um abzubrechen.</translation>
@@ -2064,6 +2079,16 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
         <translation type="unfinished">Escape</translation>
+    </message>
+    <message>
+        <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
+        <comment>Help text shown when a region has been selected</comment>
+        <translation type="unfinished">Drücke %1, um einen Screenshot des ausgewählten Ausschnitts zu senden, die %2, um das qTox-Fenster auszublenden/einzublenden oder %3, um abzubrechen.</translation>
+    </message>
+    <message>
+        <source>Enter</source>
+        <comment>[Enter] key on the keyboard</comment>
+        <translation type="unfinished">Enter</translation>
     </message>
 </context>
 <context>
