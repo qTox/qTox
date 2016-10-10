@@ -83,6 +83,10 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Rescan devices</source>
         <translation>Otsi seadmeid</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -362,11 +366,11 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvesta fail</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Logid (*.log)</translation>
     </message>
 </context>
 <context>
@@ -440,15 +444,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Veaotsing</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ekspordi veaotsingu logifail</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopeeri veaotsingu logifail</translation>
     </message>
 </context>
 <context>
