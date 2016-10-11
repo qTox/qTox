@@ -9,5 +9,3 @@ Compiling:
 
 * ```clang qtox_sudo.m -framework corefoundation -framework security -framework cocoa -Os -o qtox_sudo```
 * ```go build updater.go```
-
-(Starting with this commit all commits will be signed with [this key](http://pgp.mit.edu/pks/lookup?op=get&search=0x13D2043169D25DF4).)
