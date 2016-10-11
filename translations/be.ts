@@ -83,6 +83,10 @@ which may lead to problems with video calls.</source>
         <source>Rescan devices</source>
         <translation>Перасканаваць прылады</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
@@ -364,11 +368,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Захаваць файл</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>журнал (*.log)</translation>
     </message>
 </context>
 <context>
@@ -442,15 +446,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Адладка</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспартаваць журнал адладкі</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Капіяваць журнал адладкі</translation>
     </message>
 </context>
 <context>
@@ -1084,7 +1088,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Save chat log</source>
-        <translation>Захаваць часопіс чату</translation>
+        <translation>Захаваць журнал чату</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -2034,7 +2038,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox не можа адкрыць гісторыю чату, яна будзе адключана.</translation>
+        <translation>qTox не можа адкрыць журнал чату, ён будзе адключаны.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
@@ -2084,12 +2088,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">Націсніце %1 каб адправіць здымак абранай вобласці, %2 каб схаваць/паказаць акно qTox ці %3 каб адмяніць.</translation>
+        <translation>Націсніце %1 каб адправіць здымак абранай вобласці, %2 каб схаваць/паказаць акно qTox ці %3 каб адмяніць.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished">ўвод</translation>
+        <translation>Увод</translation>
     </message>
 </context>
 <context>
