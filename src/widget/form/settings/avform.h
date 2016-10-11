@@ -61,7 +61,7 @@ private slots:
     void on_inDevCombobox_currentIndexChanged(int deviceIndex);
     void on_outDevCombobox_currentIndexChanged(int deviceIndex);
     void on_playbackSlider_valueChanged(int value);
-    void on_btnPlayTestSound_clicked(bool checked);
+    void on_cbEnableTestSound_stateChanged();
     void on_microphoneSlider_valueChanged(int value);
 
     // camera
@@ -80,7 +80,6 @@ private:
 
 private:
     bool subscribedToAudioIn;
-    bool mPlayTestSound;
     VideoSurface *camVideoSurface;
     CameraSource &camera;
     QVector<QPair<QString, QString>> videoDeviceList;

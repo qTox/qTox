@@ -30,8 +30,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>830</width>
-        <height>495</height>
+        <width>824</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -71,20 +71,6 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QToolButton" name="btnPlayTestSound">
-            <property name="text">
-             <string notr="true">...</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../../../res.qrc">
-              <normaloff>:/ui/volButton/volButton.png</normaloff>:/ui/volButton/volButton.png</iconset>
-            </property>
-            <property name="checkable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
@@ -109,6 +95,16 @@
            <widget class="QLabel" name="playbackLabel">
             <property name="text">
              <string>Volume</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="cbEnableTestSound">
+            <property name="text">
+             <string>Test Sound</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -207,8 +203,6 @@ which may lead to problems with video calls.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../../res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
