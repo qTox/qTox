@@ -85,7 +85,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Тэставы гук</translation>
     </message>
 </context>
 <context>
