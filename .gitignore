@@ -1,17 +1,48 @@
-*.pro.user*
-libs
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
+*.a
+*.so
+
+# Doxygen
+doc/html/*
+
+# Executables
+qtox
+*.exe
+build-*-Release
+build-*-Profile
+build-*-Debug
+
+# Folders
+_obj
+_test
+libs
+
+# Git
+*.orig
+
+# Go stuff (for Go OSX updater)
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+_testmain.go
+*.test
+
+# OSX
+.DS_Store
+/qtox.app
+
+# Qt
+*.pro.user*
 moc_*
 ui_*
 qrc_*
 Makefile
-qtox
 *.qm
-*.orig
-build-*-Release
-build-*-Profile
-build-*-Debug
-.DS_Store
-doc/html/*
 /.qmake.stash
-/qtox.app
