@@ -53,6 +53,30 @@ simple rules we need to keep qTox a "smooth experience" for everybody involved.
   message to the commit `Fixes #4134.`.  [Here is an
   example](https://github.com/qTox/qTox/commit/87160526d5bafcee7869d6741a06045e13d731d5).
 
+
+## Pull request
+
+*PR = Pull request*
+
+Ideally for simple PRs (most of them):
+
+* One topic per PR
+* One commit per PR
+* If you have several commits on different topics, close the PR and create one
+  PR per topic
+* If you still have several commits, squash them into only one commit
+* Rebase your PR branch on top of upstream `master` before submitting the PR
+
+For complex PRs (big refactoring, etc):
+
+* Squash only the commits with uninteresting changes like typos, docs
+  improvements, etc… and keep the important and isolated steps in different
+  commits.
+
+It's important to keep amount of changes in the PR small, since smaller PRs are
+easier to review and merging them is quicker. PR diff shouldn't exceed `300`
+changed lines, unless it has to.
+
 ## How to open a pull request
 1. Fork the qTox repository on Github to your existing account.
 2. Open a Terminal and do the following steps:
