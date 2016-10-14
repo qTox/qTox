@@ -56,7 +56,9 @@ AVForm::AVForm()
     const Audio& audio = Audio::getInstance();
     const Settings& s = Settings::getInstance();
 
-    btnPlayTestSound->setToolTip(
+    cbEnableTestSound->setChecked(s.getEnableTestSound());
+
+    cbEnableTestSound->setToolTip(
                 tr("Play a test sound while changing the output volume."));
 
     connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
@@ -527,17 +529,17 @@ void AVForm::on_playbackSlider_valueChanged(int value)
         const qreal percentage = value / 100.0;
         audio.setOutputVolume(percentage);
 
-        if (mPlayTestSound)
+        if (cbEnableTestSound->isChecked())
             audio.playMono16Sound(Audio::getSound(Audio::Sound::Test));
     }
 }
 
-void AVForm::on_btnPlayTestSound_clicked(bool checked)
+void AVForm::on_cbEnableTestSound_stateChanged()
 {
-    mPlayTestSound = checked;
+    Settings::getInstance().setEnableTestSound(cbEnableTestSound->isChecked());
 
     Audio& audio = Audio::getInstance();
-    if (mPlayTestSound && audio.isOutputReady())
+    if (cbEnableTestSound->isChecked() && audio.isOutputReady())
         audio.playMono16Sound(Audio::getSound(Audio::Sound::Test));
 }
 

@@ -244,6 +244,7 @@ signals:
     void outDevChanged(const QString& name);
     void audioOutDevEnabledChanged(bool enabled);
     void outVolumeChanged(int volume);
+    void enableTestSoundChanged(bool enabled);
 
     // Video
     void videoDevChanged(const QString& name);
@@ -301,13 +302,13 @@ public:
 
     QString getToxmeBio() const;
     void setToxmeBio(const QString& bio);
-    
+
     bool getToxmePriv() const;
     void setToxmePriv(bool priv);
-    
+
     QString getToxmePass() const;
     void setToxmePass(const QString& pass);
-    
+
     void setAutoSaveEnabled(bool newValue);
     bool getAutoSaveEnabled() const;
 
@@ -369,6 +370,9 @@ public:
 
     int getOutVolume() const;
     void setOutVolume(int volume);
+
+    bool getEnableTestSound() const;
+    void setEnableTestSound(bool newValue);
 
     QString getVideoDev() const;
     void setVideoDev(const QString& deviceSpecifier);
@@ -619,6 +623,7 @@ private:
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
+    bool enableTestSound;
 
     // Video
     QString videoDev;

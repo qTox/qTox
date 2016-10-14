@@ -839,6 +839,22 @@ void Settings::setDhtServerList(const QList<DhtServer>& newDhtServerList)
         emit dhtServerListChanged(dhtServerList);
     }
 }
+bool Settings::getEnableTestSound() const
+{
+    QMutexLocker locker{&bigLock};
+    return enableTestSound;
+}
+
+void Settings::setEnableTestSound(bool newValue)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (newValue != enableTestSound)
+    {
+        enableTestSound = newValue;
+        emit enableTestSoundChanged(enableTestSound);
+    }
+}
 
 bool Settings::getEnableIPv6() const
 {
