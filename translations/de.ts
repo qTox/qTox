@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Aufnahmelautstärke</translation>
+        <translation>Aufnahmelautstärke</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -75,11 +75,15 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Kameraauflösung</translation>
+        <translation>Kameraauflösung</translation>
     </message>
     <message>
         <source>Rescan devices</source>
         <translation>Geräte aktualisieren</translation>
+    </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -141,7 +145,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt-Version: %1</translation>
+        <translation>Qt-Version: %1</translation>
     </message>
 </context>
 <context>
@@ -232,7 +236,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Anruf automatisch annehmen:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -240,11 +244,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio + Video</translation>
     </message>
 </context>
 <context>
@@ -309,7 +313,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Diese Tox ID existiert nicht</translation>
+        <translation>Diese Tox-ID existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -336,15 +340,15 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen zurücksetzen</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle Einstellungen werden zurückgesetzt. Sicher?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Ja</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
@@ -362,11 +366,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datei speichern</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Protokolle (*.log)</translation>
     </message>
 </context>
 <context>
@@ -390,12 +394,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Verbindungseinstellungen</translation>
+        <translation>Verbindungseinstellungen</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">IPv6 aktivieren (Empfohlen)</translation>
+        <translation>IPv6 aktivieren (Empfohlen)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
@@ -427,11 +431,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
@@ -444,11 +448,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fehlerbericht exportieren</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fehlerbericht kopieren</translation>
     </message>
 </context>
 <context>
@@ -1620,7 +1624,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation type="unfinished">NoSpam-Funktion</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -1631,7 +1635,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Zufälligen NoSpam erzeugen</translation>
+        <translation type="unfinished">Zufällige NoSpam-ID generieren</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1762,8 +1766,8 @@ Bitte benutze ein anderes.</translation>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Dies ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
-Teile sie einfach deinen Bekannten mit!</translation>
+        <translation type="unfinished">Dies ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
+Gebe sie einfach an deine Bekannte weiter, um zu kommunizieren.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -2060,7 +2064,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Bist du dir sicher, dass du %1 von deiner Kontaktliste löschen möchtest?</translation>
+        <translation>Bist du dir sicher, dass du %1 aus deiner Kontaktliste entfernen möchtest?</translation>
     </message>
 </context>
 <context>
@@ -2088,7 +2092,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished">Enter</translation>
+        <translation>Enter</translation>
     </message>
 </context>
 <context>
@@ -2167,7 +2171,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Benutzeroberfläche</translation>
     </message>
 </context>
 <context>
@@ -2178,11 +2182,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Schriftart:</translation>
+        <translation>Schriftart:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>Px</translation>
     </message>
     <message>
         <source>Size: </source>
@@ -2214,16 +2218,16 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Neue Nachricht</translation>
+        <translation>Neue Nachricht</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Öffne qTox bei neuen Nachrichten, sollte noch kein Fenster geöffnet sein.</translation>
+        <translation type="unfinished">Öffne qTox bei neuen Nachrichten, falls noch kein Fenster geöffnet ist.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Öffne Fenster</translation>
+        <translation>Fenster öffnen</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
@@ -2245,7 +2249,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Gruppenchat-Benachrichtigungen</translation>
+        <translation type="unfinished">Für Gruppenchats immer benachrichtigen</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2254,12 +2258,12 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Gruppenchats oben</translation>
+        <translation type="unfinished">Gruppenchats an erster Stelle der Kontaktliste anzeigen</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Die Kontaktliste wird kompakter dargestellt.</translation>
+        <translation>Die Kontaktliste wird kompakt dargestellt.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
@@ -2275,7 +2279,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Emoticons</translation>
     </message>
     <message>
         <source>Use emoticons</source>
@@ -2288,7 +2292,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Smileygröße:</translation>
+        <translation type="unfinished">Emoticongröße:</translation>
     </message>
     <message>
         <source> px</source>
@@ -2304,7 +2308,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Grundfarbe:</translation>
+        <translation>Farbschema:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
