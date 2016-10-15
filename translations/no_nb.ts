@@ -82,6 +82,10 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Rescan devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

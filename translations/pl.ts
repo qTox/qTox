@@ -84,6 +84,10 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <source>Rescan devices</source>
         <translation>Skanuj ponownie urządzenia</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

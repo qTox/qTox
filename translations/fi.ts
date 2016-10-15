@@ -82,6 +82,10 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
         <source>Rescan devices</source>
         <translation type="unfinished">Uudelleenhae laitteet</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

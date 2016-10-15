@@ -83,6 +83,10 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <source>Rescan devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

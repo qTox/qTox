@@ -83,6 +83,10 @@ which may lead to problems with video calls.</source>
         <source>Rescan devices</source>
         <translation>Пересканувати пристрої</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

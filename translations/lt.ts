@@ -83,6 +83,10 @@ vaizdo skambučiais.</translation>
         <source>Rescan devices</source>
         <translation type="unfinished">Aptikti įrenginius iš naujo</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

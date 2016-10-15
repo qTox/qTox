@@ -82,6 +82,10 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <source>Rescan devices</source>
         <translation type="unfinished">Re-escanear</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

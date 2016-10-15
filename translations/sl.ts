@@ -83,6 +83,10 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <source>Rescan devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

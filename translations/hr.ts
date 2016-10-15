@@ -83,6 +83,10 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Rescan devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>

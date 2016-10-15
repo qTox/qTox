@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es_MX">
+<TS version="2.0" language="es_MX">
 <context>
     <name>AVForm</name>
     <message>
@@ -82,6 +82,10 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Rescan devices</source>
         <translation>Volver a detectar dispositivos</translation>
+    </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

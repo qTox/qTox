@@ -83,6 +83,10 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <source>Rescan devices</source>
         <translation type="unfinished">Scansiona dispositivi</translation>
     </message>
+    <message>
+        <source>Test Sound</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AboutForm</name>
