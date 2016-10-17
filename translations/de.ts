@@ -137,11 +137,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Commit-Hash: %1</translation>
+        <translation>Commit-Hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">Toxcore-Version: %1</translation>
+        <translation>Toxcore-Version: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
@@ -344,7 +344,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished">Alle Einstellungen werden zurückgesetzt. Sicher?</translation>
+        <translation>Alle Einstellungen werden zurückgesetzt. Bist du dir sicher?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -352,7 +352,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Nein</translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -1767,7 +1767,7 @@ Bitte benutze ein anderes.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished">Dies ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
-Gebe sie einfach an deine Bekannte weiter, um zu kommunizieren.</translation>
+Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -2072,7 +2072,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke die %1, um das qTox-Fenster auszublenden/anzuzeigen. Drücke %2, um abzubrechen.</translation>
+        <translation type="unfinished">Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke %1, um das qTox-Fenster auszublenden/anzuzeigen. Drücke %2, um abzubrechen.</translation>
     </message>
     <message>
         <source>Space</source>
@@ -2254,7 +2254,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Gruppenchats werden über den normalen Kontakten platziert.</translation>
+        <translation type="unfinished">Falls aktiviert, werden Gruppenchats an erster Stelle deiner Kontaktliste platziert, andernfalls werden sie unter deinen Kontakten platziert.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
