@@ -289,6 +289,11 @@ HEADERS  += \
     src/net/autoupdate.h \
     src/net/toxme.h \
     src/net/avatarbroadcaster.h \
+    src/persistence/db/rawdatabase.h \
+    src/persistence/db/genericddinterface.h \
+    src/persistence/db/plaindb.h \
+    src/persistence/db/encrypteddb.h \
+    src/persistence/db/userdb.h \
     src/persistence/smileypack.h \
     src/persistence/toxsave.h \
     src/persistence/serialize.h \
@@ -296,13 +301,9 @@ HEADERS  += \
     src/persistence/profilelocker.h \
     src/persistence/profile.h \
     src/persistence/settingsserializer.h \
-    src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
     src/persistence/historykeeper.h \
     src/persistence/settings.h \
-    src/persistence/db/genericddinterface.h \
-    src/persistence/db/plaindb.h \
-    src/persistence/db/encrypteddb.h \
     src/video/videosurface.h \
     src/video/netcamview.h \
     src/video/videoframe.h \
@@ -410,11 +411,14 @@ SOURCES += \
     src/net/toxuri.cpp \
     src/net/toxme.cpp \
     src/net/avatarbroadcaster.cpp \
-    src/persistence/historykeeper.cpp \
-    src/persistence/settings.cpp \
     src/persistence/db/genericddinterface.cpp \
     src/persistence/db/plaindb.cpp \
     src/persistence/db/encrypteddb.cpp \
+    src/persistence/db/rawdatabase.cpp \
+    src/persistence/db/userdb.cpp \
+    src/persistence/historykeeper.cpp \
+    src/persistence/settings.cpp \
+    src/persistence/history.cpp \
     src/persistence/profile.cpp \
     src/persistence/settingsserializer.cpp \
     src/persistence/smileypack.cpp \
@@ -422,8 +426,6 @@ SOURCES += \
     src/persistence/serialize.cpp \
     src/persistence/offlinemsgengine.cpp \
     src/persistence/profilelocker.cpp \
-    src/persistence/db/rawdatabase.cpp \
-    src/persistence/history.cpp \
     src/video/videoframe.cpp \
     src/video/videosource.cpp \
     src/video/cameradevice.cpp \

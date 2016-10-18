@@ -41,8 +41,11 @@ public:
 
     struct HistMessage
     {
-        HistMessage(qint64 id, QString chat, QString sender, QString message, QDateTime timestamp, bool isSent, QString dispName) :
-            id(id), chat(chat), sender(sender), message(message), timestamp(timestamp), isSent(isSent), dispName(dispName) {}
+        HistMessage(qint64 id, QString chat, QString sender, QString message,
+                    QDateTime timestamp, bool isSent, QString dispName)
+            : id(id), chat(chat), sender(sender), message(message),
+              timestamp(timestamp), isSent(isSent), dispName(dispName)
+        {}
 
         qint64 id;
         QString chat;

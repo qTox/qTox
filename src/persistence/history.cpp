@@ -1,16 +1,13 @@
 #include "history.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/db/rawdatabase.h"
-#include "src/persistence/historykeeper.h"
-#include <QDebug>
-#include <cassert>
 
-using namespace std;
+#include <QDebug>
+#include <algorithm>
+
+#include "historykeeper.h"
 
 /**
  * @class History
- * @brief Interacts with the profile database to save the chat history.
+ * @brief Interacts with the user info database to save the chat history.
  *
  * @var QHash<QString, int64_t> History::peers
  * @brief Maps friend public keys to unique IDs by index.
@@ -18,69 +15,52 @@ using namespace std;
  */
 
 /**
- * @brief Opens the profile database and prepares to work with the history.
- * @param profileName Profile name to load.
- * @param password If empty, the database will be opened unencrypted.
+ * @brief Init History by database
+ * @param db Database with user information
  */
-History::History(const QString &profileName, const QString &password)
-    : db{getDbPath(profileName), password}
+History::History(UserDb* db)
+    : db(db)
 {
-    init();
+    // Cache our current peers
+    db->execLater(RawDatabase::Query("SELECT public_key, id FROM peers;",
+                                 [this](const QVector<QVariant>& row)
+    {
+        peers[row[0].toString()] = row[1].toInt();
+    }));
 }
 
 /**
- * @brief Opens the profile database, and import from the old database.
- * @param profileName Profile name to load.
- * @param password If empty, the database will be opened unencrypted.
+ * @brief Imports messages from the old history file.
  * @param oldHistory Old history to import.
  */
-History::History(const QString &profileName, const QString &password, const HistoryKeeper &oldHistory)
-    : History{profileName, password}
+void History::import(const HistoryKeeper &oldHistory)
 {
-    import(oldHistory);
-}
+    if (!db->isOpen())
+    {
+        qWarning() << "New database not open, import failed";
+        return;
+    }
 
-History::~History()
-{
-    // We could have execLater requests pending with a lambda attached,
-    // so clear the pending transactions first
-    db.sync();
-}
-
-/**
- * @brief Checks if the database was opened successfully
- * @return True if database if opened, false otherwise.
- */
-bool History::isValid()
-{
-    return db.isOpen();
-}
-
-/**
- * @brief Changes the database password, will encrypt or decrypt if necessary.
- * @param password Password to set.
- */
-void History::setPassword(const QString& password)
-{
-    db.setPassword(password);
-}
-
-/**
- * @brief Moves the database file on disk to match the new name.
- * @param newName New name.
- */
-void History::rename(const QString &newName)
-{
-    db.rename(getDbPath(newName));
-}
-
-/**
- * @brief Deletes the on-disk database file.
- * @return True if success, false otherwise.
- */
-bool History::remove()
-{
-    return db.remove();
+    qDebug() << "Importing old database...";
+    QTime t = QTime::currentTime();
+    t.start();
+    QVector<RawDatabase::Query> queries;
+    constexpr int batchSize = 1000;
+    queries.reserve(batchSize);
+    QList<HistoryKeeper::HistMessage> oldMessages = oldHistory.exportMessagesDeleteFile();
+    for (const HistoryKeeper::HistMessage& msg : oldMessages)
+    {
+        queries += generateNewMessageQueries(msg.chat, msg.message, msg.sender,
+                                             msg.timestamp, true, msg.dispName);
+        if (queries.size() >= batchSize)
+        {
+            db->execLater(queries);
+            queries.clear();
+        }
+    }
+    db->execLater(queries);
+    db->sync();
+    qDebug() << "Imported old database in" << t.elapsed() << "ms";
 }
 
 /**
@@ -88,11 +68,11 @@ bool History::remove()
  */
 void History::eraseHistory()
 {
-    db.execNow("DELETE FROM faux_offline_pending;"
-               "DELETE FROM history;"
-               "DELETE FROM aliases;"
-               "DELETE FROM peers;"
-               "VACUUM;");
+    db->execNow("DELETE FROM faux_offline_pending;"
+                "DELETE FROM history;"
+                "DELETE FROM aliases;"
+                "DELETE FROM peers;"
+                "VACUUM;");
 }
 
 /**
@@ -103,25 +83,25 @@ void History::removeFriendHistory(const QString &friendPk)
 {
     if (!peers.contains(friendPk))
         return;
+
     int64_t id = peers[friendPk];
 
-    if (db.execNow(QString("DELETE FROM faux_offline_pending "
+    bool deleted = db->execNow(QString(
+               "DELETE FROM faux_offline_pending "
                "WHERE faux_offline_pending.id IN ( "
-                 "SELECT faux_offline_pending.id FROM faux_offline_pending "
-                 "LEFT JOIN history ON faux_offline_pending.id = history.id "
-                 "WHERE chat_id=%1 "
+               "     SELECT faux_offline_pending.id FROM faux_offline_pending "
+               "     LEFT JOIN history ON faux_offline_pending.id = history.id "
+               "     WHERE chat_id=%1 "
                "); "
                "DELETE FROM history WHERE chat_id=%1; "
                "DELETE FROM aliases WHERE owner=%1; "
                "DELETE FROM peers WHERE id=%1; "
-               "VACUUM;").arg(id)))
-    {
+               "VACUUM;").arg(id));
+
+    if (deleted)
         peers.remove(friendPk);
-    }
     else
-    {
         qWarning() << "Failed to remove friend's history";
-    }
 }
 
 /**
@@ -151,7 +131,8 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
         if (peers.isEmpty())
             peerId = 0;
         else
-            peerId = *max_element(begin(peers), end(peers))+1;
+            peerId = *std::max_element(peers.begin(), peers.end()) + 1;
+
         peers[friendPk] = peerId;
         queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) VALUES (%1, '"+friendPk+"');").arg(peerId)};
     }
@@ -167,7 +148,8 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
         if (peers.isEmpty())
             senderId = 0;
         else
-            senderId = *max_element(begin(peers), end(peers))+1;
+            senderId = *std::max_element(peers.begin(), peers.end()) + 1;
+
         peers[sender] = senderId;
         queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) VALUES (%1, '"+sender+"');").arg(senderId)};
     }
@@ -205,7 +187,7 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
 void History::addNewMessage(const QString &friendPk, const QString &message, const QString &sender,
                 const QDateTime &time, bool isSent, QString dispName, std::function<void(int64_t)> insertIdCallback)
 {
-    db.execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName, insertIdCallback));
+    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName, insertIdCallback));
 }
 
 /**
@@ -232,8 +214,8 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
     };
 
     // Don't forget to update the rowCallback if you change the selected columns!
-    db.execNow({QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
-                               "aliases.display_name, sender.public_key, message FROM history "
+    db->execNow({QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
+                       "         aliases.display_name, sender.public_key, message FROM history "
                        "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                        "JOIN peers chat ON chat_id = chat.id "
                        "JOIN aliases ON sender_alias = aliases.id "
@@ -252,74 +234,5 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
  */
 void History::markAsSent(qint64 id)
 {
-    db.execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(id));
-}
-
-/**
- * @brief Retrieves the path to the database file for a given profile.
- * @param profileName Profile name.
- * @return Path to database.
- */
-QString History::getDbPath(const QString &profileName)
-{
-    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
-}
-
-/**
- * @brief Makes sure the history tables are created
- */
-void History::init()
-{
-    if (!isValid())
-    {
-        qWarning() << "Database not open, init failed";
-        return;
-    }
-
-    db.execLater("CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE);"
-                 "CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY, owner INTEGER,"
-                                                     "display_name BLOB NOT NULL, UNIQUE(owner, display_name));"
-                 "CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, "
-                                                     "chat_id INTEGER NOT NULL, sender_alias INTEGER NOT NULL, "
-                                                     "message BLOB NOT NULL);"
-                 "CREATE TABLE IF NOT EXISTS faux_offline_pending (id INTEGER PRIMARY KEY);");
-
-    // Cache our current peers
-    db.execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;", [this](const QVector<QVariant>& row)
-    {
-        peers[row[0].toString()] = row[1].toInt();
-    }});
-}
-
-/**
- * @brief Imports messages from the old history file.
- * @param oldHistory Old history to import.
- */
-void History::import(const HistoryKeeper &oldHistory)
-{
-    if (!isValid())
-    {
-        qWarning() << "New database not open, import failed";
-        return;
-    }
-
-    qDebug() << "Importing old database...";
-    QTime t=QTime::currentTime();
-    t.start();
-    QVector<RawDatabase::Query> queries;
-    constexpr int batchSize = 1000;
-    queries.reserve(batchSize);
-    QList<HistoryKeeper::HistMessage> oldMessages = oldHistory.exportMessagesDeleteFile();
-    for (const HistoryKeeper::HistMessage& msg : oldMessages)
-    {
-        queries += generateNewMessageQueries(msg.chat, msg.message, msg.sender, msg.timestamp, true, msg.dispName);
-        if (queries.size() >= batchSize)
-        {
-            db.execLater(queries);
-            queries.clear();
-        }
-    }
-    db.execLater(queries);
-    db.sync();
-    qDebug() << "Imported old database in"<<t.elapsed()<<"ms";
+    db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(id));
 }

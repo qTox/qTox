@@ -113,10 +113,11 @@ void AboutUser::onRemoveHistoryClicked()
     History* history = Nexus::getProfile()->getHistory();
     if (history)
         history->removeFriendHistory(toxId.publicKey);
-    QMessageBox::information(this,
-                                     tr("History removed"),
-                                     tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),
-                                     QMessageBox::Ok);
+
+    QString username = ui->userName->text().toHtmlEscaped();
+    QMessageBox::information(this, tr("History removed"),
+                             tr("Chat history with %1 removed!").arg(username),
+                             QMessageBox::Ok);
 }
 
 AboutUser::~AboutUser()

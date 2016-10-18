@@ -27,7 +27,6 @@
 #include "src/core/core.h"
 #include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
-#include "src/persistence/history.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
