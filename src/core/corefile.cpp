@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -124,6 +124,7 @@ void CoreFile::sendFile(Core* core, uint32_t friendId, QString filename, QString
     {
         qWarning() << QString("sendFile: Can't open file, error: %1").arg(file.file->errorString());
     }
+
     addFile(friendId, fileNum, file);
 
     emit core->fileSendStarted(file);
@@ -150,7 +151,9 @@ void CoreFile::pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileI
         tox_file_control(core->tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
     }
     else
+    {
         qWarning() << "pauseResumeFileSend: File is stopped";
+    }
 }
 
 void CoreFile::pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId)
@@ -174,7 +177,9 @@ void CoreFile::pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileI
         tox_file_control(core->tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_RESUME, nullptr);
     }
     else
+    {
         qWarning() << "pauseResumeFileRecv: File is stopped or broken";
+    }
 }
 
 void CoreFile::cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId)
@@ -185,6 +190,7 @@ void CoreFile::cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId)
         qWarning("cancelFileSend: No such file in queue");
         return;
     }
+
     file->status = ToxFile::STOPPED;
     emit core->fileTransferCancelled(*file);
     tox_file_control(core->tox, file->friendId, file->fileNum, TOX_FILE_CONTROL_CANCEL, nullptr);
@@ -240,27 +246,33 @@ void CoreFile::acceptFileRecvRequest(Core* core, uint32_t friendId, uint32_t fil
 
 ToxFile* CoreFile::findFile(uint32_t friendId, uint32_t fileId)
 {
-    uint64_t key = ((uint64_t)friendId<<32) + (uint64_t)fileId;
-    if (!fileMap.contains(key))
+    uint64_t key = getFriendKey(friendId, fileId);
+    if (fileMap.contains(key))
     {
-        qWarning() << "findFile: File transfer with ID "<<friendId<<':'<<fileId<<" doesn't exist";
-        return nullptr;
-    }
-    else
         return &fileMap[key];
+    }
+
+    qWarning() << "findFile: File transfer with ID" << friendId << ':'
+               << fileId << "doesn't exist";
+    return nullptr;
 }
 
 void CoreFile::addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file)
 {
-    uint64_t key = ((uint64_t)friendId<<32) + (uint64_t)fileId;
+    uint64_t key = getFriendKey(friendId, fileId);
+
     if (fileMap.contains(key))
-        qWarning() << "addFile: Overwriting existing file transfer with same ID "<<friendId<<':'<<fileId;
+    {
+        qWarning() << "addFile: Overwriting existing file transfer with same ID"
+                   << friendId << ':' << fileId;
+    }
+
     fileMap.insert(key, file);
 }
 
 void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
 {
-    uint64_t key = ((uint64_t)friendId<<32) + (uint64_t)fileId;
+    uint64_t key = getFriendKey(friendId, fileId);
     if (!fileMap.contains(key))
     {
         qWarning() << "removeFile: No such file in queue";
