@@ -25,6 +25,7 @@ running on all major platforms.**
   - [**CentOS, Debian, Fedora, openSUSE, Ubuntu**](https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox)
   - [other](/INSTALL.md#linux)
 * **Mac**:
+  - __[Building instructions]__
   - [**Experimental download**](https://github.com/qTox/qTox/releases/latest)
 * **FreeBSD**:
   - [**Port**](/INSTALL.md#freebsd-easy)
@@ -98,6 +99,7 @@ There are [IRC logs] available.
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
 [**64 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
 [**32 bit installer**]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[Building instructions]: /INSTALL.md#os-x
 [Coding]: https://github.com/qTox/qTox/blob/master/CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
