@@ -477,9 +477,7 @@ void Widget::updateIcons()
         checkedHasThemeIcon = true;
 
         if (hasThemeIconBug)
-        {
             qDebug() << "Detected buggy QIcon::hasThemeIcon. Icon overrides from theme will be ignored.";
-        }
     }
 
     QIcon ico;
