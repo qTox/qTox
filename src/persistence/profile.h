@@ -25,9 +25,11 @@
 #include <QString>
 #include <QByteArray>
 #include <QPixmap>
+
 #include <tox/toxencryptsave.h>
 #include <memory>
-#include "src/persistence/history.h"
+
+#include "history.h"
 
 class Core;
 class QThread;
@@ -88,6 +90,7 @@ private:
     QString name, password;
     TOX_PASS_KEY passkey;
     std::unique_ptr<History> history;
+    std::unique_ptr<UserDb> userDb;
     bool newProfile;
     bool isRemoved;
     static QVector<QString> profiles;
