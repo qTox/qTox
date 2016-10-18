@@ -56,6 +56,7 @@ private:
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
     static unsigned corefileIterationInterval();
+    static constexpr uint32_t getFriendKey(uint32_t friendId, uint32_t fileId);
 
 private:
     static void onFileReceiveCallback(Tox*, uint32_t friendnumber, uint32_t fileId, uint32_t kind,
