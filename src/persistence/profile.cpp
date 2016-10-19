@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,22 +17,23 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
+#include "historykeeper.h"
 #include "profile.h"
 #include "profilelocker.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
-#include "src/core/core.h"
-#include "src/widget/gui.h"
-#include "src/widget/widget.h"
-#include "src/nexus.h"
-#include <cassert>
+#include "settings.h"
+#include "../core/core.h"
+#include "../nexus.h"
+#include "../widget/gui.h"
+#include "../widget/widget.h"
+
 #include <QDir>
 #include <QFileInfo>
 #include <QSaveFile>
 #include <QThread>
 #include <QObject>
 #include <QDebug>
+
+#include <cassert>
 #include <sodium.h>
 
 /**
@@ -65,12 +66,16 @@ Profile::Profile(QString name, const QString &password, bool isNewProfile)
 
     // At this point it's too early to load the personal settings (Nexus will do it), so we always load
     // the history, and if it fails we can't change the setting now, but we keep a nullptr
-    history.reset(new History{name, password});
-    if (!history->isValid())
+    userDb.reset(new UserDb(name, password));
+    if (userDb->isOpen())
     {
-        qWarning() << "Failed to open history for profile"<<name;
+        history.reset(new History(userDb.get()));
+    }
+    else
+    {
+        qWarning() << "Failed to open database for profile" << name;
         GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-        history.release();
+        userDb.release();
     }
 
     coreThread = new QThread();
@@ -177,13 +182,15 @@ Profile* Profile::createProfile(QString name, QString password)
 {
     if (ProfileLocker::hasLock())
     {
-        qCritical() << "Tried to create profile "<<name<<", but another profile is already locked!";
+        qCritical() << "Tried to create profile" << name
+                    << ", but another profile is already locked!";
         return nullptr;
     }
 
     if (exists(name))
     {
-        qCritical() << "Tried to create profile "<<name<<", but it already exists!";
+        qCritical() << "Tried to create profile" << name
+                    << ", but it already exists!";
         return nullptr;
     }
 
@@ -624,6 +631,7 @@ QVector<QString> Profile::remove()
             i--;
         }
     }
+
     QString path = Settings::getInstance().getSettingsDirPath() + name;
     ProfileLocker::unlock();
 
@@ -656,12 +664,13 @@ QVector<QString> Profile::remove()
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
 
-    if (history)
+    if (userDb)
     {
-        if (!history->remove() && QFile::exists(History::getDbPath(name)))
+        QString dbPath = UserDb::getDbPath(name);
+        if (!userDb->remove() && QFile::exists(dbPath))
         {
-            ret.push_back(History::getDbPath(name));
-            qWarning() << "Could not remove file " << History::getDbPath(name);
+            ret.push_back(dbPath);
+            qWarning() << "Could not remove file " << dbPath;
         }
         history.release();
     }
@@ -682,10 +691,11 @@ bool Profile::rename(QString newName)
     if (!ProfileLocker::lock(newName))
         return false;
 
-    QFile::rename(path+".tox", newPath+".tox");
-    QFile::rename(path+".ini", newPath+".ini");
-    if (history)
-        history->rename(newName);
+    QFile::rename(path + ".tox", newPath + ".tox");
+    QFile::rename(path + ".ini", newPath + ".ini");
+    if (userDb)
+        userDb->rename(newName);
+
     bool resetAutorun = Settings::getInstance().getAutorun();
     Settings::getInstance().setAutorun(false);
     Settings::getInstance().setCurrentProfile(newName);
@@ -726,6 +736,7 @@ void Profile::restartCore()
     GUI::setEnabled(false); // Core::reset re-enables it
     if (!isRemoved && core->isReady())
         saveToxSave();
+
     QMetaObject::invokeMethod(core, "reset");
 }
 
@@ -741,11 +752,12 @@ void Profile::setPassword(const QString &newPassword)
     passkey = *core->createPasskey(password);
     saveToxSave();
 
-    if (history)
+    if (userDb)
     {
-        history->setPassword(newPassword);
+        userDb->setPassword(newPassword);
         Nexus::getDesktopGUI()->reloadHistory();
     }
+
     saveAvatar(avatar, core->getSelfId().publicKey);
 
     QVector<uint32_t> friendList = core->getFriendList();
