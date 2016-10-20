@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -35,7 +35,7 @@ class QThread;
 class Profile
 {
 public:
-    static Profile* loadProfile(QString name, const QString &password = QString());
+    static Profile* loadProfile(QString name, const QString& password = QString());
     static Profile* createProfile(QString name, QString password);
     ~Profile();
 
@@ -48,7 +48,7 @@ public:
     bool isEncrypted() const;
     bool checkPassword();
     QString getPassword() const;
-    void setPassword(const QString &newPassword);
+    void setPassword(const QString& newPassword);
     const TOX_PASS_KEY& getPasskey() const;
 
     QByteArray loadToxSave();
@@ -76,9 +76,10 @@ public:
 
     static bool exists(QString name);
     static bool isEncrypted(QString name);
+    static QString getDbPath(const QString& profileName);
 
 private:
-    Profile(QString name, const QString &password, bool newProfile);
+    Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
@@ -87,6 +88,7 @@ private:
     QThread* coreThread;
     QString name, password;
     TOX_PASS_KEY passkey;
+    std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;
     bool isRemoved;
