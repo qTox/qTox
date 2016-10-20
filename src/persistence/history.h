@@ -1,16 +1,36 @@
+/*
+    Copyright © 2015-2016 by The qTox Project
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    qTox is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef HISTORY_H
 #define HISTORY_H
 
-#include <tox/toxencryptsave.h>
 #include <QDateTime>
 #include <QVector>
 #include <QHash>
+
 #include <cstdint>
+#include <tox/toxencryptsave.h>
+
 #include "src/persistence/db/rawdatabase.h"
 
 class Profile;
 class HistoryKeeper;
-class RawDatabase;
 
 class History
 {   
@@ -30,14 +50,13 @@ public:
     };
 
 public:
-    History(const QString& profileName, const QString& password);
-    History(const QString& profileName, const QString& password, const HistoryKeeper& oldHistory);
+    History(RawDatabase* db);
     ~History();
 
     bool isValid();
     void import(const HistoryKeeper& oldHistory);
     void setPassword(const QString& password);
-    void rename(const QString& newName);
+    void rename(const QString& path);
     bool remove();
 
     void eraseHistory();
@@ -48,7 +67,6 @@ public:
 
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime &from, const QDateTime &to);
     void markAsSent(qint64 id);
-    static QString getDbPath(const QString& profileName);
 protected:
     void init();
     QVector<RawDatabase::Query> generateNewMessageQueries(const QString& friendPk, const QString& message,
@@ -56,7 +74,7 @@ protected:
                                                           std::function<void(int64_t)> insertIdCallback={});
 
 private:
-    RawDatabase db;
+    RawDatabase *db;
     QHash<QString, int64_t> peers;
 };
 
