@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,22 +18,24 @@
 */
 
 
-#include "profile.h"
-#include "profilelocker.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
-#include "src/core/core.h"
-#include "src/widget/gui.h"
-#include "src/widget/widget.h"
-#include "src/nexus.h"
-#include <cassert>
+#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QObject>
 #include <QSaveFile>
 #include <QThread>
-#include <QObject>
-#include <QDebug>
+
+#include <cassert>
 #include <sodium.h>
+
+#include "profile.h"
+#include "profilelocker.h"
+#include "settings.h"
+#include "historykeeper.h"
+#include "../core/core.h"
+#include "../widget/gui.h"
+#include "../widget/widget.h"
+#include "../nexus.h"
 
 /**
  * @class Profile
@@ -53,24 +55,31 @@
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, const QString &password, bool isNewProfile)
-    : name{name}, password{password},
-      newProfile{isNewProfile}, isRemoved{false}
+    : name{name}, password{password}
+    , database{new RawDatabase(getDbPath(name), password)}
+    , newProfile{isNewProfile}, isRemoved{false}
 {
     if (!password.isEmpty())
+    {
         passkey = *core->createPasskey(password);
+    }
 
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
-    // the history, and if it fails we can't change the setting now, but we keep a nullptr
-    history.reset(new History{name, password});
-    if (!history->isValid())
+    // At this point it's too early to load the personal settings (Nexus will do
+    // it), so we always load the history, and if it fails we can't change the
+    // setting now, but we keep a nullptr
+    if (database->isOpen())
+    {
+        history.reset(new History(database.get()));
+    }
+    else
     {
         qWarning() << "Failed to open history for profile"<<name;
         GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-        history.release();
+        database.release();
     }
 
     coreThread = new QThread();
@@ -155,13 +164,18 @@ Profile* Profile::loadProfile(QString name, const QString &password)
         else
         {
             if (!password.isEmpty())
+            {
                 qWarning() << "We have a password, but the tox save file is not encrypted";
+            }
         }
     }
 
     Profile* p = new Profile(name, password, false);
     if (p->history && HistoryKeeper::isFileExist(!password.isEmpty()))
+    {
         p->history->import(*HistoryKeeper::getInstance(*p));
+    }
+
     return p;
 }
 
@@ -200,7 +214,10 @@ Profile* Profile::createProfile(QString name, QString password)
 Profile::~Profile()
 {
     if (!isRemoved && core->isReady())
+    {
         saveToxSave();
+    }
+
     delete core;
     delete coreThread;
     if (!isRemoved)
@@ -227,7 +244,10 @@ QVector<QString> Profile::getFilesByExt(QString extension)
     QFileInfoList list = dir.entryInfoList();
     out.reserve(list.size());
     for (QFileInfo file : list)
+    {
         out += file.completeBaseName();
+    }
+
     return out;
 }
 
@@ -242,7 +262,10 @@ void Profile::scanProfiles()
     for (QString toxfile : toxfiles)
     {
         if (!inifiles.contains(toxfile))
+        {
             Settings::getInstance().createPersonal(toxfile);
+        }
+
         profiles.append(toxfile);
     }
 }
@@ -324,12 +347,16 @@ QByteArray Profile::loadToxSave()
 
         data = core->decryptData(data, passkey);
         if (data.isEmpty())
+        {
             qCritical() << "Failed to decrypt the tox save file";
+        }
     }
     else
     {
         if (!password.isEmpty())
+        {
             qWarning() << "We have a password, but the tox save file is not encrypted";
+        }
     }
 
 fail:
@@ -470,7 +497,9 @@ QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &passwo
 
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
+    {
         return {};
+    }
 
     QByteArray pic = file.readAll();
     if (encrypted && !pic.isEmpty())
@@ -480,6 +509,7 @@ QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &passwo
         auto passkey = core->createPasskey(password, salt);
         pic = core->decryptData(pic, *passkey);
     }
+
     return pic;
 }
 
@@ -491,7 +521,9 @@ QByteArray Profile::loadAvatarData(const QString &ownerId, const QString &passwo
 void Profile::saveAvatar(QByteArray pic, const QString &ownerId)
 {
     if (!password.isEmpty() && !pic.isEmpty())
+    {
         pic = core->encryptData(pic, passkey);
+    }
 
     QString path = avatarPath(ownerId);
     QDir(Settings::getInstance().getSettingsDirPath()).mkdir("avatars");
@@ -656,13 +688,15 @@ QVector<QString> Profile::remove()
         qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
 
-    if (history)
+    if (database)
     {
-        if (!history->remove() && QFile::exists(History::getDbPath(name)))
+        QString dbPath = getDbPath(name);
+        if (!database->remove() && QFile::exists(dbPath))
         {
-            ret.push_back(History::getDbPath(name));
-            qWarning() << "Could not remove file " << History::getDbPath(name);
+            ret.push_back(dbPath);
+            qWarning() << "Could not remove file " << dbPath;
         }
+        database.release();
         history.release();
     }
 
@@ -680,17 +714,24 @@ bool Profile::rename(QString newName)
             newPath = Settings::getInstance().getSettingsDirPath() + newName;
 
     if (!ProfileLocker::lock(newName))
+    {
         return false;
+    }
 
     QFile::rename(path+".tox", newPath+".tox");
     QFile::rename(path+".ini", newPath+".ini");
-    if (history)
-        history->rename(newName);
+    if (database)
+    {
+        database->rename(newName);
+    }
+
     bool resetAutorun = Settings::getInstance().getAutorun();
     Settings::getInstance().setAutorun(false);
     Settings::getInstance().setCurrentProfile(newName);
     if (resetAutorun)
+    {
         Settings::getInstance().setAutorun(true); // fixes -p flag in autostart command line
+    }
 
     name = newName;
     return true;
@@ -703,7 +744,9 @@ bool Profile::rename(QString newName)
 bool Profile::checkPassword()
 {
     if (isRemoved)
+    {
         return false;
+    }
 
     return !loadToxSave().isEmpty();
 }
@@ -725,7 +768,10 @@ void Profile::restartCore()
 {
     GUI::setEnabled(false); // Core::reset re-enables it
     if (!isRemoved && core->isReady())
+    {
         saveToxSave();
+    }
+
     QMetaObject::invokeMethod(core, "reset");
 }
 
@@ -733,7 +779,7 @@ void Profile::restartCore()
  * @brief Changes the encryption password and re-saves everything with it
  * @param newPassword Password for encryption.
  */
-void Profile::setPassword(const QString &newPassword)
+void Profile::setPassword(const QString& newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
     QString oldPassword = password;
@@ -741,9 +787,9 @@ void Profile::setPassword(const QString &newPassword)
     passkey = *core->createPasskey(password);
     saveToxSave();
 
-    if (history)
+    if (database)
     {
-        history->setPassword(newPassword);
+        database->setPassword(newPassword);
         Nexus::getDesktopGUI()->reloadHistory();
     }
     saveAvatar(avatar, core->getSelfId().publicKey);
@@ -755,4 +801,14 @@ void Profile::setPassword(const QString &newPassword)
         QString friendPublicKey = core->getFriendPublicKey(i.next());
         saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
     }
+}
+
+/**
+ * @brief Retrieves the path to the database file for a given profile.
+ * @param profileName Profile name.
+ * @return Path to database.
+ */
+QString Profile::getDbPath(const QString &profileName)
+{
+    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
 }
