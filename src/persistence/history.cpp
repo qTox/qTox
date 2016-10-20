@@ -1,12 +1,30 @@
-#include "history.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/db/rawdatabase.h"
-#include "src/persistence/historykeeper.h"
+/*
+    Copyright © 2015-2016 by The qTox Project
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    qTox is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include <QDebug>
 #include <cassert>
 
-using namespace std;
+#include "db/rawdatabase.h"
+#include "history.h"
+#include "historykeeper.h"
+#include "profile.h"
+#include "settings.h"
 
 /**
  * @class History
@@ -18,33 +36,23 @@ using namespace std;
  */
 
 /**
- * @brief Opens the profile database and prepares to work with the history.
- * @param profileName Profile name to load.
- * @param password If empty, the database will be opened unencrypted.
+ * @brief Prepares the database to work with the history.
+ * @param db This database will be prepared for use with the history.
  */
-History::History(const QString &profileName, const QString &password)
-    : db{getDbPath(profileName), password}
+History::History(RawDatabase *db)
+    : db(db)
 {
     init();
 }
 
-/**
- * @brief Opens the profile database, and import from the old database.
- * @param profileName Profile name to load.
- * @param password If empty, the database will be opened unencrypted.
- * @param oldHistory Old history to import.
- */
-History::History(const QString &profileName, const QString &password, const HistoryKeeper &oldHistory)
-    : History{profileName, password}
-{
-    import(oldHistory);
-}
-
 History::~History()
 {
+    if (!isValid())
+        return;
+
     // We could have execLater requests pending with a lambda attached,
     // so clear the pending transactions first
-    db.sync();
+    db->sync();
 }
 
 /**
@@ -53,34 +61,7 @@ History::~History()
  */
 bool History::isValid()
 {
-    return db.isOpen();
-}
-
-/**
- * @brief Changes the database password, will encrypt or decrypt if necessary.
- * @param password Password to set.
- */
-void History::setPassword(const QString& password)
-{
-    db.setPassword(password);
-}
-
-/**
- * @brief Moves the database file on disk to match the new name.
- * @param newName New name.
- */
-void History::rename(const QString &newName)
-{
-    db.rename(getDbPath(newName));
-}
-
-/**
- * @brief Deletes the on-disk database file.
- * @return True if success, false otherwise.
- */
-bool History::remove()
-{
-    return db.remove();
+    return db && db->isOpen();
 }
 
 /**
@@ -88,7 +69,10 @@ bool History::remove()
  */
 void History::eraseHistory()
 {
-    db.execNow("DELETE FROM faux_offline_pending;"
+    if (!isValid())
+        return;
+
+    db->execNow("DELETE FROM faux_offline_pending;"
                "DELETE FROM history;"
                "DELETE FROM aliases;"
                "DELETE FROM peers;"
@@ -101,11 +85,15 @@ void History::eraseHistory()
  */
 void History::removeFriendHistory(const QString &friendPk)
 {
+    if (!isValid())
+        return;
+
     if (!peers.contains(friendPk))
         return;
+
     int64_t id = peers[friendPk];
 
-    if (db.execNow(QString("DELETE FROM faux_offline_pending "
+    if (db->execNow(QString("DELETE FROM faux_offline_pending "
                "WHERE faux_offline_pending.id IN ( "
                  "SELECT faux_offline_pending.id FROM faux_offline_pending "
                  "LEFT JOIN history ON faux_offline_pending.id = history.id "
@@ -151,9 +139,11 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
         if (peers.isEmpty())
             peerId = 0;
         else
-            peerId = *max_element(begin(peers), end(peers))+1;
+            peerId = *std::max_element(peers.begin(), peers.end()) + 1;
         peers[friendPk] = peerId;
-        queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) VALUES (%1, '"+friendPk+"');").arg(peerId)};
+        queries += RawDatabase::Query(("INSERT INTO peers (id, public_key) "
+                                       "VALUES (%1, '" + friendPk + "');")
+                .arg(peerId));
     }
 
     // Get the db id of the sender of the message
@@ -167,9 +157,11 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
         if (peers.isEmpty())
             senderId = 0;
         else
-            senderId = *max_element(begin(peers), end(peers))+1;
+            senderId = *std::max_element(peers.begin(), peers.end()) + 1;
         peers[sender] = senderId;
-        queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) VALUES (%1, '"+sender+"');").arg(senderId)};
+        queries += RawDatabase::Query{("INSERT INTO peers (id, public_key) "
+                                       "VALUES (%1, '" + sender + "');")
+                .arg(senderId)};
     }
 
     queries += RawDatabase::Query(QString("INSERT OR IGNORE INTO aliases (owner, display_name) VALUES (%1, ?);")
@@ -205,7 +197,10 @@ QVector<RawDatabase::Query> History::generateNewMessageQueries(const QString &fr
 void History::addNewMessage(const QString &friendPk, const QString &message, const QString &sender,
                 const QDateTime &time, bool isSent, QString dispName, std::function<void(int64_t)> insertIdCallback)
 {
-    db.execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName, insertIdCallback));
+    if (!isValid())
+        return;
+
+    db->execLater(generateNewMessageQueries(friendPk, message, sender, time, isSent, dispName, insertIdCallback));
 }
 
 /**
@@ -217,6 +212,9 @@ void History::addNewMessage(const QString &friendPk, const QString &message, con
  */
 QList<History::HistMessage> History::getChatHistory(const QString &friendPk, const QDateTime &from, const QDateTime &to)
 {
+    if (!isValid())
+        return QList<HistMessage>();
+
     QList<HistMessage> messages;
 
     auto rowCallback = [&messages](const QVector<QVariant>& row)
@@ -232,7 +230,7 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
     };
 
     // Don't forget to update the rowCallback if you change the selected columns!
-    db.execNow({QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
+    db->execNow({QString("SELECT history.id, faux_offline_pending.id, timestamp, chat.public_key, "
                                "aliases.display_name, sender.public_key, message FROM history "
                        "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
                        "JOIN peers chat ON chat_id = chat.id "
@@ -252,17 +250,10 @@ QList<History::HistMessage> History::getChatHistory(const QString &friendPk, con
  */
 void History::markAsSent(qint64 id)
 {
-    db.execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(id));
-}
+    if (!isValid())
+        return;
 
-/**
- * @brief Retrieves the path to the database file for a given profile.
- * @param profileName Profile name.
- * @return Path to database.
- */
-QString History::getDbPath(const QString &profileName)
-{
-    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
+    db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;").arg(id));
 }
 
 /**
@@ -276,7 +267,7 @@ void History::init()
         return;
     }
 
-    db.execLater("CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE);"
+    db->execLater("CREATE TABLE IF NOT EXISTS peers (id INTEGER PRIMARY KEY, public_key TEXT NOT NULL UNIQUE);"
                  "CREATE TABLE IF NOT EXISTS aliases (id INTEGER PRIMARY KEY, owner INTEGER,"
                                                      "display_name BLOB NOT NULL, UNIQUE(owner, display_name));"
                  "CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, "
@@ -285,7 +276,7 @@ void History::init()
                  "CREATE TABLE IF NOT EXISTS faux_offline_pending (id INTEGER PRIMARY KEY);");
 
     // Cache our current peers
-    db.execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;", [this](const QVector<QVariant>& row)
+    db->execLater(RawDatabase::Query{"SELECT public_key, id FROM peers;", [this](const QVector<QVariant>& row)
     {
         peers[row[0].toString()] = row[1].toInt();
     }});
@@ -315,11 +306,11 @@ void History::import(const HistoryKeeper &oldHistory)
         queries += generateNewMessageQueries(msg.chat, msg.message, msg.sender, msg.timestamp, true, msg.dispName);
         if (queries.size() >= batchSize)
         {
-            db.execLater(queries);
+            db->execLater(queries);
             queries.clear();
         }
     }
-    db.execLater(queries);
-    db.sync();
+    db->execLater(queries);
+    db->sync();
     qDebug() << "Imported old database in"<<t.elapsed()<<"ms";
 }

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,22 +18,24 @@
 */
 
 
-#include "profile.h"
-#include "profilelocker.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/historykeeper.h"
-#include "src/core/core.h"
-#include "src/widget/gui.h"
-#include "src/widget/widget.h"
-#include "src/nexus.h"
-#include <cassert>
+#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QObject>
 #include <QSaveFile>
 #include <QThread>
-#include <QObject>
-#include <QDebug>
+
+#include <cassert>
 #include <sodium.h>
+
+#include "profile.h"
+#include "profilelocker.h"
+#include "settings.h"
+#include "historykeeper.h"
+#include "../core/core.h"
+#include "../widget/gui.h"
+#include "../widget/widget.h"
+#include "../nexus.h"
 
 /**
  * @class Profile
@@ -65,12 +67,16 @@ Profile::Profile(QString name, const QString &password, bool isNewProfile)
 
     // At this point it's too early to load the personal settings (Nexus will do it), so we always load
     // the history, and if it fails we can't change the setting now, but we keep a nullptr
-    history.reset(new History{name, password});
-    if (!history->isValid())
+    database.reset(new RawDatabase(getDbPath(name), password));
+    if (database->isOpen())
+    {
+        history.reset(new History(database.get()));
+    }
+    else
     {
         qWarning() << "Failed to open history for profile"<<name;
         GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-        history.release();
+        database.release();
     }
 
     coreThread = new QThread();
@@ -658,10 +664,11 @@ QVector<QString> Profile::remove()
 
     if (history)
     {
-        if (!history->remove() && QFile::exists(History::getDbPath(name)))
+        QString dbPath = getDbPath(name);
+        if (!history->remove() && QFile::exists(dbPath))
         {
-            ret.push_back(History::getDbPath(name));
-            qWarning() << "Could not remove file " << History::getDbPath(name);
+            ret.push_back(dbPath);
+            qWarning() << "Could not remove file " << dbPath;
         }
         history.release();
     }
@@ -755,4 +762,14 @@ void Profile::setPassword(const QString &newPassword)
         QString friendPublicKey = core->getFriendPublicKey(i.next());
         saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
     }
+}
+
+/**
+ * @brief Retrieves the path to the database file for a given profile.
+ * @param profileName Profile name.
+ * @return Path to database.
+ */
+QString Profile::getDbPath(const QString &profileName)
+{
+    return Settings::getInstance().getSettingsDirPath() + profileName + ".db";
 }

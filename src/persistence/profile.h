@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project
+    Copyright © 2015-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -76,6 +76,7 @@ public:
 
     static bool exists(QString name);
     static bool isEncrypted(QString name);
+    static QString getDbPath(const QString &profileName);
 
 private:
     Profile(QString name, const QString &password, bool newProfile);
@@ -87,6 +88,7 @@ private:
     QThread* coreThread;
     QString name, password;
     TOX_PASS_KEY passkey;
+    std::unique_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;
     bool isRemoved;
