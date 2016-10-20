@@ -81,11 +81,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Aptikti įrenginius iš naujo</translation>
+        <translation>Aptikti įrenginius iš naujo</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Išbandyti garsą</translation>
     </message>
 </context>
 <context>
@@ -121,19 +121,19 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradinis autorius: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Visą %1 rasite Github svetainėje</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>talkininkų sąrašą</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Naudojate qTox versiją: %1.</translation>
+        <translation>Naudojate qTox versiją: %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -141,11 +141,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">toxcore versija: %1</translation>
+        <translation>toxcore versija: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt versija: %1</translation>
+        <translation>Qt versija: %1</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Tokio Tox ID nėra</translation>
+        <translation>Tokio Tox ID nėra</translation>
     </message>
 </context>
 <context>
@@ -336,23 +336,23 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>SVARBUS PRANEŠIMAS</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Atstatyti nustatymus</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Visi nustatymai bus atstatyti į numatytuosius. Ar tikrai to norite?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Taip</translation>
+        <translation>Taip</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Ne</translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -362,15 +362,15 @@ vaizdo skambučiais.</translation>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Vykstant pokalbiui atsijungti negalite!</translation>
+        <translation>Vykstant pokalbiui, negalite atsijungti!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Įrašyti failą</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Žurnalai (*.log)</translation>
     </message>
 </context>
 <context>
@@ -394,12 +394,12 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Ryšio nuostatos</translation>
+        <translation>Ryšio nustatymai</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Įjungti IPv6 (rekomenduojama)</translation>
+        <translation>Įjungti IPv6 (rekomenduojama)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
@@ -409,38 +409,38 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Įjungti UDP (rekomenduojama)</translation>
+        <translation>Įjungti UDP (rekomenduojama)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Įgaliotojo serverio tipas:</translation>
+        <translation>Įgaliotojo serverio tipas:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Adresas:</translation>
+        <translation>Adresas:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Prievadas:</translation>
+        <translation>Prievadas:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Joks</translation>
+        <translation>Joks</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Prisijungti iš naujo</translation>
+        <translation>Prisijungti iš naujo</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -448,11 +448,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuoti derinimo žurnalą</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopijuoti derinimo žurnalą</translation>
     </message>
 </context>
 <context>
@@ -1639,7 +1639,7 @@ Failo formatas dar gali pasikeisti, todėl galite prarasti sukauptus duomenis.</
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Privatumas</translation>
+        <translation>Privatumas</translation>
     </message>
 </context>
 <context>
@@ -1882,11 +1882,11 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Profilis importuotas</translation>
+        <translation>Profilis importuotas</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox sėkmingai importuotas</translation>
+        <translation>%1.tox sėkmingai importuotas</translation>
     </message>
 </context>
 <context>
@@ -1897,7 +1897,7 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Atšaukti</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -2058,7 +2058,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Ar tikrai norite pašalinti %1 iš kontaktų sąrašo?</translation>
+        <translation>Ar tikrai norite pašalinti %1 iš savo kontaktų sąrašo?</translation>
     </message>
 </context>
 <context>
@@ -2154,18 +2154,18 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 nėra taisyklingas Toxme adresas.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Joks</translation>
+        <translation>Joks</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo sąsaja</translation>
     </message>
 </context>
 <context>
@@ -2184,44 +2184,44 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Dydis: </translation>
+        <translation>Dydis: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Naujoji teksto stiliaus nuostata negali būti įkelta tol, kol qTox nebus paleista iš naujo.</translation>
+        <translation>Naujoji teksto stiliaus nuostata negali būti įkelta tol, kol qTox nebus paleista iš naujo.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Teksto stiliaus formatas:</translation>
+        <translation>Teksto stiliaus formatas:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Pasirinkite teksto stiliaus nuostatą.</translation>
+        <translation>Pasirinkite teksto stiliaus nuostatą.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Neformatuotas tekstas</translation>
+        <translation>Grynasis tekstas</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Rodyti formatavimo simbolius</translation>
+        <translation>Rodyti formatavimo simbolius</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Nerodyti formatavimo simbolių</translation>
+        <translation>Nerodyti formatavimo simbolių</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nauja žintutė</translation>
+        <translation>Nauja žinutė</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Atverti qTox langą gavus naują žinutę, jei qTox yra paslėptas.</translation>
+        <translation>Gavus naują žinutę, atverti qTox langą, jeigu jis dar nėra atvertas.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Atverti langą</translation>
+        <translation>Atverti langą</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
