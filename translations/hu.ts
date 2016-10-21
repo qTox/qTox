@@ -1905,7 +1905,7 @@ Ossza meg ezt a partnerével a kommunikációhoz.</translation>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>Balról Jobbra</translation>
     </message>
 </context>
 <context>
