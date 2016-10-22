@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Spiele während dem Ändern der Ausgabelautstärke ein Testgeräusch ab.</translation>
+        <translation>Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -70,7 +70,7 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Wähle deine Kameraauflösung.
-Höhere Werte führen zu einem schärferen Bild bei deinen Freunden, allerdings nimmt die Netzwerkauslastung zu.
+Höhere Werte führen zu einem schärferen Bild, allerdings nimmt damit die Netzwerkauslastung zu.
 Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
     </message>
     <message>
@@ -83,7 +83,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Testton</translation>
     </message>
 </context>
 <context>
@@ -103,7 +103,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished">Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, %3 bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
+        <translation>Eine Liste aller bekannten Probleme findest du in unserem %1 auf GitHub. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, %3 bitte wie in unserem Wiki-Artikel %2 beschrieben.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -121,11 +121,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Originalauthor</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesamte Liste von %1 bei Github</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -133,7 +133,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Du verwendest qTox %1.</translation>
+        <translation>Du verwendest qTox Version %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -240,7 +240,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuell</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -324,19 +324,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn du %1 nicht weißt, was du tust, solltest du hier nichts ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>wirklich</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>nicht</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>WICHTIGER HINWEIS</translation>
     </message>
     <message>
         <source>Reset settings</source>
@@ -357,7 +357,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Anruf aktiv</translation>
+        <translation>Anruf aktiv</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
@@ -370,7 +370,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished">Protokolle (*.log)</translation>
+        <translation>Protokolle (*.log)</translation>
     </message>
 </context>
 <context>
@@ -390,7 +390,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -404,30 +404,30 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
+        <translation>Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">UDP aktivieren (Empfohlen)</translation>
+        <translation>UDP aktivieren (Empfohlen)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Proxy-Typ:</translation>
+        <translation>Proxy-Typ:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Adresse:</translation>
+        <translation>Adresse:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Port:</translation>
+        <translation>Port:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Keine Kamera ausgewählt</translation>
+        <translation>Kein Videogerät ausgewählt</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -440,19 +440,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Erneut verbinden</translation>
+        <translation>Erneut verbinden</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished">Fehlerbericht exportieren</translation>
+        <translation>Fehlerbericht exportieren</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished">Fehlerbericht kopieren</translation>
+        <translation>Fehlerbericht kopieren</translation>
     </message>
 </context>
 <context>
@@ -1065,7 +1065,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Auch Ton abspielen während man „beschäftigt“ ist</translation>
+        <translation>Auch Ton abspielen, wenn man beschäftigt ist.</translation>
     </message>
 </context>
 <context>
@@ -1330,8 +1330,8 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation>Speichert das ausgewählte Profil in eine Datei.
-Das Profil beinhaltet nicht deine Historie.</translation>
+        <translation>Speichert dein Tox Profil in eine Datei.
+Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1624,7 +1624,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     </message>
     <message>
         <source>NoSpam</source>
-        <translation type="unfinished">NoSpam-Funktion</translation>
+        <translation>NoSpam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -1635,7 +1635,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation type="unfinished">Zufällige NoSpam-ID generieren</translation>
+        <translation>Zufällige NoSpam-ID generieren</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1645,7 +1645,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Privatsphäre</translation>
+        <translation>Privatsphäre</translation>
     </message>
 </context>
 <context>
@@ -1766,8 +1766,8 @@ Bitte benutze ein anderes.</translation>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation type="unfinished">Dies ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
-Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
+        <translation>Das ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
+Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -1813,11 +1813,11 @@ Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</trans
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation>Account %1@%2 wurde erfolgreich aktualisiert.</translation>
+        <translation>Account %1@%2 wurde erfolgreich aktualisiert</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Der Benutzer %1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern.</translation>
+        <translation>Der Benutzer %1@%2 wurde erfolgreich der Datenbank hinzugefügt. Bitte Passwort speichern</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -1843,7 +1843,7 @@ Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</trans
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Aktuelles Profil in: %1</translation>
+        <translation>Aktuelles Profil in: %1</translation>
     </message>
 </context>
 <context>
@@ -1888,11 +1888,11 @@ Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</trans
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Profil importiert</translation>
+        <translation>Profil importiert</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">Die Datei %1.tox wurde erfolgreich importiert</translation>
+        <translation>Die Datei %1.tox wurde erfolgreich importiert</translation>
     </message>
 </context>
 <context>
@@ -1993,7 +1993,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
-        <translation>Der Server unterstützt kein ToxMe.</translation>
+        <translation>Server unterstützt ToxMe nicht</translation>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
@@ -2001,7 +2001,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation>Dieser Name wird bereits verwendet.</translation>
+        <translation>Dieser Name wird bereits verwendet</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
@@ -2013,19 +2013,19 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation>Falsches Passwort.</translation>
+        <translation>Passwort falsch</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation>Du kannst diesen Namen leider nicht verwenden.</translation>
+        <translation>Du kannst diesen Namen nicht verwenden.</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation>Name nicht gefunden.</translation>
+        <translation>Name nicht gefunden</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation>Tox ID wurde nicht gesendet.</translation>
+        <translation>Tox ID wurde nicht gesendet</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2037,15 +2037,15 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
-        <translation>qTox konnte deine Gesprächshistorie nicht öffnen. Das Speichern der Gespräche wird deaktiviert!</translation>
+        <translation>qTox konnte deinen Chatverlauf nicht öffnen, er wird deaktiviert.</translation>
     </message>
     <message>
         <source>Problem with HTTPS connection</source>
-        <translation>Problem mit HTTPS-Verbindung.</translation>
+        <translation>Problem mit der HTTPS-Verbindung</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Interner ToxMe-Fehler.</translation>
+        <translation>Interner ToxMe Fehler</translation>
     </message>
 </context>
 <context>
@@ -2072,22 +2072,22 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke %1, um das qTox-Fenster auszublenden/anzuzeigen. Drücke %2, um abzubrechen.</translation>
+        <translation>Klicke und ziehe, um einen Ausschnitt auszuwählen. Drücke %1, um das qTox-Fenster auszublenden/anzuzeigen oder drücke %2, um abzubrechen.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">Leertaste</translation>
+        <translation>Leertaste</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Escape</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">Drücke %1, um einen Screenshot des ausgewählten Ausschnitts zu senden, die %2, um das qTox-Fenster auszublenden/einzublenden oder %3, um abzubrechen.</translation>
+        <translation>Drücke %1, um einen Screenshot des ausgewählten Ausschnitts zu senden, %2, um das qTox-Fenster auszublenden/einzublenden oder %3, um abzubrechen.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2160,25 +2160,25 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ist keine gültige Toxme-Adresse.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Keine Kamera ausgewählt</translation>
+        <translation>Kein Videogerät ausgewählt</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished">Benutzeroberfläche</translation>
+        <translation>Benutzeroberfläche</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Chat</translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2190,31 +2190,31 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Größe: </translation>
+        <translation>Größe: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
+        <translation>Änderungen am Aussehen des Textes werden eventuell erst nach einem Neustart von qTox angezeigt.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Text Stilformat:</translation>
+        <translation>Textformat:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Wählen Sie die Textstil Einstellung.</translation>
+        <translation>Wählen Sie die Textstil Einstellung.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Klartext</translation>
+        <translation>Klartext</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Formatierungszeichen anzeigen</translation>
+        <translation>Formatierungszeichen anzeigen</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Formatierungszeichen nicht anzeigen</translation>
+        <translation>Formatierungszeichen nicht anzeigen</translation>
     </message>
     <message>
         <source>New message</source>
@@ -2223,7 +2223,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Öffne qTox bei neuen Nachrichten, falls noch kein Fenster geöffnet ist.</translation>
+        <translation>Öffne qTox bei neuen Nachrichten, falls noch kein Fenster geöffnet ist.</translation>
     </message>
     <message>
         <source>Open window</source>
@@ -2232,11 +2232,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Fenster wird fokussiert, wenn neue Nachrichten eingehen.</translation>
+        <translation>qTox wird fokussiert, wenn neue Nachrichten eingehen.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Fokussiere das Fenster</translation>
+        <translation>Fokussiere das Fenster</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2254,11 +2254,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Falls aktiviert, werden Gruppenchats an erster Stelle deiner Kontaktliste platziert, andernfalls werden sie unter deinen Kontakten platziert.</translation>
+        <translation>Falls aktiviert, werden Gruppenchats an erster Stelle deiner Kontaktliste platziert, andernfalls werden sie unter deinen Kontakten platziert.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Gruppenchats an erster Stelle der Kontaktliste anzeigen</translation>
+        <translation>Gruppenchats an erster Stelle der Kontaktliste anzeigen</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
@@ -2267,15 +2267,15 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Kompakte Kontaktliste</translation>
+        <translation>Kompakte Kontaktliste</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Mehrfenster-Modus</translation>
+        <translation>Mehrfenster-Modus</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Jeden Chat in einem separaten Fenster öffnen</translation>
+        <translation>Jeden Chat in einem separaten Fenster öffnen</translation>
     </message>
     <message>
         <source>Emoticons</source>
@@ -2283,20 +2283,20 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Emoticons verwenden</translation>
+        <translation>Emoticons verwenden</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Smiley-Art:</translation>
+        <translation>Smileyart:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Emoticongröße:</translation>
+        <translation>Emoticongröße:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> Pixel</translation>
+        <translation> Pixel</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2304,7 +2304,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Grundstil:</translation>
+        <translation>Stil:</translation>
     </message>
     <message>
         <source>Theme color:</source>
@@ -2449,7 +2449,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 ist jetzt %2.</translation>
+        <translation>%1 ist jetzt %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
