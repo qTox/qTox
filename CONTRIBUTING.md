@@ -327,27 +327,18 @@ function()
 }
 
 // if / while / for / switch
-if ()
-    1_line;
+// always use curly brackets
+if () // ← note the space between `if` and parenthesis
+{
+    1_line_curly;
+}
 else if ()
+{
     just_one_line;
-else
-    each_condition;
-
-// ↑ note space between last line of conditional code, and code outside of condition
-if ()
-{
-    1_line;
-}
-else if ()
-{
-    what_if;
-    i_told_you;
 }
 else
 {
-    that_there_are;
-    more_lines;
+    each_condition_in_curly;
 }
 
 QObject* asterisksGoWithTheType;
@@ -357,7 +348,6 @@ uint8_t* array = new uint8_t[count];
 QObject notToMentionThatWeUseCamelCase;
 ```
 
-E.g. https://github.com/qTox/qTox/blob/master/src/misc/flowlayout.cpp
 
 ## Dynamic casts / RTTI
 
