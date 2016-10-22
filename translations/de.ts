@@ -2245,11 +2245,11 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Du wirst benachrichtigt, wenn neue Nachrichten in Gruppenchats eingehen.</translation>
+        <translation>Immer über neue Nachrichten in Gruppenchats benachrichtigen.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Für Gruppenchats immer benachrichtigen</translation>
+        <translation>Für Gruppenchats immer Benachrichtigungen anzeigen</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2300,7 +2300,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Aussehen</translation>
+        <translation>Farbschema</translation>
     </message>
     <message>
         <source>Style:</source>
