@@ -69,8 +69,8 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Wähle deine Kameraauflösung.
-Höhere Werte führen zu einem schärferen Bild, allerdings nimmt die Netzwerkauslastung zu.
+        <translation>Wähle deine Kameraauflösung.
+Höhere Werte führen zu einem schärferen Bild bei deinen Freunden, allerdings nimmt die Netzwerkauslastung zu.
 Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
     </message>
     <message>
@@ -1916,7 +1916,7 @@ Gebe sie einfach an deine Bekannte weiter, um mit ihnen zu kommunizieren.</trans
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>rechtsläufige Schrift</translation>
     </message>
 </context>
 <context>
