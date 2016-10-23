@@ -95,9 +95,8 @@ RawDatabase::RawDatabase(const QString &path, const QString& password, const uin
     : workerThread{new QThread}, path{path}
 {
     // we need the salt later if a new password should be set
-    currentSalt = new uint8_t[TOX_PASS_SALT_LENGTH];
     memcpy(currentSalt, salt, TOX_PASS_SALT_LENGTH);
-    currentHexKey{deriveKey(password, currentSalt);
+    currentHexKey = deriveKey(password, currentSalt);
 
     workerThread->setObjectName("qTox Database");
     moveToThread(workerThread.get());
@@ -129,7 +128,6 @@ RawDatabase::~RawDatabase()
     workerThread->exit(0);
     while (workerThread->isRunning())
         workerThread->wait(50);
-    delete currentSalt;
 }
 
 /**
@@ -467,6 +465,8 @@ bool RawDatabase::remove()
  * @brief Derives a 256bit key from the password and returns it hex-encoded
  * @param password Password to decrypt database
  * @return String representation of key
+ *
+ * Deprecated, remove in 2018
  */
 QString RawDatabase::deriveKey(const QString &password)
 {

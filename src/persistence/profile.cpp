@@ -67,23 +67,11 @@ Profile::Profile(QString name, const QString &password, bool isNewProfile)
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
-    // the history, and if it fails we can't change the setting now, but we keep a nullptr
-    database.reset(new RawDatabase(getDbPath(name), password));
-    if (database->isOpen())
-    {
-        history.reset(new History(database.get()));
-    }
-    else
-    {
-        qWarning() << "Failed to open history for profile"<<name;
-        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
-        database.release();
-    }
-
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
     core = new Core(coreThread, *this);
+    // we need our own public key to load the encrypted database
+    QObject::connect(core, &Core::idSet, this, &Profile::loadDatabase, Qt::QueuedConnection);
     core->moveToThread(coreThread);
     QObject::connect(coreThread, &QThread::started, core, &Core::start);
 }
@@ -443,6 +431,29 @@ QString Profile::avatarPath(const QString &ownerId, bool forceUnencrypted)
     QByteArray hash(hashSize, 0);
     crypto_generichash((uint8_t*)hash.data(), hashSize, (uint8_t*)idData.data(), idData.size(), (uint8_t*)pubkeyData.data(), pubkeyData.size());
     return Settings::getInstance().getSettingsDirPath() + "avatars/" + hash.toHex().toUpper() + ".png";
+}
+
+void Profile::loadDatabase(const QString &id)
+{
+    QByteArray salt = QByteArray::fromHex(core->getSelfId().publicKey.toLocal8Bit());
+    if(salt.size() != TOX_PASS_SALT_LENGTH)
+    {
+        qWarning() << "Couldn't compute salt from public key" << name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+    }
+    // At this point it's too early to load the personal settings (Nexus will do it), so we always load
+    // the history, and if it fails we can't change the setting now, but we keep a nullptr
+    database.reset(new RawDatabase(getDbPath(name), password, reinterpret_cast<uint8_t *>(salt.data())));
+    if (database->isOpen())
+    {
+        history.reset(new History(database.get()));
+    }
+    else
+    {
+        qWarning() << "Failed to open history for profile"<<name;
+        GUI::showError(QObject::tr("Error"), QObject::tr("qTox couldn't open your chat logs, they will be disabled."));
+        database.release();
+    }
 }
 
 /**
