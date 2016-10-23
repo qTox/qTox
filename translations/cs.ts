@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Použijte posuvník pro nastavení zesílení nahrávacího zařízení od %1dB do %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -37,11 +37,11 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Zesílení</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Přehrávací zařízení</translation>
+        <translation>Přehrávací zařízení</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Nahrávací zařízení</translation>
+        <translation>Nahrávací zařízení</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -69,10 +69,10 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Nastavení rozlišení vaší kamery
-Čím vyšší hodnota je nastavena v tím lepší kvalitě vás uvidí ostatní.
-Poznámka čím vyšší kvalita je nastavena tím vyšší jsou nároky na internetové spojení.
-Rychlost vašeho připojení nemusí být vždy dostačující pro vyšší kvalitu videa,což 
+        <translation>Nastavte rozlišení vaší kamery.
+Čím vyšší hodnota je nastavena, v tím lepší kvalitě vás uvidí ostatní.
+Čím vyšší kvalita, tím vyšší jsou nároky na internetové připojení.
+Rychlost vašeho připojení nemusí být vždy dostačující pro vyšší kvalitu videa, což 
 může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
@@ -137,7 +137,7 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Commit hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -175,7 +175,7 @@ může způsobovat problémy během videohovorů.</translation>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogové okno</translation>
     </message>
     <message>
         <source>username</source>
@@ -283,7 +283,7 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 je zde! Prosím přidáš si mne ?</translation>
+        <translation type="unfinished">%1 je zde! Prosím přidáš si mne?</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -328,11 +328,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>vážně</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>ne</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -1144,7 +1144,7 @@ místo do spuštěných programů.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Prázdné&gt;</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1196,7 @@ místo do spuštěných programů.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pozvánky do skupin</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1208,7 +1208,7 @@ místo do spuštěných programů.</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvaný uživatelem %1 dne %2 o %3.</translation>
     </message>
 </context>
 <context>
@@ -1344,7 +1344,7 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>O mně</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1559,9 +1559,9 @@ You may want to create one.</source>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
+            <numerusform>Nepřečtená zpráva</numerusform>
             <numerusform>Nepřečtené zprávy</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Nepřečtené zprávy</numerusform>
         </translation>
     </message>
 </context>
@@ -2492,7 +2492,7 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Prázdné&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
