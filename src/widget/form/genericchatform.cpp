@@ -486,7 +486,7 @@ QString GenericChatForm::resolveToxId(const ToxId &id)
 
 void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
 {
-    chatWidget->insertChatlineAtBottom(std::dynamic_pointer_cast<ChatLine>(msg));
+    chatWidget->insertChatlineAtBottom(std::static_pointer_cast<ChatLine>(msg));
     emit messageInserted();
 }
 
