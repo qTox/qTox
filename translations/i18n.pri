@@ -25,6 +25,7 @@ TRANSLATIONS = \
     translations/pl.ts \
     translations/pt.ts \
     translations/ru.ts \
+    translations/sk.ts \
     translations/sl.ts \
     translations/sv.ts \
     translations/tr.ts \
