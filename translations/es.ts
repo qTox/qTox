@@ -85,7 +85,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prueba de Sonido</translation>
     </message>
 </context>
 <context>
@@ -109,11 +109,11 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation>bug-tracker</translation>
+        <translation>Informe de errores (bug-tracker)</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation>Writing Useful Bug Reports</translation>
+        <translation>Cómo escribir un informe de errores correctamente</translation>
     </message>
     <message>
         <source>report it</source>
@@ -1277,7 +1277,7 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation>Te llevará a la pantalla de inicio de sesión.</translation>
+        <translation>Volver a la pantalla de inicio de sesión</translation>
     </message>
     <message>
         <source>Logout</source>
