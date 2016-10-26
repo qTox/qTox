@@ -22,7 +22,8 @@ set -eu -o pipefail
 # Obtain doxygen and its deps
 sudo apt-get install doxygen graphviz
 
-GIT_DESC=$(git describe --tags 2> /dev/null)
+# can fail due to travis cloning only `depth=50`
+GIT_DESC=$(git describe --tags 2>/dev/null || echo HEAD)
 GIT_CHASH=$(git rev-parse HEAD)
 
 # Append git version to doxygen version string
