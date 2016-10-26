@@ -16,7 +16,7 @@ class AboutUser : public QDialog
 public:
     explicit AboutUser(ToxId &toxID, QWidget *parent = 0);
     ~AboutUser();
-    void setFriend(Friend *f);
+    void setFriend(Friend f);
 
 private:
     Ui::AboutUser *ui;

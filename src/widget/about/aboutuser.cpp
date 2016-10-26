@@ -34,16 +34,16 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
         ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
 }
 
-void AboutUser::setFriend(Friend *f)
+void AboutUser::setFriend(Friend f)
 {
-    this->setWindowTitle(f->getDisplayedName());
-    ui->userName->setText(f->getDisplayedName());
-    ui->publicKey->setText(QString(f->getToxId().toString()));
+    this->setWindowTitle(f.getDisplayedName());
+    ui->userName->setText(f.getDisplayedName());
+    ui->publicKey->setText(QString(f.getToxId().toString()));
     ui->publicKey->setCursorPosition(0); //scroll textline to left
-    ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
+    ui->note->setPlainText(Settings::getInstance().getContactNote(f.getToxId()));
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getToxId().toString());
-    ui->statusMessage->setText(f->getStatusMessage());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(f.getToxId().toString());
+    ui->statusMessage->setText(f.getStatusMessage());
     if(!avatar.isNull()) {
         ui->avatar->setPixmap(avatar);
     } else {

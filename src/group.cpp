@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,17 +18,30 @@
 */
 
 #include "group.h"
+
 #include "widget/groupwidget.h"
 #include "widget/form/groupchatform.h"
-#include "friendlist.h"
 #include "friend.h"
+#include "grouplist.h"
 #include "src/core/core.h"
 #include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
+Group* Group::get(int groupId)
+{
+    return GroupList::findGroup(groupId);
+}
+
+void Group::remove(int groupId)
+{
+    GroupList::removeGroup(groupId);
+}
+
+Group::Group(int GroupId, const QString& Name, bool IsAvGroupchat)
+    : groupId(GroupId)
+    , nPeers{0}
+    , avGroupchat{IsAvGroupchat}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
@@ -53,11 +66,11 @@ void Group::updatePeer(int peerId, QString name)
     peers[peerId] = name;
     toxids[toxid] = name;
 
-    Friend *f = FriendList::findFriend(id);
-    if (f != nullptr && f->hasAlias())
+    Friend f = Friend::get(id);
+    if (f.isValid() && f.hasAlias())
     {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
+        peers[peerId] = f.getDisplayedName();
+        toxids[toxid] = f.getDisplayedName();
     }
     else
     {
@@ -98,11 +111,11 @@ void Group::regeneratePeerList()
         if (toxids[toxid].isEmpty())
             toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
-        Friend *f = FriendList::findFriend(id);
-        if (f != nullptr && f->hasAlias())
+        Friend f = Friend::get(id);
+        if (f.isValid() && f.hasAlias())
         {
-            peers[i] = f->getDisplayedName();
-            toxids[toxid] = f->getDisplayedName();
+            peers[i] = f.getDisplayedName();
+            toxids[toxid] = f.getDisplayedName();
         }
     }
 
@@ -146,22 +159,22 @@ bool Group::isSelfPeerNumber(int num) const
     return num == selfPeerNum;
 }
 
-void Group::setEventFlag(int f)
+void Group::setEventFlag(bool f)
 {
     hasNewMessages = f;
 }
 
-int Group::getEventFlag() const
+bool Group::getEventFlag() const
 {
     return hasNewMessages;
 }
 
-void Group::setMentionedFlag(int f)
+void Group::setMentionedFlag(bool f)
 {
     userWasMentioned = f;
 }
 
-int Group::getMentionedFlag() const
+bool Group::getMentionedFlag() const
 {
     return userWasMentioned;
 }

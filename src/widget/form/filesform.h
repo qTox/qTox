@@ -20,25 +20,22 @@
 #ifndef FILESFORM_H
 #define FILESFORM_H
 
-#include <QListWidgetItem>
 #include <QTabWidget>
 #include <QString>
 #include <QLabel>
-#include <QVBoxLayout>
 
-class ContentLayout;
+#include "src/widget/contentwidget.h"
+
 class QListWidget;
+class QListWidgetItem;
 
-class FilesForm : public QObject
+class FilesForm : public ContentWidget
 {
     Q_OBJECT
 
 public:
-    FilesForm();
+    explicit FilesForm(QWidget* parent = nullptr);
     ~FilesForm();
-
-    bool isShown() const;
-    void show(ContentLayout* contentLayout);
 
 public slots:
     void onFileDownloadComplete(const QString& path);
@@ -51,12 +48,11 @@ private:
     void retranslateUi();
 
 private:
-    QWidget* head;
     QIcon doneIcon;
     QLabel headLabel;
-    QVBoxLayout headLayout;
     QTabWidget main;
-    QListWidget* sent, * recvd;
+    QListWidget* sent;
+    QListWidget* recvd;
 };
 
 #endif // FILESFORM_H

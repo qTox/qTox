@@ -18,21 +18,23 @@
 */
 
 #include "circlewidget.h"
-#include "friendwidget.h"
-#include "friendlistwidget.h"
-#include "tool/croppinglabel.h"
-#include "src/persistence/settings.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
-#include "src/widget/contentdialog.h"
-#include "widget.h"
+
+#include <cassert>
+
 #include <QVariant>
 #include <QBoxLayout>
 #include <QMouseEvent>
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QMenu>
-#include <cassert>
+
+#include "contentdialog.h"
+#include "friendlistwidget.h"
+#include "friendwidget.h"
+#include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "tool/croppinglabel.h"
+#include "widget.h"
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 
@@ -40,7 +42,9 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
     : CategoryWidget(parent)
     , id(id)
 {
-    setName(Settings::getInstance().getCircleName(id), false);
+    const Settings& s = Settings::getInstance();
+
+    setName(s.getCircleName(id), false);
     circleList[id] = this;
 
     connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
@@ -51,11 +55,11 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
 
     connect(nameLabel, &CroppingLabel::editRemoved, [this]()
     {
-        if (isCompact())
+        if (Settings::getInstance().getCompactLayout())
             nameLabel->minimizeMaximumWidth();
     });
 
-    setExpanded(Settings::getInstance().getCircleExpanded(id), false);
+    setExpanded(s.getCircleExpanded(id), false);
     updateStatus();
 }
 
@@ -124,20 +128,14 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
             for (int i = 0; i < friendOfflineLayout()->count(); ++i)
             {
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
                 if (friendWidget != nullptr)
-                {
-                    Friend* f = friendWidget->getFriend();
-                    dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
-                }
+                    emit friendWidget->chatroomWidgetClicked(friendWidget, false);
             }
 
             dialog->show();
@@ -150,7 +148,9 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
 void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    ToxId toxId(event->mimeData()->text());
+    Friend f = Friend::get(toxId);
+    if (!f.isValid())
         event->acceptProposedAction();
 
     setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
@@ -163,31 +163,32 @@ void CircleWidget::dragLeaveEvent(QDragLeaveEvent* )
 
 void CircleWidget::dropEvent(QDropEvent* event)
 {
-    if (event->mimeData()->hasFormat("friend"))
+    // Check, if element dropped from qTox
+    QObject *o = event->source();
+    FriendWidget *widget = qobject_cast<FriendWidget*>(o);
+    if (!widget)
+        return;
+
+    // Check, if a friend with this toxId is contained in our friend list
+    ToxId toxId(event->mimeData()->text());
+    Friend f = Friend::get(toxId);
+    if (!f.isValid())
+        return;
+
+    setExpanded(true, false);
+    addFriendWidget(widget, f.getStatus());
+    Settings::getInstance().savePersonal();
+
+    // Update old circle after moved.
+    int circleId = Settings::getInstance().getFriendCircleID(f.getToxId());
+    CircleWidget* circleWidget = getFromID(circleId);
+    if (circleWidget)
     {
-        setExpanded(true, false);
-
-        int friendId = event->mimeData()->data("friend").toInt();
-        Friend* f = FriendList::findFriend(friendId);
-        assert(f != nullptr);
-
-        FriendWidget* widget = f->getFriendWidget();
-        assert(widget != nullptr);
-
-        // Update old circle after moved.
-        CircleWidget* circleWidget = getFromID(Settings::getInstance().getFriendCircleID(f->getToxId()));
-
-        addFriendWidget(widget, f->getStatus());
-        Settings::getInstance().savePersonal();
-
-        if (circleWidget != nullptr)
-        {
-            circleWidget->updateStatus();
-            Widget::getInstance()->searchCircle(circleWidget);
-        }
-
-        setContainerAttribute(Qt::WA_UnderMouse, false);
+        circleWidget->updateStatus();
+        Widget::getInstance()->searchCircle(circleWidget);
     }
+
+    setContainerAttribute(Qt::WA_UnderMouse, false);
 }
 
 void CircleWidget::onSetName()
@@ -203,7 +204,8 @@ void CircleWidget::onExpand()
 
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
-    Settings::getInstance().setFriendCircleID(FriendList::findFriend(w->friendId)->getToxId(), id);
+    ToxId toxId = Friend::get(w->friendId).getToxId();
+    Settings::getInstance().setFriendCircleID(toxId, id);
 }
 
 void CircleWidget::updateID(int index)
@@ -221,14 +223,21 @@ void CircleWidget::updateID(int index)
     {
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+        if (friendWidget)
+        {
+            ToxId toxId = Friend::get(friendWidget->friendId).getToxId();
+            Settings::getInstance().setFriendCircleID(toxId, id);
+        }
     }
+
     for (int i = 0; i < friendOfflineLayout()->count(); ++i)
     {
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
-        if (friendWidget != nullptr)
-            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+        if (friendWidget)
+        {
+            ToxId toxId = Friend::get(friendWidget->friendId).getToxId();
+            Settings::getInstance().setFriendCircleID(toxId, id);
+        }
     }
 }

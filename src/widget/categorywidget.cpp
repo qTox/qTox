@@ -21,6 +21,7 @@
 #include "friendlistlayout.h"
 #include "friendlistwidget.h"
 #include "friendwidget.h"
+#include "src/persistence/settings.h"
 #include "src/widget/style.h"
 #include "tool/croppinglabel.h"
 #include <QBoxLayout>
@@ -65,9 +66,7 @@ CategoryWidget::CategoryWidget(QWidget* parent)
     fullLayout->addWidget(listWidget);
 
     setAcceptDrops(true);
-
-    onCompactChanged(isCompact());
-
+    initLayout();
     setExpanded(true, false);
     updateStatus();
 }
@@ -108,7 +107,8 @@ void CategoryWidget::setName(const QString &name, bool save)
 {
     nameLabel->setText(name);
 
-    if (isCompact())
+    const Settings& s = Settings::getInstance();
+    if (s.getCompactLayout())
         nameLabel->minimizeMaximumWidth();
 
     if (save)
@@ -239,13 +239,15 @@ bool CategoryWidget::cycleContacts(FriendWidget* activeChatroomWidget, bool forw
         GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(currentLayout->itemAt(index)->widget());
         if (chatWidget != nullptr)
             emit chatWidget->chatroomWidgetClicked(chatWidget);
-        return true;
+
+        break;
     }
 
-    return false;
+    // TODO: method always returns true
+    return true;
 }
 
-void CategoryWidget::onCompactChanged(bool _compact)
+void CategoryWidget::initLayout()
 {
     delete topLayout;
     delete mainLayout;
@@ -253,9 +255,6 @@ void CategoryWidget::onCompactChanged(bool _compact)
     topLayout = new QHBoxLayout;
     topLayout->setSpacing(0);
     topLayout->setMargin(0);
-
-    Q_UNUSED(_compact);
-    setCompact(true);
 
     nameLabel->minimizeMaximumWidth();
 

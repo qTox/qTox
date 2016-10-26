@@ -18,23 +18,27 @@
 */
 
 #include "groupwidget.h"
-#include "maskablepixmapwidget.h"
-#include "contentdialog.h"
-#include "src/grouplist.h"
-#include "src/group.h"
-#include "src/persistence/settings.h"
-#include "form/groupchatform.h"
-#include "src/widget/style.h"
-#include "src/core/core.h"
-#include "tool/croppinglabel.h"
-#include "src/widget/translator.h"
-#include <QPalette>
-#include <QMenu>
-#include <QContextMenuEvent>
-#include <QDragEnterEvent>
-#include <QMimeData>
+
 #include <QApplication>
+#include <QContextMenuEvent>
 #include <QDrag>
+#include <QDragEnterEvent>
+#include <QMenu>
+#include <QMimeData>
+#include <QPalette>
+
+#include "contentdialog.h"
+#include "form/groupchatform.h"
+#include "friendwidget.h"
+#include "maskablepixmapwidget.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/group.h"
+#include "src/grouplist.h"
+#include "src/persistence/settings.h"
+#include "style.h"
+#include "tool/croppinglabel.h"
+#include "translator.h"
 
 GroupWidget::GroupWidget(int GroupId, QString Name)
     : groupId{GroupId}
@@ -43,6 +47,10 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
     statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
     statusPic.setMargin(3);
     nameLabel->setText(Name);
+
+    const Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GroupWidget::onCompactLayoutChanged);
 
     onUserListChanged();
 
@@ -137,13 +145,12 @@ void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
 
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
-        QDrag* drag = new QDrag(this);
         QMimeData* mdata = new QMimeData;
-        mdata->setData("group", QString::number(groupId).toLatin1());
+        mdata->setText(getGroup()->getName());
 
+        QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
         drag->setPixmap(avatar->getPixmap());
-
         drag->exec(Qt::CopyAction | Qt::MoveAction);
     }
 }
@@ -211,15 +218,13 @@ Group* GroupWidget::getGroup() const
 
 bool GroupWidget::chatFormIsSet(bool focus) const
 {
-    (void)focus;
-    Group* g = GroupList::findGroup(groupId);
-    return ContentDialog::existsGroupWidget(groupId, focus) || g->getChatForm()->isVisible();
+    return ContentDialog::groupWidgetExists(groupId, focus);
 }
 
-void GroupWidget::setChatForm(ContentLayout* contentLayout)
+void GroupWidget::setChatForm()
 {
     Group* g = GroupList::findGroup(groupId);
-    g->getChatForm()->show(contentLayout);
+    g->getChatForm()->show();
 }
 
 void GroupWidget::resetEventFlags()
@@ -231,7 +236,9 @@ void GroupWidget::resetEventFlags()
 
 void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
+    ToxId toxId = ToxId(ev->mimeData()->text());
+    Friend frnd = Friend::get(toxId);
+    if (frnd.isValid())
         ev->acceptProposedAction();
 
     if (!active)
@@ -246,14 +253,16 @@ void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 
 void GroupWidget::dropEvent(QDropEvent *ev)
 {
-    if (ev->mimeData()->hasFormat("friend"))
-    {
-        int friendId = ev->mimeData()->data("friend").toInt();
-        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    ToxId toxId = ToxId(ev->mimeData()->text());
+    Friend frnd = Friend::get(toxId);
+    if (!frnd.isValid())
+        return;
 
-        if (!active)
-            setBackgroundRole(QPalette::Window);
-    }
+    Friend::ID friendId = frnd.getFriendId();
+    Core::getInstance()->groupInviteFriend(friendId, groupId);
+
+    if (!active)
+        setBackgroundRole(QPalette::Window);
 }
 
 void GroupWidget::setName(const QString& name)

@@ -18,26 +18,27 @@
 */
 
 #include "netcamview.h"
-#include "camerasource.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/core/core.h"
-#include "src/video/videosurface.h"
-#include "src/widget/tool/movablewidget.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/profile.h"
-#include "src/nexus.h"
-#include <QLabel>
+
 #include <QBoxLayout>
 #include <QFrame>
+#include <QLabel>
 
-NetCamView::NetCamView(int friendId, QWidget* parent)
+#include "camerasource.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/movablewidget.h"
+
+NetCamView::NetCamView(Friend::ID friendId, QWidget* parent)
     : GenericNetCamView(parent)
     , selfFrame{nullptr}
     , friendId{friendId}
     , e(false)
 {
-    QString id = FriendList::findFriend(friendId)->getToxId().toString();
+    QString id = Friend::get(friendId).getToxId().toString();
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);
@@ -79,9 +80,9 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
         selfVideoSurface->setAvatar(pixmap);
     });
 
-    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
+    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](Friend::ID friendId, const QPixmap& pixmap)
     {
-        if (this->friendId == FriendId)
+        if (this->friendId == friendId)
             videoSurface->setAvatar(pixmap);
     });
 

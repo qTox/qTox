@@ -22,22 +22,37 @@
 
 #include <QObject>
 #include <QString>
+#include "src/chatlog/chatmessage.h"
 #include "src/core/corestructs.h"
-#include "core/toxid.h"
+#include "src/core/toxid.h"
+#include "src/persistence/offlinemsgengine.h"
 
 class FriendWidget;
-class ChatForm;
 
-class Friend : public QObject
+class Friend
 {
-    Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxId &UserId);
-    Friend(const Friend& other)=delete;
-    ~Friend();
-    Friend& operator=(const Friend& other)=delete;
+    typedef uint32_t ID;
+    class Private;
 
+    static Friend get(ID friendId);
+    static Friend get(const ToxId& userId);
+    static QList<Friend> getAll();
+    static void remove(ID friendId);
+
+public:
+    Friend(ID friendId, const ToxId& userId);
+    Friend(Private* data = nullptr);
+    Friend(const Friend& other);
+    Friend(Friend&& other);
+    ~Friend();
+
+    Friend& operator=(const Friend& other);
+    Friend& operator=(Friend&& other);
+
+    bool isValid() const;
     void loadHistory();
+    void destroy();
 
     void setName(QString name);
     void setAlias(QString name);
@@ -47,31 +62,26 @@ public:
     void setStatusMessage(QString message);
     QString getStatusMessage();
 
-    void setEventFlag(int f);
-    int getEventFlag() const;
+    void setEventFlag(bool f);
+    bool getEventFlag() const;
 
-    const ToxId &getToxId() const;
-    uint32_t getFriendID() const;
+    const ToxId& getToxId() const;
+    ID getFriendId() const;
 
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm *getChatForm();
-    FriendWidget *getFriendWidget();
-    const FriendWidget *getFriendWidget() const;
+    const OfflineMsgEngine& getOfflineMsgEngine() const;
+    void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
+    void dischargeReceipt(int receipt);
 
-signals:
-    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    void clearOfflineReceipts();
+    void deliverOfflineMsgs();
 
 private:
-    QString userAlias, userName, statusMessage;
-    ToxId userID;
-    uint32_t friendId;
-    int hasNewEvents;
-    Status friendStatus;
-
-    FriendWidget* widget;
-    ChatForm* chatForm;
+    QExplicitlySharedDataPointer<Private> data;
+    static QHash<ID, Friend::Private*> friendList;
+    static QHash<QString, ID> tox2id;
 };
 
 #endif // FRIEND_H

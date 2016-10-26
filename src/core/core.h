@@ -47,7 +47,7 @@ class Core : public QObject
 public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance();
-    CoreAV* getAv();
+    CoreAV* getAv() const;
     ~Core();
 
     static const QString TOX_EXT;
@@ -88,6 +88,8 @@ public:
 
     bool isReady();
 
+    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
+
 public slots:
     void start();
     void reset();
@@ -116,7 +118,6 @@ public slots:
      int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
-    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
     void cancelFileSend(uint32_t friendId, uint32_t fileNum);
     void cancelFileRecv(uint32_t friendId, uint32_t fileNum);
@@ -126,7 +127,6 @@ public slots:
     void pauseResumeFileRecv(uint32_t friendId, uint32_t fileNum);
 
     void setNospam(uint32_t nospam);
-
 
 signals:
     void connected();
@@ -143,10 +143,12 @@ signals:
     void friendUsernameChanged(uint32_t friendId, const QString& username);
     void friendTypingChanged(uint32_t friendId, bool isTyping);
     void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
+    void friendAliasChanged(uint32_t friendId, const QString& alias);
     void friendAvatarRemoved(uint32_t friendId);
 
     void friendRemoved(uint32_t friendId);
 
+    void friendLoadChatHistory(uint32_t friendId);
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
@@ -159,7 +161,7 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
-    void idSet(const QString& id);
+    void idSet(const ToxId& id);
     void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);

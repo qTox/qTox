@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -35,8 +35,12 @@ class Group : public QObject
 {
     Q_OBJECT
 public:
-    Group(int GroupId, QString Name, bool IsAvGroupchat);
-    virtual ~Group();
+    static Group* get(int groupId);
+    static void remove(int groupId);
+
+public:
+    explicit Group(int GroupId, const QString& Name, bool IsAvGroupchat);
+    ~Group();
 
     bool isAvGroupchat() const;
     int getGroupId() const;
@@ -48,11 +52,11 @@ public:
     GroupChatForm *getChatForm();
     GroupWidget *getGroupWidget();
 
-    void setEventFlag(int f);
-    int getEventFlag() const;
+    void setEventFlag(bool f);
+    bool getEventFlag() const;
 
-    void setMentionedFlag(int f);
-    int getMentionedFlag() const;
+    void setMentionedFlag(bool f);
+    bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
@@ -69,7 +73,8 @@ private:
     GroupChatForm* chatForm;
     QStringList peers;
     QMap<QString, QString> toxids;
-    int hasNewMessages, userWasMentioned;
+    bool hasNewMessages;
+    bool userWasMentioned;
     int groupId;
     int nPeers;
     int selfPeerNum = -1;

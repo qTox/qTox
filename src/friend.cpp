@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,155 +17,396 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "friend.h"
-#include "friendlist.h"
-#include "widget/friendwidget.h"
-#include "widget/form/chatform.h"
-#include "widget/gui.h"
+
+#include <limits>
+
 #include "src/core/core.h"
+#include "src/group.h"
+#include "src/grouplist.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
 #include "src/nexus.h"
-#include "src/grouplist.h"
-#include "src/group.h"
 
-Friend::Friend(uint32_t FriendId, const ToxId &UserId)
-    : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
-    , hasNewEvents(0), friendStatus(Status::Offline)
-
+class Friend::Private : public QSharedData
 {
-    if (userName.size() == 0)
-        userName = UserId.publicKey;
+public:
+    Private(Friend::ID friendId, const ToxId& userId)
+        : userName(Core::getInstance()->getPeerName(userId))
+        , userAlias(Settings::getInstance().getFriendAlias(userId))
+        , userId(userId)
+        , friendId(friendId)
+        , hasNewEvents(0)
+        , friendStatus(Status::Offline)
+        , offlineEngine(friendId)
+    {
+        if (userName.isEmpty())
+            userName = userId.publicKey;
 
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
+        friendList[friendId] = this;
+        tox2id[userId.publicKey] = friendId;
+    }
 
-    widget = new FriendWidget(friendId, getDisplayedName());
-    chatForm = new ChatForm(this);
+    ~Private()
+    {
+        friendList.remove(friendId);
+        tox2id.remove(userId.publicKey);
+    }
+
+    QString userName;
+    QString userAlias;
+    QString statusMessage;
+    ToxId userId;
+    Friend::ID friendId;
+    bool hasNewEvents;
+    Status friendStatus;
+    OfflineMsgEngine offlineEngine;
+};
+
+QHash<Friend::ID, Friend::Private*> Friend::friendList;
+QHash<QString, Friend::ID> Friend::tox2id;
+
+/**
+ * @brief Friend constructor.
+ * @param friendId The friend's ID.
+ * @param userId The friend's ToxId.
+ *
+ * Add new friend in the friend list.
+ */
+Friend::Friend(Friend::ID friendId, const ToxId& userId)
+{
+    if (friendList.contains(friendId))
+    {
+        qWarning() << "addFriend: friendId already taken";
+        return;
+    }
+
+    data = new Friend::Private(friendId, userId);
 }
 
-Friend::~Friend()
+Friend::Friend(const Friend& other)
+    : data(other.data)
 {
-    delete chatForm;
-    delete widget;
+}
+
+Friend::Friend(Friend &&other)
+{
+    data = std::move(other.data);
+}
+
+bool Friend::isValid() const
+{
+    return data == nullptr;
 }
 
 /**
- * @brief Loads the friend's chat history if enabled
+ * @brief Friend destructor.
+ */
+Friend::~Friend()
+{
+}
+
+Friend& Friend::operator=(const Friend &other)
+{
+    data = other.data;
+    return *this;
+}
+
+Friend& Friend::operator=(Friend &&other)
+{
+    data = std::move(other.data);
+    return *this;
+}
+
+/**
+ * @brief Friend constructor, without adding friend to db.
+ * @param data Private friend data.
+ */
+Friend::Friend(Friend::Private *data)
+    : data(data)
+{
+}
+
+/**
+ * @brief Looks up a friend in the friend list.
+ * @param friendId The lookup ID.
+ * @return The friend if found; nullptr otherwise.
+ */
+Friend Friend::get(Friend::ID friendId)
+{
+    return friendList[friendId];
+}
+
+/**
+ * @brief Looks up a friend in the friend list.
+ * @param userId The lookup Tox Id.
+ * @return the friend if found; nullptr otherwise.
+ */
+Friend Friend::get(const ToxId& userId)
+{
+    auto id = tox2id.find(userId.publicKey);
+    if (id == tox2id.end())
+        return nullptr;
+
+    Friend f = get(*id);
+    if (f.getToxId() == userId)
+        return f;
+
+    return nullptr;
+}
+
+/**
+ * @brief Get list of all existing friends.
+ * @return List of all existing friends.
+ */
+QList<Friend> Friend::getAll()
+{
+    QList<Friend> result;
+    for (Friend::Private* data : friendList)
+    {
+        result.append(data);
+    }
+
+    return result;
+}
+
+void Friend::remove(Friend::ID friendId)
+{
+    get(friendId).destroy();
+}
+
+/**
+ * @brief Loads the friend's chat history if enabled.
  */
 void Friend::loadHistory()
 {
     if (Nexus::getProfile()->isHistoryEnabled())
     {
-        chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
-        widget->historyLoaded = true;
+        Core* core = Core::getInstance();
+        emit core->friendLoadChatHistory(data->friendId);
     }
 }
 
+/**
+ * @brief Removes a friend from the friend list.
+ */
+void Friend::destroy()
+{
+    data = nullptr;
+}
+
+/**
+ * @brief Change the real username of friend.
+ * @param name New name to friend.
+ */
 void Friend::setName(QString name)
 {
-   if (name.isEmpty())
-       name = userID.publicKey;
+    if (!data)
+        return;
 
-    userName = name;
-    if (userAlias.size() == 0)
-    {
-        widget->setName(name);
-        chatForm->setName(name);
+    if (name.isEmpty())
+        name = data->userId.publicKey;
 
-        if (widget->isActive())
-            GUI::setWindowTitle(name);
-
-        emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
-    }
+    if (data->userName != name)
+        data->userName = name;
 }
 
-void Friend::setAlias(QString name)
+/**
+ * @brief Set new displayed name to friend.
+ * @param alias New alias to friend.
+ *
+ * Alias will override friend name in friend list.
+ */
+void Friend::setAlias(QString alias)
 {
-    userAlias = name;
-    QString dispName = userAlias.size() == 0 ? userName : userAlias;
+    if (!data)
+        return;
 
-    widget->setName(dispName);
-    chatForm->setName(dispName);
-
-    if (widget->isActive())
-            GUI::setWindowTitle(dispName);
-
-    emit displayedNameChanged(getFriendWidget(), getStatus(), hasNewEvents);
-
-    for (Group *g : GroupList::getAllGroups())
+    if (data->userAlias != alias)
     {
-        g->regeneratePeerList();
+        data->userAlias = alias;
+        Core* core = Core::getInstance();
+        emit core->friendAliasChanged(data->friendId, alias);
     }
 }
 
+/**
+ * @brief Sets a descriptive status message.
+ * @param message New status message.
+ *
+ * The status message is a brief descriptive text, describing the friend's mood.
+ * Optional, but fun.
+ */
 void Friend::setStatusMessage(QString message)
 {
-    statusMessage = message;
-    widget->setStatusMsg(message);
-    chatForm->setStatusMessage(message);
+    if (!data)
+        return;
+
+    if (data->statusMessage != message)
+        data->statusMessage = message;
 }
 
+/**
+ * @brief Get status message.
+ * @return Friend status message.
+ */
 QString Friend::getStatusMessage()
 {
-    return statusMessage;
+    if (!data)
+        return QString();
+
+    return data->statusMessage;
 }
 
+/**
+ * @brief Returns name, which should be displayed.
+ * @return Friend displayed name.
+ *
+ * Return friend alias if setted, username otherwise.
+ */
 QString Friend::getDisplayedName() const
 {
-    if (userAlias.size() == 0)
-        return userName;
+    if (!data)
+        return QString();
 
-    return userAlias;
+    return data->userAlias.isEmpty() ? data->userName : data->userAlias;
 }
 
+/**
+ * @brief Checks, if friend has alias.
+ * @return True, if user sets alias for this friend, false otherwise.
+ */
 bool Friend::hasAlias() const
 {
-    return !userAlias.isEmpty();
+    if (!data)
+        return false;
+
+    return !data->userAlias.isEmpty();
 }
 
-const ToxId &Friend::getToxId() const
+/**
+ * @brief Get ToxId
+ * @return ToxId of current friend.
+ */
+const ToxId& Friend::getToxId() const
 {
-    return userID;
+    return data->userId;
 }
 
-uint32_t Friend::getFriendID() const
+/**
+ * @brief Get friend id.
+ * @return Friend id.
+ */
+Friend::ID Friend::getFriendId() const
 {
-    return friendId;
+    if (!data)
+        return std::numeric_limits<Friend::ID>::max();
+
+    return data->friendId;
 }
 
-void Friend::setEventFlag(int f)
+/**
+ * @brief Set event flag.
+ * @param flag True if friend has new event, false otherwise.
+ */
+void Friend::setEventFlag(bool flag)
 {
-    hasNewEvents = f;
+    if (!data)
+        return;
+
+    data->hasNewEvents = flag;
 }
 
-int Friend::getEventFlag() const
+/**
+ * @brief Get event flag.
+ * @return Return true, if friend has new event, false otherwise.
+ */
+bool Friend::getEventFlag() const
 {
-    return hasNewEvents;
+    if (!data)
+        return false;
+
+    return data->hasNewEvents;
 }
 
+/**
+ * @brief Set friend status.
+ * @param s New friend status.
+ */
 void Friend::setStatus(Status s)
 {
-    friendStatus = s;
+    if (!data)
+        return;
+
+    if (data->friendStatus != s)
+        data->friendStatus = s;
 }
 
+/**
+ * @brief Get friend status.
+ * @return Status of current friend.
+ */
 Status Friend::getStatus() const
 {
-    return friendStatus;
+    if (!data)
+        return Status::Offline;
+
+    return data->friendStatus;
 }
 
-ChatForm *Friend::getChatForm()
+/**
+ * @brief Returns the friend's @a OfflineMessageEngine.
+ * @return A const reference to the offline engine
+ */
+const OfflineMsgEngine& Friend::getOfflineMsgEngine() const
 {
-    return chatForm;
+    return data->offlineEngine;
 }
 
-FriendWidget *Friend::getFriendWidget()
+/**
+ * @brief Register new offline message in @a OfflineMsgEngine.
+ * @param rec Receipt ID.
+ * @param id Message ID.
+ * @param msg Message to register.
+ */
+void Friend::registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg)
 {
-    return widget;
+    if (!data)
+        return;
+
+    data->offlineEngine.registerReceipt(rec, id, msg);
 }
 
-const FriendWidget *Friend::getFriendWidget() const
+/**
+ * @brief Discharge offline message from @a OfflineMsgEngine.
+ * @param receipt Receipt ID.
+ */
+void Friend::dischargeReceipt(int receipt)
 {
-    return widget;
+    if (!data)
+        return;
+
+    data->offlineEngine.dischargeReceipt(receipt);
+}
+
+/**
+ * @brief Remove all offline receipts from @a OfflineMsgEngine.
+ */
+void Friend::clearOfflineReceipts()
+{
+    if (!data)
+        return;
+
+    data->offlineEngine.removeAllReceipts();
+}
+
+/**
+ * @brief Deliver all offline messages from @a OfflineMsgEngine.
+ */
+void Friend::deliverOfflineMsgs()
+{
+    if (!data)
+        return;
+
+    data->offlineEngine.deliverOfflineMsgs();
 }

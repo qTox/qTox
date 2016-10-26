@@ -32,17 +32,19 @@
 #include "src/widget/form/settings/advancedform.h"
 #include "src/widget/form/settings/aboutform.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
+
+#include <QKeyEvent>
+#include <QTabWidget>
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
+    , settingsWidgets(new QTabWidget(this))
+    , currentIndex(0)
 {
-    // block all signals during initialization, including child widgets
-    blockSignals(true);
+    setAttribute(Qt::WA_DeleteOnClose);
 
-    QVBoxLayout* bodyLayout = new QVBoxLayout();
+    QVBoxLayout* bodyLayout = new QVBoxLayout(this);
 
-    settingsWidgets = new QTabWidget(this);
     settingsWidgets->setTabPosition(QTabWidget::North);
     bodyLayout->addWidget(settingsWidgets);
 
@@ -61,7 +63,8 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
     Translator::registerHandler(std::bind(&SettingsWidget::retranslateUi, this), this);
 
-    blockSignals(false);
+    // initialize head label & icon
+    onTabChanged(currentIndex);
 }
 
 SettingsWidget::~SettingsWidget()
@@ -69,7 +72,7 @@ SettingsWidget::~SettingsWidget()
     Translator::unregister(this);
 }
 
-void SettingsWidget::setBodyHeadStyle(QString style)
+void SettingsWidget::setBodyHeadStyle(const QString& style)
 {
     settingsWidgets->setStyle(QStyleFactory::create(style));
 }
@@ -90,13 +93,6 @@ bool SettingsWidget::isShown() const
     return false;
 }
 
-void SettingsWidget::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(settingsWidgets);
-    settingsWidgets->show();
-    onTabChanged(settingsWidgets->currentIndex());
-}
-
 void SettingsWidget::onTabChanged(int index)
 {
     settingsWidgets->setCurrentIndex(index);
@@ -106,4 +102,12 @@ void SettingsWidget::retranslateUi()
 {
     for (size_t i = 0; i < cfgForms.size(); i++)
         settingsWidgets->setTabText(i, cfgForms[i]->getFormName());
+}
+
+void SettingsWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape)
+        close();
+    else
+        QWidget::keyPressEvent(event);
 }
