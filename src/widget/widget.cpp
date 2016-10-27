@@ -1338,7 +1338,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
         bool notifySound = Settings::getInstance().getNotifySound();
 
         if (notifySound && sound && (!isBusy || busySound))
-            Audio::getInstance().playMono16Sound(QStringLiteral(":/audio/notification.pcm"));
+            Audio::getInstance().playMono16Sound(Audio::getSound(Audio::Sound::NewMessage));
     }
 
     return true;
