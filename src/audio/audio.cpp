@@ -721,4 +721,13 @@ void Audio::stopLoop()
     QMutexLocker locker(&audioLock);
     alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
     alSourceStop(alMainSource);
+
+    ALint state;
+    alGetSourcei(alMainSource, AL_SOURCE_STATE, &state);
+    if (state == AL_STOPPED)
+    {
+        alSourcei(alMainSource, AL_BUFFER, AL_NONE);
+        alDeleteBuffers(1, &alMainBuffer);
+        alMainBuffer = 0;
+    }
 }
