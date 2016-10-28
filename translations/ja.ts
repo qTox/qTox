@@ -1193,7 +1193,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">グループ招待</translation>
+        <translation>グループ招待</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1615,7 +1615,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>NoSpam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
