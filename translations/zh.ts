@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished">使用滑块来设置您的输入设备从 %1dB 到 %2dB 增益。</translation>
+        <translation>使用滑块设置输入设备增益（%1—%2dB） 。</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -92,7 +92,7 @@ which may lead to problems with video calls.</source>
     <name>AboutForm</name>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished">你可以在 Github 上找到我们的已知问题列表 %1 。如果你发现 qTox 的 bug 或安全漏洞，请根据我们的 wiki 文章 %2 来 %3。</translation>
+        <translation>你可以在 Github（%1 ）上找到我们的已知问题列表。如果你发现 qTox 有 bug 或安全漏洞，请根据我们的 wiki 文章 %2 来 %3。</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -203,15 +203,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">自动接收对该联系人已禁用</translation>
+        <translation>自动接收已对该联系人禁用</translation>
     </message>
     <message>
         <source>Auto accept files</source>
-        <translation type="unfinished">自动接收文件</translation>
+        <translation>自动接收文件</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">删除历史记录 （操作不能撤消 ！）</translation>
+        <translation>删除历史记录（操作不能撤消！）</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -219,20 +219,20 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">你可以在这里保存关于该联系人的附注。</translation>
+        <translation>你可以在这里存下关于该联系人的附注。</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>选择默认接收目录</translation>
+        <translation>选择自动接收目录</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished">历史记录已删除</translation>
+        <translation>已删除历史记录</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished">与 %1 的聊天记录已删除 ！</translation>
+        <translation>已删除与 %1 的聊天记录！</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
@@ -248,7 +248,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished">音频和视频</translation>
+        <translation>音视频</translation>
     </message>
 </context>
 <context>
@@ -294,21 +294,21 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">无法添加好友</translation>
+        <translation>无法添加好友</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation type="unfinished">76 个十六进制字符或 name@example.com</translation>
+        <translation>76 个十六进制字符或 name@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished">无效的 Tox ID 格式</translation>
+        <translation>无效的 Tox ID 格式</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished">我是 %1 ！使用 Tox 联系我？</translation>
+        <translation>嘿我是 %1，要不要使用 Tox 联系我？</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
@@ -324,7 +324,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished">除非你 %1 知道自己在做什么，否则不要改变这里 ％2 的任何东西。此处所做的更改可能导致 qTox 出现问题，甚至数据丢失，如历史。</translation>
+        <translation>除非你 %1 知道自己在做什么，否则 ％2 改变这里的任何东西。此处所做的更改可能导致 qTox 出现问题，甚至引发包括但不限于聊天历史的数据丢失。</translation>
     </message>
     <message>
         <source>really</source>
@@ -370,7 +370,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished">日志 (*.log)</translation>
+        <translation>日志（*.log）</translation>
     </message>
 </context>
 <context>
@@ -404,12 +404,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">在必要时你应该禁用这个选项，例如正在使用 Tox over Tor 或者需要节省网络流量。</translation>
+        <translation>在必要时你应该禁用这个选项，例如正在使用 Tox over Tor 或者需要节省网络流量。</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>启用 UDP (推荐)</translation>
+        <translation>启用 UDP（推荐）</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -643,7 +643,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation></translation>
+        <translation>
+现在禁用聊天记录不会对加密过的记录造成什么改变（但还是不能使用）；如果你之后想起了密码，你可以到“隐私”选项卡内使用正确的密码重新启用加密，从而使用历史记录。</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
