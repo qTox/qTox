@@ -41,15 +41,15 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehrávacie zariadenie</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomocou posúvača nastavte hlasitosť reproduktorov.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished"></translation>
+        <translation>Nahrávacie zariadenie</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -123,11 +123,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Úplný zoznam %1 nájdete na Githubu</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>prispievateľov</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -2425,7 +2425,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>online</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -2459,11 +2459,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Správu sa nepodarilo odoslať</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť novú skupinu...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
