@@ -626,7 +626,7 @@ void Widget::onConnected()
 void Widget::onDisconnected()
 {
     ui->statusButton->setEnabled(false);
-    emit statusSet(Status::Offline);
+    emit Core::getInstance()->statusSet(Status::Offline);
 }
 
 void Widget::onFailedToStartCore()
