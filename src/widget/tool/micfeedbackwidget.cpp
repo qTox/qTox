@@ -51,7 +51,7 @@ void MicFeedbackWidget::paintEvent(QPaintEvent*)
     const float slice = w / 5.f;
     const int padding = qRound(slice / 2);
 
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < 5; i++)
     {
         int pos = qRound(slice * i + padding);
         painter.drawLine(pos, 2, pos, h - 4);

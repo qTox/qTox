@@ -148,7 +148,7 @@ void ChatLog::clearSelection()
     if (selectionMode == None)
         return;
 
-    for (int i=selFirstRow; i<=selLastRow; ++i)
+    for (int i=selFirstRow; i<=selLastRow; i++)
         lines[i]->selectionCleared();
 
     selFirstRow = -1;
@@ -187,7 +187,7 @@ void ChatLog::layout(int start, int end, qreal width)
     start = clamp<int>(start, 0, lines.size());
     end = clamp<int>(end + 1, 0, lines.size());
 
-    for (int i = start; i < end; ++i)
+    for (int i = start; i < end; i++)
     {
         ChatLine* l = lines[i].get();
 
@@ -362,7 +362,7 @@ void ChatLog::reposition(int start, int end, qreal deltaY)
     start = clamp<int>(start, 0, lines.size() - 1);
     end = clamp<int>(end + 1, 0, lines.size());
 
-    for (int i = start; i < end; ++i)
+    for (int i = start; i < end; i++)
     {
         ChatLine* l = lines[i].get();
         l->moveBy(deltaY);
@@ -511,7 +511,7 @@ QString ChatLog::getSelectedText() const
         // build a nicely formatted message
         QString out;
 
-        for (int i=selFirstRow; i<=selLastRow; ++i)
+        for (int i=selFirstRow; i<=selLastRow; i++)
         {
             if (lines[i]->content[1]->getText().isEmpty())
                 continue;
@@ -659,7 +659,7 @@ void ChatLog::checkVisibility()
 
     // set visibilty
     QList<ChatLine::Ptr> newVisibleLines;
-    for (auto itr = lowerBound; itr != upperBound; ++itr)
+    for (auto itr = lowerBound; itr != upperBound; itr++)
     {
         newVisibleLines.append(*itr);
 
@@ -838,7 +838,7 @@ void ChatLog::focusInEvent(QFocusEvent* ev)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor));
 
-        for (int i=selFirstRow; i<=selLastRow; ++i)
+        for (int i=selFirstRow; i<=selLastRow; i++)
             lines[i]->selectionFocusChanged(true);
     }
 }
@@ -851,7 +851,7 @@ void ChatLog::focusOutEvent(QFocusEvent* ev)
     {
         selGraphItem->setBrush(QBrush(selectionRectColor.lighter(120)));
 
-        for (int i=selFirstRow; i<=selLastRow; ++i)
+        for (int i=selFirstRow; i<=selLastRow; i++)
             lines[i]->selectionFocusChanged(false);
     }
 }

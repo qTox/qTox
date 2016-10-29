@@ -219,7 +219,7 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             assert(size == sizeof(VIDEO_STREAM_CONFIG_CAPS));
             vcaps = new VIDEO_STREAM_CONFIG_CAPS;
 
-            for (int i = 0; i < n; ++i)
+            for (int i = 0; i < n; i++)
             {
                 AM_MEDIA_TYPE* type = nullptr;
                 VideoMode mode;

@@ -251,7 +251,7 @@ void FileTransferWidget::onFileTransferInfo(ToxFile file)
         meanData[meanIndex++] = bytesPerSec;
 
         qreal meanBytesPerSec = 0.0;
-        for (size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; ++i)
+        for (size_t i = 0; i < TRANSFER_ROLLING_AVG_COUNT; i++)
             meanBytesPerSec += meanData[i];
 
         meanBytesPerSec /= static_cast<qreal>(TRANSFER_ROLLING_AVG_COUNT);
@@ -320,7 +320,7 @@ void FileTransferWidget::onFileTransferPaused(ToxFile file)
 
     // reset mean
     meanIndex = 0;
-    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; i++)
         meanData[i] = 0.0;
 
     setBackgroundColor(Style::getColor(Style::LightGrey), false);
@@ -340,7 +340,7 @@ void FileTransferWidget::onFileTransferResumed(ToxFile file)
 
     // reset mean
     meanIndex = 0;
-    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; ++i)
+    for (size_t i=0; i<TRANSFER_ROLLING_AVG_COUNT; i++)
         meanData[i] = 0.0;
 
     setBackgroundColor(Style::getColor(Style::LightGrey), false);

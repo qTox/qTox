@@ -1522,7 +1522,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
     {
-        ++unreadGroupInvites;
+        unreadGroupInvites++;
         groupInvitesUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
         groupInviteForm->addGroupInvite(friendId, type, invite);

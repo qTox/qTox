@@ -604,7 +604,7 @@ void Audio::doCapture()
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i)
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; i++)
     {
         // gain amplification with clipping to 16-bit boundaries
         int ampPCM = qBound<int>(std::numeric_limits<int16_t>::min(),

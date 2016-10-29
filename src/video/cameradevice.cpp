@@ -244,7 +244,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
  */
 void CameraDevice::open()
 {
-    ++refcount;
+    refcount++;
 }
 
 /**

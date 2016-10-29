@@ -309,7 +309,7 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
     // detect text quotes
     QStringList messageLines = str.split("\n");
     QString quotedText;
-    for (int i = 0; i < messageLines.size(); ++i)
+    for (int i = 0; i < messageLines.size(); i++)
     {
         // don't quote first line in action message. This makes co-existence of
         // quotes and action messages possible, since only first line can cause
