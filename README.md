@@ -13,6 +13,12 @@
 <a href="https://hosted.weblate.org/engage/tox/?utm_source=widget">
 <img src="https://hosted.weblate.org/widgets/tox/-/svg-badge.svg"
      alt="Translate on Weblate" />
+</a>
+<a href="https://github.com/qTox/release-schedule/blob/master/README.md">
+<img src="https://qtox.github.io/release-schedule/status.svg"
+title="Week of Merges: population of Merges increases!
+
+Week of Testing: Your mana regenerates!" />
 </a></p>
 ---
 <p align="center"><b>
