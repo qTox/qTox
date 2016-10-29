@@ -96,10 +96,10 @@ void QRWidget::paintImage()
         const double aspect = w / h;
         const double scale = ((aspect > 1.0) ? h : w) / s;
 
-        for (int y = 0; y < s; y++)
+        for (int y = 0; y < s; ++y)
         {
             const int yy = y * s;
-            for (int x = 0; x < s; x++)
+            for (int x = 0; x < s; ++x)
             {
                 const int xx = yy + x;
                 const unsigned char b = qr->data[xx];

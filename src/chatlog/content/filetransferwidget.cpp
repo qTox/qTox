@@ -121,7 +121,7 @@ void FileTransferWidget::autoAcceptTransfer(const QString &path)
     do
     {
         filepath = QString("%1/%2%3.%4").arg(path, base, number > 0 ? QString(" (%1)").arg(QString::number(number)) : QString(), suffix);
-        number++;
+        ++number;
     }
     while (QFileInfo(filepath).exists());
 

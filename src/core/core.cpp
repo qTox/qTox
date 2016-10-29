@@ -397,7 +397,7 @@ bool Core::checkConnection()
         emit disconnected();
         isConnected = false;
         //count++;
-    } //else if (!toxConnected) count++;
+    } //else if (!toxConnected) ++count;
     return isConnected;
 }
 
@@ -436,8 +436,8 @@ void Core::bootstrapDht()
             qDebug() << "Error adding TCP relay from "+dhtServer.name;
         }
 
-        j++;
-        i++;
+        ++j;
+        ++i;
     }
 }
 
@@ -1047,7 +1047,7 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
         qWarning() << "getGroupPeerNames: Unexpected tox_group_get_names result";
         return names;
     }
-    for (uint16_t i=0; i<nPeers; i++)
+    for (uint16_t i=0; i<nPeers; ++i)
        names.push_back(CString::toString(namesArray[i], lengths[i]));
 
     return names;

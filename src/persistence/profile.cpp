@@ -616,7 +616,7 @@ QVector<QString> Profile::remove()
     isRemoved = true;
 
     qDebug() << "Removing profile" << name;
-    for (int i=0; i<profiles.size(); i++)
+    for (int i=0; i<profiles.size(); ++i)
     {
         if (profiles[i] == name)
         {

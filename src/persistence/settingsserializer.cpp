@@ -283,7 +283,7 @@ void SettingsSerializer::save()
     QDataStream stream(&data, QIODevice::ReadWrite | QIODevice::Append);
     stream.setVersion(QDataStream::Qt_5_0);
 
-    for (int g=-1; g<groups.size(); g++)
+    for (int g=-1; g<groups.size(); ++g)
     {
         // Save the group name, if any
         if (g!=-1)
@@ -534,7 +534,7 @@ void SettingsSerializer::readIni()
         else
         {
             a.group = -1;
-            for (int i=0; i<groups.size(); i++)
+            for (int i=0; i<groups.size(); ++i)
                 if (groups[i] == groups[static_cast<int>(v.group)].left(slashIndex))
                     a.group = i;
             a.name = groups[static_cast<int>(v.group)].mid(slashIndex+1);
@@ -547,7 +547,7 @@ void SettingsSerializer::readIni()
     }
 
     // Associate each array's values with the array
-    for (int ai=0; ai<arrays.size(); ai++)
+    for (int ai=0; ai<arrays.size(); ++ai)
     {
         Array& a = arrays[ai];
         QString arrayPrefix;
@@ -556,7 +556,7 @@ void SettingsSerializer::readIni()
         arrayPrefix += a.name+'/';
 
         // Find groups which represent each array index
-        for (int g=0; g<groups.size(); g++)
+        for (int g=0; g<groups.size(); ++g)
         {
             if (!groups[g].startsWith(arrayPrefix))
                 continue;

@@ -234,11 +234,11 @@ void UserInterfaceForm::reloadSmileys()
     }
 
     QStringList smileys;
-    for (int i = 0; i < emoticons.size(); i++)
+    for (int i = 0; i < emoticons.size(); ++i)
         smileys.push_front(emoticons.at(i).first());
 
     const QSize size(18,18);
-    for (int i = 0; i < smileLabels.size(); i++)
+    for (int i = 0; i < smileLabels.size(); ++i)
     {
         QIcon icon = SmileyPack::getInstance().getAsIcon(smileys[i]);
         smileLabels[i]->setPixmap(icon.pixmap(size));

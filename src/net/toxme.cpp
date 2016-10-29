@@ -98,7 +98,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
 
     QByteArray key;
     // I think, exist more easy way to convert key to ByteArray
-    for (int i = 0; i < pubkeySize; i++) {
+    for (int i = 0; i < pubkeySize; ++i) {
         QString byte = rawKey.mid(i*2, 2);
         key[i] = byte.toInt(nullptr, 16);
     }

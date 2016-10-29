@@ -62,7 +62,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
     // create pages
     buttonLayout->addStretch();
-    for (int i = 0; i < pageCount; i++)
+    for (int i = 0; i < pageCount; ++i)
     {
         QGridLayout* pageLayout = new QGridLayout;
         pageLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), maxRows, 0);
@@ -101,14 +101,14 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
 
         qobject_cast<QGridLayout*>(stack.widget(currPage)->layout())->addWidget(button, row, col);
 
-        col++;
-        currItem++;
+        ++col;
+        ++currItem;
 
         // next row
         if (col >= maxCols)
         {
             col = 0;
-            row++;
+            ++row;
         }
 
         // next page
@@ -116,7 +116,7 @@ EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
         {
             row = 0;
             currItem = 0;
-            currPage++;
+            ++currPage;
         }
     }
 

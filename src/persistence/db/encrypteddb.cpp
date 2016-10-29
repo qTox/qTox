@@ -152,7 +152,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
         }
 
         buffer = buffer.right(buffer.size() - plainChunkSize);
-        chunkPosition++;
+        ++chunkPosition;
     }
     encrFile.seek(chunkPosition * encryptedChunkSize);
 

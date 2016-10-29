@@ -84,14 +84,14 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
         return;
     }
 
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; ++i)
     {
         int dstStride = avframe->linesize[i];
         int srcStride = vpxframe->stride[i];
         int minStride = std::min(dstStride, srcStride);
         int size = (i == 0) ? height : height / 2;
 
-        for (int j = 0; j < size; j++)
+        for (int j = 0; j < size; ++j)
         {
             uint8_t* dst = avframe->data[i] + dstStride * j;
             uint8_t* src = vpxframe->planes[i] + srcStride * j;

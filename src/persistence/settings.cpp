@@ -719,7 +719,7 @@ void Settings::savePersonal(QString profileName, const QString &password)
             ps.setArrayIndex(index);
             ps.setValue("name", circle.name);
             ps.setValue("expanded", circle.expanded);
-            index++;
+            ++index;
         }
         ps.endArray();
     }
@@ -2291,7 +2291,7 @@ unsigned int Settings::getUnreadFriendRequests() const
     unsigned int unreadFriendRequests = 0;
     for (auto request : friendRequests)
         if (!request.read)
-            unreadFriendRequests++;
+            ++unreadFriendRequests;
 
     return unreadFriendRequests;
 }

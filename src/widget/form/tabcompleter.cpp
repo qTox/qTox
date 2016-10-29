@@ -93,7 +93,7 @@ void TabCompleter::complete()
         auto cur = msgEdit->textCursor();
         cur.setPosition(cur.selectionEnd());
         msgEdit->setTextCursor(cur);
-        for (int i = 0; i < lastCompletionLength; i++)
+        for (int i = 0; i < lastCompletionLength; ++i)
             msgEdit->textCursor().deletePreviousChar();
 
         // insert completion

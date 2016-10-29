@@ -308,7 +308,7 @@ void Audio::subscribeInput()
         return;
     }
 
-    inSubscriptions++;
+    ++inSubscriptions;
     qDebug() << "Subscribed to audio input device [" << inSubscriptions << "subscriptions ]";
 }
 

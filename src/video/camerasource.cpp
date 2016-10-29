@@ -194,7 +194,7 @@ CameraSource::~CameraSource()
 
     if (device)
     {
-        for (int i = 0; i < subscriptions; i++)
+        for (int i = 0; i < subscriptions; ++i)
             device->close();
 
         device = nullptr;
@@ -286,11 +286,11 @@ bool CameraSource::openDevice()
 
     // We need to open the device as many time as we already have subscribers,
     // otherwise the device could get closed while we still have subscribers
-    for (int i = 0; i < subscriptions; i++)
+    for (int i = 0; i < subscriptions; ++i)
         device->open();
 
     // Find the first video stream
-    for (unsigned i = 0; i < device->context->nb_streams; i++)
+    for (unsigned i = 0; i < device->context->nb_streams; ++i)
     {
         if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
         {

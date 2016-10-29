@@ -340,7 +340,7 @@ QString Text::extractSanitizedText(int from, int to) const
             if (pos >= from && pos < to)
             {
                 txt += rune;
-                pos++;
+                ++pos;
             }
         }
         else
@@ -350,7 +350,7 @@ QString Text::extractSanitizedText(int from, int to) const
                 if (pos >= from && pos < to)
                     txt += c;
 
-                pos++;
+                ++pos;
             }
         }
     }

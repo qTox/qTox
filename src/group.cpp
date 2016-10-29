@@ -87,7 +87,7 @@ void Group::regeneratePeerList()
     peers = Core::getInstance()->getGroupPeerNames(groupId);
     toxids.clear();
     nPeers = peers.size();
-    for (int i = 0; i < nPeers; i++)
+    for (int i = 0; i < nPeers; ++i)
     {
         ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
         if (id.isSelf())

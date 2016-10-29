@@ -121,7 +121,7 @@ GeneralForm::GeneralForm(SettingsWidget *myParent)
     bodyUI->checkUpdates->setVisible(AUTOUPDATE_ENABLED);
     bodyUI->checkUpdates->setChecked(s.getCheckUpdates());
 
-    for (int i = 0; i < langs.size(); i++)
+    for (int i = 0; i < langs.size(); ++i)
         bodyUI->transComboBox->insertItem(i, langs[i]);
 
     bodyUI->transComboBox->setCurrentIndex(locales.indexOf(s.getTranslation()));

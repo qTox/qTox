@@ -369,7 +369,7 @@ void ContentDialog::cycleContacts(bool forward, bool loop)
 
 void ContentDialog::onVideoShow(QSize size)
 {
-    videoCount++;
+    ++videoCount;
     if (videoCount > 1)
         return;
 

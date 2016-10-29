@@ -100,7 +100,7 @@ void PrivacyForm::on_randomNosapamButton_clicked()
     qsrand((uint)time.msec());
 
     uint32_t newNospam{0};
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; ++i)
         newNospam = (newNospam<<8) + (qrand() % 256); // Generate byte by byte. For some reason.
 
     Core::getInstance()->setNospam(newNospam);

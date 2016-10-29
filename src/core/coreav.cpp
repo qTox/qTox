@@ -323,7 +323,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
         {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC)
             {
-                retries++;
+                ++retries;
                 QThread::usleep(500);
             }
             else
@@ -375,7 +375,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
         {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC)
             {
-                retries++;
+                ++retries;
                 QThread::usleep(500);
             }
             else

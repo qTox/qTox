@@ -104,6 +104,6 @@ void SettingsWidget::onTabChanged(int index)
 
 void SettingsWidget::retranslateUi()
 {
-    for (size_t i = 0; i < cfgForms.size(); i++)
+    for (size_t i = 0; i < cfgForms.size(); ++i)
         settingsWidgets->setTabText(i, cfgForms[i]->getFormName());
 }

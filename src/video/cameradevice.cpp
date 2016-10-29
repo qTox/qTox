@@ -330,7 +330,7 @@ QVector<QPair<QString, QString>> CameraDevice::getRawDeviceListGeneric()
 
     // Convert the list to a QVector
     devices.resize(devlist->nb_devices);
-    for (int i = 0; i < devlist->nb_devices; i++)
+    for (int i = 0; i < devlist->nb_devices; ++i)
     {
         AVDeviceInfo* dev = devlist->devices[i];
         devices[i].first = dev->device_name;

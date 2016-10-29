@@ -865,7 +865,7 @@ void ChatLog::retranslateUi()
 bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
 {
     int count = l->getColumnCount();
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count; ++i)
     {
         ChatLineContent *content = l->getContent(i);
         ChatLineContentProxy *proxy = qobject_cast<ChatLineContentProxy*>(content);

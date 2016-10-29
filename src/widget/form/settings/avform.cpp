@@ -278,7 +278,7 @@ void AVForm::fillCameraModesComboBox()
     bool previouslyBlocked = videoModescomboBox->blockSignals(true);
     videoModescomboBox->clear();
 
-    for(int i = 0; i < videoModes.size(); i++)
+    for(int i = 0; i < videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
 
@@ -305,7 +305,7 @@ int AVForm::searchPreferredIndex()
     QRect prefRes = Settings::getInstance().getCamVideoRes();
     quint16 prefFPS = Settings::getInstance().getCamVideoFPS();
 
-    for (int i = 0; i < videoModes.size(); i++)
+    for (int i = 0; i < videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
         if (mode.width == prefRes.width()
@@ -322,7 +322,7 @@ void AVForm::fillScreenModesComboBox()
     bool previouslyBlocked = videoModescomboBox->blockSignals(true);
     videoModescomboBox->clear();
 
-    for(int i = 0; i < videoModes.size(); i++)
+    for(int i = 0; i < videoModes.size(); ++i)
     {
         VideoMode mode = videoModes[i];
         QString pixelFormat = CameraDevice::getPixelFormatString(mode.pixel_format);

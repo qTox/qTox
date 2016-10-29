@@ -128,7 +128,7 @@ time_t IPC::postEvent(const QString &name, const QByteArray& data, uint32_t dest
         IPCMemory* mem = global();
         time_t result = 0;
 
-        for (uint32_t i = 0; !evt && i < EVENT_QUEUE_SIZE; i++)
+        for (uint32_t i = 0; !evt && i < EVENT_QUEUE_SIZE; ++i)
         {
             if (mem->events[i].posted == 0)
                 evt = &mem->events[i];
@@ -188,7 +188,7 @@ bool IPC::isEventAccepted(time_t time)
         if (difftime(global()->lastProcessed, time) > 0)
         {
             IPCMemory* mem = global();
-            for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; i++)
+            for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; ++i)
             {
                 if (mem->events[i].posted == time && mem->events[i].processed)
                 {
@@ -225,7 +225,7 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout/*=-1*/)
 IPC::IPCEvent *IPC::fetchEvent()
 {
     IPCMemory* mem = global();
-    for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; i++)
+    for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; ++i)
     {
         IPCEvent* evt = &mem->events[i];
 
