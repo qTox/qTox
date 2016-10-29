@@ -525,7 +525,7 @@ void RawDatabase::process()
                                << anonymizeQuery(query.query);
                     goto cleanupStatements;
                 }
-                for (int i=0; i<nParams; ++i)
+                for (int i=0; i<nParams; i++)
                 {
                     const QByteArray& blob = query.blobs[curParam+i];
                     if (sqlite3_bind_blob(stmt, i+1, blob.data(), blob.size(), SQLITE_STATIC) != SQLITE_OK)
@@ -553,7 +553,7 @@ void RawDatabase::process()
                     if (result == SQLITE_ROW && query.rowCallback)
                     {
                         QVector<QVariant> row;
-                        for (int i = 0; i < column_count; ++i)
+                        for (int i = 0; i < column_count; i++)
                             row += extractData(stmt, i);
 
                         query.rowCallback(row);

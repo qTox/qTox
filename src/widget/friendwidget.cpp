@@ -125,7 +125,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
 
     QList<QAction*> circleActionList;
 
-    for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+    for (int i = 0; i < Settings::getInstance().getCircleCount(); i++)
     {
         if (i != circleId)
         {

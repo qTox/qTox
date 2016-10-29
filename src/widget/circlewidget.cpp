@@ -119,7 +119,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
         {
             ContentDialog* dialog = Widget::getInstance()->createContentDialog();
 
-            for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+            for (int i = 0; i < friendOnlineLayout()->count(); i++)
             {
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
@@ -129,7 +129,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                     dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
                 }
             }
-            for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+            for (int i = 0; i < friendOfflineLayout()->count(); i++)
             {
                 FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
@@ -217,14 +217,14 @@ void CircleWidget::updateID(int index)
     id = index;
     circleList[id] = this;
 
-    for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+    for (int i = 0; i < friendOnlineLayout()->count(); i++)
     {
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
             Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
     }
-    for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+    for (int i = 0; i < friendOfflineLayout()->count(); i++)
     {
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 

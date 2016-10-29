@@ -673,7 +673,7 @@ void Settings::savePersonal(QString profileName, const QString &password)
             if (getEnableLogging())
                 ps.setValue("activity", frnd.activity);
 
-            ++index;
+            index++;
         }
         ps.endArray();
     }
@@ -690,7 +690,7 @@ void Settings::savePersonal(QString profileName, const QString &password)
             ps.setValue("message", request.message);
             ps.setValue("read", request.read);
 
-            ++index;
+            index++;
         }
         ps.endArray();
     }

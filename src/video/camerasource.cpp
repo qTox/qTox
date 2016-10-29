@@ -213,13 +213,13 @@ bool CameraSource::subscribe()
 
     if (!_isOpen)
     {
-        ++subscriptions;
+        subscriptions++;
         return true;
     }
 
     if (openDevice())
     {
-        ++subscriptions;
+        subscriptions++;
         return true;
     }
     else

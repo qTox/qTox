@@ -144,7 +144,7 @@ ContentDialog::~ContentDialog()
             friendIt = friendList.erase(friendIt);
             continue;
         }
-        ++friendIt;
+        friendIt++;
     }
 
     auto groupIt = groupList.begin();
@@ -156,7 +156,7 @@ ContentDialog::~ContentDialog()
             groupIt = groupList.erase(groupIt);
             continue;
         }
-        ++groupIt;
+        groupIt++;
     }
 
     Translator::unregister(this);

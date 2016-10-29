@@ -196,7 +196,7 @@ void GroupChatForm::onUserListChanged()
     // first traverse in peer number order, storing the QLabels as necessary
     QStringList names = group->getPeerList();
     unsigned nNames = names.size();
-    for (unsigned i=0; i<nNames; ++i)
+    for (unsigned i=0; i<nNames; i++)
     {
         QString tooltip = correctNames(names[i]);
         peerLabels.append(new QLabel(names[i]));
@@ -216,7 +216,7 @@ void GroupChatForm::onUserListChanged()
 
     // now alphabetize and add to layout
     qSort(nickLabelList.begin(), nickLabelList.end(), [](QLabel *a, QLabel *b){return a->text().toLower() < b->text().toLower();});
-    for (unsigned i=0; i<nNames; ++i)
+    for (unsigned i=0; i<nNames; i++)
     {
         QLabel *label = nickLabelList.at(i);
         if (i != nNames - 1)
@@ -377,7 +377,7 @@ GenericNetCamView *GroupChatForm::createNetcam()
     GroupNetCamView* view = new GroupNetCamView(group->getGroupId(), this);
 
     QStringList names = group->getPeerList();
-    for (int i = 0; i<names.size(); ++i)
+    for (int i = 0; i<names.size(); i++)
     {
         if (!group->isSelfPeerNumber(i))
             static_cast<GroupNetCamView*>(view)->addPeer(i, names[i]);

@@ -924,7 +924,7 @@ void Core::loadFriends()
         uint32_t *ids = new uint32_t[friendCount];
         tox_self_get_friend_list(tox, ids);
         uint8_t clientId[TOX_PUBLIC_KEY_SIZE];
-        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
+        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); i++)
         {
             if (tox_friend_get_public_key(tox, ids[i], clientId, nullptr))
             {
@@ -1150,7 +1150,7 @@ bool Core::hasFriendWithPublicKey(const QString &pubkey) const
     {
         uint32_t *ids = new uint32_t[friendCount];
         tox_self_get_friend_list(tox, ids);
-        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
+        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); i++)
         {
             // getFriendAddress may return either id (public key) or address
             QString addrOrId = getFriendAddress(ids[i]);

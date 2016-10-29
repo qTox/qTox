@@ -84,7 +84,7 @@ AddFriendForm::AddFriendForm()
 
     int size = Settings::getInstance().getFriendRequestSize();
 
-    for (int i = 0; i < size; ++i)
+    for (int i = 0; i < size; i++)
     {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
         addFriendRequestWidget(request.address, request.message);

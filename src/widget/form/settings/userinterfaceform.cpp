@@ -313,7 +313,7 @@ void UserInterfaceForm::retranslateUi()
     bodyUI->retranslateUi(this);
 
     QStringList colorThemes(Style::getThemeColorNames());
-    for (int i = 0; i < colorThemes.size(); ++i)
+    for (int i = 0; i < colorThemes.size(); i++)
     {
         bodyUI->themeColorCBox->setItemText(i, colorThemes[i]);
     }

@@ -190,7 +190,7 @@ bool SmileyPack::load(const QString& filename)
     doc.setContent(xmlFile.readAll());
 
     QDomNodeList emoticonElements = doc.elementsByTagName("emoticon");
-    for (int i = 0; i < emoticonElements.size(); ++i)
+    for (int i = 0; i < emoticonElements.size(); i++)
     {
         QString file = emoticonElements.at(i).attributes().namedItem("file").nodeValue();
         QDomElement stringElement = emoticonElements.at(i).firstChildElement("string");

@@ -111,7 +111,7 @@ void NotificationScrollArea::updateTracking(GenericChatroomWidget *widget)
             i = trackedWidgets.erase(i);
             continue;
         }
-        ++i;
+        i++;
     }
 }
 
@@ -132,7 +132,7 @@ void NotificationScrollArea::findNextWidget()
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
-    for (; i != trackedWidgets.end(); ++i)
+    for (; i != trackedWidgets.end(); i++)
     {
         if (i.value() == Below)
         {
@@ -143,7 +143,7 @@ void NotificationScrollArea::findNextWidget()
     }
 
     // Try finding a closer one.
-    for (; i != trackedWidgets.end(); ++i)
+    for (; i != trackedWidgets.end(); i++)
     {
         if (i.value() == Below)
         {
@@ -167,7 +167,7 @@ void NotificationScrollArea::findPreviousWidget()
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
-    for (; i != trackedWidgets.end(); ++i)
+    for (; i != trackedWidgets.end(); i++)
     {
         if (i.value() == Above)
         {
@@ -178,7 +178,7 @@ void NotificationScrollArea::findPreviousWidget()
     }
 
     // Try finding a closer one.
-    for (; i != trackedWidgets.end(); ++i)
+    for (; i != trackedWidgets.end(); i++)
     {
         if (i.value() == Above)
         {

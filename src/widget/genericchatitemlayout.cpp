@@ -82,7 +82,7 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
 
 void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
 {
-    for (int index = 0; index < layout->count(); ++index)
+    for (int index = 0; index < layout->count(); index++)
     {
         GenericChatItemWidget* widgetAt = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
         assert(widgetAt != nullptr);

@@ -189,14 +189,14 @@ void FriendListWidget::setMode(Mode mode)
         circleLayout->getLayout()->setSpacing(0);
         circleLayout->getLayout()->setMargin(0);
 
-        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+        for (int i = 0; i < Settings::getInstance().getCircleCount(); i++)
         {
             addCircleWidget(i);
             CircleWidget::getFromID(i)->setVisible(false);
         }
 
         // Only display circles once all created to avoid artifacts.
-        for (int i = 0; i < Settings::getInstance().getCircleCount(); ++i)
+        for (int i = 0; i < Settings::getInstance().getCircleCount(); i++)
             CircleWidget::getFromID(i)->setVisible(true);
 
         QList<Friend*> friendList = FriendList::getAllFriends();
@@ -300,7 +300,7 @@ void FriendListWidget::setMode(Mode mode)
             categoryWidget->addFriendWidget(contact->getFriendWidget(), contact->getStatus());
         }
 
-        for (int i = 0; i < activityLayout->count(); ++i)
+        for (int i = 0; i < activityLayout->count(); i++)
         {
             CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
             categoryWidget->setVisible(categoryWidget->hasChatrooms());
@@ -415,7 +415,7 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
 
     if (circleLayout != nullptr)
     {
-        for (int i = 0; i != circleLayout->getLayout()->count(); ++i)
+        for (int i = 0; i != circleLayout->getLayout()->count(); i++)
         {
             CircleWidget* circleWidget = static_cast<CircleWidget*>(circleLayout->getLayout()->itemAt(i)->widget());
             circleWidget->search(searchString, true, hideOnline, hideOffline);
@@ -423,7 +423,7 @@ void FriendListWidget::searchChatrooms(const QString &searchString, bool hideOnl
     }
     else if (activityLayout != nullptr)
     {
-        for (int i = 0; i != activityLayout->count(); ++i)
+        for (int i = 0; i != activityLayout->count(); i++)
         {
             CategoryWidget* categoryWidget = static_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
             categoryWidget->search(searchString, true, hideOnline, hideOffline);

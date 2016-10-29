@@ -327,7 +327,7 @@ QString Text::extractSanitizedText(int from, int to) const
     QString txt;
     QTextBlock block = doc->firstBlock();
 
-    for (QTextBlock::Iterator itr = block.begin(); itr!=block.end(); ++itr)
+    for (QTextBlock::Iterator itr = block.begin(); itr!=block.end(); itr++)
     {
         int pos = itr.fragment().position(); //fragment position -> position of the first character in the fragment
 
@@ -360,7 +360,7 @@ QString Text::extractSanitizedText(int from, int to) const
 
 QString Text::extractImgTooltip(int pos) const
 {
-    for (QTextBlock::Iterator itr = doc->firstBlock().begin(); itr!=doc->firstBlock().end(); ++itr)
+    for (QTextBlock::Iterator itr = doc->firstBlock().begin(); itr!=doc->firstBlock().end(); itr++)
     {
         if (itr.fragment().contains(pos) && itr.fragment().charFormat().isImageFormat())
         {

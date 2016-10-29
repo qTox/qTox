@@ -244,7 +244,7 @@ void GroupNetCamView::findActivePeer()
     int candidate = -1;
     int maximum = 0;
 
-    for (auto peer = videoList.begin(); peer != videoList.end(); ++peer)
+    for (auto peer = videoList.begin(); peer != videoList.end(); peer++)
     {
         if (peer.value().volume > maximum)
         {
@@ -260,7 +260,7 @@ void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
     Friend* f = FriendList::findFriend(FriendId);
 
-    for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
+    for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); i++)
     {
         if (Core::getInstance()->getGroupPeerToxId(group, i) == f->getToxId())
         {

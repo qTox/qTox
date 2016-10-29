@@ -94,7 +94,7 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     removeAllReceipts();
     undeliveredMsgs.clear();
 
-    for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)
+    for (auto iter = msgs.begin(); iter != msgs.end(); iter++)
     {
         auto val = iter.value();
         auto key = iter.key();

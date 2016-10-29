@@ -363,7 +363,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
     else
         activeWindow = nullptr;
 
-    for (int i = 0; i < windowList.size(); ++i)
+    for (int i = 0; i < windowList.size(); i++)
     {
         if (closedWindow == windowList[i])
             continue;
