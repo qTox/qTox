@@ -85,7 +85,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Son de test</translation>
     </message>
 </context>
 <context>
@@ -137,11 +137,11 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Activer l&apos;identifiant : %1</translation>
+        <translation>Identifiant de changement : %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation>version de toxcore : %1</translation>
+        <translation>Version de toxcore : %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
@@ -324,7 +324,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>À moins que vous % 1 savez ce que vous faites, s&apos;il vous plaît % 2 ne rien changer ici. Les changements effectués ici peuvent conduire à des problèmes avec qTox, et même à la perte de vos données, par exemple l&apos;historique.</translation>
+        <translation>À moins que vous ne saviez %1 ce que vous faites, s&apos;il vous plaît ne changez %2 ici. Les changements effectués ici peuvent conduire à des problèmes avec qTox, et même à la perte de vos données, par exemple l&apos;historique.</translation>
     </message>
     <message>
         <source>really</source>
@@ -332,7 +332,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>not</source>
-        <translation>non pas</translation>
+        <translation>rien</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -394,7 +394,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Options de connextion</translation>
+        <translation>Options de connexion</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
@@ -1196,7 +1196,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Invite de groupes</translation>
+        <translation>Invitations à des groupes</translation>
     </message>
     <message>
         <source>Join</source>
@@ -2073,7 +2073,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation>Echapper</translation>
+        <translation>Echap</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
@@ -2169,7 +2169,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation>Bavardage</translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2177,7 +2177,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>px</source>
-        <translation>pixels</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
