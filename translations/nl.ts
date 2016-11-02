@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Audio Instellingen</translation>
+        <translation>Audio-instellingen</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Afspeelapparaat</translation>
+        <translation>Afspeelapparaat</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
@@ -96,7 +96,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Een lijst van alle bekende problemen kan je vinden op onze %1 op GitHub. Als je een bug of een beveiligingsprobleem binnen qTox ontdekt, %3 dan volgens de richtlijnen in ons wiki-artikel &quot;%2&quot;.</translation>
+        <translation>Een lijst van alle bekende problemen kan je vinden op onze %1 op GitHub. Als je een bug of een beveiligingsprobleem binnen qTox ontdekt, %3 dan volgens de richtlijnen in ons wiki-artikel "%2".</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -259,7 +259,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
+        <comment>Tox ID of the person you're sending a friend request to</comment>
         <translation>Tox-ID</translation>
     </message>
     <message>
@@ -277,11 +277,11 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>%1 hier! Tox met me!</translation>
     </message>
     <message>
-        <source>Couldn&apos;t add friend</source>
+        <source>Couldn't add friend</source>
         <translation>Kon vriend niet toevoegen</translation>
     </message>
     <message>
-        <source>You can&apos;t add yourself as a friend!</source>
+        <source>You can't add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation>Je kunt jezelf niet als vriend toevoegen!</translation>
     </message>
@@ -360,7 +360,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation type="unfinished">In gesprek</translation>
     </message>
     <message>
-        <source>You can&apos;t disconnect while a call is active!</source>
+        <source>You can't disconnect while a call is active!</source>
         <comment>popup text</comment>
         <translation type="unfinished">Je kan niet offline gaan terwijl je in een gesprek zit!</translation>
     </message>
@@ -466,11 +466,11 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Verstuur een bestand</translation>
     </message>
     <message>
-        <source>qTox wasn&apos;t able to open %1</source>
+        <source>qTox wasn't able to open %1</source>
         <translation>qTox kan %1 niet openen</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
+        <source>You're trying to send a special (sequential) file, that's not going to work!</source>
         <translation>Je probeert een speciaal (sequentieel) bestand te versturen, dat zal niet werken!</translation>
     </message>
     <message>
@@ -534,7 +534,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Maak gesprek hoorbaar</translation>
     </message>
     <message>
-        <source>Failed to send file &quot;%1&quot;</source>
+        <source>Failed to send file "%1"</source>
         <translation>Kon bestand %1 niet verzenden</translation>
     </message>
     <message>
@@ -543,7 +543,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Kon tijdelijk bestand niet openen</translation>
     </message>
     <message>
-        <source>qTox wasn&apos;t able to save the screenshot</source>
+        <source>qTox wasn't able to save the screenshot</source>
         <translation>qTox kon de schermafbeelding niet opslaan</translation>
     </message>
     <message>
@@ -629,8 +629,8 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>/me biedt vriendschap aan.</translation>
     </message>
     <message>
-        <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation>/me biedt vriendschap aan, &quot;%1&quot;</translation>
+        <source>/me offers friendship, "%1"</source>
+        <translation>/me biedt vriendschap aan, "%1"</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -648,9 +648,9 @@ History will be disabled!</source>
 Gespreksgeschiedenis zal uitgeschakeld worden!</translation>
     </message>
     <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
+        <source>Please enter the password for the chat history for the profile "%1".</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation>Vul het wachtwoord in voor de gespreksgeschiedenis van het profiel &quot;%1&quot;.</translation>
+        <translation>Vul het wachtwoord in voor de gespreksgeschiedenis van het profiel "%1".</translation>
     </message>
     <message>
         <source>
@@ -661,7 +661,7 @@ Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis be
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
+        <comment>used only when pw set before load() doesn't work</comment>
         <translation>Het wachtwoord voor de versleuteling van gespreksgeschiedenis was verkeerd. Probeer een ander wachtwoord.</translation>
     </message>
     <message>
@@ -755,7 +755,7 @@ Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis be
     <name>FilesForm</name>
     <message>
         <source>Transferred Files</source>
-        <comment>&quot;Headline&quot; of the window</comment>
+        <comment>"Headline" of the window</comment>
         <translation>Overgedragen Bestanden</translation>
     </message>
     <message>
@@ -847,12 +847,12 @@ Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis be
         <translation>Naar nieuwe cirkel</translation>
     </message>
     <message>
-        <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Verwijder uit cirkel &apos;%1&apos;</translation>
+        <source>Remove from circle '%1'</source>
+        <translation>Verwijder uit cirkel '%1'</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>Verplaats naar cirkel &quot;%1&quot;</translation>
+        <source>Move  to circle "%1"</source>
+        <translation>Verplaats naar cirkel "%1"</translation>
     </message>
     <message>
         <source>Set alias...</source>
@@ -906,7 +906,7 @@ Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis be
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invite to group &apos;%1&apos;</source>
+        <source>Invite to group '%1'</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1033,7 +1033,7 @@ in plaats van naar de taakbalk.</translation>
         <translation>Start qTox wanneer het besturingsysteem start (huidige profiel).</translation>
     </message>
     <message>
-        <source>Show contacts&apos; status changes</source>
+        <source>Show contacts' status changes</source>
         <translation>Laat statusverandering van contacten zien</translation>
     </message>
     <message>
@@ -1144,7 +1144,7 @@ in plaats van naar de taakbalk.</translation>
     <name>Group</name>
     <message>
         <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <comment>Placeholder when someone's name in a group chat is empty</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1410,7 +1410,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>Nieuw Profiel</translation>
     </message>
     <message>
-        <source>Couldn&apos;t create a new profile</source>
+        <source>Couldn't create a new profile</source>
         <translation>Kon geen nieuw profiel aanmaken</translation>
     </message>
     <message>
@@ -1422,7 +1422,7 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <translation>Het wachtwoord moet tenminste 6 karakters lang zijn.</translation>
     </message>
     <message>
-        <source>The passwords you&apos;ve entered are different.
+        <source>The passwords you've entered are different.
 Please make sure to enter same password twice.</source>
         <translation>De wachtwoorden die je hebt ingevuld komen niet overeen.
 Vul alsjeblieft tweemaal hetzelfde wachtwoord in.</translation>
@@ -1432,13 +1432,13 @@ Vul alsjeblieft tweemaal hetzelfde wachtwoord in.</translation>
         <translation>Een profiel met deze naam bestaat al.</translation>
     </message>
     <message>
-        <source>Unknown error: Couldn&apos;t create a new profile.
+        <source>Unknown error: Couldn't create a new profile.
 If you encountered this error, please report it.</source>
         <translation>Onbekende fout: Kon geen nieuw profiel aanmaken.
 Als je deze fout tegenkomt, meld dat alsjeblieft.</translation>
     </message>
     <message>
-        <source>Couldn&apos;t load this profile</source>
+        <source>Couldn't load this profile</source>
         <translation>Kon dit profiel niet laden</translation>
     </message>
     <message>
@@ -1470,11 +1470,11 @@ Als je deze fout tegenkomt, meld dat alsjeblieft.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password protected profiles can&apos;t be automatically loaded.</source>
+        <source>Password protected profiles can't be automatically loaded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Couldn&apos;t load profile</source>
+        <source>Couldn't load profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1666,9 +1666,9 @@ Please use another image.</source>
 Gebruik alsjeblieft een andere foto.</translation>
     </message>
     <message>
-        <source>Rename &quot;%1&quot;</source>
+        <source>Rename "%1"</source>
         <comment>renaming a profile</comment>
-        <translation>Hernoem &quot;%1&quot;</translation>
+        <translation>Hernoem "%1"</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1676,9 +1676,9 @@ Gebruik alsjeblieft een andere foto.</translation>
         <translation>Profiel bestaat al</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists.</source>
+        <source>A profile named "%1" already exists.</source>
         <comment>rename confirm text</comment>
-        <translation>Een profiel met de naam &quot;%1&quot; bestaat al.</translation>
+        <translation>Een profiel met de naam "%1" bestaat al.</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -1686,8 +1686,8 @@ Gebruik alsjeblieft een andere foto.</translation>
         <translation>Kon niet hernoemen</translation>
     </message>
     <message>
-        <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Kon het profiel niet hernoemen naar &quot;%1&quot;</translation>
+        <source>Couldn't rename the profile to "%1"</source>
+        <translation>Kon het profiel niet hernoemen naar "%1"</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1863,16 +1863,16 @@ Deel dit met je vrienden om te communiceren.</translation>
         <translation>Profiel bestaat al</translation>
     </message>
     <message>
-        <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
+        <source>A profile named "%1" already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Er bestaat al een profiel met de naam &quot;%1&quot;. Wil je het verwijderen?</translation>
+        <translation>Er bestaat al een profiel met de naam "%1". Wil je het verwijderen?</translation>
     </message>
     <message>
-        <source>File doesn&apos;t exist</source>
+        <source>File doesn't exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Profile doesn&apos;t exist</source>
+        <source>Profile doesn't exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1904,7 +1904,7 @@ Deel dit met je vrienden om te communiceren.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
+        <comment>Translate this string to the string 'RTL' in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1971,11 +1971,11 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Server doesn&apos;t support Toxme</source>
+        <source>Server doesn't support Toxme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You&apos;re making too many requests. Wait an hour and try again</source>
+        <source>You're making too many requests. Wait an hour and try again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1987,7 +1987,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please don&apos;t use a space in your name</source>
+        <source>Please don't use a space in your name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1995,7 +1995,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can&apos;t use this name</source>
+        <source>You can't use this name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2015,7 +2015,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Fout</translation>
     </message>
     <message>
-        <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
+        <source>qTox couldn't open your chat logs, they will be disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2095,7 +2095,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Het wachtwoord is te kort</translation>
     </message>
     <message>
-        <source>The password doesn&apos;t match.</source>
+        <source>The password doesn't match.</source>
         <translation>Het wachtwoord komt niet overeen.</translation>
     </message>
     <message>
@@ -2144,7 +2144,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <comment>Don&apos;t send a friend request</comment>
+        <comment>Don't send a friend request</comment>
         <translation>Annuleer</translation>
     </message>
     <message>
@@ -2202,7 +2202,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Don&apos;t show formatting characters</source>
+        <source>Don't show formatting characters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2210,7 +2210,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished">Nieuw bericht</translation>
     </message>
     <message>
-        <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
+        <source>Open qTox's window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
         <translation type="unfinished">Open het qTox scherm wanneer ik een bericht ontvang en er nog geen scherm open is.</translation>
     </message>
@@ -2221,7 +2221,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Focus qTox&apos; venster bij het ontvangen van een nieuw bericht.</translation>
+        <translation type="unfinished">Focus qTox' venster bij het ontvangen van een nieuw bericht.</translation>
     </message>
     <message>
         <source>Focus window</source>
@@ -2241,7 +2241,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation type="unfinished">Notificatie voor alle berichten in een groepsgesprek</translation>
     </message>
     <message>
-        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
+        <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they'll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
         <translation type="unfinished">Indien geselecteerd zullen groepsgesprekken bovenaan de vriendenlijst gezet worden, anders worden ze gezet onder online vrienden.</translation>
     </message>
@@ -2312,17 +2312,17 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <name>Widget</name>
     <message>
         <source>Online</source>
-        <comment>Button to set your status to &apos;Online&apos;</comment>
+        <comment>Button to set your status to 'Online'</comment>
         <translation>Online</translation>
     </message>
     <message>
         <source>Away</source>
-        <comment>Button to set your status to &apos;Away&apos;</comment>
+        <comment>Button to set your status to 'Away'</comment>
         <translation>Afwezig</translation>
     </message>
     <message>
         <source>Busy</source>
-        <comment>Button to set your status to &apos;Busy&apos;</comment>
+        <comment>Button to set your status to 'Busy'</comment>
         <translation>Bezet</translation>
     </message>
     <message>
@@ -2401,7 +2401,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Profiel</translation>
     </message>
     <message>
-        <source>Couldn&apos;t request friendship</source>
+        <source>Couldn't request friendship</source>
         <translation>Kon geen vriendschapsverzoek maken</translation>
     </message>
     <message>
@@ -2426,7 +2426,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <comment>e.g. "Dubslow is now online"</comment>
         <translation>%1 is nu %2</translation>
     </message>
     <message>
@@ -2491,7 +2491,7 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
-        <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
+        <comment>Placeholder when someone's name in a group chat is empty</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
