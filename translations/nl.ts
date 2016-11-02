@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Audio Instellingen</translation>
+        <translation>Audio-instellingen</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Afspeelapparaat</translation>
+        <translation>Afspeelapparaat</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
