@@ -15,10 +15,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Script for updating translation files.  Should be ran after
-# translatable strings are modified.
+# Script for updating translation files.  Should be ran after applying commit
+# to clean translation up or after modifying translation.
 #
-# Needed, since Weblate cannot do it automatically.
+# NOTE: if latest commit is a translation from Weblate, it amends commit!
 
 # Usage:
 #   ./tools/$script_name [ALL|lang]
@@ -28,15 +28,45 @@ set -eu -o pipefail
 readonly COMMIT_MSG="chore(i18n): update translation files for Weblate"
 readonly LUPDATE_CMD="lupdate -pro qtox.pro -no-obsolete -locations none -ts"
 
-if [[ "$@" = "ALL" ]]
-then
+update_all() {
+    local git_cmd="git commit -S -m $COMMIT_MSG"
     for translation in translations/*.ts
     do
         $LUPDATE_CMD "$translation"
     done
 
     git add translations/*.ts
-    git commit -m "$COMMIT_MSG"
-else
-    $LUPDATE_CMD "translations/$@.ts"
-fi
+    $git_cmd
+}
+
+last_commit_title() {
+    git log --format=format:%s HEAD~1..HEAD
+}
+
+is_last_commit_transl() {
+    last_commit_title \
+    | grep -q '^feat(l10n): update .* translation from Weblate$'
+}
+
+update_file() {
+    local file="translations/$@.ts"
+    local git_cmd="git commit -S"
+    if is_last_commit_transl
+    then
+        git_cmd="$git_cmd --amend"
+    fi
+
+    $LUPDATE_CMD "$file"
+    $git_cmd "$file"
+}
+
+
+main() {
+    if [[ "$@" = "ALL" ]]
+    then
+        update_all
+    else
+        update_file $@
+    fi
+}
+main $@
