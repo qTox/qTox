@@ -20,11 +20,14 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include "ui_mainwindow.h"
+
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QFileInfo>
-#include "src/core/corestructs.h"
+
 #include "genericchatitemwidget.h"
+#include "src/core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -75,7 +78,6 @@ public:
     bool getIsWindowMinimized();
     void updateIcons();
     void clearContactsList();
-    void updateScroll(GenericChatroomWidget *widget);
 
     enum DialogType
     {
@@ -88,7 +90,7 @@ public:
 
     static QString fromDialogType(DialogType type);
     ContentDialog* createContentDialog() const;
-    ContentLayout* createContentDialog(DialogType type);
+    ContentLayout* createContentDialog(DialogType type) const;
 
     static void confirmExecutableOpen(const QFileInfo &file);
 
@@ -128,7 +130,7 @@ public slots:
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
-    void onFriendDisplayChanged(FriendWidget* friendWidget, Status s);
+    void onFriendAliasChanged(uint32_t friendId, QString alias);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
     void onFriendRequestReceived(const QString& userId, const QString& message);
     void updateFriendActivity(Friend* frnd);
@@ -145,6 +147,8 @@ public slots:
     void onFriendTypingChanged(int friendId, bool isTyping);
     void nextContact();
     void previousContact();
+    void onFriendDialogShown(Friend* f);
+    void onGroupDialogShown(Group* g);
 
 signals:
     void friendRequestAccepted(const QString& userId);
@@ -171,7 +175,7 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void showProfile();
-    void onChatroomWidgetClicked(GenericChatroomWidget *, bool group);
+    void onChatroomWidgetClicked(GenericChatroomWidget*, bool group);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -190,6 +194,7 @@ private slots:
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
+    void onDialogShown(GenericChatroomWidget* widget);
 
 private:
     int icon_size;
@@ -278,6 +283,8 @@ private:
     QPushButton* friendRequestsButton;
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
+
+    QMap<int, FriendWidget*> friendWidgets;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;

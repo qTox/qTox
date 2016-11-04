@@ -37,6 +37,8 @@ class FriendWidget;
 class GroupWidget;
 class FriendListLayout;
 class SettingsWidget;
+class Friend;
+class Group;
 
 class ContentDialog : public ActivateDialog
 {
@@ -59,7 +61,7 @@ public:
     void onVideoHide();
 
     static ContentDialog* current();
-    static bool existsFriendWidget(int friendId, bool focus);
+    static bool friendWidgetExists(int friendId, bool focus);
     static bool existsGroupWidget(int groupId, bool focus);
     static void updateFriendStatus(int friendId);
     static void updateFriendStatusMessage(int friendId, const QString &message);
@@ -69,8 +71,10 @@ public:
     static ContentDialog* getFriendDialog(int friendId);
     static ContentDialog* getGroupDialog(int groupId);
 
-#ifdef Q_OS_MAC
 signals:
+    void friendDialogShown(Friend* f);
+    void groupDialogShown(Group* g);
+#ifdef Q_OS_MAC
     void activated();
 #endif
 
@@ -91,7 +95,7 @@ protected:
 
 private slots:
     void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
-    void updateFriendWidget(FriendWidget* w, Status s);
+    void updateFriendWidget(uint32_t friendId, QString alias);
     void updateGroupWidget(GroupWidget* w);
     void onGroupchatPositionChanged(bool top);
 
