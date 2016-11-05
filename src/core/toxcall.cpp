@@ -14,13 +14,13 @@
  * @var bool ToxCall::inactive
  * @brief True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
  *
- * @var bool ToxCall::videoEnabled
+ * @var bool ToxFriendCall::videoEnabled
  * @brief True if our user asked for a video call, sending and recieving.
  *
- * @var bool ToxCall::nullVideoBitrate
+ * @var bool ToxFriendCall::nullVideoBitrate
  * @brief True if our video bitrate is zero, i.e. if the device is closed.
  *
- * @var TOXAV_FRIEND_CALL_STATE ToxCall::state
+ * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
  * @brief State of the peer (not ours!)
  */
 
