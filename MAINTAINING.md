@@ -129,30 +129,24 @@ To get translations into qTox:
    feat(l10n): update $LANGUAGE from Weblate
    ```
    
-6. Update translation file that was changed to get rid of Weblate's formatting
-   using [`./tools/update-translation-files.sh`], e.g.:
+6. Get rid of Weblate's formatting and amend the commit using
+   [`./tools/deweblate-translation-file.sh`], i.e.:
    
    ```
-   ./tools/update-translation-files.sh en
+   ./tools/deweblate-translation-file.sh
    ```
    
-7. Commit those changes using `--amend`:
-   
-   ```
-   git commit --amend translations/en.ts
-   ```
-   
-8. For translations that haven't yet been cherry-picked repeat steps 4-7.
-9. Once done with cherry-picking, update all translation files, so that
-   Weblate would get newest strings that changed in qTox:
+7. For translations that haven't yet been cherry-picked repeat steps 4-6.
+8. Once done with cherry-picking, update all translation files, so that Weblate
+   would get newest strings that changed in qTox:
    
    ```
    ./tools/update-translation-files.sh ALL
    ```
    
-10. Once PR with translation gets merged, `Reset` Weblate to current `master`,
-    since without reset there would be a git conflict that would prevent
-    Weblate from getting new strings.
+9. Once PR with translation gets merged, `Reset` Weblate to current `master`,
+   since without reset there would be a git conflict that would prevent Weblate
+   from getting new strings.
     
 **It's a good idea to lock translations on Weblate while they're in merge
 process, so that no translation effort would be lost when resetting Weblate.**
@@ -184,4 +178,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`CONTRIBUTING.md`]: /CONTRIBUTING.md
 [`merge-pr.sh`]: /merge-pr.sh
 [`test-pr.sh`]: /test-pr.sh
-[`./tools/update-translation-files.sh`]: /tools/update-translation-files.sh
+[`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh

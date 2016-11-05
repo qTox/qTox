@@ -21,7 +21,7 @@
 # Needed, since Weblate cannot do it automatically.
 
 # Usage:
-#   ./tools/$script_name [ALL|lang]
+#   ./tools/$script_name [ALL|translation file]
 
 set -eu -o pipefail
 
@@ -38,5 +38,5 @@ then
     git add translations/*.ts
     git commit -m "$COMMIT_MSG"
 else
-    $LUPDATE_CMD "translations/$@.ts"
+    $LUPDATE_CMD "$@"
 fi
