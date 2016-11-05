@@ -46,6 +46,8 @@ CONFIG   += silent
 
 # needed, since `rtti_off` doesn't work
 QMAKE_CXXFLAGS += -fno-rtti
+# harden by default
+QMAKE_CXXFLAGS += -fstack-protector-strong
 QMAKE_RESOURCE_FLAGS += -compress 9 -threshold 0
 
 # Rules for creating/updating {ts|qm}-files
