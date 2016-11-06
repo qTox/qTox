@@ -27,6 +27,7 @@
 #include <QMessageBox>
 #include <QRegularExpressionValidator>
 #include <QStandardPaths>
+#include <QSignalBlocker>
 #include <QStyleFactory>
 #include <QTime>
 #include <QVector>
@@ -310,7 +311,14 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
  */
 void UserInterfaceForm::retranslateUi()
 {
+    // Block signals to textStyleComboBox during translation to prevent settings change
+    QSignalBlocker textStyleBlocker {bodyUI->textStyleComboBox};
+
     bodyUI->retranslateUi(this);
+
+    // Restore text style index once translation is complete
+    bodyUI->textStyleComboBox->setCurrentIndex(
+        static_cast<int>(Settings::getInstance().getStylePreference()));
 
     QStringList colorThemes(Style::getThemeColorNames());
     for (int i = 0; i < colorThemes.size(); ++i)
