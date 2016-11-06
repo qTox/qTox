@@ -310,7 +310,14 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
  */
 void UserInterfaceForm::retranslateUi()
 {
+    // Block signals during translation to prevent settings change
+    RecursiveSignalBlocker signalBlocker{this};
+
     bodyUI->retranslateUi(this);
+
+    // Restore text style index once translation is complete
+    bodyUI->textStyleComboBox->setCurrentIndex(
+        static_cast<int>(Settings::getInstance().getStylePreference()));
 
     QStringList colorThemes(Style::getThemeColorNames());
     for (int i = 0; i < colorThemes.size(); ++i)
