@@ -130,7 +130,7 @@ install() {
         git pull
     else
         fcho "Cloning Toxcore git ... "
-        git clone --depth=1 https://github.com/irungentoo/toxcore
+        git clone --depth=1 https://github.com/irungentoo/toxcore "$TOXCORE_DIR"
     fi
     # qTox
     if [[ $TRAVIS = true ]]
@@ -268,7 +268,7 @@ helpme() {
     echo "This script was created to help ease the process of compiling and creating a distributable qTox package for OSX systems."
     echo "The available commands are:"
     echo "-h  | --help      -- This help text."
-    echo "-i  | --instal    -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
+    echo "-i  | --install   -- A slightly automated process for getting an OSX machine ready to build Toxcore and qTox."
     echo "-u  | --update    -- Check for updates and build Toxcore from git & update qTox from git."
     echo "-b  | --build     -- Builds qTox in: ${BUILD_DIR}"
     echo "-d  | --deploy    -- Makes a distributable qTox.app file in: ${DEPLOY_DIR}"
