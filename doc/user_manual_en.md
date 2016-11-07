@@ -95,6 +95,24 @@ shown as QR code to easily share it with friends over a smartphone.
 The "Save image" button saves the QR code into a image file, while the "Copy
 image" button copies into your clipboard.
 
+### Register on ToxMe
+
+An integration for ToxMe service providers that allows you to create a simple
+alias for your Tox ID that will look like `user@example.com`. A default service
+provider (toxme.io) is already listed, and you can add your own.
+
+* __Username:__ This will be used as an alias for your Tox ID.
+* __Biography:__ Optional. If you want, you can write something here.
+* __Server:__ Service address where your alias will be registered.
+
+Note that by default aliases are public, but you can check the option to make a
+private one, but given that it would be stored on a server that you don't
+control, it's not actually private. At best you have a promise of privacy from
+the owner of the server. For 100% privacy use Tox IDs.
+
+After registration, you can give your new alias, e.g. `user@example.com` to
+your friends instead of the long Tox ID.
+
 ### Profile
 
 qTox allows you to use multiple Tox IDs with different profiles, each of which
@@ -333,7 +351,7 @@ pretty formatting.
 
 To invite a friend to a chat with you, you have to click the `+` button on the
 bottom left of the qTox window. The "Add a friend" Tab allows you to enter the
-Tox ID of your friend, or the username of a ToxMe service if your friend
+Tox ID of your friend, or the username of a [ToxMe service] if your friend
 registered there.
 
 On the "Friend requests" tab you can see, friend requests you got from other
@@ -374,3 +392,6 @@ for Linux. If these directories don't exist, you have to create them. The emoji
 files have to be in a subfolder also containing `emoticon.xml`, see the
 structure of https://github.com/qTox/qTox/tree/v1.5.2/smileys for further
 information.
+
+
+[ToxMe service]: #register-on-toxme
