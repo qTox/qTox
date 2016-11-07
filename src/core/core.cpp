@@ -319,13 +319,9 @@ void Core::start()
 
     ready = true;
 
-    // If we created a new profile earlier,
-    // now that we're ready save it and ONLY THEN broadcast the new ID.
-    // This is useful for e.g. the profileForm that searches for saves.
     if (isNewProfile)
     {
         profile.saveToxSave();
-        emit idSet(getSelfId().toString());
     }
 
     if (isReady())
