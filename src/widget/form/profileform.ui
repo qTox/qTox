@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>577</width>
-        <height>796</height>
+        <width>612</width>
+        <height>800</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,1">
@@ -156,7 +156,7 @@ Share it with your friends to communicate.</string>
        <item>
         <widget class="QGroupBox" name="horizontalGroupBox">
          <property name="title">
-          <string>Toxme register</string>
+          <string>Register on ToxMe</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
@@ -170,6 +170,9 @@ Share it with your friends to communicate.</string>
             </item>
             <item row="0" column="1">
              <widget class="QLineEdit" name="toxmeUsername">
+              <property name="toolTip">
+               <string comment="Tooltip for the `Username` ToxMe field.">Name for the ToxMe service.</string>
+              </property>
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
@@ -177,16 +180,26 @@ Share it with your friends to communicate.</string>
             </item>
             <item row="2" column="0">
              <widget class="QLabel" name="toxmeBioLabel">
+              <property name="toolTip">
+               <string comment="Tooltip for the Biography text.">Optional. Something about you. Or your cat.</string>
+              </property>
               <property name="text">
                <string>Biography</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLineEdit" name="toxmeBio"/>
+             <widget class="QLineEdit" name="toxmeBio">
+              <property name="toolTip">
+               <string comment="Tooltip for the Biography field.">Optional. Something about you. Or your cat.</string>
+              </property>
+             </widget>
             </item>
             <item row="3" column="0">
              <widget class="QLabel" name="toxmeServerLabel">
+              <property name="toolTip">
+               <string>ToxMe service to register on.</string>
+              </property>
               <property name="text">
                <string>Server</string>
               </property>
@@ -196,6 +209,9 @@ Share it with your friends to communicate.</string>
              <widget class="QComboBox" name="toxmeServersList">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="toolTip">
+               <string>ToxMe service to register on.</string>
               </property>
               <property name="editable">
                <bool>true</bool>
@@ -207,6 +223,9 @@ Share it with your friends to communicate.</string>
             </item>
             <item row="4" column="1">
              <widget class="QCheckBox" name="toxmePrivacy">
+              <property name="toolTip">
+               <string comment="Tooltip for the `Hide my name from public list` ToxMe checkbox.">If not set, ToxMe entries are publicly visible.</string>
+              </property>
               <property name="text">
                <string>Hide my name from the public list</string>
               </property>
@@ -396,6 +415,9 @@ Profile does not contain your history.</string>
             </item>
             <item>
              <widget class="QPushButton" name="deletePassButton">
+              <property name="toolTip">
+               <string comment="Tooltip for the `Remove password` button.">Remove your password and encryption from your profile.</string>
+              </property>
               <property name="text">
                <string>Remove password</string>
               </property>
