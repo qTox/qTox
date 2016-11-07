@@ -137,7 +137,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinimo maiša: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -236,19 +236,19 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai atsiliepti į skambutį :</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Rankinis</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsas</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsas + Vaizdas</translation>
     </message>
 </context>
 <context>
@@ -324,15 +324,15 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 čia nekeiskite, nebent %1 žinote ką darote. Čia atlikti pakeitimai gali sukelti problemų su qTox ir netgi duomenų (pvz., pokalbių žurnalo) praradimą.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>tikrai</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieko</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -357,7 +357,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Vyksta pokalbis</translation>
+        <translation>Vyksta pokalbis</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
@@ -390,7 +390,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Perkeliama</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -404,7 +404,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Išjungus galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
+        <translation>Išjungus, galima naudotis Tox protokolu per Tor. Tox tinklas dėl to yra papildomai apkraunamas, todėl nuimkite žymėjimą tik tada, kai reikia.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -444,7 +444,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Derinimas</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
@@ -1837,7 +1837,7 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Aktyvaus profilio saugojimo vieta: %1</translation>
+        <translation>Aktyvaus profilio saugojimo vieta: %1</translation>
     </message>
 </context>
 <context>
@@ -2066,27 +2066,27 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Paspauskite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. %1 klavišas (de)aktyvuoja qTox langą, o veiksmą atšauksite paspaudę %2 klavišą.</translation>
+        <translation>Spustelėkite pelės klavišą ir vilkdami pelę pasirinkite norimą ekrano sritį. Paspauskite %1 klavišą, kad būtų paslėptas/parodytas qTox langas, arba paspauskite %2 klavišą, kad atsisakytumėte.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">Tarpo</translation>
+        <translation>tarpo</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Escape</translation>
+        <translation>Escape (atšaukimo)</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">Paspaudę %1 klavišą nusiųsite pasirinktos ekrano srities kopiją, o %2 klavišu (de)aktyvuosite qTox langą. Veiksmą atšauksite paspaudę %3 klavišą.</translation>
+        <translation>Paspauskite %1 klavišą, kad nusiųstumėte pasirinktos ekrano srities kopiją, o %2, kad parodytumėte/paslėptumėte qTox langą. Veiksmo atsisakysite, paspaudę %3 klavišą.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished">Enter</translation>
+        <translation>Enter (įvedimo)</translation>
     </message>
 </context>
 <context>
@@ -2172,15 +2172,15 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Susirašinėjimas</translation>
+        <translation>Susirašinėjimas</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Standartinis šriftas:</translation>
+        <translation>Numatytasis šriftas:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>piks.</translation>
     </message>
     <message>
         <source>Size: </source>
@@ -2226,91 +2226,91 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Sufokusuoti qTox langą gavus žinutę.</translation>
+        <translation>Sufokusuoti qTox langą, gavus žinutę.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Sufokusuoti langą</translation>
+        <translation>Sufokusuoti langą</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų sąrašas</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Visada rodyti pranešimus apie naujas žinutes grupių pokalbiuose.</translation>
+        <translation>Visada rodyti pranešimus apie naujas žinutes grupių pokalbiuose.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Visada pranešti apie grupių pokalbius</translation>
+        <translation>Visada pranešti apie grupių pokalbius</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Jei pažymėta, grupių pokalbiai bus rodomi kontaktų sąrašo viršuje, priešingu atveju – apačioje.</translation>
+        <translation>Jei pažymėta, grupių pokalbiai bus rodomi kontaktų sąrašo viršuje, priešingu atveju – apačioje.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Rodyti grupių pokalbius viršuje</translation>
+        <translation>Rodyti grupių pokalbius kontaktų sąrašo viršuje</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Jūsų kontaktų sąrašas bus rodomas glaustuoju režimu.</translation>
+        <translation>Jūsų kontaktų sąrašas bus rodomas glaustoje veiksenoje.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Glaudesnis kontaktų sąrašas</translation>
+        <translation>Glaustas kontaktų sąrašas</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Atskirų langų režimas</translation>
+        <translation>Atskirų langų veiksena</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Kiekvieną pokalbį atverti atskirame lange</translation>
+        <translation>Kiekvieną pokalbį atverti atskirame lange</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Jaustukai</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Naudoti jaustukus</translation>
+        <translation>Naudoti jaustukus</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Jaustukų rinkinys:</translation>
+        <translation>Šypsenėlių rinkinys:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Jaustukų dydis:</translation>
+        <translation>Jaustukų dydis:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> piks.</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Apipavidalinimas</translation>
+        <translation>Apipavidalinimas</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Stilius:</translation>
+        <translation>Stilius:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Apipavidalinimo spalva:</translation>
+        <translation>Apipavidalinimo spalva:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Laiko formatas:</translation>
+        <translation>Laiko žymos formatas:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Datos formatas:</translation>
+        <translation>Datos formatas:</translation>
     </message>
 </context>
 <context>
