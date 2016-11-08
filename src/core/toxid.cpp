@@ -105,16 +105,6 @@ bool ToxId::operator!=(const ToxId &other) const
 }
 
 /**
- * @brief Check, that the current user ID is the active user ID
- * @return True if this Tox ID is equals to
- * the Tox ID of the currently active profile.
- */
-bool ToxId::isSelf() const
-{
-    return *this == Core::getInstance()->getSelfId();
-}
-
-/**
  * @brief Returns Tox ID converted to QString.
  * @return The Tox ID as QString.
  */

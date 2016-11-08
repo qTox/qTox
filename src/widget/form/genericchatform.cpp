@@ -319,11 +319,17 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 ChatMessage::Ptr GenericChatForm::addMessage(const ToxId& author, const QString &message, bool isAction,
                                              const QDateTime &datetime, bool isSent)
 {
-    bool authorIsActiveProfile = author.isSelf();
-    QString authorStr = authorIsActiveProfile ? Core::getInstance()->getUsername() : resolveToxId(author);
+    const Core* core = Core::getInstance();
+    bool authorIsActiveProfile = author == core->getSelfId();
+    QString authorStr = authorIsActiveProfile ? core->getUsername() : resolveToxId(author);
+
 
     if (getLatestDate() != QDate::currentDate())
-        addSystemInfoMessage(QDate::currentDate().toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime());
+    {
+        const Settings& s = Settings::getInstance();
+        QString dateText = QDate::currentDate().toString(s.getDateFormat());
+        addSystemInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+    }
 
     ChatMessage::Ptr msg;
     if (isAction)
@@ -357,7 +363,8 @@ ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString &message, bool is
 void GenericChatForm::addAlertMessage(const ToxId &author, QString message, QDateTime datetime)
 {
     QString authorStr = resolveToxId(author);
-    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, author.isSelf(), datetime);
+    bool isSelf = author == Core::getInstance()->getSelfId();
+    ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, isSelf, datetime);
     insertChatMessage(msg);
 
     if ((author == previousId) && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter))

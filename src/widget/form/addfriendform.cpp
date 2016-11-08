@@ -216,10 +216,12 @@ void AddFriendForm::setIdFromClipboard()
 {
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
-    if (Core::getInstance()->isReady() && !id.isEmpty() && ToxId::isToxId(id))
+    const Core* core = Core::getInstance();
+    if (core->isReady() && !id.isEmpty()
+            && ToxId::isToxId(id)
+            && ToxId(id) == core->getSelfId())
     {
-        if (!ToxId(id).isSelf())
-            toxId.setText(id);
+        toxId.setText(id);
     }
 }
 

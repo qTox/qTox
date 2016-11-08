@@ -1278,7 +1278,7 @@ QString Core::getPeerName(const ToxId& id) const
 /**
  * @brief Most of the API shouldn't be used until Core is ready, call start() first
  */
-bool Core::isReady()
+bool Core::isReady() const
 {
     return av && av->getToxAv() && tox && ready;
 }

@@ -86,7 +86,7 @@ public:
     static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
     static QByteArray decryptData(const QByteArray& data);
 
-    bool isReady();
+    bool isReady() const;
 
 public slots:
     void start();
