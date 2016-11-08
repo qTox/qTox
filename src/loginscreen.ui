@@ -114,6 +114,12 @@
          </item>
          <item row="1" column="1">
           <widget class="QLineEdit" name="newUsername">
+           <property name="accessibleName">
+            <string>Username</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Username input field</string>
+           </property>
            <property name="maxLength">
             <number>64</number>
            </property>
@@ -130,7 +136,14 @@
           </widget>
          </item>
          <item row="2" column="1">
-          <widget class="PasswordEdit" name="newPass"/>
+          <widget class="PasswordEdit" name="newPass">
+           <property name="accessibleName">
+            <string>Password</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Password input field, you can leave it empty (no password), or type at least 6 characters</string>
+           </property>
+          </widget>
          </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_8">
@@ -143,7 +156,14 @@
           </widget>
          </item>
          <item row="3" column="1">
-          <widget class="PasswordEdit" name="newPassConfirm"/>
+          <widget class="PasswordEdit" name="newPassConfirm">
+           <property name="accessibleName">
+            <string>Confirm password</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Password confirmation field</string>
+           </property>
+          </widget>
          </item>
          <item row="7" column="0" colspan="2">
           <widget class="QProgressBar" name="passStrengthMeter">
@@ -172,6 +192,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="createAccountButton">
+             <property name="accessibleName">
+              <string>Create Profile</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Button to create a new profile</string>
+             </property>
              <property name="text">
               <string>Create Profile</string>
              </property>
@@ -281,7 +307,14 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="loginUsernames"/>
+          <widget class="QComboBox" name="loginUsernames">
+           <property name="accessibleName">
+            <string>Profile list</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Drop-down list of profiles</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QLabel" name="loginPasswordLabel">
@@ -294,12 +327,25 @@
           </widget>
          </item>
          <item>
-          <widget class="PasswordEdit" name="loginPassword"/>
+          <widget class="PasswordEdit" name="loginPassword">
+           <property name="accessibleName">
+            <string>Password input field</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Field to type in your current password</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="autoLoginCB">
            <property name="toolTip">
             <string>If the profile does not have a password, qTox can skip the login screen</string>
+           </property>
+           <property name="accessibleName">
+            <string>Load automatically checkbox</string>
+           </property>
+           <property name="accessibleDescription">
+            <string>Checkbox to load profile automatically</string>
            </property>
            <property name="text">
             <string>Load automatically</string>
@@ -323,6 +369,12 @@
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
             <widget class="QPushButton" name="importButton">
+             <property name="accessibleName">
+              <string>Import profile</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Import an already existing profile using file picker button</string>
+             </property>
              <property name="text">
               <string>Import</string>
              </property>
@@ -343,6 +395,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="loginButton">
+             <property name="accessibleName">
+              <string>Load profile</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Load selected profile button</string>
+             </property>
              <property name="text">
               <string>Load</string>
              </property>
@@ -382,6 +440,12 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="accessibleName">
+    <string>New Profile</string>
+   </property>
+   <property name="accessibleDescription">
+    <string>Button to swtich to new profile creation page</string>
+   </property>
    <property name="text">
     <string>New Profile</string>
    </property>
@@ -394,6 +458,12 @@
      <width>160</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="accessibleName">
+    <string>Load Profile</string>
+   </property>
+   <property name="accessibleDescription">
+    <string>Button to swtich to loading existing profile page</string>
    </property>
    <property name="text">
     <string>Load Profile</string>
