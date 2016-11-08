@@ -36,6 +36,7 @@ public:
     void clear();
 
     static bool isToxId(const QString& id);
+    static bool isValidToxId(const QString &id);
 
 public:
     QString publicKey;
