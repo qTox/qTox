@@ -87,7 +87,7 @@ public:
     static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
     static QByteArray decryptData(const QByteArray& data);
 
-    bool isReady();
+    bool isReady() const;
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 

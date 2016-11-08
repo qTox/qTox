@@ -1595,15 +1595,23 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
 {
     Group* g = GroupList::findGroup(groupnumber);
     if (!g)
+    {
         return;
+    }
 
-    ToxId author = Core::getInstance()->getGroupPeerToxId(groupnumber, peernumber);
+    const Core* core = Core::getInstance();
+    ToxId author = core->getGroupPeerToxId(groupnumber, peernumber);
+    bool isSelf = author == core->getSelfId();
 
-    bool targeted = !author.isSelf() && (message.contains(nameMention) || message.contains(sanitizedNameMention));
+    bool targeted = !isSelf && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
+    {
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
+    }
     else
+    {
         g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
+    }
 
     newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
 }

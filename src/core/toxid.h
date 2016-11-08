@@ -32,7 +32,6 @@ public:
 
     bool operator==(const ToxId& other) const;
     bool operator!=(const ToxId& other) const;
-    bool isSelf() const;
     QString toString() const;
     void clear();
 

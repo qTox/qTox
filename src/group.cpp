@@ -84,13 +84,15 @@ QString Group::getName() const
 
 void Group::regeneratePeerList()
 {
-    peers = Core::getInstance()->getGroupPeerNames(groupId);
+    const Core* core = Core::getInstance();
+    peers = core->getGroupPeerNames(groupId);
     toxids.clear();
     nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i)
     {
-        ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, i);
-        if (id.isSelf())
+        ToxId id = core->getGroupPeerToxId(groupId, i);
+        ToxId self = core->getSelfId();
+        if (id == self)
             selfPeerNum = i;
 
         QString toxid = id.publicKey;

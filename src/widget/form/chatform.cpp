@@ -229,11 +229,12 @@ void ChatForm::startFileSend(ToxFile file)
         return;
 
     QString name;
-    if (!previousId.isSelf())
+    const Core* core = Core::getInstance();
+    ToxId self = core->getSelfId();
+    if (previousId != self)
     {
-        Core* core = Core::getInstance();
         name = core->getUsername();
-        previousId = core->getSelfId();
+        previousId = self;
     }
 
     insertChatMessage(ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
@@ -721,6 +722,7 @@ void ChatForm::onAvatarRemoved(uint32_t FriendId)
     avatar->setPixmap(QPixmap(":/img/contact_dark.svg"));
 }
 
+// TODO: Split on smaller methods (style)
 void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 {
     QDateTime now = historyBaselineDate.addMSecs(-1);
@@ -757,20 +759,41 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         if (msgDate > lastDate)
         {
             lastDate = msgDate;
-            historyMessages.append(ChatMessage::createChatInfoMessage(msgDate.toString(Settings::getInstance().getDateFormat()), ChatMessage::INFO, QDateTime()));
+            QString dateText = msgDate.toString(Settings::getInstance().getDateFormat());
+            historyMessages.append(
+                        ChatMessage::createChatInfoMessage(dateText,
+                                                           ChatMessage::INFO,
+                                                           QDateTime()));
         }
 
         // Show each messages
-        ToxId authorId = ToxId(it.sender);
-        QString authorStr = !it.dispName.isEmpty() ? it.dispName : (authorId.isSelf() ? Core::getInstance()->getUsername() : resolveToxId(authorId));
-        bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
-        bool needSending = !it.isSent && authorId.isSelf();
+        const Core* core = Core::getInstance();
+        ToxId authorId(it.sender);
+        QString authorStr;
+        bool isSelf = authorId == core->getSelfId();
 
-        ChatMessage::Ptr msg = ChatMessage::createChatMessage(authorStr,
-                                                              isAction ? it.message.mid(4) : it.message,
-                                                              isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
-                                                              authorId.isSelf(),
-                                                              needSending ? QDateTime() : msgDateTime);
+        if (!it.dispName.isEmpty())
+        {
+            authorStr = it.dispName;
+        }
+        else if (isSelf)
+        {
+            authorStr = core->getUsername();
+        }
+        else
+        {
+            authorStr = resolveToxId(authorId);
+        }
+
+        bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
+        bool needSending = !it.isSent && isSelf;
+
+        ChatMessage::Ptr msg =
+                ChatMessage::createChatMessage(authorStr,
+                                               isAction ? it.message.mid(4) : it.message,
+                                               isAction ? ChatMessage::ACTION : ChatMessage::NORMAL,
+                                               isSelf,
+                                               needSending ? QDateTime() : msgDateTime);
 
         if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
             msg->hideSender();
