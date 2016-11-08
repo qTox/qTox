@@ -35,7 +35,8 @@ public:
     QString toString() const;
     void clear();
 
-    static bool isToxId(const QString& id);
+    static bool isValidToxId(const QString& id);
+    static bool isProbableToxId(const QString& id);
 
 public:
     QString publicKey;

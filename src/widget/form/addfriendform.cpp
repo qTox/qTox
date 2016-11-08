@@ -165,7 +165,7 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (!ToxId::isToxId(id))
+    if (!ToxId::isValidToxId(id))
     {
         ToxId toxId = Toxme::lookup(id); // Try Toxme
         if (toxId.toString().isEmpty())
@@ -193,7 +193,7 @@ void AddFriendForm::onIdChanged(const QString &id)
 {
     QString tId = id.trimmed();
     QRegularExpression dnsIdExpression("^\\S+@\\S+$");
-    bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
+    bool isValidId = tId.isEmpty() || ToxId::isValidToxId(tId) || tId.contains(dnsIdExpression);
 
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
     QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
@@ -225,8 +225,8 @@ void AddFriendForm::setIdFromClipboard()
     QString id = clipboard->text().trimmed();
     const Core* core = Core::getInstance();
     if (core->isReady() && !id.isEmpty()
-            && ToxId::isToxId(id)
-            && ToxId(id) == core->getSelfId())
+            && ToxId::isValidToxId(id)
+            && ToxId(id) != core->getSelfId())
     {
         toxId.setText(id);
     }
