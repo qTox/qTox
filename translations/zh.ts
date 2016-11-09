@@ -96,11 +96,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <translation type="unfinished">Bug 跟踪器</translation>
+        <translation>漏洞追踪器</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <translation>编写有用的Bug报告</translation>
+        <translation>编写有用的漏洞报告</translation>
     </message>
     <message>
         <source>report it</source>
@@ -137,7 +137,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>提交摘要： %1</translation>
+        <translation>此版本哈希值： %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -175,7 +175,7 @@ which may lead to problems with video calls.</source>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation>qTox</translation>
+        <translation type="unfinished">qTox</translation>
     </message>
     <message>
         <source>username</source>
@@ -195,7 +195,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">历史上的别名</translation>
+        <translation>曾用的别名</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -203,7 +203,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>自动接收已对该联系人禁用</translation>
+        <translation>已禁用这个联系人的自动接收</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -211,7 +211,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>删除历史记录（操作不能撤消！）</translation>
+        <translation>删除历史记录（再也不能找回！）</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -299,7 +299,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation>76 个十六进制字符或 name@example.com</translation>
+        <translation>76 位十六进制字符或 name@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -324,11 +324,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>除非你 %1 知道自己在做什么，否则 ％2 改变这里的任何东西。此处所做的更改可能导致 qTox 出现问题，甚至引发包括但不限于聊天历史的数据丢失。</translation>
+        <translation>除非你 %1 知道自己在做什么，否则请 ％2 改变这里的任何设置。此处所做的更改可能导致 qTox 出现问题，甚至导致聊天历史、数据等丢失。</translation>
     </message>
     <message>
         <source>really</source>
-        <translation>确实</translation>
+        <translation>真的</translation>
     </message>
     <message>
         <source>not</source>
@@ -357,12 +357,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>通话处于活动状态</translation>
+        <translation type="unfinished">通话处于活动状态</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>你不能在通话期间关闭连接！</translation>
+        <translation>你不能在通话时关闭连接！</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -390,7 +390,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation>便携</translation>
+        <translation>可移动</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -448,7 +448,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished">导出调试日志</translation>
+        <translation>导出调试日志</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
@@ -467,7 +467,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>你在试图传输一个特殊（有序）的文件，此操作无法完成！</translation>
+        <translation>你在试图传输一个特殊的文件，此操作无法完成！</translation>
     </message>
     <message>
         <source>Load chat history...</source>
@@ -491,7 +491,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation>静音麦克风</translation>
+        <translation>关闭麦克风</translation>
     </message>
     <message>
         <source>Mute call</source>
@@ -499,11 +499,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished">呼叫 %1</translation>
+        <translation type="unfinished">正在呼叫 %1</translation>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished">%1 键入中</translation>
+        <translation>%1 正在打字</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -527,7 +527,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation>取消麦克风静音</translation>
+        <translation>打开麦克风</translation>
     </message>
     <message>
         <source>Unmute call</source>
@@ -540,11 +540,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation type="unfinished">无法打开临时文件</translation>
+        <translation>无法打开临时文件</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation type="unfinished">qTox 无法保存截图</translation>
+        <translation>qTox 无法保存截图</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -560,11 +560,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished">坏主意</translation>
+        <translation>坏主意</translation>
     </message>
     <message>
         <source>End audio call</source>
-        <translation>结束音频童话</translation>
+        <translation>结束音频通话</translation>
     </message>
 </context>
 <context>
