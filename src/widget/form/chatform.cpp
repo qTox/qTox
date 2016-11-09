@@ -442,7 +442,7 @@ void ChatForm::onAnswerCallTriggered()
         return;
     }
 
-    onAvStart(f->getFriendID(), coreav->isCallVideoEnabled(f->getFriendID()));
+    onAvStart(f->getFriendID(), coreav->isCallActive(f));
 }
 
 void ChatForm::onHangupCallTriggered()
@@ -593,7 +593,7 @@ void ChatForm::onMicMuteToggle()
 {
     if (audioInputFlag)
     {
-        coreav->micMuteToggle(f->getFriendID());
+        coreav->toggleMuteCallInput(f);
         if (micButton->objectName() == "red")
         {
             micButton->setObjectName("green");
@@ -613,7 +613,7 @@ void ChatForm::onVolMuteToggle()
 {
     if (audioOutputFlag)
     {
-        coreav->volMuteToggle(f->getFriendID());
+        coreav->toggleMuteCallOutput(f);
         if (volButton->objectName() == "red")
         {
             volButton->setObjectName("green");

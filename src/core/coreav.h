@@ -27,6 +27,8 @@
 #include "src/core/toxcall.h"
 #include <tox/toxav.h>
 
+class Friend;
+class Group;
 class QTimer;
 class QThread;
 class CoreVideoSource;
@@ -46,8 +48,10 @@ public:
 
     const ToxAV* getToxAv() const;
 
-    bool anyActiveCalls();
-    bool isCallVideoEnabled(uint32_t friendNum);
+    bool anyActiveCalls() const;
+    bool isCallActive(const Friend* f) const;
+    bool isCallActive(const Group* g) const;
+    bool isCallVideoEnabled(const Friend* f) const;
     bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
@@ -58,16 +62,16 @@ public:
 
     void joinGroupCall(int groupNum);
     void leaveGroupCall(int groupNum);
-    void disableGroupCallMic(int groupNum);
-    void disableGroupCallVol(int groupNum);
-    void enableGroupCallMic(int groupNum);
-    void enableGroupCallVol(int groupNum);
-    bool isGroupCallMicEnabled(int groupNum) const;
-    bool isGroupCallVolEnabled(int groupNum) const;
+    void muteCallInput(const Group* g, bool mute);
+    void muteCallOutput(const Group* g, bool mute);
+    bool isGroupCallInputMuted(const Group* g) const;
+    bool isGroupCallOutputMuted(const Group* g) const;
     bool isGroupAvEnabled(int groupNum) const;
 
-    void micMuteToggle(uint32_t friendNum);
-    void volMuteToggle(uint32_t friendNum);
+    bool isCallInputMuted(const Friend* f) const;
+    bool isCallOutputMuted(const Friend* f) const;
+    void toggleMuteCallInput(const Friend* f);
+    void toggleMuteCallOutput(const Friend* f);
 
     static void groupCallCallback(void* tox, int group, int peer,
                                   const int16_t* data, unsigned samples,
