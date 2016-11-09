@@ -47,6 +47,7 @@ class Core : public QObject
 public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance();
+    const CoreAV* getAv() const;
     CoreAV* getAv();
     ~Core();
 
@@ -88,6 +89,8 @@ public:
 
     bool isReady();
 
+    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
+
 public slots:
     void start();
     void reset();
@@ -116,7 +119,6 @@ public slots:
      int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
-    void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
     void cancelFileSend(uint32_t friendId, uint32_t fileNum);
     void cancelFileRecv(uint32_t friendId, uint32_t fileNum);
@@ -126,7 +128,6 @@ public slots:
     void pauseResumeFileRecv(uint32_t friendId, uint32_t fileNum);
 
     void setNospam(uint32_t nospam);
-
 
 signals:
     void connected();
