@@ -565,8 +565,23 @@
  </customwidgets>
  <tabstops>
   <tabstop>scrollArea</tabstop>
+  <tabstop>txtChatFont</tabstop>
+  <tabstop>txtChatFontSize</tabstop>
+  <tabstop>textStyleComboBox</tabstop>
+  <tabstop>showWindow</tabstop>
+  <tabstop>showInFront</tabstop>
+  <tabstop>groupAlwaysNotify</tabstop>
+  <tabstop>cbGroupchatPosition</tabstop>
+  <tabstop>cbCompactLayout</tabstop>
+  <tabstop>cbSeparateWindow</tabstop>
+  <tabstop>cbDontGroupWindows</tabstop>
+  <tabstop>useEmoticons</tabstop>
+  <tabstop>smileyPackBrowser</tabstop>
+  <tabstop>emoticonSize</tabstop>
   <tabstop>styleBrowser</tabstop>
   <tabstop>themeColorCBox</tabstop>
+  <tabstop>timestamp</tabstop>
+  <tabstop>dateFormats</tabstop>
  </tabstops>
  <resources/>
  <connections/>

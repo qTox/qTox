@@ -39,8 +39,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1276</width>
-        <height>587</height>
+        <width>1284</width>
+        <height>598</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0">
@@ -377,12 +377,20 @@ instead of closing itself.</string>
  <tabstops>
   <tabstop>scrollArea</tabstop>
   <tabstop>transComboBox</tabstop>
-  <tabstop>lightTrayIcon</tabstop>
-  <tabstop>showSystemTray</tabstop>
-  <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>cbAutorun</tabstop>
   <tabstop>checkUpdates</tabstop>
+  <tabstop>lightTrayIcon</tabstop>
+  <tabstop>showSystemTray</tabstop>
+  <tabstop>startInTray</tabstop>
+  <tabstop>minimizeToTray</tabstop>
+  <tabstop>closeToTray</tabstop>
+  <tabstop>notifySound</tabstop>
+  <tabstop>busySound</tabstop>
+  <tabstop>statusChanges</tabstop>
+  <tabstop>cbFauxOfflineMessaging</tabstop>
+  <tabstop>autoAwaySpinBox</tabstop>
   <tabstop>autoSaveFilesDir</tabstop>
+  <tabstop>autoacceptFiles</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -393,12 +401,12 @@ instead of closing itself.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>205</x>
-     <y>146</y>
+     <x>224</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
-     <x>224</x>
-     <y>178</y>
+     <x>283</x>
+     <y>290</y>
     </hint>
    </hints>
   </connection>
@@ -409,12 +417,12 @@ instead of closing itself.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>180</x>
-     <y>144</y>
+     <x>199</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
-     <x>359</x>
-     <y>178</y>
+     <x>418</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -425,12 +433,12 @@ instead of closing itself.</string>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>144</y>
+     <x>124</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
-     <x>119</x>
-     <y>177</y>
+     <x>178</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>

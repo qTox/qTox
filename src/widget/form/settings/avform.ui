@@ -203,6 +203,17 @@ which may lead to problems with video calls.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>outDevCombobox</tabstop>
+  <tabstop>playbackSlider</tabstop>
+  <tabstop>cbEnableTestSound</tabstop>
+  <tabstop>inDevCombobox</tabstop>
+  <tabstop>microphoneSlider</tabstop>
+  <tabstop>videoDevCombobox</tabstop>
+  <tabstop>videoModescomboBox</tabstop>
+  <tabstop>rescanButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
