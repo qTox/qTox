@@ -465,19 +465,20 @@ Profile does not contain your history.</string>
   <tabstop>scrollArea</tabstop>
   <tabstop>userName</tabstop>
   <tabstop>statusMessage</tabstop>
+  <tabstop>toxId</tabstop>
+  <tabstop>saveQr</tabstop>
+  <tabstop>copyQr</tabstop>
   <tabstop>toxmeUsername</tabstop>
   <tabstop>toxmeBio</tabstop>
   <tabstop>toxmeServersList</tabstop>
   <tabstop>toxmePrivacy</tabstop>
   <tabstop>toxmeRegisterButton</tabstop>
+  <tabstop>toxmeUpdateButton</tabstop>
   <tabstop>toxmePassword</tabstop>
-  <tabstop>toxId</tabstop>
-  <tabstop>saveQr</tabstop>
-  <tabstop>copyQr</tabstop>
   <tabstop>renameButton</tabstop>
   <tabstop>deleteButton</tabstop>
-  <tabstop>logoutButton</tabstop>
   <tabstop>exportButton</tabstop>
+  <tabstop>logoutButton</tabstop>
   <tabstop>deletePassButton</tabstop>
   <tabstop>changePassButton</tabstop>
  </tabstops>

@@ -231,6 +231,19 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>cbMakeToxPortable</tabstop>
+  <tabstop>btnExportLog</tabstop>
+  <tabstop>btnCopyDebug</tabstop>
+  <tabstop>cbEnableIPv6</tabstop>
+  <tabstop>cbEnableUDP</tabstop>
+  <tabstop>proxyType</tabstop>
+  <tabstop>proxyAddr</tabstop>
+  <tabstop>proxyPort</tabstop>
+  <tabstop>reconnectButton</tabstop>
+  <tabstop>resetButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
