@@ -69,7 +69,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte rozlíšenie vašej kamery.
+Čím vyššia hodnota je nastavená, tým lepšej kvalite vás uvidia ostatní.
+Čím vyššia kvalita, tým vyššie sú nároky na internetové pripojenie.
+Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kvalitu videa,
+čo môže spôsobiť problémy počas videohovoru.</translation>
     </message>
     <message>
         <source>Resolution</source>
