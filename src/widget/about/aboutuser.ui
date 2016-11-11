@@ -255,6 +255,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>publicKey</tabstop>
+  <tabstop>autoacceptcall</tabstop>
+  <tabstop>autoacceptfile</tabstop>
+  <tabstop>selectSaveDir</tabstop>
+  <tabstop>removeHistory</tabstop>
+  <tabstop>note</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

@@ -448,6 +448,11 @@
    <header location="global">src/widget/tool/croppinglabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>previewButton</tabstop>
+  <tabstop>topButton</tabstop>
+  <tabstop>bottomButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../res.qrc"/>
  </resources>
