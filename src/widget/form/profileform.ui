@@ -69,7 +69,14 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="userName"/>
+             <widget class="QLineEdit" name="userName">
+              <property name="accessibleName">
+               <string>Name input</string>
+              </property>
+              <property name="accessibleDescription">
+               <string>Name visible to contacts</string>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="statusMessageLabel">
@@ -79,7 +86,14 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="statusMessage"/>
+             <widget class="QLineEdit" name="statusMessage">
+              <property name="accessibleName">
+               <string>Status message input</string>
+              </property>
+              <property name="accessibleDescription">
+               <string>Status message visible to contacts</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -105,6 +119,9 @@ Share it with your friends to communicate.</string>
           </item>
           <item>
            <widget class="QLineEdit" name="toxId">
+            <property name="accessibleDescription">
+             <string>Your Tox ID</string>
+            </property>
             <property name="frame">
              <bool>true</bool>
             </property>
@@ -132,6 +149,9 @@ Share it with your friends to communicate.</string>
                 </item>
                 <item alignment="Qt::AlignVCenter">
                  <widget class="QPushButton" name="saveQr">
+                  <property name="accessibleDescription">
+                   <string>Save QR image as file</string>
+                  </property>
                   <property name="text">
                    <string>Save image</string>
                   </property>
@@ -139,6 +159,9 @@ Share it with your friends to communicate.</string>
                 </item>
                 <item alignment="Qt::AlignVCenter">
                  <widget class="QPushButton" name="copyQr">
+                  <property name="accessibleDescription">
+                   <string>Copy QR image to clipboard</string>
+                  </property>
                   <property name="text">
                    <string>Copy image</string>
                   </property>
@@ -173,6 +196,9 @@ Share it with your friends to communicate.</string>
               <property name="toolTip">
                <string comment="Tooltip for the `Username` ToxMe field.">Name for the ToxMe service.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>ToxMe username to be shown on ToxMe</string>
+              </property>
               <property name="autoFillBackground">
                <bool>false</bool>
               </property>
@@ -192,6 +218,9 @@ Share it with your friends to communicate.</string>
              <widget class="QLineEdit" name="toxmeBio">
               <property name="toolTip">
                <string comment="Tooltip for the Biography field.">Optional. Something about you. Or your cat.</string>
+              </property>
+              <property name="accessibleDescription">
+               <string>Optional ToxMe biography to be shown on ToxMe</string>
               </property>
              </widget>
             </item>
@@ -213,6 +242,9 @@ Share it with your friends to communicate.</string>
               <property name="toolTip">
                <string>ToxMe service to register on.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>ToxMe service address</string>
+              </property>
               <property name="editable">
                <bool>true</bool>
               </property>
@@ -226,6 +258,9 @@ Share it with your friends to communicate.</string>
               <property name="toolTip">
                <string comment="Tooltip for the `Hide my name from public list` ToxMe checkbox.">If not set, ToxMe entries are publicly visible.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>Visibility on the ToxMe service</string>
+              </property>
               <property name="text">
                <string>Hide my name from the public list</string>
               </property>
@@ -235,6 +270,9 @@ Share it with your friends to communicate.</string>
              <widget class="QPushButton" name="toxmeRegisterButton">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="accessibleDescription">
+               <string>Register on ToxMe</string>
               </property>
               <property name="text">
                <string>Register</string>
@@ -262,6 +300,9 @@ Share it with your friends to communicate.</string>
             </item>
             <item row="7" column="1">
              <widget class="QLineEdit" name="toxmePassword">
+              <property name="accessibleDescription">
+               <string>Password</string>
+              </property>
               <property name="frame">
                <bool>false</bool>
               </property>
@@ -277,6 +318,9 @@ Share it with your friends to communicate.</string>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
                <widget class="QPushButton" name="toxmeUpdateButton">
+                <property name="accessibleDescription">
+                 <string>Update ToxMe entry</string>
+                </property>
                 <property name="text">
                  <string>Update</string>
                 </property>
@@ -347,6 +391,9 @@ Share it with your friends to communicate.</string>
               <property name="toolTip">
                <string comment="tooltip for renaming profile button">Rename profile.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>Rename profile.</string>
+              </property>
               <property name="text">
                <string comment="rename profile button">Rename</string>
               </property>
@@ -356,6 +403,9 @@ Share it with your friends to communicate.</string>
              <widget class="QPushButton" name="deleteButton">
               <property name="toolTip">
                <string comment="delete profile button tooltip">Delete profile.</string>
+              </property>
+              <property name="accessibleDescription">
+               <string>Delete profile.</string>
               </property>
               <property name="text">
                <string comment="delete profile button">Delete</string>
@@ -368,6 +418,9 @@ Share it with your friends to communicate.</string>
                <string comment="tooltip for profile exporting button">Allows you to export your Tox profile to a file.
 Profile does not contain your history.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>Export profile</string>
+              </property>
               <property name="text">
                <string comment="export profile button">Export</string>
               </property>
@@ -377,6 +430,9 @@ Profile does not contain your history.</string>
              <widget class="QPushButton" name="logoutButton">
               <property name="toolTip">
                <string comment="tooltip for logout button">Go back to the login screen</string>
+              </property>
+              <property name="accessibleDescription">
+               <string/>
               </property>
               <property name="text">
                <string comment="import profile button">Logout</string>
@@ -418,6 +474,9 @@ Profile does not contain your history.</string>
               <property name="toolTip">
                <string comment="Tooltip for the `Remove password` button.">Remove your password and encryption from your profile.</string>
               </property>
+              <property name="accessibleDescription">
+               <string>Remove password from profile</string>
+              </property>
               <property name="text">
                <string>Remove password</string>
               </property>
@@ -425,6 +484,9 @@ Profile does not contain your history.</string>
             </item>
             <item>
              <widget class="QPushButton" name="changePassButton">
+              <property name="accessibleDescription">
+               <string>Change profile password</string>
+              </property>
               <property name="text">
                <string>Change password</string>
               </property>
