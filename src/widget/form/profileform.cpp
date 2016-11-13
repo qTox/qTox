@@ -101,6 +101,8 @@ ProfileForm::ProfileForm(QWidget *parent) :
     profilePicture->setContextMenuPolicy(Qt::CustomContextMenu);
     profilePicture->setClickable(true);
     profilePicture->installEventFilter(this);
+    profilePicture->setAccessibleName("Profile avatar");
+    profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
     connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showProfilePictureContextMenu(const QPoint&)));
     QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
