@@ -1,2 +1,4 @@
 [clog]
 repository = "https://github.com/qTox/qTox"
+changelog = "CHANGELOG.md"
+from-latest-tag = true
