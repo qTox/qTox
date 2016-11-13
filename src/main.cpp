@@ -134,6 +134,14 @@ int main(int argc, char* argv[])
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
+    // Install Unicode 6.1 supporting font
+    // Keep this as close to the beginning of `main()` as possible, otherwise
+    // on systems that have poor support for Unicode qTox will look bad.
+    if (QFontDatabase::addApplicationFont("://font/DejaVuSans.ttf") == -1) {
+        qWarning() << "Couldn't load font";
+    }
+
+
 #if defined(Q_OS_OSX)
     // TODO: Add setting to enable this feature.
     // osx::moveToAppFolder();
@@ -207,10 +215,6 @@ int main(int argc, char* argv[])
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
-    // Install Unicode 6.1 supporting font
-    if (QFontDatabase::addApplicationFont("://font/DejaVuSans.ttf") == -1) {
-        qWarning() << "Couldn't load font";
-    }
 
 // Check whether we have an update waiting to be installed
 #if AUTOUPDATE_ENABLED
