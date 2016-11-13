@@ -2,6 +2,12 @@ sudo: required
 dist: trusty
 language: cpp
 
+# regex is for release tags
+branches:
+  only:
+    - master
+    - /^v(\d+\.){2}\d+$/
+
 matrix:
   fast_finish: true
   include:
@@ -29,8 +35,8 @@ deploy:
   skip_cleanup: true
 
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $JOB == "build-docs" && bash ./.travis/deploy-docs.sh
-
-branches:
-  only:
-    - master
+  ->
+  test $TRAVIS_PULL_REQUEST == "false"
+  && test $TRAVIS_BRANCH == "master"
+  && test $JOB == "build-docs"
+  && bash ./.travis/deploy-docs.sh
