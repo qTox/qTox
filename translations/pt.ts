@@ -80,11 +80,11 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Re-escanear</translation>
+        <translation>Re-escanear dispositivos</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Testar Som</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Hash do commit: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -335,7 +335,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished">NOTIFICAÇÃO IMPORTANTE</translation>
+        <translation>NOTA IMPORTANTE</translation>
     </message>
     <message>
         <source>Reset settings</source>
@@ -365,7 +365,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvar Arquivo</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -1333,10 +1333,6 @@ Profile does not contain your history.</source>
         <translation>Excluir</translation>
     </message>
     <message>
-        <source>Toxme register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1363,6 +1359,39 @@ Profile does not contain your history.</source>
     <message>
         <source>Update</source>
         <translation type="unfinished">Atualizar</translation>
+    </message>
+    <message>
+        <source>Register on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name for the ToxMe service.</source>
+        <comment>Tooltip for the `Username` ToxMe field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography text.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service to register on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If not set, ToxMe entries are publicly visible.</source>
+        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove your password and encryption from your profile.</source>
+        <comment>Tooltip for the `Remove password` button.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1478,6 +1507,54 @@ Por favor, reporte este erro.</translation>
         <source>There is no selected profile.
 
 You may want to create one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username input field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password confirmation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load automatically checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import profile</source>
+        <translation type="unfinished">Importar perfil</translation>
+    </message>
+    <message>
+        <source>Load selected profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile creation page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading existing profile page</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
