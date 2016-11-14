@@ -5,15 +5,15 @@
     <name>AVForm</name>
     <message>
         <source>Default resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlta ekrandistingivo</translation>
     </message>
     <message>
         <source>Audio/Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Sono/Video</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Malebligita</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
@@ -25,11 +25,11 @@
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Elektu regionon</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrano %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Sonforteco</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <translation>Videa aparato</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -81,14 +81,14 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Testi sonon</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished">Vi povas trovi liston de problemoj konatoj je nia %1 je Github. Se vi trovos cimon aŭ atakeblan punkton en qTox, bonvole %3 laŭ la petoj en nia %2 vikia artikolo.</translation>
+        <translation>Vi povas trovi liston de problemoj konataj je nia %1 je Github. Se vi trovos cimon aŭ atakeblan punkton en qTox, bonvole %3 laŭ la gvidlinioj en nia %2 vikia artikolo.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -100,16 +100,16 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>report it</source>
-        <translation type="unfinished"></translation>
+        <translation>raportu ĝin</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished">Restartigu qTox por instalo de versio %1</translation>
+        <translation>Restartigu qTox por instalo de versio %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished">qTox elŝutas ĝisdatigon %1</translation>
+        <translation>qTox elŝutas ĝisdatigon %1</translation>
     </message>
     <message>
         <source>About</source>
@@ -117,23 +117,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Originala aŭtoro: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Vidu plenan liston de %1 ĉe Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>kontribuintoj</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi uzas qTox versio %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Enmeta haketo: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -152,19 +152,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Downloading update: %p%</source>
-        <translation type="unfinished"></translation>
+        <translation>Elŝutante ĝisdatigon: %p%</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Permesilo</translation>
     </message>
     <message>
         <source>Authors</source>
-        <translation type="unfinished"></translation>
+        <translation>Aŭtoroj</translation>
     </message>
     <message>
         <source>Known Issues</source>
-        <translation type="unfinished"></translation>
+        <translation>Konataj problemoj</translation>
     </message>
 </context>
 <context>
@@ -175,23 +175,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>uzantnomo</translation>
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished"></translation>
+        <translation>statmesaĝo</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Publika ŝlosilo:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kromnomoj uzataj:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>HISTORIO DE KROMNOMOJ</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -211,7 +211,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Notoj</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -236,7 +236,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manlibro</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -261,7 +261,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tox-identigilo</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -288,28 +288,28 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jen %1! Toksu min, eble?</translation>
     </message>
     <message>
         <source>Add a friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni amikon</translation>
     </message>
     <message>
         <source>Friend requests</source>
-        <translation type="unfinished"></translation>
+        <translation>Amikiĝpetoj</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Akcepti</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished"></translation>
+        <translation>Malakcepti</translation>
     </message>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ĉi tiu Tox-identigilo ne ekzistas</translation>
     </message>
 </context>
 <context>
@@ -332,7 +332,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>GRAVA AVERTO</translation>
     </message>
     <message>
         <source>Reset settings</source>
@@ -344,11 +344,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -362,11 +362,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi dosieron</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Protokoloj (*.log)</translation>
     </message>
 </context>
 <context>
@@ -390,12 +390,12 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Konektaj agordoj</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ŝalti IPv6 (indas)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
@@ -423,24 +423,24 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Neniu</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished"></translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rekonekti</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Malcimigi</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
@@ -455,19 +455,19 @@ which may lead to problems with video calls.</source>
     <name>ChatForm</name>
     <message>
         <source>Send a file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendi dosieron</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas malfermi</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox ne sukcesis malfermi %1</translation>
     </message>
     <message>
         <source>Bad idea</source>
-        <translation type="unfinished"></translation>
+        <translation>Malbona ideo</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
@@ -495,7 +495,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Silentigi mikrofonon</translation>
     </message>
     <message>
         <source>Mute call</source>
@@ -523,7 +523,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Malsilentigi mikrofonon</translation>
     </message>
     <message>
         <source>Unmute call</source>
@@ -531,16 +531,16 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Failed to send file &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Malsukcesis sendi dosieron &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Failed to open temporary file</source>
         <comment>Temporary file for screenshot</comment>
-        <translation type="unfinished"></translation>
+        <translation>Malsukcesis malfermi nedaŭran dosieron</translation>
     </message>
     <message>
         <source>qTox wasn&apos;t able to save the screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>qTox ne povis konservi la ekrankaptaĵon</translation>
     </message>
     <message>
         <source>Call with %1 ended. %2</source>
@@ -552,7 +552,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>%1 is typing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 tajpas</translation>
     </message>
     <message>
         <source>Load chat history...</source>
@@ -560,29 +560,29 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii</translation>
     </message>
 </context>
 <context>
     <name>ChatLog</name>
     <message>
         <source>pending</source>
-        <translation type="unfinished"></translation>
+        <translation>pritraktota</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Selekti ĉion</translation>
     </message>
 </context>
 <context>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tajpu vian mesaĝon ĉi tie...</translation>
     </message>
 </context>
 <context>
@@ -590,43 +590,43 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alinomi rondon</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forigi rondon</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi ĉion en nova fenestro</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>Toksante ĉe qTox</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi bezonas skribi mesaĝon en via peto</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
+        <translation>Via mesaĝo tro longas!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiu amiko jam estis aldonita</translation>
     </message>
     <message>
         <source>/me offers friendship.</source>
-        <translation type="unfinished"></translation>
+        <translation>/me ofertas amikecon.</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>/me ofertas amikecon, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Encrypted chat history</source>
@@ -671,29 +671,29 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>10Mb</source>
-        <translation type="unfinished"></translation>
+        <translation>10Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
-        <translation type="unfinished"></translation>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
-        <translation type="unfinished"></translation>
+        <translation>Restanta tempo:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiernomo</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atendante por sendi...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akceptu por ricevi ĉi tiun dosieron</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -717,11 +717,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi dosieron</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi dosierujon</translation>
     </message>
     <message>
         <source>Pause transfer</source>
@@ -742,7 +742,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Konservi dosieron</translation>
     </message>
 </context>
 <context>
@@ -754,11 +754,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Elŝutoj</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Alŝutoj</translation>
     </message>
 </context>
 <context>
@@ -766,32 +766,32 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Today</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hodiaŭ</translation>
     </message>
     <message>
         <source>Yesterday</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hieraŭ</translation>
     </message>
     <message>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pasintaj 7 tagoj</translation>
     </message>
     <message>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ĉi-monate</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Antaŭ 6 monatoj</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nekonate</translation>
     </message>
 </context>
 <context>
@@ -799,36 +799,36 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Amikiĝpeto</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
-        <translation type="unfinished"></translation>
+        <translation>Iu volas amikiĝi kun vi</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzanta identigilo:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Amikiĝpeta mesaĝo:</translation>
     </message>
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Akcepti</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Malakcepti</translation>
     </message>
 </context>
 <context>
     <name>FriendWidget</name>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi babilejon en nova fenestro</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -837,24 +837,24 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>Inviti al grupo</translation>
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Al nova grupo</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviti al la grupo &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Transloki al la rondo...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Al nova rondo</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
@@ -880,7 +880,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri detalojn</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -889,34 +889,34 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova mesaĝo</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>Enrete</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished"></translation>
+        <translation>Fore</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Okupite</translation>
     </message>
     <message>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Elreta</translation>
     </message>
 </context>
 <context>
     <name>GUI</name>
     <message>
         <source>Enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Entajpu vian pasvorton</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Malĉifri</translation>
     </message>
     <message>
         <source>You must enter a non-empty password:</source>
@@ -947,7 +947,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingvo:</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
@@ -1061,7 +1061,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne sendite</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1097,7 +1097,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Smileys</source>
-        <translation type="unfinished"></translation>
+        <translation>Miensimboloj</translation>
     </message>
     <message>
         <source>Send file(s)</source>
@@ -1120,15 +1120,15 @@ instead of closing itself.</source>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox-video</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Montri mesaĝojn</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaŝi mesaĝojn</translation>
     </message>
 </context>
 <context>
@@ -1136,7 +1136,7 @@ instead of closing itself.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Malplena&gt;</translation>
     </message>
 </context>
 <context>
@@ -1144,12 +1144,12 @@ instead of closing itself.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>1 uzanto en la babilejo</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 uzantoj en la babilejo</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1157,11 +1157,11 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Mute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Silentigi mikrofonon</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
-        <translation type="unfinished"></translation>
+        <translation>Malsilentigi mikrofonon</translation>
     </message>
     <message>
         <source>Mute call</source>
@@ -1180,7 +1180,7 @@ instead of closing itself.</source>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grupoj</translation>
     </message>
     <message>
         <source>Create new group</source>
@@ -1188,15 +1188,15 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grupo-invitoj</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Aliĝi</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Nei</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
@@ -1207,7 +1207,7 @@ instead of closing itself.</source>
     <name>GroupWidget</name>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Malfermi babilejon en nova fenestro</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -1215,39 +1215,39 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Set title...</source>
-        <translation type="unfinished"></translation>
+        <translation>Titoli...</translation>
     </message>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eliri grupon</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>1 uzanto en la babilejo</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 uzantoj en la babilejo</translation>
     </message>
 </context>
 <context>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Publika informado</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo:</translation>
     </message>
     <message>
         <source>Status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stato:</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox-identigilo</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1265,27 +1265,23 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi bildon</translation>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toxme register</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopii bildon</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzantnomo</translation>
     </message>
     <message>
         <source>Biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Biografio</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Servilo</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
@@ -1297,35 +1293,35 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Via pasvorto</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisdatigi</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alinomi profilon.</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alinomi</translation>
     </message>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forigi profilon.</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Forigi</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
@@ -1346,7 +1342,7 @@ Profile does not contain your history.</source>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elsaluti</translation>
     </message>
     <message>
         <source>Remove password</source>
@@ -1354,6 +1350,39 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change password</source>
+        <translation type="unfinished">Ŝanĝi pasvorton</translation>
+    </message>
+    <message>
+        <source>Register on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name for the ToxMe service.</source>
+        <comment>Tooltip for the `Username` ToxMe field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography text.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service to register on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If not set, ToxMe entries are publicly visible.</source>
+        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove your password and encryption from your profile.</source>
+        <comment>Tooltip for the `Remove password` button.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1372,15 +1401,15 @@ Profile does not contain your history.</source>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzantnomo:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasvorto:</translation>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfirmi:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
@@ -1388,7 +1417,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei profilon</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
@@ -1408,7 +1437,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova profilo</translation>
     </message>
     <message>
         <source>Load Profile</source>
@@ -1468,6 +1497,54 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Wrong password.</source>
+        <translation>Malĝusta pasvorto.</translation>
+    </message>
+    <message>
+        <source>Username input field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password confirmation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load automatically checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load selected profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile creation page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading existing profile page</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1475,23 +1552,23 @@ You may want to create one.</source>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Via nomo</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>Via stato</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Add friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni amikojn</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei grupbabilejon</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
@@ -1499,11 +1576,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi viajn agordojn</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermi</translation>
     </message>
 </context>
 <context>
@@ -1511,22 +1588,22 @@ You may want to create one.</source>
     <message>
         <source>Images (%1)</source>
         <comment>filetype filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bildoj (%1)</translation>
     </message>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vidi</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fenestro</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Minimumigi</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
@@ -1562,7 +1639,7 @@ You may want to create one.</source>
     <name>PrivacyForm</name>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfirmo</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
@@ -1570,7 +1647,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Privateco</translation>
     </message>
 </context>
 <context>
@@ -1616,14 +1693,14 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Privateco</translation>
     </message>
 </context>
 <context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nuna profilo: </translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1635,7 +1712,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
@@ -1653,12 +1730,12 @@ Please use another image.</source>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alinomi &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
-        <translation type="unfinished"></translation>
+        <translation>La profilo jam ekzistas</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -1730,35 +1807,35 @@ Please use another image.</source>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ŝanĝi pasvorton</translation>
     </message>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Agordi profilan pasvorton</translation>
     </message>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation type="unfinished"></translation>
+        <translation>Konservi</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Konservi QrKodon (*.png)</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Nenio forigebla</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
+        <translation>Via profilo ne havas pasvorton!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vere forigi pasvorton?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
@@ -1788,7 +1865,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Farite!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
@@ -1808,7 +1885,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĝisdatigi</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
@@ -1840,7 +1917,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La profilo jam ekzistas</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
@@ -1868,31 +1945,31 @@ Share it with your friends to communicate.</source>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuligi</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Jes</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dekstren</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Resizing</source>
-        <translation type="unfinished"></translation>
+        <translation>Regrandigi</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
@@ -1904,7 +1981,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>profile</source>
-        <translation type="unfinished"></translation>
+        <translation>profilo</translation>
     </message>
     <message>
         <source>An update is available, do you want to download it now?
@@ -1918,7 +1995,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Update</source>
         <comment>The title of a message box</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ĝisdatigi</translation>
     </message>
     <message>
         <source>Server doesn&apos;t support Toxme</source>
@@ -1946,15 +2023,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Password incorrect</source>
-        <translation type="unfinished"></translation>
+        <translation>Malĝusta pasvorto</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi ne rajtas uzi ĉi tiun nomon</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nomo ne trovita</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
@@ -1971,11 +2048,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jen %1! Toksu min, eble?</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
@@ -1984,32 +2061,32 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neniu</translation>
     </message>
     <message>
         <source>Desktop</source>
         <comment>Desktop as a camera input for screen sharing</comment>
-        <translation type="unfinished"></translation>
+        <translation>Labortablo</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlto</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Blua</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation type="unfinished"></translation>
+        <translation>Olivkolora</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruĝa</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Violkolora</translation>
     </message>
     <message>
         <source>Incoming call...</source>
@@ -2071,11 +2148,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfirmu:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasvorto:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
@@ -2094,7 +2171,7 @@ It will be installed when qTox restarts.</source>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Rondo #%1</translation>
     </message>
 </context>
 <context>
@@ -2102,29 +2179,29 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add a friend</source>
         <comment>Title of the window to add a friend through Tox URI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni amikon</translation>
     </message>
     <message>
         <source>Do you want to add %1 as a friend?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉu vi volas aldoni %1 kiel amiko?</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uzanta identigilo:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Amikiĝpeta mesaĝo:</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sendi</translation>
     </message>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nuligi</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
@@ -2135,30 +2212,30 @@ It will be installed when qTox restarts.</source>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Neniu</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzanta fasono</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Babilejo</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlta tiparo:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>rastrumeroj</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Grando: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
@@ -2186,7 +2263,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova mesaĝo</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -2195,7 +2272,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished"></translation>
+        <translation>Malfermi fenestron</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
@@ -2208,7 +2285,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktlisto</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
@@ -2247,7 +2324,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Miensimboloj</translation>
     </message>
     <message>
         <source>Use emoticons</source>
@@ -2264,7 +2341,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> rastrumeroj</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2272,7 +2349,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Stilo:</translation>
     </message>
     <message>
         <source>Theme color:</source>
@@ -2314,170 +2391,170 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Via nomo</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>Via stato</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblis amikiĝpeti</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>fore</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>okupite</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>elrete</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>enrete</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 nun estas %2</translation>
     </message>
     <message>
         <source>Add friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni amikon</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo-invitoj</translation>
     </message>
     <message>
         <source>File transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosieraj transigoj</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordoj</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Malplena&gt;</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 titolis ĝin %2</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupbabilejo #%1</translation>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesaĝo fiaskis dum sendado</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>Krei novan grupon...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldoni novan rondon...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nova amikiĝpeto</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nova grupo-invito</numerusform>
         </translation>
     </message>
     <message>
         <source>By Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Per nomo</translation>
     </message>
     <message>
         <source>By Activity</source>
-        <translation type="unfinished"></translation>
+        <translation>Per aktiveco</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Ĉio</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>Enrete</translation>
     </message>
     <message>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Elrete</translation>
     </message>
     <message>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Amikoj</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupoj</translation>
     </message>
     <message>
         <source>Search Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Serĉi kontaktojn</translation>
     </message>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Enretaj</translation>
     </message>
     <message>
         <source>Away</source>
         <comment>Button to set your status to &apos;Away&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fore</translation>
     </message>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Okupitaj</translation>
     </message>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elsaluti</translation>
     </message>
     <message>
         <source>Exit</source>
         <comment>Tray action menu to exit tox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eliri</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtri...</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosiero</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti</translation>
     </message>
     <message>
         <source>Contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktoj</translation>
     </message>
     <message>
         <source>Change Status</source>
@@ -2485,7 +2562,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Redakti profilon</translation>
     </message>
     <message>
         <source>Log out</source>
@@ -2506,7 +2583,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Montri</translation>
     </message>
 </context>
 </TS>
