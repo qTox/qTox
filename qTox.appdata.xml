@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyleft 2016 SkyzohKey <skyzohkey@framasphere.org> -->
+<component type="desktop">
+ <id>qTox.desktop</id>
+ <metadata_license>CC-BY-SA-3.0</metadata_license>
+ <project_license>GPL-3.0</project_license>
+ <name>qTox</name>
+ <summary>Powerful Tox chat client that follows the Tox design guidelines.</summary>
+ <description>
+  <p>
+    A New Kind of Instant Messaging
+  </p>
+  <p>
+    With the rise of government monitoring programs, qTox provides an easy to use
+    application that allows you to connect with friends and family without anyone
+    else listening in. While other big-name services require you to pay for
+    features, qTox is totally free, and comes without advertising.
+  </p>
+  <p>
+    Nowadays, every government seems to be interested in what we're saying online.
+    qTox is built on a "privacy goes first" agenda, and we make no compromises.
+    Your safety is our top priority, and there isn't anything in the world that
+    will change that. 
+  </p>
+  <p>Instant messaging, video conferencing, and more.</p>
+  <ul>
+    <li>Messages: At your fingertips. You're always in the loop with instant encrypted messaging.</li>
+    <li>Calls: Stay in touch. Make free and secure qTox to qTox calls.</li>
+    <li>Video: Seeing is believing. Catch up face to face with a secure video call.</li>
+  </ul>
+  <p>
+    qTox is a free and open source software, built by it's community for it's community.
+  </p>
+  <ul>
+    <li>
+      Security: qTox takes your privacy seriously. With leading-class encryption,
+      you can rest assured knowing that the only people reading your messages are
+      the ones you send them to.
+    </li>
+    <li>
+      Ease of Use: Unlike other secure messaging solutions, qTox does not require
+      you to be a computer programmer to use it. qTox comes out-of-the-box with an
+      easy-to-use interface that allows you to focus on your conversations.
+    </li>
+    <li>
+      Freedom: qTox is both free for you to use, and free for you to change.
+      You are completely free to both use and modify qTox. Furthermore,
+      qTox will never harass you with ads, or require you to pay for features.
+    </li>
+  </ul>
+ </description>
+ <screenshots>
+  <screenshot type="default">
+   <image>https://i.imgur.com/olb89CN.png</image>
+   <caption>A sample conversation taking place on qTox.</caption>
+  </screenshot>
+  <screenshot>
+   <image>https://i.imgur.com/tmX8z9s.png</image>
+   <caption>A sample groupchat discussion taking place on qTox.</caption>
+  </screenshot>
+ </screenshots>
+ <url type="homepage">https://qtox.github.io</url>
+ <update_contact>barrdetwix@gmail.com</update_contact>
+ <project_group>qTox</project_group>
+</component>
+
