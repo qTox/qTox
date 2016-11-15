@@ -26,7 +26,7 @@
 
 #include "genericsettings.h"
 #include "ui_avform.h"
-#include "src/video/videomode.h"
+#include "video/videomode.h"
 
 
 class CameraSource;

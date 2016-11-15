@@ -13,8 +13,8 @@
 */
 
 #include "friendlistlayout.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
+#include "friend.h"
+#include "friendlist.h"
 #include "friendwidget.h"
 #include "friendlistwidget.h"
 #include <cassert>

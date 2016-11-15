@@ -32,10 +32,10 @@
 #include "profilelocker.h"
 #include "settings.h"
 #include "historykeeper.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/widget/gui.h"
-#include "src/widget/widget.h"
+#include "core/core.h"
+#include "nexus.h"
+#include "widget/gui.h"
+#include "widget/widget.h"
 
 /**
  * @class Profile

@@ -18,7 +18,7 @@
 */
 
 #if defined(__APPLE__) && defined(__MACH__)
-#include "src/platform/autorun.h"
+#include "platform/autorun.h"
 #include <QSettings>
 #include <QDir>
 #include <QFile>

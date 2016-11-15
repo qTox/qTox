@@ -26,7 +26,7 @@
 #include <QMutex>
 #include <QNetworkReply>
 #include <memory>
-#include "src/core/toxid.h"
+#include "core/toxid.h"
 
 class QNetworkAccessManager;
 

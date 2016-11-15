@@ -17,23 +17,23 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/core.h"
-#include "src/nexus.h"
+#include "core/core.h"
+#include "nexus.h"
 #include "ui_profileform.h"
 #include "profileform.h"
-#include "src/widget/form/settingswidget.h"
-#include "src/widget/maskablepixmapwidget.h"
-#include "src/widget/form/setpassworddialog.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/widget.h"
-#include "src/widget/gui.h"
-#include "src/widget/style.h"
-#include "src/widget/translator.h"
-#include "src/persistence/profilelocker.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
-#include "src/net/toxme.h"
+#include "widget/form/settingswidget.h"
+#include "widget/maskablepixmapwidget.h"
+#include "widget/form/setpassworddialog.h"
+#include "widget/contentlayout.h"
+#include "widget/tool/croppinglabel.h"
+#include "widget/widget.h"
+#include "widget/gui.h"
+#include "widget/style.h"
+#include "widget/translator.h"
+#include "persistence/profilelocker.h"
+#include "persistence/profile.h"
+#include "persistence/settings.h"
+#include "net/toxme.h"
 #include <QLabel>
 #include <QLineEdit>
 #include <QGroupBox>

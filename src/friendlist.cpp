@@ -19,7 +19,7 @@
 
 #include "friend.h"
 #include "friendlist.h"
-#include "src/persistence/settings.h"
+#include "persistence/settings.h"
 #include <QMenu>
 #include <QDebug>
 #include <QHash>

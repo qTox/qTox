@@ -27,7 +27,7 @@
 #include <cstdint>
 #include <tox/toxencryptsave.h>
 
-#include "src/persistence/db/rawdatabase.h"
+#include "persistence/db/rawdatabase.h"
 
 class Profile;
 class HistoryKeeper;

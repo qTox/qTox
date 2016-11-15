@@ -21,7 +21,7 @@
 #define USERINTERFACEFORM_H
 
 #include "genericsettings.h"
-#include "src/widget/form/settingswidget.h"
+#include "widget/form/settingswidget.h"
 
 namespace Ui {
 class UserInterfaceSettings;

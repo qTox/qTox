@@ -22,7 +22,7 @@
 
 #include <QObject>
 #include <QString>
-#include "src/core/corestructs.h"
+#include "core/corestructs.h"
 #include "core/toxid.h"
 
 class FriendWidget;

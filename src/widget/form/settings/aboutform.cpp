@@ -24,9 +24,9 @@
 #include <QDebug>
 #include <tox/tox.h>
 
-#include "src/core/recursivesignalblocker.h"
-#include "src/net/autoupdate.h"
-#include "src/widget/translator.h"
+#include "core/recursivesignalblocker.h"
+#include "net/autoupdate.h"
+#include "widget/translator.h"
 
 /**
  * @class AboutForm

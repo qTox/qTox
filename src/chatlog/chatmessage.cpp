@@ -28,8 +28,8 @@
 
 #include <QDebug>
 
-#include "src/persistence/settings.h"
-#include "src/persistence/smileypack.h"
+#include "persistence/settings.h"
+#include "persistence/smileypack.h"
 
 #define NAME_COL_WIDTH 90.0
 #define TIME_COL_WIDTH 90.0

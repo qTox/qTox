@@ -19,9 +19,9 @@
 
 #include "settingsserializer.h"
 #include "serialize.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
-#include "src/core/core.h"
+#include "nexus.h"
+#include "persistence/profile.h"
+#include "core/core.h"
 #include <QSaveFile>
 #include <QFile>
 #include <QDebug>

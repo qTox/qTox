@@ -27,15 +27,15 @@
 #include <QClipboard>
 #include <QFileDialog>
 
-#include "src/core/core.h"
-#include "src/core/coreav.h"
-#include "src/core/recursivesignalblocker.h"
-#include "src/nexus.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/db/plaindb.h"
-#include "src/persistence/profile.h"
-#include "src/widget/gui.h"
-#include "src/widget/translator.h"
+#include "core/core.h"
+#include "core/coreav.h"
+#include "core/recursivesignalblocker.h"
+#include "nexus.h"
+#include "persistence/settings.h"
+#include "persistence/db/plaindb.h"
+#include "persistence/profile.h"
+#include "widget/gui.h"
+#include "widget/translator.h"
 
 /**
  * @class AdvancedForm

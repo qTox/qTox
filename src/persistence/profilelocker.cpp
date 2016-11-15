@@ -19,7 +19,7 @@
 
 
 #include "profilelocker.h"
-#include "src/persistence/settings.h"
+#include "persistence/settings.h"
 #include <QDir>
 #include <QDebug>
 

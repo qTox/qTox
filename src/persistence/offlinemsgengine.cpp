@@ -18,11 +18,11 @@
 */
 
 #include "offlinemsgengine.h"
-#include "src/friend.h"
-#include "src/persistence/settings.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
+#include "friend.h"
+#include "persistence/settings.h"
+#include "core/core.h"
+#include "nexus.h"
+#include "persistence/profile.h"
 #include <QMutexLocker>
 #include <QTimer>
 

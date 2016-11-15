@@ -18,9 +18,9 @@
 */
 
 #include "genericchatitemwidget.h"
-#include "src/widget/style.h"
-#include "src/persistence/settings.h"
-#include "src/widget/tool/croppinglabel.h"
+#include "widget/style.h"
+#include "persistence/settings.h"
+#include "widget/tool/croppinglabel.h"
 #include <QVariant>
 
 GenericChatItemWidget::GenericChatItemWidget(QWidget *parent)
