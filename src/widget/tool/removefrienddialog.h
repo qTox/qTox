@@ -4,7 +4,7 @@
 
 #include <QDialog>
 #include "ui_removefrienddialog.h"
-#include "src/friend.h"
+#include "friend.h"
 
 
 class RemoveFriendDialog : public QDialog

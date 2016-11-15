@@ -23,7 +23,7 @@
 #include <QWidget>
 #include <memory>
 #include <atomic>
-#include "src/video/videosource.h"
+#include "video/videosource.h"
 
 class VideoSurface : public QWidget
 {

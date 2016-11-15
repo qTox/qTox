@@ -24,8 +24,8 @@
 #include <QMessageBox>
 #include <QPushButton>
 
-#include "src/core/core.h"
-#include "src/persistence/settings.h"
+#include "core/core.h"
+#include "persistence/settings.h"
 
 /**
  * @class ProfileImporter

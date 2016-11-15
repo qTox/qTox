@@ -23,8 +23,8 @@
 #include <QWidget>
 #include <QDateTime>
 #include <QSet>
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/gui.h"
+#include "widget/tool/croppinglabel.h"
+#include "widget/gui.h"
 #include <QScrollArea>
 
 class QLabel;

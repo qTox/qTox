@@ -1,5 +1,5 @@
-#include "src/core/corestructs.h"
-#include "src/core/core.h"
+#include "core/corestructs.h"
+#include "core/core.h"
 #include <tox/tox.h>
 #include <QFile>
 #include <QRegularExpression>

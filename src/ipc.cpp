@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/ipc.h"
-#include "src/persistence/settings.h"
+#include "ipc.h"
+#include "persistence/settings.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>

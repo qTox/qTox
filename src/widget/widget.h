@@ -27,7 +27,7 @@
 #include <QFileInfo>
 
 #include "genericchatitemwidget.h"
-#include "src/core/corestructs.h"
+#include "core/corestructs.h"
 
 #define PIXELS_TO_ACT 7
 

@@ -16,22 +16,22 @@
 */
 
 #include "friendwidget.h"
-#include "src/group.h"
-#include "src/grouplist.h"
+#include "group.h"
+#include "grouplist.h"
 #include "groupwidget.h"
 #include "circlewidget.h"
 #include "friendlistwidget.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
-#include "src/core/core.h"
+#include "friendlist.h"
+#include "friend.h"
+#include "core/core.h"
 #include "form/chatform.h"
 #include "maskablepixmapwidget.h"
 #include "contentdialog.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/style.h"
-#include "src/persistence/settings.h"
-#include "src/widget/widget.h"
-#include "src/widget/about/aboutuser.h"
+#include "widget/tool/croppinglabel.h"
+#include "widget/style.h"
+#include "persistence/settings.h"
+#include "widget/widget.h"
+#include "widget/about/aboutuser.h"
 #include <QContextMenuEvent>
 #include <QMenu>
 #include <QDrag>

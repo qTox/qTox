@@ -1,9 +1,9 @@
-#include "src/audio/audio.h"
-#include "src/core/toxcall.h"
-#include "src/core/coreav.h"
-#include "src/persistence/settings.h"
-#include "src/video/camerasource.h"
-#include "src/video/corevideosource.h"
+#include "audio/audio.h"
+#include "core/toxcall.h"
+#include "core/coreav.h"
+#include "persistence/settings.h"
+#include "video/camerasource.h"
+#include "video/corevideosource.h"
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 

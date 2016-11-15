@@ -33,7 +33,7 @@ extern "C" {
     #include <glib-object.h>
     #include <gio/gio.h>
     #include <gdk-pixbuf/gdk-pixbuf.h>
-    #include "src/platform/statusnotifier/statusnotifier.h"
+    #include "platform/statusnotifier/statusnotifier.h"
 }
 #define signals public
 #endif

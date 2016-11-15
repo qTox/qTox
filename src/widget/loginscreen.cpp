@@ -20,14 +20,14 @@
 
 #include "loginscreen.h"
 #include "ui_loginscreen.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/profilelocker.h"
-#include "src/nexus.h"
-#include "src/persistence/settings.h"
-#include "src/widget/form/setpassworddialog.h"
-#include "src/widget/translator.h"
-#include "src/widget/style.h"
-#include "src/widget/tool/profileimporter.h"
+#include "persistence/profile.h"
+#include "persistence/profilelocker.h"
+#include "nexus.h"
+#include "persistence/settings.h"
+#include "widget/form/setpassworddialog.h"
+#include "widget/translator.h"
+#include "widget/style.h"
+#include "widget/tool/profileimporter.h"
 #include <QMessageBox>
 #include <QToolButton>
 #include <QDebug>

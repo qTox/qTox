@@ -20,7 +20,7 @@
 
 #include "gui.h"
 #include "widget.h"
-#include "src/nexus.h"
+#include "nexus.h"
 #include <assert.h>
 #include <QApplication>
 #include <QCoreApplication>

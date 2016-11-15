@@ -2,7 +2,7 @@
 #define ABOUTUSER_H
 
 #include <QDialog>
-#include "src/friend.h"
+#include "friend.h"
 
 
 namespace Ui {

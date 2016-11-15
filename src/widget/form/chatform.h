@@ -26,8 +26,8 @@
 #include <QElapsedTimer>
 
 #include "genericchatform.h"
-#include "src/core/corestructs.h"
-#include "src/widget/tool/screenshotgrabber.h"
+#include "core/corestructs.h"
+#include "widget/tool/screenshotgrabber.h"
 
 class Friend;
 class FileTransferInstance;

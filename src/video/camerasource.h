@@ -26,8 +26,8 @@
 #include <QVector>
 #include <QReadWriteLock>
 #include <atomic>
-#include "src/video/videosource.h"
-#include "src/video/videomode.h"
+#include "video/videosource.h"
+#include "video/videomode.h"
 
 class CameraDevice;
 struct AVCodecContext;

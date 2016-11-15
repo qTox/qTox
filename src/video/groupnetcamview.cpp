@@ -18,14 +18,14 @@
 */
 
 #include "groupnetcamview.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/video/videosurface.h"
-#include "src/persistence/profile.h"
-#include "src/audio/audio.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
+#include "widget/tool/croppinglabel.h"
+#include "video/videosurface.h"
+#include "persistence/profile.h"
+#include "audio/audio.h"
+#include "core/core.h"
+#include "nexus.h"
+#include "friendlist.h"
+#include "friend.h"
 #include <QBoxLayout>
 #include <QScrollArea>
 #include <QSplitter>

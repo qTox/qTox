@@ -18,10 +18,10 @@
 */
 
 #include "historykeeper.h"
-#include "src/persistence/settings.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
+#include "persistence/settings.h"
+#include "core/core.h"
+#include "nexus.h"
+#include "persistence/profile.h"
 
 #include <QSqlError>
 #include <QFile>
@@ -32,8 +32,8 @@
 #include <QDebug>
 #include <QTemporaryFile>
 
-#include "src/persistence/db/plaindb.h"
-#include "src/persistence/db/encrypteddb.h"
+#include "persistence/db/plaindb.h"
+#include "persistence/db/encrypteddb.h"
 
 /**
  * @class HistoryKeeper

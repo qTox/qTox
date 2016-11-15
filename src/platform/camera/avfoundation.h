@@ -22,7 +22,7 @@
 #include <QString>
 #include <QVector>
 #include <QPair>
-#include "src/video/videomode.h"
+#include "video/videomode.h"
 
 #ifndef Q_OS_MACX
 #error "This file is only meant to be compiled for Mac OS X targets"

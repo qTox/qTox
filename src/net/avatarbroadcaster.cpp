@@ -19,7 +19,7 @@
 
 
 #include "avatarbroadcaster.h"
-#include "src/core/core.h"
+#include "core/core.h"
 #include <QObject>
 #include <QDebug>
 

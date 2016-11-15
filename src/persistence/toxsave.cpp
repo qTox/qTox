@@ -18,10 +18,10 @@
 */
 
 #include "toxsave.h"
-#include "src/widget/gui.h"
-#include "src/core/core.h"
-#include "src/persistence/settings.h"
-#include "src/widget/tool/profileimporter.h"
+#include "widget/gui.h"
+#include "core/core.h"
+#include "persistence/settings.h"
+#include "widget/tool/profileimporter.h"
 #include <QCoreApplication>
 #include <QFileInfo>
 
