@@ -132,7 +132,9 @@ win32 {
         target.path = $$BINDIR
         desktop.path = $$DATADIR/applications
         desktop.files += qTox.desktop
-        INSTALLS += target desktop
+        appdata.path = $$DATADIR/appdata
+        appdata.files += res/qTox.appdata.xml
+        INSTALLS += target desktop appdata
 
         # Install application icons according to the XDG spec
         ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
