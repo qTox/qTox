@@ -32,11 +32,11 @@ public:
     ToolBoxGraphicsItem();
     ~ToolBoxGraphicsItem();
 
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
 
 protected:
-    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event) final override;
-    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) final override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) final;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) final;
 
 private:
 

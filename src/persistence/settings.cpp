@@ -178,7 +178,7 @@ void Settings::loadGlobal()
             enableIPv6 = s.value("enableIPv6", true).toBool();
             makeToxPortable = s.value("makeToxPortable", false).toBool();
             forceTCP = s.value("forceTCP", false).toBool();
-            proxyType = static_cast<ProxyType>(s.value("proxyType", 0).toInt());
+            proxyType = getEnum(s, "proxyType", ProxyType::ptNone);
             proxyAddr = s.value("proxyAddr", "").toString();
             proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
             showWindow = s.value("showWindow", true).toBool();
@@ -208,7 +208,7 @@ void Settings::loadGlobal()
                                           QStandardPaths::HomeLocation,
                                           QString(),
                                           QStandardPaths::LocateDirectory)).toString();
-        stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
+        stylePreference = getEnum(s, "stylePreference", StyleType::WITH_CHARS);
     }
     s.endGroup();
 
@@ -219,9 +219,6 @@ void Settings::loadGlobal()
         enableIPv6 = s.value("enableIPv6", enableIPv6).toBool();
         forceTCP = s.value("forceTCP", forceTCP).toBool();
 
-        int type = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
-        Db::syncType sType = static_cast<Db::syncType>(type);
-        setDbSyncType(sType);
     }
     s.endGroup();
 
@@ -240,7 +237,7 @@ void Settings::loadGlobal()
         showInFront = s.value("showInFront", showInFront).toBool();
         groupAlwaysNotify = s.value("groupAlwaysNotify", groupAlwaysNotify).toBool();
         groupchatPosition = s.value("groupchatPosition", groupchatPosition).toBool();
-        separateWindow = s.value("separateWindow", separateWindow).toBool();
+        contentArrangement = getEnum(s, "contentArrangement", Qt::LeftEdge);
         dontGroupWindows = s.value("dontGroupWindows", dontGroupWindows).toBool();
 
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
@@ -561,6 +558,7 @@ void Settings::saveGlobal()
         s.setValue("showInFront", showInFront);
         s.setValue("groupAlwaysNotify", groupAlwaysNotify);
         s.setValue("separateWindow", separateWindow);
+        s.setValue("contentArrangement", contentArrangement);
         s.setValue("dontGroupWindows", dontGroupWindows);
         s.setValue("groupchatPosition", groupchatPosition);
 
@@ -2167,6 +2165,21 @@ void Settings::setCompactLayout(bool value)
     {
         compactLayout = value;
         emit compactLayoutChanged(value);
+    }
+}
+
+Qt::Edge Settings::getContentArrangement() const
+{
+    QMutexLocker locker(&bigLock);
+    return contentArrangement;
+}
+
+void Settings::setContentArrangement(Qt::Edge value)
+{
+    if (value != contentArrangement)
+    {
+        contentArrangement = value;
+        emit contentArrangementChanged(contentArrangement);
     }
 }
 

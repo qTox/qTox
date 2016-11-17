@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -18,32 +18,43 @@
 */
 
 #include "group.h"
-#include "widget/groupwidget.h"
-#include "widget/form/groupchatform.h"
-#include "friendlist.h"
-#include "friend.h"
+
 #include "src/core/core.h"
-#include "widget/gui.h"
+#include "src/friend.h"
+#include "src/grouplist.h"
+#include "src/widget/form/groupchatform.h"
+#include "src/widget/gui.h"
+#include "src/widget/groupwidget.h"
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
-{
-    widget = new GroupWidget(groupId, Name);
-    chatForm = new GroupChatForm(this);
+GroupNotify Group::notifier;
 
-    //in groupchats, we only notify on messages containing your name <-- dumb
-    // sound notifications should be on all messages, but system popup notification
-    // on naming is appropriate
-    hasNewMessages = 0;
-    userWasMentioned = 0;
+Group* Group::get(int groupId)
+{
+    return GroupList::findGroup(groupId);
+}
+
+Group::List Group::getAll()
+{
+    return GroupList::getAllGroups();
+}
+
+void Group::remove(int groupId)
+{
+    GroupList::removeGroup(groupId);
+}
+
+Group::Group(Group::ID groupId, QString name, bool isAvGroupchat)
+    : groupId(groupId)
+    , title(name)
+    , nPeers{0}
+    , avGroupchat{isAvGroupchat}
+{
 }
 
 Group::~Group()
 {
-    delete chatForm;
-    widget->deleteLater();
 }
 
 void Group::updatePeer(int peerId, QString name)
@@ -53,33 +64,30 @@ void Group::updatePeer(int peerId, QString name)
     peers[peerId] = name;
     toxids[toxid] = name;
 
-    Friend *f = FriendList::findFriend(id);
-    if (f != nullptr && f->hasAlias())
+    Friend f = Friend::get(id);
+    if (f && f.hasAlias())
     {
-        peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
+        peers[peerId] = f.getDisplayedName();
+        toxids[toxid] = f.getDisplayedName();
     }
     else
     {
-        widget->onUserListChanged();
-        chatForm->onUserListChanged();
-        emit userListChanged(getGroupWidget());
+        emit notifier.userListChanged(*this, nPeers, 0);
     }
 }
 
 void Group::setName(const QString& name)
 {
-    chatForm->setName(name);
-
-    if (widget->isActive())
-        GUI::setWindowTitle(name);
-
-    emit titleChanged(this->getGroupWidget());
+    if (title != name)
+    {
+        title = name;
+        emit notifier.titleChanged(*this, title);
+    }
 }
 
 QString Group::getName() const
 {
-    return widget->getName();
+    return title;
 }
 
 void Group::regeneratePeerList()
@@ -98,19 +106,17 @@ void Group::regeneratePeerList()
         QString toxid = id.publicKey;
         toxids[toxid] = peers[i];
         if (toxids[toxid].isEmpty())
-            toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+            toxids[toxid] = QObject::tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
-        Friend *f = FriendList::findFriend(id);
-        if (f != nullptr && f->hasAlias())
+        Friend f = Friend::get(id);
+        if (f && f.hasAlias())
         {
-            peers[i] = f->getDisplayedName();
-            toxids[toxid] = f->getDisplayedName();
+            peers[i] = f.getDisplayedName();
+            toxids[toxid] = f.getDisplayedName();
         }
     }
 
-    widget->onUserListChanged();
-    chatForm->onUserListChanged();
-    emit userListChanged(getGroupWidget());
+    emit notifier.userListChanged(*this, nPeers, 0);
 }
 
 bool Group::isAvGroupchat() const
@@ -118,7 +124,7 @@ bool Group::isAvGroupchat() const
     return avGroupchat;
 }
 
-int Group::getGroupId() const
+Group::ID Group::getGroupId() const
 {
     return groupId;
 }
@@ -126,16 +132,6 @@ int Group::getGroupId() const
 int Group::getPeersCount() const
 {
     return nPeers;
-}
-
-GroupChatForm *Group::getChatForm()
-{
-    return chatForm;
-}
-
-GroupWidget *Group::getGroupWidget()
-{
-    return widget;
 }
 
 QStringList Group::getPeerList() const
@@ -148,26 +144,6 @@ bool Group::isSelfPeerNumber(int num) const
     return num == selfPeerNum;
 }
 
-void Group::setEventFlag(int f)
-{
-    hasNewMessages = f;
-}
-
-int Group::getEventFlag() const
-{
-    return hasNewMessages;
-}
-
-void Group::setMentionedFlag(int f)
-{
-    userWasMentioned = f;
-}
-
-int Group::getMentionedFlag() const
-{
-    return userWasMentioned;
-}
-
 QString Group::resolveToxId(const ToxId &id) const
 {
     QString key = id.publicKey;
@@ -177,4 +153,15 @@ QString Group::resolveToxId(const ToxId &id) const
         return *it;
 
     return QString();
+}
+
+/**
+ * @brief constructor
+ *
+ * Registers the @a Group class to the Qt meta object system.
+ */
+GroupNotify::GroupNotify()
+{
+    // TODO:
+    //qRegisterMetaType<Group>("Group");
 }

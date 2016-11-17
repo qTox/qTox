@@ -18,21 +18,22 @@
 */
 
 #include "groupnetcamview.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/video/videosurface.h"
-#include "src/persistence/profile.h"
-#include "src/audio/audio.h"
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "src/friendlist.h"
-#include "src/friend.h"
+
 #include <QBoxLayout>
+#include <QDebug>
+#include <QMap>
 #include <QScrollArea>
 #include <QSplitter>
 #include <QTimer>
-#include <QMap>
 
-#include <QDebug>
+#include "src/audio/audio.h"
+#include "src/core/core.h"
+#include "src/friend.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/croppinglabel.h"
+
 class LabeledVideo : public QFrame
 {
 public:
@@ -157,7 +158,8 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
         selfVideoSurface->setText(username);
         findActivePeer();
     });
-    connect(Core::getInstance(), &Core::friendAvatarChanged, this, &GroupNetCamView::friendAvatarChanged);
+    connect(Friend::notify(), &FriendNotify::avatarChanged,
+            this, &GroupNetCamView::friendAvatarChanged);
 
     selfVideoSurface->setText(Core::getInstance()->getUsername());
 }
@@ -256,16 +258,15 @@ void GroupNetCamView::findActivePeer()
     setActive(candidate);
 }
 
-void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
+void GroupNetCamView::friendAvatarChanged(Friend::ID friendId, const QPixmap &pixmap)
 {
-    Friend* f = FriendList::findFriend(FriendId);
+    Friend f = Friend::get(friendId);
 
     for (int i = 0; i < Core::getInstance()->getGroupNumberPeers(group); ++i)
     {
-        if (Core::getInstance()->getGroupPeerToxId(group, i) == f->getToxId())
+        if (Core::getInstance()->getGroupPeerToxId(group, i) == f.getToxId())
         {
             auto peerVideo = videoList.find(i);
-
             if (peerVideo != videoList.end())
             {
                 peerVideo.value().video->getVideoSurface()->setAvatar(pixmap);

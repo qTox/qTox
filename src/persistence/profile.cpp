@@ -292,7 +292,7 @@ void Profile::startCore()
     coreThread->start();
 }
 
-bool Profile::isNewProfile()
+bool Profile::isNewProfile() const
 {
     return newProfile;
 }
@@ -331,7 +331,7 @@ QByteArray Profile::loadToxSave()
     }
 
     data = saveFile.readAll();
-    if (tox_is_data_encrypted((uint8_t*)data.data()))
+    if (tox_is_data_encrypted(reinterpret_cast<const uint8_t*>(data.constData())))
     {
         if (password.isEmpty())
         {
@@ -788,7 +788,11 @@ void Profile::setPassword(const QString& newPassword)
         database->setPassword(newPassword);
     }
 
-    Nexus::getDesktopGUI()->reloadHistory();
+    for (auto f : Friend::getAll())
+    {
+        f.loadHistory();
+    }
+
     saveAvatar(avatar, core->getSelfId().publicKey);
 
     QVector<uint32_t> friendList = core->getFriendList();

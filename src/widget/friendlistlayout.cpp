@@ -13,11 +13,12 @@
 */
 
 #include "friendlistlayout.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "friendwidget.h"
-#include "friendlistwidget.h"
+
 #include <cassert>
+
+#include "friendlistwidget.h"
+#include "friendwidget.h"
+#include "src/friend.h"
 
 FriendListLayout::FriendListLayout()
     : QVBoxLayout()
@@ -82,14 +83,16 @@ void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
         QWidget* getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);
-        listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+        Friend f = friendWidget->getFriend();
+        listWidget->moveWidget(friendWidget, f.getStatus(), false);
     }
     while (!friendOfflineLayout.getLayout()->isEmpty())
     {
         QWidget* getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);
-        listWidget->moveWidget(friendWidget, FriendList::findFriend(friendWidget->friendId)->getStatus(), true);
+        Friend f = friendWidget->getFriend();
+        listWidget->moveWidget(friendWidget, f.getStatus(), false);
     }
 }
 

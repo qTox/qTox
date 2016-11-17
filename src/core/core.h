@@ -32,6 +32,7 @@
 #include "coredefines.h"
 #include "toxid.h"
 
+class Friend;
 class Profile;
 template <typename T> class QList;
 class QTimer;
@@ -44,6 +45,10 @@ struct vpx_image;
 class Core : public QObject
 {
     Q_OBJECT
+
+    friend class Friend;
+    friend class FriendNotify;
+
 public:
     explicit Core(QThread* coreThread, Profile& profile);
     static Core* getInstance();
@@ -91,6 +96,20 @@ public:
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
+    int sendMessage(uint32_t friendId, const QString& message);
+   void sendGroupMessage(int groupId, const QString& message);
+   void sendGroupAction(int groupId, const QString& message);
+   void changeGroupTitle(int groupId, const QString& title);
+    int sendAction(uint32_t friendId, const QString& action);
+   void sendTyping(uint32_t friendId, bool typing);
+
+   void setStatus(Status status);
+   void setUsername(const QString& username);
+   void setStatusMessage(const QString& message);
+   void setAvatar(const QByteArray& data);
+
+   bool checkTox(const Tox* otherTox) const;
+
 public slots:
     void start();
     void reset();
@@ -106,18 +125,6 @@ public slots:
 
     void removeFriend(uint32_t friendId, bool fake = false);
     void removeGroup(int groupId, bool fake = false);
-
-    void setStatus(Status status);
-    void setUsername(const QString& username);
-    void setStatusMessage(const QString& message);
-    void setAvatar(const QByteArray& data);
-
-     int sendMessage(uint32_t friendId, const QString& message);
-    void sendGroupMessage(int groupId, const QString& message);
-    void sendGroupAction(int groupId, const QString& message);
-    void changeGroupTitle(int groupId, const QString& title);
-     int sendAction(uint32_t friendId, const QString& action);
-    void sendTyping(uint32_t friendId, bool typing);
 
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
     void cancelFileSend(uint32_t friendId, uint32_t fileNum);
@@ -138,16 +145,10 @@ signals:
 
     void friendAdded(uint32_t friendId, const QString& userId);
     void friendshipChanged(uint32_t friendId);
-
-    void friendStatusChanged(uint32_t friendId, Status status);
-    void friendStatusMessageChanged(uint32_t friendId, const QString& message);
-    void friendUsernameChanged(uint32_t friendId, const QString& username);
-    void friendTypingChanged(uint32_t friendId, bool isTyping);
-    void friendAvatarChanged(uint32_t friendId, const QPixmap& pic);
-    void friendAvatarRemoved(uint32_t friendId);
-
     void friendRemoved(uint32_t friendId);
+    void groupRemoved(int groupId);
 
+    void friendLoadChatHistory(uint32_t friendId);
     void friendLastSeenChanged(uint32_t friendId, const QDateTime& dateTime);
 
     void emptyGroupCreated(int groupnumber);
@@ -160,7 +161,7 @@ signals:
     void usernameSet(const QString& username);
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
-    void idSet(const QString& id);
+    void idSet(const ToxId& id);
     void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);
@@ -198,13 +199,8 @@ private:
                                 size_t cMessageSize, void* core);
     static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
                                 const uint8_t* cMessage, size_t cMessageSize, void* core);
-    static void onFriendNameChange(Tox* tox, uint32_t friendId, const uint8_t* cName,
-                                   size_t cNameSize, void* core);
-    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping, void* core);
     static void onStatusMessageChanged(Tox* tox, uint32_t friendId, const uint8_t* cMessage,
                                        size_t cMessageSize, void* core);
-    static void onUserStatusChanged(Tox* tox, uint32_t friendId, TOX_USER_STATUS userstatus, void* core);
-    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status, void* core);
     static void onGroupAction(Tox* tox, int groupnumber, int peernumber, const uint8_t * action,
                               uint16_t length, void* core);
     static void onGroupInvite(Tox *tox, int32_t friendId, uint8_t type, const uint8_t *data,
@@ -220,9 +216,6 @@ private:
 
     void checkEncryptedHistory();
     void makeTox(QByteArray savedata);
-    void loadFriends();
-
-    void checkLastOnline(uint32_t friendId);
 
     void deadifyTox();
 
@@ -234,7 +227,7 @@ private:
     CoreAV* av;
     QTimer *toxTimer;
     Profile& profile;
-    QMutex messageSendMutex;
+    mutable QMutex messageSendMutex;
     bool ready;
 
     static QThread *coreThread;

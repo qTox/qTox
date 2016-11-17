@@ -20,44 +20,54 @@
 #ifndef GROUPWIDGET_H
 #define GROUPWIDGET_H
 
-#include "genericchatroomwidget.h"
+#include "src/group.h"
+#include "src/widget/genericchatroomwidget.h"
+
+class FriendListWidget;
 
 class GroupWidget final : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    GroupWidget(int GroupId, QString Name);
+    explicit GroupWidget(Group* group, FriendListWidget* parent);
     ~GroupWidget();
-    void setAsInactiveChatroom() final override;
-    void setAsActiveChatroom() final override;
-    void updateStatusLight() final override;
-    bool chatFormIsSet(bool focus) const final override;
-    void setChatForm(ContentLayout* contentLayout) final override;
-    void resetEventFlags() final override;
-    QString getStatusString() const final override;
-    Group* getGroup() const final override;
+
+    Type type() const final;
+    void setAsActiveChatroom(bool activate) final;
+    void updateStatusLight() final;
+    bool chatFormIsSet(bool focus) const final;
+    void resetEventFlags() final;
+    QString getTitle() const final;
     void setName(const QString& name);
-    void onUserListChanged();
     void editName();
+
+    inline Group* getGroup() const
+    {
+        return g;
+    }
 
 signals:
     void groupWidgetClicked(GroupWidget* widget);
     void renameRequested(GroupWidget* widget, const QString& newName);
     void removeGroup(int groupId);
 
-protected:
-    void contextMenuEvent(QContextMenuEvent * event) final override;
-    void mousePressEvent(QMouseEvent* event) final override;
-    void mouseMoveEvent(QMouseEvent* event) final override;
-    void dragEnterEvent(QDragEnterEvent* ev) override;
-    void dragLeaveEvent(QDragLeaveEvent* ev) override;
-    void dropEvent(QDropEvent* ev) override;
+private slots:
+    void onUserListChanged(const Group& group, int peerCount, quint8 change);
+
+private:
+    void contextMenuEvent(QContextMenuEvent * event) final;
+    void mousePressEvent(QMouseEvent* event) final;
+    void mouseMoveEvent(QMouseEvent* event) final;
+    void dragEnterEvent(QDragEnterEvent* ev) final;
+    void dragLeaveEvent(QDragLeaveEvent* ev) final;
+    void dropEvent(QDropEvent* ev) final;
 
 private:
     void retranslateUi();
 
-public:
-    int groupId;
+private:
+    Group* g;
+    bool userWasMentioned;
 };
 
 #endif // GROUPWIDGET_H

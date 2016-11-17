@@ -20,60 +20,157 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
+#include <cassert>
+
 #include <QObject>
+#include <QPixmap>
 #include <QString>
+
+#include "src/chatlog/chatmessage.h"
 #include "src/core/corestructs.h"
-#include "core/toxid.h"
+#include "src/core/toxid.h"
+#include "src/core/cstring.h"
+#include "src/persistence/offlinemsgengine.h"
 
-class FriendWidget;
-class ChatForm;
+class FriendNotify;
+struct Tox;
 
-class Friend : public QObject
+class Friend final
 {
-    Q_OBJECT
+    friend class CoreFile;
+    friend class FriendNotify;
+
+    class Private;
+    using PrivatePtr = QExplicitlySharedDataPointer<Private>;
+
 public:
-    Friend(uint32_t FriendId, const ToxId &UserId);
-    Friend(const Friend& other)=delete;
+    using ID = uint32_t;
+    using FriendCache = QHash<ID, Private*>;
+    using List = QList<Friend>;
+    using IDList = QVector<ID>;
+
+public:
+    inline static const FriendNotify* notify()
+    {
+        return &notifier;
+    }
+
+    inline static QPixmap getDefaultAvatar(bool active = true)
+    {
+        return active ? QPixmap(QStringLiteral(":/img/contact_dark.svg"))
+                      : QPixmap(QStringLiteral(":/img/contact.svg"));
+    }
+
+    inline static QString statusToString(const Friend& f)
+    {
+        if (f)
+        {
+            switch (f.getStatus())
+            {
+            case Status::Online:
+                return QObject::tr("Online");
+            case Status::Away:
+                return QObject::tr("Away");
+            case Status::Busy:
+                return QObject::tr("Busy");
+            case Status::Offline:
+                return QObject::tr("Offline");
+            }
+        }
+
+        return QString();
+    }
+
+    inline static void toOneline(QString& str)
+    {
+        str.replace('\n', ' ');
+        str.remove('\r');
+    }
+
+    inline static Friend get(const ToxId& userId)
+    {
+        auto it = tox2id.find(userId.publicKey);
+        return it == tox2id.end() ? nullptr : get(*it);
+    }
+
+    static Friend get(ID friendId);
+    static Friend::List getAll();
+
+    static void deleteFromProfile(ID friendId);
+    static IDList idList();
+    static void initCallbacks();
+    static void initCache();
+
+private:
+    static void updateAvatar(ID friendId, const QPixmap& avatar);
+
+public:
+    Friend(Private* p = nullptr);
+    Friend(const Friend& other);
+    Friend(Friend&& other);
     ~Friend();
-    Friend& operator=(const Friend& other)=delete;
+
+    Friend& operator=(const Friend& other);
+    Friend& operator=(Friend&& other);
 
     void loadHistory();
+    void invalidate();
 
-    void setName(QString name);
-    void setAlias(QString name);
     QString getDisplayedName() const;
     bool hasAlias() const;
 
-    void setStatusMessage(QString message);
+    QPixmap getAvatar() const;
     QString getStatusMessage();
-
-    void setEventFlag(int f);
-    int getEventFlag() const;
-
-    const ToxId &getToxId() const;
-    uint32_t getFriendID() const;
-
-    void setStatus(Status s);
+    ToxId getToxId() const;
+    ID getFriendId() const;
     Status getStatus() const;
+    bool getTyping() const;
 
-    ChatForm *getChatForm();
+    const OfflineMsgEngine& getOfflineMsgEngine() const;
+    void registerReceipt(int rec, qint64 id, ChatMessage::Ptr msg);
+    void dischargeReceipt(int receipt);
 
-    void setFriendWidget(FriendWidget* widget);
-    FriendWidget *getFriendWidget();
-    const FriendWidget *getFriendWidget() const;
+    void clearOfflineReceipts();
+    void deliverOfflineMsgs();
 
-signals:
-    void displayedNameChanged(FriendWidget* widget, Status s, int hasNewEvents);
+    void setAlias(QString name);
+
+    inline operator bool() const
+    {
+        return data;
+    }
 
 private:
-    QString userAlias, userName, statusMessage;
-    ToxId userID;
-    uint32_t friendId;
-    int hasNewEvents;
-    Status friendStatus;
+    static FriendNotify notifier;
+    static FriendCache friendList;
+    static QHash<QString, ID> tox2id;
 
-    FriendWidget* widget;
-    ChatForm* chatForm;
+    PrivatePtr data;
+};
+
+class FriendNotify : public QObject
+{
+    Q_OBJECT
+
+    friend class Friend;
+
+public:
+    FriendNotify();
+
+signals:
+    void added(Friend f);
+    void removed(Friend::ID friendId);
+    void failedToRemove(Friend::ID friendId);
+    void nameChanged(Friend f, const QString& name);
+    void aliasChanged(Friend f, const QString& alias);
+    void avatarChanged(Friend f, const QPixmap& getAvatar);
+    void statusChanged(Friend f, Status status);
+    void statusMessageChanged(Friend f, const QString& message);
+    void typingChanged(Friend f, bool isTyping);
+    void lastOnlineChanged(Friend f, QDateTime lastOnline);
+
+    // TODO: remove loadHistory signal
+    void loadHistory(const Friend& f);
 };
 
 #endif // FRIEND_H

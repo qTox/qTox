@@ -19,17 +19,20 @@
 */
 
 #include "core.h"
-#include "src/nexus.h"
+
+#include "src/core/corefile.h"
 #include "src/core/cdata.h"
 #include "src/core/cstring.h"
 #include "src/core/coreav.h"
-#include "src/persistence/settings.h"
-#include "src/widget/gui.h"
-#include "src/persistence/profilelocker.h"
+#include "src/friend.h"
+#include "src/group.h"
+#include "src/nexus.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/persistence/profile.h"
-#include "corefile.h"
+#include "src/persistence/profilelocker.h"
+#include "src/persistence/settings.h"
 #include "src/video/camerasource.h"
+#include "src/widget/gui.h"
 
 #include <tox/tox.h>
 #include <tox/toxav.h>
@@ -268,33 +271,17 @@ void Core::start()
         return;
     }
 
-    // set GUI with user and statusmsg
-    QString name = getUsername();
-    if (!name.isEmpty())
-        emit usernameSet(name);
-
-    QString msg = getStatusMessage();
-    if (!msg.isEmpty())
-        emit statusMessageSet(msg);
-
-    QString id = getSelfId().toString();
-    if (!id.isEmpty())
-        emit idSet(id);
-
     // TODO: This is a backwards compatibility check,
     // once most people have been upgraded away from the old HistoryKeeper, remove this
     if (Nexus::getProfile()->isEncrypted())
         checkEncryptedHistory();
 
-    loadFriends();
+    // TODO: only load the ID's instead of building the whole cache
+    Friend::initCache();
+    Friend::initCallbacks();
 
     tox_callback_friend_request(tox, onFriendRequest, this);
     tox_callback_friend_message(tox, onFriendMessage, this);
-    tox_callback_friend_name(tox, onFriendNameChange, this);
-    tox_callback_friend_typing(tox, onFriendTypingChange, this);
-    tox_callback_friend_status_message(tox, onStatusMessageChanged, this);
-    tox_callback_friend_status(tox, onUserStatusChanged, this);
-    tox_callback_friend_connection_status(tox, onConnectionStatusChanged, this);
     tox_callback_friend_read_receipt(tox, onReadReceiptCallback, this);
     tox_callback_group_invite(tox, onGroupInvite, this);
     tox_callback_group_message(tox, onGroupMessage, this);
@@ -374,8 +361,9 @@ void Core::process()
         tolerance = 3*CORE_DISCONNECT_TOLERANCE;
     }
 
-    unsigned sleeptime = qMin(tox_iteration_interval(tox), CoreFile::corefileIterationInterval());
-    toxTimer->start(sleeptime);
+    uint32_t sleeptime = qMin(tox_iteration_interval(tox),
+                              CoreFile::corefileIterationInterval());
+    toxTimer->start(static_cast<int>(sleeptime));
 }
 
 bool Core::checkConnection()
@@ -454,54 +442,6 @@ void Core::onFriendMessage(Tox*/* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE typ
 {
     bool isAction = (type == TOX_MESSAGE_TYPE_ACTION);
     emit static_cast<Core*>(core)->friendMessageReceived(friendId,CString::toString(cMessage, cMessageSize), isAction);
-}
-
-void Core::onFriendNameChange(Tox*/* tox*/, uint32_t friendId,
-                              const uint8_t* cName, size_t cNameSize, void* core)
-{
-    emit static_cast<Core*>(core)->friendUsernameChanged(friendId, CString::toString(cName, cNameSize));
-}
-
-void Core::onFriendTypingChange(Tox*/* tox*/, uint32_t friendId, bool isTyping, void *core)
-{
-    emit static_cast<Core*>(core)->friendTypingChanged(friendId, isTyping ? true : false);
-}
-
-void Core::onStatusMessageChanged(Tox*/* tox*/, uint32_t friendId, const uint8_t* cMessage,
-                                  size_t cMessageSize, void* core)
-{
-    emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, CString::toString(cMessage, cMessageSize));
-}
-
-void Core::onUserStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_USER_STATUS userstatus, void* core)
-{
-    Status status;
-    switch (userstatus)
-    {
-        case TOX_USER_STATUS_NONE:
-            status = Status::Online;
-            break;
-        case TOX_USER_STATUS_AWAY:
-            status = Status::Away;
-            break;
-        case TOX_USER_STATUS_BUSY:
-            status = Status::Busy;
-            break;
-        default:
-            status = Status::Online;
-            break;
-    }
-
-    emit static_cast<Core*>(core)->friendStatusChanged(friendId, status);
-}
-
-void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNECTION status, void* core)
-{
-    Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
-    emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
-    if (friendStatus == Status::Offline)
-        static_cast<Core*>(core)->checkLastOnline(friendId);
-    CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, friendStatus != Status::Offline);
 }
 
 void Core::onGroupAction(Tox*, int groupnumber, int peernumber, const uint8_t *action, uint16_t length, void* _core)
@@ -720,17 +660,8 @@ void Core::acceptFileRecvRequest(uint32_t friendId, uint32_t fileNum, QString pa
 
 void Core::removeFriend(uint32_t friendId, bool fake)
 {
-    if (!isReady() || fake)
-        return;
-
-    if (!tox_friend_delete(tox, friendId, nullptr))
-    {
-        emit failedToRemoveFriend(friendId);
-        return;
-    }
-
-    profile.saveToxSave();
-    emit friendRemoved(friendId);
+    if (!fake)
+        Friend::deleteFromProfile(friendId);
 }
 
 void Core::removeGroup(int groupId, bool fake)
@@ -738,8 +669,9 @@ void Core::removeGroup(int groupId, bool fake)
     if (!isReady() || fake)
         return;
 
-    tox_del_groupchat(tox, groupId);
     av->leaveGroupCall(groupId);
+    tox_del_groupchat(tox, groupId);
+    emit groupRemoved(groupId);
 }
 
 /**
@@ -750,10 +682,10 @@ QString Core::getUsername() const
     QString sname;
     if (!tox)
         return sname;
-    int size = tox_self_get_name_size(tox);
+    size_t size = tox_self_get_name_size(tox);
     uint8_t* name = new uint8_t[size];
     tox_self_get_name(tox, name);
-    sname = CString::toString(name, size);
+    sname = CString::toString(name, static_cast<uint16_t>(size));
     delete[] name;
     return sname;
 }
@@ -792,6 +724,11 @@ void Core::setAvatar(const QByteArray& data)
 
     AvatarBroadcaster::setAvatar(data);
     AvatarBroadcaster::enableAutoBroadcast();
+}
+
+bool Core::checkTox(const Tox* otherTox) const
+{
+    return otherTox && otherTox == this->tox;
 }
 
 /**
@@ -860,6 +797,7 @@ void Core::setStatusMessage(const QString& message)
 
     if (ready)
         profile.saveToxSave();
+
     emit statusMessageSet(message);
 }
 
@@ -877,9 +815,8 @@ void Core::setStatus(Status status)
         case Status::Busy:
             userstatus = TOX_USER_STATUS_BUSY;
             break;
-        default:
+        case Status::Offline:
             return;
-            break;
     }
 
     tox_self_set_status(tox, userstatus);
@@ -914,55 +851,6 @@ QByteArray Core::getToxSaveData()
     data.resize(fileSize);
     tox_get_savedata(tox, (uint8_t*)data.data());
     return data;
-}
-
-void Core::loadFriends()
-{
-    const uint32_t friendCount = tox_self_get_friend_list_size(tox);
-    if (friendCount > 0)
-    {
-        // assuming there are not that many friends to fill up the whole stack
-        uint32_t *ids = new uint32_t[friendCount];
-        tox_self_get_friend_list(tox, ids);
-        uint8_t clientId[TOX_PUBLIC_KEY_SIZE];
-        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
-        {
-            if (tox_friend_get_public_key(tox, ids[i], clientId, nullptr))
-            {
-                emit friendAdded(ids[i], CUserId::toString(clientId));
-
-                const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
-                if (nameSize && nameSize != SIZE_MAX)
-                {
-                    uint8_t *name = new uint8_t[nameSize];
-                    if (tox_friend_get_name(tox, ids[i], name, nullptr))
-                        emit friendUsernameChanged(ids[i], CString::toString(name, nameSize));
-                    delete[] name;
-                }
-
-                const size_t statusMessageSize = tox_friend_get_status_message_size(tox, ids[i], nullptr);
-                if (statusMessageSize != SIZE_MAX)
-                {
-                    uint8_t *statusMessage = new uint8_t[statusMessageSize];
-                    if (tox_friend_get_status_message(tox, ids[i], statusMessage, nullptr))
-                    {
-                        emit friendStatusMessageChanged(ids[i], CString::toString(statusMessage, statusMessageSize));
-                    }
-                    delete[] statusMessage;
-                }
-
-                checkLastOnline(ids[i]);
-            }
-
-        }
-        delete[] ids;
-    }
-}
-
-void Core::checkLastOnline(uint32_t friendId) {
-    const uint64_t lastOnline = tox_friend_get_last_online(tox, friendId, nullptr);
-    if (lastOnline != std::numeric_limits<uint64_t>::max())
-        emit friendLastSeenChanged(friendId, QDateTime::fromTime_t(lastOnline));
 }
 
 /**
@@ -1263,15 +1151,12 @@ QString Core::getPeerName(const ToxId& id) const
     if (nameSize == SIZE_MAX)
         return name;
 
-    uint8_t* cname = new uint8_t[nameSize<TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
-    if (!tox_friend_get_name(tox, friendId, cname, nullptr))
-    {
+    uint8_t* cname = new uint8_t[qMin<size_t>(nameSize, TOX_MAX_NAME_LENGTH)];
+    if (tox_friend_get_name(tox, friendId, cname, nullptr))
+        name = CString::toString(cname, nameSize);
+    else
         qWarning() << "getPeerName: Can't get name of friend "+QString().setNum(friendId);
-        delete[] cname;
-        return name;
-    }
 
-    name = CString::toString(cname, nameSize);
     delete[] cname;
     return name;
 }
@@ -1290,7 +1175,7 @@ void Core::setNospam(uint32_t nospam)
     std::reverse(nspm, nspm + 4);
     tox_self_set_nospam(tox, nospam);
 
-    emit idSet(getSelfId().toString());
+    emit idSet(getSelfId());
 }
 
 /**

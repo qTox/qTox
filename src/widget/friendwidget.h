@@ -18,8 +18,10 @@
 #ifndef FRIENDWIDGET_H
 #define FRIENDWIDGET_H
 
-#include "genericchatroomwidget.h"
+#include "src/friend.h"
+#include "src/widget/genericchatroomwidget.h"
 
+class FriendListWidget;
 class QPixmap;
 class MaskablePixmapWidget;
 
@@ -27,35 +29,41 @@ class FriendWidget : public GenericChatroomWidget
 {
     Q_OBJECT
 public:
-    FriendWidget(int FriendId, QString id);
-    virtual void contextMenuEvent(QContextMenuEvent * event) override;
-    virtual void setAsActiveChatroom() override;
-    virtual void setAsInactiveChatroom() override;
-    virtual void updateStatusLight() override;
-    virtual bool chatFormIsSet(bool focus) const override;
-    virtual void setChatForm(ContentLayout* contentLayout) override;
-    virtual void resetEventFlags() override;
-    virtual QString getStatusString() const override;
-    virtual Friend* getFriend() const override;
+    FriendWidget(const Friend& _f, FriendListWidget* parent);
+
+    Type type() const override final;
+    void contextMenuEvent(QContextMenuEvent * event) override final;
+    void setAsActiveChatroom(bool activate) override final;
+    void updateStatusLight() override final;
+    bool chatFormIsSet(bool focus) const override final;
+    void resetEventFlags() override final;
+    QString getTitle() const override final;
+
     void search(const QString &searchString, bool hide = false);
+
+    void updateAvatar(Friend::ID FriendId, const QPixmap& pic);
+
+    inline const Friend& getFriend() const
+    {
+        return f;
+    }
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
-    void removeFriend(int friendId);
-    void copyFriendIdToClipboard(int friendId);
+    void copyFriendIdToClipboard(uint32_t friendId);
+    void contextMenuCalled(QContextMenuEvent * event);
 
 public slots:
-    void onAvatarChange(int FriendId, const QPixmap& pic);
-    void onAvatarRemoved(int FriendId);
     void setAlias(const QString& alias);
+    void onContextMenuCalled(QContextMenuEvent * event);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent* ev) override;
-    virtual void mouseMoveEvent(QMouseEvent* ev) override;
+    void mousePressEvent(QMouseEvent* ev) override;
+    void mouseMoveEvent(QMouseEvent* ev) override;
     void setFriendAlias();
 
-public:
-    int friendId;
+private:
+    Friend f;
     bool isDefaultAvatar;
     bool historyLoaded;
 };

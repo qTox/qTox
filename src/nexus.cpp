@@ -192,24 +192,14 @@ void Nexus::showMainGUI()
     connect(core, &Core::usernameSet,                widget, &Widget::setUsername);
     connect(core, &Core::statusMessageSet,           widget, &Widget::setStatusMessage);
     connect(core, &Core::selfAvatarChanged,          widget, &Widget::onSelfAvatarLoaded);
-    connect(core, &Core::friendAdded,                widget, &Widget::addFriend);
     connect(core, &Core::friendshipChanged,          widget, &Widget::onFriendshipChanged);
     connect(core, &Core::failedToAddFriend,          widget, &Widget::addFriendFailed);
-    connect(core, &Core::friendUsernameChanged,      widget, &Widget::onFriendUsernameChanged);
-    connect(core, &Core::friendStatusChanged,        widget, &Widget::onFriendStatusChanged);
-    connect(core, &Core::friendStatusMessageChanged, widget, &Widget::onFriendStatusMessageChanged);
     connect(core, &Core::friendRequestReceived,      widget, &Widget::onFriendRequestReceived);
     connect(core, &Core::friendMessageReceived,      widget, &Widget::onFriendMessageReceived);
-    connect(core, &Core::receiptRecieved,            widget, &Widget::onReceiptRecieved);
     connect(core, &Core::groupInviteReceived,        widget, &Widget::onGroupInviteReceived);
     connect(core, &Core::groupMessageReceived,       widget, &Widget::onGroupMessageReceived);
     connect(core, &Core::groupNamelistChanged,       widget, &Widget::onGroupNamelistChanged);
-    connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
-    connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
     connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
-    connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
 
     connect(widget, &Widget::statusSet,             core, &Core::setStatus);
     connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);

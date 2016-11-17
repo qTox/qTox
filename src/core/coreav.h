@@ -49,9 +49,10 @@ public:
     const ToxAV* getToxAv() const;
 
     bool anyActiveCalls() const;
-    bool isCallActive(const Friend* f) const;
+    bool isCallActive(const Friend& f) const;
     bool isCallActive(const Group* g) const;
-    bool isCallVideoEnabled(const Friend* f) const;
+    bool isCallVideoEnabled(const Friend& f) const;
+    bool isCallVideoEnabled(const Group* f) const;
     bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
     bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
@@ -62,16 +63,16 @@ public:
 
     void joinGroupCall(int groupNum);
     void leaveGroupCall(int groupNum);
-    void muteCallInput(const Group* g, bool mute);
-    void muteCallOutput(const Group* g, bool mute);
-    bool isGroupCallInputMuted(const Group* g) const;
-    bool isGroupCallOutputMuted(const Group* g) const;
+    void toggleMuteCallInput(const Group* g);
+    void toggleMuteCallOutput(const Group* g);
+    bool isCallInputMuted(const Group* g) const;
+    bool isCallOutputMuted(const Group* g) const;
     bool isGroupAvEnabled(int groupNum) const;
 
-    bool isCallInputMuted(const Friend* f) const;
-    bool isCallOutputMuted(const Friend* f) const;
-    void toggleMuteCallInput(const Friend* f);
-    void toggleMuteCallOutput(const Friend* f);
+    bool isCallInputMuted(const Friend& f) const;
+    bool isCallOutputMuted(const Friend& f) const;
+    void toggleMuteCallInput(const Friend& f);
+    void toggleMuteCallOutput(const Friend& f);
 
     static void groupCallCallback(void* tox, int group, int peer,
                                   const int16_t* data, unsigned samples,
@@ -79,10 +80,10 @@ public:
                                   void* core);
 
 public slots:
-    bool startCall(uint32_t friendNum, bool video=false);
-    bool answerCall(uint32_t friendNum);
-    bool cancelCall(uint32_t friendNum);
-    void timeoutCall(uint32_t friendNum);
+    bool startCall(uint32_t friendId, bool video=false);
+    bool answerCall(uint32_t friendId);
+    bool cancelCall(uint32_t friendId);
+    void timeoutCall(uint32_t friendId);
     void start();
     void stop();
 
@@ -90,6 +91,7 @@ signals:
     void avInvite(uint32_t friendId, bool video);
     void avStart(uint32_t friendId, bool video);
     void avEnd(uint32_t friendId);
+    void avGroupEnd(int groupId);
 
 private slots:
     static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);

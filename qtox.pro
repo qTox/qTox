@@ -254,7 +254,6 @@ RESOURCES += res.qrc
 
 HEADERS  += \
     src/friend.h \
-    src/friendlist.h \
     src/group.h \
     src/grouplist.h \
     src/ipc.h \
@@ -313,6 +312,7 @@ HEADERS  += \
     src/video/videomode.h \
     src/video/genericnetcamview.h \
     src/video/groupnetcamview.h \
+    src/widget/contentwidget.h \
     src/widget/emoticonswidget.h \
     src/widget/style.h \
     src/widget/tool/croppinglabel.h \
@@ -376,7 +376,6 @@ HEADERS  += \
 SOURCES += \
     src/ipc.cpp \
     src/friend.cpp \
-    src/friendlist.cpp \
     src/group.cpp \
     src/grouplist.cpp \
     src/main.cpp \
@@ -434,6 +433,7 @@ SOURCES += \
     src/video/netcamview.cpp \
     src/video/videosurface.cpp \
     src/video/videomode.cpp \
+    src/widget/contentwidget.cpp \
     src/widget/form/addfriendform.cpp \
     src/widget/form/settingswidget.cpp \
     src/widget/form/settings/generalform.cpp \
