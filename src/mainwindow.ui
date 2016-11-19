@@ -858,6 +858,12 @@ QSplitter:handle{
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
+                 <property name="accessibleName">
+                  <string>Open profile</string>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string>Open profile page when clicked</string>
+                 </property>
                  <property name="text">
                   <string>Your name</string>
                  </property>
@@ -943,6 +949,12 @@ QSplitter:handle{
                    <pointsize>8</pointsize>
                   </font>
                  </property>
+                 <property name="accessibleName">
+                  <string>Status message input</string>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string>Set your status message that will be shown to others</string>
+                 </property>
                  <property name="text">
                   <string>Your status</string>
                  </property>
@@ -985,6 +997,12 @@ QSplitter:handle{
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="accessibleName">
+                <string>Status</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Set availability status</string>
                </property>
                <property name="text">
                 <string/>
@@ -1033,6 +1051,12 @@ QSplitter:handle{
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="accessibleName">
+                <string>Contact search</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Contact search input for known friends</string>
+               </property>
                <property name="clearButtonEnabled">
                 <bool>true</bool>
                </property>
@@ -1045,6 +1069,12 @@ QSplitter:handle{
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="accessibleName">
+                <string>Sorting and visibility</string>
+               </property>
+               <property name="accessibleDescription">
+                <string>Set friends sorting and visibility</string>
                </property>
                <property name="text">
                 <string>...</string>
@@ -1094,7 +1124,7 @@ QSplitter:handle{
              <x>0</x>
              <y>0</y>
              <width>775</width>
-             <height>279</height>
+             <height>285</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -1151,6 +1181,12 @@ QSplitter:handle{
              <property name="toolTip">
               <string>Add friends</string>
              </property>
+             <property name="accessibleName">
+              <string>Add friends</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Open Add friends page</string>
+             </property>
              <property name="autoFillBackground">
               <bool>false</bool>
              </property>
@@ -1195,6 +1231,12 @@ QSplitter:handle{
              <property name="toolTip">
               <string>Create a group chat</string>
              </property>
+             <property name="accessibleName">
+              <string>Groupchat</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Open groupchat management page</string>
+             </property>
              <property name="autoFillBackground">
               <bool>false</bool>
              </property>
@@ -1236,6 +1278,12 @@ QSplitter:handle{
              <property name="toolTip">
               <string>View completed file transfers</string>
              </property>
+             <property name="accessibleName">
+              <string>File transfers history</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Open File transfers history</string>
+             </property>
              <property name="text">
               <string/>
              </property>
@@ -1273,6 +1321,12 @@ QSplitter:handle{
              </property>
              <property name="toolTip">
               <string>Change your settings</string>
+             </property>
+             <property name="accessibleName">
+              <string>Settings</string>
+             </property>
+             <property name="accessibleDescription">
+              <string>Open Settings</string>
              </property>
              <property name="text">
               <string/>

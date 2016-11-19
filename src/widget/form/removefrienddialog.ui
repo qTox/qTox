@@ -35,6 +35,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="removeHistory">
+     <property name="accessibleDescription">
+      <string>Remove all chat history with the friend if set</string>
+     </property>
      <property name="text">
       <string>Also remove chat history</string>
      </property>
