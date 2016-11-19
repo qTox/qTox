@@ -1341,10 +1341,6 @@ Profile does not contain your history.</source>
         <translation>Вилучити</translation>
     </message>
     <message>
-        <source>Toxme register</source>
-        <translation>Реєстрація Toxme</translation>
-    </message>
-    <message>
         <source>Username</source>
         <translation>Ім&apos;я користувача</translation>
     </message>
@@ -1371,6 +1367,39 @@ Profile does not contain your history.</source>
     <message>
         <source>Update</source>
         <translation>Оновити</translation>
+    </message>
+    <message>
+        <source>Register on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name for the ToxMe service.</source>
+        <comment>Tooltip for the `Username` ToxMe field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography text.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service to register on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If not set, ToxMe entries are publicly visible.</source>
+        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove your password and encryption from your profile.</source>
+        <comment>Tooltip for the `Remove password` button.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1494,6 +1523,54 @@ You may want to create one.</source>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>Профілі, захищені паролем, не можуть бути завантажені автоматично.</translation>
+    </message>
+    <message>
+        <source>Username input field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password confirmation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load automatically checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import profile</source>
+        <translation type="unfinished">Імпортувати профіль</translation>
+    </message>
+    <message>
+        <source>Load selected profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile creation page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading existing profile page</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
