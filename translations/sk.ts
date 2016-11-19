@@ -589,7 +589,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem napíšte vašu správu...</translation>
     </message>
 </context>
 <context>
@@ -918,7 +918,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
@@ -940,7 +940,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecné</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -952,7 +952,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Obecné nastavenia</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
@@ -1272,16 +1272,16 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše Tox ID (kliknutím zkopírujete)</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Premenovať profil.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
@@ -1291,7 +1291,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odhlásiť sa</translation>
     </message>
     <message>
         <source>Remove password</source>
@@ -1307,21 +1307,21 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť obrázok</translation>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať obrázok</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Premenovať</translation>
     </message>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vymazať Profil.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
@@ -1337,7 +1337,7 @@ Profile does not contain your history.</source>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1369,7 +1369,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaregistrovať na ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
@@ -1398,6 +1398,78 @@ Profile does not contain your history.</source>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">Premenovať profil.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">Vymazať Profil.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1571,7 +1643,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>Váš status</translation>
     </message>
     <message>
         <source>...</source>
@@ -1657,7 +1729,7 @@ You may want to create one.</source>
     <name>PrivacyForm</name>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Súkromie</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -1711,7 +1783,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"></translation>
+        <translation>Súkromie</translation>
     </message>
 </context>
 <context>
@@ -1727,7 +1799,7 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>Premenovať &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
@@ -1767,7 +1839,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa premenovať profil na &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1800,7 +1872,7 @@ Please use another image.</source>
     <message>
         <source>Really delete profile?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naozaj chcete odstrániť profil?</translation>
     </message>
     <message>
         <source>Nothing to remove</source>
@@ -1813,12 +1885,12 @@ Please use another image.</source>
     <message>
         <source>Really delete password?</source>
         <comment>deletion confirmation title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naozaj chcete odstrániť heslo?</translation>
     </message>
     <message>
         <source>Are you sure you want to delete your password?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naozaj chcete odstrániť svoje heslo?</translation>
     </message>
     <message>
         <source>Please enter a new password.</source>
@@ -1836,7 +1908,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Naozaj chcete odstrániť tento profil?</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1851,7 +1923,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nebolo možné odstrániť nasledovné súbory:</translation>
     </message>
     <message>
         <source>Please manually remove them.</source>
@@ -1861,7 +1933,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Súbory nie je možné odstrániť!</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -1903,7 +1975,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Set profile password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nastaviť heslo profilu</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
@@ -2234,7 +2306,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Používateľské rozhranie</translation>
     </message>
 </context>
 <context>
@@ -2435,7 +2507,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odhlásiť sa</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2482,7 +2554,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2501,7 +2573,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>online</source>
@@ -2527,7 +2599,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation>Váš status</translation>
     </message>
     <message>
         <source>Group invites</source>
@@ -2585,7 +2657,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Offline</translation>
     </message>
     <message>
         <source>Friends</source>
