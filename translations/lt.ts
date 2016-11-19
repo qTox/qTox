@@ -1335,10 +1335,6 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <translation>Ištrinti</translation>
     </message>
     <message>
-        <source>Toxme register</source>
-        <translation>Toxme registras</translation>
-    </message>
-    <message>
         <source>Username</source>
         <translation>Naudotojo vardas</translation>
     </message>
@@ -1365,6 +1361,39 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     <message>
         <source>Update</source>
         <translation>Atnaujinti</translation>
+    </message>
+    <message>
+        <source>Register on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name for the ToxMe service.</source>
+        <comment>Tooltip for the `Username` ToxMe field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography text.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional. Something about you. Or your cat.</source>
+        <comment>Tooltip for the Biography field.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service to register on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If not set, ToxMe entries are publicly visible.</source>
+        <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove your password and encryption from your profile.</source>
+        <comment>Tooltip for the `Remove password` button.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1512,54 @@ Galite sukurti naują.</translation>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
         <translation>Slaptažodžiu apsaugotų profilių automatiškai užkrauti negalima.</translation>
+    </message>
+    <message>
+        <source>Username input field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password confirmation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load automatically checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import profile</source>
+        <translation type="unfinished">Importuoti profilį</translation>
+    </message>
+    <message>
+        <source>Load selected profile button</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New profile creation page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading existing profile page</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
