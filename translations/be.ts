@@ -1373,35 +1373,107 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Рэгістрацыя ў ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Імя для сэрвіса ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Неабавязкова. Што-небудзь пра сябе альбо свойго ката.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Неабавязкова. Што-небудзь пра сябе альбо свойго ката.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Служба ToxMe для рэгістрацыі.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Калі не ўсталявана, то запісы ToxMe будуць даступны публічна.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
+        <translation>Выдаляе пароль і шыфраванне з вашага профілю.</translation>
+    </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">Перайменаваць профіль.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">Выдаліць профіль.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Экспартаваць профіль</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1524,51 +1596,51 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ўвода імя карыстальніка</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ўвода пароля. Вы можаце покінуць яго пустым або ўвядзіце не менш 6 сімвалаў</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле падцвяржэння пароля</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Кнопка стварэння новага профілю</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Спіс профіляў</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Спіс профіляў</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Увод пароля</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Пераключальнік аўтаматычнай загрузкі</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Імпарт профілю</translation>
+        <translation>Імпарт профілю</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Кнопка загрузкі выбранага профілю</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Старонка стварэння новага профілю</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Старонка загрузкі існуючага профілю</translation>
     </message>
 </context>
 <context>
