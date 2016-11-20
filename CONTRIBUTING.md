@@ -1,3 +1,12 @@
+Note that you don't need to know all of the `CONTRIBUTING.md` – it is there to
+help you with things as you go, and make things easier, not harder.
+
+Skim through it, and when you will be doing something that relevant section
+will apply to, just go back to it and read in more detail about what is the
+best course of action. You don't even need to memorize the section – after all,
+it still will be there next time you might need it. `:-)`
+
+
 # Filing an issue
 
 ### Must read
