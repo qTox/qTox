@@ -110,18 +110,30 @@ RawDatabase::RawDatabase(const QString& path, const QString& password, const QBy
     // avoid opening the same db twice
     close();
 
+    // create a backup before trying to upgrade to new salt
+    bool upgrade = true;
+    if(!QFile::copy(path, path + ".bak"))
+    {
+        qDebug() << "Couldn't create the backup of the database, won't upgrade";
+        upgrade = false;
+    }
+
     // fall back to the old salt
     currentHexKey = deriveKey(password);
     if(open(path, currentHexKey))
     {
-        // still using old salt, upgrade
-        if(setPassword(password))
+        // upgrade only if backup successful
+        if(upgrade)
         {
-            qDebug() << "Successfully upgraded to dynamic salt";
-        }
-        else
-        {
-            qWarning() << "Failed to set password with new salt";
+            // still using old salt, upgrade
+            if(setPassword(password))
+            {
+                qDebug() << "Successfully upgraded to dynamic salt";
+            }
+            else
+            {
+                qWarning() << "Failed to set password with new salt";
+            }
         }
     }
     else
