@@ -498,7 +498,8 @@ QString RawDatabase::deriveKey(const QString &password)
 
     static const uint8_t expandConstant[TOX_PASS_SALT_LENGTH+1] = "L'ignorance est le pire des maux";
     TOX_PASS_KEY key;
-    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()), static_cast<std::size_t>(passData.size()), expandConstant, &key, nullptr);
+    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()),
+                             static_cast<std::size_t>(passData.size()), expandConstant, &key, nullptr);
     return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
 }
 
@@ -526,7 +527,8 @@ QString RawDatabase::deriveKey(const QString& password, const QByteArray& salt)
     static_assert(TOX_PASS_KEY_LENGTH >= 32, "toxcore must provide 256bit or longer keys");
 
     TOX_PASS_KEY key;
-    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()), static_cast<std::size_t>(passData.size()),
+    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()),
+                             static_cast<std::size_t>(passData.size()),
                              reinterpret_cast<const uint8_t*>(salt.constData()), &key, nullptr);
     return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
 }
@@ -570,7 +572,8 @@ void RawDatabase::process()
         for (Query& query : trans.queries)
         {
             assert(query.statements.isEmpty());
-            // sqlite3_prepare_v2 only compiles one statement at a time in the query, we need to loop over them all
+            // sqlite3_prepare_v2 only compiles one statement at a time in the query,
+            // we need to loop over them all
             int curParam=0;
             const char* compileTail = query.query.data();
             do {
