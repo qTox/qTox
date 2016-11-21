@@ -1403,6 +1403,78 @@ Profile does not contain your history.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">Переименовать профиль.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">Удалить профиль.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Экспортировать профиль</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1555,7 +1627,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Импорт профиля</translation>
+        <translation>Импорт профиля</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
