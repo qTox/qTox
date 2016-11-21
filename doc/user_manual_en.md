@@ -225,6 +225,9 @@ In the friend's window you can customize some options for this friend specifical
   are currently typing.
 * __Keep chat history:__ If enabled, qTox will save your sent and received
   messages. Encrypt your profile, if you want to encrypt the chat history.
+  ***Note*** that disabling history disables `Faux offline messaging`. With
+  disabled history qTox doesn't store messages, so it can't try to re-send
+  them.
 
 #### NoSpam
 
