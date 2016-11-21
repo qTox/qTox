@@ -34,9 +34,10 @@
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/net/toxme.h"
+
+#include <QVBoxLayout>
 #include <QWindow>
 #include <QScrollArea>
 
@@ -45,15 +46,19 @@
  * @brief Cached username so we can retranslate the invite message
  */
 
-AddFriendForm::AddFriendForm()
+AddFriendForm::AddFriendForm(QWidget* parent)
+    : ContentWidget(parent)
+    , head(new QWidget(this))
+    , tabWidget(new QTabWidget(this))
 {
-    tabWidget = new QTabWidget();
-    main = new QWidget(tabWidget), head = new QWidget();
+    Settings& s = Settings::getInstance();
+
     QFont bold;
     bold.setBold(true);
     headLabel.setFont(bold);
     toxIdLabel.setTextFormat(Qt::RichText);
 
+    main = new QWidget(tabWidget);
     tabWidget->addTab(main, QString());
     QScrollArea* scrollArea = new QScrollArea(tabWidget);
     QWidget* requestWidget = new QWidget(tabWidget);
@@ -63,39 +68,43 @@ AddFriendForm::AddFriendForm()
     requestsLayout->addStretch(1);
     tabWidget->addTab(scrollArea, QString());
 
-    main->setLayout(&layout);
-    layout.addWidget(&toxIdLabel);
-    layout.addWidget(&toxId);
-    layout.addWidget(&messageLabel);
-    layout.addWidget(&message);
-    layout.addWidget(&sendButton);
+    QVBoxLayout* layout = new QVBoxLayout(main);
+    layout->addWidget(&toxIdLabel);
+    layout->addWidget(&toxId);
+    layout->addWidget(&messageLabel);
+    layout->addWidget(&message);
+    layout->addWidget(&sendButton);
 
-    head->setLayout(&headLayout);
-    headLayout.addWidget(&headLabel);
+    QVBoxLayout* headLayout = new QVBoxLayout(head);
+    headLayout->addWidget(&headLabel);
+
+    setIdFromClipboard();
+    toxId.setFocus();
 
     connect(&toxId, &QLineEdit::returnPressed, this, &AddFriendForm::onSendTriggered);
     connect(&toxId, &QLineEdit::textChanged, this, &AddFriendForm::onIdChanged);
     connect(tabWidget, &QTabWidget::currentChanged, this, &AddFriendForm::onCurrentChanged);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
+
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
-    int size = Settings::getInstance().getFriendRequestSize();
+    int size = s.getFriendRequestSize();
 
     for (int i = 0; i < size; ++i)
     {
-        Settings::Request request = Settings::getInstance().getFriendRequest(i);
+        Settings::Request request = s.getFriendRequest(i);
         addFriendRequestWidget(request.address, request.message);
     }
+
+    setupLayout(head, tabWidget);
 }
 
 AddFriendForm::~AddFriendForm()
 {
     Translator::unregister(this);
-    head->deleteLater();
-    tabWidget->deleteLater();
 }
 
 bool AddFriendForm::isShown() const
@@ -107,21 +116,6 @@ bool AddFriendForm::isShown() const
     }
 
     return false;
-}
-
-void AddFriendForm::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(tabWidget);
-    contentLayout->mainHead->layout()->addWidget(head);
-    tabWidget->show();
-    head->show();
-    setIdFromClipboard();
-    toxId.setFocus();
-
-    // Fix #3421
-    // Needed to update tab after opening window
-    int index = tabWidget->currentIndex();
-    onCurrentChanged(index);
 }
 
 QString AddFriendForm::getMessage() const

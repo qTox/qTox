@@ -44,7 +44,7 @@ public:
 
     void startCore();
     void restartCore();
-    bool isNewProfile();
+    bool isNewProfile() const;
     bool isEncrypted() const;
     bool checkPassword();
     QString getPassword() const;

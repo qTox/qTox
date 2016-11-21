@@ -26,6 +26,9 @@
 class ContentLayout : public QVBoxLayout
 {
 public:
+    static void createPalette(QWidget* widget);
+
+public:
     ContentLayout();
     explicit ContentLayout(QWidget* parent);
     ~ContentLayout();

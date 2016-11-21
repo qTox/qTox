@@ -45,8 +45,8 @@ protected:
 
 private slots:
     void showUpdateProgress();
-    virtual void hideEvent(QHideEvent*) final override;
-    virtual void showEvent(QShowEvent*) final override;
+    void hideEvent(QHideEvent*) final;
+    void showEvent(QShowEvent*) final;
 
 private:
     void retranslateUi();

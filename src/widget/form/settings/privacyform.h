@@ -43,7 +43,7 @@ private slots:
     void on_nospamLineEdit_editingFinished();
     void on_randomNosapamButton_clicked();
     void on_nospamLineEdit_textChanged();
-    virtual void showEvent(QShowEvent*) final override;
+    virtual void showEvent(QShowEvent*) final;
 
 private:
     void retranslateUi();

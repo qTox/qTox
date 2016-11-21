@@ -33,33 +33,42 @@ class GroupChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit GroupChatForm(Group* chatGroup);
+    explicit GroupChatForm(Group* chatGroup, QWidget* parent = nullptr);
     ~GroupChatForm();
 
-    void onUserListChanged();
-    void peerAudioPlaying(int peer);
-
-signals:
-    void groupTitleChanged(int groupnum, const QString& name);
 
 private slots:
+    void onUserListChanged(const Group& g, int numPeers, quint8 change);
+    void onGroupTitleChanged(int groupId, const QString& title,
+                             const QString& author);
+    void onPeerAudioPlaying(int groupId, int peer);
     void onSendTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onCallClicked();
+    void onCallButtonClicked();
+    void onMessageReceived(int groupId, int peerNo, const QString& message,
+                           bool isAction);
+    void onSendResult(int groupId, const QString& message, int result);
 
-protected:
-    virtual GenericNetCamView* createNetcam() final override;
-    virtual void keyPressEvent(QKeyEvent* ev) final override;
-    virtual void keyReleaseEvent(QKeyEvent* ev) final override;
-    // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
-    virtual void dropEvent(QDropEvent* ev) final override;
+private:
+    void updateCallButtons();
+    void updateMuteMicButton();
+    void updateMuteVolButton();
+
+    GenericNetCamView* createNetcam() final;
+    void keyPressEvent(QKeyEvent* ev) final;
+    void keyReleaseEvent(QKeyEvent* ev) final;
+    void dragEnterEvent(QDragEnterEvent* ev) final;
+    void dropEvent(QDropEvent* ev) final;
 
 private:
     void retranslateUi();
 
 private:
+    // TODO: flags are deprecated -> remove
+    bool audioInputFlag;
+    bool audioOutputFlag;
+
     Group* group;
     QList<QLabel*> peerLabels;
     QMap<int, QTimer*> peerAudioTimers;

@@ -170,34 +170,41 @@ bool CoreAV::anyActiveCalls() const
 
 /**
  * @brief Checks the call status for a Tox friend.
- * @param f the friend to check
- * @return true, if call is active for the friend, false otherwise
+ * @param f     the friend to check
+ * @return true, if call is active for the friend; false otherwise
  */
-bool CoreAV::isCallActive(const Friend* f) const
+bool CoreAV::isCallActive(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendID());
+    return f && calls.contains(f.getFriendId());
 }
 
 /**
  * @brief Checks the call status for a Tox group.
- * @param g the group to check
- * @return true, if the call is active for the group, false otherwise
+ * @param g     the group to check
+ * @return true, if the call is active for the group; false otherwise
  */
 bool CoreAV::isCallActive(const Group* g) const
 {
-    return g && groupCalls.contains(g->getGroupId())
+    return (g && groupCalls.contains(g->getGroupId()))
             ? !(groupCalls[g->getGroupId()].inactive)
             : false;
 }
 
-bool CoreAV::isCallVideoEnabled(const Friend* f) const
+bool CoreAV::isCallVideoEnabled(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].videoEnabled
+    return f && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].videoEnabled
             : false;
 }
 
-bool CoreAV::answerCall(uint32_t friendNum)
+bool CoreAV::isCallVideoEnabled(const Group* g) const
+{
+    // TODO: group video calls are not implemented yet
+    Q_UNUSED(g);
+    return false;
+}
+
+bool CoreAV::answerCall(uint32_t friendId)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
@@ -209,30 +216,31 @@ bool CoreAV::answerCall(uint32_t friendNum)
 
         bool ret;
         QMetaObject::invokeMethod(this, "answerCall", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret), Q_ARG(uint32_t, friendNum));
+                                  Q_RETURN_ARG(bool, ret),
+                                  Q_ARG(uint32_t, friendId));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
-    qDebug() << QString("answering call %1").arg(friendNum);
-    assert(calls.contains(friendNum));
+    qDebug() << QString("answering call %1").arg(friendId);
+    assert(calls.contains(friendId));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
+    if (toxav_answer(toxav, friendId, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
     {
-        calls[friendNum].inactive = false;
+        calls[friendId].inactive = false;
         return true;
     }
     else
     {
         qWarning() << "Failed to answer call with error"<<err;
-        toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
-        calls.remove(friendNum);
+        toxav_call_control(toxav, friendId, TOXAV_CALL_CONTROL_CANCEL, nullptr);
+        calls.remove(friendId);
         return false;
     }
 }
 
-bool CoreAV::startCall(uint32_t friendNum, bool video)
+bool CoreAV::startCall(uint32_t friendId, bool video)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
@@ -245,30 +253,30 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
         bool ret;
         QMetaObject::invokeMethod(this, "startCall", Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(uint32_t, friendNum),
+                                  Q_ARG(uint32_t, friendId),
                                   Q_ARG(bool, video));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
-    qDebug() << QString("Starting call with %1").arg(friendNum);
-    if (calls.contains(friendNum))
+    qDebug() << QString("Starting call with %1").arg(friendId);
+    if (calls.contains(friendId))
     {
-        qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendNum);
+        qWarning() << QString("Can't start call with %1, we're already in this call!").arg(friendId);
         return false;
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+    if (!toxav_call(toxav, friendId, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
         return false;
 
-    auto call = calls.insert({friendNum, video, *this});
+    auto call = calls.insert({friendId, video, *this});
     call->startTimeout();
     return true;
 }
 
-bool CoreAV::cancelCall(uint32_t friendNum)
+bool CoreAV::cancelCall(uint32_t friendId)
 {
     if (QThread::currentThread() != coreavThread.get())
     {
@@ -282,41 +290,41 @@ bool CoreAV::cancelCall(uint32_t friendNum)
         QMetaObject::invokeMethod(this, "cancelCall",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(uint32_t, friendNum));
+                                  Q_ARG(uint32_t, friendId));
 
         threadSwitchLock.clear(std::memory_order_release);
         return ret;
     }
 
-    qDebug() << QString("Cancelling call with %1").arg(friendNum);
-    if (!toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr))
+    qDebug() << QString("Cancelling call with %1").arg(friendId);
+    if (!toxav_call_control(toxav, friendId, TOXAV_CALL_CONTROL_CANCEL, nullptr))
     {
-        qWarning() << QString("Failed to cancel call with %1").arg(friendNum);
+        qWarning() << QString("Failed to cancel call with %1").arg(friendId);
         return false;
     }
 
-    calls.remove(friendNum);
-    emit avEnd(friendNum);
+    calls.remove(friendId);
+    emit avEnd(friendId);
     return true;
 }
 
-void CoreAV::timeoutCall(uint32_t friendNum)
+void CoreAV::timeoutCall(uint32_t friendId)
 {
     // Non-blocking switch to the CoreAV thread, we really don't want to be coming
     // blocking-queued from the UI thread while we emit blocking-queued to it
     if (QThread::currentThread() != coreavThread.get())
     {
         QMetaObject::invokeMethod(this, "timeoutCall", Qt::QueuedConnection,
-                                    Q_ARG(uint32_t, friendNum));
+                                    Q_ARG(uint32_t, friendId));
         return;
     }
 
-    if (!cancelCall(friendNum))
+    if (!cancelCall(friendId))
     {
-        qWarning() << QString("Failed to timeout call with %1").arg(friendNum);
+        qWarning() << QString("Failed to timeout call with %1").arg(friendId);
         return;
     }
-    qDebug() << "Call with friend"<<friendNum<<"timed out";
+    qDebug() << "Call with friend"<<friendId<<"timed out";
 }
 
 /**
@@ -416,26 +424,52 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
 /**
  * @brief Toggles the mute state of the call's input (microphone).
- * @param f The friend assigned to the call
+ * @param f     the friend assigned to the call
  */
-void CoreAV::toggleMuteCallInput(const Friend* f)
+void CoreAV::toggleMuteCallInput(const Friend& f)
 {
-    if (f && calls.contains(f->getFriendID()))
+    if (f && calls.contains(f.getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendID()];
+        ToxCall& call = calls[f.getFriendId()];
+        call.muteMic = !call.muteMic;
+    }
+}
+
+/**
+ * @brief Toggles the mute state of the call's input (microphone).
+ * @param g     the group assigned to the call
+ */
+void CoreAV::toggleMuteCallInput(const Group* g)
+{
+    if (g && groupCalls.contains(g->getGroupId()))
+    {
+        ToxCall& call = groupCalls[g->getGroupId()];
         call.muteMic = !call.muteMic;
     }
 }
 
 /**
  * @brief Toggles the mute state of the call's output (speaker).
- * @param f The friend assigned to the call
+ * @param f     the friend assigned to the call
  */
-void CoreAV::toggleMuteCallOutput(const Friend* f)
+void CoreAV::toggleMuteCallOutput(const Friend& f)
 {
-    if (f && calls.contains(f->getFriendID()))
+    if (f && calls.contains(f.getFriendId()))
     {
-        ToxCall& call = calls[f->getFriendID()];
+        ToxCall& call = calls[f.getFriendId()];
+        call.muteVol = !call.muteVol;
+    }
+}
+
+/**
+ * @brief Toggles the mute state of the call's output (speaker).
+ * @param g     the group assigned to the call
+ */
+void CoreAV::toggleMuteCallOutput(const Group* g)
+{
+    if (g && groupCalls.contains(g->getGroupId()))
+    {
+        ToxCall& call = groupCalls[g->getGroupId()];
         call.muteVol = !call.muteVol;
     }
 }
@@ -512,14 +546,11 @@ void CoreAV::joinGroupCall(int groupId)
 }
 
 /**
- * @brief Will not leave the group, just stop the call.
- * @note Call from the GUI thread.
- * @param groupId Id of group to leave
+ * @brief Ends an active group call.
+ * @param groupId   ID of group to leave
  */
 void CoreAV::leaveGroupCall(int groupId)
 {
-    qDebug() << QString("Leaving group call %1").arg(groupId);
-
     groupCalls.remove(groupId);
 }
 
@@ -540,33 +571,11 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t *pcm, size_t samples,
 }
 
 /**
- * @brief Mutes or unmutes the group call's input (microphone).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallInput(const Group* g, bool mute)
-{
-    if (g && groupCalls.contains(g->getGroupId()))
-        groupCalls[g->getGroupId()].muteMic = mute;
-}
-
-/**
- * @brief Mutes or unmutes the group call's output (speaker).
- * @param g The group
- * @param mute True to mute, false to unmute
- */
-void CoreAV::muteCallOutput(const Group* g, bool mute)
-{
-    if (g && groupCalls.contains(g->getGroupId()))
-        groupCalls[g->getGroupId()].muteVol = mute;
-}
-
-/**
  * @brief Returns the group calls input (microphone) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
  */
-bool CoreAV::isGroupCallInputMuted(const Group* g) const
+bool CoreAV::isCallInputMuted(const Group* g) const
 {
     return g && groupCalls.contains(g->getGroupId())
             ? groupCalls[g->getGroupId()].muteMic
@@ -575,10 +584,10 @@ bool CoreAV::isGroupCallInputMuted(const Group* g) const
 
 /**
  * @brief Returns the group calls output (speaker) state.
- * @param groupId The group id to check
- * @return true when muted, false otherwise
+ * @param groupId   the group id to check
+ * @return true when muted; false otherwise
  */
-bool CoreAV::isGroupCallOutputMuted(const Group* g) const
+bool CoreAV::isCallOutputMuted(const Group* g) const
 {
     return g && groupCalls.contains(g->getGroupId())
             ? groupCalls[g->getGroupId()].muteVol
@@ -597,25 +606,25 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
 
 /**
  * @brief Returns the calls input (microphone) mute state.
- * @param f The friend to check
- * @return true when muted, false otherwise
+ * @param f  the friend to check
+ * @return true when muted; false otherwise
  */
-bool CoreAV::isCallInputMuted(const Friend* f) const
+bool CoreAV::isCallInputMuted(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].muteMic
+    return f && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].muteMic
             : false;
 }
 
 /**
  * @brief Returns the calls output (speaker) mute state.
- * @param friendId The friend to check
- * @return true when muted, false otherwise
+ * @param friendId  the friend to check
+ * @return true when muted; false otherwise
  */
-bool CoreAV::isCallOutputMuted(const Friend* f) const
+bool CoreAV::isCallOutputMuted(const Friend& f) const
 {
-    return f && calls.contains(f->getFriendID())
-            ? calls[f->getFriendID()].muteVol
+    return f && calls.contains(f.getFriendId())
+            ? calls[f.getFriendId()].muteVol
             : false;
 }
 
@@ -671,7 +680,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         return;
     }
 
-    if (self->calls.contains(friendNum))
+    if (self->calls.contains(static_cast<int>(friendNum)))
     {
         /// Hanging up from a callback is supposed to be UB,
         /// but since currently the toxav callbacks are fired from the toxcore thread,
@@ -691,7 +700,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         state |= TOXAV_FRIEND_CALL_STATE_SENDING_V | TOXAV_FRIEND_CALL_STATE_ACCEPTING_V;
     callIt->state = static_cast<TOXAV_FRIEND_CALL_STATE>(state);
 
-    emit reinterpret_cast<CoreAV*>(self)->avInvite(friendNum, video);
+    emit self->avInvite(friendNum, video);
     self->threadSwitchLock.clear(std::memory_order_release);
 }
 

@@ -20,22 +20,24 @@
 #include "filesform.h"
 #include "src/widget/widget.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
+
 #include <QFileInfo>
+#include <QListWidget>
 #include <QWindow>
 
-FilesForm::FilesForm()
-    : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
+FilesForm::FilesForm(QWidget* parent)
+    : ContentWidget(parent)
+    , doneIcon(":/ui/fileTransferWidget/fileDone.svg")
+    , sent(new QListWidget(this))
+    , recvd(new QListWidget(this))
 {
-    head = new QWidget();
+    QWidget* head = new QWidget(this);
     QFont bold;
     bold.setBold(true);
     headLabel.setFont(bold);
-    head->setLayout(&headLayout);
-    headLayout.addWidget(&headLabel);
 
-    recvd = new QListWidget;
-    sent = new QListWidget;
+    QVBoxLayout* headLayout = new QVBoxLayout(head);
+    headLayout->addWidget(&headLabel);
 
     main.addTab(recvd, QString());
     main.addTab(sent, QString());
@@ -45,33 +47,13 @@ FilesForm::FilesForm()
 
     retranslateUi();
     Translator::registerHandler(std::bind(&FilesForm::retranslateUi, this), this);
+
+    setupLayout(head, &main);
 }
 
 FilesForm::~FilesForm()
 {
     Translator::unregister(this);
-    delete recvd;
-    delete sent;
-    head->deleteLater();
-}
-
-bool FilesForm::isShown() const
-{
-    if (main.isVisible())
-    {
-        head->window()->windowHandle()->alert(0);
-        return true;
-    }
-
-    return false;
-}
-
-void FilesForm::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(&main);
-    contentLayout->mainHead->layout()->addWidget(head);
-    main.show();
-    head->show();
 }
 
 void FilesForm::onFileDownloadComplete(const QString& path)

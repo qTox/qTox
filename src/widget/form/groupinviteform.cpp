@@ -20,6 +20,7 @@
 #include "groupinviteform.h"
 
 #include <tox/tox.h>
+
 #include <QDebug>
 #include <QSignalMapper>
 #include <QPushButton>
@@ -28,7 +29,9 @@
 #include <QDateTime>
 #include <QLabel>
 #include <QWindow>
+
 #include "ui_mainwindow.h"
+#include "src/friend.h"
 #include "src/persistence/settings.h"
 #include "src/widget/tool/croppinglabel.h"
 #include "src/widget/translator.h"
@@ -36,11 +39,13 @@
 #include "src/core/core.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
-#include "src/widget/contentlayout.h"
 
-GroupInviteForm::GroupInviteForm()
+GroupInviteForm::GroupInviteForm(QWidget* parent)
+    : ContentWidget(parent)
+    , headWidget(new QWidget(this))
+    , bodyWidget(new QWidget(this))
 {
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* layout = new QVBoxLayout(bodyWidget);
     createButton = new QPushButton(this);
     connect(createButton, &QPushButton::released, [this]()
     {
@@ -53,8 +58,8 @@ GroupInviteForm::GroupInviteForm()
     scroll = new QScrollArea(this);
 
     QWidget* innerWidget = new QWidget(scroll);
-    innerWidget->setLayout(new QVBoxLayout());
-    innerWidget->layout()->setAlignment(Qt::AlignTop);
+    QVBoxLayout* innerLayout = new QVBoxLayout(innerWidget);
+    innerLayout->setAlignment(Qt::AlignTop);
     scroll->setWidget(innerWidget);
     scroll->setWidgetResizable(true);
 
@@ -66,11 +71,12 @@ GroupInviteForm::GroupInviteForm()
     QFont bold;
     bold.setBold(true);
 
-    headLabel = new QLabel(this);
-    headLabel->setFont(bold);
-    headWidget = new QWidget(this);
     QHBoxLayout* headLayout = new QHBoxLayout(headWidget);
+    headLabel = new QLabel(headWidget);
+    headLabel->setFont(bold);
     headLayout->addWidget(headLabel);
+
+    setupLayout(headWidget, bodyWidget);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&GroupInviteForm::retranslateUi, this), this);
@@ -92,15 +98,7 @@ bool GroupInviteForm::isShown() const
     return false;
 }
 
-void GroupInviteForm::show(ContentLayout* contentLayout)
-{
-    contentLayout->mainContent->layout()->addWidget(this);
-    contentLayout->mainHead->layout()->addWidget(headWidget);
-    QWidget::show();
-    headWidget->show();
-}
-
-void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
+void GroupInviteForm::addGroupInvite(Friend::ID friendId, uint8_t type, QByteArray invite)
 {
     QWidget* groupWidget = new QWidget(this);
     QHBoxLayout* groupLayout = new QHBoxLayout(groupWidget);

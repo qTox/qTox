@@ -34,8 +34,8 @@ public:
     void setChosenRect(QRect rect);
 
 protected:
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) final override;
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) final;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
 
 private:
     ScreenshotGrabber* screnshootGrabber;
