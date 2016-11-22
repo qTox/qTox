@@ -22,6 +22,7 @@ execute_process(
   COMMAND brew --prefix qt5
   OUTPUT_VARIABLE QT_PREFIX_PATH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 if(NOT QT_PREFIX_PATH)
   set(QT_PREFIX_PATH
     /usr/src/mxe/usr/x86_64-w64-mingw32.shared/qt5
@@ -114,11 +115,23 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/zh.ts
 )
 
-qt5_add_resources(${PROJECT_NAME}_RESOURCES
+qt5_add_resources(
+  ${PROJECT_NAME}_RESOURCES
   res.qrc
-  smileys/smileys.qrc
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
-  DEPENDS ${${PROJECT_NAME}_QM_FILES})
+  DEPENDS ${${PROJECT_NAME}_QM_FILES}
+)
+
+if(NOT ${SMILEYS})
+    set(SMILEYS, "")
+endif()
+
+if(NOT ${SMILEYS} MATCHES "NO")
+  qt5_add_resources(smileys/emojione.qrc)
+  if(NOT ${SMILEYS} MATCHES "MIN")
+    qt5_add_resources(smileys/smileys.qrc)
+  endif()
+endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc.in"
 "<!DOCTYPE RCC>
