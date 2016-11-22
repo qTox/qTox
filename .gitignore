@@ -49,3 +49,6 @@ qrc_*
 Makefile
 *.qm
 /.qmake.stash
+
+# CMake
+CMakeLists.txt.user
