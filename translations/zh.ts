@@ -315,6 +315,22 @@ which may lead to problems with video calls.</source>
         <comment>Toxme error</comment>
         <translation>此 Tox ID 不存在</translation>
     </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -1364,35 +1380,107 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>注册 ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>你在 ToxMe 服务上的名称。</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>可选。关于你的事情。或者与你的猫咪有关的也行。</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>可选。关于你的事情。或者与你的猫咪有关的也行。</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>要在 ToxMe 上注册的服务。</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>如果不选中，你在 ToxMe 上的条目将是公开的。</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
+        <translation>移除密码，然后用你的个人档案信息来加密。</translation>
+    </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">重命名账户。</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">删除帐户。</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">导出用户配置文件</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1515,51 +1603,51 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名输入框</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>密码输入框，你可以留空（无密码），或者输入至少 6 位字符</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>密码确认框</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>创建一个新的个人档案按钮</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>帐户列表</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>所有个人档案的列表</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>密码输入</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>自动加载选项选择框</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">导入用户配置文件</translation>
+        <translation>导入用户档案</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>导入选择的个人档案按钮</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>新档案创建页面</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>正在加载已有的个人档案页面</translation>
     </message>
 </context>
 <context>
