@@ -111,9 +111,46 @@ if(WIN32)
   search_dependency(STRMIIDS          LIBRARY strmiids)
 endif()
 
+execute_process(
+  COMMAND git describe --tags
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_DESCRIBE
+  ERROR_QUIET
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+if(NOT GIT_DESCRIBE)
+  set(GIT_DESCRIBE "Nightly")
+endif()
+
 add_definitions(
+  -DGIT_DESCRIBE="${GIT_DESCRIBE}"
+)
+
+# GIT_VERSION
+execute_process(
+  COMMAND git rev-parse HEAD
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE GIT_VERSION
+  ERROR_QUIET
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+if(NOT GIT_VERSION)
+  set(GIT_VERSION "build without git")
+endif()
+
+add_definitions(
+  -DGIT_VERSION="${GIT_VERSION}"
+)
+
+execute_process(
+  COMMAND date +%s
+  OUTPUT_VARIABLE TIMESTAMP
+)
+
+add_definitions(
+  -DTIMESTAMP=${TIMESTAMP}
+  -DLOG_TO_FILE=1
   -DQTOX_PLATFORM_EXT=1
-  -DGIT_COMMIT="N/A"
-  -DGIT_DESCRIBE="N/A"
-  -DGIT_VERSION="N/A"
-  -DTIMESTAMP="N/A")
+)
