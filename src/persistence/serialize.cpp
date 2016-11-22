@@ -42,7 +42,7 @@ QString dataToString(QByteArray data)
         return QString();
 
     // Remove the strlen
-    data.remove(0, i - 1);
+    data.remove(0, i);
     data.truncate(strlen);
 
     return QString(data);
