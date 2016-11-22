@@ -40,7 +40,7 @@ _testmain.go
 /qtox.app
 
 # Qt
-*.pro.user*
+*.user
 moc_*
 ui_*
 qrc_*
