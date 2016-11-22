@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Disabilitato</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
@@ -25,43 +25,43 @@
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona regione</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermo %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Impostazioni Audio</translation>
+        <translation>Impostazioni Audio</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Volume microfono</translation>
+        <translation>Volume microfono</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Dispositivo di output</translation>
+        <translation>Dispositivo di output</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Usa lo slider per impostare il volume degli altoparlanti.</translation>
+        <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Dispositivo di input</translation>
+        <translation>Dispositivo di input</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Volume</translation>
+        <translation>Volume</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Impostazioni Video</translation>
+        <translation>Impostazioni Video</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Dispositivo di input</translation>
+        <translation>Dispositivo video</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,7 +69,7 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Imposta la risoluzione della webcam.
+        <translation>Imposta la risoluzione della webcam.
 Più alto il valore, migliore sarà la qualità del video che i tuoi contatti riceveranno.
 NOTA: più alta è la qualità video, più veloce deve essere la connessione ad internet.
 Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
@@ -77,15 +77,15 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Risoluzione</translation>
+        <translation>Risoluzione</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Scansiona dispositivi</translation>
+        <translation>Scansiona dispositivi</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Prova Suono</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Autore originale: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -133,19 +133,19 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Stai utilizzando la versione %1.</translation>
+        <translation>Stai utilizzando la versione %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Commit hash: %1</translation>
+        <translation>Commit hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">Versione toxcore: %1</translation>
+        <translation>Versione toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Versione Qt: %1</translation>
+        <translation>Versione Qt: %1</translation>
     </message>
 </context>
 <context>
@@ -236,19 +236,19 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Acetta automaticamente le chiamate</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuale</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio + Video</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Questo Tox ID non esiste</translation>
+        <translation>Questo Tox ID non esiste</translation>
     </message>
 </context>
 <context>
@@ -340,33 +340,33 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Resetta impostazioni</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Tutte le impostazioni saranno ripristinate ai valori predefiniti. Sei sicuro?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Si</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Chiamata in corso</translation>
+        <translation>Chiamata in corso</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Non puoi disconnetterti mentre c&apos;è una chiamata in corso!</translation>
+        <translation>Non puoi disconnetterti mentre c&apos;è una chiamata in corso!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva File</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -390,57 +390,57 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Potabile</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Impostazioni Connessione</translation>
+        <translation>Impostazioni Connessione</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Abilita IPv6 (consigliato)</translation>
+        <translation>Abilita IPv6 (consigliato)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Disabilitando questo sarà possibile usare qTox con Tor. Tuttavia verrà aggiunto carico alla rete Tox, quindi disabilitare solo se necessario.</translation>
+        <translation>Disabilitando questo sarà possibile usare qTox con Tor. Tuttavia verrà aggiunto carico alla rete Tox, quindi disabilitare solo se necessario.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Abilita UDP (consigliato)</translation>
+        <translation>Abilita UDP (consigliato)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Proxy:</translation>
+        <translation>Proxy:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Indirizzo:</translation>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Porta:</translation>
+        <translation>Porta:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Nessuno</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS 5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Riconnetti</translation>
+        <translation>Riconnetti</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -1375,12 +1375,12 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Facoltativo. Qualcosa su di te o il tuo gatto.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Facoltativo. Qualcosa su di te o il tuo gatto.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1394,7 +1394,7 @@ I profili non contengono la cronologia messaggi.</translation>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi la password e la crittografia dal tuo profilo.</translation>
     </message>
 </context>
 <context>
@@ -1524,7 +1524,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo per la conferma della password</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
@@ -1532,11 +1532,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation >Lista profili</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista dei profili</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -1713,7 +1713,7 @@ Se ricevi molte richieste di amicizia indesiderate cambia questo valore.</transl
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Privacy</translation>
+        <translation>Privacy</translation>
     </message>
 </context>
 <context>
@@ -1911,7 +1911,7 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Posizione del profilo attuale: %1</translation>
+        <translation>Posizione del profilo attuale: %1</translation>
     </message>
 </context>
 <context>
@@ -1948,38 +1948,38 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>File non esistente</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilo non esistente</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Profilo importato</translation>
+        <translation>Profilo importato</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox è stato importato con successo</translation>
+        <translation>%1.tox è stato importato con successo</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Si</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2132,7 +2132,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Sei sicuro di voler rimuovere %1 dalla tua lista contatti?</translation>
+        <translation>Sei sicuro di voler rimuovere %1 dalla tua lista contatti?</translation>
     </message>
 </context>
 <context>
@@ -2140,17 +2140,17 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Fare clic e trascinare per selezionare una regione. Premere %1 per nascondere/mostrare la finestra qTox, o %2 per annullare.</translation>
+        <translation>Fare clic e trascinare per selezionare una regione. Premere %1 per nascondere/mostrare la finestra qTox, o %2 per annullare.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">Spazio</translation>
+        <translation>Spazio</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Escape</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
@@ -2160,7 +2160,7 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished"></translation>
+        <translation>Enter</translation>
     </message>
 </context>
 <context>
@@ -2228,25 +2228,25 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è un indirizzo Toxme valido.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Nessuno</translation>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Interfaccia Utente</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Chat</translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2254,11 +2254,11 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Grandezza: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
@@ -2274,117 +2274,117 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Testo in chiaro</translation>
+        <translation>Testo in chiaro</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Mostra caratteri di formattazione</translation>
+        <translation>Mostra caratteri di formattazione</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Non mostrare i caratteri di formattazione</translation>
+        <translation>Non mostrare i caratteri di formattazione</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Nuovo messaggio</translation>
+        <translation>Nuovo messaggio</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Apri la finestra di qTox quando si riceve un nuovo messaggio.</translation>
+        <translation>Apri la finestra di qTox quando si riceve un nuovo messaggio e nessuna finestra è ancora aperta.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Apri finestra</translation>
+        <translation>Apri finestra</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Dai il focus alla finestra di qTox quando arriva un nuovo messaggio.</translation>
+        <translation>Dai il focus alla finestra di qTox quando si riceve un nuovo messaggio.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Dai il focus alla finestra</translation>
+        <translation>Dai il focus alla finestra</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista contatti</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Mostra sempre le notifiche per i nuovi messaggi nelle chat di gruppo.</translation>
+        <translation>Mostra sempre le notifiche per i nuovi messaggi nelle chat di gruppo.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Usa notifiche per chat di gruppo</translation>
+        <translation>Usa notifiche per chat di gruppo</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Le chat di gruppo saranno posizionate all&apos;inizio della lista contatti, altrimenti saranno posizionate sotto ai contatti online.</translation>
+        <translation>Le chat di gruppo saranno posizionate all&apos;inizio della lista contatti, altrimenti saranno posizionate sotto ai contatti online.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Posiziona le chat di gruppo in cima alla lista contatti</translation>
+        <translation>Posiziona le chat di gruppo in cima alla lista contatti</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">La lista contatti sarà visualizzata in modo compatto.</translation>
+        <translation>La lista contatti sarà visualizzata in modo compatto.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Usa lista contatti compatta</translation>
+        <translation>Usa lista contatti compatta</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Modalità finestre multiple</translation>
+        <translation>Modalità finestre multiple</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Apri ogni chat in una finestra singola</translation>
+        <translation>Apri ogni chat in una finestra singola</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Emoticons</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Usa emoticons</translation>
+        <translation>Usa emoticons</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Emoticons:</translation>
+        <translation>Emoticons:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Dimensione:</translation>
+        <translation>Dimensione emoticon:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Impostazioni Tema</translation>
+        <translation>Impostazioni Tema</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Stile:</translation>
+        <translation>Stile:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Colore tema:</translation>
+        <translation>Colore tema:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Formato data/ora:</translation>
+        <translation>Formato data/ora:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Formato data:</translation>
+        <translation>Formato data:</translation>
     </message>
 </context>
 <context>
