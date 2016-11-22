@@ -317,6 +317,22 @@ which may lead to problems with video calls.</source>
         <comment>Toxme error</comment>
         <translation>Гэты Tox ID не існуе</translation>
     </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -1392,7 +1408,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>Служба ToxMe для рэгістрацыі.</translation>
+        <translation>Сэрвіс ToxMe для рэгістрацыі.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1406,75 +1422,75 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Увод імя</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Імя бачна кантактам</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Увод паведамлення аб стане</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Паведамленне аб стане бачна кантактам</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Захаваць QR-малюнак як файл</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Капіяваць QR-малюнак у буфер абмену</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe імя карыстальніка будзе паказана ў ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Неабавязковая біяграфія будзе паказана ў ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрас сэрвісу ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Бачнасць у сэрвісе ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Абнавіць запіс ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Перайменаваць профіль.</translation>
+        <translation>Перайменаваць профіль.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Выдаліць профіль.</translation>
+        <translation>Выдаліць профіль.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Экспартаваць профіль</translation>
+        <translation>Экспартаваць профіль</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Выдаліць пароль з профілю</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Змяніць пароль профілю</translation>
     </message>
 </context>
 <context>
@@ -2310,7 +2326,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 — некарэктны Toxme-адрас.</translation>
+        <translation>%1 — некарэктны адрас Toxme.</translation>
     </message>
 </context>
 <context>
