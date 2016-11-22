@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export CFLAGS="-O3"
-export CXXFLAGS="-O3"
+export CFLAGS="-O2"
+export CXXFLAGS="-O2"
 
 BUILD_DIR=_build

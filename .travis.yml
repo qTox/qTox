@@ -11,7 +11,11 @@ branches:
 matrix:
   include:
     - os: linux
+      env: JOB=verify-commit-format ENV=linux
+    - os: linux
       env: JOB=test ENV=linux
+    - os: linux 
+      env: build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
     - os: linux
       env: JOB=deploy ENV=linux
     - os: linux
@@ -24,6 +28,17 @@ matrix:
         - docker
     - os: osx
       env: JOB=deploy ENV=osx
+
+deploy:
+  provider: releases
+  api_key:
+  secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+  file: "./qTox.dmg"
+  on:
+    condition: $TRAVIS_OS_NAME == osx
+    repo: qTox/qTox
+    tags: true
+  skip_cleanup: true
 
 after_success:
   ->
