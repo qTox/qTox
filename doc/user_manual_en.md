@@ -1,6 +1,7 @@
 # qTox User Manual
 ## Index
 
+* [Profile corner](#profile-corner)
 * [Contact list](#contact-list)
 * [User Profile](#user-profile)
 * [Settings](#settings)
@@ -12,9 +13,34 @@
 * [Emoji Packs](#emoji-packs)
 
 
+## Profile corner
+
+Located in the top left corner of the main window.
+
+* __Avatar__: picture that is shown to your contacts. Clicking on it will open
+  [user profile] where you can change it.
+* __Name__: your name shown to your contacts. Clicking on it will open [user
+  profile] where you can change it.
+* __Status message__: your status message shown to your contacts. Click on it
+  to change it.
+* __Status orb__: colored orb button that shows your current status. Click on
+  it to change it.
+
+### Status
+
+Status can be one of:
+
+* `Online` – green
+* `Away` – yellow
+* `Busy` – red
+* `Offline` – gray, set automatically by qTox when there is no connection to
+  the Tox network.
+
+
 ## Contact list
 
-Located on the left. Can be sorted e.g. `By Activity`.
+Located on the left, below the [profile corner]. Can be sorted e.g. `By
+Activity`.
 
 `By Activity` sorting in qTox is updated whenever client receives something that
 is directly aimed at you, and not sent to everyone, that is:
@@ -29,7 +55,7 @@ is directly aimed at you, and not sent to everyone, that is:
 * avatar change
 * groupchat message
 * name change
-* status change (`Online`/`Away`/`Busy`/`Offline`)
+* [status](#status) change
 * status message change
 
 ### Contact menu
@@ -70,6 +96,9 @@ Some of the informations listed are:
 
 
 ## User Profile
+
+To access it, click on __Avatar__/__Name__ in the [profile corner].
+
 Your User Profile contains everything you share with other people on Tox. You
 can open it by clicking the picture in the top left corner. It contains the
 following settings:
@@ -398,3 +427,5 @@ information.
 
 
 [ToxMe service]: #register-on-toxme
+[user profile]: #user-profile
+[profile corner]: #profile-corner
