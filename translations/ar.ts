@@ -85,7 +85,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>اختبار الصوت</translation>
     </message>
 </context>
 <context>
@@ -121,31 +121,31 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>المؤلف الأصلي: %1</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>رؤية قائمة كاملة من %1 في Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>المساهمين</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">حالياً تستخدم الإصدار كيوتوكس&quot;qTox&quot; %1.</translation>
+        <translation>حالياً تستخدم كيوتوكس الإصدار %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">إيداع رمز التهشير: %1</translation>
+        <translation>إيداع رمز التهشير: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">toxcore إصداره: %1</translation>
+        <translation>إصدار toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt نسخة: %1</translation>
+        <translation>Qt نسخة: %1</translation>
     </message>
 </context>
 <context>
@@ -232,19 +232,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>قبول المكالمات تلقائياً :</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>يدوي</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>الصوت</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>الصوت + التسجيل المرئي</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -313,7 +313,23 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">هذا المعرف غير مستخدم</translation>
+        <translation>رقم حساب التوكس هذا غير موجود</translation>
+    </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -324,53 +340,53 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>إلا إذا كنت %1 تعرف ما تقومون به، يرجى %2 حتى تغيير أي شيء هنا. التغييرات التي تم إجراؤها هنا قد تؤدي إلى مشاكل مع كيوتوكس، وحتى إلى فقدان البيانات الخاصة بك، على سبيل المثال، التاريخ.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>حقا</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>ليس</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>ملاحظة هامة</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>استعادة الضبط</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>ستعاد جميع الإعدادات للضبط الافتراضي. هل أنت قيد الموافقة؟</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">نعم</translation>
+        <translation>نعم</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">لا</translation>
+        <translation>لا</translation>
     </message>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">المكالمة نشطة</translation>
+        <translation>المكالمة نشطة</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">لا تستطيع قطع الاتصال اثناء المكالمة!</translation>
+        <translation>لا تستطيع قطع الاتصال اثناء المكالمة!</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ الملف</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>سجلات (*.log)</translation>
     </message>
 </context>
 <context>
@@ -390,69 +406,69 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>متنقل</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">إعدادات الإتصال</translation>
+        <translation>إعدادات الإتصال</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">تفعيل IPv6 (موصى به )</translation>
+        <translation>تفعيل IPv6 (موصى به )</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">تعطيلها بهذا يسمح، على سبيل المثال، استخدام التوكس خلال التور &quot;Tox&quot;. فإنه يضيف تحميله إلى الشبكة توكس&quot;Tox&quot; ولكن، حتى يتم إلغائة إلا عند الضرورة.</translation>
+        <translation>تعطيلها بهذا يسمح، على سبيل المثال، استخدام التوكس خلال شبكة تور &quot;Tor&quot;. فإنه يضيف تحميله إلى الشبكة توكس&quot;Tox&quot; ولكن، حتى يتم إلغائة إلا عند الضرورة.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">تفعيل UDP (موصى ب ه)</translation>
+        <translation>تفعيل UDP (موصى به)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">نوع الوكيل(بروكسي):</translation>
+        <translation>نوع الوكيل(بروكسي):</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">العنوان:</translation>
+        <translation>العنوان:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">المنفذ:</translation>
+        <translation>المنفذ:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">لا شيئ</translation>
+        <translation>لا شيئ</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">إعادة الإتصال</translation>
+        <translation>إعادة الإتصال</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>تصحيح الأخطاء</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>تصدير سجل تصحيح الاخطاء</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخ سجل تصحيح الاخطاء</translation>
     </message>
 </context>
 <context>
@@ -1361,35 +1377,107 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>التسجيل في ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>إسم لخدمة ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>اختياري. شئ عنك. أو عن ما تملك.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>اختياري. شئ عنك. أو عن ما تملك.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>خدمة ToxMe لتسجيل الدخول.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>إذا لم يتم التغيير، فإن إدخالات ToxMe واضحة علنا.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
+        <translation>إزالة كلمة المرور والتشفير من ملفك الشخصي.</translation>
+    </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">اعادة تسمية الحساب.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">حذف الحساب.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">تصدير الملف الشخصي</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1397,11 +1485,11 @@ Profile does not contain your history.</source>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>نافذة عرض التاريخ</translation>
+        <translation>تحميل تاريخ المحادثة</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation>عرض التاريخ من:</translation>
+        <translation>تحميل التاريخ من:</translation>
     </message>
 </context>
 <context>
@@ -1416,7 +1504,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Confirm:</source>
-        <translation>تأكيدكلمة المرور:</translation>
+        <translation>تأكيد كلمة المرور:</translation>
     </message>
     <message>
         <source>Password strength: %p%</source>
@@ -1444,7 +1532,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>تسجيل دخول</translation>
+        <translation>تحميل الملف الشخصي</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
@@ -1452,49 +1540,51 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation>لا يجوز أن يكون اسم المستخدم فارغاً.</translation>
+        <translation>يجب ألا يكون اسم المستخدم فارغاً.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation>كلمة المرور يجب أن تحتوي على أكثر من 6 مقاطع.</translation>
+        <translation>كلمة المرور يجب أن تحتوي على أكثر من 6 أحرف.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation>كلمة المرور التي أدخلتها مختلفة. أدخل نفس كلمة المرور في المرتين.</translation>
+        <translation>كلمات المرور التي قمت بإدخالها مختلفة.
+يرجى التأكد من إدخال نفس كلمة المرور مرتين.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation>يوجد حساب بهذا الاسم فعلا.</translation>
+        <translation>يوجد حساب آخر بهذا الاسم.</translation>
     </message>
     <message>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation>خطأ غير معروف: لا يمكن إنشاء حساب جديد. إذا واجهت هذا الخطأ, نرجو أن تبلغ عنه.</translation>
+        <translation>خطأ مجهول: تعذر إنشاء ملف حساب جديد.
+إذا واجهت هذا الخطأ، الرجاء الإبلاغ عنه.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation>لا يستطيع الدخول</translation>
+        <translation>لا يمكن تحميل الملف الشخصي</translation>
     </message>
     <message>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>لم يتم إختيار حساب.
+        <translation>لا يوجد ملف شخصي محدد.
 
-ربما تريد إنشاء واحد..</translation>
+قد تحتاج إلى إنشاء حساب جديد.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation>لا تستطيع الدخول لهذا الحساب</translation>
+        <translation>لا يمكن تحميل هذا الملف الشخصى</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
-        <translation>هذا الحساب مستخدم فعلا.</translation>
+        <translation>هذا الحساب مستخدم حالياً.</translation>
     </message>
     <message>
         <source>Profile already in use. Close other clients.</source>
-        <translation>الحساب مستخدم فعلا. أغلقه من باقي الاجهزة.</translation>
+        <translation>الحساب مستخدم حالياً. يجب أغلاقه من باقي الاجهزة.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
@@ -1510,62 +1600,62 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>حقل إدخال اسم المستخدم</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>كلمة المرور  في حقل الإدخال، يمكن تركها فارغة (بلا كلمة مرور)، أو أن لا تقل كلمة المرور عن 6 أحرف</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>حقل تأكيد كلمة المرور</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>إنشاء زر حساب شخصي جديد</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة الحساب الشخصي</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة الحسابات الشخصية</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>إدخال كلمة المرور</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>تحميل خانة الاختيار بشكل تلقائي</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">استيراد ملف الحساب الشخصي</translation>
+        <translation>استيراد ملف الحساب الشخصي</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>تحميل زر الحساب الشخصي المحدد</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>صفحة جديدة لإنشاء حساب شخصي</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>تحميل صفحة الحساب الشخصي الحالية</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation>إسمك</translation>
+        <translation>الإسم</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation>حالتك</translation>
+        <translation>الحالة</translation>
     </message>
     <message>
         <source>...</source>
@@ -1577,11 +1667,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>إنشاء غرفة محادثة</translation>
+        <translation>إنشاء محادثة جماعية</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>إعرض الملفات التي تم نقلها</translation>
+        <translation>عرض الملفات التي تم نقلها</translation>
     </message>
     <message>
         <source>Change your settings</source>
@@ -1669,7 +1759,7 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>اصدقائك سيرون اشعاراً عندما تكون تكتب.</translation>
+        <translation>اصدقائك سيرون اشعاراً عندما تكتب.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
@@ -1680,7 +1770,7 @@ You may want to create one.</source>
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>سجل المحادثات لا يزال قيد التطوير.
-تغييرات الصيغة المعروفة ممكنة , هذا قد يؤدي الى فقدان البيانات.</translation>
+تغييرات الصيغة المعروفة ممكنة، هذا قد يؤدي الى فقدان البيانات.</translation>
     </message>
     <message>
         <source>Keep chat history</source>
@@ -1711,7 +1801,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">خصوصية</translation>
+        <translation>خصوصية</translation>
     </message>
 </context>
 <context>
@@ -1909,7 +1999,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">مسار الملف الشخصي: %1</translation>
+        <translation>مسار ملف الحساب الشخصي الحالي: %1</translation>
     </message>
 </context>
 <context>
@@ -2130,7 +2220,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">هل انت متأكد من ازالة %1 من جهات الاتصال ؟</translation>
+        <translation>هل انت متأكد من ازالة %1 من جهات الاتصال ؟</translation>
     </message>
 </context>
 <context>
@@ -2138,27 +2228,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">اضغط وافلت للتحديد. اضغط %1 لـ اخفاء/إظهار نافذة qTox او %2  للالغاء.</translation>
+        <translation>اضغط واسحب للتحديد. اضغط %1 لـ اخفاء/إظهار نافذة qTox او %2  للالغاء.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">مسافة</translation>
+        <translation>مسافة</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Esc</translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">اضغط %1 لارسال لقطة الشاشة المحددةاضغط %2 لـ اخفاء/إظهار نافذة qTox او %3 للالغاء.</translation>
+        <translation>اضغط %1 لارسال لقطة الشاشة المحددة، اضغط %2 لـ اخفاء/إظهار نافذة qTox او %3 للالغاء.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished">Enter</translation>
+        <translation>أدخل</translation>
     </message>
 </context>
 <context>
@@ -2226,163 +2316,163 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ليس عنوان ToxMe صحيح.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">لا شيئ</translation>
+        <translation>لا شيئ</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>واجهة المستخدم</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">المحادثة</translation>
+        <translation>المحادثة</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">الخط المستخدم:</translation>
+        <translation>نوع خط الكتابة:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">بكسل</translation>
+        <translation>بكسل</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">الحجم: </translation>
+        <translation>الحجم: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">قد لا يتم إستعمال تصميم النص الجديد حتى يتم إعادة تشغيل qTox.</translation>
+        <translation>قد لا يتم إستعمال تصميم النص الجديد حتى يتم إعادة تشغيل qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">نمط تنسيق الخط:</translation>
+        <translation>نمط تنسيق الخط:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">قم بتحديد نمط الخط الذي تفضله.</translation>
+        <translation>تحديد نمط الخط المفضل.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">نص عادي</translation>
+        <translation>نص عادي</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">إظهار أحرف التنسيق</translation>
+        <translation>إظهار أحرف التنسيق</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">عدم إظهار أحرف التنسيق</translation>
+        <translation>عدم إظهار أحرف التنسيق</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">رسالة جديدة</translation>
+        <translation>رسالة جديدة</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">فتح نافذة qTox عند التوصل برسالة جديدة .</translation>
+        <translation>فتح نافذة qTox عند التواصل برسالة جديدة وأي إطار مفتوح حتى الان.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">افتح النافذة</translation>
+        <translation>افتح النافذة</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">التركيز على نافذة qTox عند التوصل برسالة.</translation>
+        <translation>التركيز على نافذة qTox عند وصول رسالة.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">التركيز على النافذة</translation>
+        <translation>التركيز على النافذة</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>قائمة الإتصال</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">الاشعار عن الرسائل الجديدة في المجموعات.</translation>
+        <translation>ظهور اشعار بشكل دائم عند تلقي رسائل جديدة في المحادثات الجماعية.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">اشعارات المجموعات</translation>
+        <translation>تفعيل اشعارات المحادثات الجماعية</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">إذا فعلتها, المجموعات ستصبح فوق قائمة الأصدقاء, خلاف ذلك, ستكون المجموعات تحت الأصدقاء المتصلين.</translation>
+        <translation>إذا تم التحقيق، فالمحادثات الجماعية ستصبح فوق قائمة الأصدقاء, خلاف ذلك، ستكون المحادثات الجماعية تحت قائمة الأصدقاء المتصلين.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">ضع المجموعات اعلى من قائمه الاصدقاء</translation>
+        <translation>ضع المحادثات الجماعية اعلى قائمه الاصدقاء</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">سيتم عرض جهات الاتصال بوضع مضغوط.</translation>
+        <translation>سيتم عرض جهات الاتصال بوضع مضغوط.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">اظهار القائمه بالوضع المضغوط</translation>
+        <translation>اظهار القائمه بالوضع المضغوط</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">خاصيه النوافذ المتعدد</translation>
+        <translation>خاصيه النوافذ المتعدد</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">افتح كل محادثه في نافذه مستقله</translation>
+        <translation>افتح كل محادثه في نافذه مستقله</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>الرموز التعبيرية</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">إستخدام الإبتسامات</translation>
+        <translation>إستخدام الرموز التعبيرية</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">حزمة الإبتسامات:</translation>
+        <translation>حزمة الإبتسامات:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">حجم الإبتسامات:</translation>
+        <translation>حجم الرموز التعبيرية:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> بكسل</translation>
+        <translation> بكسل</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">المظهر</translation>
+        <translation>المظهر</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">السِمة:</translation>
+        <translation>السِمة:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">لون السِمة:</translation>
+        <translation>لون السِمة:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">صيغة الوقت:</translation>
+        <translation>صيغة الوقت:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">صيغة التاريخ:</translation>
+        <translation>صيغة التاريخ:</translation>
     </message>
 </context>
 <context>
