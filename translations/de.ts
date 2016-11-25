@@ -315,6 +315,22 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <comment>Toxme error</comment>
         <translation>Diese Tox-ID existiert nicht</translation>
     </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -427,7 +443,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>None</source>
-        <translation>Kein Videogerät ausgewählt</translation>
+        <translation>Kein Proxy</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -1373,22 +1389,22 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Auf ToxMe registrieren</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Name für den ToxMe Service.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Optional. Etwas über dich. Oder deine Katze.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Optional. Etwas über dich. Oder deine Katze.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1397,11 +1413,83 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wenn nicht gesetzt, sind ToxMe Einträge öffentlich sichtbar.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
+        <translation>Entferne dein Passwort und die Verschlüsselung von deinem Profil.</translation>
+    </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">Profil umbenennen.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">Profil löschen.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Profil exportieren</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1409,7 +1497,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation>Gesprächsverlauf</translation>
+        <translation>Lade Gesprächsverlauf</translation>
     </message>
     <message>
         <source>Load history from:</source>
@@ -1556,7 +1644,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Profil importieren</translation>
+        <translation>Profil importieren</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
@@ -2244,7 +2332,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation>Kein Videogerät ausgewählt</translation>
+        <translation>Ohne</translation>
     </message>
     <message>
         <source>User Interface</source>
