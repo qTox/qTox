@@ -20,113 +20,112 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
+#include <QPointer>
 #include <QSet>
 #include <QLabel>
 #include <QTimer>
 #include <QElapsedTimer>
 
+#include "src/friend.h"
 #include "genericchatform.h"
 #include "src/core/corestructs.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
-class Friend;
 class FileTransferInstance;
 class QPixmap;
 class CallConfirmWidget;
 class QHideEvent;
 class QMoveEvent;
-class OfflineMsgEngine;
 class CoreAV;
 
 class ChatForm : public GenericChatForm
 {
     Q_OBJECT
 public:
-    explicit ChatForm(Friend* chatFriend);
+    explicit ChatForm(Friend chatFriend, QWidget* parent = nullptr);
     ~ChatForm();
+
     void setStatusMessage(QString newMessage);
     void loadHistory(QDateTime since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
-    OfflineMsgEngine* getOfflineMsgEngine();
-
-    virtual void show(ContentLayout* contentLayout) final override;
 
     static const QString ACTION_PREFIX;
 
 signals:
-    void sendFile(uint32_t friendId, QString, QString, long long);
     void aliasChanged(const QString& alias);
 
 public slots:
     void startFileSend(ToxFile file);
     void onFileRecvRequest(ToxFile file);
-    void onAvInvite(uint32_t FriendId, bool video);
-    void onAvStart(uint32_t FriendId, bool video);
-    void onAvEnd(uint32_t FriendId);
-    void onAvatarChange(uint32_t FriendId, const QPixmap& pic);
-    void onAvatarRemoved(uint32_t FriendId);
+    void onAvInvite(uint32_t friendId, bool video);
+    void onAvStart(uint32_t friendId, bool video);
+    void onAvEnd(uint32_t friendId);
+    void onAvatarChange(const Friend& frnd, const QPixmap& pic);
+    void onAvatarRemoved(uint32_t friendId);
 
 private slots:
+    void clearChatArea(bool notInForm) override final;
+
+    void onDeliverOfflineMessages();
     void onSendTriggered();
     void onTextEditChanged();
     void onAttachClicked();
-    void onCallTriggered();
+    void onCallButtonClicked();
     void onVideoCallTriggered();
     void onAnswerCallTriggered();
-    void onHangupCallTriggered();
-    void onCancelCallTriggered();
     void onRejectCallTriggered();
     void onMicMuteToggle();
     void onVolMuteToggle();
-    void onFileSendFailed(uint32_t FriendId, const QString &fname);
-    void onFriendStatusChanged(uint32_t friendId, Status status);
+    void onFileSendFailed(Friend::ID friendId, const QString& fname);
+    void onLoadChatHistory(quint32 friendId);
+    void onFriendStatusChanged(const Friend& frnd, Status status);
+    void onFriendTypingChanged(const Friend& frnd, bool isTyping);
+    void onFriendNameChanged(const Friend& frnd, const QString& name);
+    void onFriendMessageReceived(quint32 friendId, const QString& message,
+                                 bool isAction);
+    void onStatusMessage(const Friend& frnd, const QString& message);
+    void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
-    void onEnableCallButtons();
     void onScreenshotClicked();
     void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
-    void onMessageInserted();
     void onCopyStatusMessage();
 
 private:
+    void updateMuteMicButton();
+    void updateMuteVolButton();
     void retranslateUi();
     void showOutgoingCall(bool video);
     void startCounter();
     void stopCounter();
     QString secondsToDHMS(quint32 duration);
-    void enableCallButtons();
-    void disableCallButtons();
+    void updateCallButtons();
     void SendMessageStr(QString msg);
 
 protected:
-    virtual GenericNetCamView* createNetcam() final override;
-    // drag & drop
-    virtual void dragEnterEvent(QDragEnterEvent* ev) final override;
-    virtual void dropEvent(QDropEvent* ev) final override;
-    virtual void hideEvent(QHideEvent* event) final override;
-    virtual void showEvent(QShowEvent* event) final override;
+    GenericNetCamView* createNetcam() final;
+    void insertChatMessage(ChatMessage::Ptr msg) final;
+    void dragEnterEvent(QDragEnterEvent* ev) final;
+    void dropEvent(QDropEvent* ev) final;
+    void hideEvent(QHideEvent* event) final;
+    void showEvent(QShowEvent* event) final;
 
 private:
-
-    CoreAV* coreav;
-    Friend* f;
+    Friend f;
     CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
     QLabel *callDuration;
-    QTimer *callDurationTimer;
+    QPointer<QTimer> callDurationTimer;
     QTimer typingTimer;
-    QTimer *disableCallButtonsTimer;
     QElapsedTimer timeElapsed;
-    OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
-    QMap<uint32_t, Status> oldStatus;
-    CallConfirmWidget *callConfirm;
+    QPointer<CallConfirmWidget> callConfirm;
     bool isTyping;
 };
 

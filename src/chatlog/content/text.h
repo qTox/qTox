@@ -36,25 +36,25 @@ public:
 
     virtual void setWidth(qreal width) final;
 
-    virtual void selectionMouseMove(QPointF scenePos) final;
-    virtual void selectionStarted(QPointF scenePos) final;
-    virtual void selectionCleared() final;
-    virtual void selectionDoubleClick(QPointF scenePos) final;
-    virtual void selectionFocusChanged(bool focusIn) final;
-    virtual bool isOverSelection(QPointF scenePos) const final;
-    virtual QString getSelectedText() const final;
+    void selectionMouseMove(QPointF scenePos) final;
+    void selectionStarted(QPointF scenePos) final;
+    void selectionCleared() final;
+    void selectionDoubleClick(QPointF scenePos) final;
+    void selectionFocusChanged(bool focusIn) final;
+    bool isOverSelection(QPointF scenePos) const final;
+    QString getSelectedText() const final;
 
-    virtual QRectF boundingRect() const final;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
+    QRectF boundingRect() const final;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
 
-    virtual void visibilityChanged(bool keepInMemory) final;
+    void visibilityChanged(bool keepInMemory) final;
 
-    virtual qreal getAscent() const final;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
-    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
+    qreal getAscent() const final;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) final;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final;
 
-    virtual QString getText() const final;
+    QString getText() const final;
 
 protected:
     // dynamic resource management

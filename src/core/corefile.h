@@ -38,6 +38,7 @@ class Core;
 class CoreFile
 {
     friend class Core;
+    friend class Friend;
 
 private:
     CoreFile()=delete;
@@ -70,7 +71,7 @@ private:
                                    uint64_t pos, size_t length, void *core);
     static void onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
                                         const uint8_t *data, size_t length, void *core);
-    static void onConnectionStatusChanged(Core* core, uint32_t friendId, bool online);
+    static void onConnectionStatusChanged(uint32_t friendId, bool online);
 
 private:
     static QMutex fileSendMutex;

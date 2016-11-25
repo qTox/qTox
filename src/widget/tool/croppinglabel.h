@@ -32,7 +32,7 @@ public:
 
     void editBegin();
     void setEditable(bool editable);
-    void setEdlideMode(Qt::TextElideMode elide);
+    void setElideMode(Qt::TextElideMode elide);
 
     void setText(const QString& text);
     QString fullText();
@@ -51,10 +51,10 @@ protected:
     void setElidedText();
     void hideTextEdit();
     void showTextEdit();
-    virtual void resizeEvent(QResizeEvent *ev) final override;
-    virtual QSize sizeHint() const final override;
-    virtual QSize minimumSizeHint() const final override;
-    virtual void mouseReleaseEvent(QMouseEvent *e) final override;
+    virtual void resizeEvent(QResizeEvent *ev) final;
+    virtual QSize sizeHint() const final;
+    virtual QSize minimumSizeHint() const final;
+    virtual void mouseReleaseEvent(QMouseEvent *e) final;
 
 private slots:
     void editingFinished();

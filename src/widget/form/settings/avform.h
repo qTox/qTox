@@ -74,8 +74,8 @@ protected:
     void updateVideoModes(int curIndex);
 
 private:
-    void hideEvent(QHideEvent* event) final override;
-    void showEvent(QShowEvent*event) final override;
+    void hideEvent(QHideEvent* event) final;
+    void showEvent(QShowEvent*event) final;
     void open(const QString &devName, const VideoMode &mode);
 
 private:

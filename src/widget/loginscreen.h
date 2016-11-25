@@ -38,7 +38,7 @@ public:
     ~LoginScreen();
     void reset();
 
-    bool event(QEvent* event) final override;
+    bool event(QEvent* event) final;
 
 #ifdef Q_OS_MAC
 signals:

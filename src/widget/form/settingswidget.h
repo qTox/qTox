@@ -20,10 +20,10 @@
 #ifndef SETTINGSWIDGET_H
 #define SETTINGSWIDGET_H
 
+#include <array>
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QStyleFactory>
-#include <array>
 
 class Camera;
 class GenericForm;
@@ -32,7 +32,6 @@ class PrivacyForm;
 class AVForm;
 class QLabel;
 class QTabWidget;
-class ContentLayout;
 
 class SettingsWidget : public QWidget
 {
@@ -42,8 +41,7 @@ public:
     ~SettingsWidget();
 
     bool isShown() const;
-    void show(ContentLayout* contentLayout);
-    void setBodyHeadStyle(QString style);
+    void setBodyHeadStyle(const QString& style);
 
     void showAbout();
 
@@ -52,6 +50,10 @@ private slots:
 
 private:
     void retranslateUi();
+
+private:
+    // QWidget overrides
+    void keyPressEvent(QKeyEvent* event) override final;
 
 private:
     QTabWidget *settingsWidgets;

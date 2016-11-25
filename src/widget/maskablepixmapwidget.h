@@ -38,8 +38,8 @@ signals:
     void clicked();
 
 protected:
-    virtual void paintEvent(QPaintEvent *) final override;
-    virtual void mousePressEvent(QMouseEvent *) final override;
+    virtual void paintEvent(QPaintEvent *) final;
+    virtual void mousePressEvent(QMouseEvent *) final;
 
 private:
     QPixmap pixmap, mask, unscaled;

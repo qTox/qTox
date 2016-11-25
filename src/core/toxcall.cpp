@@ -8,19 +8,19 @@
 #include <QtConcurrent/QtConcurrent>
 
 /**
- * @var uint32_t ToxCall::callId
+ * @var ToxCall::callId
  * @brief Could be a friendNum or groupNum, must uniquely identify the call. Do not modify!
  *
- * @var bool ToxCall::inactive
+ * @var ToxCall::inactive
  * @brief True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
  *
- * @var bool ToxFriendCall::videoEnabled
+ * @var ToxCall::videoEnabled
  * @brief True if our user asked for a video call, sending and recieving.
  *
- * @var bool ToxFriendCall::nullVideoBitrate
+ * @var ToxCall::nullVideoBitrate
  * @brief True if our video bitrate is zero, i.e. if the device is closed.
  *
- * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
+ * @var ToxCall::state
  * @brief State of the peer (not ours!)
  */
 

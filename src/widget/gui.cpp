@@ -43,12 +43,10 @@
  * @brief Emitted when the GUI is resized on supported platforms.
  */
 
-GUI::GUI(QObject *parent) :
-    QObject(parent)
+GUI::GUI() :
+    QObject()
 {
     assert(QThread::currentThread() == qApp->thread());
-    assert(Nexus::getDesktopGUI());
-    connect(Nexus::getDesktopGUI(), &Widget::resized, this, &GUI::resized);
 }
 
 /**

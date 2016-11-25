@@ -159,61 +159,29 @@ void Nexus::showLogin()
     loginScreen->reset();
     loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
     loginScreen->show();
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    qApp->setQuitOnLastWindowClosed(true);
 }
 
 void Nexus::showMainGUI()
 {
     assert(profile);
 
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
+    qApp->setQuitOnLastWindowClosed(false);
     loginScreen->close();
 
-    // Create GUI
+    const Core* core = profile->getCore();
     widget = Widget::getInstance();
-
-    // Start GUI
-    widget->init();
-    GUI::getInstance();
+    connect(core, &Core::started, this, [&]()
+    {
+        // initialize GUI after core thread was started
+        widget->init();
+    });
 
     // Zetok protection
     // There are small instants on startup during which no
     // profile is loaded but the GUI could still receive events,
     // e.g. between two modal windows. Disable the GUI to prevent that.
     GUI::setEnabled(false);
-
-    // Connections
-    Core* core = profile->getCore();
-    connect(core, &Core::connected,                  widget, &Widget::onConnected);
-    connect(core, &Core::disconnected,               widget, &Widget::onDisconnected);
-    connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore, Qt::BlockingQueuedConnection);
-    connect(core, &Core::badProxy,                   widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
-    connect(core, &Core::statusSet,                  widget, &Widget::onStatusSet);
-    connect(core, &Core::usernameSet,                widget, &Widget::setUsername);
-    connect(core, &Core::statusMessageSet,           widget, &Widget::setStatusMessage);
-    connect(core, &Core::selfAvatarChanged,          widget, &Widget::onSelfAvatarLoaded);
-    connect(core, &Core::friendAdded,                widget, &Widget::addFriend);
-    connect(core, &Core::friendshipChanged,          widget, &Widget::onFriendshipChanged);
-    connect(core, &Core::failedToAddFriend,          widget, &Widget::addFriendFailed);
-    connect(core, &Core::friendUsernameChanged,      widget, &Widget::onFriendUsernameChanged);
-    connect(core, &Core::friendStatusChanged,        widget, &Widget::onFriendStatusChanged);
-    connect(core, &Core::friendStatusMessageChanged, widget, &Widget::onFriendStatusMessageChanged);
-    connect(core, &Core::friendRequestReceived,      widget, &Widget::onFriendRequestReceived);
-    connect(core, &Core::friendMessageReceived,      widget, &Widget::onFriendMessageReceived);
-    connect(core, &Core::receiptRecieved,            widget, &Widget::onReceiptRecieved);
-    connect(core, &Core::groupInviteReceived,        widget, &Widget::onGroupInviteReceived);
-    connect(core, &Core::groupMessageReceived,       widget, &Widget::onGroupMessageReceived);
-    connect(core, &Core::groupNamelistChanged,       widget, &Widget::onGroupNamelistChanged);
-    connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
-    connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
-    connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
-    connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
-
-    connect(widget, &Widget::statusSet,             core, &Core::setStatus);
-    connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
-    connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
 }
