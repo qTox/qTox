@@ -17,11 +17,11 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Riprodurre un suono di prova mentre si cambia il volume di uscita.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizza lo slider per impostare la ricezione del dispositivo di input che va da %1 dB a %2 dB.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -125,11 +125,11 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
+        <translation>Consulta l'elenco completo di %1 su Github</translation>
     </message>
     <message>
         <source>contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>contributori</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -324,19 +324,19 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation>A meno che non sai %1 cosa stai facendo, si prega di %2 cambiare nulla qui. Le modifiche apportate qui potrebbero portare a problemi con qTox, e anche per la perdita di dati, ad esempio la cronologia.</translation>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>realmente</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>non</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>NOTA IMPORTANTE</translation>
     </message>
     <message>
         <source>Reset settings</source>
@@ -370,7 +370,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Logs (*.log)</translation>
     </message>
 </context>
 <context>
@@ -444,15 +444,15 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta il Log di Debug</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia il Log di Debug</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1196,7 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviti ad un gruppo</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1208,7 +1208,7 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitato da %1 su %2 a %3.</translation>
     </message>
 </context>
 <context>
@@ -1365,12 +1365,12 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrati su ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nome per il servizio ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
@@ -1384,12 +1384,12 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Servizio ToxMe a cui registrarsi</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Se non è impostata, le registrazioni ToxMe sono pubblicamente visibili.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
@@ -1516,11 +1516,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo per l&apos;inserimento dell&apos;Username</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo per l&apos;inserimento della Password, si può lasciare vuota (nessuna password), o digitare almeno 6 caratteri</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1528,7 +1528,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsante per la creazione di un nuovo profilo</translation>
     </message>
     <message>
         <source>Profile list</source>
@@ -1540,27 +1540,27 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserimento password</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Casella per caricare automaticamente</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Importa profilo</translation>
+        <translation>Importa profilo</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsante per caricare il profilo selezionato</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagina per la creazione di un nuovo profilo</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica la pagina del profilo esistente</translation>
     </message>
 </context>
 <context>
@@ -1623,7 +1623,7 @@ You may want to create one.</source>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Porta tutto in primo piano</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1638,8 +1638,8 @@ You may want to create one.</source>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation type="unfinished">
-            <numerusform>Messaggi non letti</numerusform>
+        <translation>
+            <numerusform>Messaggio non letto</numerusform>
             <numerusform>Messaggi non letti</numerusform>
         </translation>
     </message>
@@ -1648,7 +1648,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished">CAPS-LOCK ABILITATO</translation>
+        <translation>CAPS-LOCK ABILITATO</translation>
     </message>
 </context>
 <context>
@@ -1924,7 +1924,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox save file (*.tox)</translation>
+        <translation>File di salvataggio di Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
@@ -1984,7 +1984,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
@@ -2155,7 +2155,7 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished"></translation>
+        <translation>Premi %1 per inviare uno screenshot della selezione, %2 per nascondere/mostrare la finestra qTox, o %3 per annullare.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2250,7 +2250,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Carattere di base:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2262,15 +2262,15 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>La nuova preferenza dello stile del testo sarà caricata al riavvio qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato dello stile del testo:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezionare lo stile del testo.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2526,7 +2526,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviti ad un gruppo</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2543,16 +2543,16 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
-        <translation type="unfinished">
-            <numerusform>%n Nuove Richieste di Amicizia</numerusform>
+        <translation>
+            <numerusform>%n Nuova Richiesta di Amicizia</numerusform>
             <numerusform>%n Nuove Richieste di Amicizia</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Nuovo Invito ad un Gruppo</numerusform>
+            <numerusform>%n Nuovi Inviti ad un Gruppo</numerusform>
         </translation>
     </message>
     <message>
