@@ -1,4 +1,4 @@
-sudo: true
+sudo: required
 dist: trusty
 language: cpp
 
@@ -9,6 +9,7 @@ branches:
     - /^v(\d+\.){2}\d+$/
 
 matrix:
+  fast_finish: true
   include:
     - os: linux
       env: JOB=verify-commit-format ENV=linux

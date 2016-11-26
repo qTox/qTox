@@ -111,11 +111,23 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/uk.ts
   translations/zh.ts)
 
-qt5_add_resources(${PROJECT_NAME}_RESOURCES
+qt5_add_resources(
+  ${PROJECT_NAME}_RESOURCES
   res.qrc
-  smileys/smileys.qrc
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
-  DEPENDS ${${PROJECT_NAME}_QM_FILES})
+  DEPENDS ${${PROJECT_NAME}_QM_FILES}
+)
+
+if(NOT ${SMILEYS})
+    set(SMILEYS, "")
+endif()
+
+if(NOT ${SMILEYS} MATCHES "NO")
+  qt5_add_resources(smileys/emojione.qrc)
+  if(NOT ${SMILEYS} MATCHES "MIN")
+    qt5_add_resources(smileys/smileys.qrc)
+  endif()
+endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc.in"
 "<!DOCTYPE RCC>
