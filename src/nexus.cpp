@@ -308,19 +308,17 @@ void Nexus::showLoginLater()
     QMetaObject::invokeMethod(&getInstance(), "showLogin", Qt::QueuedConnection);
 }
 
+#ifdef Q_OS_MAC
 void Nexus::retranslateUi()
 {
-#ifdef Q_OS_MAC
     viewMenu->menuAction()->setText(tr("View", "OS X Menu bar"));
     windowMenu->menuAction()->setText(tr("Window", "OS X Menu bar"));
     minimizeAction->setText(tr("Minimize", "OS X Menu bar"));
     frontAction->setText((tr("Bring All to Front", "OS X Menu bar")));
-#endif
 }
 
 void Nexus::onWindowStateChanged(Qt::WindowStates state)
 {
-#ifdef Q_OS_MAC
     minimizeAction->setEnabled(QApplication::activeWindow() != nullptr);
 
     if (QApplication::activeWindow() != nullptr && sender() == QApplication::activeWindow())
@@ -337,17 +335,13 @@ void Nexus::onWindowStateChanged(Qt::WindowStates state)
     }
 
     updateWindowsStates();
-#endif
 }
 
 void Nexus::updateWindows()
 {
-#ifdef Q_OS_MAC
     updateWindowsArg(nullptr);
-#endif
 }
 
-#ifdef Q_OS_MAC
 void Nexus::updateWindowsArg(QWindow* closedWindow)
 {
     QWindowList windowList = QApplication::topLevelWindows();
@@ -386,18 +380,14 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
     if (dockLast && !dockLast->isSeparator())
         dockMenu->insertSeparator(dockLast);
 }
-#endif
 
 void Nexus::updateWindowsClosed()
 {
-#ifdef Q_OS_MAC
     updateWindowsArg(static_cast<QWidget*>(sender())->windowHandle());
-#endif
 }
 
 void Nexus::updateWindowsStates()
 {
-#ifdef Q_OS_MAC
     bool exists = false;
     QWindowList windowList = QApplication::topLevelWindows();
 
@@ -411,12 +401,10 @@ void Nexus::updateWindowsStates()
     }
 
     frontAction->setEnabled(exists);
-#endif
 }
 
 void Nexus::onOpenWindow(QObject* object)
 {
-#ifdef Q_OS_MAC
     QWindow* window = static_cast<QWindow*>(object);
 
     if (window->windowState() & QWindow::Minimized)
@@ -424,24 +412,20 @@ void Nexus::onOpenWindow(QObject* object)
 
     window->raise();
     window->requestActivate();
-#endif
 }
 
 void Nexus::toggleFullscreen()
 {
-#ifdef Q_OS_MAC
     QWidget* window = QApplication::activeWindow();
 
     if (window->isFullScreen())
         window->showNormal();
     else
         window->showFullScreen();
-#endif
 }
 
 void Nexus::bringAllToFront()
 {
-#ifdef Q_OS_MAC
     QWindowList windowList = QApplication::topLevelWindows();
     QWindow* focused = QApplication::focusWindow();
 
@@ -449,5 +433,5 @@ void Nexus::bringAllToFront()
         window->raise();
 
     focused->raise();
-#endif
 }
+#endif

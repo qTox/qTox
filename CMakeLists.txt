@@ -22,6 +22,7 @@ execute_process(
   COMMAND brew --prefix qt5
   OUTPUT_VARIABLE QT_PREFIX_PATH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 if(NOT QT_PREFIX_PATH)
   set(QT_PREFIX_PATH
     /usr/src/mxe/usr/x86_64-w64-mingw32.shared/qt5

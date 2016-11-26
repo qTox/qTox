@@ -158,7 +158,9 @@ signals:
     void usernameChanged(const QString& username);
     void statusMessageChanged(const QString& statusMessage);
     void resized();
+#ifdef Q_OS_MAC
     void windowStateChanged(Qt::WindowStates states);
+#endif
 
 protected:
     virtual bool eventFilter(QObject *obj, QEvent *event) final override;

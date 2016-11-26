@@ -40,8 +40,10 @@ public:
 
     bool event(QEvent* event) final override;
 
+#ifdef Q_OS_MAC
 signals:
     void windowStateChanged(Qt::WindowStates states);
+#endif
 
 private slots:
     void onAutoLoginToggled(int state);

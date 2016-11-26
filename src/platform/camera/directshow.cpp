@@ -19,8 +19,6 @@
 */
 
 
-#include <QtCore>
-#ifdef Q_OS_WIN
 #include "directshow.h"
 
 #include <cstdint>
@@ -255,4 +253,3 @@ next:
 
     return modes;
 }
-#endif

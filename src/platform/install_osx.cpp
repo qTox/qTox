@@ -18,8 +18,6 @@
 */
 
 
-#include <QtCore>
-#ifdef Q_OS_OSX
 #include "install_osx.h"
 #include <QApplication>
 #include <QMessageBox>
@@ -118,4 +116,3 @@ void osx::migrateProfiles()
     }
 }
 // End migrateProfiles() compatibility code
-#endif
