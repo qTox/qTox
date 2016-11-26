@@ -79,6 +79,13 @@ AddFriendForm::AddFriendForm()
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
+    // accessibility stuff
+    toxIdLabel.setAccessibleDescription(tr("Tox ID, either 76 hexadecimal characters or name@example.com"));
+    toxId.setAccessibleDescription(tr("Type in Tox ID of your friend"));
+    messageLabel.setAccessibleDescription(tr("Friend request message"));
+    message.setAccessibleDescription(
+        tr("Type message to send with the friend request or leave empty to send a default message"));
+
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
