@@ -1,8 +1,14 @@
 #!/bin/sh
 
+# toxcore
 git clone --depth=1 https://github.com/irungentoo/toxcore
-
-RUN $CMAKE -Btoxcore/$BUILD_DIR -Htoxcore -DBOOTSTRAP_DAEMON=OFF -DASSOC_DHT=ON -DDEBUG=ON -DSTRICT_ABI=ON -DCMAKE_INSTALL_PREFIX:PATH=$CURDIR/libs
-RUN $MAKE -C toxcore/$BUILD_DIR -j$NPROC -k install
+cd toxcore
+autoreconf -if
+./configure
+make -j$(nproc) > /dev/null
+sudo make install
+echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
+sudo ldconfig
+cd ..
 
 rm -rf toxcore
