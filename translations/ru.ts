@@ -318,6 +318,22 @@ which may lead to problems with video calls.</source>
         <comment>Toxme error</comment>
         <translation>Такого Tox ID не существует</translation>
     </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
@@ -1372,22 +1388,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Зарегистрироваться на ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Имя на сервисе ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Необязательно. Напишите что-нибудь о вас. Или о вашем коте.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Необязательно. Напишите что-нибудь о вас. Или о вашем коте.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
