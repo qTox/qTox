@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Screen %1</source>
-        <translation>الشاشة 1%</translation>
+        <translation>الشاشة %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
