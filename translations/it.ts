@@ -125,7 +125,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
-        <translation>Consulta l'elenco completo di %1 su Github</translation>
+        <translation>Consulta l&apos;elenco completo di %1 su Github</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -314,6 +314,22 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
         <translation>Questo Tox ID non esiste</translation>
+    </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1396,6 +1412,78 @@ I profili non contengono la cronologia messaggi.</translation>
         <comment>Tooltip for the `Remove password` button.</comment>
         <translation>Rimuovi la password e la crittografia dal tuo profilo.</translation>
     </message>
+    <message>
+        <source>Name input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message visible to contacts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save QR image as file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy QR image to clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe username to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Optional ToxMe biography to be shown on ToxMe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ToxMe service address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visibility on the ToxMe service</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ToxMe entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename profile.</source>
+        <translation type="unfinished">Rinomina profilo.</translation>
+    </message>
+    <message>
+        <source>Delete profile.</source>
+        <translation type="unfinished">Elimina profilo.</translation>
+    </message>
+    <message>
+        <source>Export profile</source>
+        <translation type="unfinished">Esporta profilo</translation>
+    </message>
+    <message>
+        <source>Remove password from profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1532,7 +1620,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Profile list</source>
-        <translation >Lista profili</translation>
+        <translation>Lista profili</translation>
     </message>
     <message>
         <source>List of profiles</source>

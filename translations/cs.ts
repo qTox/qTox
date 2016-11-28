@@ -315,6 +315,22 @@ může způsobovat problémy během videohovorů.</translation>
         <comment>Toxme error</comment>
         <translation>Toto Tox ID neexistuje</translation>
     </message>
+    <message>
+        <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type in Tox ID of your friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friend request message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AdvancedForm</name>
