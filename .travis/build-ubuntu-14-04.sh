@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2015-2016 by The qTox Project
+#    Copyright © 2015-2016 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
