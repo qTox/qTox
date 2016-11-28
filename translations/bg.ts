@@ -1173,7 +1173,7 @@ instead of system taskbar.</source>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation>1% потребител/и в чата</translation>
+        <translation>%1 потребител/и в чата</translation>
     </message>
     <message>
         <source>1 user in chat</source>
@@ -1241,7 +1241,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>%1 users in chat</source>
-        <translation>1% потребители в чата</translation>
+        <translation>%1 потребители в чата</translation>
     </message>
     <message>
         <source>Set title...</source>
