@@ -53,8 +53,9 @@ get_filename() {
 # call the other script to update && amend
 update() {
     local file=$(get_filename)
+    local commit_msg=$(get_commit_title)
     ./tools/update-translation-files.sh "$file"
-    git commit -S --amend "$file"
+    git commit -S --amend -m "$commit_msg" "$file"
 }
 
 
