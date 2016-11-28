@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2014-2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -27,32 +27,52 @@
 #define RETRY_PEER_INFO_INTERVAL 500
 
 class Friend;
+class GroupNotify;
 class GroupWidget;
 class GroupChatForm;
 class ToxId;
 
-class Group : public QObject
+class Group final
 {
-    Q_OBJECT
+    class Private;
+
 public:
-    Group(int GroupId, QString Name, bool IsAvGroupchat);
-    virtual ~Group();
+    using ID = int;
+    using Groups = QHash<ID, Private*>;
+    using List = QList<Group*>;
+
+private:
+    static GroupNotify notifier;
+
+public:
+    static Group* get(int groupId);
+    static List getAll();
+    static void remove(int groupId);
+
+    inline static const GroupNotify* notify()
+    {
+        return &notifier;
+    }
+
+    inline static QString statusToString(const Group* g)
+    {
+        Q_UNUSED(g);
+        return QObject::tr("Online");
+    }
+
+public:
+    Group(ID groupId, QString name, bool isAvGroupchat);
+    ~Group();
 
     bool isAvGroupchat() const;
-    int getGroupId() const;
+    ID getGroupId() const;
     int getPeersCount() const;
     void regeneratePeerList();
     QStringList getPeerList() const;
     bool isSelfPeerNumber(int peernumber) const;
 
-    GroupChatForm *getChatForm();
-    GroupWidget *getGroupWidget();
-
-    void setEventFlag(int f);
-    int getEventFlag() const;
-
-    void setMentionedFlag(int f);
-    int getMentionedFlag() const;
+    void setMentionedFlag(bool f);
+    bool getMentionedFlag() const;
 
     void updatePeer(int peerId, QString newName);
     void setName(const QString& name);
@@ -60,21 +80,24 @@ public:
 
     QString resolveToxId(const ToxId &id) const;
 
-signals:
-    void titleChanged(GroupWidget* widget);
-    void userListChanged(GroupWidget* widget);
-
 private:
-    GroupWidget* widget;
-    GroupChatForm* chatForm;
+    ID groupId;
+    QString title;
     QStringList peers;
     QMap<QString, QString> toxids;
-    int hasNewMessages, userWasMentioned;
-    int groupId;
     int nPeers;
     int selfPeerNum = -1;
     bool avGroupchat;
+};
 
+class GroupNotify : public QObject
+{
+    Q_OBJECT
+public:
+    GroupNotify();
+signals:
+    void titleChanged(const Group& g, QString title);
+    void userListChanged(const Group& g, int numPeers, quint8 change);
 };
 
 #endif // GROUP_H

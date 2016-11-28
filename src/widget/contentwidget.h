@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project
+    Copyright © 2016 by The qTox Project
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,28 +17,36 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef FRIENDLIST_H
-#define FRIENDLIST_H
+#ifndef CONTENTWIDGET_H
+#define CONTENTWIDGET_H
 
-template <class T> class QList;
-template <class A, class B> class QHash;
-class Friend;
-class QString;
-class ToxId;
+#include <QFrame>
+#include <QPointer>
 
-class FriendList
+class QVBoxLayout;
+
+class ContentWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
-    static Friend* addFriend(int friendId, const ToxId &userId);
-    static Friend* findFriend(int friendId);
-    static Friend* findFriend(const ToxId &userId);
-    static QList<Friend*> getAllFriends();
-    static void removeFriend(int friendId, bool fake = false);
-    static void clear();
+    explicit ContentWidget(QWidget *parent = nullptr,
+                           Qt::WindowFlags f = Qt::WindowFlags());
+
+    void setLayout(QLayout* layout) = delete;
+
+    void setupLayout(QWidget* head, QWidget* body);
+    QSize minimumSizeHint() const override;
+
+protected:
+    QWidget* headerWidget() const;
+    QWidget* bodyWidget() const;
 
 private:
-    static QHash<int, Friend*> friendList;
-    static QHash<QString, int> tox2id;
+    QVBoxLayout*        contentLayout;
+    QFrame              mainHLine;
+    QPointer<QWidget>   head;
+    QPointer<QWidget>   body;
 };
 
-#endif // FRIENDLIST_H
+#endif

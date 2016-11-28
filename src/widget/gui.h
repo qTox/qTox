@@ -55,11 +55,8 @@ public:
 
     static QString passwordDialog(const QString& cancel, const QString& body);
 
-signals:
-    void resized();
-
 private:
-    explicit GUI(QObject *parent = 0);
+    explicit GUI();
 
 private slots:
     // Private implementation, those must be called from the GUI thread

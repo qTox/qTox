@@ -21,6 +21,7 @@
 #include "core.h"
 #include "corefile.h"
 #include "corestructs.h"
+#include "src/friend.h"
 #include "src/core/cstring.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
@@ -292,18 +293,22 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, u
         QString friendAddr = core->getFriendPublicKey(friendId);
         if (!filesize)
         {
-            qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             // Avatars of size 0 means explicitely no avatar
-            emit core->friendAvatarRemoved(friendId);
+            qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
             core->profile.removeAvatar(friendAddr);
+            Friend::updateAvatar(friendId, QPixmap());
             return;
         }
         else
         {
-            static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH, "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
-            uint8_t avatarHash[TOX_FILE_ID_LENGTH];
-            tox_file_get_file_id(core->tox, friendId, fileId, avatarHash, nullptr);
-            if (core->profile.getAvatarHash(friendAddr) == QByteArray((char*)avatarHash, TOX_HASH_LENGTH))
+            static_assert(TOX_HASH_LENGTH <= TOX_FILE_ID_LENGTH,
+                          "TOX_HASH_LENGTH > TOX_FILE_ID_LENGTH!");
+            char avatarHash[TOX_FILE_ID_LENGTH];
+            tox_file_get_file_id(core->tox, friendId, fileId,
+                                 reinterpret_cast<uint8_t*>(avatarHash),
+                                 nullptr);
+            if (core->profile.getAvatarHash(friendAddr) ==
+                QByteArray(avatarHash, TOX_HASH_LENGTH))
             {
                 // If it's an avatar but we already have it cached, cancel
                 qDebug() << QString("Received avatar request %1:%2, reject, since we have it in cache.").arg(friendId).arg(fileId);
@@ -459,7 +464,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
             {
                 qDebug() << "Got"<<file->avatarData.size()<<"bytes of avatar data from" <<friendId;
                 core->profile.saveAvatar(file->avatarData, core->getFriendPublicKey(friendId));
-                emit core->friendAvatarChanged(friendId, pic);
+                Friend::updateAvatar(friendId, pic);
             }
         }
         else
@@ -481,15 +486,19 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fil
         emit static_cast<Core*>(core)->fileTransferInfo(*file);
 }
 
-void CoreFile::onConnectionStatusChanged(Core* core, uint32_t friendId, bool online)
+void CoreFile::onConnectionStatusChanged(uint32_t friendId, bool online)
 {
+    Core* core = Core::getInstance();
+
     // TODO: Actually resume broken file transfers
     // We need to:
     // - Start a new file transfer with the same 32byte file ID with toxcore
     // - Seek to the correct position again
     // - Update the fileNum in our ToxFile
-    // - Update the users of our signals to check the 32byte tox file ID, not the uint32_t file_num (fileId)
-    ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING : ToxFile::BROKEN;
+    // - Update the users of our signals to check the 32byte tox file ID, not
+    //   the uint32_t file_num (fileId)
+    ToxFile::FileStatus status = online ? ToxFile::TRANSMITTING
+                                        : ToxFile::BROKEN;
     for (uint64_t key : fileMap.keys())
     {
         if (key>>32 != friendId)

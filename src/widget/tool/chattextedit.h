@@ -37,7 +37,7 @@ signals:
     void keyPressed();
 
 protected:
-    virtual void keyPressEvent(QKeyEvent * event) final override;
+    virtual void keyPressEvent(QKeyEvent * event) final;
 
 private:
     void retranslateUi();

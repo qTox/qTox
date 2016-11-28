@@ -18,23 +18,36 @@
 */
 
 #include "genericchatroomwidget.h"
-#include "src/widget/style.h"
-#include "src/persistence/settings.h"
-#include "maskablepixmapwidget.h"
-#include "src/widget/tool/croppinglabel.h"
+
 #include <QBoxLayout>
 #include <QMouseEvent>
 
-GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
-    : GenericChatItemWidget(parent), active{false}
-{
-    // avatar
-    QSize size;
-    if (isCompact())
-        size = QSize(20,20);
-    else
-        size = QSize(40,40);
+#include "maskablepixmapwidget.h"
+#include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/croppinglabel.h"
 
+/**
+ * @class GenericChatroomWidget
+ *
+ * @fn type
+ * @brief Returns the chatroom widget's type.
+ * @return the chatroom type
+ */
+
+GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
+    : GenericChatItemWidget(parent)
+    , active{false}
+    , hasNewMessages{false}
+{
+    const Settings& s = Settings::getInstance();
+
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GenericChatroomWidget::onCompactLayoutChanged);
+
+    // avatar
+    QSize size = s.getCompactLayout() ? QSize(20,20) : QSize(40,40);
     avatar = new MaskablePixmapWidget(this, size, ":/img/avatar_mask.svg");
 
     // status text
@@ -47,39 +60,29 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
     setAutoFillBackground(true);
     reloadTheme();
 
-    compactChange(isCompact());
+    onCompactLayoutChanged(s.getCompactLayout());
 }
 
 bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
 {
-    return true; // Disable all events.
+    // Disable all events.
+    return true;
 }
 
-void GenericChatroomWidget::compactChange(bool _compact)
+void GenericChatroomWidget::onCompactLayoutChanged(bool compact)
 {
-    if (!isCompact())
-        delete textLayout; // has to be first, deleted by layout
-
-    setCompact(_compact);
-
     delete mainLayout;
-
-    mainLayout = new QHBoxLayout;
-    textLayout = new QVBoxLayout;
-
-    setLayout(mainLayout);
+    mainLayout = new QHBoxLayout(this);
     mainLayout->setSpacing(0);
     mainLayout->setMargin(0);
-    textLayout->setSpacing(0);
-    textLayout->setMargin(0);
-    setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
+    setLayoutDirection(Qt::LeftToRight);
 
     // avatar
-    if (isCompact())
+    if (compact)
     {
-        delete textLayout;  // Not needed
         setFixedHeight(25);
         avatar->setSize(QSize(20,20));
+
         mainLayout->addSpacing(18);
         mainLayout->addWidget(avatar);
         mainLayout->addSpacing(5);
@@ -89,6 +92,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
         mainLayout->addWidget(&statusPic);
         mainLayout->addSpacing(5);
         mainLayout->activate();
+
         statusMessageLabel->setFont(Style::getFont(Style::Small));
         nameLabel->setFont(Style::getFont(Style::Medium));
     }
@@ -96,10 +100,15 @@ void GenericChatroomWidget::compactChange(bool _compact)
     {
         setFixedHeight(55);
         avatar->setSize(QSize(40,40));
+
+        QVBoxLayout* textLayout = new QVBoxLayout;
+        textLayout->setSpacing(0);
+        textLayout->setMargin(0);
         textLayout->addStretch();
         textLayout->addWidget(nameLabel);
         textLayout->addWidget(statusMessageLabel);
         textLayout->addStretch();
+
         mainLayout->addSpacing(20);
         mainLayout->addWidget(avatar);
         mainLayout->addSpacing(10);
@@ -108,6 +117,7 @@ void GenericChatroomWidget::compactChange(bool _compact)
         mainLayout->addWidget(&statusPic);
         mainLayout->addSpacing(10);
         mainLayout->activate();
+
         statusMessageLabel->setFont(Style::getFont(Style::Medium));
         nameLabel->setFont(Style::getFont(Style::Big));
     }
@@ -152,12 +162,7 @@ QString GenericChatroomWidget::getStatusMsg() const
 
 QString GenericChatroomWidget::getTitle() const
 {
-    QString title = getName();
-
-    if (!getStatusString().isNull())
-        title += QStringLiteral(" (") + getStatusString() + QStringLiteral(")");
-
-    return title;
+    return GenericChatItemWidget::getName();
 }
 
 void GenericChatroomWidget::reloadTheme()
@@ -179,6 +184,11 @@ void GenericChatroomWidget::reloadTheme()
     p.setColor(QPalette::Highlight, Style::getColor(Style::ThemeLight)); // On mouse over
     p.setColor(QPalette::Light, Style::getColor(Style::White)); // When active
     setPalette(p);
+}
+
+void GenericChatroomWidget::setEventFlag(bool enabled)
+{
+    hasNewMessages = enabled;
 }
 
 void GenericChatroomWidget::mouseReleaseEvent(QMouseEvent* event)

@@ -34,19 +34,19 @@ class GenericChatroomWidget : public GenericChatItemWidget
 {
     Q_OBJECT
 public:
+    enum class Type { Friend = 0, Group = 1 };
+
+public:
     explicit GenericChatroomWidget(QWidget *parent = 0);
 
-    virtual void setAsActiveChatroom() = 0;
-    virtual void setAsInactiveChatroom() = 0;
+    virtual Type type() const = 0;
+    virtual void setAsActiveChatroom(bool activate) = 0;
     virtual void updateStatusLight() = 0;
     virtual bool chatFormIsSet(bool focus) const = 0;
-    virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
-    virtual QString getStatusString() const = 0;
-    virtual Friend* getFriend() const{return nullptr;}
-    virtual Group* getGroup() const{return nullptr;}
+    virtual QString getTitle() const  = 0;
 
-    virtual bool eventFilter(QObject *, QEvent *) final override;
+    bool eventFilter(QObject *, QEvent *) final;
 
     bool isActive();
     void setActive(bool active);
@@ -54,30 +54,34 @@ public:
     void setName(const QString& name);
     void setStatusMsg(const QString& status);
     QString getStatusMsg() const;
-    QString getTitle() const;
 
 	void reloadTheme();
 
+    void setEventFlag(bool enabled);
+    inline bool getEventFlag() const
+    {
+        return hasNewMessages;
+    }
+
 public slots:
-	void compactChange(bool compact);
+    void onCompactLayoutChanged(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
 
 protected:
-    virtual void mouseReleaseEvent(QMouseEvent* event) override;
-    virtual void enterEvent(QEvent* e) override;
-    virtual void leaveEvent(QEvent* e) override;
-
-    QPoint dragStartPos;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+    void enterEvent(QEvent* e) override;
+    void leaveEvent(QEvent* e) override;
 
 protected:
+    QPoint dragStartPos;
     QColor lastColor;
     QHBoxLayout* mainLayout = nullptr;
-    QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
 	bool active;
+    bool hasNewMessages;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

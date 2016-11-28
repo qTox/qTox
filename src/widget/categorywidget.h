@@ -46,26 +46,26 @@ public:
     bool hasChatrooms() const;
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-    void search(const QString &searchString, bool updateAll = false, bool hideOnline = false, bool hideOffline = false);
+    void search(const QString &searchString, bool updateAll = false,
+                bool hideOnline = false, bool hideOffline = false);
 
-public slots:
-    void onCompactChanged(bool compact);
+    void initLayout();
+    void moveFriendWidgets(FriendListWidget* friendList);
 
 protected:
-    virtual void leaveEvent(QEvent* event) final override;
-    virtual void mouseReleaseEvent(QMouseEvent* event) final override;
+    void leaveEvent(QEvent* event) final;
+    void mouseReleaseEvent(QMouseEvent* event) final;
 
     void editName();
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
-    void moveFriendWidgets(FriendListWidget* friendList);
     void emitChatroomWidget(QLayout *layout, int index);
 
 private:
-    virtual void onSetName() {}
-    virtual void onExpand() {}
-    virtual void onAddFriendWidget(FriendWidget*) {}
+    virtual void onSetName();
+    virtual void onExpand();
+    virtual void onAddFriendWidget(FriendWidget*);
 
     QWidget* listWidget;
     FriendListLayout* listLayout;

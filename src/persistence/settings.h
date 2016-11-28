@@ -21,14 +21,16 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
+#include <QDate>
+#include <QFlags>
 #include <QFont>
 #include <QHash>
+#include <QMutex>
+#include <QNetworkProxy>
 #include <QObject>
 #include <QPixmap>
-#include <QMutex>
-#include <QDate>
-#include <QNetworkProxy>
-#include <QFlags>
+#include <QSettings>
+
 #include "src/core/corestructs.h"
 
 class ToxId;
@@ -54,6 +56,8 @@ class Settings : public QObject
     // GUI
     Q_PROPERTY(bool separateWindow READ getSeparateWindow
                WRITE setSeparateWindow NOTIFY separateWindowChanged FINAL)
+    Q_PROPERTY(Qt::Edge contentArrangement READ getContentArrangement
+               WRITE setContentArrangement NOTIFY contentArrangementChanged FINAL)
     Q_PROPERTY(QString smileyPack READ getSmileyPack WRITE setSmileyPack
                NOTIFY smileyPackChanged FINAL)
     Q_PROPERTY(int emojiFontPointSize READ getEmojiFontPointSize
@@ -219,6 +223,7 @@ signals:
     void styleChanged(const QString& style);
     void themeColorChanged(int color);
     void compactLayoutChanged(bool enabled);
+    void contentArrangementChanged(Qt::Edge contentArrangement);
 
     // ChatView
     void useEmoticonsChanged(bool enabled);
@@ -478,6 +483,9 @@ public:
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
+    Qt::Edge getContentArrangement() const;
+    void setContentArrangement(Qt::Edge value);
+
     bool getSeparateWindow() const;
     void setSeparateWindow(bool value);
 
@@ -529,8 +537,19 @@ public:
 private:
     Settings();
     ~Settings();
-    Settings(Settings &settings) = delete;
-    Settings& operator=(const Settings&) = delete;
+    Settings(const Settings& other) = delete;
+    Settings(Settings&& other) = delete;
+
+    Settings& operator=(const Settings& other) = delete;
+    Settings& operator=(Settings&& other) = delete;
+
+    template<typename T>
+    inline
+    T getEnum(const QSettings& s, const QString& key, T defaultValue) const
+    {
+        return static_cast<T>(s.value(key, static_cast<int>(defaultValue))
+                              .toInt());
+    }
 
 private slots:
     void savePersonal(QString profileName, const QString &password);
@@ -548,6 +567,7 @@ private:
     bool compactLayout;
     bool groupchatPosition;
     bool separateWindow;
+    Qt::Edge contentArrangement;
     bool dontGroupWindows;
     bool enableIPv6;
     QString translation;
