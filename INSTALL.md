@@ -140,8 +140,6 @@ sudo apt-get install git
 
 <a name="fedora-git" />
 #### Fedora
-*`yum` is now officially deprecated by `dnf`. using `yum` will redirect to `dnf`
-on Fedora 21 and fail on future versions.*
 ```bash
 sudo dnf install git
 ```
@@ -199,10 +197,11 @@ libsqlcipher-dev
 
 <a name="fedora-other-deps" />
 #### Fedora
-**Note that sqlcipher is not included in Fedora(!).**
-
-**This means that you have to compile sqlcipher yourself, otherwise compiling
-qTox will fail.**
+**Note that sqlcipher is not included in all versions of Fedora yet.**
+As of writing this section (November 2016), Fedora 25 ships sqlcipher, but
+Fedora 24 and older don't ship it yet.
+**This means that if you can't install sqlcipher from repositories, you'll
+have to compile it yourself, otherwise compiling qTox will fail.**
 ```bash
 sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
@@ -210,8 +209,11 @@ sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel \
 openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel \
 qtsingleapplication qt5-linguist gtk2-devel libtool openssl-devel
 ```
+```bash
+sudo dnf install sqlcipher sqlcipher-devel
+```
 
-**Go to [sqlcipher](#sqlcipher) section to compile it.**
+**Go to [sqlcipher](#sqlcipher) section to compile it if necessary.**
 
 <a name="opensuse-other-deps" />
 #### openSUSE
@@ -296,7 +298,8 @@ libopus-dev libvpx-dev libsodium-dev
 
 ### sqlcipher
 
-If you are not using Fedora, skip this section, and go directly to compiling
+If you are not using an old version of Fedora, skip this section, and go
+directly to compiling
 [**toxcore**](#toxcore-compiling).
 
 ```bash
