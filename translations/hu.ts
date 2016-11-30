@@ -91,22 +91,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
 <context>
     <name>AboutForm</name>
     <message>
-        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Az ismert hibák listája megtalálható a Github %1 oldalunkon. Amennyiben hibát, vagy biztonsági rést talál a qToxban, kérjük %3, a %2 wiki oldalon található irányelv alapján.</translation>
-    </message>
-    <message>
-        <source>bug-tracker</source>
-        <translation>hibakövető</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <translation>Hasznos hibajelentések írása</translation>
-    </message>
-    <message>
-        <source>report it</source>
-        <translation>jelentse</translation>
-    </message>
-    <message>
         <source>Restart qTox to install version %1</source>
         <translation>Indítsa újra a qToxot, a %1 verzió telepítéséhez</translation>
     </message>
@@ -124,14 +108,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Eredeti szerző: %1</translation>
     </message>
     <message>
-        <source>See a full list of %1 at Github</source>
-        <translation>%1 teljes listája Github-on</translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <translation>hozzájárulók</translation>
-    </message>
-    <message>
         <source>You are using qTox version %1.</source>
         <translation>Ön a qTox %1 verzióját használja.</translation>
     </message>
@@ -146,6 +122,36 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>Qt version: %1</source>
         <translation>Qt verzió: %1</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
+        <comment>`%1` is replaced by translation of `bug tracker`
+`%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">hibakövető</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Hasznos hibajelentések írása</translation>
+    </message>
+    <message>
+        <source>Click here to report a bug.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <comment>`%1` is replaced with translation of word `contributors`</comment>
+        <translation type="unfinished">%1 teljes listája Github-on</translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">hozzájárulók</translation>
     </message>
 </context>
 <context>
@@ -250,6 +256,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Audio + Video</source>
         <translation>Hang + Videó</translation>
     </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -317,7 +331,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox azonosító, 76 hexadecimális karakter, vagy nev@pelda.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
@@ -486,18 +500,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>A qTox nem tudta ezt megnyitni: %1</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Megpróbált egy speciális (egymást követő) fájlt küldeni, ez jelenleg nem működik!</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Videóhívás elfogadása</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Hanghívás elfogadása</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 hívja Önt</translation>
     </message>
@@ -581,6 +583,35 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>Copy</source>
         <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">távol</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">elfoglalt</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">nem elérhető</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">elérhető</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 már %2</translation>
     </message>
 </context>
 <context>
@@ -1647,7 +1678,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Meglévő profil oldal betöltése</translation>
     </message>
 </context>
 <context>
@@ -1683,6 +1714,74 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     <message>
         <source>...</source>
         <translation>...</translation>
+    </message>
+    <message>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open profile page when clicked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set your status message that will be shown to others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Állapot</translation>
+    </message>
+    <message>
+        <source>Set availability status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search input for known friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set friends sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Add friends page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open groupchat management page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Beállítások</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2220,6 +2319,10 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation>Biztos eltávolítja %1 partnert a partnerlistáról?</translation>
     </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
@@ -2274,6 +2377,22 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>The password doesn&apos;t match.</source>
         <translation>A jelszó nem egyezik.</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, minimum 6 characters long</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
