@@ -111,43 +111,48 @@ if(WIN32)
   search_dependency(STRMIIDS          LIBRARY strmiids)
 endif()
 
-execute_process(
-  COMMAND git describe --tags
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_DESCRIBE
-  ERROR_QUIET
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+if (NOT GIT_DESCRIBE)
+    execute_process(
+      COMMAND git describe --tags
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      OUTPUT_VARIABLE GIT_DESCRIBE
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
 
-if(NOT GIT_DESCRIBE)
-  set(GIT_DESCRIBE "Nightly")
+    if(NOT GIT_DESCRIBE)
+      set(GIT_DESCRIBE "Nightly")
+    endif()
 endif()
 
 add_definitions(
   -DGIT_DESCRIBE="${GIT_DESCRIBE}"
 )
 
-# GIT_VERSION
-execute_process(
-  COMMAND git rev-parse HEAD
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  OUTPUT_VARIABLE GIT_VERSION
-  ERROR_QUIET
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+if (NOT GIT_VERSION)
+    execute_process(
+      COMMAND git rev-parse HEAD
+      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+      OUTPUT_VARIABLE GIT_VERSION
+      ERROR_QUIET
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
 
-if(NOT GIT_VERSION)
-  set(GIT_VERSION "build without git")
+    if(NOT GIT_VERSION)
+      set(GIT_VERSION "build without git")
+    endif()
 endif()
 
 add_definitions(
   -DGIT_VERSION="${GIT_VERSION}"
 )
 
-execute_process(
-  COMMAND date +%s
-  OUTPUT_VARIABLE TIMESTAMP
-)
+if (NOT TIMESTAMP)
+    execute_process(
+      COMMAND date +%s
+      OUTPUT_VARIABLE TIMESTAMP
+    )
+endif()
 
 add_definitions(
   -DTIMESTAMP=${TIMESTAMP}
