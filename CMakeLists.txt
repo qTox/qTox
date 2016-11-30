@@ -410,7 +410,10 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/widget.cpp
   src/widget/widget.h)
 
-if(GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
+if (NOT ENABLE_STATUSNOTIFIER)
+    set(ENABLE_STATUSNOTIFIER True)
+endif()
+if(${ENABLE_STATUSNOTIFIER} AND GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/statusnotifier/closures.c
     src/platform/statusnotifier/closures.h
@@ -428,11 +431,18 @@ if(AVFOUNDATION_FOUND)
     src/platform/camera/avfoundation.h)
 endif()
 
-if(APPINDICATOR_FOUND)
+if (NOT ENABLE_APPINDICATOR)
+    set(ENABLE_APPINDICATOR False)
+endif()
+if(${ENABLE_APPINDICATOR} AND APPINDICATOR_FOUND)
   add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
 endif()
 
-if(GTK_FOUND)
+if (NOT ENABLE_GTK_SYSTRAY)
+    set(ENABLE_GTK_SYSTRAY True)
+endif()
+
+if(${ENABLE_GTK_SYSTRAY} AND GTK_FOUND)
   add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
 endif()
 
