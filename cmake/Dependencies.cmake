@@ -154,8 +154,29 @@ if (NOT TIMESTAMP)
     )
 endif()
 
+set(APPLE_EXT False)
+if (AVFOUNDATION_FOUND OR FRAMEWORK_FOUND OR COREMEDIA_FOUND 
+        OR COREGRAPHICS_FOUND OR FOUNDATION_FOUND OR IOKIT_FOUND)
+    set(APPLE_EXT True)
+endif()
+
+set(LINUX_EXT False)
+if (APPINDICATOR_FOUND OR GDK_PIXBUF_FOUND OR GLIB_FOUND 
+        OR GTK_FOUND OR X11_FOUND OR XSS_FOUND)
+    set(LINUX_EXT True)
+endif()
+
+if (${APPLE_EXT} OR ${LINUX_EXT})
+    add_definitions(
+      -DQTOX_PLATFORM_EXT=1
+    )
+else()
+    add_definitions(
+      -DQTOX_PLATFORM_EXT=0
+    )
+endif()
+
 add_definitions(
   -DTIMESTAMP=${TIMESTAMP}
   -DLOG_TO_FILE=1
-  -DQTOX_PLATFORM_EXT=1
 )
