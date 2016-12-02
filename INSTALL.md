@@ -46,9 +46,54 @@
 | OpenAL Soft   | >= 1.16.0   |                                                   |
 | qrencode      | >= 3.0.3    |                                                   |
 | sqlcipher     | >= 3.2.0    |                                                   |
-| libXScrnSaver | >= 1.2      |                                                   |
 | pkg-config    | >= 0.28     |                                                   |
-| libX11        | >= 1.6.0    |                                                   |
+
+## Optional dependencies
+
+They can be disabled/enabled by passing arguments to `qmake` command when
+building qTox.
+
+If they are missing, qTox is built without support for the functionality.
+
+### Linux
+
+#### Auto-away support
+
+| Name          | Version  |
+|---------------|----------|
+| libXScrnSaver | >= 1.2   |
+| libX11        | >= 1.6.0 |
+
+To disable: `DISABLE_PLATFORM_EXT=YES`
+
+#### KDE Status Notifier / GTK tray backend
+
+| Name        | Version |
+|-------------|---------|
+| [Atk]       | >= 2.14 |
+| [Cairo]     | |
+| [GdkPixbuf] | >= 2.31 |
+| [GLib]      | >= 2.0  |
+| [GTK+]      | >= 2.0  |
+| [Pango]     | >= 1.18 |
+
+To disable: `ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO
+ENABLE_SYSTRAY_GTK_BACKEND=NO`
+
+#### Unity tray backend
+
+| Name        | Version |
+|-------------|---------|
+| [Atk]       | >= 2.14 |
+| [Cairo]     | |
+| [DBus Menu] | >= 0.6  |
+| [GdkPixbuf] | >= 2.31 |
+| [GLib]      | >= 2.0  |
+| [GTK+]      | >= 2.0  |
+| [libappindicator] | >= 0.4.92 |
+| [Pango]     | >= 1.18 |
+
+To enable: `ENABLE_SYSTRAY_UNITY_BACKEND=YES`
 
 
 <a name="linux" />
@@ -558,5 +603,13 @@ dependencies compile them and put to appropriate directories.
 
 
 
+[Atk]: https://wiki.gnome.org/Accessibility
+[Cairo]: https://www.cairographics.org/
+[DBus Menu]: https://launchpad.net/libdbusmenu
+[GdkPixbuf]: https://developer.gnome.org/gdk-pixbuf/
+[GLib]: https://wiki.gnome.org/Projects/GLib
+[GTK+]: https://www.gtk.org/
+[libappindicator]: https://launchpad.net/libappindicator
 [OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+[Pango]: http://www.pango.org/
 [Ubuntu PPA]: https://launchpad.net/~abbat/+archive/ubuntu/tox
