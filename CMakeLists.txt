@@ -23,14 +23,6 @@ execute_process(
   OUTPUT_VARIABLE QT_PREFIX_PATH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-if(NOT QT_PREFIX_PATH)
-  set(QT_PREFIX_PATH
-    /usr/src/mxe/usr/x86_64-w64-mingw32.shared/qt5
-    /usr/src/mxe/usr/i686-w64-mingw32.shared/qt5)
-endif()
-
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT_PREFIX_PATH})
-
 execute_process(
   COMMAND xcode-select -p
   OUTPUT_VARIABLE CMAKE_OSX_SYSROOT
@@ -54,6 +46,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 # Search for headers in current directory.
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 include(Dependencies)
 
@@ -252,12 +245,6 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/smileypack.h
   src/persistence/toxsave.cpp
   src/persistence/toxsave.h
-  src/platform/camera/directshow.cpp
-  src/platform/camera/directshow.h
-  src/platform/camera/v4l2.cpp
-  src/platform/camera/v4l2.h
-  src/platform/install_osx.cpp
-  src/platform/install_osx.h
   src/platform/autorun.h
   src/platform/capslock.h
   src/platform/timer.h
@@ -408,11 +395,30 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/translator.cpp
   src/widget/translator.h
   src/widget/widget.cpp
-  src/widget/widget.h)
+  src/widget/widget.h
+)
+
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/camera/directshow.cpp
+      src/platform/camera/directshow.h
+  )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/camera/v4l2.cpp
+      src/platform/camera/v4l2.h
+  )
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+      src/platform/install_osx.cpp
+      src/platform/install_osx.h
+  )
+endif()
 
 if (NOT ENABLE_STATUSNOTIFIER)
     set(ENABLE_STATUSNOTIFIER True)
 endif()
+
 if(${ENABLE_STATUSNOTIFIER} AND GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/statusnotifier/closures.c
