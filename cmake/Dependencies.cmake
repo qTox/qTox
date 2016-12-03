@@ -48,7 +48,12 @@ function(search_dependency pkg)
 
   # Then, try OSX frameworks.
   if(NOT ${pkg}_FOUND AND arg_FRAMEWORK)
-    find_library(${pkg}_LIBRARIES NAMES ${arg_FRAMEWORK} PATHS ${CMAKE_OSX_SYSROOT}/System/Library PATH_SUFFIXES Frameworks NO_DEFAULT_PATH)
+    find_library(${pkg}_LIBRARIES 
+            NAMES ${arg_FRAMEWORK} 
+            PATHS ${CMAKE_OSX_SYSROOT}/System/Library 
+            PATH_SUFFIXES Frameworks 
+            NO_DEFAULT_PATH
+    )
     if(${pkg}_LIBRARIES)
       set(${pkg}_FOUND TRUE)
     endif()
@@ -80,7 +85,6 @@ search_dependency(APPINDICATOR        PACKAGE appindicator-0.1 OPTIONAL)
 search_dependency(GDK_PIXBUF          PACKAGE gdk-pixbuf-2.0   OPTIONAL)
 search_dependency(GLIB                PACKAGE glib-2.0         OPTIONAL)
 search_dependency(GTK                 PACKAGE gtk+-2.0         OPTIONAL)
-search_dependency(X11                 PACKAGE x11              OPTIONAL)
 
 search_dependency(LIBAVCODEC          PACKAGE libavcodec)
 search_dependency(LIBAVDEVICE         PACKAGE libavdevice)
@@ -97,15 +101,17 @@ search_dependency(VPX                 PACKAGE vpx)
 
 search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
 
-# XScreenSaver support.
+search_dependency(X11                 PACKAGE x11 OPTIONAL)
+# Automatic auto-away support.
 search_dependency(XSS                 LIBRARY Xss OPTIONAL)
 
 if(APPLE)
   search_dependency(AVFOUNDATION      FRAMEWORK AVFoundation)
   search_dependency(COREMEDIA         FRAMEWORK CoreMedia   )
   search_dependency(COREGRAPHICS      FRAMEWORK CoreGraphics)
-  search_dependency(FOUNDATION        FRAMEWORK Foundation  )
-  search_dependency(IOKIT             FRAMEWORK IOKit       )
+
+  search_dependency(FOUNDATION        FRAMEWORK Foundation  OPTIONAL)
+  search_dependency(IOKIT             FRAMEWORK IOKit       OPTIONAL)
 endif()
 
 if(WIN32)
@@ -156,15 +162,13 @@ if (NOT TIMESTAMP)
 endif()
 
 set(APPLE_EXT False)
-if (AVFOUNDATION_FOUND OR FRAMEWORK_FOUND OR COREMEDIA_FOUND 
-        OR COREGRAPHICS_FOUND OR FOUNDATION_FOUND OR IOKIT_FOUND)
+if (FOUNDATION_FOUND OR IOKIT_FOUND)
     set(APPLE_EXT True)
 endif()
 
-set(LINUX_EXT False)
-if (APPINDICATOR_FOUND OR GDK_PIXBUF_FOUND OR GLIB_FOUND 
-        OR GTK_FOUND OR X11_FOUND OR XSS_FOUND)
-    set(LINUX_EXT True)
+set(X11_EXT False)
+if (X11_FOUND OR XSS_FOUND)
+    set(X11_EXT True)
 endif()
 
 if (${APPLE_EXT} OR ${LINUX_EXT})
