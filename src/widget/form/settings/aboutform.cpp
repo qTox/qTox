@@ -112,26 +112,37 @@ void AboutForm::replaceVersions()
     issueBody.replace("#", "%23").replace(":", "%3A");
 
     bodyUI->knownIssues->setText(
-                tr("A list of all known issues may be found at our %1 at Github."
-                   " If you discover a bug or security vulnerability within"
-                   " qTox, please %3 according to the guidelines in our %2"
-                   " wiki article.")
-                .arg(createLink("https://github.com/qTox/qTox/issues",
-                     tr("bug-tracker")))
-                .arg(createLink("https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports",
-                     tr("Writing Useful Bug Reports")))
-                .arg(createLink("https://github.com/qTox/qTox/issues/new?body="
-                                + QUrl(issueBody).toEncoded(),
-                     tr("report it")))
-                );
+        tr("A list of all known issues may be found at our %1 at Github."
+           " If you discover a bug or security vulnerability within"
+           " qTox, please report it according to the guidelines in our"
+           " %2 wiki article.",
+
+           "`%1` is replaced by translation of `bug tracker`"
+           "\n`%2` is replaced by translation of `Writing Useful Bug Reports`")
+        .arg(createLink("https://github.com/qTox/qTox/issues",
+             tr("bug-tracker",
+                "Replaces `%1` in the `A list of all known…`")))
+        .arg(createLink("https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports",
+             tr("Writing Useful Bug Reports",
+                "Replaces `%2` in the `A list of all known…`")))
+    );
+
+    bodyUI->clickToReport->setText(
+        createLink("https://github.com/qTox/qTox/issues/new?body="
+                        + QUrl(issueBody).toEncoded(),
+                   QString("<b>%1</b>")
+                      .arg(tr("Click here to report it.")))
+    );
 
 
     QString authorInfo = QString("<p>%1</p><p>%2</p>")
             .arg(tr("Original author: %1")
                  .arg(createLink("https://github.com/tux3", "tux3")))
-            .arg(tr("See a full list of %1 at Github")
+            .arg(tr("See a full list of %1 at Github",
+                    "`%1` is replaced with translation of word `contributors`")
                  .arg(createLink("https://github.com/qTox/qTox/graphs/contributors",
-                                 tr("contributors"))));
+                                 tr("contributors",
+                                    "Replaces `%1` in `See a full list of…`"))));
 
     bodyUI->authorInfo->setText(authorInfo);
 }
