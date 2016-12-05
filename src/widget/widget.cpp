@@ -976,7 +976,11 @@ void Widget::setStatusMessage(const QString& statusMessage)
     else
     {
         ui->statusLabel->setText(statusMessage);
-        ui->statusLabel->setToolTip(Qt::convertFromPlainText(statusMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
+        // escape HTML from tooltips and preserve newlines
+        // TODO: move newspace preservance to a generic function
+        ui->statusLabel->setToolTip("<p style='white-space:pre'>" +
+                                    statusMessage.toHtmlEscaped() +
+                                    "</p>");
     }
 }
 
