@@ -920,7 +920,10 @@ void Widget::setStatusMessage(const QString &statusMessage)
     else
     {
         ui->statusLabel->setText(statusMessage);
-        ui->statusLabel->setToolTip(Qt::convertFromPlainText(statusMessage, Qt::WhiteSpaceNormal)); // for overlength messsages
+        // escape HTML from tooltips;
+        // can mess up formatting if someone wants to use "HTML" tags in their
+        // status messages https://bugreports.qt.io/browse/QTBUG-57477
+        ui->statusLabel->setToolTip(statusMessage.toHtmlEscaped());
     }
 }
 
