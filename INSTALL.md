@@ -39,14 +39,14 @@
 
 | Name          | Version     | Modules                                           |
 |---------------|-------------|-------------------------------------------------- |
-| Qt            | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
-| GCC/MinGW     | >= 4.8      | C++11 enabled                                     |
-| toxcore       | most recent | core, av                                          |
-| FFmpeg        | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
-| OpenAL Soft   | >= 1.16.0   |                                                   |
-| qrencode      | >= 3.0.3    |                                                   |
-| sqlcipher     | >= 3.2.0    |                                                   |
-| pkg-config    | >= 0.28     |                                                   |
+| [Qt]          | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
+| [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
+| [toxcore]     | most recent | core, av                                          |
+| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
+| [OpenAL Soft] | >= 1.16.0   |                                                   |
+| [qrencode]    | >= 3.0.3    |                                                   |
+| [sqlcipher]   | >= 3.2.0    |                                                   |
+| [pkg-config]  | >= 0.28     |                                                   |
 
 ## Optional dependencies
 
@@ -59,10 +59,10 @@ If they are missing, qTox is built without support for the functionality.
 
 #### Auto-away support
 
-| Name          | Version  |
-|---------------|----------|
-| libXScrnSaver | >= 1.2   |
-| libX11        | >= 1.6.0 |
+| Name            | Version  |
+|-----------------|----------|
+| [libXScrnSaver] | >= 1.2   |
+| [libX11]        | >= 1.6.0 |
 
 To disable: `DISABLE_PLATFORM_EXT=YES`
 
@@ -604,14 +604,24 @@ Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
 dependencies compile them and put to appropriate directories.
 
 
-
 [Atk]: https://wiki.gnome.org/Accessibility
 [Cairo]: https://www.cairographics.org/
 [DBus Menu]: https://launchpad.net/libdbusmenu
+[FFmpeg]: https://www.ffmpeg.org/
+[GCC]: https://gcc.gnu.org/
 [GdkPixbuf]: https://developer.gnome.org/gdk-pixbuf/
 [GLib]: https://wiki.gnome.org/Projects/GLib
 [GTK+]: https://www.gtk.org/
 [libappindicator]: https://launchpad.net/libappindicator
+[libX11]: https://www.x.org/wiki/
+[libXScrnSaver]: https://www.x.org/wiki/Releases/ModuleVersions/
+[MinGW]: http://www.mingw.org/
 [OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
+[OpenAL Soft]: http://kcat.strangesoft.net/openal.html
 [Pango]: http://www.pango.org/
+[pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
+[qrencode]: https://fukuchi.org/works/qrencode/
+[Qt]: https://www.qt.io/
+[sqlcipher]: https://www.zetetic.net/sqlcipher/
+[toxcore]: https://github.com/irungentoo/toxcore/
 [Ubuntu PPA]: https://launchpad.net/~abbat/+archive/ubuntu/tox
