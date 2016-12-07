@@ -558,6 +558,16 @@ ChatLine::Ptr ChatLog::getLatestLine() const
     return nullptr;
 }
 
+/**
+ * @brief Finds the chat line object at a position on screen
+ * @param pos Position on screen in global coordinates
+ * @sa getContentFromPos()
+ */
+ChatLineContent *ChatLog::getContentFromGlobalPos(QPoint pos) const
+{
+    return getContentFromPos(mapToScene(mapFromGlobal(pos)));
+}
+
 void ChatLog::clear()
 {
     clearSelection();

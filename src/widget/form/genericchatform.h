@@ -95,6 +95,7 @@ protected slots:
     void onShowMessagesClicked();
     void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
+    void copyLink();
 
 private:
     void retranslateUi();
@@ -113,7 +114,7 @@ protected:
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction* saveChatAction, *clearAction, *quoteAction;
+    QAction* saveChatAction, *clearAction, *quoteAction, *copyLinkAction;
     ToxId previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;

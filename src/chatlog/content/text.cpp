@@ -231,6 +231,18 @@ QString Text::getText() const
     return rawText;
 }
 
+/**
+ * @brief Extracts the target of a link from the text at a given coordinate
+ * @param scenePos Position in scene coordinates
+ * @return The link target URL, or an empty string if there is no link there
+ */
+QString Text::getLinkAt(QPointF scenePos) const
+{
+    QTextCursor cursor(doc);
+    cursor.setPosition(cursorFromPos(scenePos));
+    return cursor.charFormat().anchorHref();
+}
+
 void Text::regenerate()
 {
     if (!doc)

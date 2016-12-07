@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QShortcut>
 #include <QSplitter>
+#include <QClipboard>
 
 #include "chatlog/chatlog.h"
 #include "chatlog/content/timestamp.h"
@@ -198,6 +199,9 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     quoteAction = menu.addAction(QIcon(),
                                  QString(), this, SLOT(quoteSelectedText()));
 
+    copyLinkAction = menu.addAction(QIcon(),
+                                    QString(), this, SLOT(copyLink()));
+
     menu.addSeparator();
 
     connect(emoteButton, &QPushButton::clicked,
@@ -312,6 +316,21 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 {
     QWidget* sender = static_cast<QWidget*>(QObject::sender());
     pos = sender->mapToGlobal(pos);
+
+    // If we right-clicked on a link, give the option to copy it
+    bool clickedOnLink = false;
+    Text* clickedText = qobject_cast<Text*>(chatWidget->getContentFromGlobalPos(pos));
+    if (clickedText)
+    {
+        QPointF scenePos = chatWidget->mapToScene(chatWidget->mapFromGlobal(pos));
+        QString linkTarget = clickedText->getLinkAt(scenePos);
+        if (!linkTarget.isEmpty())
+        {
+            clickedOnLink = true;
+            copyLinkAction->setData(linkTarget);
+        }
+    }
+    copyLinkAction->setVisible(clickedOnLink);
 
     menu.exec(pos);
 }
@@ -598,6 +617,15 @@ void GenericChatForm::quoteSelectedText()
     msgEdit->append(quote);
 }
 
+/**
+ * @brief Callback of GenericChatForm::copyLinkAction
+ */
+void GenericChatForm::copyLink()
+{
+    QString linkText = copyLinkAction->data().toString();
+    QApplication::clipboard()->setText(linkText);
+}
+
 void GenericChatForm::retranslateUi()
 {
     QString callObjectName = callButton->objectName();
@@ -624,6 +652,7 @@ void GenericChatForm::retranslateUi()
     saveChatAction->setText(tr("Save chat log"));
     clearAction->setText(tr("Clear displayed messages"));
     quoteAction->setText(tr("Quote selected text"));
+    copyLinkAction->setText(tr("Copy link address"));
 }
 
 void GenericChatForm::showNetcam()
