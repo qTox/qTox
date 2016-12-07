@@ -122,13 +122,8 @@ To get translations into qTox:
      git cherry-pick <commit1> <commit2>
      ```
      
-5. If there were multiple commits, squash them into a single one, and rename
-   remaining to
-   
-   ```
-   feat(l10n): update $LANGUAGE from Weblate
-   ```
-   
+5. If there were multiple commits, squash them into a single one, leaving only
+   a single `feat(l10n): …` line in the commit message.
 6. Get rid of Weblate's formatting and amend the commit using
    [`./tools/deweblate-translation-file.sh`], i.e.:
    
@@ -150,16 +145,6 @@ To get translations into qTox:
     
 **It's a good idea to lock translations on Weblate while they're in merge
 process, so that no translation effort would be lost when resetting Weblate.**
-
-## Vim macro to rename commits
-
-Renames a single commit. To add it in Vim under register `t`:
-
-```
-:let @t='ggd4wifeat(l10n): update ^[A<80>kb translation from Weblate^[jVjd'
-```
-
-To invoke when editing a commit message: `@t`
 
 
 # How to become a maintainer?
