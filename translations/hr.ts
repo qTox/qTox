@@ -91,22 +91,6 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
 <context>
     <name>AboutForm</name>
     <message>
-        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>bug-tracker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>report it</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Restart qTox to install version %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,14 +108,6 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>See a full list of %1 at Github</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You are using qTox version %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -145,6 +121,36 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
     <message>
         <source>Qt version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
+        <comment>`%1` is replaced by translation of `bug tracker`
+`%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click here to report a bug.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <comment>`%1` is replaced with translation of word `contributors`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -248,6 +254,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
     <message>
         <source>Audio + Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -489,18 +503,6 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation>qTox nije mogao otvoriti %1</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Pokušavate poslati posebnu (sekvencijalnu) datoteku, to neće ići!</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Prihvati video poziv</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Prihvati audio poziv</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 zove</translation>
     </message>
@@ -584,6 +586,35 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     <message>
         <source>Copy</source>
         <translation type="unfinished">Kopiraj</translation>
+    </message>
+    <message>
+        <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">odsutan(na)</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">zauzet(a)</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">offline</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">online</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 je sada %2</translation>
     </message>
 </context>
 <context>
@@ -1683,6 +1714,74 @@ You may want to create one.</source>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open profile page when clicked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set your status message that will be shown to others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <source>Set availability status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search input for known friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set friends sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Add friends page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open groupchat management page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Postavke</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Nexus</name>
@@ -2217,6 +2316,10 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
@@ -2270,6 +2373,22 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     </message>
     <message>
         <source>The password doesn&apos;t match.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, minimum 6 characters long</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

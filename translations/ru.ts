@@ -105,32 +105,8 @@ which may lead to problems with video calls.</source>
         <translation>qTox загружает обновление %1</translation>
     </message>
     <message>
-        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Список всех известных проблем вы можете найти на нашем %1 на Github. Если вы обнаружите ошибку или уязвимость в безопасности qTox, пожалуйста %3 согласно указаниям в нашей статье %2 вики.</translation>
-    </message>
-    <message>
-        <source>bug-tracker</source>
-        <translation>баг-трекере</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <translation>Написание полезных отчетов об ошибках</translation>
-    </message>
-    <message>
-        <source>report it</source>
-        <translation>сообщите о них</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Исходный автор: %1</translation>
-    </message>
-    <message>
-        <source>See a full list of %1 at Github</source>
-        <translation>Полный список %1 доступен на Github</translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <translation>разработчиков</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -147,6 +123,36 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Qt version: %1</source>
         <translation>Версия Qt: %1</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
+        <comment>`%1` is replaced by translation of `bug tracker`
+`%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">баг-трекере</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Написание полезных отчетов об ошибках</translation>
+    </message>
+    <message>
+        <source>Click here to report a bug.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <comment>`%1` is replaced with translation of word `contributors`</comment>
+        <translation type="unfinished">Полный список %1 доступен на Github</translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">разработчиков</translation>
     </message>
 </context>
 <context>
@@ -250,6 +256,14 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Audio + Video</source>
         <translation>Аудио + Видео</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -494,19 +508,6 @@ which may lead to problems with video calls.</source>
         <translation>Плохая идея</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translatorcomment>...передаёте последовательный файл и получаете te-le-fun-ken. И переводчик работает по другой линии. По линии «Библиотека».</translatorcomment>
-        <translation>Вы пытаетесь отправить специальный (последовательный) файл. Это так не работает!</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Принять видеозвонок</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Принять аудиозвонок</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 звонит</translation>
     </message>
@@ -586,6 +587,35 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Copy</source>
         <translation>Копировать</translation>
+    </message>
+    <message>
+        <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">отсутствует</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">занят</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">оффлайн</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">в сети</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 сейчас %2</translation>
     </message>
 </context>
 <context>
@@ -1692,6 +1722,74 @@ You may want to create one.</source>
         <source>Your status</source>
         <translation>Ваш статус</translation>
     </message>
+    <message>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open profile page when clicked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set your status message that will be shown to others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Статус</translation>
+    </message>
+    <message>
+        <source>Set availability status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search input for known friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set friends sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Add friends page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open groupchat management page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Nexus</name>
@@ -2233,6 +2331,10 @@ It will be installed when qTox restarts.</source>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation>Вы уверены, что хотите удалить %1 из вашего списка контактов?</translation>
     </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
@@ -2287,6 +2389,22 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Пароли не совпадают.</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, minimum 6 characters long</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

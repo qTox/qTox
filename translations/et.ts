@@ -104,32 +104,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Programmist lähemalt</translation>
     </message>
     <message>
-        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Loetelu teadaolevatest vigadest asub Githubis meie %1. Kui sa leiad qToxis vea või turvaaugu, siis palun %3 vastavalt juhendile meie wiki artiklis %2.</translation>
-    </message>
-    <message>
-        <source>bug-tracker</source>
-        <translation>veahalduse süsteemis (inglise keeles)</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <translation>„Writing Useful Bug Reports“ (inglise keeles)</translation>
-    </message>
-    <message>
-        <source>report it</source>
-        <translation>raporteeri sellest</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Esialgne autor: %1</translation>
-    </message>
-    <message>
-        <source>See a full list of %1 at Github</source>
-        <translation>Vaata %1 täielikku nimistut keskkonnas Github</translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <translation>kaastöölised</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -146,6 +122,36 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Qt version: %1</source>
         <translation>Qt versioon: %1</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
+        <comment>`%1` is replaced by translation of `bug tracker`
+`%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">veahalduse süsteemis (inglise keeles)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">„Writing Useful Bug Reports“ (inglise keeles)</translation>
+    </message>
+    <message>
+        <source>Click here to report a bug.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <comment>`%1` is replaced with translation of word `contributors`</comment>
+        <translation type="unfinished">Vaata %1 täielikku nimistut keskkonnas Github</translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">kaastöölised</translation>
     </message>
 </context>
 <context>
@@ -249,6 +255,14 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Audio + Video</source>
         <translation>Heli + Video</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -490,18 +504,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>See on vilets mõte</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>Üritad saata erilist faili (sequential file), see ei lähe läbi!</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Võta videokõne vastu</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Võta audiokõne vastu</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 helistab</translation>
     </message>
@@ -583,6 +585,35 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Copy</source>
         <translation>Kopeeri</translation>
+    </message>
+    <message>
+        <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">eemal</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">hõivatud</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ühendamata</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">Vestlusvalmis</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 on nüüd %2</translation>
     </message>
 </context>
 <context>
@@ -1687,6 +1718,74 @@ Võimalik, et peaksid selle looma.</translation>
         <source>Close</source>
         <translation>Sulge</translation>
     </message>
+    <message>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open profile page when clicked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set your status message that will be shown to others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Olek</translation>
+    </message>
+    <message>
+        <source>Set availability status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search input for known friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set friends sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Add friends page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open groupchat management page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Seaded</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Nexus</name>
@@ -2226,6 +2325,10 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation>Oled kindel, et soovid %1 oma kontaktide nimekirjast eemaldada?</translation>
     </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
@@ -2280,6 +2383,22 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>The password doesn&apos;t match.</source>
         <translation>Salasõnad ei kattu.</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, minimum 6 characters long</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -104,32 +104,8 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>qTox está descargando la actualización %1</translation>
     </message>
     <message>
-        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please %3 according to the guidelines in our %2 wiki article.</source>
-        <translation>Puedes encontrar una lista de problemas conocidos en nuestro %1 en Github. Si descubres un error o vulnerabilidad en qTox, por favor %3 según las normas descritas en el artículo &quot;%2&quot; de nuestra wiki.</translation>
-    </message>
-    <message>
-        <source>bug-tracker</source>
-        <translation>Informe de errores (bug-tracker)</translation>
-    </message>
-    <message>
-        <source>Writing Useful Bug Reports</source>
-        <translation>Cómo escribir un informe de errores correctamente</translation>
-    </message>
-    <message>
-        <source>report it</source>
-        <translation>repórtalo</translation>
-    </message>
-    <message>
         <source>Original author: %1</source>
         <translation>Autor original: %1</translation>
-    </message>
-    <message>
-        <source>See a full list of %1 at Github</source>
-        <translation>Lista completa de %1 en Github</translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <translation>colaboradores</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -146,6 +122,36 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Qt version: %1</source>
         <translation>Versión de Qt: %1</translation>
+    </message>
+    <message>
+        <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
+        <comment>`%1` is replaced by translation of `bug tracker`
+`%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bug-tracker</source>
+        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Informe de errores (bug-tracker)</translation>
+    </message>
+    <message>
+        <source>Writing Useful Bug Reports</source>
+        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
+        <translation type="unfinished">Cómo escribir un informe de errores correctamente</translation>
+    </message>
+    <message>
+        <source>Click here to report a bug.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See a full list of %1 at Github</source>
+        <comment>`%1` is replaced with translation of word `contributors`</comment>
+        <translation type="unfinished">Lista completa de %1 en Github</translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
+        <translation type="unfinished">colaboradores</translation>
     </message>
 </context>
 <context>
@@ -249,6 +255,14 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Audio + Video</source>
         <translation>Audio y Vídeo</translation>
+    </message>
+    <message>
+        <source>Automatically accept files from contact if set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -491,18 +505,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Mala idea</translation>
     </message>
     <message>
-        <source>You&apos;re trying to send a special (sequential) file, that&apos;s not going to work!</source>
-        <translation>¡Estás intentando mandar un archivo especial (secuencial), no va a funcionar!</translation>
-    </message>
-    <message>
-        <source>Accept video call</source>
-        <translation>Aceptar videollamada</translation>
-    </message>
-    <message>
-        <source>Accept audio call</source>
-        <translation>Aceptar llamada de audio</translation>
-    </message>
-    <message>
         <source>%1 calling</source>
         <translation>%1 llamando</translation>
     </message>
@@ -582,6 +584,35 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>Copy</source>
         <translation>Copiar</translation>
+    </message>
+    <message>
+        <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>away</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ausente</translation>
+    </message>
+    <message>
+        <source>busy</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">ocupado</translation>
+    </message>
+    <message>
+        <source>offline</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">desconectado</translation>
+    </message>
+    <message>
+        <source>online</source>
+        <comment>contact status</comment>
+        <translation type="unfinished">conectado</translation>
+    </message>
+    <message>
+        <source>%1 is now %2</source>
+        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished">%1 ahora está %2</translation>
     </message>
 </context>
 <context>
@@ -1684,6 +1715,74 @@ You may want to create one.</source>
         <source>Your status</source>
         <translation>Tu estado</translation>
     </message>
+    <message>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open profile page when clicked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status message input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set your status message that will be shown to others</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Estado</translation>
+    </message>
+    <message>
+        <source>Set availability status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact search input for known friends</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set friends sorting and visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Add friends page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groupchat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open groupchat management page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open File transfers history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">Opciones</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Nexus</name>
@@ -2221,6 +2320,10 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
         <translation>¿Estás seguro de que deseas eliminar a %1 de tu lista de contactos?</translation>
     </message>
+    <message>
+        <source>Remove all chat history with the friend if set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScreenshotGrabber</name>
@@ -2275,6 +2378,22 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>Password strength: %p%</source>
         <translation>Robustez de la contraseña: %p%</translation>
+    </message>
+    <message>
+        <source>Confirm password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password input field, minimum 6 characters long</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
