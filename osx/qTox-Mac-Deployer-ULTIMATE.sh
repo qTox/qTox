@@ -212,6 +212,9 @@ update() {
 build() {
     fcho "------------------------------"
     fcho "Starting build process ..."
+    # update version info
+    ./tools/update-versions.sh
+
     rm -rf $BUILD_DIR
     rm -rf $DEPLOY_DIR
     mkdir $BUILD_DIR
