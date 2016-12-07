@@ -447,6 +447,9 @@ To use this script you must launch terminal which can be found:
 
 If you wish to lean more you can run `./qTox-Mac-Deployer-ULTIMATE.sh -h`
 
+Note that the script will revert any non-committed changes to qTox repository
+during the `update` phase.
+
 #### First Run / Install
 If you are running the script for the first time you will want to make sure your
 system is ready. To do this simply run `./qTox-Mac-Deployer-ULTIMATE.sh -i` to

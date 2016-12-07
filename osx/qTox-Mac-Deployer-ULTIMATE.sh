@@ -185,6 +185,9 @@ update() {
     cd $TOXCORE_DIR
     fcho "Now in ${PWD}"
     fcho "Pulling ..."
+    # make sure that pull can be applied, i.e. clean up files from any
+    # changes that could have been applied to them
+    git checkout -f
     git pull
     read -r -p "Did Toxcore update from git? [y/N] " response
     if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
@@ -198,6 +201,9 @@ update() {
     cd $QTOX_DIR
     fcho "Now in ${PWD}"
     fcho "Pulling ..."
+    # make sure that pull can be applied, i.e. clean up files from any
+    # changes that could have been applied to them
+    git checkout -f
     git pull
     read -r -p "Did qTox update from git? [y/N] " response
     if [[ $response =~ ^([yY][eE][sS]|[yY])$ ]]
