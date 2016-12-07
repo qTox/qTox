@@ -558,6 +558,11 @@ ChatLine::Ptr ChatLog::getLatestLine() const
     return nullptr;
 }
 
+ChatLineContent *ChatLog::getContentFromGlobalPos(QPoint pos) const
+{
+    return getContentFromPos(mapToScene(mapFromGlobal(pos)));
+}
+
 void ChatLog::clear()
 {
     clearSelection();

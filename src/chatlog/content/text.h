@@ -28,6 +28,8 @@ class QTextDocument;
 
 class Text : public ChatLineContent
 {
+    Q_OBJECT
+
 public:
     Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false, const QString& rawText = QString(), const QColor c = Qt::black);
     virtual ~Text();
@@ -55,6 +57,7 @@ public:
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
     virtual QString getText() const final;
+    QString getLinkAt(QPointF scenePos) const;
 
 protected:
     // dynamic resource management

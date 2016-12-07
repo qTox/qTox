@@ -231,6 +231,13 @@ QString Text::getText() const
     return rawText;
 }
 
+QString Text::getLinkAt(QPointF scenePos) const
+{
+    QTextCursor cursor(doc);
+    cursor.setPosition(cursorFromPos(scenePos));
+    return cursor.charFormat().anchorHref();
+}
+
 void Text::regenerate()
 {
     if (!doc)
