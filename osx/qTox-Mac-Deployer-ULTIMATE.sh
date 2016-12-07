@@ -168,7 +168,7 @@ install() {
         fcho "Updating brew formulas ..."
         brew update > /dev/null
     fi
-    brew install ffmpeg qrencode qt5 sqlcipher
+    brew install ffmpeg qrencode qt5 sqlcipher gnu-sed
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
@@ -212,6 +212,9 @@ update() {
 build() {
     fcho "------------------------------"
     fcho "Starting build process ..."
+    # update version info
+    ./tools/update-versions.sh
+
     rm -rf $BUILD_DIR
     rm -rf $DEPLOY_DIR
     mkdir $BUILD_DIR

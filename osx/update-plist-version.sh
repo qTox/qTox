@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
+#    Copyright © 2016 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,13 +15,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# script to append correct qTox version to `.nsi` files from
+
+# script to append correct qTox version to `.plist` file from
 # `git describe`
 #
 # NOTE: it checkouts the files before appending a version to them!
 #
 # requires:
-#  * files `qtox.nsi` and `qtox64.nsi` in working dir
+#  * correctly formatted `*.plist file(s) in working dir
 #  * git – tags in format `v0.0.0`
 #  * GNU sed
 
@@ -35,16 +36,15 @@ set -eu -o pipefail
 source "../tools/lib/git.source"
 
 
-# append version to .nsi files after a certain line
+# append version to .plist file(s) after the right line
 append_version() {
-    local after_line='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"'
-    local append='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion"'
+    local after_line='		<key>CFBundleVersion'
+    local append="		<string>$(get_version)<\/string>"
 
-    for nsi in *.nsi
+    for plist in *.plist
     do
-        git checkout "$nsi"
-        sed -i "/$after_line/a\\$append \"$(get_version)\"" "$nsi"
+        git checkout "$plist"
+        sed -i "/$after_line/a\\$append" "$plist"
     done
 }
-
 append_version

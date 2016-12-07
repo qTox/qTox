@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
+#    Copyright © 2016 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,13 +15,14 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# script to append correct qTox version to `.nsi` files from
-# `git describe`
+
+# script to add versions to the files for osx and windows "packages"
+# 
+# it should be run by the `qTox-Mac-Deployer-ULTIMATE.sh`
 #
 # NOTE: it checkouts the files before appending a version to them!
 #
 # requires:
-#  * files `qtox.nsi` and `qtox64.nsi` in working dir
 #  * git – tags in format `v0.0.0`
 #  * GNU sed
 
@@ -29,22 +30,22 @@
 #
 #   ./$script
 
+
 set -eu -o pipefail
 
-# uses `get_version()`
-source "../tools/lib/git.source"
 
-
-# append version to .nsi files after a certain line
-append_version() {
-    local after_line='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"'
-    local append='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion"'
-
-    for nsi in *.nsi
-    do
-        git checkout "$nsi"
-        sed -i "/$after_line/a\\$append \"$(get_version)\"" "$nsi"
-    done
+update_windows() {
+    ( cd windows
+        ./qtox-nsi-version.sh )
 }
 
-append_version
+update_osx() {
+    ( cd osx
+        ./update-plist-version.sh )
+}
+
+main() {
+    update_osx
+    update_windows
+}
+main
