@@ -47,7 +47,6 @@
  * @var bool Profile::isRemoved
  * @brief True if the profile has been removed by remove().
  *
- * @var static constexpr int Profile::encryptHeaderSize = 8
  * @brief How much data we need to read to check if the file is encrypted.
  * @note Must be >= TOX_ENC_SAVE_MAGIC_LENGTH (8), which isn't publicly defined.
  */
@@ -631,7 +630,7 @@ bool Profile::isEncrypted() const
  */
 bool Profile::isEncrypted(QString name)
 {
-    uint8_t data[encryptHeaderSize] = {0};
+    uint8_t data[TOX_PASS_ENCRYPTION_EXTRA_LENGTH] = {0};
     QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::ReadOnly))
@@ -640,7 +639,7 @@ bool Profile::isEncrypted(QString name)
         return false;
     }
 
-    saveFile.read((char*)data, encryptHeaderSize);
+    saveFile.read((char*)data, TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
     saveFile.close();
 
     return tox_is_data_encrypted(data);
