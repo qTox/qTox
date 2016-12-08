@@ -98,7 +98,6 @@ private:
     bool newProfile;
     bool isRemoved;
     static QVector<QString> profiles;
-    static constexpr int encryptHeaderSize = 8;
 };
 
 #endif // PROFILE_H
