@@ -429,9 +429,11 @@ password for sudo.
 <a name="osx" />
 ## OS X
 
+Supported OS X versions: >=10.8.
+
 Compiling qTox on OS X for development requires 3 tools:
 [Xcode](https://developer.apple.com/xcode/),
-[Qt 5.4+](http://www.qt.io/qt5-4/) and [homebrew](http://brew.sh).
+[Qt 5.4+](https://www.qt.io/qt5-4/) and [homebrew](https://brew.sh).
 
 ### Automated Script
 You can now set up your OS X system to compile qTox automatically thanks to the
