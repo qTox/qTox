@@ -876,7 +876,8 @@ void ChatForm::insertChatMessage(ChatMessage::Ptr msg)
 
 void ChatForm::onCopyStatusMessage()
 {
-    QString text = statusMessageLabel->text();
+    // make sure to copy not truncated text directly from the friend
+    QString text = f->getStatusMessage();
     QClipboard* clipboard = QApplication::clipboard();
 
     if (clipboard)
