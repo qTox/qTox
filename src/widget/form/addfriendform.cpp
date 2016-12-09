@@ -308,10 +308,14 @@ void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const Q
     friendLayout->addLayout(horLayout);
 
     CroppingLabel* friendLabel = new CroppingLabel(friendWidget);
+    friendLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     friendLabel->setText("<b>" + friendAddress + "</b>");
     horLayout->addWidget(friendLabel);
 
     QLabel* messageLabel = new QLabel(message);
+    // allow to select text, but treat links as plaintext to prevent phishing
+    messageLabel->setTextInteractionFlags(Qt::TextSelectableByMouse |
+                                          Qt::TextSelectableByKeyboard);
     messageLabel->setTextFormat(Qt::PlainText);
     messageLabel->setWordWrap(true);
     horLayout->addWidget(messageLabel, 1);
