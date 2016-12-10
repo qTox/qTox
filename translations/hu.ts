@@ -127,31 +127,31 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az összes ismert probléma listája megtalálható a Github-on %1. Ha észrevesz egy hibát vagy biztonsági sérülékenységet a qTox-ban, kérjük jelentse azt a %2 wiki cikkünkben leírtaknak megfelelően.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">hibakövető</translation>
+        <translation>hibakövető</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Hasznos hibajelentések írása</translation>
+        <translation>Hasznos hibajelentések írása</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kattintson ide egy hiba bejelentéséért.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">%1 teljes listája Github-on</translation>
+        <translation>%1 teljes listája Github-on</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">hozzájárulók</translation>
+        <translation>hozzájárulók</translation>
     </message>
 </context>
 <context>
@@ -217,7 +217,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Előzmények törlése (ez a müvelet nem visszavonható!)</translation>
+        <translation>Előzmények törlése (ez a művelet nem visszavonható!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -258,11 +258,11 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikusan elfogad fájlokat a partnertől ha be van állítva</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Beviteli mező a partnerről való jegyzetek készítéséhez</translation>
     </message>
 </context>
 <context>
@@ -591,27 +591,27 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">távol</translation>
+        <translation>távol</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">elfoglalt</translation>
+        <translation>elfoglalt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">nem elérhető</translation>
+        <translation>nem elérhető</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">elérhető</translation>
+        <translation>elérhető</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 már %2</translation>
+        <translation>%1 most %2</translation>
     </message>
 </context>
 <context>
@@ -1170,6 +1170,10 @@ a rendszertálca helyett.</translation>
         <source>Quote selected text</source>
         <translation>Kiválasztott szöveg idézése</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1496,15 +1500,15 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Profil átnevezése.</translation>
+        <translation>Profil átnevezése.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Profil törlése.</translation>
+        <translation>Profil törlése.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Profil exportálása</translation>
+        <translation>Profil exportálása</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
@@ -1666,7 +1670,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Profil importálása</translation>
+        <translation>Profil importálása</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
@@ -1678,7 +1682,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished">Meglévő profil oldal betöltése</translation>
+        <translation>Meglévő profil oldal betöltése</translation>
     </message>
 </context>
 <context>
@@ -1733,7 +1737,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Állapot</translation>
+        <translation>Állapot</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1777,7 +1781,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Beállítások</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Open Settings</source>
