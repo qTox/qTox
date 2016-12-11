@@ -116,7 +116,7 @@ qt5_add_resources(
 )
 
 if(NOT ${SMILEYS})
-    set(SMILEYS, "")
+  set(SMILEYS, "")
 endif()
 
 if(NOT ${SMILEYS} MATCHES "NO")
@@ -400,23 +400,23 @@ set(${PROJECT_NAME}_SOURCES
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/camera/directshow.cpp
-      src/platform/camera/directshow.h
+    src/platform/camera/directshow.cpp
+    src/platform/camera/directshow.h
   )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/camera/v4l2.cpp
-      src/platform/camera/v4l2.h
+    src/platform/camera/v4l2.cpp
+    src/platform/camera/v4l2.h
   )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/install_osx.cpp
-      src/platform/install_osx.h
+    src/platform/install_osx.cpp
+    src/platform/install_osx.h
   )
 endif()
 
 if (NOT ENABLE_STATUSNOTIFIER)
-    set(ENABLE_STATUSNOTIFIER True)
+  set(ENABLE_STATUSNOTIFIER True)
 endif()
 
 if(${ENABLE_STATUSNOTIFIER} AND GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
@@ -438,14 +438,14 @@ if(AVFOUNDATION_FOUND)
 endif()
 
 if (NOT ENABLE_APPINDICATOR)
-    set(ENABLE_APPINDICATOR False)
+  set(ENABLE_APPINDICATOR False)
 endif()
 if(${ENABLE_APPINDICATOR} AND APPINDICATOR_FOUND)
   add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
 endif()
 
 if (NOT ENABLE_GTK_SYSTRAY)
-    set(ENABLE_GTK_SYSTRAY True)
+  set(ENABLE_GTK_SYSTRAY True)
 endif()
 
 if(${ENABLE_GTK_SYSTRAY} AND GTK_FOUND)
