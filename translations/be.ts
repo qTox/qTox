@@ -1177,7 +1177,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Капіяваць адрас спасылкі</translation>
     </message>
 </context>
 <context>
@@ -1302,16 +1302,6 @@ instead of system taskbar.</source>
         <translation>Публічная інфармацыя</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation>Імя:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translatorcomment>Ausgelasssen</translatorcomment>
-        <translation>Стан:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Ідэнтыфікатар Tox</translation>
     </message>
@@ -1391,14 +1381,6 @@ Profile does not contain your history.</source>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Выдаліць</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Імя карыстальніка</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Біяграфія</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1524,6 +1506,22 @@ Profile does not contain your history.</source>
     <message>
         <source>Change profile password</source>
         <translation>Змяніць пароль профілю</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
