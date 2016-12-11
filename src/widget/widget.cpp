@@ -1721,8 +1721,6 @@ Group *Widget::createGroup(int groupId)
     newgroup->getGroupWidget()->updateStatusLight();
     contactListWidget->activateWindow();
 
-    const Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged, newgroup->getGroupWidget(), &GenericChatroomWidget::compactChange);
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*,bool)), this, SLOT(onChatroomWidgetClicked(GenericChatroomWidget*,bool)));
     connect(newgroup->getGroupWidget(), SIGNAL(removeGroup(int)), this, SLOT(removeGroup(int)));
     connect(newgroup->getGroupWidget(), SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)), newgroup->getChatForm(), SLOT(focusInput()));

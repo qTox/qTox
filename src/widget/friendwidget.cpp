@@ -16,33 +16,36 @@
 */
 
 #include "friendwidget.h"
+
+#include <cassert>
+
+#include <QApplication>
+#include <QBitmap>
+#include <QCollator>
+#include <QContextMenuEvent>
+#include <QDebug>
+#include <QDrag>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QMenu>
+#include <QMimeData>
+
+#include "circlewidget.h"
+#include "contentdialog.h"
+#include "core/core.h"
+#include "form/chatform.h"
+#include "friend.h"
+#include "friendlist.h"
+#include "friendlistwidget.h"
 #include "group.h"
 #include "grouplist.h"
 #include "groupwidget.h"
-#include "circlewidget.h"
-#include "friendlistwidget.h"
-#include "friendlist.h"
-#include "friend.h"
-#include "core/core.h"
-#include "form/chatform.h"
 #include "maskablepixmapwidget.h"
-#include "contentdialog.h"
-#include "widget/tool/croppinglabel.h"
-#include "widget/style.h"
 #include "persistence/settings.h"
-#include "widget/widget.h"
 #include "widget/about/aboutuser.h"
-#include <QContextMenuEvent>
-#include <QMenu>
-#include <QDrag>
-#include <QMimeData>
-#include <QApplication>
-#include <QBitmap>
-#include <QFileDialog>
-#include <QDebug>
-#include <QInputDialog>
-#include <QCollator>
-#include <cassert>
+#include "widget/style.h"
+#include "widget/tool/croppinglabel.h"
+#include "widget/widget.h"
 
 FriendWidget::FriendWidget(int FriendId, QString id)
     : friendId(FriendId)

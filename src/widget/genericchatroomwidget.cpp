@@ -44,6 +44,10 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget *parent)
 
     nameLabel->setForegroundRole(QPalette::WindowText);
 
+    Settings& s = Settings::getInstance();
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GenericChatroomWidget::compactChange);
+
     setAutoFillBackground(true);
     reloadTheme();
 
