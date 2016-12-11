@@ -92,9 +92,9 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/ja.qm
   translations/jbo.qm
   translations/ko.qm
+  translations/lt.qm
   translations/nl.qm
   translations/no_nb.qm
-  translations/lt.qm
   translations/pl.qm
   translations/pt.qm
   translations/ru.qm
