@@ -116,7 +116,7 @@ qt5_add_resources(
 )
 
 if(NOT ${SMILEYS})
-    set(SMILEYS, "")
+  set(SMILEYS, "")
 endif()
 
 if(NOT ${SMILEYS} MATCHES "NO")
@@ -400,18 +400,18 @@ set(${PROJECT_NAME}_SOURCES
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/camera/directshow.cpp
-      src/platform/camera/directshow.h
+    src/platform/camera/directshow.cpp
+    src/platform/camera/directshow.h
   )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/camera/v4l2.cpp
-      src/platform/camera/v4l2.h
+    src/platform/camera/v4l2.cpp
+    src/platform/camera/v4l2.h
   )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-      src/platform/install_osx.cpp
-      src/platform/install_osx.h
+    src/platform/install_osx.cpp
+    src/platform/install_osx.h
   )
 endif()
 

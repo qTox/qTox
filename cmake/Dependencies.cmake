@@ -119,17 +119,17 @@ if(WIN32)
 endif()
 
 if (NOT GIT_DESCRIBE)
-    execute_process(
-      COMMAND git describe --tags
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      OUTPUT_VARIABLE GIT_DESCRIBE
-      ERROR_QUIET
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
+  execute_process(
+    COMMAND git describe --tags
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_DESCRIBE
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
 
-    if(NOT GIT_DESCRIBE)
-      set(GIT_DESCRIBE "Nightly")
-    endif()
+  if(NOT GIT_DESCRIBE)
+    set(GIT_DESCRIBE "Nightly")
+  endif()
 endif()
 
 add_definitions(
@@ -137,17 +137,17 @@ add_definitions(
 )
 
 if (NOT GIT_VERSION)
-    execute_process(
-      COMMAND git rev-parse HEAD
-      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-      OUTPUT_VARIABLE GIT_VERSION
-      ERROR_QUIET
-      OUTPUT_STRIP_TRAILING_WHITESPACE
-    )
+  execute_process(
+    COMMAND git rev-parse HEAD
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_VERSION
+    ERROR_QUIET
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
 
-    if(NOT GIT_VERSION)
-      set(GIT_VERSION "build without git")
-    endif()
+  if(NOT GIT_VERSION)
+    set(GIT_VERSION "build without git")
+  endif()
 endif()
 
 add_definitions(
@@ -155,30 +155,30 @@ add_definitions(
 )
 
 if (NOT TIMESTAMP)
-    execute_process(
-      COMMAND date +%s
-      OUTPUT_VARIABLE TIMESTAMP
-    )
+  execute_process(
+    COMMAND date +%s
+    OUTPUT_VARIABLE TIMESTAMP
+  )
 endif()
 
 set(APPLE_EXT False)
 if (FOUNDATION_FOUND AND IOKIT_FOUND)
-    set(APPLE_EXT True)
+  set(APPLE_EXT True)
 endif()
 
 set(X11_EXT False)
 if (X11_FOUND AND XSS_FOUND)
-    set(X11_EXT True)
+  set(X11_EXT True)
 endif()
 
 if (${APPLE_EXT} OR ${X11_EXT})
-    add_definitions(
-      -DQTOX_PLATFORM_EXT=1
-    )
+  add_definitions(
+    -DQTOX_PLATFORM_EXT=1
+  )
 else()
-    add_definitions(
-      -DQTOX_PLATFORM_EXT=0
-    )
+  add_definitions(
+    -DQTOX_PLATFORM_EXT=0
+  )
 endif()
 
 add_definitions(
