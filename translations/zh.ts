@@ -127,31 +127,31 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>所有已知问题的列表可以在 GitHub 上我们的 %1 里找到。如果你发现 qTox 的漏洞或者安全漏洞，请根据我们的维基文章 %1 提交报告。</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">漏洞追踪器</translation>
+        <translation>漏洞追踪器</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">编写有用的漏洞报告</translation>
+        <translation>编写有用的漏洞报告</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>单击这里提交漏洞报告。</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">在 Github 上查看 %1 完整列表</translation>
+        <translation>在 Github 上查看 %1 完整列表</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">贡献者</translation>
+        <translation>贡献者</translation>
     </message>
 </context>
 <context>
@@ -258,11 +258,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>如果设置则自动接收来自联系人的文件</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>关于该联系人信息的输入框</translation>
     </message>
 </context>
 <context>
@@ -586,32 +586,32 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>你尝试发送一个顺序文件，该操作无法完成！</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">离开</translation>
+        <translation>离开</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">忙碌</translation>
+        <translation>忙碌</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">离线</translation>
+        <translation>离线</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">在线</translation>
+        <translation>在线</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 %2 了</translation>
+        <translation>%1 现在 %2</translation>
     </message>
 </context>
 <context>
@@ -1170,6 +1170,10 @@ instead of system taskbar.</source>
         <source>Quote selected text</source>
         <translation>引用选中的文本</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1717,71 +1721,71 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>打开个人档案</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>点击后打开个人档案页面</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished">输入状态消息</translation>
+        <translation>输入状态消息</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>设置你要展示给他人的个人状态消息</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">状态</translation>
+        <translation>状态</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>设置个人状态</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索联系人</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索已知好友的联系人搜索输入框</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>排序和可见性</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>设置好友排序和可见状态</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>打开添加好友页面</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>群聊</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>打开群聊管理页面</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>文件传输历史记录</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件传输历史记录</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设置</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>打开设置</translation>
     </message>
 </context>
 <context>
@@ -2321,7 +2325,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>如果设置则删除与该好友的所有聊天历史记录</translation>
     </message>
 </context>
 <context>
@@ -2380,19 +2384,19 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>确认密码</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>确认密码输入框</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished">密码输入</translation>
+        <translation>密码输入</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>密码输入框，最小长度为 6 个字符</translation>
     </message>
 </context>
 <context>
