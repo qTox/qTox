@@ -127,31 +127,31 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Спіс усіх вядомых пытанняў можна знайсці ў нашым %1 на Гітхабе. Калі вы знайшлі хібу або ўразлівасць бяспекі ў qTox, калі ласка, паведаміце аб гэтым, згодна з указаннямі ў артыкуле %2 нашай вікі.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">трэкеры хібаў</translation>
+        <translation>трэкеры хібаў</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">«Напісанне карысных справаздач аб хібах»</translation>
+        <translation>«Напісанне карысных справаздач аб хібах»</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Націсніце сюды, каб паведаміць аб хібе.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Глядзіце поўны спіс %1 на Гітхабе</translation>
+        <translation>Глядзіце поўны спіс %1 на Гітхабе</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">удзельнікі</translation>
+        <translation>удзельнікі</translation>
     </message>
 </context>
 <context>
@@ -258,11 +258,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўтаматычна прымаць файлы ад кантактаў, калі зададзена</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ўводы для нататак аб кантакце</translation>
     </message>
 </context>
 <context>
@@ -587,32 +587,32 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы спрабуеце адправіць адмысловы (паслядоўны) файл, але гэта не спрацуе!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">адышоў</translation>
+        <translation>адышоў</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">заняты</translation>
+        <translation>заняты</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">па-за сеткай</translation>
+        <translation>па-за сеткай</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">у сеціве</translation>
+        <translation>у сеціве</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 цяпер %2</translation>
+        <translation>%1 цяпер %2</translation>
     </message>
 </context>
 <context>
@@ -1175,6 +1175,10 @@ instead of system taskbar.</source>
         <source>Quote selected text</source>
         <translation>Цытаваць выдзелены тэкст</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1725,71 +1729,71 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць профіль</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць старонку профілю пры націску</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished">Увод паведамлення аб стане</translation>
+        <translation>Увод паведамлення аб стане</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>Задаць ваша паведамленне аб стане, якое будзе бачна іншым</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Стан</translation>
+        <translation>Стан</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Задаць стан даступнасці</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук кантакта</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле пошуку сяброў</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Упарадкаванне і бачнасць</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Задаць упарадкаванне і бачнасць сяброў</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць старонку дадання сяброў</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Групавы чат</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць старонку кіравання групавым чатам</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Гісторыя перадач файлаў</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць гісторыю перадач файлаў</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Налады</translation>
+        <translation>Налады</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Адкрыць налады</translation>
     </message>
 </context>
 <context>
@@ -2331,7 +2335,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Выдаліць усю гісторыю чату з сябрам, калі зададзена</translation>
     </message>
 </context>
 <context>
@@ -2390,19 +2394,19 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пацвердзіць пароль</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле пацвярджэнне пароля</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished">Увод пароля</translation>
+        <translation>Увод пароля</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ўводу пароля, не менш, чым 6 знакаў</translation>
     </message>
 </context>
 <context>
