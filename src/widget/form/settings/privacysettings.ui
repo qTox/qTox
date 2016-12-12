@@ -37,7 +37,7 @@
         <x>0</x>
         <y>0</y>
         <width>384</width>
-        <height>340</height>
+        <height>343</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -90,6 +90,9 @@ If you are getting spammed with friend requests, change the NoSpam.</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
             </property>
            </widget>
           </item>
