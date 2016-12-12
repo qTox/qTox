@@ -49,6 +49,17 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
+/**
+ * @class GenericChatForm
+ * @brief Parent class for all chatforms. It's provide the minimum required UI
+ * elements and methods to work with chat messages.
+ *
+ * TODO: reword
+ * @var GenericChatForm::historyBaselineDate
+ * @brief Used by HistoryKeeper to load messages from t to historyBaselineDate
+ *        (excluded)
+ */
+
 GenericChatForm::GenericChatForm(QWidget *parent)
   : QWidget(parent, Qt::Window)
   , audioInputFlag(false)
