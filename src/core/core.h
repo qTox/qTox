@@ -81,10 +81,10 @@ public:
     ToxId getSelfId() const;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
-    static std::unique_ptr<TOX_PASS_KEY> createPasskey(const QString &password, uint8_t* salt = nullptr);
-    static QByteArray encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey);
+    static std::shared_ptr<Tox_Pass_Key> createPasskey(const QString &password, uint8_t* salt = nullptr);
+    static QByteArray encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey);
     static QByteArray encryptData(const QByteArray& data);
-    static QByteArray decryptData(const QByteArray& data, const TOX_PASS_KEY &encryptionKey);
+    static QByteArray decryptData(const QByteArray& data, const Tox_Pass_Key &encryptionKey);
     static QByteArray decryptData(const QByteArray& data);
 
     bool isReady() const;
