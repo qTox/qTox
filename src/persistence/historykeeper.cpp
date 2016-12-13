@@ -86,7 +86,7 @@ HistoryKeeper *HistoryKeeper::getInstance(const Profile& profile)
     return historyInstance;
 }
 
-bool HistoryKeeper::checkPassword(const TOX_PASS_KEY &passkey, int encrypted)
+bool HistoryKeeper::checkPassword(std::shared_ptr<Tox_Pass_Key> passkey, int encrypted)
 {
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;

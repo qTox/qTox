@@ -27,6 +27,8 @@
 #include <QMutex>
 #include <tox/toxencryptsave.h>
 
+#include <memory>
+
 class Profile;
 class GenericDdInterface;
 
@@ -59,7 +61,7 @@ public:
     static void resetInstance();
 
     static QString getHistoryPath(QString currentProfile = QString(), int encrypted = -1); // -1 defaults to checking settings, 0 or 1 to specify
-    static bool checkPassword(const TOX_PASS_KEY& passkey, int encrypted = -1);
+    static bool checkPassword(std::shared_ptr<Tox_Pass_Key> passkey, int encrypted = -1);
     static bool isFileExist(bool encrypted);
     void removeHistory();
     static QList<HistMessage> exportMessagesDeleteFile();

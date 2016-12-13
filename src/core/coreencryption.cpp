@@ -38,15 +38,15 @@
 #include <algorithm>
 #include <cassert>
 
-std::unique_ptr<TOX_PASS_KEY> Core::createPasskey(const QString& password, uint8_t* salt)
+std::shared_ptr<Tox_Pass_Key> Core::createPasskey(const QString& password, uint8_t* salt)
 {
-    std::unique_ptr<TOX_PASS_KEY> encryptionKey(new TOX_PASS_KEY);
+    std::shared_ptr<Tox_Pass_Key> encryptionKey(tox_pass_key_new(), tox_pass_key_free);
 
     CString str(password);
     if (salt)
-        tox_derive_key_with_salt(str.data(), str.size(), salt, encryptionKey.get(), nullptr);
+        tox_pass_key_derive_with_salt(encryptionKey.get(), str.data(), str.size(), salt, nullptr);
     else
-        tox_derive_key_from_pass(str.data(), str.size(), encryptionKey.get(), nullptr);
+        tox_pass_key_derive(encryptionKey.get(), str.data(), str.size(), nullptr);
 
     return encryptionKey;
 }
@@ -62,11 +62,11 @@ QByteArray Core::encryptData(const QByteArray &data)
     return encryptData(data, Nexus::getProfile()->getPasskey());
 }
 
-QByteArray Core::encryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
+QByteArray Core::encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey)
 {
     uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
-    if (!tox_pass_key_encrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                            &encryptionKey, encrypted, nullptr))
+    if (!tox_pass_key_encrypt(&encryptionKey, reinterpret_cast<const uint8_t*>(data.data()), data.size(),
+                              encrypted, nullptr))
     {
         qWarning() << "Encryption failed";
         return QByteArray();
@@ -85,7 +85,7 @@ QByteArray Core::decryptData(const QByteArray &data)
     return decryptData(data, Nexus::getProfile()->getPasskey());
 }
 
-QByteArray Core::decryptData(const QByteArray& data, const TOX_PASS_KEY& encryptionKey)
+QByteArray Core::decryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey)
 {
     if (data.size() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH)
     {
@@ -94,8 +94,8 @@ QByteArray Core::decryptData(const QByteArray& data, const TOX_PASS_KEY& encrypt
     }
     int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
     uint8_t decrypted[sz];
-    if (!tox_pass_key_decrypt(reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                              &encryptionKey, decrypted, nullptr))
+    if (!tox_pass_key_decrypt(&encryptionKey, reinterpret_cast<const uint8_t*>(data.data()), data.size(),
+                              decrypted, nullptr))
     {
         qWarning() << "Decryption failed";
         return QByteArray();
@@ -115,7 +115,7 @@ QByteArray Core::getSaltFromFile(QString filename)
     file.close();
 
     uint8_t salt[TOX_PASS_SALT_LENGTH];
-    if (!tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt))
+    if (!tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt, nullptr))
     {
         qWarning() << "can't get salt from" << filename << "header";
         return QByteArray();
@@ -148,7 +148,7 @@ void Core::checkEncryptedHistory()
     QString dialogtxt;
 
 
-    if (!exists || HistoryKeeper::checkPassword(*passkey))
+    if (!exists || HistoryKeeper::checkPassword(passkey))
         return;
 
     dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
@@ -169,7 +169,7 @@ void Core::checkEncryptedHistory()
             passkey = createPasskey(pw, reinterpret_cast<uint8_t*>(salt.data()));
         }
 
-        error = exists && !HistoryKeeper::checkPassword(*passkey);
+        error = exists && !HistoryKeeper::checkPassword(passkey);
         dialogtxt = a + "\n" + c + "\n" + b;
     } while (error);
 }

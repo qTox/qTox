@@ -56,7 +56,7 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile)
 {
     if (!password.isEmpty())
     {
-        passkey = *core->createPasskey(password);
+        passkey = core->createPasskey(password);
     }
 
     Settings& s = Settings::getInstance();
@@ -132,10 +132,10 @@ Profile* Profile::loadProfile(QString name, const QString& password)
             }
 
             uint8_t salt[TOX_PASS_SALT_LENGTH];
-            tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt);
-            auto tmpkey = *Core::createPasskey(password, salt);
+            tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt, nullptr);
+            auto tmpkey = Core::createPasskey(password, salt);
 
-            data = Core::decryptData(data, tmpkey);
+            data = Core::decryptData(data, *tmpkey);
             if (data.isEmpty())
             {
                 qCritical() << "Failed to decrypt the tox save file";
@@ -324,10 +324,10 @@ QByteArray Profile::loadToxSave()
         }
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt);
-        passkey = *core->createPasskey(password, salt);
+        tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt, nullptr);
+        passkey = core->createPasskey(password, salt);
 
-        data = core->decryptData(data, passkey);
+        data = core->decryptData(data, *passkey);
         if (data.isEmpty())
         {
             qCritical() << "Failed to decrypt the tox save file";
@@ -380,8 +380,8 @@ void Profile::saveToxSave(QByteArray data)
 
     if (!password.isEmpty())
     {
-        passkey = *core->createPasskey(password);
-        data = core->encryptData(data, passkey);
+        passkey = core->createPasskey(password);
+        data = core->encryptData(data, *passkey);
         if (data.isEmpty())
         {
             qCritical() << "Failed to encrypt, can't save!";
@@ -487,7 +487,7 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
     if (encrypted && !pic.isEmpty())
     {
         uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t*>(pic.data()), salt);
+        tox_get_salt(reinterpret_cast<uint8_t*>(pic.data()), salt, nullptr);
         auto passkey = core->createPasskey(password, salt);
         pic = core->decryptData(pic, *passkey);
     }
@@ -532,7 +532,7 @@ void Profile::saveAvatar(QByteArray pic, const QString& ownerId)
 {
     if (!password.isEmpty() && !pic.isEmpty())
     {
-        pic = core->encryptData(pic, passkey);
+        pic = core->encryptData(pic, *passkey);
     }
 
     QString path = avatarPath(ownerId);
@@ -764,9 +764,9 @@ QString Profile::getPassword() const
     return password;
 }
 
-const TOX_PASS_KEY& Profile::getPasskey() const
+const Tox_Pass_Key& Profile::getPasskey() const
 {
-    return passkey;
+    return *passkey;
 }
 
 /**
@@ -792,7 +792,7 @@ void Profile::setPassword(const QString& newPassword)
     QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
     QString oldPassword = password;
     password = newPassword;
-    passkey = *core->createPasskey(password);
+    passkey = core->createPasskey(password);
     saveToxSave();
 
     if (database)
