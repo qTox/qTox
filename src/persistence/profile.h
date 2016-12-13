@@ -52,7 +52,7 @@ public:
     bool checkPassword();
     QString getPassword() const;
     void setPassword(const QString& newPassword);
-    const TOX_PASS_KEY& getPasskey() const;
+    const Tox_Pass_Key& getPasskey() const;
 
     QByteArray loadToxSave();
     void saveToxSave();
@@ -92,7 +92,7 @@ private:
     Core* core;
     QThread* coreThread;
     QString name, password;
-    TOX_PASS_KEY passkey;
+    std::shared_ptr<Tox_Pass_Key> passkey;
     std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;

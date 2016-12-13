@@ -26,6 +26,8 @@
 #include <QList>
 #include <QFile>
 
+#include <memory>
+
 class EncryptedDb : public PlainDb
 {
 public:
@@ -33,7 +35,7 @@ public:
     virtual ~EncryptedDb();
 
     virtual QSqlQuery exec(const QString &query);
-    static bool check(const TOX_PASS_KEY &passkey, const QString &fname);
+    static bool check(std::shared_ptr<Tox_Pass_Key> passkey, const QString &fname);
 
 private:
     bool pullFileContent(const QString& fname, QByteArray &buf);
@@ -46,7 +48,7 @@ private:
     static qint64 plainChunkSize;
     static qint64 encryptedChunkSize;
 
-    static TOX_PASS_KEY decryptionKey;
+    static std::shared_ptr<Tox_Pass_Key> decryptionKey;
 
     qint64 chunkPosition;
     QByteArray buffer;
