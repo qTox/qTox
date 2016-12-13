@@ -30,14 +30,14 @@
 #include <QSqlError>
 
 /**
- * @var static TOX_PASS_KEY EncryptedDb::decryptionKey
+ * @var static std::shared_ptr<Tox_Pass_Key> EncryptedDb::decryptionKey
  * @note When importing, the decryption key may not be the same as the profile key
  */
 
 qint64 EncryptedDb::encryptedChunkSize = 4096;
 qint64 EncryptedDb::plainChunkSize = EncryptedDb::encryptedChunkSize - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
 
-TOX_PASS_KEY EncryptedDb::decryptionKey;
+std::shared_ptr<Tox_Pass_Key> EncryptedDb::decryptionKey;
 
 EncryptedDb::EncryptedDb(const QString &fname, QList<QString> initList) :
     PlainDb(":memory:", initList), fileName(fname)
@@ -99,7 +99,7 @@ bool EncryptedDb::pullFileContent(const QString &fname, QByteArray &buf)
     while (!dbFile.atEnd())
     {
         QByteArray encrChunk = dbFile.read(encryptedChunkSize);
-        buf = Core::getInstance()->decryptData(encrChunk, decryptionKey);
+        buf = Core::getInstance()->decryptData(encrChunk, *decryptionKey);
         if (buf.size() > 0)
         {
             fileContent += buf;
@@ -163,7 +163,7 @@ void EncryptedDb::appendToEncrypted(const QString &sql)
     encrFile.flush();
 }
 
-bool EncryptedDb::check(const TOX_PASS_KEY &passkey, const QString &fname)
+bool EncryptedDb::check(std::shared_ptr<Tox_Pass_Key> passkey, const QString &fname)
 {
     QFile file(fname);
     file.open(QIODevice::ReadOnly);
@@ -172,7 +172,7 @@ bool EncryptedDb::check(const TOX_PASS_KEY &passkey, const QString &fname)
     if (file.size() > 0)
     {
         QByteArray encrChunk = file.read(encryptedChunkSize);
-        QByteArray buf = Core::getInstance()->decryptData(encrChunk, passkey);
+        QByteArray buf = Core::getInstance()->decryptData(encrChunk, *passkey);
         if (buf.size() == 0)
             state = false;
         else

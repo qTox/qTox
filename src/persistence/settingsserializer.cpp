@@ -370,7 +370,7 @@ void SettingsSerializer::readSerialized()
         Core* core = Nexus::getCore();
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt);
+        tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt, nullptr);
         auto passkey = core->createPasskey(password, salt);
 
         data = core->decryptData(data, *passkey);
