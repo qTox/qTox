@@ -128,31 +128,31 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Список всех известных проблем может быть найдет на нашем баг-трекере Github. Если вы обнаружите баг или уязвимость безопасности в работе qTox, пожалуйста сообщите о ней на нашу wiki &quot;Написание полезных отчетов об ошибках&quot;, следуя правилам оформления.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">баг-трекере</translation>
+        <translation>баг-трекер</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Написание полезных отчетов об ошибках</translation>
+        <translation>Написание полезных отчетов об ошибках</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите здесь, чтобы сообщить об ошибке.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Полный список %1 доступен на Github</translation>
+        <translation>Полный список %1 доступен на Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">разработчиков</translation>
+        <translation>разработчиков</translation>
     </message>
 </context>
 <context>
@@ -259,11 +259,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически принимать файлы от контактов если установлен</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ввода для заметок о контакте.</translation>
     </message>
 </context>
 <context>
@@ -334,19 +334,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, или 76 шестнадцатиричных символов или name@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите Tox ID вашего друга</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрос в друзья</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите сообщение чтобы отправить с запросом в друзья или оставьте поле пустым, чтобы отправить сообщение по-умолчанию.</translation>
     </message>
 </context>
 <context>
@@ -590,32 +590,32 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы пытаетесь отправить последовательный файл, что не сработает!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">отсутствует</translation>
+        <translation>отошел</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">занят</translation>
+        <translation>занят</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">оффлайн</translation>
+        <translation>оффлайн</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">в сети</translation>
+        <translation>онлайн</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 сейчас %2</translation>
+        <translation>%1 сейчас %2</translation>
     </message>
 </context>
 <context>
@@ -1177,6 +1177,10 @@ instead of system taskbar.</source>
         <source>Cleared</source>
         <translation>Очищено</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1423,103 +1427,103 @@ Profile does not contain your history.</source>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished">Имя на сервисе ToxMe.</translation>
+        <translation>Имя на сервисе ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished">Необязательно. Напишите что-нибудь о вас. Или о вашем коте.</translation>
+        <translation>Необязательно. Напишите что-нибудь о вас. Или о вашей кошке:)</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished">Необязательно. Напишите что-нибудь о вас. Или о вашем коте.</translation>
+        <translation>Необязательно. Напишите что-нибудь о вас. Или о вашей кошке:)</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Сервис ToxMe для регистрации.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Если не установлен, записи ToxMe видны всем.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Удалите ваш пароль и шифрование с вашего профиля.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод имени</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя видимо для контактов</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод сообщения статуса</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Сообщение статуса видимо для контактов</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить QR-изображение как файл</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопировать QR-изображение в буфер обмена</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Имя пользователя ToxMe для отображения на ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Необязательная ToxMe биография для отображения на ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес сервиса ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Видимость на сервисе ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновите запись ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Переименовать профиль.</translation>
+        <translation>Переименовать профиль.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Удалить профиль.</translation>
+        <translation>Удалить профиль.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Экспортировать профиль</translation>
+        <translation>Экспортировать профиль</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить пароль из профиля</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить пароль профиля</translation>
     </message>
 </context>
 <context>
@@ -1641,35 +1645,35 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ввода имени пользователя</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ввода пароля, вы можете оставить его пустым (без пароля), или ввести минимум 6 символов.</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле подтверждения пароля.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Кнопка создания нового профиля</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список профиля</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Список профилей</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод пароля</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Загружать автоматически</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1677,15 +1681,15 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузить выбранный профиль</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Страница создания нового профиля</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Страница загрузки существующего профиля</translation>
     </message>
 </context>
 <context>
@@ -1704,7 +1708,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation>Завершённые передачи файлов</translation>
+        <translation>Посмотреть завершённые передачи файлов</translation>
     </message>
     <message>
         <source>Change your settings</source>
@@ -1724,71 +1728,71 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть профиль</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыль профиль по клику</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ввода сообщения статуса</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить ваше сообщения статуса видимым другим пользователям</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить статус доступности</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск контактов</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле поиска контактов для известных друзей</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортировка и видимость</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить сортировку друзей и видимость</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть страницу Добавить друзей</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Групповой чат</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть страницу настройки группового чата</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>История передачи файлов</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть историю передачи файлов</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть настройки</translation>
     </message>
 </context>
 <context>
@@ -1816,7 +1820,7 @@ You may want to create one.</source>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation>Всё на передний план</translation>
+        <translation>Отобразить все</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1865,11 +1869,11 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Ваши друзья будут видеть, когда вы им печатаете.</translation>
+        <translation>Ваши друзья будут видеть, когда вы печатаете.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Сообщать о наборе сообщения</translation>
+        <translation>Отправлять статус печати</translation>
     </message>
     <message>
         <source>Keep chat history</source>
@@ -1880,13 +1884,13 @@ You may want to create one.</source>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>Антиспам это часть вашего Tox ID.
-Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить это значение.
-Пользователи не смогут посылать вам запросы, зная старый ID, подтвержденным друзьям не придется ничего менять.</translation>
+        <translation>NoSpam это часть вашего Tox ID.
+Если вы часто получаете ошибочные запросы в друзья, вам достаточно изменить NoSpam.
+Пользователи не смогут добавлять вас с вашим старым ID, но вы сохраните ваших текущих друзей.</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>Антиспам</translation>
+        <translation>NoSpam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -1896,7 +1900,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Сгенерировать случайное значение</translation>
+        <translation>Сгенерировать случайное значение NoSpam</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1914,7 +1918,7 @@ Save format changes are possible, which may result in data loss.</source>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
-        <translation>Выбрать картинку для профиля</translation>
+        <translation>Выбрать аватар</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1939,7 +1943,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Невозможно прочесть это изображение.</translation>
+        <translation>Невозможно обработать это изображение.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -1955,7 +1959,7 @@ Please use another image.</source>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation>Профиль с именем «%1» уже существует.</translation>
+        <translation>Профиль с именем &quot;%1&quot; уже существует.</translation>
     </message>
     <message>
         <source>Failed to rename</source>
@@ -1964,7 +1968,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>Не удалось переименовать профиль в «%1»</translation>
+        <translation>Не удалось переименовать профиль в &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1974,17 +1978,17 @@ Please use another image.</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation>Файл Tox (*.tox)</translation>
+        <translation>Сохранить файл Tox (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Нет прав на запись</translation>
+        <translation>Путь недоступен для записи.</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation>У вас нет прав для записи в эту директорию. Выберете другую.</translation>
+        <translation>У вас нет прав для записи в эту директорию. Выберете другую, или отмените диалог сохранения.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
@@ -2035,7 +2039,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation>Выбранный файл не может быть записан.</translation>
+        <translation>Запись в выбранный вами файл невозможна.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -2079,7 +2083,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Аккаунт %1@%2 успешно записан. Сохраните ваш пароль</translation>
+        <translation>%1@%2 успешно внесен в базу данных. Сохраните ваш пароль</translation>
     </message>
     <message>
         <source>Toxme error</source>
@@ -2118,7 +2122,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation>Файл Tox (*.tox)</translation>
+        <translation>Файл профиля Tox (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
@@ -2128,7 +2132,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
         <comment>popup text</comment>
-        <translation>Предупреждение: Вы выбрали файл, который не является Tox файлом; он будет проигнорирован.</translation>
+        <translation>Предупреждение: Вы выбрали файл, который не является файлом Tox; он будет проигнорирован.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -2138,7 +2142,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
         <comment>import confirm text</comment>
-        <translation>Профиль с именем «%1» уже существует. Желаете его стереть?</translation>
+        <translation>Профиль с именем &quot;%1&quot; уже существует. Желаете его стереть?</translation>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
@@ -2154,14 +2158,14 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation>%1.tox успешно импортирован</translation>
+        <translation>%1.tox был успешно импортирован</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation>Ок</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2195,13 +2199,13 @@ Share it with your friends to communicate.</source>
     <message>
         <source>An update is available, do you want to download it now?
 It will be installed when qTox restarts.</source>
-        <translation>Обновление доступно, не желаете ли скачать его прямо сейчас?
+        <translation>Обновление доступно, хотите скачать его прямо сейчас?
 Оно будет установлено после того, как qTox будет перезапущен.</translation>
     </message>
     <message>
         <source>Tox URI to parse</source>
         <translatorcomment>Без перевода, так как весь остальной CLI на английском</translatorcomment>
-        <translation>Tox URI для разбора</translation>
+        <translation>Tox URI для обработки</translation>
     </message>
     <message>
         <source>Starts new instance and loads specified profile.</source>
@@ -2219,15 +2223,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Blue</source>
-        <translation>Синяя</translation>
+        <translation>Синий</translation>
     </message>
     <message>
         <source>Olive</source>
-        <translation>Оливковая</translation>
+        <translation>Оливковый</translation>
     </message>
     <message>
         <source>Red</source>
-        <translation>Красная</translation>
+        <translation>Красный</translation>
     </message>
     <message>
         <source>Violet</source>
@@ -2235,7 +2239,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation>Входящий вызов...</translation>
+        <translation>Входящий звонок...</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -2262,7 +2266,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>You&apos;re making too many requests. Wait an hour and try again</source>
-        <translation>Вы делаете слишком много запросов. Подождите один час и повторите попытку</translation>
+        <translation>Вы создаете слишком много запросов. Подождите один час и повторите попытку</translation>
     </message>
     <message>
         <source>This name is already in use</source>
@@ -2333,7 +2337,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаляет всю историю переписки с другом если установлен</translation>
     </message>
 </context>
 <context>
@@ -2392,19 +2396,19 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердите пароль</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод подтверждения пароля</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Ввод пароля</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле ввода пароля, длиной минимум 6 символов</translation>
     </message>
 </context>
 <context>
