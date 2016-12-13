@@ -481,6 +481,13 @@ bool RawDatabase::remove()
     return QFile::remove(path);
 }
 
+struct PassKeyDeleter
+{
+    void operator()(Tox_Pass_Key *pass_key) {
+        tox_pass_key_free(pass_key);
+    }
+};
+
 /**
  * @brief Derives a 256bit key from the password and returns it hex-encoded
  * @param password Password to decrypt database
@@ -497,10 +504,10 @@ QString RawDatabase::deriveKey(const QString &password)
     static_assert(TOX_PASS_KEY_LENGTH >= 32, "toxcore must provide 256bit or longer keys");
 
     static const uint8_t expandConstant[TOX_PASS_SALT_LENGTH+1] = "L'ignorance est le pire des maux";
-    TOX_PASS_KEY key;
-    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()),
-                             static_cast<std::size_t>(passData.size()), expandConstant, &key, nullptr);
-    return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
+    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(tox_pass_key_new());
+    tox_pass_key_derive_with_salt(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
+                                  static_cast<std::size_t>(passData.size()), expandConstant, nullptr);
+    return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();;
 }
 
 /**
@@ -526,11 +533,11 @@ QString RawDatabase::deriveKey(const QString& password, const QByteArray& salt)
 
     static_assert(TOX_PASS_KEY_LENGTH >= 32, "toxcore must provide 256bit or longer keys");
 
-    TOX_PASS_KEY key;
-    tox_derive_key_with_salt(reinterpret_cast<uint8_t*>(passData.data()),
-                             static_cast<std::size_t>(passData.size()),
-                             reinterpret_cast<const uint8_t*>(salt.constData()), &key, nullptr);
-    return QByteArray(reinterpret_cast<char*>(key.key), 32).toHex();
+    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(tox_pass_key_new());
+    tox_pass_key_derive_with_salt(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
+                                  static_cast<std::size_t>(passData.size()),
+                                  reinterpret_cast<const uint8_t*>(salt.constData()), nullptr);
+    return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();;
 }
 
 /**
