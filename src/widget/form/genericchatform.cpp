@@ -106,8 +106,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
 
-    volButton = new QPushButton();
-    micButton = new QPushButton();
+    volButton = new QToolButton();
+    micButton = new QToolButton();
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
 

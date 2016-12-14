@@ -35,6 +35,7 @@
 #include <QSplitter>
 #include <QStyle>
 #include <QTemporaryFile>
+#include <QToolButton>
 
 #include <cassert>
 #include "chatform.h"

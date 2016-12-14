@@ -1,8 +1,12 @@
+QToolButton
+{
+    image: url(":/ui/volButton/volButton.svg");
+}
+
 QAbstractButton
 {
     border-radius: 5px;
     border: none;
-    background-image: url(":/ui/volButton/volButton.svg");
     background-repeat: none;
     background-position: center;
 }
