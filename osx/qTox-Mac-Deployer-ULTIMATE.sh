@@ -65,6 +65,8 @@ build_toxcore() {
     cd $TOXCORE_DIR
     echo "Now working in: ${PWD}"
 
+    git checkout tags/v0.1.0
+
     local LS_DIR="/usr/local/Cellar/libsodium/"
     #Figure out latest version
     local LS_VER=($(ls ${LS_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
