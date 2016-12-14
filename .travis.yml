@@ -16,6 +16,13 @@ matrix:
     - os: linux
       env: JOB=build-docs DOXYGEN_CONFIG_FILE=doxygen.conf
     - os: linux
+      env: JOB=build-gitstats GITSTATS_DIR=gitstats
+      addons:
+        apt:
+          packages:
+            - gitstats
+    # the actual compilin'
+    - os: linux
       env: JOB=build-ubuntu-14-04
     - os: osx
       osx_image: xcode7.3
@@ -49,3 +56,8 @@ after_success:
   && test $TRAVIS_BRANCH == "master"
   && test $JOB == "build-docs"
   && bash ./.travis/deploy-docs.sh
+  ->
+  test $TRAVIS_PULL_REQUEST == "false"
+  && test $TRAVIS_BRANCH == "master"
+  && test $JOB == "build-gitstats"
+  && bash ./.travis/deploy-gitstats.sh
