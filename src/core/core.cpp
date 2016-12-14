@@ -527,7 +527,7 @@ void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNEC
     CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, friendStatus != Status::Offline);
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 #else
 void Core::onGroupAction(Tox*, int groupnumber, int peernumber,
                          const uint8_t *action, uint16_t length, void* _core)
@@ -537,7 +537,7 @@ void Core::onGroupAction(Tox*, int groupnumber, int peernumber,
 }
 #endif
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type,
                          const uint8_t *data, size_t length, void* _core)
 #else
@@ -571,7 +571,7 @@ void Core::onGroupInvite(Tox*, int32_t friendId, uint8_t type,
     }
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
                           const uint8_t* _message, size_t length, void* _core)
 #else
@@ -582,7 +582,7 @@ void Core::onGroupMessage(Tox*, int groupId, int peerId,
     Core* core = static_cast<Core*>(_core);
     QString message = CString::toString(_message, length);
     bool isAction;
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     isAction = type == TOX_MESSAGE_TYPE_ACTION;
 #else
     isAction = false;
@@ -590,7 +590,7 @@ void Core::onGroupMessage(Tox*, int groupId, int peerId,
     emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
                                  TOX_CONFERENCE_STATE_CHANGE change, void* core)
 #else
@@ -601,7 +601,7 @@ void Core::onGroupNamelistChange(Tox*, int groupId, int peerId, uint8_t change, 
     emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId,
                               const uint8_t* _title, size_t length, void* _core)
 #else
@@ -615,7 +615,7 @@ void Core::onGroupTitleChange(Tox*, int groupId, int peerId,
     emit core->groupTitleChanged(groupId, author, title);
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void *core)
 #else
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void *core)
@@ -1130,7 +1130,7 @@ QVector<uint32_t> Core::getFriendList() const
     return friends;
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 /**
  * @brief Print in console text of error.
  * @param error Error to handle.
@@ -1282,7 +1282,7 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
     return names;
 }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
 /**
  * @brief Print in console text of error.
  * @param error Error to handle.

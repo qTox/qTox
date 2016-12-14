@@ -102,7 +102,7 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
 #else
     int createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
@@ -198,7 +198,7 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId,
                                 const uint8_t* cMessage, size_t cMessageSize,
                                 void* core);
@@ -253,7 +253,7 @@ private:
 #endif
 
     void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
     bool parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const;
 #endif

@@ -1550,7 +1550,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 {
     updateFriendActivity(FriendList::findFriend(friendId));
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     if (type == TOX_CONFERENCE_TYPE_TEXT || type == TOX_CONFERENCE_TYPE_AV)
 #else
     if (type == TOX_GROUPCHAT_TYPE_TEXT || type == TOX_GROUPCHAT_TYPE_AV)
@@ -1614,7 +1614,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
             return;
     }
 
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     TOX_CONFERENCE_STATE_CHANGE change = static_cast<TOX_CONFERENCE_STATE_CHANGE>(Change);
     if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_JOIN)
 #else
@@ -1628,7 +1628,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         // we can't display these messages until toxcore fixes peernumbers
         // https://github.com/irungentoo/toxcore/issues/1128
     }
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT)
 #else
     else if (change == TOX_CHAT_CHANGE_PEER_DEL)
@@ -1638,7 +1638,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "white", QDateTime::currentDateTime());
     }
-#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 1, 0)
     else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_NAME_CHANGE) // core overwrites old name before telling us it changed...
 #else
     else if (change == TOX_CHAT_CHANGE_PEER_NAME) // core overwrites old name before telling us it changed...
