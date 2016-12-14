@@ -133,6 +133,7 @@ if [[ $INSTALL_TOX = "true" ]]; then
         "${BASE_DIR}/${TOX_CORE_DIR}" --depth 1
 
     pushd ${BASE_DIR}/${TOX_CORE_DIR}
+    git checkout tags/v0.1.0
     ./autogen.sh
 
     # configure
