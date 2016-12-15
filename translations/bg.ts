@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished">Пусни тестов звук докато променяш силата на звука.</translation>
+        <translation>Пусни тестов звук докато променяш силата на звука.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Настройки за звука</translation>
+        <translation>Аудио Настройки</translation>
     </message>
     <message>
         <source>Gain</source>
@@ -41,27 +41,27 @@
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Устройство за възпроизвеждане</translation>
+        <translation>Устройство за възпроизвеждане</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Използвайте слайдера за да зададете силата на звука.</translation>
+        <translation>Използвайте слайдера за да зададете силата на звука.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished">Устройство за запис</translation>
+        <translation>Устройство за запис</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished">Сила на възпроизвеждане</translation>
+        <translation>Сила на възпроизвеждане</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Видео настройки</translation>
+        <translation>Видео настройки</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Видео устройство</translation>
+        <translation>Видео устройство</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -85,7 +85,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Тествай звук</translation>
     </message>
 </context>
 <context>
@@ -246,15 +246,15 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Ръчен</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудио</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Аудио + Видео</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
@@ -307,7 +307,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>%1 here! Tox me maybe?</translation>
+        <translation>%1 е тук! Да се Tox-ваме?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -340,11 +340,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Молба за приятелство</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Напиши съобщение, за да изпратиш със молбата за приятелство или остави празно, за да изпратиш съобщение по подразбиране</translation>
     </message>
 </context>
 <context>
@@ -379,11 +379,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Не</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -397,7 +397,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Запази файла</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -659,7 +659,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Toxing on qTox</source>
         <translatorcomment>Как-то так. Может, можно ещё что-нибудь придумать?</translatorcomment>
-        <translation></translation>
+        <translation>Tox-ва в qTox</translation>
     </message>
     <message>
         <source>Friend is already added</source>
@@ -1173,6 +1173,10 @@ instead of system taskbar.</source>
     <message>
         <source>Quote selected text</source>
         <translation>Цитирай маркиран текст</translation>
+    </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1829,8 +1833,8 @@ You may want to create one.</source>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>Непрочетено съобщение/я</numerusform>
-            <numerusform>Непрочетено съобщение/я</numerusform>
+            <numerusform>Непрочетено/и съобщение/я</numerusform>
+            <numerusform>Непрочетени съобщения</numerusform>
         </translation>
     </message>
 </context>
@@ -2165,11 +2169,11 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Да</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2277,7 +2281,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation>%1 here! Tox me maybe?</translation>
+        <translation>%1 е тук! Да се Tox-ваме?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2723,15 +2727,15 @@ It will be installed when qTox restarts.</source>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
         <translation>
-            <numerusform>%n Нова молба(и) за приятелсво</numerusform>
-            <numerusform>%n Нова молба(и) за приятелсво</numerusform>
+            <numerusform>%n Нова молба за приятелство</numerusform>
+            <numerusform>%n Нова/и молба/и за приятелсво</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
-            <numerusform>%n Нова покана(и) за група</numerusform>
-            <numerusform>%n Нова покана(и) за група</numerusform>
+            <numerusform>%n Нова покана за група</numerusform>
+            <numerusform>%n Нова/и покана/и за група</numerusform>
         </translation>
     </message>
     <message>
