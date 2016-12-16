@@ -241,7 +241,7 @@ which may lead to problems with video calls.</source>
         <translation>已删除与 %1 的聊天记录！</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>自动接听呼叫：</translation>
     </message>
     <message>

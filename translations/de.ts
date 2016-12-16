@@ -239,7 +239,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Gesprächsverlauf mit %1 wurde gelöscht!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Anruf automatisch annehmen:</translation>
     </message>
     <message>

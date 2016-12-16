@@ -241,7 +241,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>Cronologia chat con %1 rimossa!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Acetta automaticamente le chiamate</translation>
     </message>
     <message>

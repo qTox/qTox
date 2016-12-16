@@ -237,8 +237,8 @@ which may lead to problems with video calls.</source>
         <translation>سجل المحادثة مع %1 تم حذفها!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
-        <translation>قبول المكالمات تلقائياً :</translation>
+        <source>Auto accept call:</source>
+        <translation>قبول المكالمات تلقائياً:</translation>
     </message>
     <message>
         <source>Manual</source>

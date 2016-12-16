@@ -241,7 +241,7 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>¡El historial de chat con %1 fue eliminado!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Aceptar llamadas automáticamente:</translation>
     </message>
     <message>

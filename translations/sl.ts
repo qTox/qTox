@@ -241,7 +241,7 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

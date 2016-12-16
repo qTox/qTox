@@ -241,8 +241,8 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>L&apos;historique de la dicussion avec %1 a été effacé !</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
-        <translation>Accepter automatiquement les appels :</translation>
+        <source>Auto accept call:</source>
+        <translation>Accepter automatiquement les appels:</translation>
     </message>
     <message>
         <source>Manual</source>

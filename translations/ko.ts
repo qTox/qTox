@@ -237,8 +237,8 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
-        <translation>호출 자동 수락 :</translation>
+        <source>Auto accept call:</source>
+        <translation>호출 자동 수락:</translation>
     </message>
     <message>
         <source>Manual</source>

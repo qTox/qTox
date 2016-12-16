@@ -241,8 +241,8 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Kasutajaga %1 peetud vestluste ajalugu on kustutatud!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
-        <translation>Võta kõne automaatselt vastu :</translation>
+        <source>Auto accept call:</source>
+        <translation>Võta kõne automaatselt vastu:</translation>
     </message>
     <message>
         <source>Manual</source>

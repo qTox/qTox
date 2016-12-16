@@ -241,8 +241,8 @@ which may lead to problems with video calls.</source>
         <translation>Гісторыя гутарак з %1 выдалена!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
-        <translation>Аўтаматычна прымаць выклік :</translation>
+        <source>Auto accept call:</source>
+        <translation>Аўтаматычна прымаць выклік:</translation>
     </message>
     <message>
         <source>Manual</source>
