@@ -1171,6 +1171,10 @@ in plaats van naar de taakbalk.</translation>
         <source>Quote selected text</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

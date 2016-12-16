@@ -1170,6 +1170,10 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <source>Quote selected text</source>
         <translation>Cituoti pažymėtą tekstą</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

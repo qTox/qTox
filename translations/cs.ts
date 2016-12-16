@@ -1170,6 +1170,10 @@ místo do spuštěných programů.</translation>
         <source>Quote selected text</source>
         <translation>Citovat vybraný text</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

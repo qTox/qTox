@@ -1170,6 +1170,10 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <source>Quote selected text</source>
         <translation>Quota testo selezionato</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

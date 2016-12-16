@@ -1170,6 +1170,10 @@ en lugar de la barra de tareas del sistema.</translation>
         <source>Quote selected text</source>
         <translation>Citar texto seleccionado</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
