@@ -24,6 +24,7 @@ TRANSLATIONS = \
     translations/no_nb.ts \
     translations/lt.ts \
     translations/pl.ts \
+    translations/pr.ts \
     translations/pt.ts \
     translations/ru.ts \
     translations/sk.ts \
