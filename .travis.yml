@@ -25,6 +25,40 @@ matrix:
     # the actual compilin'
     - os: linux
       env: JOB=build-ubuntu-14-04
+      addons:
+        apt:
+          sources:
+            # for ffmpeg
+            - sourceline: 'ppa:mc3man/trusty-media'
+            - sourceline: 'ppa:chris-lea/libsodium'
+            # need to test against Qt 5.3
+            - sourceline: 'ppa:beineri/opt-qt532-trusty'
+          packages:
+            - automake
+            - build-essential
+            - check
+            - checkinstall
+            - ffmpeg
+            - libgdk-pixbuf2.0-dev
+            - libglib2.0-dev
+            - libgtk2.0-dev
+            - libopenal-dev
+            - libopus-dev
+            - libqrencode-dev
+            - libsodium-dev
+            - libsqlcipher-dev
+            - libswscale-dev
+            - libtool
+            - libvpx-dev
+            - libxss-dev qrencode
+            - qt53base
+            - qt53script
+            - qt53svg
+            - qt53tools
+            - qt53xmlpatterns
+            - qttools5-dev
+            - qttools5-dev-tools
+            - pkg-config
     - os: osx
       osx_image: xcode7.3
       env: JOB=build-osx
