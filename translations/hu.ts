@@ -241,7 +241,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Előzmények %1 partnerrel törölve!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Automatikus hívásfogadás:</translation>
     </message>
     <message>

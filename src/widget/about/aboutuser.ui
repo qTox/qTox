@@ -193,7 +193,7 @@
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Auto accept call :</string>
+          <string>Auto accept call:</string>
          </property>
         </widget>
        </item>

@@ -241,7 +241,7 @@ vaizdo skambučiais.</translation>
         <translation>Pokalbių su %1 žurnalas išvalytas!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Automatiškai atsiliepti į skambutį :</translation>
     </message>
     <message>

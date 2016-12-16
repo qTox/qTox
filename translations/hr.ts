@@ -241,7 +241,7 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

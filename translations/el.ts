@@ -241,7 +241,7 @@ which may lead to problems with video calls.</source>
         <translation>Το ιστορικό της συνομιλίας με τον/την %1 αφαιρέθηκε!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Αυτόματη αποδοχή κλήσης :</translation>
     </message>
     <message>

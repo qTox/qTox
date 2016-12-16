@@ -241,7 +241,7 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
         <translation>Correspondence with %1 destroyed!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Auto-answerin&apos; scrys:</translation>
     </message>
     <message>

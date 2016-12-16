@@ -241,7 +241,7 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Gespreksgeschiedenis met %1 verwijderd!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -240,7 +240,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
         <translation>Käyttäjän %1 keskusteluhistoria poistettu!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

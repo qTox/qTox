@@ -242,7 +242,7 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

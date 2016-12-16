@@ -240,7 +240,7 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>O histórico de conversas com %1 foi apagado!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Aceitar chamada automaticamente:</translation>
     </message>
     <message>

@@ -241,7 +241,7 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>Historie konverzace s %1 odstraněna!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished">Automaticky přijímat hovor :</translation>
     </message>
     <message>

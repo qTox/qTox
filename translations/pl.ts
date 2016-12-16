@@ -244,7 +244,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>Historia rozmów z %1 usunięta!</translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation>Automatycznie akceptuj rozmowy:</translation>
     </message>
     <message>

@@ -240,7 +240,7 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto accept call :</source>
+        <source>Auto accept call:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
