@@ -1173,6 +1173,10 @@ instead of closing itself.</source>
         <source>Quote selected text</source>
         <translation>Tsiteeri valitud tekst</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

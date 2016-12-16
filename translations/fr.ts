@@ -1170,6 +1170,10 @@ au lieu de se fermer.</translation>
         <source>Quote selected text</source>
         <translation>Citer le texte sélectionné</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>

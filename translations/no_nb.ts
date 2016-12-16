@@ -1174,6 +1174,10 @@ instead of system taskbar.</source>
         <source>Quote selected text</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
