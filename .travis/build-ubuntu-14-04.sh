@@ -19,34 +19,6 @@
 # stop as soon as one of steps will fail
 set -e -o pipefail
 
-# Qt 5.3, since that's the lowest supported version
-sudo add-apt-repository -y ppa:beineri/opt-qt532-trusty
-sudo apt-get update -qq
-
-# install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
-# `--force-yes` since we don't care about GPG failing to work with short IDs
-sudo apt-get install -y --force-yes \
-    automake \
-    autotools-dev \
-    build-essential \
-    check \
-    checkinstall \
-    libgdk-pixbuf2.0-dev \
-    libglib2.0-dev \
-    libgtk2.0-dev \
-    libopenal-dev \
-    libopus-dev \
-    libqrencode-dev \
-    libsqlcipher-dev \
-    libtool \
-    libvpx-dev \
-    libxss-dev qrencode \
-    qt53base \
-    qt53script \
-    qt53svg \
-    qt53tools \
-    qt53xmlpatterns \
-    pkg-config || yes
 
 # Qt
 source /opt/qt53/bin/qt53-env.sh || yes
@@ -119,16 +91,7 @@ CC="ccache $CC" CXX="ccache $CXX" ./configure --prefix="$PREFIX_DIR" \
 CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
 make install
 cd ../../
-# libsodium
-git clone git://github.com/jedisct1/libsodium.git
-cd libsodium
-git checkout tags/1.0.8
-./autogen.sh
-CC="ccache $CC" CXX="ccache $CXX" ./configure
-CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
-sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
-sudo ldconfig
-cd ..
+
 # toxcore
 git clone --branch v0.1.0 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
