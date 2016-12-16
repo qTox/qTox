@@ -86,7 +86,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Dźwięk testowy</translation>
     </message>
 </context>
 <context>
@@ -129,31 +129,32 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>better translation?</translatorcomment>
+        <translation>Lista znanych problemów może zostać znaleziona na naszym %1 na Githubie. Jeśli odkryjesz błąd lub lukę bezpieczeństwa w qToxie, proszę zgłoś to wedłóg naszych artykułu %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-trackerze</translation>
+        <translation>bug-trackerze</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Zgłaszanie użytecznych reportów o błędach</translation>
+        <translation>Zgłaszanie użytecznych reportów o błędach</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknij tutaj by zgłosić błąd.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Zobacz pełną listę %1 na Githubie</translation>
+        <translation>Zobacz pełną listę %1 na Githubie</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">współtwórców</translation>
+        <translation>współtwórców</translation>
     </message>
 </context>
 <context>
@@ -244,27 +245,27 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Auto accept call :</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatycznie akceptuj rozmowy:</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Ręcznie</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio + Wideo</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczone, automatycznie odbieraj pliki</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole na notatki o znajomym</translation>
     </message>
 </context>
 <context>
@@ -335,19 +336,20 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, 76 heksadecymalnych znaków lub nazwa@domena.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Wpisz Tox ID znajomego</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>better translation?</translatorcomment>
+        <translation>Wiadomość w zapytaniu do znajomych</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Napisz coś, lub zostaw puste by wysłać domyślną wiadomość w zapytaniu</translation>
     </message>
 </context>
 <context>
@@ -401,11 +403,11 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz plik</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Logi (*.log)</translation>
     </message>
 </context>
 <context>
@@ -480,15 +482,15 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportuj debug log</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj debug log</translation>
     </message>
 </context>
 <context>
@@ -600,27 +602,27 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">nieobecna/y</translation>
+        <translation>nieobecna/y</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">zajęta/y</translation>
+        <translation>zajęta/y</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation>offline</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">online</translation>
+        <translation>online</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 jest teraz %2</translation>
+        <translation>%1 jest teraz %2</translation>
     </message>
 </context>
 <context>
@@ -1192,6 +1194,10 @@ zamiast do paska zadań.</translation>
         <source>Quote selected text</source>
         <translation>Cytuj wybrany tekst</translation>
     </message>
+    <message>
+        <source>Copy link address</source>
+        <translation>Kopiuj adres odsyłacza</translation>
+    </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
@@ -1436,44 +1442,46 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Zarejestruj na ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>better translation?</translatorcomment>
+        <translation type="unfinished">Nazwa w serwisie ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opcjonalne. Coś o tobie. Albo twoim kocie.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opcjonalne. Coś o tobie. Albo twoim kocie.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Serwis ToxMe do rejestracji.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli nie jest ustawione, wpis ToxMe jest publicznie widoczny.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Usuń swoje hasło i szyfrowanie z profilu.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>better translation?</translatorcomment>
+        <translation>Pole imienia</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazwa widoczna dla kontaktów</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1485,59 +1493,60 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Twój Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz obraz QR jako plik</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj obraz QR do schowka</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>better translation?</translatorcomment>
+        <translation>Nazwa do pokazana na ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcjonalna biografia pokazana na ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Adres serwisu ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Widoczność na serwisie ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasło</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizuj wpis ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Zmień nazwę profilu.</translation>
+        <translation>Zmień nazwę profilu.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Usuń profil.</translation>
+        <translation>Usuń profil.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Eksportuj profil</translation>
+        <translation>Eksportuj profil</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Usuń hasło z profilu</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmień hasło</translation>
     </message>
 </context>
 <context>
@@ -1661,31 +1670,31 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole nazwy użytkownika</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole wpisu hasła, możesz zostawić puste (brak hasła), lub wpisać przynajmniej 6 znaków</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole potwierdzenia hasła</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Przycisk utworzenia nowego profilu</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista profili</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista profili</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole hasła</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
@@ -1693,19 +1702,19 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Importuj profil</translation>
+        <translation>Importuj profil</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Przycisk do załadowania wybranego profilu</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Strona tworzenia nowego profilu</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Strona ładowania istniejącego profilu</translation>
     </message>
 </context>
 <context>
@@ -1745,7 +1754,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz profil</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
@@ -1761,7 +1770,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1805,11 +1814,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ustawienia</translation>
+        <translation>Ustawienia</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz ustawienia</translation>
     </message>
 </context>
 <context>
@@ -2363,7 +2372,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczone, usuń całą historię rozmów ze znajomym</translation>
     </message>
 </context>
 <context>
@@ -2381,7 +2390,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Escape</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
@@ -2422,19 +2431,19 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Potwierdź hasło</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole potwierdzenia hasła</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole hasła</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pole hasła, długie na minimum 6 znaków</translation>
     </message>
 </context>
 <context>
