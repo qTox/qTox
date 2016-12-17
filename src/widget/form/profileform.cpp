@@ -55,22 +55,6 @@ ProfileForm::ProfileForm(QWidget* parent) :
     bodyUI->setupUi(this);
     core = Core::getInstance();
 
-    head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
-    head->setLayout(headLayout);
-
-    QLabel* imgLabel = new QLabel();
-    headLayout->addWidget(imgLabel);
-
-    nameLabel = new QLabel();
-    QFont bold;
-    bold.setBold(true);
-    nameLabel->setFont(bold);
-    headLayout->addWidget(nameLabel);
-    headLayout->addStretch(1);
-
-    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
-
     // tox
     toxId = new ClickableTE();
     toxId->setReadOnly(true);
@@ -86,9 +70,13 @@ ProfileForm::ProfileForm(QWidget* parent) :
     bodyUI->toxmeServersList->addItem("toxme.io");
     QString toxmeInfo = Settings::getInstance().getToxmeInfo();
     if (toxmeInfo.isEmpty()) // User not registered
+    {
         showRegisterToxme();
+    }
     else
+    {
         showExistingToxme();
+    }
 
     bodyUI->qrLabel->setWordWrap(true);
 
@@ -155,12 +143,11 @@ ProfileForm::~ProfileForm()
     Translator::unregister(this);
     delete qr;
     delete bodyUI;
-    head->deleteLater();
 }
 
 bool ProfileForm::isShown() const
 {
-    if (head->isVisible())
+    if (profilePicture->isVisible())
     {
         window()->windowHandle()->alert(0);
         return true;
@@ -171,9 +158,7 @@ bool ProfileForm::isShown() const
 
 void ProfileForm::show(ContentLayout* contentLayout)
 {
-    contentLayout->mainHead->layout()->addWidget(head);
     contentLayout->mainContent->layout()->addWidget(this);
-    head->show();
     QWidget::show();
     prFileLabelUpdate();
     bool portable = Settings::getInstance().getMakeToxPortable();
@@ -473,7 +458,6 @@ void ProfileForm::onChangePassClicked()
 void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    nameLabel->setText(tr("User Profile"));
     setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));

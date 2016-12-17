@@ -31,6 +31,7 @@
 /**
  * Spacing in px inserted when the author of the last message changes
  * @note Why the hell is this a thing? surely the different font is enough?
+ *        - Even a different font is not enough – TODO #1307 ~~zetok
  */
 #define AUTHOR_CHANGE_SPACING 5
 

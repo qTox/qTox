@@ -96,8 +96,6 @@ private:
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
-    QLabel* nameLabel;
-    QWidget* head;
     Core* core;
     QTimer timer;
     bool hasCheck = false;
