@@ -64,7 +64,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="userNameLabel">
               <property name="text">
-               <string>Name:</string>
+               <string>My name:</string>
               </property>
              </widget>
             </item>
@@ -81,7 +81,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="statusMessageLabel">
               <property name="text">
-               <string>Status:</string>
+               <string>My status:</string>
               </property>
              </widget>
             </item>
@@ -187,7 +187,7 @@ Share it with your friends to communicate.</string>
             <item row="0" column="0">
              <widget class="QLabel" name="toxmeUsernameLabel">
               <property name="text">
-               <string>Username</string>
+               <string>My username</string>
               </property>
              </widget>
             </item>
@@ -210,7 +210,7 @@ Share it with your friends to communicate.</string>
                <string comment="Tooltip for the Biography text.">Optional. Something about you. Or your cat.</string>
               </property>
               <property name="text">
-               <string>Biography</string>
+               <string>My biography</string>
               </property>
              </widget>
             </item>
