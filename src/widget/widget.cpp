@@ -1303,15 +1303,15 @@ QString Widget::fromDialogType(DialogType type)
     switch (type)
     {
         case AddDialog:
-            return tr("Add friend");
+            return tr("Add friend", "title of the window");
         case GroupDialog:
-            return tr("Group invites");
+            return tr("Group invites", "title of the window");
         case TransferDialog:
-            return tr("File transfers");
+            return tr("File transfers", "title of the window");
         case SettingDialog:
-            return tr("Settings");
+            return tr("Settings", "title of the window");
         case ProfileDialog:
-            return tr("Profile");
+            return tr("My Profile", "title of the window");
         default:
             return QString();
     }

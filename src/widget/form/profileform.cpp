@@ -56,20 +56,6 @@ ProfileForm::ProfileForm(QWidget *parent) :
     core = Core::getInstance();
 
     head = new QWidget(this);
-    QHBoxLayout* headLayout = new QHBoxLayout();
-    head->setLayout(headLayout);
-
-    QLabel* imgLabel = new QLabel();
-    headLayout->addWidget(imgLabel);
-
-    nameLabel = new QLabel();
-    QFont bold;
-    bold.setBold(true);
-    nameLabel->setFont(bold);
-    headLayout->addWidget(nameLabel);
-    headLayout->addStretch(1);
-
-    imgLabel->setPixmap(QPixmap(":/img/settings/identity.png").scaledToHeight(40, Qt::SmoothTransformation));
 
     // tox
     toxId = new ClickableTE();
@@ -86,9 +72,13 @@ ProfileForm::ProfileForm(QWidget *parent) :
     bodyUI->toxmeServersList->addItem("toxme.io");
     QString toxmeInfo = Settings::getInstance().getToxmeInfo();
     if (toxmeInfo.isEmpty()) // User not registered
+    {
         showRegisterToxme();
+    }
     else
+    {
         showExistingToxme();
+    }
 
     bodyUI->qrLabel->setWordWrap(true);
 
@@ -473,7 +463,6 @@ void ProfileForm::onChangePassClicked()
 void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
-    nameLabel->setText(tr("User Profile"));
     setPasswordButtonsText();
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
