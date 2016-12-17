@@ -83,6 +83,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
             chatWidget, &ChatLog::forceRelayout);
 
     msgEdit = new ChatTextEdit();
+    // TODO: make it work without restart
+    msgEdit->setCurrentFont(s.getChatMessageFont());
 
     sendButton = new QPushButton();
     emoteButton = new QPushButton();
