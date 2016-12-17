@@ -119,6 +119,9 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 
 # Rules for Windows, Mac OSX, and Linux
 win32 {
+    # windows-specific hardening (ASLR, DEP protection)
+    QMAKE_LFLAGS += -Wl,dynamicbase -Wl,nxcompat
+
     RC_FILE = windows/qtox.rc
     LIBS += -L$$PWD/libs/lib \
             -ltoxav \
