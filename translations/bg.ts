@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Сила на записващо устройство</translation>
+        <translation>Сила на записващо устройство</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -69,19 +69,19 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Задайте резолюцията на вашата камера.
-Колкото са по-големи стойностите, толкова по-добро качество на видеото вашите приятели може да получат.
+        <translation>Задайте резолюцията на вашата камера.
+Колкото по-големи са стойностите, толкова по-качествено видео вашите приятели може да получат.
 Имайте предвид, че с по-добро качество на видеото е нужна и по-бърза връзка.
-Понякога вашата връзка може да не е достатъчно добра за да се справи с по-добро качество на видеото,
-което може да доведе до проблеми с видео обажданията.</translation>
+Понякога вашата връзка може да не е достатъчно добра за да се справи с по-качествено видео,
+което може да доведе до проблеми с видео разговорите.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Резолюция</translation>
+        <translation>Резолюция</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Повторно сканиране</translation>
+        <translation>Повторно сканиране на устройствата</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -105,53 +105,53 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Оригинален автор: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished">Вие ползвате qTox версия %1.</translation>
+        <translation>Вие ползвате qTox версия %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Хеш на commit: %1</translation>
+        <translation>Хеш на commit: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">toxcore версия: %1</translation>
+        <translation>toxcore версия: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Qt версия: %1</translation>
+        <translation>Qt версия: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Списък от всички настоящи проблеми може да откриете при нашият бъг трейсър в Github. Ако откриете бъг или уязвимост в защитата на qTox, моля докладвайте по оказания начин в нашата уики статия Бъг Доклади.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">бъг-тракер</translation>
+        <translation>бъг-тракер</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Писане на полезни доклади за бъгове</translation>
+        <translation>Полезни Доклади За Бъгове</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кликнете тук за докладване на бъг.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вижте пълен списък със сътрудници в Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>сътрудници</translation>
     </message>
 </context>
 <context>
@@ -242,7 +242,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично приемане на обаждане:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -258,11 +258,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично приемане на файлове от контакт</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Въведи бележка за абонат</translation>
     </message>
 </context>
 <context>
@@ -328,15 +328,15 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Този Tox ID не съществува</translation>
+        <translation>Този Tox ID не съществува</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, или 76 шеснадесетични символи или име@пример,com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Запиши Tox ID на твоя приятел</translation>
     </message>
     <message>
         <source>Friend request message</source>
@@ -359,23 +359,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>really</source>
-        <translation type="unfinished"></translation>
+        <translation>наистина</translation>
     </message>
     <message>
         <source>not</source>
-        <translation type="unfinished"></translation>
+        <translation>не</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation type="unfinished"></translation>
+        <translation>ВАЖНО СЪОБЩЕНИЕ</translation>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Рестартирай настройките</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>Всички настройки ще се рестартират по подразбиране. Сигурни ли сте?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -388,12 +388,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Обадете се активно</translation>
+        <translation>Обаждане в активност</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Вие не можете да излезнете, докато повикването е активно!</translation>
+        <translation>Вие не можете да излезете, докато повикването е активно!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -401,7 +401,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Логове (* .log)</translation>
     </message>
 </context>
 <context>
@@ -421,69 +421,69 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Преносим</translation>
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Настройки за връзка</translation>
+        <translation>Настройки за връзка</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Активиране на IPv6 (Препоръчително)</translation>
+        <translation>Активиране на IPv6 (Препоръчително)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation type="unfinished">Изключването на тази опция позволява, примерно, писане през Tor. Обаче по този начин се прибавя товар към Tox мрежата, затова я изключвайте само, ако е нужно.</translation>
+        <translation>Изключването на тази опция позволява, примерно, писане през Tor. Обаче по този начин се прибавя товар към Tox мрежата, затова я изключвайте само, ако е нужно.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Активиране на UDP (Препоръчително)</translation>
+        <translation>Активиране на UDP (Препоръчително)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Тип прокси:</translation>
+        <translation>Тип прокси:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Адрес:</translation>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Порт:</translation>
+        <translation>Порт:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Нищо</translation>
+        <translation>Нищо</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Свържете се отново</translation>
+        <translation>Свържете се отново</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Дебъг</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Изведи Дебъг Регистър</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирай Дебъг Регистър</translation>
     </message>
 </context>
 <context>
@@ -587,32 +587,32 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Вие се опитвате да изпратите последователен файл, който няма да работи!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">отсъстващ</translation>
+        <translation>отсъстващ</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Зает</translation>
+        <translation>зает</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Извън линия</translation>
+        <translation>Извън линия</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">На линия</translation>
+        <translation>На линия</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 е сега %2</translation>
+        <translation>%1 сега е %2</translation>
     </message>
 </context>
 <context>
@@ -722,7 +722,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>FileTransferWidget</name>
     <message>
         <source>Form</source>
-        <translation></translation>
+        <translation>Form.</translation>
     </message>
     <message>
         <source>10Mb</source>
@@ -1176,7 +1176,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирай линка адрес</translation>
     </message>
 </context>
 <context>
@@ -1263,7 +1263,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished">Поканен от %1 на %2 в %3.</translation>
+        <translation>Поканен от %1 на %2 в %3.</translation>
     </message>
 </context>
 <context>
@@ -1338,14 +1338,6 @@ Profile does not contain your history.</source>
         <translation>Изтрий</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Име:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Състояние:</translation>
-    </message>
-    <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation>Този QR код съдържа вашия Tox ID. Можете да го споделите с вашите приятели.</translation>
     </message>
@@ -1356,14 +1348,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Copy image</source>
         <translation>Копирай изображение</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Потребителско име</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Биография</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1419,107 +1403,123 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрирайте се на ToxMe</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Име за услугата на ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>По желание. Нещо за вас. Или вашата котка.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>По желание. Нещо за вас. Или вашата котка.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe услуга на която да се регистрирате.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ако не зададено, ToxMe записите са публично видими.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Премахнете вашата парола и криптиране от вашия профил.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на име</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Име видимо за контакти</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на съобщение за състояние</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Съобщението за състояние е видимо за контакти</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Вашият Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Запишете QR изображение като файл</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копирайте QR изображението в клипборда</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe потребителско име да се показва на ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Незадължителен ToxMe биография да бъде показан на ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес на ToxMe услуга</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Видимост на услугата на ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Парола</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Актуализиране на ToxMe запис</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Преименувай профил.</translation>
+        <translation>Преименувай профил.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Изтрий профил.</translation>
+        <translation>Изтрий профил.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Износ на профил</translation>
+        <translation>Изнасяне на профил</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Премахване на парола от профил</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation>Промяна на паролата на профила</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1642,51 +1642,51 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле за въвеждане на потребителско име</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле за въвеждане на парола, може да го оставите празно (без парола), или напишете поне 6 символа</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле за потвърждение на паролата</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Създаване на нов профилен бутон</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Списък на профил</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Списък на профили</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на парола</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареди автоматично квадратче за отметка</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Внеси профил</translation>
+        <translation>Внасяне на профил</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на избрания профилен бутон</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Страницата за създаване на нов профил</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Зареждане на съществуваща профил страница</translation>
     </message>
 </context>
 <context>
@@ -1725,31 +1725,31 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Отваряне на профил</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Отваряне на профил страницата при кликване</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на съобщение за състоянието</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>Задаване на вашето съобщение за състояние, което ще бъде показано на другите</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Задаване на състояние за достъп</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Търсене на контакт</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
@@ -1757,39 +1757,39 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортиране и видимост</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Задайте сортиране и видимост на приятели</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори страницата за добавяне на приятели</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Групов чат</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори страницата за управление на групов чат</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>История на файлови трансфери</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори историята на файловите трансфери</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Отворете настройките</translation>
     </message>
 </context>
 <context>
@@ -1907,7 +1907,7 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Поверителност</translation>
+        <translation>Поверителност</translation>
     </message>
 </context>
 <context>
@@ -2105,7 +2105,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation type="unfinished">Местоположение на профила: %1</translation>
+        <translation>Местоположение на профила: %1</translation>
     </message>
 </context>
 <context>
@@ -2142,43 +2142,43 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>File doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлът не съществува</translation>
     </message>
     <message>
         <source>Profile doesn&apos;t exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Профилът не съществува</translation>
     </message>
     <message>
         <source>Profile imported</source>
-        <translation type="unfinished">Профилът е внесен</translation>
+        <translation>Профилът е внесен</translation>
     </message>
     <message>
         <source>%1.tox was successfully imported</source>
-        <translation type="unfinished">%1.tox бе внесен успешно</translation>
+        <translation>%1.tox бе внесен успешно</translation>
     </message>
 </context>
 <context>
     <name>QApplication</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отложи</translation>
+        <translation>Отложи</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Да</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Не</translation>
+        <translation>Не</translation>
     </message>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation>ОТЛЯВО НАДЯСНО</translation>
     </message>
 </context>
 <context>
@@ -2326,11 +2326,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation type="unfinished">Сигурни ли сте, че искате да премахнете %1 от вашия лист с контакти?</translation>
+        <translation>Сигурни ли сте, че искате да премахнете %1 от вашия лист с контакти?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Премахнете цялата история на чатовете с приятел, ако е зададено</translation>
     </message>
 </context>
 <context>
@@ -2338,27 +2338,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Click and drag to select a region. Press %1 to hide/show qTox window, or %2 to cancel.</source>
         <comment>Help text shown when no region has been selected yet</comment>
-        <translation type="unfinished">Натисни и издърпай за да избереш регион. Натисни %1 за скриеш/покажеш qTox прозорец, или %2 за да отложиш.</translation>
+        <translation>Натисни и издърпай за да избереш регион. Натисни %1 за да скриеш/покажеш qTox прозорец, или %2 за да отложиш.</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation type="unfinished">Space</translation>
+        <translation>Space</translation>
     </message>
     <message>
         <source>Escape</source>
         <comment>[Escape] key on the keyboard</comment>
-        <translation type="unfinished">Escape</translation>
+        <translation>Escape</translation>
     </message>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation type="unfinished">Натисни %1 за да изпратиш скрийншот от селекцията, %2 за да скриеш/покажеш qTox прозорец, или %3 за да отложиш.</translation>
+        <translation>Натисни %1 за да изпратиш снимка от селекцията, %2 за да скриеш/покажеш qTox прозорец, или %3 за да отложиш.</translation>
     </message>
     <message>
         <source>Enter</source>
         <comment>[Enter] key on the keyboard</comment>
-        <translation type="unfinished">Enter</translation>
+        <translation>Enter</translation>
     </message>
 </context>
 <context>
@@ -2389,19 +2389,19 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Потвърждение на паролата</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на потвърждение на парола</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Въвеждане на парола</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Поле за въвеждане на парола, минимум 6 символа</translation>
     </message>
 </context>
 <context>
@@ -2442,163 +2442,163 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 не е валиден адрес на Toxme.</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Нищо</translation>
+        <translation>Нищо</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Потребителски интерфейс</translation>
     </message>
 </context>
 <context>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Чат</translation>
+        <translation>Чат</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished">Основен шрифт:</translation>
+        <translation>Основен шрифт:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished">Размер: </translation>
+        <translation>Размер: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished">Новите предпочитания за стил на текста може да не се заредят, докато не рестартирате qTox.</translation>
+        <translation>Новите предпочитания за стил на текста може да не се заредят, докато не рестартирате qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished">Формат на стил на текста:</translation>
+        <translation>Формат на стил на текста:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished">Изберете предпочитания за стил на тескта.</translation>
+        <translation>Изберете предпочитания за стил на текста.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished">Обикновен текст</translation>
+        <translation>Обикновен текст</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished">Покажи форматиращи символи</translation>
+        <translation>Покажи форматиращи символи</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished">Не показвай форматиращи символи</translation>
+        <translation>Не показвай форматиращи символи</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Ново съобщение</translation>
+        <translation>Ново съобщение</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished">Отвори прозореца на qTox, когато получиш ново съобщение и няма отворен прозорец все още.</translation>
+        <translation>Отвори прозореца на qTox, когато получиш ново съобщение и няма отворен прозорец все още.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Отвори прозорец</translation>
+        <translation>Отвори прозорец</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished">Фокусирай qTox когато получиш ново съобщение.</translation>
+        <translation>Фокусирай qTox когато получиш ново съобщение.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Фокусирай прозореца</translation>
+        <translation>Фокусирай прозореца</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Списък с контакти</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished">Винаги уведомявай за нови съобщения в групови чатове.</translation>
+        <translation>Винаги уведомявай за нови съобщения в групови чатове.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished">Групови чатове винаги уведомявай</translation>
+        <translation>Груповите чатове винаги уведомяват</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation type="unfinished">Ако е маркирано, групови чатове ще се поставят най-отгоре на листа с приятели, а ако не е маркирано ще се поставят под приятелите, които са онлайн.</translation>
+        <translation>Ако е маркирано, групови чатове ще се поставят най-отгоре на листа с приятели, а ако не е маркирано ще се поставят под приятелите, които са онлайн.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
-        <translation type="unfinished">Постави групови чатове на върха на листа с приятели</translation>
+        <translation>Постави групови чатове на върха на листа с приятели</translation>
     </message>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished">Вашия лист с контакти ще бъде показан в сбит вид.</translation>
+        <translation>Вашият лист с контакти ще бъде показан в компактен режим.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished">Сбит лист с контакти</translation>
+        <translation>Компактен лист с контакти</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation type="unfinished">Режим с много прозорци</translation>
+        <translation>Режим с много прозорци</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
-        <translation type="unfinished">Отвори всеки чат в индивидуален прозорец</translation>
+        <translation>Отвори всеки чат в индивидуален прозорец</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Емотикони</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Използвай емотикони</translation>
+        <translation>Използвай емотикони</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Комплект от емотикони:</translation>
+        <translation>Пакет емотикони:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Размер на емотикони:</translation>
+        <translation>Размер на емотикони:</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Тема</translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Стил:</translation>
+        <translation>Стил:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Цвят на тема:</translation>
+        <translation>Цвят на тема:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Формат на дата и час:</translation>
+        <translation>Формат на дата и час:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Формат на дата:</translation>
+        <translation>Формат на дата:</translation>
     </message>
 </context>
 <context>
