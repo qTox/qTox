@@ -127,31 +127,31 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>لائحة بجميع المشاكل المعروفة موجودة في %1 على GitHub. اذا وجدت خطأ ما أو ضعف أمني في qTox, الرجاء التبليغ عنها فيما يتوافق في التعليمات الموجود على %2 مقالة الويكي.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">متتبع الأخطاء</translation>
+        <translation>متتبع الأخطاء</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">كتابة تقارير الأخطاء المفيدة</translation>
+        <translation>كتابة تقارير مفيدة بالأخطاء</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>اضغط هنا لكتابة تقرير عن الخطأ.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">رؤية قائمة كاملة من %1 في Github</translation>
+        <translation>رؤية قائمة كاملة من %1 في Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">المساهمين</translation>
+        <translation>المساهمين</translation>
     </message>
 </context>
 <context>
@@ -258,11 +258,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>قبول الملفات تلقائيا من جهة الاتصال المسجلة</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>حقل لادخال للملاحظات عن جهة الاتصار</translation>
     </message>
 </context>
 <context>
@@ -331,19 +331,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>(Tox ID) هوية Tox , اما 76 حرف بصيغة ستة عشرية أو بشكل بريد الكتروني name@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>ادخل هوية Tox (Tox ID) الخاصة بصديقك</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>رسالة طلب صداقة</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>اكتب رسالة لارسالها مع طلب الصداقة او اترك فارغا لارسال الرسالة الافتراضية</translation>
     </message>
 </context>
 <context>
@@ -586,32 +586,32 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن ارسال ملف متسلسل!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">في الخارج</translation>
+        <translation>في الخارج</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">مشغول</translation>
+        <translation>مشغول</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">غير متصل</translation>
+        <translation>غير متصل</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">متصل</translation>
+        <translation>متصل</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 الأن %2</translation>
+        <translation>%1 الأن %2</translation>
     </message>
 </context>
 <context>
@@ -1170,7 +1170,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>انسخ عنوان الرابط</translation>
     </message>
 </context>
 <context>
@@ -1295,14 +1295,6 @@ instead of closing itself.</source>
         <translation>معلومات عامة</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>الإسم:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>الحالة:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>حساب التوكس &quot;Tox ID&quot;</translation>
     </message>
@@ -1383,14 +1375,6 @@ Profile does not contain your history.</source>
         <translation>تغيير كلمة المرور</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>إسم المستخدم</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>السيرة الذاتية</translation>
-    </message>
-    <message>
         <source>Server</source>
         <translation>خادم الاتصال</translation>
     </message>
@@ -1445,51 +1429,51 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم الإدخال</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم مرئي لجهات الاتصال</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>ادخال رسالة الحالة</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>رسالة الحالة تظهر لجهات الاتصال</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>هوية Tox الخاصة بك (Tox ID)</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>حفظ صورة رمز QR  كملف</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>نسخ صورة رمز QR الى الحافظة</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم مستخدم ToxMe المراد اظهاره في ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>السيرة الذاتية الخاصة ToxMe المراد اظهاره في  ToxMe خياريا</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>عنوان خدمة ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>الظهور على خدمة ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>كلمة المرور</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
@@ -1497,22 +1481,38 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">اعادة تسمية الحساب.</translation>
+        <translation>اعادة تسمية الحساب.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">حذف الحساب.</translation>
+        <translation>حذف الحساب.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">تصدير الملف الشخصي</translation>
+        <translation>تصدير الملف الشخصي</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ازالة كلمة المرور من الحساب الشخصي</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation>تغيير كلمة المرور في الحساب الشخصي</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1718,31 +1718,31 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح الحساب الشخصي</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح صفحة الحساب الشخصي عند النقر عليه</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>ادخال رسالة الحالة</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>تعيين رسالة الحالة التي سيتم عرضها للآخرين</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">الحالة</translation>
+        <translation>الحالة</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>تعيين حالة التوفر</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>البحث عن جهة اتصال</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
@@ -1750,39 +1750,39 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>الفرز والرؤية</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>تعيين الفرز والرؤية للأصدقاء</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح صفحة اضافة اصدقاء</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>دردشة جماعية</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح صفحة ادارة الدردشة الجماعية</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>تاريخ نقل الملف</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح سجل نقل الملفات</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">الاعدادات</translation>
+        <translation>الاعدادات</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>فتح إعدادات</translation>
     </message>
 </context>
 <context>
@@ -2327,7 +2327,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>ازالة تاريخ جمبيع المحادثات مع الصديق اذا وجد</translation>
     </message>
 </context>
 <context>
@@ -2386,19 +2386,19 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>تأكيد كلمة المرور</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>التأكد من إدخال كلمة المرور</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished">إدخال كلمة المرور</translation>
+        <translation>إدخال كلمة المرور</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>حقل كلمة المرور ، الحد الأدنى 6 أحرف</translation>
     </message>
 </context>
 <context>
