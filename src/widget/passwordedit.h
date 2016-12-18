@@ -6,6 +6,7 @@
 
 class PasswordEdit : public QLineEdit
 {
+    Q_OBJECT
 public:
     explicit PasswordEdit(QWidget *parent);
     ~PasswordEdit();
