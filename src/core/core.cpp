@@ -1060,7 +1060,8 @@ bool Core::parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const
 }
 
 /**
- * @brief Return the number of peers in the group chat on success, or -1 on failure
+ * @brief Get number of peers in the conference.
+ * @return The number of peers in the conference. UINT32_MAX on failure.
  */
 uint32_t Core::getGroupNumberPeers(int groupId) const
 {
@@ -1122,8 +1123,8 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
         return QList<QString>();
     }
 
-    int result = getGroupNumberPeers(groupId);
-    if (result < 0)
+    uint32_t result = getGroupNumberPeers(groupId);
+    if (result == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "getGroupPeerNames: Unable to get number of peers";
         return QList<QString>();
@@ -1193,9 +1194,16 @@ bool Core::parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const
 }
 
 /**
- * @brief Accept a groupchat invite
+ * @brief Accept a groupchat invite.
+ * @param friendnumber Id of friend in friend list.
+ * @param type Chat type (TEXT or AV).
+ * @param friend_group_public_key Received via the `conference_invite` event.
+ * @param length The size of @friend_group_public_key.
+ *
+ * @return Conference number on success, UINT32_MAX on failure.
  */
-uint32_t Core::joinGroupchat(int32_t friendnumber, uint8_t type, const uint8_t* friend_group_public_key,uint16_t length) const
+uint32_t Core::joinGroupchat(int32_t friendnumber, uint8_t type,
+                             const uint8_t* friend_group_public_key, uint16_t length) const
 {
     if (type == TOX_CONFERENCE_TYPE_TEXT)
     {
