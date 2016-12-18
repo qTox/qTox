@@ -335,15 +335,15 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Írja be a partnere Tox azonosítóját</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Partnerkérelem üzenete</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Írja be az üzenetét a partnerkérelemhez, vagy hagyja üresen az alapértelmezett üzenet küldéséhez</translation>
     </message>
 </context>
 <context>
@@ -586,7 +586,7 @@ ami a videóhívások problémáihoz vezethet.</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Egymást követő fájlt próbált meg küldeni, ami nem fog működni!</translation>
     </message>
     <message>
         <source>away</source>
@@ -1172,7 +1172,7 @@ a rendszertálca helyett.</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Link címének másolása</translation>
     </message>
 </context>
 <context>
@@ -1334,14 +1334,6 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
         <translation>Törlés</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Név:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Állapot:</translation>
-    </message>
-    <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation>Ez a QR-kód tartalmazza a Tox ID-jét. Ezt is megoszthatja a barátaival.</translation>
     </message>
@@ -1352,14 +1344,6 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     <message>
         <source>Copy image</source>
         <translation>Kép másolása</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Felhasználónév</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Bemutatkozás</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1415,88 +1399,88 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe regisztráció</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Név a ToxMe szolgáltatáshoz.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nem kötelező. Pár mondat Önről. Vagy a macskájáról.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nem kötelező. Pár mondat Önről. Vagy a macskájáról.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe szolgáltatáshoz regisztráció.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha ez nincs beállítva, a ToxMe bejegyzései nyilvánosan láthatók lesznek.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jelszava és a titkosítás eltávolítása az Ön profiljáról.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Név bevitel</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Név látható a partnereknek</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Állapotüzenet bevitel</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Állapotüzenet látható a partnereknek</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Az Ön Tox-azonosítója</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-kép mentése fájlként</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-kép másolása Vágólapra</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe felhasználónév megjelenítése ToxMe-n</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem kötelező ToxMe biográfia megjelenítése ToyMe-n</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe szolgáltatás címe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Láthatóság a ToxMe szolgáltatásban</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe bejegyzés frissítése</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1512,10 +1496,26 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó eltávolítása a profilból</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation>Profil jelszó megváltoztatása</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1570,11 +1570,11 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation>Új Profil</translation>
+        <translation>Új profil</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation>Profil Betöltése</translation>
+        <translation>Profil betöltése</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
@@ -1602,11 +1602,11 @@ Győződjön meg róla, hogy ugyanazt a jelszót írta be kétszer.</translation
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
         <translation>Ismeretlen hiba: Az új profilt nem sikerült létrehozni. 
-Ha ez a hiba megjelenik, kérjük jelentse.</translation>
+Ha ez a hiba megjelenik, kérjük jelentse be.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation>A jelszóval védett profilok automatikusan nem betölthetőek.</translation>
+        <translation>A jelszóval védett profilok automatikusan nem tölthetőek be.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
@@ -1638,35 +1638,35 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév beviteli mező</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó beviteli mező, hagyhatja üresen (nincs jelszó), vagy írjon be legalább 6 karaktert</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó megerősítő mező</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Új profil létrehozása gomb</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil lista</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilok listája</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó bevitel</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikus betöltés jelölőnégyzet</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1674,11 +1674,11 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztott profil betöltése gomb</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Új profil létrehozó oldal</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
@@ -1721,19 +1721,19 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil megnyitása</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil oldal megnyitása klikkeléskor</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Állapotüzenet bevitel</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>Állítsa be állapotüzenetét, mely másoknak megjelenik</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1741,43 +1741,43 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Elérhetőségi állapot beállítása</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Partner keresése</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Keresési mező bevitel ismert partnerekhez</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendezés és láthatóság</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Partnerek rendezése és láthatóságuk beállítása</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Partnerek hozzáadása oldal megnyitása</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Csoportos chat</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Csoportos chat menedzselési oldal megnyitása</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlátviteli előzmények</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlátviteli előzmények megnyitása</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1785,7 +1785,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások megnyitása</translation>
     </message>
 </context>
 <context>
@@ -1817,11 +1817,11 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
-        <translation>Teljes Képernyő Bezárása</translation>
+        <translation>Teljes képernyő bezárása</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Teljes Képernyő</translation>
+        <translation>Teljes képernyő</translation>
     </message>
 </context>
 <context>
@@ -1829,7 +1829,7 @@ Lehet, hogy új profilt szükséges létrehozni.</translation>
     <message numerus="yes">
         <source>Unread message(s)</source>
         <translation>
-            <numerusform>Olvasatlan üzenet</numerusform>
+            <numerusform>Olvasatlan üzenet(ek)</numerusform>
         </translation>
     </message>
 </context>
@@ -1871,11 +1871,11 @@ Mentési formátum változások lehetségesek, melyek adatvesztést eredményezh
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Gépelés értesítések küldése</translation>
+        <translation>Gépelési értesítések küldése</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation>Előzmények tárolása</translation>
+        <translation>Chat előzmények megtartása</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
@@ -1883,7 +1883,7 @@ If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
         <translation>A NoSpam része a Tox azonosítójának.
-Ha kéretlen barátkérelmekkel bombázzák, változtassa meg a NoSpam értékét.
+Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam értékét.
 A felhasználók nem fogják tudni felvenni a régi azonosítójával, de a jelenlegi ismerősei megmaradnak.</translation>
     </message>
     <message>
@@ -1894,7 +1894,7 @@ A felhasználók nem fogják tudni felvenni a régi azonosítójával, de a jele
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
         <translation>A NoSpam része az azonosítójának és bármikor megváltoztatható.
-Ha kéretlen barátkérelmekkel bombázzák, változtassa meg a NoSpam-ot.</translation>
+Ha kéretlen partnerfelkérésekkel bombázzák, változtassa meg a NoSpam-ot.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -2030,7 +2030,7 @@ Válasszon egy másik képet.</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation>Ez a profil nem tartalmaz jelszót!</translation>
+        <translation>Az Ön profilja nem tartalmaz jelszót!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
@@ -2048,13 +2048,13 @@ Válasszon egy másik képet.</translation>
     </message>
     <message>
         <source>User Profile</source>
-        <translation>Felhasználói Profil</translation>
+        <translation>Felhasználói profil</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation>Ez a csomó karakter megmondja más Tox kliensnek, hogyan találják meg.
-Ossza meg ezt a partnerével a kommunikációhoz.</translation>
+Ossza ezt meg a partnerével a kommunikációhoz.</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2100,7 +2100,7 @@ Ossza meg ezt a partnerével a kommunikációhoz.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Jelenlegi profil elhelyezkedése: %1</translation>
+        <translation>Jelenlegi profil helye: %1</translation>
     </message>
 </context>
 <context>
@@ -2173,7 +2173,7 @@ Ossza meg ezt a partnerével a kommunikációhoz.</translation>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation>Balról Jobbra</translation>
+        <translation>Balról jobbra</translation>
     </message>
 </context>
 <context>
@@ -2321,11 +2321,11 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
-        <translation>Biztos eltávolítja %1 partnert a partnerlistáról?</translation>
+        <translation>Biztos eltávolítja %1 partnert a partnerlistájáról?</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltávolít minden chat előzményt a partnerével, ha ez be van állítva</translation>
     </message>
 </context>
 <context>
@@ -2384,26 +2384,26 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó megerősítése</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó megerősítés bevitel</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó bevitel</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó beviteli mező, minimum 6 karakter hosszú</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation>%1. kör</translation>
+        <translation>#%1. kör</translation>
     </message>
 </context>
 <context>
@@ -2471,7 +2471,7 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>A szövegbeállítások változtatásához a qTox újraindítása lehet szükséges.</translation>
+        <translation>A szövegbeállítások változtatásához a qToxot újra kell indítani.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
@@ -2616,7 +2616,7 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>A Tox nem indult el ezekkel a proxy beállításokkal. A qTox nem fut, kérem, módosítsa a beállításait, és indítsa újra.</translation>
+        <translation>A Tox nem indult el ezekkel a proxy beállításokkal. A qTox nem fut; módosítsa a beállításait, és indítsa újra.</translation>
     </message>
     <message>
         <source>Add friend</source>
@@ -2708,7 +2708,7 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation>%1. csoport</translation>
+        <translation>#%1. csoport</translation>
     </message>
     <message>
         <source>Create new group...</source>
