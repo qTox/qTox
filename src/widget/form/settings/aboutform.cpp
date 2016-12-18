@@ -140,7 +140,7 @@ void AboutForm::replaceVersions()
                  .arg(createLink("https://github.com/tux3", "tux3")))
             .arg(tr("See a full list of %1 at Github",
                     "`%1` is replaced with translation of word `contributors`")
-                 .arg(createLink("https://github.com/qTox/qTox/graphs/contributors",
+                 .arg(createLink("https://qtox.github.io/gitstats/authors.html",
                                  tr("contributors",
                                     "Replaces `%1` in `See a full list of…`"))));
 
