@@ -2375,7 +2375,8 @@ void Settings::setAutoLogin(bool state)
 /**
  * @brief Write a default personal .ini settings file for a profile.
  * @param basename Filename without extension to save settings.
- * @example If basename is "profile", settings will be saved in profile.ini
+ *
+ * @note If basename is "profile", settings will be saved in profile.ini
  */
 void Settings::createPersonal(QString basename)
 {

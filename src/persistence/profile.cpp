@@ -167,7 +167,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
  * @param password If password is not empty, the profile will be encrypted.
  * @return Returns a nullptr on error. Profile pointer otherwise.
  *
- * @example If the profile is already in use return nullptr.
+ * @note If the profile is already in use return nullptr.
  */
 Profile* Profile::createProfile(QString name, QString password)
 {
