@@ -61,7 +61,7 @@ public:
     QString getPeerName(const ToxId& id) const;
 
     QVector<uint32_t> getFriendList() const;
-    int getGroupNumberPeers(int groupId) const;
+    uint32_t getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     ToxId getGroupPeerToxId(int groupId, int peerId) const;
     QList<QString> getGroupPeerNames(int groupId) const;
@@ -72,7 +72,7 @@ public:
     bool isFriendOnline(uint32_t friendId) const;
     bool hasFriendWithAddress(const QString &addr) const;
     bool hasFriendWithPublicKey(const QString &pubkey) const;
-    int joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
+    uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
@@ -102,7 +102,11 @@ public slots:
     void acceptFriendRequest(const QString& userId);
     void requestFriendship(const QString& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
+#else
     int createGroup(uint8_t type = TOX_GROUPCHAT_TYPE_AV);
+#endif
 
     void removeFriend(uint32_t friendId, bool fake = false);
     void removeGroup(int groupId, bool fake = false);
@@ -112,11 +116,11 @@ public slots:
     void setStatusMessage(const QString& message);
     void setAvatar(const QByteArray& data);
 
-     int sendMessage(uint32_t friendId, const QString& message);
+    int sendMessage(uint32_t friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
     void sendGroupAction(int groupId, const QString& message);
     void changeGroupTitle(int groupId, const QString& title);
-     int sendAction(uint32_t friendId, const QString& action);
+    int sendAction(uint32_t friendId, const QString& action);
     void sendTyping(uint32_t friendId, bool typing);
 
     void sendAvatarFile(uint32_t friendId, const QByteArray& data);
@@ -194,6 +198,37 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    static void onFriendRequest(Tox* tox, const uint8_t* cUserId,
+                                const uint8_t* cMessage, size_t cMessageSize,
+                                void* core);
+    static void onFriendMessage(Tox* tox, uint32_t friendId,
+                                TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
+                                size_t cMessageSize, void* core);
+    static void onFriendNameChange(Tox* tox, uint32_t friendId,
+                                   const uint8_t* cName, size_t cNameSize,
+                                   void* core);
+    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping,
+                                     void* core);
+    static void onStatusMessageChanged(Tox* tox, uint32_t friendId,
+                                       const uint8_t* cMessage,
+                                       size_t cMessageSize, void* core);
+    static void onUserStatusChanged(Tox* tox, uint32_t friendId,
+                                    TOX_USER_STATUS userstatus, void* core);
+    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId,
+                                          TOX_CONNECTION status, void* core);
+    static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
+                              const uint8_t* data, size_t length, void* core);
+    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId,
+                               TOX_MESSAGE_TYPE type, const uint8_t* message,
+                               size_t length, void* core);
+    static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
+                                      TOX_CONFERENCE_STATE_CHANGE change, void* core);
+    static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
+                                   const uint8_t* title, size_t length, void* core);
+    static void onReadReceiptCallback(Tox* tox, uint32_t friendId,
+                                      uint32_t receipt, void *core);
+#else
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
     static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
@@ -215,7 +250,13 @@ private:
     static void onGroupTitleChange(Tox*, int groupnumber, int peernumber,
                                    const uint8_t* title, uint8_t len, void* _core);
     static void onReadReceiptCallback(Tox *tox, uint32_t friendId, uint32_t receipt, void *core);
+#endif
 
+    void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
+#if TOX_VERSION_IS_API_COMPATIBLE(0, 0, 1)
+    bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
+    bool parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const;
+#endif
     bool checkConnection();
 
     void checkEncryptedHistory();
