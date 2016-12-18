@@ -481,6 +481,12 @@ bool RawDatabase::remove()
     return QFile::remove(path);
 }
 
+/**
+ * @brief Functor used to free tox_pass_key memory.
+ *
+ * This functor can be used as Deleter for smart pointers.
+ * @note Doesn't take care of overwriting the key.
+ */
 struct PassKeyDeleter
 {
     void operator()(Tox_Pass_Key *pass_key) {
