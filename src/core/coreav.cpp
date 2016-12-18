@@ -666,9 +666,9 @@ void CoreAV::sendNoVideo()
     }
 }
 
-void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool video, void *_self)
+void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool video, void* vSelf)
 {
-    CoreAV* self = static_cast<CoreAV*>(_self);
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     // Run this slow callback asynchronously on the AV thread to avoid deadlocks with what our caller (toxcore) holds
     // Also run the code to switch to the CoreAV thread in yet another thread, in case CoreAV
@@ -681,8 +681,8 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
                 QThread::yieldCurrentThread(); // Shouldn't spin for long, we have priority
 
             QMetaObject::invokeMethod(self, "callCallback", Qt::QueuedConnection,
-                                                    Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                    Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, _self));
+                                      Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
+                                      Q_ARG(bool, audio), Q_ARG(bool, video), Q_ARG(void*, vSelf));
         });
         return;
     }
@@ -711,9 +711,9 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
     self->threadSwitchLock.clear(std::memory_order_release);
 }
 
-void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void *_self)
+void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, void* vSelf)
 {
-    CoreAV* self = static_cast<CoreAV*>(_self);
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     // Run this slow callback asynchronously on the AV thread to avoid deadlocks with what our caller (toxcore) holds
     // Also run the code to switch to the CoreAV thread in yet another thread, in case CoreAV
@@ -727,7 +727,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
 
             QMetaObject::invokeMethod(self, "stateCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                Q_ARG(uint32_t, state), Q_ARG(void*, _self));
+                                                Q_ARG(uint32_t, state), Q_ARG(void*, vSelf));
         });
         return;
     }
@@ -784,25 +784,25 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     self->threadSwitchLock.clear(std::memory_order_release);
 }
 
-void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, uint32_t vrate, void *_self)
+void CoreAV::bitrateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t arate, uint32_t vrate, void* vSelf)
 {
-    CoreAV* self = static_cast<CoreAV*>(_self);
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
 
     // Run this slow path callback asynchronously on the AV thread to avoid deadlocks
     if (QThread::currentThread() != self->coreavThread.get())
     {
         return (void)QMetaObject::invokeMethod(self, "bitrateCallback", Qt::QueuedConnection,
                                                 Q_ARG(ToxAV*, toxav), Q_ARG(uint32_t, friendNum),
-                                                Q_ARG(uint32_t, arate), Q_ARG(uint32_t, vrate), Q_ARG(void*, _self));
+                                                Q_ARG(uint32_t, arate), Q_ARG(uint32_t, vrate), Q_ARG(void*, vSelf));
     }
 
     qDebug() << "Recommended bitrate with"<<friendNum<<" is now "<<arate<<"/"<<vrate<<", ignoring it";
 }
 
 void CoreAV::audioFrameCallback(ToxAV *, uint32_t friendNum, const int16_t *pcm,
-                                size_t sampleCount, uint8_t channels, uint32_t samplingRate, void *_self)
+                                size_t sampleCount, uint8_t channels, uint32_t samplingRate, void* vSelf)
 {
-    CoreAV* self = static_cast<CoreAV*>(_self);
+    CoreAV* self = static_cast<CoreAV*>(vSelf);
     if (!self->calls.contains(friendNum))
         return;
 

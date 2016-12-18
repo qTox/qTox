@@ -300,10 +300,12 @@ void CoreFile::removeFile(uint32_t friendId, uint32_t fileId)
     fileMap.remove(key);
 }
 
-void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId, uint32_t kind,
-                                 uint64_t filesize, const uint8_t *fname, size_t fnameLen, void *_core)
+void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId,
+                                     uint32_t kind, uint64_t filesize,
+                                     const uint8_t* fname, size_t fnameLen,
+                                     void* vCore)
 {
-    Core* core = static_cast<Core*>(_core);
+    Core* core = static_cast<Core*>(vCore);
 
     if (kind == TOX_FILE_KIND_AVATAR)
     {
@@ -445,10 +447,12 @@ void CoreFile::onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
         emit static_cast<Core*>(core)->fileTransferInfo(*file);
 }
 
-void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
-                                    const uint8_t *data, size_t length, void *_core)
+void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId,
+                                       uint32_t fileId, uint64_t position,
+                                       const uint8_t* data, size_t length,
+                                       void* vCore)
 {
-    Core* core = static_cast<Core*>(_core);
+    Core* core = static_cast<Core*>(vCore);
     ToxFile* file = findFile(friendId, fileId);
     if (!file)
     {

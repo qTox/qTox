@@ -222,7 +222,7 @@ private:
     static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                    const uint8_t* title, size_t length, void* core);
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId,
-                                      uint32_t receipt, void *core);
+                                      uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
     bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
