@@ -55,8 +55,8 @@ Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
 static Nexus* nexus{nullptr};
 
-Nexus::Nexus(QObject *parent) :
-    QObject(parent),
+Nexus::Nexus() :
+    QObject(),
     profile{nullptr},
     widget{nullptr},
     loginScreen{nullptr}
