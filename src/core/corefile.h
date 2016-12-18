@@ -62,14 +62,19 @@ private:
     }
 
 private:
-    static void onFileReceiveCallback(Tox*, uint32_t friendnumber, uint32_t fileId, uint32_t kind,
-                                      uint64_t filesize, const uint8_t *fname, size_t fnameLen, void *core);
-    static void onFileControlCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
-                                      TOX_FILE_CONTROL control, void *core);
+    static void onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId,
+                                      uint32_t kind, uint64_t filesize,
+                                      const uint8_t* fname, size_t fnameLen,
+                                      void *vCore);
+    static void onFileControlCallback(Tox *tox, uint32_t friendId,
+                                      uint32_t fileId, TOX_FILE_CONTROL control,
+                                      void *core);
     static void onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
                                    uint64_t pos, size_t length, void *core);
-    static void onFileRecvChunkCallback(Tox *tox, uint32_t friendId, uint32_t fileId, uint64_t position,
-                                        const uint8_t *data, size_t length, void *core);
+    static void onFileRecvChunkCallback(Tox *tox, uint32_t friendId,
+                                        uint32_t fileId, uint64_t position,
+                                        const uint8_t* data, size_t length,
+                                        void *vCore);
     static void onConnectionStatusChanged(Core* core, uint32_t friendId, bool online);
 
 private:

@@ -213,14 +213,14 @@ private:
     static void onConnectionStatusChanged(Tox* tox, uint32_t friendId,
                                           TOX_CONNECTION status, void* core);
     static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
-                              const uint8_t* data, size_t length, void* core);
+                              const uint8_t* data, size_t length, void* vCore);
     static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId,
-                               TOX_MESSAGE_TYPE type, const uint8_t* message,
-                               size_t length, void* core);
+                               TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
+                               size_t length, void* vCore);
     static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                       TOX_CONFERENCE_STATE_CHANGE change, void* core);
     static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
-                                   const uint8_t* title, size_t length, void* core);
+                                   const uint8_t* cTitle, size_t length, void* vCore);
     static void onReadReceiptCallback(Tox* tox, uint32_t friendId,
                                       uint32_t receipt, void* core);
 
