@@ -1881,7 +1881,8 @@ void Widget::onTryCreateTrayIcon()
         disconnect(timer, &QTimer::timeout, this, &Widget::onTryCreateTrayIcon);
         if (!icon)
         {
-            qWarning() << "No system tray detected!";
+            Settings::getInstance().setShowSystemTray(false);
+            qWarning() << "No system tray detected, disabling system tray!";
             show();
         }
     }
