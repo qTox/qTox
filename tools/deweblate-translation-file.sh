@@ -35,6 +35,11 @@ get_commit_title() {
     git log --format=format:%s HEAD~1..HEAD
 }
 
+# get the whole commit message
+get_whole_commit_name() {
+    git log --format=foramt:%B HEAD~1..HEAD
+}
+
 # bool, whether HEAD commit is a weblate translation
 is_webl_tr() {
     local re='^feat\(l10n\): update .* translation from Weblate$'
@@ -44,7 +49,7 @@ is_webl_tr() {
 
 # get filename of file to be updated
 get_filename() {
-    local raw=( $(git log --raw | tail -n +7 | head -n1) )
+    local raw=( $(git log --raw | egrep '^:[[:digit:]]{6}' | head -n1) )
     local re='^translations/.+\.ts$'
     [[ ${raw[5]} =~ $re ]] # check if that's actually right, if not, fail here
     echo ${raw[5]}
@@ -53,7 +58,7 @@ get_filename() {
 # call the other script to update && amend
 update() {
     local file=$(get_filename)
-    local commit_msg=$(get_commit_title)
+    local commit_msg=$(get_whole_commit_name)
     ./tools/update-translation-files.sh "$file"
     git commit -S --amend -m "$commit_msg" "$file"
 }
