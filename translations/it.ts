@@ -1374,25 +1374,9 @@ Profile does not contain your history.</source>
 I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nome:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Stato:</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Elimina</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nome utente</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biografia</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1517,6 +1501,22 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

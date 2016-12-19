@@ -1302,16 +1302,6 @@ instead of system taskbar.</source>
         <translation>Öffentliche Informationen</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translatorcomment>Ausgelasssen</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>ID Informationen</translation>
     </message>
@@ -1391,14 +1381,6 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Löschen</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>ToxMe-Name</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Öffentliche Info (optional)</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1523,6 +1505,22 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

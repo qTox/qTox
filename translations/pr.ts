@@ -1302,16 +1302,6 @@ instead of system taskbar.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translatorcomment>Ausgelasssen</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation type="unfinished">Tox ID</translation>
     </message>
@@ -1388,14 +1378,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1521,6 +1503,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

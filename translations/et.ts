@@ -1300,14 +1300,6 @@ instead of closing itself.</source>
         <translation>Avalik teave</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nimi:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Olekuteade:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
@@ -1387,14 +1379,6 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     <message>
         <source>Change password</source>
         <translation>Muuda salasõna</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Kasutajanimi</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biograafia</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1519,6 +1503,22 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

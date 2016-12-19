@@ -1289,14 +1289,6 @@ instead of closing itself.</source>
         <translation>Publika informado</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nomo:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Stato:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox-identigilo</translation>
     </message>
@@ -1321,14 +1313,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Copy image</source>
         <translation>Kopii bildon</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Uzantnomo</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biografio</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1506,6 +1490,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

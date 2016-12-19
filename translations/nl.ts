@@ -1298,14 +1298,6 @@ in plaats van naar de taakbalk.</translation>
         <translation>Publieke informatie</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Naam:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Status:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox-ID</translation>
     </message>
@@ -1385,14 +1377,6 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Verwijder</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Server</source>
@@ -1517,6 +1501,22 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

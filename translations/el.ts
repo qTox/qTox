@@ -1297,14 +1297,6 @@ instead of closing itself.</source>
         <translation>Δημόσιες πληροφορίες</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Όνομα:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Κατάσταση:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation type="unfinished">Tox ID</translation>
     </message>
@@ -1384,14 +1376,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Change password</source>
         <translation>Αλλαγή κωδικού πρόσβασης</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Όνομα χρήστη</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Βιογραφία</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1516,6 +1500,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

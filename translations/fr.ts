@@ -1297,14 +1297,6 @@ au lieu de se fermer.</translation>
         <translation>Informations Publiques</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nom :</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>État :</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>ID Tox</translation>
     </message>
@@ -1385,14 +1377,6 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Identifiant</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biographie</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1517,6 +1501,22 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

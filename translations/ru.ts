@@ -1304,14 +1304,6 @@ instead of system taskbar.</source>
         <translation>Публичные данные</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Имя:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Статус:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
@@ -1391,14 +1383,6 @@ Profile does not contain your history.</source>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Удалить</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Имя пользователя</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>О себе</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1524,6 +1508,22 @@ Profile does not contain your history.</source>
     <message>
         <source>Change profile password</source>
         <translation>Изменить пароль профиля</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

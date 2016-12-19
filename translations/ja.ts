@@ -1294,14 +1294,6 @@ instead of closing itself.</source>
         <translation type="unfinished">公開情報</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation type="unfinished">名前：</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished">ステータス：</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation type="unfinished">Tox ID</translation>
     </message>
@@ -1327,14 +1319,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Copy image</source>
         <translation type="unfinished">画像をコピー</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished">ユーザー名</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation type="unfinished">自己紹介</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1512,6 +1496,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

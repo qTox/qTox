@@ -1297,14 +1297,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <translation>Vieša informacija</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Vardas:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Būsena:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
@@ -1384,14 +1376,6 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Ištrinti</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Naudotojo vardas</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biografija</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1516,6 +1500,22 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
