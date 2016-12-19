@@ -22,7 +22,7 @@
 #include "widget/form/groupchatform.h"
 #include "friendlist.h"
 #include "friend.h"
-#include "core/core.h"
+#include "src/core/core.h"
 #include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>

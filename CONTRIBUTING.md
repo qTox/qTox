@@ -353,15 +353,15 @@ Use `C++11`.
 
 ## Includes
 
-On the project level, include files starting with the module name, e.g. 
-`core/core.h` from `widget/widget.cpp`:
+On the project level, include files starting with the root directory of the
+repository, e.g. `src/core/core.h` from `src/widget/widget.cpp`:
 
 ```C++
-#include "core/core.h"
+#include "src/core/core.h"
 ```
 
 Do **not** use `<>` tags to include files on the project level, e.g.
-`core/core.h` from `widget/widget.cpp`:
+`src/core/core.h` from `src/widget/widget.cpp`:
 
 ```C++
 #include <core.h>    // WRONG

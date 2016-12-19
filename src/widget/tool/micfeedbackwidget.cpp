@@ -18,7 +18,7 @@
 */
 
 #include "micfeedbackwidget.h"
-#include "audio/audio.h"
+#include "src/audio/audio.h"
 #include <QPainter>
 #include <QLinearGradient>
 

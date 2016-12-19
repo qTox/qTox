@@ -25,7 +25,7 @@
 #include <QMutex>
 #include <QDateTime>
 #include <QMap>
-#include "chatlog/chatmessage.h"
+#include "src/chatlog/chatmessage.h"
 
 class Friend;
 class QTimer;

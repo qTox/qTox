@@ -27,16 +27,16 @@
 #include <QScreen>
 #include <QShowEvent>
 
-#include "audio/audio.h"
-#include "core/core.h"
-#include "core/coreav.h"
-#include "core/recursivesignalblocker.h"
-#include "persistence/settings.h"
-#include "video/cameradevice.h"
-#include "video/camerasource.h"
-#include "video/videosurface.h"
-#include "widget/tool/screenshotgrabber.h"
-#include "widget/translator.h"
+#include "src/audio/audio.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/core/recursivesignalblocker.h"
+#include "src/persistence/settings.h"
+#include "src/video/cameradevice.h"
+#include "src/video/camerasource.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/screenshotgrabber.h"
+#include "src/widget/translator.h"
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 #define ALC_ALL_DEVICES_SPECIFIER ALC_DEVICE_SPECIFIER

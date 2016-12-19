@@ -20,12 +20,12 @@
 #include "filetransferwidget.h"
 #include "ui_filetransferwidget.h"
 
-#include "nexus.h"
-#include "core/core.h"
-#include "widget/gui.h"
-#include "widget/style.h"
-#include "widget/widget.h"
-#include "persistence/settings.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
+#include "src/widget/gui.h"
+#include "src/widget/style.h"
+#include "src/widget/widget.h"
+#include "src/persistence/settings.h"
 
 #include <QMouseEvent>
 #include <QFileDialog>

@@ -22,9 +22,9 @@
 
 #include <tuple>
 
-#include "core/corestructs.h"
-#include "widget/genericchatitemlayout.h"
-#include "widget/tool/activatedialog.h"
+#include "src/core/corestructs.h"
+#include "src/widget/genericchatitemlayout.h"
+#include "src/widget/tool/activatedialog.h"
 
 template <typename K, typename V> class QHash;
 template <typename T> class QSet;

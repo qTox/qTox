@@ -19,15 +19,15 @@
 
 #include "widget/widget.h"
 #include "persistence/settings.h"
-#include "nexus.h"
-#include "ipc.h"
-#include "net/toxuri.h"
-#include "net/autoupdate.h"
-#include "persistence/toxsave.h"
-#include "persistence/profile.h"
-#include "widget/loginscreen.h"
-#include "widget/translator.h"
-#include "video/camerasource.h"
+#include "src/nexus.h"
+#include "src/ipc.h"
+#include "src/net/toxuri.h"
+#include "src/net/autoupdate.h"
+#include "src/persistence/toxsave.h"
+#include "src/persistence/profile.h"
+#include "src/widget/loginscreen.h"
+#include "src/widget/translator.h"
+#include "src/video/camerasource.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>

@@ -33,7 +33,7 @@
 #include "screengrabberchooserrectitem.h"
 #include "screengrabberoverlayitem.h"
 #include "toolboxgraphicsitem.h"
-#include "widget/widget.h"
+#include "src/widget/widget.h"
 
 ScreenshotGrabber::ScreenshotGrabber()
     : QObject()

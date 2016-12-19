@@ -29,14 +29,14 @@
 #include <QLabel>
 #include <QWindow>
 #include "ui_mainwindow.h"
-#include "persistence/settings.h"
-#include "widget/tool/croppinglabel.h"
-#include "widget/translator.h"
-#include "nexus.h"
-#include "core/core.h"
-#include "widget/gui.h"
-#include "widget/translator.h"
-#include "widget/contentlayout.h"
+#include "src/persistence/settings.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/translator.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 
 GroupInviteForm::GroupInviteForm()
 {

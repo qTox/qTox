@@ -19,7 +19,7 @@
 
 #include <QtCore/qsystemdetection.h>
 #if defined(__APPLE__) && defined(__MACH__)
-#include "platform/capslock.h"
+#include "src/platform/capslock.h"
 
 // TODO: Implement for osx
 bool Platform::capsLockEnabled()

@@ -26,16 +26,16 @@ extern "C" {
 #include <libavdevice/avdevice.h>
 }
 #include "cameradevice.h"
-#include "persistence/settings.h"
+#include "src/persistence/settings.h"
 
 #ifdef Q_OS_WIN
-#include "platform/camera/directshow.h"
+#include "src/platform/camera/directshow.h"
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
-#include "platform/camera/v4l2.h"
+#include "src/platform/camera/v4l2.h"
 #endif
 #ifdef Q_OS_OSX
-#include "platform/camera/avfoundation.h"
+#include "src/platform/camera/avfoundation.h"
 #endif
 
 /**

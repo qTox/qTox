@@ -24,9 +24,9 @@
 #include <QPoint>
 #include <QDateTime>
 #include <QMenu>
-#include "core/corestructs.h"
-#include "chatlog/chatmessage.h"
-#include "core/toxid.h"
+#include "src/core/corestructs.h"
+#include "src/chatlog/chatmessage.h"
+#include "src/core/toxid.h"
 
 /**
  * Spacing in px inserted when the author of the last message changes

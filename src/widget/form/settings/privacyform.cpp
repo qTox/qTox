@@ -24,17 +24,17 @@
 #include <QFile>
 #include <QMessageBox>
 
-#include "core/core.h"
-#include "core/recursivesignalblocker.h"
-#include "nexus.h"
-#include "persistence/history.h"
-#include "persistence/profile.h"
-#include "persistence/settings.h"
-#include "widget/form/setpassworddialog.h"
-#include "widget/form/settingswidget.h"
-#include "widget/gui.h"
-#include "widget/translator.h"
-#include "widget/widget.h"
+#include "src/core/core.h"
+#include "src/core/recursivesignalblocker.h"
+#include "src/nexus.h"
+#include "src/persistence/history.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/widget/form/setpassworddialog.h"
+#include "src/widget/form/settingswidget.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/widget.h"
 
 PrivacyForm::PrivacyForm()
     : GenericForm(QPixmap(":/img/settings/privacy.png"))

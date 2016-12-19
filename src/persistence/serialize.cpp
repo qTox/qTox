@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "persistence/serialize.h"
+#include "src/persistence/serialize.h"
 
 /**
  * @file serialize.cpp

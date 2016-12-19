@@ -19,9 +19,9 @@
 
 #include "friendlistwidget.h"
 #include "friendlistlayout.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "persistence/settings.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/persistence/settings.h"
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "circlewidget.h"

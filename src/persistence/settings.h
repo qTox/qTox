@@ -29,7 +29,7 @@
 #include <QDate>
 #include <QNetworkProxy>
 #include <QFlags>
-#include "core/corestructs.h"
+#include "src/core/corestructs.h"
 
 class ToxId;
 class Profile;

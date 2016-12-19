@@ -29,7 +29,7 @@ extern "C" {
 #include <QtConcurrent/QtConcurrentRun>
 #include <memory>
 #include <functional>
-#include "persistence/settings.h"
+#include "src/persistence/settings.h"
 #include "camerasource.h"
 #include "cameradevice.h"
 #include "videoframe.h"

@@ -24,7 +24,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "video/videosurface.h"
+#include "src/video/videosurface.h"
 
 class GenericNetCamView : public QWidget
 {

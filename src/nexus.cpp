@@ -19,10 +19,10 @@
 
 
 #include "nexus.h"
-#include "persistence/profile.h"
-#include "core/core.h"
-#include "core/coreav.h"
-#include "widget/widget.h"
+#include "src/persistence/profile.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/widget/widget.h"
 #include "persistence/settings.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"

@@ -21,7 +21,6 @@ QT       += core gui network xml opengl sql svg widgets
 
 TARGET    = qtox
 TEMPLATE  = app
-INCLUDEPATH += src
 FORMS    += \
     src/loginscreen.ui \
     src/mainwindow.ui \

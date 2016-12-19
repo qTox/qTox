@@ -19,20 +19,20 @@
 */
 
 #include "settings.h"
-#include "persistence/smileypack.h"
-#include "persistence/db/plaindb.h"
-#include "core/corestructs.h"
-#include "core/core.h"
-#include "widget/gui.h"
-#include "widget/style.h"
-#include "persistence/profilelocker.h"
-#include "persistence/settingsserializer.h"
-#include "nexus.h"
-#include "persistence/profile.h"
+#include "src/persistence/smileypack.h"
+#include "src/persistence/db/plaindb.h"
+#include "src/core/corestructs.h"
+#include "src/core/core.h"
+#include "src/widget/gui.h"
+#include "src/widget/style.h"
+#include "src/persistence/profilelocker.h"
+#include "src/persistence/settingsserializer.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
-#include "platform/autorun.h"
+#include "src/platform/autorun.h"
 #endif
-#include "ipc.h"
+#include "src/ipc.h"
 
 #include <QFont>
 #include <QApplication>

@@ -24,7 +24,7 @@
 #include <QMenu>
 #include <QFile>
 #include <QDebug>
-#include "persistence/settings.h"
+#include "src/persistence/settings.h"
 
 SystemTrayIcon::SystemTrayIcon()
 {

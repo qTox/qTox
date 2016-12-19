@@ -23,12 +23,12 @@
 #include "widget/friendwidget.h"
 #include "widget/form/chatform.h"
 #include "widget/gui.h"
-#include "core/core.h"
-#include "persistence/settings.h"
-#include "persistence/profile.h"
-#include "nexus.h"
-#include "grouplist.h"
-#include "group.h"
+#include "src/core/core.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
+#include "src/grouplist.h"
+#include "src/group.h"
 
 Friend::Friend(uint32_t FriendId, const ToxId &UserId)
     : userName{Core::getInstance()->getPeerName(UserId)}

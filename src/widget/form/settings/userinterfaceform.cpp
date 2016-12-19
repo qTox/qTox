@@ -31,18 +31,18 @@
 #include <QTime>
 #include <QVector>
 
-#include "core/core.h"
-#include "core/coreav.h"
-#include "core/recursivesignalblocker.h"
-#include "net/autoupdate.h"
-#include "nexus.h"
-#include "persistence/profile.h"
-#include "persistence/settings.h"
-#include "persistence/smileypack.h"
-#include "widget/form/settingswidget.h"
-#include "widget/style.h"
-#include "widget/translator.h"
-#include "widget/widget.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/core/recursivesignalblocker.h"
+#include "src/net/autoupdate.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/smileypack.h"
+#include "src/widget/form/settingswidget.h"
+#include "src/widget/style.h"
+#include "src/widget/translator.h"
+#include "src/widget/widget.h"
 
 /**
  * @class UserInterfaceForm

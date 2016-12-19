@@ -20,7 +20,7 @@
 #include <QtCore/qsystemdetection.h>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include <X11/XKBlib.h>
-#include "platform/capslock.h"
+#include "src/platform/capslock.h"
 #undef KeyPress
 #undef KeyRelease
 #undef FocusIn

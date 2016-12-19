@@ -18,7 +18,7 @@
 #include <QtCore/qsystemdetection.h>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
 #include <QDebug>
-#include "platform/timer.h"
+#include "src/platform/timer.h"
 #include <X11/extensions/scrnsaver.h>
 
 uint32_t Platform::getIdleTime()

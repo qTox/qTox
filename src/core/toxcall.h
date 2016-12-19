@@ -5,7 +5,7 @@
 #include <QtGlobal>
 #include <QMetaObject>
 
-#include "core/indexedlist.h"
+#include "src/core/indexedlist.h"
 
 #include <tox/toxav.h>
 

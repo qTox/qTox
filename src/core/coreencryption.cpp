@@ -22,12 +22,12 @@
 /* was permanently moved here to handle encryption */
 
 #include "core.h"
-#include "widget/gui.h"
-#include "persistence/settings.h"
-#include "core/cstring.h"
-#include "nexus.h"
-#include "persistence/profile.h"
-#include "persistence/historykeeper.h"
+#include "src/widget/gui.h"
+#include "src/persistence/settings.h"
+#include "src/core/cstring.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/historykeeper.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>

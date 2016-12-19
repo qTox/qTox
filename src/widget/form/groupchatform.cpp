@@ -24,19 +24,19 @@
 #include <QTimer>
 
 #include "tabcompleter.h"
-#include "group.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "widget/groupwidget.h"
-#include "widget/tool/croppinglabel.h"
-#include "widget/maskablepixmapwidget.h"
-#include "core/core.h"
-#include "core/coreav.h"
-#include "widget/style.h"
-#include "widget/flowlayout.h"
-#include "widget/translator.h"
-#include "widget/form/chatform.h"
-#include "video/groupnetcamview.h"
+#include "src/group.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/widget/groupwidget.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/core/core.h"
+#include "src/core/coreav.h"
+#include "src/widget/style.h"
+#include "src/widget/flowlayout.h"
+#include "src/widget/translator.h"
+#include "src/widget/form/chatform.h"
+#include "src/video/groupnetcamview.h"
 
 /**
  * @var QList<QLabel*> GroupChatForm::peerLabels
