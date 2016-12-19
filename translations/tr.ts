@@ -1297,14 +1297,6 @@ instead of closing itself.</source>
         <translation>Hakkımda</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>İsim:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Durum:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox kimliği</translation>
     </message>
@@ -1382,14 +1374,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Change password</source>
         <translation>Parolayı değiştir</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Server</source>
@@ -1514,6 +1498,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

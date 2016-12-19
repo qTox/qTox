@@ -1297,14 +1297,6 @@ místo do spuštěných programů.</translation>
         <translation>Veřejné informace</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Jméno:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Status:</translation>
-    </message>
-    <message>
         <source>Tox ID</source>
         <translation>Tox ID</translation>
     </message>
@@ -1384,14 +1376,6 @@ Při exportu nebude nahrána vaše historie.</translation>
     <message>
         <source>Change password</source>
         <translation>Změnit heslo</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Uživatelské jméno</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>O mně</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1516,6 +1500,22 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1400,25 +1400,9 @@ Profile does not contain your history.</source>
 Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nazwa:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Status:</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Usuń</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nazwa użytkownika</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biografia</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1547,6 +1531,22 @@ Profil nie zawiera twojej historii.</translation>
     <message>
         <source>Change profile password</source>
         <translation>Zmień hasło</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

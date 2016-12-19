@@ -1326,14 +1326,6 @@ Profile does not contain your history.</source>
         <translation>Radera</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1343,14 +1335,6 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1508,6 +1492,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

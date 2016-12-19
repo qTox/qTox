@@ -1373,25 +1373,9 @@ Profile does not contain your history.</source>
 El perfil no contiene tu historial.</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Nombre:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Estado:</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nombre de usuario</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Biografía</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1516,6 +1500,22 @@ El perfil no contiene tu historial.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

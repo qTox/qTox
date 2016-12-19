@@ -1379,25 +1379,9 @@ Profile does not contain your history.</source>
         <translation>Дозволяє Вами експортувати ваш профіль Tox в файл. Профіль не містить Вашу історію переписки.</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>Ім&apos;я:</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>Статус:</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
         <translation>Вилучити</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Ім&apos;я користувача</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>Біографія</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1522,6 +1506,22 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

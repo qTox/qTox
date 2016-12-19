@@ -1337,14 +1337,6 @@ Profil ne sadrži vašu povijest.</translation>
         <translation>Brisanje</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1354,14 +1346,6 @@ Profil ne sadrži vašu povijest.</translation>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Biography</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1519,6 +1503,22 @@ Profil ne sadrži vašu povijest.</translation>
     </message>
     <message>
         <source>Change profile password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

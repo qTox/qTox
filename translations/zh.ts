@@ -1355,14 +1355,6 @@ Profile does not contain your history.</source>
         <translation>公开信息</translation>
     </message>
     <message>
-        <source>Name:</source>
-        <translation>名称：</translation>
-    </message>
-    <message>
-        <source>Status:</source>
-        <translation>状态：</translation>
-    </message>
-    <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
         <translation>此二维码包含你的 Tox ID。你可以将它分享给朋友们。</translation>
     </message>
@@ -1373,14 +1365,6 @@ Profile does not contain your history.</source>
     <message>
         <source>Copy image</source>
         <translation>复制图像</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>用户名</translation>
-    </message>
-    <message>
-        <source>Biography</source>
-        <translation>档案</translation>
     </message>
     <message>
         <source>Server</source>
@@ -1517,6 +1501,22 @@ Profile does not contain your history.</source>
     <message>
         <source>Change profile password</source>
         <translation>更改个人资料密码</translation>
+    </message>
+    <message>
+        <source>My name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My status:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My biography</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
