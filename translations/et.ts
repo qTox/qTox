@@ -127,7 +127,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nimekirja kõikidest teadaolevatest probleemidest saab näha meie %1, mis asub keskkonnas nimega Github. Kui avastad qToxis vea või turvaaugu, anna sellest teada vastavalt meie %2 wiki artiklis antud juhistele.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -141,7 +141,7 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Veast teatamiseks klõpsa siia.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -258,11 +258,11 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Kui valitud, võetakse failid antud kontaktilt automaatselt vastu</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Väli, kuhu saab antud kontakti kohta märkusi kirjutada</translation>
     </message>
 </context>
 <context>
@@ -331,15 +331,15 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, kas 76 kuueteistkümnendsüsteemi märki või nimi@mingiserver.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Sisesta oma sõbra Tox ID</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Sõbrakutsele lisatav sõnum</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
