@@ -25,7 +25,7 @@
 
 #include <QtCore/qsystemdetection.h>
 #if defined(__APPLE__) && defined(__MACH__)
-#include "platform/timer.h"
+#include "src/platform/timer.h"
 #include <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
 

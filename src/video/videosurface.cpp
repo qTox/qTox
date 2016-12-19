@@ -18,13 +18,13 @@
 */
 
 #include "videosurface.h"
-#include "video/videoframe.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "widget/friendwidget.h"
-#include "persistence/settings.h"
-#include "core/core.h"
-#include "widget/style.h"
+#include "src/video/videoframe.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/widget/friendwidget.h"
+#include "src/persistence/settings.h"
+#include "src/core/core.h"
+#include "src/widget/style.h"
 
 #include <QPainter>
 #include <QLabel>

@@ -22,7 +22,7 @@
 #include "chatlinecontent.h"
 #include "chatlinecontentproxy.h"
 #include "content/filetransferwidget.h"
-#include "widget/translator.h"
+#include "src/widget/translator.h"
 
 #include <QDebug>
 #include <QScrollBar>

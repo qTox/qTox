@@ -18,9 +18,9 @@
 */
 
 #include "filesform.h"
-#include "widget/widget.h"
-#include "widget/translator.h"
-#include "widget/contentlayout.h"
+#include "src/widget/widget.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 #include <QFileInfo>
 #include <QWindow>
 

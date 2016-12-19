@@ -17,12 +17,12 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "net/autoupdate.h"
-#include "persistence/serialize.h"
-#include "persistence/settings.h"
-#include "widget/widget.h"
-#include "widget/gui.h"
-#include "nexus.h"
+#include "src/net/autoupdate.h"
+#include "src/persistence/serialize.h"
+#include "src/persistence/settings.h"
+#include "src/widget/widget.h"
+#include "src/widget/gui.h"
+#include "src/nexus.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QCoreApplication>

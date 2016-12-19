@@ -18,7 +18,7 @@
 */
 
 #include "chattextedit.h"
-#include "widget/translator.h"
+#include "src/widget/translator.h"
 #include <QKeyEvent>
 
 ChatTextEdit::ChatTextEdit(QWidget *parent) :

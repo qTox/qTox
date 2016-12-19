@@ -20,12 +20,12 @@
 
 #include "core.h"
 #include "coreav.h"
-#include "audio/audio.h"
-#include "friend.h"
-#include "group.h"
-#include "persistence/settings.h"
-#include "video/videoframe.h"
-#include "video/corevideosource.h"
+#include "src/audio/audio.h"
+#include "src/friend.h"
+#include "src/group.h"
+#include "src/persistence/settings.h"
+#include "src/video/videoframe.h"
+#include "src/video/corevideosource.h"
 #include <cassert>
 #include <QThread>
 #include <QTimer>

@@ -19,7 +19,7 @@
 
 #include <QtCore/qsystemdetection.h>
 #ifdef Q_OS_WIN32
-#include "platform/timer.h"
+#include "src/platform/timer.h"
 #include <windows.h>
 
 uint32_t Platform::getIdleTime()

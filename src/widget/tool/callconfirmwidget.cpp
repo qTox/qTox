@@ -19,7 +19,7 @@
 
 
 #include "callconfirmwidget.h"
-#include "widget/widget.h"
+#include "src/widget/widget.h"
 #include <assert.h>
 #include <QVBoxLayout>
 #include <QHBoxLayout>

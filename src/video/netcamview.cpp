@@ -19,14 +19,14 @@
 
 #include "netcamview.h"
 #include "camerasource.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "core/core.h"
-#include "video/videosurface.h"
-#include "widget/tool/movablewidget.h"
-#include "persistence/settings.h"
-#include "persistence/profile.h"
-#include "nexus.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/core/core.h"
+#include "src/video/videosurface.h"
+#include "src/widget/tool/movablewidget.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
 #include <QLabel>
 #include <QBoxLayout>
 #include <QFrame>

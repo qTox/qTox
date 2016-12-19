@@ -20,7 +20,7 @@
 #include <QtCore/qsystemdetection.h>
 #ifdef Q_OS_WIN32
 #include <windows.h>
-#include "platform/capslock.h"
+#include "src/platform/capslock.h"
 
 bool Platform::capsLockEnabled()
 {

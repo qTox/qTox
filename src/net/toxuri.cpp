@@ -18,11 +18,11 @@
 */
 
 
-#include "net/toxuri.h"
-#include "net/toxme.h"
-#include "widget/tool/friendrequestdialog.h"
-#include "nexus.h"
-#include "core/core.h"
+#include "src/net/toxuri.h"
+#include "src/net/toxme.h"
+#include "src/widget/tool/friendrequestdialog.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
 #include <QByteArray>
 #include <QString>
 #include <QMessageBox>

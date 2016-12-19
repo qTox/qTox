@@ -24,7 +24,7 @@
 #include <QObject>
 #include <memory>
 #include <atomic>
-#include "core/toxcall.h"
+#include "src/core/toxcall.h"
 #include <tox/toxav.h>
 
 class Friend;

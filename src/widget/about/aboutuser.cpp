@@ -1,8 +1,8 @@
 #include "aboutuser.h"
 #include "ui_aboutuser.h"
-#include "persistence/settings.h"
-#include "persistence/profile.h"
-#include "nexus.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
 
 #include <QDir>
 #include <QFileDialog>

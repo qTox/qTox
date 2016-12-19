@@ -18,8 +18,8 @@
 */
 
 #include "style.h"
-#include "persistence/settings.h"
-#include "widget/gui.h"
+#include "src/persistence/settings.h"
+#include "src/widget/gui.h"
 
 #include <QFile>
 #include <QDebug>

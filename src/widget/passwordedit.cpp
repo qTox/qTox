@@ -1,6 +1,6 @@
 #include "passwordedit.h"
 #ifdef QTOX_PLATFORM_EXT
-#include "platform/capslock.h"
+#include "src/platform/capslock.h"
 #endif
 #include <QCoreApplication>
 

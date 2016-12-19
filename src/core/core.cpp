@@ -19,16 +19,16 @@
 */
 
 #include "core.h"
-#include "nexus.h"
-#include "core/cstring.h"
-#include "core/coreav.h"
-#include "persistence/settings.h"
-#include "widget/gui.h"
-#include "persistence/profilelocker.h"
-#include "net/avatarbroadcaster.h"
-#include "persistence/profile.h"
+#include "src/nexus.h"
+#include "src/core/cstring.h"
+#include "src/core/coreav.h"
+#include "src/persistence/settings.h"
+#include "src/widget/gui.h"
+#include "src/persistence/profilelocker.h"
+#include "src/net/avatarbroadcaster.h"
+#include "src/persistence/profile.h"
 #include "corefile.h"
-#include "video/camerasource.h"
+#include "src/video/camerasource.h"
 
 #include <tox/tox.h>
 #include <tox/toxav.h>

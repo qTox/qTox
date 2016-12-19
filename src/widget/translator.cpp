@@ -19,7 +19,7 @@
 
 
 #include "translator.h"
-#include "persistence/settings.h"
+#include "src/persistence/settings.h"
 #include <QApplication>
 #include <QString>
 #include <QLocale>

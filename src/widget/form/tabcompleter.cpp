@@ -25,9 +25,9 @@
 #include <QRegExp>
 #include <QKeyEvent>
 
-#include "core/core.h"
-#include "group.h"
-#include "widget/tool/chattextedit.h"
+#include "src/core/core.h"
+#include "src/group.h"
+#include "src/widget/tool/chattextedit.h"
 
 /**
  * @file tabcompleter.h

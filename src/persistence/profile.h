@@ -28,7 +28,7 @@
 #include <QObject>
 #include <tox/toxencryptsave.h>
 #include <memory>
-#include "persistence/history.h"
+#include "src/persistence/history.h"
 
 class Core;
 class QThread;

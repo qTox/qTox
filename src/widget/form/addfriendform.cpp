@@ -27,15 +27,15 @@
 #include <QTabWidget>
 #include <QSignalMapper>
 #include <tox/tox.h>
-#include "nexus.h"
-#include "core/core.h"
-#include "net/toxme.h"
-#include "persistence/settings.h"
-#include "widget/gui.h"
-#include "widget/translator.h"
-#include "widget/contentlayout.h"
-#include "widget/tool/croppinglabel.h"
-#include "net/toxme.h"
+#include "src/nexus.h"
+#include "src/core/core.h"
+#include "src/net/toxme.h"
+#include "src/persistence/settings.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/net/toxme.h"
 #include <QWindow>
 #include <QScrollArea>
 

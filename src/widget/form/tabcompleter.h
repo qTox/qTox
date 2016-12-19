@@ -25,8 +25,8 @@
 
 #include <QString>
 #include <QMap>
-#include "group.h"
-#include "widget/tool/chattextedit.h"
+#include "src/group.h"
+#include "src/widget/tool/chattextedit.h"
 
 class TabCompleter : public QObject
 {

@@ -22,7 +22,7 @@
 #include <QString>
 #include <QVector>
 #include <QPair>
-#include "video/videomode.h"
+#include "src/video/videomode.h"
 
 #if !(defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD))
 #error "This file is only meant to be compiled for Linux or FreeBSD targets"

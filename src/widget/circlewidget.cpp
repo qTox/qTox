@@ -33,9 +33,9 @@
 #include "tool/croppinglabel.h"
 #include "widget.h"
 
-#include "friend.h"
-#include "friendlist.h"
-#include "persistence/settings.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/persistence/settings.h"
 
 QHash<int, CircleWidget*> CircleWidget::circleList;
 

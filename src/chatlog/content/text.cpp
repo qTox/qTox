@@ -31,7 +31,7 @@
 #include <QDesktopServices>
 #include <QTextFragment>
 
-#include "widget/style.h"
+#include "src/widget/style.h"
 
 Text::Text(const QString& txt, const QFont& font, bool enableElide, const QString &rwText, const QColor c)
     : rawText(rwText)
