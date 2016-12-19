@@ -270,243 +270,243 @@ RESOURCES += res.qrc
 }
 
 HEADERS  += \
-    src/friend.h \
-    src/friendlist.h \
-    src/group.h \
-    src/grouplist.h \
-    src/ipc.h \
-    src/nexus.h \
     src/audio/audio.h \
-    src/chatlog/chatlog.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
-    src/chatlog/content/text.h \
-    src/chatlog/content/spinner.h \
-    src/chatlog/content/filetransferwidget.h \
+    src/chatlog/chatlog.h \
     src/chatlog/chatmessage.h \
+    src/chatlog/content/filetransferwidget.h \
     src/chatlog/content/image.h \
-    src/chatlog/customtextdocument.h \
     src/chatlog/content/notificationicon.h \
+    src/chatlog/content/spinner.h \
+    src/chatlog/content/text.h \
     src/chatlog/content/timestamp.h \
+    src/chatlog/customtextdocument.h \
     src/chatlog/documentcache.h \
     src/chatlog/pixmapcache.h \
+    src/core/cdata.h \
     src/core/core.h \
     src/core/coreav.h \
     src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/core/cdata.h \
     src/core/cstring.h \
-    src/core/toxid.h \
     src/core/indexedlist.h \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
-    src/net/toxuri.h \
+    src/core/toxid.h \
+    src/friend.h \
+    src/friendlist.h \
+    src/group.h \
+    src/grouplist.h \
+    src/ipc.h \
     src/net/autoupdate.h \
-    src/net/toxme.h \
     src/net/avatarbroadcaster.h \
-    src/persistence/smileypack.h \
-    src/persistence/toxsave.h \
-    src/persistence/serialize.h \
-    src/persistence/offlinemsgengine.h \
-    src/persistence/profilelocker.h \
-    src/persistence/profile.h \
-    src/persistence/settingsserializer.h \
+    src/net/toxme.h \
+    src/net/toxuri.h \
+    src/nexus.h \
+    src/persistence/db/encrypteddb.h \
+    src/persistence/db/genericddinterface.h \
+    src/persistence/db/plaindb.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
     src/persistence/historykeeper.h \
+    src/persistence/offlinemsgengine.h \
+    src/persistence/profile.h \
+    src/persistence/profilelocker.h \
+    src/persistence/serialize.h \
     src/persistence/settings.h \
-    src/persistence/db/genericddinterface.h \
-    src/persistence/db/plaindb.h \
-    src/persistence/db/encrypteddb.h \
-    src/video/videosurface.h \
-    src/video/netcamview.h \
-    src/video/videoframe.h \
-    src/video/videosource.h \
+    src/persistence/settingsserializer.h \
+    src/persistence/smileypack.h \
+    src/persistence/toxsave.h \
     src/video/cameradevice.h \
     src/video/camerasource.h \
     src/video/corevideosource.h \
-    src/video/videomode.h \
     src/video/genericnetcamview.h \
     src/video/groupnetcamview.h \
+    src/video/netcamview.h \
+    src/video/videoframe.h \
+    src/video/videomode.h \
+    src/video/videosource.h \
+    src/video/videosurface.h \
+    src/widget/about/aboutuser.h \
+    src/widget/categorywidget.h \
+    src/widget/circlewidget.h \
+    src/widget/contentdialog.h \
+    src/widget/contentlayout.h \
     src/widget/emoticonswidget.h \
-    src/widget/style.h \
-    src/widget/tool/croppinglabel.h \
-    src/widget/maskablepixmapwidget.h \
-    src/widget/form/settings/aboutform.h \
-    src/widget/form/settings/advancedform.h \
     src/widget/form/addfriendform.h \
     src/widget/form/chatform.h \
-    src/widget/form/groupchatform.h \
-    src/widget/form/settingswidget.h \
-    src/widget/form/settings/genericsettings.h \
-    src/widget/form/settings/generalform.h \
-    src/widget/form/settings/privacyform.h \
-    src/widget/form/settings/avform.h \
     src/widget/form/filesform.h \
-    src/widget/form/profileform.h \
-    src/widget/tool/chattextedit.h \
-    src/widget/tool/friendrequestdialog.h \
-    src/widget/friendwidget.h \
-    src/widget/groupwidget.h \
-    src/widget/widget.h \
-    src/widget/friendlistwidget.h \
-    src/widget/genericchatroomwidget.h \
     src/widget/form/genericchatform.h \
-    src/widget/tool/adjustingscrollarea.h \
+    src/widget/form/groupchatform.h \
+    src/widget/form/groupinviteform.h \
     src/widget/form/loadhistorydialog.h \
+    src/widget/form/profileform.h \
     src/widget/form/setpassworddialog.h \
+    src/widget/form/settings/aboutform.h \
+    src/widget/form/settings/advancedform.h \
+    src/widget/form/settings/avform.h \
+    src/widget/form/settings/generalform.h \
+    src/widget/form/settings/genericsettings.h \
+    src/widget/form/settings/privacyform.h \
+    src/widget/form/settings/userinterfaceform.h \
+    src/widget/form/settings/verticalonlyscroller.h \
+    src/widget/form/settingswidget.h \
     src/widget/form/tabcompleter.h \
-    src/widget/tool/callconfirmwidget.h \
-    src/widget/systemtrayicon.h \
-    src/widget/qrwidget.h \
-    src/widget/systemtrayicon_private.h \
-    src/widget/loginscreen.h \
+    src/widget/friendlistlayout.h \
+    src/widget/friendlistwidget.h \
+    src/widget/friendwidget.h \
+    src/widget/genericchatitemlayout.h \
+    src/widget/genericchatitemwidget.h \
+    src/widget/genericchatroomwidget.h \
+    src/widget/groupwidget.h \
     src/widget/gui.h \
-    src/widget/tool/screenshotgrabber.h \
+    src/widget/loginscreen.h \
+    src/widget/maskablepixmapwidget.h \
+    src/widget/notificationedgewidget.h \
+    src/widget/notificationscrollarea.h \
+    src/widget/passwordedit.h \
+    src/widget/qrwidget.h \
+    src/widget/style.h \
+    src/widget/systemtrayicon.h \
+    src/widget/systemtrayicon_private.h \
+    src/widget/tool/activatedialog.h \
+    src/widget/tool/adjustingscrollarea.h \
+    src/widget/tool/callconfirmwidget.h \
+    src/widget/tool/chattextedit.h \
+    src/widget/tool/croppinglabel.h \
+    src/widget/tool/flyoutoverlaywidget.h \
+    src/widget/tool/friendrequestdialog.h \
+    src/widget/tool/micfeedbackwidget.h \
+    src/widget/tool/movablewidget.h \
+    src/widget/tool/profileimporter.h \
+    src/widget/tool/removefrienddialog.h \
     src/widget/tool/screengrabberchooserrectitem.h \
     src/widget/tool/screengrabberoverlayitem.h \
+    src/widget/tool/screenshotgrabber.h \
     src/widget/tool/toolboxgraphicsitem.h \
-    src/widget/tool/flyoutoverlaywidget.h \
-    src/widget/form/settings/verticalonlyscroller.h \
     src/widget/translator.h \
-    src/widget/notificationscrollarea.h \
-    src/widget/notificationedgewidget.h \
-    src/widget/circlewidget.h \
-    src/widget/genericchatitemwidget.h \
-    src/widget/friendlistlayout.h \
-    src/widget/genericchatitemlayout.h \
-    src/widget/categorywidget.h \
-    src/widget/contentlayout.h \
-    src/widget/contentdialog.h \
-    src/widget/tool/activatedialog.h \
-    src/widget/tool/micfeedbackwidget.h \
-    src/widget/tool/removefrienddialog.h \
-    src/widget/tool/movablewidget.h \
-    src/widget/about/aboutuser.h \
-    src/widget/form/groupinviteform.h \
-    src/widget/tool/profileimporter.h \
-    src/widget/passwordedit.h \
-    src/widget/form/settings/userinterfaceform.h
+    src/widget/widget.h
 
 SOURCES += \
-    src/ipc.cpp \
-    src/friend.cpp \
-    src/friendlist.cpp \
-    src/group.cpp \
-    src/grouplist.cpp \
-    src/main.cpp \
-    src/nexus.cpp \
     src/audio/audio.cpp \
+    src/chatlog/chatline.cpp \
+    src/chatlog/chatlinecontent.cpp \
+    src/chatlog/chatlinecontentproxy.cpp \
+    src/chatlog/chatlog.cpp \
+    src/chatlog/chatmessage.cpp \
+    src/chatlog/content/filetransferwidget.cpp \
+    src/chatlog/content/image.cpp \
+    src/chatlog/content/notificationicon.cpp \
+    src/chatlog/content/spinner.cpp \
+    src/chatlog/content/text.cpp \
+    src/chatlog/content/timestamp.cpp \
+    src/chatlog/customtextdocument.cpp\
+    src/chatlog/documentcache.cpp \
+    src/chatlog/pixmapcache.cpp \
     src/core/cdata.cpp \
-    src/core/cstring.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
     src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
+    src/core/cstring.cpp \
     src/core/recursivesignalblocker.cpp \
-    src/core/toxid.cpp \
     src/core/toxcall.cpp \
-    src/chatlog/chatlog.cpp \
-    src/chatlog/chatline.cpp \
-    src/chatlog/chatlinecontent.cpp \
-    src/chatlog/chatlinecontentproxy.cpp \
-    src/chatlog/content/text.cpp \
-    src/chatlog/content/spinner.cpp \
-    src/chatlog/content/filetransferwidget.cpp \
-    src/chatlog/chatmessage.cpp \
-    src/chatlog/content/image.cpp \
-    src/chatlog/customtextdocument.cpp\
-    src/chatlog/content/notificationicon.cpp \
-    src/chatlog/content/timestamp.cpp \
-    src/chatlog/documentcache.cpp \
-    src/chatlog/pixmapcache.cpp \
+    src/core/toxid.cpp \
+    src/friend.cpp \
+    src/friendlist.cpp \
+    src/group.cpp \
+    src/grouplist.cpp \
+    src/ipc.cpp \
+    src/main.cpp \
     src/net/autoupdate.cpp \
-    src/net/toxuri.cpp \
-    src/net/toxme.cpp \
     src/net/avatarbroadcaster.cpp \
-    src/persistence/historykeeper.cpp \
-    src/persistence/settings.cpp \
+    src/net/toxme.cpp \
+    src/net/toxuri.cpp \
+    src/nexus.cpp \
+    src/persistence/db/encrypteddb.cpp \
     src/persistence/db/genericddinterface.cpp \
     src/persistence/db/plaindb.cpp \
-    src/persistence/db/encrypteddb.cpp \
+    src/persistence/db/rawdatabase.cpp \
+    src/persistence/history.cpp \
+    src/persistence/historykeeper.cpp \
+    src/persistence/offlinemsgengine.cpp \
     src/persistence/profile.cpp \
+    src/persistence/profilelocker.cpp \
+    src/persistence/serialize.cpp \
+    src/persistence/settings.cpp \
     src/persistence/settingsserializer.cpp \
     src/persistence/smileypack.cpp \
     src/persistence/toxsave.cpp \
-    src/persistence/serialize.cpp \
-    src/persistence/offlinemsgengine.cpp \
-    src/persistence/profilelocker.cpp \
-    src/persistence/db/rawdatabase.cpp \
-    src/persistence/history.cpp \
-    src/video/videoframe.cpp \
-    src/video/videosource.cpp \
     src/video/cameradevice.cpp \
     src/video/camerasource.cpp \
     src/video/corevideosource.cpp \
     src/video/genericnetcamview.cpp \
     src/video/groupnetcamview.cpp \
     src/video/netcamview.cpp \
-    src/video/videosurface.cpp \
+    src/video/videoframe.cpp \
     src/video/videomode.cpp \
-    src/widget/form/addfriendform.cpp \
-    src/widget/form/settingswidget.cpp \
-    src/widget/form/settings/generalform.cpp \
-    src/widget/form/settings/privacyform.cpp \
-    src/widget/form/settings/avform.cpp \
-    src/widget/form/settings/userinterfaceform.cpp \
-    src/widget/form/settings/genericsettings.cpp \
-    src/widget/form/profileform.cpp \
-    src/widget/form/filesform.cpp \
-    src/widget/tool/chattextedit.cpp \
-    src/widget/tool/friendrequestdialog.cpp \
-    src/widget/widget.cpp \
-    src/widget/friendlistwidget.cpp \
-    src/widget/tool/adjustingscrollarea.cpp \
-    src/widget/form/loadhistorydialog.cpp \
-    src/widget/form/setpassworddialog.cpp \
-    src/widget/form/tabcompleter.cpp \
-    src/widget/flowlayout.cpp \
-    src/widget/tool/callconfirmwidget.cpp \
-    src/widget/systemtrayicon.cpp \
-    src/widget/groupwidget.cpp \
-    src/widget/friendwidget.cpp \
-    src/widget/form/chatform.cpp \
-    src/widget/form/groupchatform.cpp \
-    src/widget/form/genericchatform.cpp \
+    src/video/videosource.cpp \
+    src/video/videosurface.cpp \
+    src/widget/about/aboutuser.cpp \
+    src/widget/categorywidget.cpp \
+    src/widget/circlewidget.cpp \
+    src/widget/contentdialog.cpp \
+    src/widget/contentlayout.cpp \
     src/widget/emoticonswidget.cpp \
-    src/widget/style.cpp \
-    src/widget/tool/croppinglabel.cpp \
-    src/widget/maskablepixmapwidget.cpp \
+    src/widget/flowlayout.cpp \
+    src/widget/form/addfriendform.cpp \
+    src/widget/form/chatform.cpp \
+    src/widget/form/filesform.cpp \
+    src/widget/form/genericchatform.cpp \
+    src/widget/form/groupchatform.cpp \
+    src/widget/form/groupinviteform.cpp \
+    src/widget/form/loadhistorydialog.cpp \
+    src/widget/form/profileform.cpp \
+    src/widget/form/setpassworddialog.cpp \
     src/widget/form/settings/aboutform.cpp \
     src/widget/form/settings/advancedform.cpp \
-    src/widget/qrwidget.cpp \
+    src/widget/form/settings/avform.cpp \
+    src/widget/form/settings/generalform.cpp \
+    src/widget/form/settings/genericsettings.cpp \
+    src/widget/form/settings/privacyform.cpp \
+    src/widget/form/settings/userinterfaceform.cpp \
+    src/widget/form/settings/verticalonlyscroller.cpp \
+    src/widget/form/settingswidget.cpp \
+    src/widget/form/tabcompleter.cpp \
+    src/widget/friendlistlayout.cpp \
+    src/widget/friendlistwidget.cpp \
+    src/widget/friendwidget.cpp \
+    src/widget/genericchatitemlayout.cpp \
+    src/widget/genericchatitemwidget.cpp \
     src/widget/genericchatroomwidget.cpp \
-    src/widget/loginscreen.cpp \
+    src/widget/groupwidget.cpp \
     src/widget/gui.cpp \
-    src/widget/tool/screenshotgrabber.cpp \
+    src/widget/loginscreen.cpp \
+    src/widget/maskablepixmapwidget.cpp \
+    src/widget/notificationedgewidget.cpp \
+    src/widget/notificationscrollarea.cpp \
+    src/widget/passwordedit.cpp \
+    src/widget/qrwidget.cpp \
+    src/widget/style.cpp \
+    src/widget/systemtrayicon.cpp \
+    src/widget/tool/activatedialog.cpp \
+    src/widget/tool/adjustingscrollarea.cpp \
+    src/widget/tool/callconfirmwidget.cpp \
+    src/widget/tool/chattextedit.cpp \
+    src/widget/tool/croppinglabel.cpp \
+    src/widget/tool/flyoutoverlaywidget.cpp \
+    src/widget/tool/friendrequestdialog.cpp \
+    src/widget/tool/micfeedbackwidget.cpp \
+    src/widget/tool/movablewidget.cpp \
+    src/widget/tool/profileimporter.cpp \
+    src/widget/tool/removefrienddialog.cpp \
     src/widget/tool/screengrabberchooserrectitem.cpp \
     src/widget/tool/screengrabberoverlayitem.cpp \
+    src/widget/tool/screenshotgrabber.cpp \
     src/widget/tool/toolboxgraphicsitem.cpp \
-    src/widget/tool/flyoutoverlaywidget.cpp \
-    src/widget/form/settings/verticalonlyscroller.cpp \
     src/widget/translator.cpp \
-    src/widget/notificationscrollarea.cpp \
-    src/widget/notificationedgewidget.cpp \
-    src/widget/circlewidget.cpp \
-    src/widget/genericchatitemwidget.cpp \
-    src/widget/friendlistlayout.cpp \
-    src/widget/genericchatitemlayout.cpp \
-    src/widget/categorywidget.cpp \
-    src/widget/contentlayout.cpp \
-    src/widget/contentdialog.cpp \
-    src/widget/tool/activatedialog.cpp \
-    src/widget/tool/movablewidget.cpp \
-    src/widget/tool/micfeedbackwidget.cpp \
-    src/widget/tool/removefrienddialog.cpp \
-    src/widget/about/aboutuser.cpp \
-    src/widget/form/groupinviteform.cpp \
-    src/widget/tool/profileimporter.cpp \
-    src/widget/passwordedit.cpp
+    src/widget/widget.cpp
