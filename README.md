@@ -39,7 +39,7 @@ while running on all major platforms.
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
 **[64 bit installer]**, [signature][sig-64] | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]**
-[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | [Experimental download] |
+[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
 
 _**Bold** options are recommended._
@@ -112,7 +112,6 @@ There are [IRC logs] available.
 [CentOS, Debian, Fedora, openSUSE, Ubuntu]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
-[Experimental download]: https://github.com/qTox/qTox/releases/latest
 [Gentoo]: /INSTALL.md#gentoo
 [Install/Build]: /INSTALL.md
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
