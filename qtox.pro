@@ -53,8 +53,8 @@ QMAKE_CXXFLAGS += -fstack-protector-all \
                   -Wstrict-overflow \
                   -Wstrict-aliasing \
                   --param ssp-buffer-size=1
-# osx cannot into security (build on it fails with those enabled)
-!macx {
+# osx & windows cannot into security (build on it fails with those enabled)
+unix:!macx {
     QMAKE_LFLAGS += -Wl,-z,now -Wl,-z,relro
 }
 
