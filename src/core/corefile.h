@@ -44,14 +44,33 @@ private:
 
     // Internal file sending APIs, used by Core. Public API in core.h
 private:
-    static void sendFile(Core *core, uint32_t friendId, QString filename, QString filePath, long long filesize);
-    static void sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data);
-    static void pauseResumeFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void pauseResumeFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileSend(Core* core, uint32_t friendId, uint32_t fileId);
-    static void cancelFileRecv(Core* core, uint32_t friendId, uint32_t fileId);
-    static void rejectFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId);
-    static void acceptFileRecvRequest(Core* core, uint32_t friendId, uint32_t fileId, QString path);
+    static void sendFile(Core *core,
+                         uint32_t friendId,
+                         QString filename,
+                         QString filePath,
+                         long long filesize);
+    static void sendAvatarFile(Core* core,
+                               uint32_t friendId,
+                               const QByteArray& data);
+    static void pauseResumeFileSend(Core* core,
+                                    uint32_t friendId,
+                                    uint32_t fileId);
+    static void pauseResumeFileRecv(Core* core,
+                                    uint32_t friendId,
+                                    uint32_t fileId);
+    static void cancelFileSend(Core* core,
+                               uint32_t friendId,
+                               uint32_t fileId);
+    static void cancelFileRecv(Core* core,
+                               uint32_t friendId,
+                               uint32_t fileId);
+    static void rejectFileRecvRequest(Core* core,
+                                      uint32_t friendId,
+                                      uint32_t fileId);
+    static void acceptFileRecvRequest(Core* core,
+                                      uint32_t friendId,
+                                      uint32_t fileId,
+                                      QString path);
     static ToxFile *findFile(uint32_t friendId, uint32_t fileId);
     static void addFile(uint32_t friendId, uint32_t fileId, const ToxFile& file);
     static void removeFile(uint32_t friendId, uint32_t fileId);
@@ -62,20 +81,28 @@ private:
     }
 
 private:
-    static void onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId,
-                                      uint32_t kind, uint64_t filesize,
-                                      const uint8_t* fname, size_t fnameLen,
+    static void onFileReceiveCallback(Tox*,
+                                      uint32_t friendId,
+                                      uint32_t fileId,
+                                      uint32_t kind,
+                                      uint64_t filesize,
+                                      const uint8_t *fname,
+                                      size_t fnameLen,
                                       void *vCore);
-    static void onFileControlCallback(Tox *tox, uint32_t friendId,
-                                      uint32_t fileId, TOX_FILE_CONTROL control,
-                                      void *core);
+    static void onFileControlCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
+                                      TOX_FILE_CONTROL control, void *core);
     static void onFileDataCallback(Tox *tox, uint32_t friendId, uint32_t fileId,
                                    uint64_t pos, size_t length, void *core);
-    static void onFileRecvChunkCallback(Tox *tox, uint32_t friendId,
-                                        uint32_t fileId, uint64_t position,
-                                        const uint8_t* data, size_t length,
+    static void onFileRecvChunkCallback(Tox *tox,
+                                        uint32_t friendId,
+                                        uint32_t fileId,
+                                        uint64_t position,
+                                        const uint8_t* data,
+                                        size_t length,
                                         void *vCore);
-    static void onConnectionStatusChanged(Core* core, uint32_t friendId, bool online);
+    static void onConnectionStatusChanged(Core* core,
+                                          uint32_t friendId,
+                                          bool online);
 
 private:
     static QMutex fileSendMutex;
