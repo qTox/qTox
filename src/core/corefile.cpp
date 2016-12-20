@@ -49,21 +49,23 @@ using namespace std;
  */
 unsigned CoreFile::corefileIterationInterval()
 {
-    /// Sleep at most 1000ms if we have no FT, 10 for user FTs, 50 for the rest (avatars, ...)
-    constexpr unsigned fastFileInterval = 10, slowFileInterval = 50, idleInterval = 1000;
-    unsigned interval = idleInterval;
+    /*
+       Sleep at most 1000ms if we have no FT, 10 for user FTs
+       There is no real difference between 10ms sleep and 50ms sleep when it
+       comes to CPU usage – just keep the CPU usage low when there are no file
+       transfers, and speed things up when there is an ongoing file transfer.
+    */
+    constexpr unsigned fileInterval =   10,
+                       idleInterval = 1000;
 
     for (ToxFile& file : fileMap)
     {
         if (file.status == ToxFile::TRANSMITTING)
         {
-            if (file.fileKind == TOX_FILE_KIND_DATA)
-                return fastFileInterval;
-            else
-                interval = slowFileInterval;
+            return fileInterval;
         }
     }
-    return interval;
+    return idleInterval;
 }
 
 void CoreFile::sendAvatarFile(Core* core, uint32_t friendId, const QByteArray& data)
