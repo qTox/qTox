@@ -328,7 +328,7 @@ void SettingsSerializer::save()
     // Encrypt
     if (!password.isEmpty())
     {
-        Core* core = Nexus::getCore();
+        Core* core = Core::getInstance();
         auto passkey = core->createPasskey(password);
         data = core->encryptData(data, *passkey);
     }
@@ -367,7 +367,7 @@ void SettingsSerializer::readSerialized()
             return;
         }
 
-        Core* core = Nexus::getCore();
+        Core* core = Core::getInstance();
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt, nullptr);

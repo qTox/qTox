@@ -800,7 +800,7 @@ void Profile::setPassword(const QString& newPassword)
         database->setPassword(newPassword);
     }
 
-    Nexus::getDesktopGUI()->reloadHistory();
+    Nexus::getInstance().getDesktopGUI()->reloadHistory();
     saveAvatar(avatar, core->getSelfId().getPublicKeyString());
 
     QVector<uint32_t> friendList = core->getFriendList();

@@ -334,7 +334,7 @@ void Settings::loadGlobal()
 
 void Settings::loadPersonal()
 {
-    Profile* profile = Nexus::getProfile();
+    Profile* profile = Nexus::getInstance().getProfile();
     if (!profile)
     {
         qCritical() << "No active profile, couldn't load personal settings";
@@ -471,7 +471,7 @@ void Settings::resetToDefault()
 
     // Remove file with profile settings
     QDir dir(getSettingsDirPath());
-    Profile *profile = Nexus::getProfile();
+    Profile *profile = Nexus::getInstance().getProfile();
     QString localPath = dir.filePath(profile->getName() + ".ini");
     QFile local(localPath);
     if (local.exists())
@@ -624,7 +624,7 @@ void Settings::saveGlobal()
  */
 void Settings::savePersonal()
 {
-    savePersonal(Nexus::getProfile());
+    savePersonal(Nexus::getInstance().getProfile());
 }
 
 /**

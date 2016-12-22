@@ -30,7 +30,6 @@ class GUI : public QObject
     Q_OBJECT
 public:
     static GUI& getInstance();
-    static QWidget* getMainWidget();
     static void clearContacts();
     static void setEnabled(bool state);
     static void setWindowTitle(const QString& title);

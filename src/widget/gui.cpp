@@ -47,8 +47,9 @@ GUI::GUI(QObject *parent) :
     QObject(parent)
 {
     assert(QThread::currentThread() == qApp->thread());
-    assert(Nexus::getDesktopGUI());
-    connect(Nexus::getDesktopGUI(), &Widget::resized, this, &GUI::resized);
+    Widget* w = Nexus::getInstance().getDesktopGUI();
+    assert(w);
+    connect(w, &Widget::resized, this, &GUI::resized);
 }
 
 /**
@@ -187,7 +188,7 @@ void GUI::showError(const QString& title, const QString& msg)
     {
         // If the GUI hasn't started yet and we're on the main thread,
         // we still want to be able to show error messages
-        if (!Nexus::getDesktopGUI())
+        if (!Nexus::getInstance().getDesktopGUI())
             QMessageBox::critical(nullptr, title, msg);
         else
             getInstance()._showError(title, msg);
@@ -323,51 +324,55 @@ QString GUI::passwordDialog(const QString& cancel, const QString& body)
 
 void GUI::_clearContacts()
 {
-    Nexus::getDesktopGUI()->clearContactsList();
+    Nexus::getInstance().getDesktopGUI()->clearContactsList();
 }
 
 void GUI::_setEnabled(bool state)
 {
-    Nexus::getDesktopGUI()->setEnabled(state);
+    Nexus::getInstance().getDesktopGUI()->setEnabled(state);
 }
 
 void GUI::_setWindowTitle(const QString& title)
 {
+    Widget* w = Nexus::getInstance().getDesktopGUI();
     if (title.isEmpty())
-        getMainWidget()->setWindowTitle("qTox");
+        w->setWindowTitle("qTox");
     else
-        getMainWidget()->setWindowTitle("qTox - " + title);
+        w->setWindowTitle("qTox - " + title);
 }
 
 void GUI::_reloadTheme()
 {
-    Nexus::getDesktopGUI()->reloadTheme();
+    Nexus::getInstance().getDesktopGUI()->reloadTheme();
 }
 
 void GUI::_showInfo(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Information, title, msg, QMessageBox::Ok, getMainWidget());
+    Widget* w = Nexus::getInstance().getDesktopGUI();
+    QMessageBox messageBox(QMessageBox::Information, title, msg, QMessageBox::Ok, w);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
 void GUI::_showWarning(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Warning, title, msg, QMessageBox::Ok, getMainWidget());
+    Widget* w = Nexus::getInstance().getDesktopGUI();
+    QMessageBox messageBox(QMessageBox::Warning, title, msg, QMessageBox::Ok, w);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
 void GUI::_showError(const QString& title, const QString& msg)
 {
-    QMessageBox messageBox(QMessageBox::Critical, title, msg, QMessageBox::Ok, getMainWidget());
+    Widget* w = Nexus::getInstance().getDesktopGUI();
+    QMessageBox messageBox(QMessageBox::Critical, title, msg, QMessageBox::Ok, w);
     messageBox.setButtonText(QMessageBox::Ok, QApplication::tr("Ok"));
     messageBox.exec();
 }
 
 void GUI::_showUpdateDownloadProgress()
 {
-    Nexus::getDesktopGUI()->showUpdateDownloadProgress();
+    Nexus::getInstance().getDesktopGUI()->showUpdateDownloadProgress();
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
@@ -384,8 +389,10 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
                        const QString& button1, const QString& button2,
                        bool defaultAns, bool warning)
 {
-    QMessageBox::Icon icon = warning ? QMessageBox::Warning : QMessageBox::Question;
-    QMessageBox box(icon, title, msg, QMessageBox::NoButton, getMainWidget());
+    QMessageBox::Icon icon = warning ? QMessageBox::Warning
+                                     : QMessageBox::Question;
+    Widget* w = Nexus::getInstance().getDesktopGUI();
+    QMessageBox box(icon, title, msg, QMessageBox::NoButton, w);
     QPushButton* pushButton1 = box.addButton(button1, QMessageBox::AcceptRole);
     QPushButton* pushButton2 = box.addButton(button2, QMessageBox::RejectRole);
     box.setDefaultButton(defaultAns ? pushButton1 : pushButton2);
@@ -463,17 +470,4 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
         dialog.setTextValue("");
         dialog.setLabelText(body + "\n\n" + tr("You must enter a non-empty password:"));
     }
-}
-
-// Other
-
-/**
- * @brief Get the main widget.
- * @return The main QWidget* of the application
- */
-QWidget* GUI::getMainWidget()
-{
-    QWidget* maingui{nullptr};
-    maingui = Nexus::getDesktopGUI();
-    return maingui;
 }
