@@ -1464,7 +1464,7 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Nem kötelező ToxMe biográfia megjelenítése ToyMe-n</translation>
+        <translation>Nem kötelező ToxMe biográfia megjelenítése ToxMe-n</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
@@ -1504,7 +1504,7 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Név:</translation>
     </message>
     <message>
         <source>My status:</source>
@@ -1512,11 +1512,11 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Biográfia</translation>
     </message>
 </context>
 <context>
