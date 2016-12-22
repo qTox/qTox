@@ -310,7 +310,6 @@ int main(int argc, char *argv[])
 
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
-    Settings::destroyInstance();
     qDebug() << "Clean exit with status" << errorcode;
 
 #ifdef LOG_TO_FILE
