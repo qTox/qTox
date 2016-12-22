@@ -42,7 +42,6 @@ class Nexus : public QObject
     Q_OBJECT
 public:
     static Nexus& getInstance();
-    static void destroyInstance();
     static QString getSupportedImageFilter();
     static bool tryRemoveFile(const QString& filepath);
 
