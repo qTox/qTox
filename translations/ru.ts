@@ -346,7 +346,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Введите сообщение чтобы отправить с запросом на добавление в друзья или оставьте поле пустым, чтобы отправить сообщение по-умолчанию.</translation>
+        <translation>Введите сообщение, чтобы отправить с запросом на добавление в друзья или оставьте поле пустым, чтобы отправить сообщение по-умолчанию</translation>
     </message>
 </context>
 <context>
@@ -1254,7 +1254,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Приглашение группы</translation>
+        <translation>Групповые приглашения</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1416,12 +1416,12 @@ Profile does not contain your history.</source>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Необязательно. Напишите что-нибудь о вас. Или о вашей кошке :)</translation>
+        <translation>Необязательно. Что-нибудь о вас. Или о вашей кошке :)</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Необязательно. Напишите что-нибудь о вас. Или о вашей кошке :)</translation>
+        <translation>Необязательно. Что-нибудь о вас. Или о вашей кошке :)</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1511,19 +1511,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Мое имя:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Мой статус:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Мое имя пользователя</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Моя биография</translation>
     </message>
 </context>
 <context>
@@ -1649,11 +1649,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation>Поле ввода пароля, вы можете оставить его пустым (без пароля), или ввести минимум 6 символов.</translation>
+        <translation>Поле ввода пароля, вы можете оставить его пустым (без пароля), или ввести минимум 6 символов</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation>Поле подтверждения пароля.</translation>
+        <translation>Поле подтверждения пароля</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
@@ -1890,7 +1890,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation>АнтиСпам</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -1983,7 +1983,7 @@ Please use another image.</source>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation>Путь недоступен для записи.</translation>
+        <translation>Путь недоступен для записи</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
