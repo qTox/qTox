@@ -307,6 +307,8 @@ int main(int argc, char *argv[])
 
     int errorcode = a.exec();
 
+    Settings::getInstance().saveGlobal();
+
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
 
