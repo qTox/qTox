@@ -305,12 +305,15 @@ int main(int argc, char *argv[])
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
 
-    // Run
     int errorcode = a.exec();
 
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
-    qDebug() << "Clean exit with status" << errorcode;
+
+    if (errorcode)
+    {
+        qWarning() << "qTox exited with error code" << errorcode;
+    }
 
 #ifdef LOG_TO_FILE
     logFileFile.store(nullptr);   // atomically disable logging to file
