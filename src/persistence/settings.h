@@ -536,6 +536,8 @@ private slots:
     void savePersonal(QString profileName, const QString &password);
 
 private:
+    QThread* settingsThread;
+
     bool loaded;
 
     bool useCustomDhtList;
@@ -656,9 +658,7 @@ private:
     int themeColor;
 
     static QMutex bigLock;
-    static Settings* settings;
     static const QString globalSettingsFile;
-    static QThread* settingsThread;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Settings::AutoAcceptCallFlags)
