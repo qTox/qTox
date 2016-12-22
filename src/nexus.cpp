@@ -78,7 +78,6 @@ Nexus::~Nexus()
     delete mProfile;
     delete widget;
     delete loginScreen;
-    Settings::getInstance().saveGlobal();
 #ifdef Q_OS_MAC
     delete globalMenuBar;
 #endif
