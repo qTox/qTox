@@ -66,7 +66,7 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
                                       QMessageBox::Yes|QMessageBox::No);
         if (dialogDelHistory == QMessageBox::Yes)
         {
-            Nexus::getProfile()->getHistory()->eraseHistory();
+            Nexus::getInstance().getProfile()->getHistory()->eraseHistory();
         }
     }
 }

@@ -73,7 +73,7 @@
 
 bool toxActivateEventHandler(const QByteArray&)
 {
-    Widget* widget = Nexus::getDesktopGUI();
+    Widget* widget = Nexus::getInstance().getDesktopGUI();
     if (!widget)
         return true;
     if (!widget->isActiveWindow())
@@ -231,7 +231,7 @@ void Widget::init()
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
     const Settings& s = Settings::getInstance();
-    Core* core = Nexus::getCore();
+    Core* core = Core::getInstance();
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
     connect(&s, &Settings::showSystemTrayChanged, this, &Widget::onSetShowSystemTray);
@@ -620,7 +620,7 @@ void Widget::resizeEvent(QResizeEvent *event)
 
 QString Widget::getUsername()
 {
-    return Nexus::getCore()->getUsername();
+    return Core::getInstance()->getUsername();
 }
 
 void Widget::onSelfAvatarLoaded(const QPixmap& pic)
@@ -631,7 +631,7 @@ void Widget::onSelfAvatarLoaded(const QPixmap& pic)
 void Widget::onConnected()
 {
     ui->statusButton->setEnabled(true);
-    emit statusSet(Nexus::getCore()->getStatus());
+    emit statusSet(Core::getInstance()->getStatus());
 }
 
 void Widget::onDisconnected()
@@ -963,7 +963,7 @@ void Widget::setUsername(const QString& username)
 void Widget::onStatusMessageChanged(const QString& newStatusMessage)
 {
     // Keep old status message until Core tells us to set it.
-    Nexus::getCore()->setStatusMessage(newStatusMessage);
+    Core::getInstance()->setStatusMessage(newStatusMessage);
 }
 
 void Widget::setStatusMessage(const QString& statusMessage)
@@ -1025,7 +1025,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(userId);
+    QPixmap avatar = Nexus::getInstance().getProfile()->loadAvatar(userId);
     if (!avatar.isNull())
     {
         friendForm->onAvatarChange(friendId, avatar);
@@ -1223,7 +1223,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     }
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    Profile* profile = Nexus::getProfile();
+    Profile* profile = Nexus::getInstance().getProfile();
     if (profile->isHistoryEnabled())
     {
         QString publicKey = f->getToxId().getPublicKeyString();
@@ -1278,7 +1278,8 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     connect(core, &Core::friendAvatarRemoved,
             friendWidget, &FriendWidget::onAvatarRemoved);
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getToxId().toString());
+    Profile* profile = Nexus::getInstance().getProfile();
+    QPixmap avatar = profile->loadAvatar(frnd->getToxId().toString());
     if (!avatar.isNull())
     {
         friendWidget->onAvatarChange(frnd->getFriendID(), avatar);
@@ -1455,7 +1456,7 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
             }
         }
 
-        bool isBusy = Nexus::getCore()->getStatus() == Status::Busy;
+        bool isBusy = Core::getInstance()->getStatus() == Status::Busy;
         bool busySound = Settings::getInstance().getBusySound();
         bool notifySound = Settings::getInstance().getNotifySound();
 
@@ -1505,7 +1506,8 @@ void Widget::removeFriend(Friend* f, bool fake)
 
         if (ask.removeHistory())
         {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().getPublicKeyString());
+            Profile* profile = Nexus::getInstance().getProfile();
+            profile->getHistory()->removeFriendHistory(f->getToxId().getPublicKeyString());
         }
     }
 
@@ -1527,7 +1529,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     }
 
     FriendList::removeFriend(f->getFriendID(), fake);
-    Nexus::getCore()->removeFriend(f->getFriendID(), fake);
+    Core::getInstance()->removeFriend(f->getFriendID(), fake);
 
     delete f;
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
@@ -1669,7 +1671,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     if (f != nullptr)
     {
         QClipboard *clipboard = QApplication::clipboard();
-        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
+        clipboard->setText(Core::getInstance()->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
     }
 }
 
@@ -1693,7 +1695,7 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
 
 void Widget::onGroupInviteAccepted(int32_t friendId, uint8_t type, QByteArray invite)
 {
-    int groupId = Nexus::getCore()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
+    int groupId = Core::getInstance()->joinGroupchat(friendId, type, (uint8_t*)invite.data(), invite.length());
     if (groupId < 0)
     {
         qWarning() << "onGroupInviteAccepted: Unable to accept group invite";
@@ -1756,7 +1758,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_NAME_CHANGE) // core overwrites old name before telling us it changed...
     {
-        QString name = Nexus::getCore()->getGroupPeerName(groupnumber, peernumber);
+        QString name = Core::getInstance()->getGroupPeerName(groupnumber, peernumber);
         if (name.isEmpty())
             name = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
@@ -1815,7 +1817,7 @@ void Widget::removeGroup(Group* g, bool fake)
         contentDialog->removeGroup(groupId);
     }
 
-    Nexus::getCore()->removeGroup(groupId, fake);
+    Core::getInstance()->removeGroup(groupId, fake);
     delete g;
     if (contentLayout != nullptr && contentLayout->mainHead->layout()->isEmpty())
     {
@@ -1839,7 +1841,7 @@ Group *Widget::createGroup(int groupId)
         return g;
     }
 
-    Core* core = Nexus::getCore();
+    Core* core = Core::getInstance();
 
     if (!core)
     {
@@ -2040,7 +2042,7 @@ void Widget::setStatusOnline()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Online);
+    Core::getInstance()->setStatus(Status::Online);
 }
 
 void Widget::setStatusAway()
@@ -2050,7 +2052,7 @@ void Widget::setStatusAway()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Away);
+    Core::getInstance()->setStatus(Status::Away);
 }
 
 void Widget::setStatusBusy()
@@ -2060,7 +2062,7 @@ void Widget::setStatusBusy()
         return;
     }
 
-    Nexus::getCore()->setStatus(Status::Busy);
+    Core::getInstance()->setStatus(Status::Busy);
 }
 
 void Widget::onMessageSendResult(uint32_t friendId, const QString& message, int messageId)
@@ -2401,7 +2403,7 @@ void Widget::friendListContextMenu(const QPoint &pos)
     }
     else if (chosenAction == createGroupAction)
     {
-        Nexus::getCore()->createGroup();
+        Core::getInstance()->createGroup();
     }
 }
 
@@ -2476,7 +2478,7 @@ void Widget::setActiveToolMenuButton(ActiveToolMenuButton newActiveButton)
 
 void Widget::retranslateUi()
 {
-    Core* core = Nexus::getCore();
+    Core* core = Core::getInstance();
     ui->retranslateUi(this);
     setUsername(core->getUsername());
     setStatusMessage(core->getStatusMessage());

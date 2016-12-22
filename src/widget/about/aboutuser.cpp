@@ -42,7 +42,8 @@ void AboutUser::setFriend(Friend *f)
     ui->publicKey->setCursorPosition(0); //scroll textline to left
     ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getToxId().toString());
+    Profile* profile = Nexus::getInstance().getProfile();
+    QPixmap avatar = profile->loadAvatar(f->getToxId().toString());
     ui->statusMessage->setText(f->getStatusMessage());
     if(!avatar.isNull()) {
         ui->avatar->setPixmap(avatar);
@@ -110,7 +111,7 @@ void AboutUser::onAcceptedClicked()
 
 void AboutUser::onRemoveHistoryClicked()
 {
-    History* history = Nexus::getProfile()->getHistory();
+    History* history = Nexus::getInstance().getProfile()->getHistory();
     if (history)
         history->removeFriendHistory(toxId.getPublicKeyString());
     QMessageBox::information(this,

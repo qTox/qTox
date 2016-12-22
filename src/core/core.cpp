@@ -38,18 +38,18 @@
 #include <limits>
 #include <functional>
 
+#include <QBuffer>
+#include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QDateTime>
+#include <QList>
+#include <QMutexLocker>
 #include <QSaveFile>
 #include <QStandardPaths>
 #include <QThread>
 #include <QTimer>
-#include <QCoreApplication>
-#include <QDateTime>
-#include <QList>
-#include <QBuffer>
-#include <QMutexLocker>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
@@ -104,19 +104,21 @@ Core::~Core()
 }
 
 /**
- * @brief Returns the global widget's Core instance
+ * @brief Returns the profile's Core instance.
+ * @return The profile's Core instance or nullptr, if profile not initialized.
  */
 Core* Core::getInstance()
 {
-    return Nexus::getCore();
+    Profile* profile = Nexus::getInstance().getProfile();
+    return profile ? profile->getCore() : nullptr;
 }
 
-const CoreAV *Core::getAv() const
+const CoreAV* Core::getAv() const
 {
     return av;
 }
 
-CoreAV *Core::getAv()
+CoreAV* Core::getAv()
 {
     return av;
 }
@@ -282,7 +284,7 @@ void Core::start()
 
     // TODO: This is a backwards compatibility check,
     // once most people have been upgraded away from the old HistoryKeeper, remove this
-    if (Nexus::getProfile()->isEncrypted())
+    if (Nexus::getInstance().getProfile()->isEncrypted())
         checkEncryptedHistory();
 
     loadFriends();
@@ -613,7 +615,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
-            Profile* profile = Nexus::getProfile();
+            Profile* profile = Nexus::getInstance().getProfile();
             if (profile->isHistoryEnabled())
                 profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().getPublicKeyString(), QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);

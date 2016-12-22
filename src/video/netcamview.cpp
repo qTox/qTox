@@ -38,13 +38,14 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     , e(false)
 {
     QString id = FriendList::findFriend(friendId)->getToxId().toString();
-    videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
+    Profile* profile = Nexus::getInstance().getProfile();
+    videoSurface = new VideoSurface(profile->loadAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);
 
     verLayout->insertWidget(0, videoSurface, 1);
 
-    selfVideoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(), this, true);
+    selfVideoSurface = new VideoSurface(profile->loadAvatar(), this, true);
     selfVideoSurface->setObjectName(QStringLiteral("CamVideoSurface"));
     selfVideoSurface->setMouseTracking(true);
     selfVideoSurface->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

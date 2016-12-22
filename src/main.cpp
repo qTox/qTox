@@ -280,6 +280,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    Nexus& nexus = Nexus::getInstance();
+
     // Autologin
     if (autoLogin)
     {
@@ -289,13 +291,13 @@ int main(int argc, char *argv[])
             {
                 Profile* profile = Profile::loadProfile(profileName);
                 if (profile)
-                    Nexus::getInstance().setProfile(profile);
+                    nexus.setProfile(profile);
             }
             Settings::getInstance().setCurrentProfile(profileName);
         }
     }
 
-    Nexus::getInstance().start();
+    nexus.start();
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")

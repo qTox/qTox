@@ -55,7 +55,7 @@ Friend::~Friend()
  */
 void Friend::loadHistory()
 {
-    if (Nexus::getProfile()->isHistoryEnabled())
+    if (Nexus::getInstance().getProfile()->isHistoryEnabled())
     {
         chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
         widget->historyLoaded = true;

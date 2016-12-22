@@ -75,7 +75,7 @@ bool handleToxURI(const QString &toxURI)
 
     ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
                                                 "Default message in Tox URI friend requests. Write something appropriate!")
-                        .arg(Nexus::getCore()->getUsername()));
+                        .arg(Core::getInstance()->getUsername()));
     if (dialog.exec() == QDialog::Accepted)
         Core::getInstance()->requestFriendship(toxId, dialog.getRequestMessage());
 
