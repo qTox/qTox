@@ -77,7 +77,8 @@ AddFriendForm::AddFriendForm()
     connect(&toxId, &QLineEdit::textChanged, this, &AddFriendForm::onIdChanged);
     connect(tabWidget, &QTabWidget::currentChanged, this, &AddFriendForm::onCurrentChanged);
     connect(&sendButton, SIGNAL(clicked()), this, SLOT(onSendTriggered()));
-    connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
+    connect(Core::getInstance(), &Core::usernameSet,
+            this, &AddFriendForm::onUsernameSet);
 
     // accessibility stuff
     toxIdLabel.setAccessibleDescription(tr("Tox ID, either 76 hexadecimal characters or name@example.com"));

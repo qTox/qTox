@@ -217,7 +217,7 @@ void AdvancedForm::on_reconnectButton_clicked()
     }
 
     emit Core::getInstance()->statusSet(Status::Offline);
-    Nexus::getProfile()->restartCore();
+    Nexus::getInstance().getProfile()->restartCore();
 }
 
 /**

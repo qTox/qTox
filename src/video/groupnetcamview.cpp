@@ -133,7 +133,8 @@ GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
     horLayout = new QHBoxLayout(widget);
     horLayout->addStretch(1);
 
-    selfVideoSurface = new LabeledVideo(Nexus::getProfile()->loadAvatar(), this);
+    Profile* profile = Nexus::getInstance().getProfile();
+    selfVideoSurface = new LabeledVideo(profile->loadAvatar(), this);
     horLayout->addWidget(selfVideoSurface);
 
     horLayout->addStretch(1);
@@ -172,7 +173,8 @@ void GroupNetCamView::clearPeers()
 
 void GroupNetCamView::addPeer(int peer, const QString& name)
 {
-    QPixmap groupAvatar = Nexus::getProfile()->loadAvatar(Core::getInstance()->getGroupPeerToxId(group, peer).toString());
+    Profile* profile = Nexus::getInstance().getProfile();
+    QPixmap groupAvatar = profile->loadAvatar(profile->getCore()->getGroupPeerToxId(group, peer).toString());
     LabeledVideo* labeledVideo = new LabeledVideo(groupAvatar, this);
     labeledVideo->setText(name);
     horLayout->insertWidget(horLayout->count() - 1, labeledVideo);
