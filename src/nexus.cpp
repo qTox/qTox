@@ -63,8 +63,6 @@
 
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
-static Nexus* nexus{nullptr};
-
 Nexus::Nexus() :
     QObject(),
     mProfile{nullptr},
@@ -76,8 +74,6 @@ Nexus::Nexus() :
 Nexus::~Nexus()
 {
     delete mProfile;
-    delete widget;
-    delete loginScreen;
 #ifdef Q_OS_MAC
     delete globalMenuBar;
 #endif
@@ -111,8 +107,6 @@ void Nexus::start()
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
     qRegisterMetaType<ToxId>("ToxId");
 
-    loginScreen = new LoginScreen();
-
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
     dockMenu = new QMenu(globalMenuBar);
@@ -145,8 +139,6 @@ void Nexus::start()
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
 
-    connect(loginScreen, &LoginScreen::windowStateChanged, this, &Nexus::onWindowStateChanged);
-
     retranslateUi();
 #endif
 
@@ -161,6 +153,13 @@ void Nexus::start()
  */
 void Nexus::showLogin()
 {
+    loginScreen = new LoginScreen();
+
+#ifdef Q_OS_MAC
+    connect(loginScreen, &LoginScreen::windowStateChanged, this,
+            &Nexus::onWindowStateChanged);
+#endif
+
     delete widget;
     widget = nullptr;
 
@@ -168,24 +167,21 @@ void Nexus::showLogin()
     mProfile = nullptr;
 
     loginScreen->reset();
-    loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
     loginScreen->show();
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    loginScreen->move(QApplication::desktop()->screen()->rect().center() -
+                      loginScreen->rect().center());
+    qApp->setQuitOnLastWindowClosed(true);
 }
 
 void Nexus::showMainGUI()
 {
     assert(mProfile);
 
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
-    loginScreen->close();
-
-    // Create GUI
+    qApp->setQuitOnLastWindowClosed(false);
     widget = Widget::getInstance();
 
-    // Start GUI
-    widget->init();
-    GUI::getInstance();
+    delete loginScreen;
+    loginScreen = nullptr;
 
     // Zetok protection
     // There are small instants on startup during which no
@@ -234,16 +230,8 @@ void Nexus::showMainGUI()
  */
 Nexus& Nexus::getInstance()
 {
-    if (!nexus)
-        nexus = new Nexus;
-
-    return *nexus;
-}
-
-void Nexus::destroyInstance()
-{
-    delete nexus;
-    nexus = nullptr;
+    static Nexus nexus;
+    return nexus;
 }
 
 /**
