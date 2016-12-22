@@ -32,7 +32,6 @@
 #include "profilelocker.h"
 #include "settings.h"
 #include "historykeeper.h"
-#include "core/core.h"
 #include "nexus.h"
 #include "widget/gui.h"
 #include "widget/widget.h"
@@ -51,28 +50,27 @@
 QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile)
-    : name{name}, password{password}
-    , newProfile{isNewProfile}, isRemoved{false}
+    : core(*this)
+    , name{name}
+    , password{password}
+    , newProfile{isNewProfile}
+    , isRemoved{false}
 {
     if (!password.isEmpty())
     {
-        passkey = core->createPasskey(password);
+        passkey = core.createPasskey(password);
     }
 
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
 
-    coreThread = new QThread();
-    coreThread->setObjectName("qTox Core");
-    core = new Core(coreThread, *this);
-    QObject::connect(core, &Core::idSet, this, &Profile::loadDatabase, Qt::QueuedConnection);
-    core->moveToThread(coreThread);
-    QObject::connect(coreThread, &QThread::started, core, &Core::start);
+    QObject::connect(&core, &Core::idSet, this,
+                     &Profile::loadDatabase, Qt::QueuedConnection);
 }
 
 /**
- * @brief Locks and loads an existing profile and creates the associate Core* instance.
+ * @brief Locks and loads an existing profile and creates the Core instance.
  * @param name Profile name.
  * @param password Profile password.
  * @return Returns a nullptr on error. Profile pointer otherwise.
@@ -195,13 +193,11 @@ Profile* Profile::createProfile(QString name, QString password)
 
 Profile::~Profile()
 {
-    if (!isRemoved && core->isReady())
+    if (!isRemoved && core.isReady())
     {
         saveToxSave();
     }
 
-    delete core;
-    delete coreThread;
     if (!isRemoved)
     {
         Settings::getInstance().savePersonal(this);
@@ -257,22 +253,9 @@ QVector<QString> Profile::getProfiles()
     return profiles;
 }
 
-Core* Profile::getCore()
-{
-    return core;
-}
-
 QString Profile::getName() const
 {
     return name;
-}
-
-/**
- * @brief Starts the Core thread
- */
-void Profile::startCore()
-{
-    coreThread->start();
 }
 
 bool Profile::isNewProfile()
@@ -325,9 +308,9 @@ QByteArray Profile::loadToxSave()
 
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt, nullptr);
-        passkey = core->createPasskey(password, salt);
+        passkey = core.createPasskey(password, salt);
 
-        data = core->decryptData(data, *passkey);
+        data = core.decryptData(data, *passkey);
         if (data.isEmpty())
         {
             qCritical() << "Failed to decrypt the tox save file";
@@ -352,8 +335,8 @@ fail:
  */
 void Profile::saveToxSave()
 {
-    assert(core->isReady());
-    QByteArray data = core->getToxSaveData();
+    assert(core.isReady());
+    QByteArray data = core.getToxSaveData();
     assert(data.size());
     saveToxSave(data);
 }
@@ -380,8 +363,8 @@ void Profile::saveToxSave(QByteArray data)
 
     if (!password.isEmpty())
     {
-        passkey = core->createPasskey(password);
-        data = core->encryptData(data, *passkey);
+        passkey = core.createPasskey(password);
+        data = core.encryptData(data, *passkey);
         if (data.isEmpty())
         {
             qCritical() << "Failed to encrypt, can't save!";
@@ -417,7 +400,7 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
 
     QByteArray idData = ownerId.toUtf8();
-    QByteArray pubkeyData = core->getSelfId().publicKey.toUtf8();
+    QByteArray pubkeyData = core.getSelfId().publicKey.toUtf8();
     constexpr int hashSize = TOX_PUBLIC_KEY_SIZE;
     static_assert(hashSize >= crypto_generichash_BYTES_MIN
                   && hashSize <= crypto_generichash_BYTES_MAX, "Hash size not supported by libsodium");
@@ -434,7 +417,7 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
  */
 QPixmap Profile::loadAvatar()
 {
-    return loadAvatar(core->getSelfId().publicKey);
+    return loadAvatar(core.getSelfId().publicKey);
 }
 
 /**
@@ -488,8 +471,8 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
     {
         uint8_t salt[TOX_PASS_SALT_LENGTH];
         tox_get_salt(reinterpret_cast<uint8_t*>(pic.data()), salt, nullptr);
-        auto passkey = core->createPasskey(password, salt);
-        pic = core->decryptData(pic, *passkey);
+        auto passkey = core.createPasskey(password, salt);
+        pic = core.decryptData(pic, *passkey);
     }
 
     return pic;
@@ -532,7 +515,7 @@ void Profile::saveAvatar(QByteArray pic, const QString& ownerId)
 {
     if (!password.isEmpty() && !pic.isEmpty())
     {
-        pic = core->encryptData(pic, *passkey);
+        pic = core.encryptData(pic, *passkey);
     }
 
     QString path = avatarPath(ownerId);
@@ -572,7 +555,7 @@ QByteArray Profile::getAvatarHash(const QString& ownerId)
  */
 void Profile::removeAvatar()
 {
-    removeAvatar(core->getSelfId().publicKey);
+    removeAvatar(core.getSelfId().publicKey);
 }
 
 /**
@@ -600,8 +583,8 @@ History* Profile::getHistory()
 void Profile::removeAvatar(const QString& ownerId)
 {
     QFile::remove(avatarPath(ownerId));
-    if (ownerId == core->getSelfId().publicKey)
-        core->setAvatar({});
+    if (ownerId == core.getSelfId().publicKey)
+        core.setAvatar({});
 }
 
 bool Profile::exists(QString name)
@@ -775,12 +758,12 @@ const Tox_Pass_Key& Profile::getPasskey() const
 void Profile::restartCore()
 {
     GUI::setEnabled(false); // Core::reset re-enables it
-    if (!isRemoved && core->isReady())
+    if (!isRemoved && core.isReady())
     {
         saveToxSave();
     }
 
-    QMetaObject::invokeMethod(core, "reset");
+    QMetaObject::invokeMethod(&core, "reset");
 }
 
 /**
@@ -789,10 +772,10 @@ void Profile::restartCore()
  */
 void Profile::setPassword(const QString& newPassword)
 {
-    QByteArray avatar = loadAvatarData(core->getSelfId().publicKey);
+    QByteArray avatar = loadAvatarData(core.getSelfId().publicKey);
     QString oldPassword = password;
     password = newPassword;
-    passkey = core->createPasskey(password);
+    passkey = core.createPasskey(password);
     saveToxSave();
 
     if (database)
@@ -801,13 +784,13 @@ void Profile::setPassword(const QString& newPassword)
     }
 
     Nexus::getInstance().getDesktopGUI()->reloadHistory();
-    saveAvatar(avatar, core->getSelfId().publicKey);
+    saveAvatar(avatar, core.getSelfId().publicKey);
 
-    QVector<uint32_t> friendList = core->getFriendList();
+    QVector<uint32_t> friendList = core.getFriendList();
     QVectorIterator<uint32_t> i(friendList);
     while (i.hasNext())
     {
-        QString friendPublicKey = core->getFriendPublicKey(i.next());
+        QString friendPublicKey = core.getFriendPublicKey(i.next());
         saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
     }
 }
