@@ -222,7 +222,7 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
-    profile->startCore();
+    core->start();
 }
 
 /**

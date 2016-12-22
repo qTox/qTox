@@ -80,11 +80,18 @@ IndexedList<ToxFriendCall> CoreAV::calls;
 IndexedList<ToxGroupCall> CoreAV::groupCalls;
 
 CoreAV::CoreAV(Tox *tox)
-    : coreavThread{new QThread}, iterateTimer{new QTimer{this}},
-      threadSwitchLock{false}
+    : coreavThread{new QThread}
+    , iterateTimer{new QTimer}
+    , threadSwitchLock{false}
 {
     coreavThread->setObjectName("qTox CoreAV");
     moveToThread(coreavThread.get());
+    iterateTimer->moveToThread(coreavThread.get());
+    connect(coreavThread.get(), &QThread::finished, this, [=]()
+    {
+        iterateTimer.release();
+        coreavThread.get()->deleteLater();
+    });
 
     iterateTimer->setSingleShot(true);
     connect(iterateTimer.get(), &QTimer::timeout, this, &CoreAV::process);
@@ -103,53 +110,52 @@ CoreAV::CoreAV(Tox *tox)
 CoreAV::~CoreAV()
 {
     for (const ToxFriendCall& call : calls)
+    {
         cancelCall(call.callId);
-    killTimerFromThread();
+    }
+
     toxav_kill(toxav);
-    coreavThread->exit(0);
-    while (coreavThread->isRunning())
+
+    coreavThread->exit();
+    while (!coreavThread->wait(100))
     {
         qApp->processEvents();
-        coreavThread->wait(100);
+    }
+}
+
+/**
+ * @brief Starts the toxav iteration timer.
+ */
+void CoreAV::start()
+{
+    if (QThread::currentThread() == thread())
+    {
+        iterateTimer->start();
+    }
+    else
+    {
+        QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
+    }
+}
+
+/**
+ * @brief Stops the toxav iteration timer.
+ */
+void CoreAV::stop()
+{
+    if (QThread::currentThread() == thread())
+    {
+        iterateTimer->stop();
+    }
+    else
+    {
+        QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
     }
 }
 
 const ToxAV *CoreAV::getToxAv() const
 {
     return toxav;
-}
-
-/**
- * @brief Starts the CoreAV main loop that calls toxav's main loop
- */
-void CoreAV::start()
-{
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "start", Qt::BlockingQueuedConnection);
-    iterateTimer->start();
-}
-
-/**
- * @brief Stops the main loop
- */
-void CoreAV::stop()
-{
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "stop", Qt::BlockingQueuedConnection);
-    iterateTimer->stop();
-}
-
-/**
- * @brief Calls itself blocking queued on the coreav thread
- */
-void CoreAV::killTimerFromThread()
-{
-    // Timers can only be touched from their own thread
-    if (QThread::currentThread() != coreavThread.get())
-        return (void)QMetaObject::invokeMethod(this, "killTimerFromThread", Qt::BlockingQueuedConnection);
-    iterateTimer.release();
 }
 
 void CoreAV::process()
