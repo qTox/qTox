@@ -31,6 +31,7 @@
 
 #include <tox/toxencryptsave.h>
 
+#include <core/core.h>
 #include "persistence/history.h"
 
 class Core;
@@ -45,7 +46,11 @@ public:
     static Profile* createProfile(QString name, QString password);
     ~Profile();
 
-    Core* getCore();
+    inline Core* getCore()
+    {
+        return &core;
+    }
+
     QString getName() const;
 
     void startCore();
@@ -86,14 +91,14 @@ public:
 
 private slots:
     void loadDatabase(const QString& id);
+
 private:
     Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
 private:
-    Core* core;
-    QThread* coreThread;
+    Core core;
     QString name, password;
     std::shared_ptr<Tox_Pass_Key> passkey;
     std::shared_ptr<RawDatabase> database;

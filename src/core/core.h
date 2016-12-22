@@ -45,7 +45,7 @@ class Core : public QObject
 {
     Q_OBJECT
 public:
-    explicit Core(QThread* coreThread, Profile& profile);
+    explicit Core(Profile& profile);
     static Core* getInstance();
     const CoreAV* getAv() const;
     CoreAV* getAv();
@@ -193,6 +193,9 @@ signals:
 
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
+private slots:
+    void onStarted();
+
 private:
     static void onFriendRequest(Tox* tox, const uint8_t* cUserId,
                                 const uint8_t* cMessage, size_t cMessageSize,
@@ -236,19 +239,17 @@ private:
     void checkLastOnline(uint32_t friendId);
 
     void deadifyTox();
-
-private slots:
-    void killTimers(bool onlyStop);
+    void killTimers();
 
 private:
     Tox* tox;
     CoreAV* av;
-    QTimer *toxTimer;
+    QTimer* toxTimer;
     Profile& profile;
     QMutex messageSendMutex;
     bool ready;
 
-    static QThread *coreThread;
+    QThread* coreThread;
 
     friend class Audio; ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals

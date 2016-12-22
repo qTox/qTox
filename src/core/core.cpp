@@ -54,29 +54,39 @@
 
 const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
-QThread* Core::coreThread{nullptr};
 
 #define MAX_GROUP_MESSAGE_LEN 1024
 
-Core::Core(QThread *CoreThread, Profile& profile) :
-    tox(nullptr), av(nullptr), profile(profile), ready{false}
+Core::Core(Profile& profile)
+    : tox(nullptr)
+    , av(nullptr)
+    , toxTimer(new QTimer)
+    , profile(profile)
+    , ready{false}
+    , coreThread(new QThread)
 {
-    coreThread = CoreThread;
+    coreThread->setObjectName("qTox Core");
+    connect(coreThread, &QThread::started,
+            this, &Core::onStarted);
+    connect(coreThread, &QThread::finished,
+            coreThread, &QThread::deleteLater);
 
-    toxTimer = new QTimer(this);
     toxTimer->setSingleShot(true);
-    connect(toxTimer, &QTimer::timeout, this, &Core::process);
-    connect(&Settings::getInstance(), &Settings::dhtServerListChanged, this, &Core::process);
+    connect(toxTimer, &QTimer::timeout,
+            this, &Core::process);
 
+    connect(&Settings::getInstance(), &Settings::dhtServerListChanged,
+            this, &Core::process);
+
+    moveToThread(coreThread);
+    toxTimer->moveToThread(coreThread);
 }
 
 void Core::deadifyTox()
 {
-    if (av)
-    {
-        delete av;
-        av = nullptr;
-    }
+    delete av;
+    av = nullptr;
+
     if (tox)
     {
         tox_kill(tox);
@@ -86,22 +96,21 @@ void Core::deadifyTox()
 
 Core::~Core()
 {
-    if (coreThread->isRunning())
-    {
-        if (QThread::currentThread() == coreThread)
-            killTimers(false);
-        else
-            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection,
-                                      Q_ARG(bool, false));
-    }
-    coreThread->exit(0);
-    while (coreThread->isRunning())
+    coreThread->exit();
+    while (!coreThread->wait(500))
     {
         qApp->processEvents();
-        coreThread->wait(500);
     }
 
     deadifyTox();
+}
+
+/**
+ * @brief Starts the core thread.
+ */
+void Core::start()
+{
+    coreThread->start();
 }
 
 /**
@@ -239,7 +248,7 @@ void Core::makeTox(QByteArray savedata)
 /**
  * @brief Initializes the core, must be called before anything else
  */
-void Core::start()
+void Core::onStarted()
 {
     bool isNewProfile = profile.isNewProfile();
     if (isNewProfile)
@@ -375,8 +384,9 @@ void Core::process()
         tolerance = 3*CORE_DISCONNECT_TOLERANCE;
     }
 
-    unsigned sleeptime = qMin(tox_iteration_interval(tox), CoreFile::corefileIterationInterval());
-    toxTimer->start(sleeptime);
+    unsigned sleeptime = qMin(tox_iteration_interval(tox),
+                              CoreFile::corefileIterationInterval());
+    toxTimer->start(static_cast<int>(sleeptime));
 }
 
 bool Core::checkConnection()
@@ -1487,19 +1497,11 @@ void Core::setNospam(uint32_t nospam)
     emit idSet(getSelfId().toString());
 }
 
-/**
- * @brief Returns the unencrypted tox save data
- */
-void Core::killTimers(bool onlyStop)
+void Core::killTimers()
 {
-    assert(QThread::currentThread() == coreThread);
+    assert(QThread::currentThread() == thread());
     av->stop();
     toxTimer->stop();
-    if (!onlyStop)
-    {
-        delete toxTimer;
-        toxTimer = nullptr;
-    }
 }
 
 /**
@@ -1508,14 +1510,14 @@ void Core::killTimers(bool onlyStop)
  */
 void Core::reset()
 {
-    assert(QThread::currentThread() == coreThread);
+    assert(QThread::currentThread() == thread());
 
     ready = false;
-    killTimers(true);
+    killTimers();
     deadifyTox();
 
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
     GUI::clearContacts();
 
-    start();
+    onStarted();
 }
