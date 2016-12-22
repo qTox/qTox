@@ -59,7 +59,7 @@ std::shared_ptr<Tox_Pass_Key> Core::createPasskey(const QString& password, uint8
  */
 QByteArray Core::encryptData(const QByteArray &data)
 {
-    return encryptData(data, Nexus::getProfile()->getPasskey());
+    return encryptData(data, Nexus::getInstance().getProfile()->getPasskey());
 }
 
 QByteArray Core::encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey)
@@ -82,7 +82,7 @@ QByteArray Core::encryptData(const QByteArray& data, const Tox_Pass_Key& encrypt
  */
 QByteArray Core::decryptData(const QByteArray &data)
 {
-    return decryptData(data, Nexus::getProfile()->getPasskey());
+    return decryptData(data, Nexus::getInstance().getProfile()->getPasskey());
 }
 
 QByteArray Core::decryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey)
@@ -140,9 +140,10 @@ void Core::checkEncryptedHistory()
         return;
     }
 
-    auto passkey = createPasskey(Nexus::getProfile()->getPassword(), reinterpret_cast<uint8_t*>(salt.data()));
+    auto passkey = createPasskey(Nexus::getInstance().getProfile()->getPassword(),
+                                 reinterpret_cast<uint8_t*>(salt.data()));
 
-    QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getProfile()->getName()));
+    QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getInstance().getProfile()->getName()));
     QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
     QString c(tr("\nDisabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
     QString dialogtxt;

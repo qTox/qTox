@@ -212,7 +212,7 @@ void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
     QAction *selectedItem = contextMenu.exec(pos);
 
     if (selectedItem == removeAction)
-        Nexus::getProfile()->removeAvatar();
+        Nexus::getInstance().getProfile()->removeAvatar();
 }
 
 void ProfileForm::copyIdClicked()
@@ -319,7 +319,7 @@ void ProfileForm::onAvatarClicked()
         return;
     }
 
-    Nexus::getCore()->setAvatar(bytes);
+    Core::getInstance()->setAvatar(bytes);
 }
 
 void ProfileForm::onRenameClicked()
@@ -349,7 +349,8 @@ void ProfileForm::onRenameClicked()
 
 void ProfileForm::onExportClicked()
 {
-    QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
+    const Profile* profile = Nexus::getInstance().getProfile();
+    QString current = profile->getName() + Core::TOX_EXT;
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Export profile", "save dialog title"),
                                                 QDir::home().filePath(current),
@@ -405,7 +406,8 @@ void ProfileForm::onLogoutClicked()
 
 void ProfileForm::setPasswordButtonsText()
 {
-    if (Nexus::getProfile()->isEncrypted())
+    const Profile* profile = Nexus::getInstance().getProfile();
+    if (profile->isEncrypted())
     {
         bodyUI->changePassButton->setText(tr("Change password", "button text"));
         bodyUI->deletePassButton->setVisible(true);
@@ -424,7 +426,8 @@ void ProfileForm::onCopyQrClicked()
 
 void ProfileForm::onSaveQrClicked()
 {
-    QString current = Nexus::getProfile()->getName() + ".png";
+    const Profile* profile = Nexus::getInstance().getProfile();
+    QString current = profile->getName() + ".png";
     QString path = QFileDialog::getSaveFileName(this,
                                                 tr("Save", "save qr image"),
                                                 QDir::home().filePath(current),
@@ -445,8 +448,8 @@ void ProfileForm::onSaveQrClicked()
 
 void ProfileForm::onDeletePassClicked()
 {
-    Profile* pro = Nexus::getProfile();
-    if (!pro->isEncrypted())
+    Profile* profile = Nexus::getInstance().getProfile();
+    if (!profile->isEncrypted())
     {
         GUI::showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
         return;
@@ -456,7 +459,7 @@ void ProfileForm::onDeletePassClicked()
                       tr("Are you sure you want to delete your password?","deletion confirmation text")))
         return;
 
-    Nexus::getProfile()->setPassword(QString());
+    profile->setPassword(QString());
 }
 
 void ProfileForm::onChangePassClicked()
@@ -467,7 +470,8 @@ void ProfileForm::onChangePassClicked()
         return;
 
     QString newPass = dialog->getPassword();
-    Nexus::getProfile()->setPassword(newPass);
+    Profile* profile = Nexus::getInstance().getProfile();
+    profile->setPassword(newPass);
 }
 
 void ProfileForm::retranslateUi()

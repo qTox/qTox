@@ -26,8 +26,11 @@
 #include <QByteArray>
 #include <QPixmap>
 #include <QObject>
-#include <tox/toxencryptsave.h>
+
 #include <memory>
+
+#include <tox/toxencryptsave.h>
+
 #include "persistence/history.h"
 
 class Core;
