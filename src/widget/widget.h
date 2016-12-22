@@ -65,7 +65,7 @@ class Widget final : public QMainWindow
 public:
     explicit Widget(QWidget *parent = 0);
     ~Widget();
-    void init();
+
     void setCentralWidget(QWidget *widget, const QString &widgetName);
     QString getUsername();
     Camera* getCamera();

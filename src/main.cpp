@@ -309,7 +309,6 @@ int main(int argc, char *argv[])
 
     Settings::getInstance().saveGlobal();
 
-    Nexus::destroyInstance();
     CameraSource::destroyInstance();
 
     if (errorcode)

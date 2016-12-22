@@ -93,12 +93,11 @@ Widget::Widget(QWidget *parent)
       eventFlag(false),
       eventIcon(false)
 {
+    setAttribute(Qt::WA_DeleteOnClose);
+
     installEventFilter(this);
     Translator::translate();
-}
 
-void Widget::init()
-{
     ui->setupUi(this);
 
     QIcon themeIcon = QIcon::fromTheme("qtox");
