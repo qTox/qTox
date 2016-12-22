@@ -1172,7 +1172,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>复制链接地址</translation>
     </message>
 </context>
 <context>
@@ -1504,19 +1504,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>我的名字：</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>我的状态：</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>我的用户名</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>我的简介</translation>
     </message>
 </context>
 <context>
