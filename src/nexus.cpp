@@ -155,8 +155,8 @@ void Nexus::showLogin()
     loginScreen = new LoginScreen();
 
 #ifdef Q_OS_MAC
-    connect(loginScreen, &LoginScreen::windowStateChanged, this,
-            &Nexus::onWindowStateChanged);
+    connect(loginScreen, &LoginScreen::windowStateChanged,
+            this, &Nexus::onWindowStateChanged);
 #endif
 
     delete widget;
@@ -243,7 +243,9 @@ void Nexus::setProfile(Profile* profile)
     mProfile = profile;
 
     if (mProfile)
+    {
         Settings::getInstance().loadPersonal(mProfile);
+    }
 }
 
 QString Nexus::getSupportedImageFilter()

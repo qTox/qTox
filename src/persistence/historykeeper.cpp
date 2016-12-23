@@ -93,8 +93,10 @@ bool HistoryKeeper::checkPassword(std::shared_ptr<Tox_Pass_Key> passkey, int enc
 
     const Profile* profile = Nexus::getInstance().getProfile();
     if ((encrypted == 1) || (encrypted == -1))
+    {
         return EncryptedDb::check(passkey, getHistoryPath(profile->getName(),
                                                           encrypted));
+    }
 
     return true;
 }
@@ -209,9 +211,13 @@ QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
 
     const Profile* profile = Nexus::getInstance().getProfile();
     if (encrypted == 1 || (encrypted == -1 && profile->isEncrypted()))
+    {
         return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
+    }
     else
+    {
         return baseDir.filePath(currentProfile + ".qtox_history");
+    }
 }
 
 bool HistoryKeeper::isFileExist(bool encrypted)
