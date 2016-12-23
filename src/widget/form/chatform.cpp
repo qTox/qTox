@@ -859,15 +859,15 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 void ChatForm::onLoadHistory()
 {
     Profile* profile = Nexus::getInstance().getProfile();
-    if (!profile->isHistoryEnabled())
-        return;
-
-    LoadHistoryDialog dlg;
-
-    if (dlg.exec())
+    if (profile->isHistoryEnabled())
     {
-        QDateTime fromTime = dlg.getFromDate();
-        loadHistory(fromTime);
+        LoadHistoryDialog dlg;
+
+        if (dlg.exec())
+        {
+            QDateTime fromTime = dlg.getFromDate();
+            loadHistory(fromTime);
+        }
     }
 }
 
