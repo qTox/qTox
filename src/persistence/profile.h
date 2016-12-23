@@ -31,7 +31,7 @@
 
 #include <tox/toxencryptsave.h>
 
-#include <core/core.h>
+#include "core/core.h"
 #include "persistence/history.h"
 
 class Core;
