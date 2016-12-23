@@ -139,17 +139,17 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hier klicken, um einen Fehler zu melden.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Gesamte Liste von %1 bei Github</translation>
+        <translation type="unfinished">Eine komplette Liste von %1 gibt es bei Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">Mitwirkende</translation>
+        <translation>Mitwirkende</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>status message</source>
-        <translation>Status-Nachricht</translation>
+        <translation type="unfinished">Status-Nachricht</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -329,19 +329,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tox-ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gib die Tox-ID deines Freunds ein</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nachricht deiner Freundschaftsanfrage</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nachricht eingeben, die mit der Freundschaftsanfrage gesendet werden soll oder leer lassen um die Standardnachricht zu senden</translation>
     </message>
 </context>
 <context>
@@ -590,22 +590,22 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">abwesend</translation>
+        <translation>Abwesend</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">beschäftigt</translation>
+        <translation>Beschäftigt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation type="unfinished">Offline</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">online</translation>
+        <translation type="unfinished">Online</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -1053,7 +1053,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Mit Betriebssystem starten</translation>
+        <translation type="unfinished">Zusammen mit Betriebssystem starten</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
@@ -1078,7 +1078,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation>Nach der festgelegten Zeit wird dein Status auf „Abwesend“ gesetzt.</translation>
+        <translation type="unfinished">Nach der festgelegten Zeit wird dein Status auf „Abwesend“ gesetzt.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
@@ -1086,7 +1086,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Hinweis bei Statusänderungen</translation>
+        <translation type="unfinished">Hinweis bei Statusänderungen deiner Freunde anzeigen</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1177,7 +1177,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Link-Adresse kopieren</translation>
     </message>
 </context>
 <context>
@@ -1739,11 +1739,11 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Status-Nachricht eingeben, die bei Anderen angezeigt werden soll</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -2749,7 +2749,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Your status</source>
-        <translation>Dein Status</translation>
+        <translation type="unfinished">Dein Status</translation>
     </message>
     <message>
         <source>Group invites</source>
