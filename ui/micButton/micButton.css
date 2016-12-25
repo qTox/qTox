@@ -1,8 +1,12 @@
+QToolButton
+{
+    image: url(":/ui/micButton/micButton.svg");
+}
+
 QAbstractButton
 {
     border-radius: 5px;
     border: none;
-    background-image: url(":/ui/micButton/micButton.svg");
     background-repeat: none;
     background-position: center;
 }
