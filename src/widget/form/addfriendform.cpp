@@ -29,7 +29,6 @@
 #include <tox/tox.h>
 #include "nexus.h"
 #include "core/core.h"
-#include "core/cdata.h"
 #include "net/toxme.h"
 #include "persistence/settings.h"
 #include "widget/gui.h"

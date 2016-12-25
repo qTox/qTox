@@ -296,7 +296,6 @@ HEADERS  += \
     src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/core/cdata.h \
     src/core/cstring.h \
     src/core/toxid.h \
     src/core/indexedlist.h \
@@ -399,7 +398,6 @@ SOURCES += \
     src/main.cpp \
     src/nexus.cpp \
     src/audio/audio.cpp \
-    src/core/cdata.cpp \
     src/core/cstring.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \

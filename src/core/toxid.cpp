@@ -170,12 +170,30 @@ bool ToxId::isToxId(const QString &id)
 }
 
 /**
+ * @brief Gets the ToxID as bytes, convenience function for toxcore interface.
+ * @return The ToxID
+ */
+const uint8_t* ToxId::getBytes() const
+{
+    return reinterpret_cast<const uint8_t*> (toxId.constData());
+}
+
+/**
  * @brief Gets the Public Key part of the ToxID
  * @return Public Key of the ToxID
  */
 QByteArray ToxId::getPublicKey() const
 {
     return toxId.mid(0, TOX_PUBLIC_KEY_SIZE);
+}
+
+/**
+ * @brief Gets the Public Key part of the ToxID, convenience fuction for toxcore interface.
+ * @return Public Key of the ToxID
+ */
+const uint8_t* ToxId::getPublicKeyBytes() const
+{
+    return reinterpret_cast<const uint8_t*> (toxId.mid(0, TOX_PUBLIC_KEY_SIZE).constData());
 }
 
 /**

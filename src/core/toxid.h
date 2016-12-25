@@ -37,8 +37,10 @@ public:
     void clear();
 
     static bool isToxId(const QString& id);
+    const uint8_t* getBytes() const;
     QByteArray getToxId() const;
     QByteArray getPublicKey() const;
+    const uint8_t* getPublicKeyBytes() const;
     QString getPublicKeyString() const;
     QString getNoSpamString() const;
 
