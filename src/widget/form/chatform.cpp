@@ -717,7 +717,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
     }
 
-    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().publicKey, since, now);
+    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().getPublicKeyString(), since, now);
 
     ToxId storedPrevId = previousId;
     ToxId prevId;
@@ -1062,8 +1062,8 @@ void ChatForm::SendMessageStr(QString msg)
         if (profile->isHistoryEnabled())
         {
             auto* offMsgEngine = getOfflineMsgEngine();
-            profile->getHistory()->addNewMessage(f->getToxId().publicKey, qt_msg_hist,
-                        Core::getInstance()->getSelfId().publicKey, timestamp, status, Core::getInstance()->getUsername(),
+            profile->getHistory()->addNewMessage(f->getToxId().getPublicKeyString(), qt_msg_hist,
+                        Core::getInstance()->getSelfId().getPublicKeyString(), timestamp, status, Core::getInstance()->getUsername(),
                                         [offMsgEngine,rec,ma](int64_t id)
             {
                 offMsgEngine->registerReceipt(rec, id, ma);

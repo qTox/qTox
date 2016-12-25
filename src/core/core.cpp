@@ -607,7 +607,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
 
             Profile* profile = Nexus::getProfile();
             if (profile->isHistoryEnabled())
-                profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().publicKey, QDateTime::currentDateTime(), true, QString());
+                profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().getPublicKeyString(), QDateTime::currentDateTime(), true, QString());
             emit friendAdded(friendId, userId);
             emit friendshipChanged(friendId);
         }
@@ -839,7 +839,7 @@ void Core::setAvatar(const QByteArray& data)
     {
         QPixmap pic;
         pic.loadFromData(data);
-        profile.saveAvatar(data, getSelfId().publicKey);
+        profile.saveAvatar(data, getSelfId().getPublicKeyString());
         emit selfAvatarChanged(pic);
     }
     else

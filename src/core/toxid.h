@@ -29,6 +29,7 @@ public:
     ToxId();
     ToxId(const ToxId& other);
     explicit ToxId(const QString& id);
+    explicit ToxId(const QByteArray& rawId);
 
     bool operator==(const ToxId& other) const;
     bool operator!=(const ToxId& other) const;
@@ -36,11 +37,13 @@ public:
     void clear();
 
     static bool isToxId(const QString& id);
+    QByteArray getToxId() const;
+    QByteArray getPublicKey() const;
+    QString getPublicKeyString() const;
+    QString getNoSpamString() const;
 
-public:
-    QString publicKey;
-    QString noSpam;
-    QString checkSum;
+private:
+    QByteArray toxId;
 };
 
 #endif // TOXID_H

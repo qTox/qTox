@@ -49,7 +49,7 @@ Group::~Group()
 void Group::updatePeer(int peerId, QString name)
 {
     ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
-    QString toxid = id.publicKey;
+    QString toxid = id.getPublicKey();
     peers[peerId] = name;
     toxids[toxid] = name;
 
@@ -95,7 +95,7 @@ void Group::regeneratePeerList()
         if (id == self)
             selfPeerNum = i;
 
-        QString toxid = id.publicKey;
+        QString toxid = id.getPublicKey();
         toxids[toxid] = peers[i];
         if (toxids[toxid].isEmpty())
             toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
@@ -170,7 +170,7 @@ int Group::getMentionedFlag() const
 
 QString Group::resolveToxId(const ToxId &id) const
 {
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = toxids.find(key);
 
     if (it != toxids.end())

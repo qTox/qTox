@@ -1142,8 +1142,9 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     QDateTime timestamp = QDateTime::currentDateTime();
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled())
-        profile->getHistory()->addNewMessage(f->getToxId().publicKey, isAction ? ChatForm::ACTION_PREFIX + f->getDisplayedName() + " " + message : message,
-                                               f->getToxId().publicKey, timestamp, true, f->getDisplayedName());
+        profile->getHistory()->addNewMessage(
+                    f->getToxId().getPublicKeyString(), isAction ? ChatForm::ACTION_PREFIX + f->getDisplayedName() + " " + message : message,
+                    f->getToxId().getPublicKeyString(), timestamp, true, f->getDisplayedName());
 
     newFriendMessageAlert(friendId);
 }
@@ -1386,7 +1387,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
         if (ask.removeHistory())
         {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().getPublicKeyString());
         }
     }
 

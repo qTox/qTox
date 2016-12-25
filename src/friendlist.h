@@ -23,7 +23,7 @@
 template <class T> class QList;
 template <class A, class B> class QHash;
 class Friend;
-class QString;
+class QByteArray;
 class ToxId;
 
 class FriendList
@@ -38,7 +38,7 @@ public:
 
 private:
     static QHash<int, Friend*> friendList;
-    static QHash<QString, int> tox2id;
+    static QHash<QByteArray, int> tox2id;
 };
 
 #endif // FRIENDLIST_H
