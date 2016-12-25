@@ -64,14 +64,14 @@ QByteArray Core::encryptData(const QByteArray &data)
 
 QByteArray Core::encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey)
 {
-    uint8_t encrypted[data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH];
+    QByteArray encrypted = QByteArray(data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
     if (!tox_pass_key_encrypt(&encryptionKey, reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                              encrypted, nullptr))
+                              (uint8_t*) encrypted.data(), nullptr))
     {
         qWarning() << "Encryption failed";
         return QByteArray();
     }
-    return QByteArray(reinterpret_cast<char*>(encrypted), data.size() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
+    return encrypted;
 }
 
 /**
@@ -89,18 +89,18 @@ QByteArray Core::decryptData(const QByteArray& data, const Tox_Pass_Key& encrypt
 {
     if (data.size() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH)
     {
-        qWarning() << "Not enough data:"<<data.size();
+        qWarning() << "Not enough data:" << data.size();
         return QByteArray();
     }
-    int sz = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
-    uint8_t decrypted[sz];
+    int decryptedSize = data.size() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
+    QByteArray decrypted = QByteArray(decryptedSize, 0x00);
     if (!tox_pass_key_decrypt(&encryptionKey, reinterpret_cast<const uint8_t*>(data.data()), data.size(),
-                              decrypted, nullptr))
+                              (uint8_t*) decrypted.data(), nullptr))
     {
         qWarning() << "Decryption failed";
         return QByteArray();
     }
-    return QByteArray(reinterpret_cast<char*>(decrypted), sz);
+    return decrypted;
 }
 
 QByteArray Core::getSaltFromFile(QString filename)

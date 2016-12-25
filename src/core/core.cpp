@@ -870,11 +870,14 @@ QPair<QByteArray, QByteArray> Core::getKeypair() const
     if (!tox)
         return keypair;
 
-    char buf[std::max(TOX_PUBLIC_KEY_SIZE, TOX_SECRET_KEY_SIZE)];
-    tox_self_get_public_key(tox, (uint8_t*)buf);
-    keypair.first = QByteArray(buf, TOX_PUBLIC_KEY_SIZE);
-    tox_self_get_secret_key(tox, (uint8_t*)buf);
-    keypair.second = QByteArray(buf, TOX_SECRET_KEY_SIZE);
+    QByteArray pk = QByteArray(TOX_PUBLIC_KEY_SIZE, 0x00);
+    QByteArray sk = QByteArray(TOX_SECRET_KEY_SIZE, 0x00);
+
+    tox_self_get_public_key(tox, (uint8_t*) pk.data());
+    tox_self_get_secret_key(tox, (uint8_t*) sk.data());
+
+    keypair.first = pk;
+    keypair.second = sk;
     return keypair;
 }
 
