@@ -62,7 +62,7 @@ ToxId::ToxId()
  * @brief The copy constructor.
  * @param other ToxId to copy
  */
-ToxId::ToxId(const ToxId &other)
+ToxId::ToxId(const ToxId& other)
 : toxId(other.toxId)
 {}
 
@@ -74,7 +74,7 @@ ToxId::ToxId(const ToxId &other)
  *
  * @param id Tox ID string to convert to ToxId object
  */
-ToxId::ToxId(const QString &id)
+ToxId::ToxId(const QString& id)
 {
     if (isToxId(id))
     {
@@ -98,7 +98,27 @@ ToxId::ToxId(const QString &id)
  *
  * @param id Tox ID string to convert to ToxId object
  */
-ToxId::ToxId(const QByteArray &rawId)
+ToxId::ToxId(const QByteArray& rawId)
+{
+    checkToxId(rawId);
+}
+
+/**
+ * @brief Create a Tox ID from a uint8_t* and length.
+ *
+ * If the given id is not a valid Tox ID, then:
+ * publicKey == id and noSpam == "" == checkSum.
+ *
+ * @param id Tox ID string to convert to ToxId object
+ */
+ToxId::ToxId(const uint8_t& rawId, int len)
+{
+    QByteArray tmpId(reinterpret_cast<const char *>(rawId), len);
+    checkToxId(tmpId);
+}
+
+
+void ToxId::checkToxId(const QByteArray& rawId)
 {
     if(rawId.length() == TOX_SECRET_KEY_SIZE)
     {
@@ -106,8 +126,8 @@ ToxId::ToxId(const QByteArray &rawId)
     }
     else if (rawId.length() == TOX_ADDRESS_SIZE
              && isToxId(rawId.toHex().toUpper()))
-    {
 
+    {
         toxId = QByteArray(rawId);                  // construct from full toxid
     }
     else
@@ -131,7 +151,7 @@ bool ToxId::operator==(const ToxId& other) const
  * @param other Tox ID to compare.
  * @return True if both Tox ID have different public keys, false otherwise.
  */
-bool ToxId::operator!=(const ToxId &other) const
+bool ToxId::operator!=(const ToxId& other) const
 {
     return getPublicKey() != other.getPublicKey();
 }
@@ -166,12 +186,30 @@ bool ToxId::isValidToxId(const QString& id)
 }
 
 /**
+ * @brief Gets the ToxID as bytes, convenience function for toxcore interface.
+ * @return The ToxID
+ */
+const uint8_t* ToxId::getBytes() const
+{
+    return reinterpret_cast<const uint8_t*> (toxId.constData());
+}
+
+/**
  * @brief Gets the Public Key part of the ToxID
  * @return Public Key of the ToxID
  */
 QByteArray ToxId::getPublicKey() const
 {
     return toxId.mid(0, TOX_PUBLIC_KEY_SIZE);
+}
+
+/**
+ * @brief Gets the Public Key part of the ToxID, convenience fuction for toxcore interface.
+ * @return Public Key of the ToxID
+ */
+const uint8_t* ToxId::getPublicKeyBytes() const
+{
+    return reinterpret_cast<const uint8_t*> (toxId.mid(0, TOX_PUBLIC_KEY_SIZE).constData());
 }
 
 /**
