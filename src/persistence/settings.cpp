@@ -390,7 +390,7 @@ void Settings::loadPersonal(Profile* profile)
             if (getEnableLogging())
                 fp.activity = ps.value("activity", QDate()).toDate();
 
-            friendLst[ToxId(fp.addr).publicKey] = fp;
+            friendLst[ToxId(fp.addr).getPublicKeyString()] = fp;
         }
         ps.endArray();
     }
@@ -1433,7 +1433,7 @@ void Settings::setAutoAwayTime(int newValue)
 QString Settings::getAutoAcceptDir(const ToxId& id) const
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
 
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1445,7 +1445,7 @@ QString Settings::getAutoAcceptDir(const ToxId& id) const
 void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
 
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1462,7 +1462,7 @@ void Settings::setAutoAcceptDir(const ToxId &id, const QString& dir)
 Settings::AutoAcceptCallFlags Settings::getAutoAcceptCall(const ToxId &id) const
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
 
     auto it = friendLst.find(key);
     if (it != friendLst.end())
@@ -1474,7 +1474,7 @@ Settings::AutoAcceptCallFlags Settings::getAutoAcceptCall(const ToxId &id) const
 void Settings::setAutoAcceptCall(const ToxId& id, AutoAcceptCallFlags accept)
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
 
     auto it = friendLst.find(key);
     if(it != friendLst.end())
@@ -1488,7 +1488,7 @@ QString Settings::getContactNote(const ToxId &id) const
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.publicKey);
+    auto it = friendLst.find(id.getPublicKeyString());
     if (it != friendLst.end())
         return it->note;
 
@@ -1499,7 +1499,7 @@ void Settings::setContactNote(const ToxId &id, const QString& note)
 {
     QMutexLocker locker{&bigLock};
 
-    auto it = friendLst.find(id.publicKey);
+    auto it = friendLst.find(id.getPublicKeyString());
     if (it != friendLst.end())
     {
         qDebug() << note;
@@ -2009,7 +2009,7 @@ void Settings::setCamVideoFPS(unsigned short newValue)
 QString Settings::getFriendAddress(const QString& publicKey) const
 {
     QMutexLocker locker{&bigLock};
-    QString key = ToxId(publicKey).publicKey;
+    QString key = ToxId(publicKey).getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         return it->addr;
@@ -2020,7 +2020,7 @@ QString Settings::getFriendAddress(const QString& publicKey) const
 void Settings::updateFriendAddress(const QString& newAddr)
 {
     QMutexLocker locker{&bigLock};
-    QString key = ToxId(newAddr).publicKey;
+    QString key = ToxId(newAddr).getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
     {
@@ -2040,7 +2040,7 @@ void Settings::updateFriendAddress(const QString& newAddr)
 QString Settings::getFriendAlias(const ToxId& id) const
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         return it->alias;
@@ -2051,7 +2051,7 @@ QString Settings::getFriendAlias(const ToxId& id) const
 void Settings::setFriendAlias(const ToxId& id, const QString& alias)
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
     {
@@ -2070,7 +2070,7 @@ void Settings::setFriendAlias(const ToxId& id, const QString& alias)
 
 int Settings::getFriendCircleID(const ToxId& id) const
 {
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         return it->circleID;
@@ -2080,7 +2080,7 @@ int Settings::getFriendCircleID(const ToxId& id) const
 
 void Settings::setFriendCircleID(const ToxId& id, int circleID)
 {
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
     {
@@ -2100,7 +2100,7 @@ void Settings::setFriendCircleID(const ToxId& id, int circleID)
 
 QDate Settings::getFriendActivity(const ToxId& id) const
 {
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
         return it->activity;
@@ -2110,7 +2110,7 @@ QDate Settings::getFriendActivity(const ToxId& id) const
 
 void Settings::setFriendActivity(const ToxId& id, const QDate& activity)
 {
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     auto it = friendLst.find(key);
     if (it != friendLst.end())
     {
@@ -2132,7 +2132,7 @@ void Settings::setFriendActivity(const ToxId& id, const QDate& activity)
 void Settings::removeFriendSettings(const ToxId& id)
 {
     QMutexLocker locker{&bigLock};
-    QString key = id.publicKey;
+    QString key = id.getPublicKeyString();
     friendLst.remove(key);
 }
 

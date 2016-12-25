@@ -37,7 +37,7 @@ Friend::Friend(uint32_t FriendId, const ToxId &UserId)
 
 {
     if (userName.size() == 0)
-        userName = UserId.publicKey;
+        userName = UserId.getPublicKeyString();
 
     userAlias = Settings::getInstance().getFriendAlias(UserId);
 
@@ -65,7 +65,7 @@ void Friend::loadHistory()
 void Friend::setName(QString name)
 {
    if (name.isEmpty())
-       name = userID.publicKey;
+       name = userID.getPublicKeyString();
 
     userName = name;
     if (userAlias.size() == 0)

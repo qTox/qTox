@@ -1222,7 +1222,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled())
     {
-        QString publicKey = f->getToxId().publicKey;
+        QString publicKey = f->getToxId().getPublicKeyString();
         QString name = f->getDisplayedName();
         QString text = message;
         if (isAction)
@@ -1501,7 +1501,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
         if (ask.removeHistory())
         {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().publicKey);
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().getPublicKeyString());
         }
     }
 

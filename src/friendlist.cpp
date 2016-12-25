@@ -25,7 +25,7 @@
 #include <QHash>
 
 QHash<int, Friend*> FriendList::friendList;
-QHash<QString, int> FriendList::tox2id;
+QHash<QByteArray, int> FriendList::tox2id;
 
 Friend* FriendList::addFriend(int friendId, const ToxId& userId)
 {
@@ -35,7 +35,7 @@ Friend* FriendList::addFriend(int friendId, const ToxId& userId)
 
     Friend* newfriend = new Friend(friendId, userId);
     friendList[friendId] = newfriend;
-    tox2id[userId.publicKey] = friendId;
+    tox2id[userId.getPublicKey()] = friendId;
 
     return newfriend;
 }
@@ -69,7 +69,7 @@ void FriendList::clear()
 
 Friend* FriendList::findFriend(const ToxId& userId)
 {
-    auto id = tox2id.find(userId.publicKey);
+    auto id = tox2id.find(userId.getPublicKey());
     if (id != tox2id.end())
     {
         Friend *f = findFriend(*id);
