@@ -25,10 +25,14 @@
 #include <tox/tox.h>
 #include <qregularexpression.h>
 
-#define TOX_ID_PUBLIC_KEY_LENGTH 64
-#define TOX_ID_NO_SPAM_LENGTH    8
-#define TOX_ID_CHECKSUM_LENGTH   4
-#define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
+// Tox doesn't publicly define these
+#define NOSPAM_BYTES                4
+#define CHECKSUM_BYTES              2
+
+#define PUBLIC_KEY_HEX_CHARS        (2*TOX_PUBLIC_KEY_SIZE)
+#define NOSPAM_HEX_CHARS            (2*NOSPAM_BYTES)
+#define CHECKSUM_HEX_CHARS          (2*CHECKSUM_BYTES)
+#define TOXID_HEX_CHARS             (2*TOX_ADDRESS_SIZE)
 
 /**
  * @class ToxId
@@ -51,7 +55,7 @@
  * @brief The default constructor. Creates an empty Tox ID.
  */
 ToxId::ToxId()
-: publicKey(), noSpam(), checkSum()
+: toxId()
 {}
 
 /**
@@ -59,11 +63,11 @@ ToxId::ToxId()
  * @param other ToxId to copy
  */
 ToxId::ToxId(const ToxId &other)
-: publicKey(other.publicKey), noSpam(other.noSpam), checkSum(other.checkSum)
+: toxId(other.toxId)
 {}
 
 /**
- * @brief Create a Tox ID from QString.
+ * @brief Create a Tox ID from a QString.
  *
  * If the given id is not a valid Tox ID, then:
  * publicKey == id and noSpam == "" == checkSum.
@@ -74,13 +78,41 @@ ToxId::ToxId(const QString &id)
 {
     if (isToxId(id))
     {
-        publicKey = id.left(TOX_ID_PUBLIC_KEY_LENGTH);
-        noSpam    = id.mid(TOX_ID_PUBLIC_KEY_LENGTH, TOX_ID_NO_SPAM_LENGTH);
-        checkSum  = id.right(TOX_ID_CHECKSUM_LENGTH);
+        toxId = QByteArray::fromHex(id.toLatin1());
+    }
+    else if(id.length() >= PUBLIC_KEY_HEX_CHARS)
+    {
+        toxId = QByteArray::fromHex(id.left(PUBLIC_KEY_HEX_CHARS).toLatin1());
     }
     else
     {
-        publicKey = id;
+        toxId = QByteArray(TOX_ADDRESS_SIZE, 0x00); // invalid id string
+    }
+}
+
+/**
+ * @brief Create a Tox ID from a QByteArray.
+ *
+ * If the given id is not a valid Tox ID, then:
+ * publicKey == id and noSpam == "" == checkSum.
+ *
+ * @param id Tox ID string to convert to ToxId object
+ */
+ToxId::ToxId(const QByteArray &rawId)
+{
+    if(rawId.length() == TOX_SECRET_KEY_SIZE)
+    {
+        toxId = QByteArray(rawId);                  // construct from PK only
+    }
+    else if (rawId.length() == TOX_ADDRESS_SIZE
+             && isToxId(rawId.toHex().toUpper()))
+    {
+
+        toxId = QByteArray(rawId);                  // construct from full toxid
+    }
+    else
+    {
+        toxId = QByteArray(TOX_ADDRESS_SIZE, 0x00); // invalid id string
     }
 }
 
@@ -91,7 +123,7 @@ ToxId::ToxId(const QString &id)
  */
 bool ToxId::operator==(const ToxId& other) const
 {
-    return publicKey == other.publicKey;
+    return getPublicKey() == other.getPublicKey();
 }
 
 /**
@@ -101,7 +133,7 @@ bool ToxId::operator==(const ToxId& other) const
  */
 bool ToxId::operator!=(const ToxId &other) const
 {
-    return publicKey != other.publicKey;
+    return getPublicKey() != other.getPublicKey();
 }
 
 /**
@@ -110,7 +142,7 @@ bool ToxId::operator!=(const ToxId &other) const
  */
 QString ToxId::toString() const
 {
-    return publicKey + noSpam + checkSum;
+    return toxId.toHex().toUpper();
 }
 
 /**
@@ -118,9 +150,7 @@ QString ToxId::toString() const
  */
 void ToxId::clear()
 {
-    publicKey.clear();
-    noSpam.clear();
-    checkSum.clear();
+    toxId.clear();
 }
 
 /**
@@ -132,7 +162,39 @@ void ToxId::clear()
 bool ToxId::isValidToxId(const QString& id)
 {
     const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
-    return id.length() == TOX_HEX_ID_LENGTH && id.contains(hexRegExp);
+    return id.length() == TOXID_HEX_CHARS && id.contains(hexRegExp);
+}
+
+/**
+ * @brief Gets the Public Key part of the ToxID
+ * @return Public Key of the ToxID
+ */
+QByteArray ToxId::getPublicKey() const
+{
+    return toxId.mid(0, TOX_PUBLIC_KEY_SIZE);
+}
+
+/**
+ * @brief Returns the Public Key converted to QString.
+ * @return The Public Key as QString.
+ */
+QString ToxId::getPublicKeyString() const
+{
+    return getPublicKey().toHex().toUpper();
+}
+
+/**
+ * @brief Returns the NoSpam value converted to QString.
+ * @return The NoSpam value as QString or "" if the ToxId was constructed from a Public Key.
+ */
+QString ToxId::getNoSpamString() const
+{
+    if(toxId.length() == TOX_ADDRESS_SIZE)
+    {
+        return toxId.mid(TOX_PUBLIC_KEY_SIZE, NOSPAM_BYTES).toHex().toUpper();
+    }
+
+    return {};
 }
 
 /**
@@ -147,9 +209,9 @@ bool ToxId::isToxId(const QString& id)
         return false;
     }
 
-    uint32_t size = TOX_ID_PUBLIC_KEY_LENGTH + TOX_ID_NO_SPAM_LENGTH;
+    uint32_t size = PUBLIC_KEY_HEX_CHARS + NOSPAM_HEX_CHARS;
     QString publicKeyStr = id.left(size);
-    QString checksumStr = id.right(TOX_ID_CHECKSUM_LENGTH);
+    QString checksumStr = id.right(CHECKSUM_HEX_CHARS);
 
     QByteArray publicKey = QByteArray::fromHex(publicKeyStr.toLatin1());
     QByteArray checksum = QByteArray::fromHex(checksumStr.toLatin1());

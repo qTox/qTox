@@ -89,7 +89,7 @@ void PrivacyForm::on_nospamLineEdit_editingFinished()
 void PrivacyForm::showEvent(QShowEvent*)
 {
     const Settings& s = Settings::getInstance();
-    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
+    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
     bodyUI->cbTypingNotification->setChecked(s.getTypingNotification());
     bodyUI->cbKeepHistory->setChecked(Settings::getInstance().getEnableLogging());
 }
@@ -104,7 +104,7 @@ void PrivacyForm::on_randomNosapamButton_clicked()
         newNospam = (newNospam<<8) + (qrand() % 256); // Generate byte by byte. For some reason.
 
     Core::getInstance()->setNospam(newNospam);
-    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().noSpam);
+    bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
 }
 
 void PrivacyForm::on_nospamLineEdit_textChanged()
