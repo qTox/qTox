@@ -22,6 +22,7 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QTimer>
+#include <QToolButton>
 
 #include "tabcompleter.h"
 #include "src/group.h"

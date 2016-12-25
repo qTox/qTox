@@ -27,6 +27,7 @@
 #include <QShortcut>
 #include <QSplitter>
 #include <QClipboard>
+#include <QToolButton>
 
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
@@ -109,10 +110,10 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     videoButton = new QPushButton();
     videoButton->setFixedSize(50,40);
 
-    volButton = new QPushButton();
+    volButton = new QToolButton();
     volButton->setFixedSize(22, 18);
 
-    micButton = new QPushButton();
+    micButton = new QToolButton();
     micButton->setFixedSize(22, 18);
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.

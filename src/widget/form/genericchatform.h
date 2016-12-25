@@ -48,6 +48,7 @@ class FlyoutOverlayWidget;
 class ContentLayout;
 class QSplitter;
 class GenericNetCamView;
+class QToolButton;
 
 namespace Ui {
     class MainWindow;
@@ -124,8 +125,10 @@ protected:
     int curRow;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
-    QWidget* headWidget;
-    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QWidget *headWidget;
+    QPushButton* fileButton, *screenshotButton, *emoteButton, *callButton;
+    QPushButton* videoButton;
+    QToolButton *volButton, *micButton;
     FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
