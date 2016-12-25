@@ -50,7 +50,6 @@
 #include "core/cstring.h"
 #include "friend.h"
 #include "nexus.h"
-#include "nexus.h"
 #include "persistence/offlinemsgengine.h"
 #include "persistence/profile.h"
 #include "persistence/settings.h"
@@ -64,6 +63,7 @@
 #include "widget/tool/callconfirmwidget.h"
 #include "widget/tool/chattextedit.h"
 #include "widget/tool/croppinglabel.h"
+#include "widget/tool/dynamicscrollbar.h"
 #include "widget/tool/flyoutoverlaywidget.h"
 #include "widget/tool/screenshotgrabber.h"
 #include "widget/translator.h"
@@ -175,6 +175,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
+
+    DynamicScrollBar* dynamicScroll = static_cast<DynamicScrollBar*>(chatWidget->verticalScrollBar());
+    connect(dynamicScroll, &DynamicScrollBar::dynamicRequest, [this]()
+    {
+        loadHistory(QDateTime(), false, true);
+    });
 }
 
 ChatForm::~ChatForm()
@@ -698,7 +704,7 @@ void ChatForm::onLoadChatHistory()
 }
 
 // TODO: Split on smaller methods (style)
-void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
+void ChatForm::loadHistory(QDateTime since, bool processUndelivered, bool next)
 {
     QDateTime now = historyBaselineDate.addMSecs(-1);
 
@@ -716,6 +722,12 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
             now = now.addMSecs(-1);
         }
     }
+
+    if (next)
+    {
+        now = getEarliestDate();
+    }
+    qDebug() << now;
 
     auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().publicKey, since, now);
 

@@ -39,7 +39,7 @@ FORMS    += \
     src/widget/about/aboutuser.ui
 
 CONFIG   += c++11
-CONFIG   += warn_on exceptions_off rtti_off
+CONFIG   += warn_on exceptions_off #rtti_off
 CONFIG   += link_pkgconfig
 # undocumented, but just works™
 CONFIG   += silent
@@ -59,7 +59,7 @@ unix:!macx {
 }
 
 # needed, since `rtti_off` doesn't work
-QMAKE_CXXFLAGS += -fno-rtti
+#QMAKE_CXXFLAGS += -fno-rtti
 QMAKE_RESOURCE_FLAGS += -compress 9 -threshold 0
 
 # Rules for creating/updating {ts|qm}-files
@@ -387,6 +387,7 @@ HEADERS  += \
     src/widget/about/aboutuser.h \
     src/widget/form/groupinviteform.h \
     src/widget/tool/profileimporter.h \
+    src/widget/tool/dynamicscrollbar.h \
     src/widget/passwordedit.h \
     src/widget/form/settings/userinterfaceform.h
 
@@ -509,4 +510,5 @@ SOURCES += \
     src/widget/about/aboutuser.cpp \
     src/widget/form/groupinviteform.cpp \
     src/widget/tool/profileimporter.cpp \
+    src/widget/tool/dynamicscrollbar.cpp \
     src/widget/passwordedit.cpp
