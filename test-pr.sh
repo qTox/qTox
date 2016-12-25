@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 #    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
 #
