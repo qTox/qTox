@@ -20,7 +20,6 @@
 
 #include "core.h"
 #include "nexus.h"
-#include "core/cdata.h"
 #include "core/cstring.h"
 #include "core/coreav.h"
 #include "persistence/settings.h"
@@ -424,14 +423,17 @@ void Core::bootstrapDht()
         qDebug() << "Connecting to "+QString(dhtServer.address.toLatin1().data())
                     +':'+QString().setNum(dhtServer.port)+" ("+dhtServer.name+')';
 
-        if (!tox_bootstrap(tox, dhtServer.address.toLatin1().data(),
-            dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
+        QByteArray address = dhtServer.address.toLatin1();
+        QByteArray pk = ToxId{dhtServer.userId}.getPublicKey();
+
+        const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.constData());
+
+        if (!tox_bootstrap(tox, address.constData(), dhtServer.port, pkPtr, nullptr))
         {
             qDebug() << "Error bootstrapping from "+dhtServer.name;
         }
 
-        if (!tox_add_tcp_relay(tox, dhtServer.address.toLatin1().data(),
-            dhtServer.port, CUserId(dhtServer.userId).data(), nullptr))
+        if (!tox_add_tcp_relay(tox, address.constData(), dhtServer.port, pkPtr, nullptr))
         {
             qDebug() << "Error adding TCP relay from "+dhtServer.name;
         }
@@ -441,11 +443,11 @@ void Core::bootstrapDht()
     }
 }
 
-void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cUserId,
+void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cFriendPk,
                            const uint8_t* cMessage, size_t cMessageSize, void* core)
 {
-    emit static_cast<Core*>(core)->friendRequestReceived(CUserId::toString(cUserId),
-                                                         CString::toString(cMessage, cMessageSize));
+    QString friendPk = ToxId(QByteArray(reinterpret_cast<const char*> (cFriendPk), TOX_PUBLIC_KEY_SIZE)).getPublicKeyString();
+    emit static_cast<Core*>(core)->friendRequestReceived(friendPk, CString::toString(cMessage, cMessageSize));
 }
 
 void Core::onFriendMessage(Tox*/* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE type,
@@ -556,7 +558,7 @@ void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void
 
 void Core::acceptFriendRequest(const QString& userId)
 {
-    uint32_t friendId = tox_friend_add_norequest(tox, CUserId(userId).data(), nullptr);
+    uint32_t friendId = tox_friend_add_norequest(tox, reinterpret_cast<const uint8_t*> (ToxId(userId).getPublicKeyBytes()), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max())
     {
         emit failedToAddFriend(userId);
@@ -589,7 +591,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     {
         CString cMessage(message);
 
-        uint32_t friendId = tox_friend_add(tox, CFriendAddress(friendAddress).data(),
+        uint32_t friendId = tox_friend_add(tox, ToxId(friendAddress).getBytes(),
                                       cMessage.data(), cMessage.size(), nullptr);
         if (friendId == std::numeric_limits<uint32_t>::max())
         {
@@ -856,9 +858,9 @@ void Core::setAvatar(const QByteArray& data)
  */
 ToxId Core::getSelfId() const
 {
-    uint8_t friendAddress[TOX_ADDRESS_SIZE] = {0};
-    tox_self_get_address(tox, friendAddress);
-    return ToxId(CFriendAddress::toString(friendAddress));
+    QByteArray friendAddress(TOX_ADDRESS_SIZE, 0x00);
+    tox_self_get_address(tox, reinterpret_cast<uint8_t*>(friendAddress.data()));
+    return ToxId(friendAddress);
 }
 
 /**
@@ -984,12 +986,12 @@ void Core::loadFriends()
         // assuming there are not that many friends to fill up the whole stack
         uint32_t *ids = new uint32_t[friendCount];
         tox_self_get_friend_list(tox, ids);
-        uint8_t clientId[TOX_PUBLIC_KEY_SIZE];
+        QByteArray friendPk(TOX_PUBLIC_KEY_SIZE, 0x00);
         for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
         {
-            if (tox_friend_get_public_key(tox, ids[i], clientId, nullptr))
+            if (tox_friend_get_public_key(tox, ids[i], reinterpret_cast<uint8_t*>(friendPk.data()), nullptr))
             {
-                emit friendAdded(ids[i], CUserId::toString(clientId));
+                emit friendAdded(ids[i], ToxId(friendPk).getPublicKeyString());
 
                 const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
                 if (nameSize && nameSize != SIZE_MAX)
@@ -1102,16 +1104,17 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
  */
 ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
 {
-    uint8_t rawID[TOX_PUBLIC_KEY_SIZE];
+    QByteArray friendPk(TOX_PUBLIC_KEY_SIZE, 0x00);
     TOX_ERR_CONFERENCE_PEER_QUERY error;
-    bool success = tox_conference_peer_get_public_key(tox, groupId, peerId, rawID, &error);
+    bool success = tox_conference_peer_get_public_key(tox, groupId, peerId,
+                                                      reinterpret_cast<uint8_t*> (friendPk.data()), &error);
     if (!parsePeerQueryError(error) || !success)
     {
         qWarning() << "getGroupPeerToxId: Unknown error";
         return ToxId();
     }
 
-    return ToxId(CUserId::toString(rawID));
+    return ToxId(friendPk);
 }
 
 /**
@@ -1445,9 +1448,7 @@ QList<CString> Core::splitMessage(const QString &message, int maxLen)
 QString Core::getPeerName(const ToxId& id) const
 {
     QString name;
-    CUserId cid(id.toString());
-
-    uint32_t friendId = tox_friend_by_public_key(tox, (uint8_t*)cid.data(), nullptr);
+    uint32_t friendId = tox_friend_by_public_key(tox, id.getBytes(), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max())
     {
         qWarning() << "getPeerName: No such peer";

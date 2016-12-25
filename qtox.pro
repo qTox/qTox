@@ -406,7 +406,6 @@ SOURCES += \
     src/chatlog/customtextdocument.cpp\
     src/chatlog/documentcache.cpp \
     src/chatlog/pixmapcache.cpp \
-    src/core/cdata.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
     src/core/coreencryption.cpp \
