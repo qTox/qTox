@@ -29,6 +29,7 @@
 #include <linux/videodev2.h>
 #include <dirent.h>
 #include <map>
+#include <QDebug>
 
 /**
  * Most of this file is adapted from libavdevice's v4l2.c,
@@ -201,7 +202,7 @@ QString v4l2::getPixelFormatString(uint32_t pixel_format)
 {
     if (pixFmtToName.find(pixel_format) == pixFmtToName.end())
     {
-        printf("BAD!\n");
+        qWarning() << "Pixel format not found";
         return QString("unknown");
     }
     return pixFmtToName.at(pixel_format);
