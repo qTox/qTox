@@ -260,6 +260,18 @@ macx {
     LIBPATH += /usr/local/lib
 }
 
+unix {
+target.path  = $$PREFIX/bin
+
+desktop.files = qTox.desktop
+desktop.path = $$PREFIX/share/applications
+
+icon.files = img/qtox.png
+icon.path = $$PREFIX/share/pixmaps
+
+INSTALLS = target desktop icon
+}
+
 RESOURCES += res.qrc
 
 !contains(SMILEYS, NO) {
