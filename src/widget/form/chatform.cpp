@@ -123,6 +123,9 @@ ChatForm::ChatForm(Friend* chatFriend)
             this, &ChatForm::onFriendMessageReceived);
     connect(core, &Core::friendTypingChanged,
             this, &ChatForm::onFriendTypingChanged);
+    connect(core, &Core::friendStatusChanged,
+            this, &ChatForm::onFriendStatusChanged);
+
 
     const CoreAV* av = core->getAv();
     connect(av, &CoreAV::avInvite, this, &ChatForm::onAvInvite);
@@ -168,6 +171,7 @@ ChatForm::ChatForm(Friend* chatFriend)
         emit aliasChanged(newName);
     });
 
+    updateCallButtons();
     setAcceptDrops(true);
     retranslateUi();
     Translator::registerHandler(std::bind(&ChatForm::retranslateUi, this), this);
@@ -465,34 +469,34 @@ void ChatForm::onVideoCallTriggered()
 void ChatForm::updateCallButtons()
 {
     CoreAV* av = Core::getInstance()->getAv();
-    if (av->isCallActive(f))
+    bool audio = av->isCallActive(f);
+    bool video = av->isCallVideoEnabled(f);
+    callButton->setEnabled(audio && !video);
+    videoButton->setEnabled(video);
+    if (audio || video)
     {
-        callButton->setObjectName("red");
-        callButton->setToolTip(tr("End audio call"));
+        videoButton->setObjectName(video ? "red" : "");
+        videoButton->setToolTip(video ? tr("End video call") :
+                                        tr("Can't start video call"));
 
-        if (av->isCallVideoEnabled(f))
-        {
-            videoButton->setObjectName("red");
-            videoButton->setToolTip(tr("End video call"));
-        }
+        callButton->setObjectName((audio && !video) ? "red" : "");
+        callButton->setToolTip((audio && !video) ? tr("End audio call") :
+                                       tr("Can't start audio call"));
     }
     else
     {
         const Status fs = f->getStatus();
-        callButton->setEnabled(fs != Status::Offline);
-        videoButton->setEnabled(fs != Status::Offline);
+        bool online = fs != Status::Offline;
+        callButton->setEnabled(online);
+        videoButton->setEnabled(online);
 
-        if (callButton->isEnabled())
-        {
-            callButton->setObjectName("green");
-            callButton->setToolTip(tr("Start audio call"));
-        }
+        callButton->setObjectName(online ? "green" : "");
+        callButton->setToolTip(online ? tr("Start audio call") :
+                                        tr("Can't start audio call"));
 
-        if (videoButton->isEnabled())
-        {
-            videoButton->setObjectName("green");
-            videoButton->setToolTip(tr("Start video call"));
-        }
+        videoButton->setObjectName(online ? "green" : "");
+        videoButton->setToolTip(online ? tr("Start video call") :
+                                        tr("Can't start audio call"));
     }
 
     callButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/callButton/callButton.css")));
