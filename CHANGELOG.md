@@ -1,4 +1,69 @@
 <a name=""></a>
+## v1.7.0 (2016-12-25)
+
+
+#### Breaking Changes
+
+* **database:**  use own public key as salt to encrypt the database ([c4b9d302](https://github.com/qTox/qTox/commit/c4b9d302d0c3007102436f7f76498a7a0b8edcaf))
+
+#### Features
+
+*   Added Kiss smiley shortcut for Universe and emojione ([059bb9a3](https://github.com/qTox/qTox/commit/059bb9a3a2ebf4c4310723ab386babc96c77cc15))
+* **UI:**
+  *  make font in message input field use font settings ([c14cbdf4](https://github.com/qTox/qTox/commit/c14cbdf4fd99352d1a70ad0c9dfeb78e309b1228))
+  *  add `My` to text labels on Profile page ([785e546e](https://github.com/qTox/qTox/commit/785e546e9e76144f2f39135cd425e0d924c960dd))
+  *  make information text in settings selectable ([e9778e81](https://github.com/qTox/qTox/commit/e9778e81a238d2688ba5106b602d08208a9311a9))
+  *  make it possible to select text of the received friend request ([06606958](https://github.com/qTox/qTox/commit/0660695873ef8ab1f5e31761c113065560d3a75b))
+  *  Add 'Copy link' context menu item ([a7de2680](https://github.com/qTox/qTox/commit/a7de2680d971337c697357c052dc90ddb468883f), closes [#927](https://github.com/qTox/qTox/issues/927))
+  *  make link to filled issue template on About page visible ([feaedeed](https://github.com/qTox/qTox/commit/feaedeed841f419a8eb5b7f40a14e27ef1e104cb))
+  *  add accessibility labels to all remaining .ui files ([25e9d3c4](https://github.com/qTox/qTox/commit/25e9d3c46cf717bd623be1bda8dbc7a8541d84e1))
+  *  add accessibility labels to the add friend page ([8854589b](https://github.com/qTox/qTox/commit/8854589b0d3ddc50bf899413c1ef970c43d127c4))
+  *  add accessibility labels to the Profile page ([949e3cb8](https://github.com/qTox/qTox/commit/949e3cb830134a1412b93d751a1d16dd80877aba))
+  *  add some accessibility labels to login pages ([953fe241](https://github.com/qTox/qTox/commit/953fe2416a97ebdeb6de45a801e66fc3b434d551))
+  *  rename `Toxme register` → `Register on ToxMe` ([2433fa9d](https://github.com/qTox/qTox/commit/2433fa9dcee8c10a9d8ec050b8bf06c0facdce7e))
+* **database:**
+  *  make a backup before upgrading ([c1d471fa](https://github.com/qTox/qTox/commit/c1d471faa18ecb8f04001b97937e14d6c34a9a46))
+  *  use own public key as salt to encrypt the database ([c4b9d302](https://github.com/qTox/qTox/commit/c4b9d302d0c3007102436f7f76498a7a0b8edcaf))
+* **l10n:**
+  *  add Korean translation ([6e040b8e](https://github.com/qTox/qTox/commit/6e040b8e7c50b53b13c8bd46a6b38df7b34a0e33), [5267b195](https://github.com/qTox/qTox/commit/5267b19503a815a269b4cc7bc4fb77b270157467))
+  *  add Pirate translation ([93feae0c](https://github.com/qTox/qTox/commit/93feae0c95bb9a6b3a8bbe1022c403e8167bc7b3), [c75f0b74](https://github.com/qTox/qTox/commit/c75f0b74a29449dac1c3320e4ea2c1702b03c4c9))
+  *  add Swahili translation ([f28e136e](https://github.com/qTox/qTox/commit/f28e136ec45b0f7ec26c4ebaa6e7eef7b39f9c0d), [8b671323](https://github.com/qTox/qTox/commit/8b67132337f3c90a9df8ed0ed06a7021386b6774))
+  *  update Arabic translation from Weblate ([1969084b](https://github.com/qTox/qTox/commit/1969084baa892a2fab957f5c326973efd0b938d8), [b0d03622](https://github.com/qTox/qTox/commit/b0d03622b2a244cef4fbe8902aca53efcbebd624))
+  *  update Belarusian translation from Weblate ([10b09036](https://github.com/qTox/qTox/commit/10b09036ca9dab7a9670b5b421897bbc23250d62), [899d74f1](https://github.com/qTox/qTox/commit/899d74f1d95136eb9e97d1ebdcbcd0fde46753f5), [a3c876c1](https://github.com/qTox/qTox/commit/a3c876c14af4a9fa581c7c627b81a7ec1fe821c5), [b8aef1dc](https://github.com/qTox/qTox/commit/b8aef1dcebae378eb08c245ffb6d83cb3876e3b0), [bb445a8e](https://github.com/qTox/qTox/commit/bb445a8e7155b18683ff77235ba64428b1b20069), [fa550a12](https://github.com/qTox/qTox/commit/fa550a127f2a4bc9eb3c4f2e4f466ba773845a5b))
+  *  update Bulgarian translation from Weblate ([595657c2](https://github.com/qTox/qTox/commit/595657c232f0826170c61ae605b831c495b58d34), [88049cc2](https://github.com/qTox/qTox/commit/88049cc2277810f0fa5e30c65c4732f4aa25db04))
+  *  update Chinese translation from Weblate ([0f5b2151](https://github.com/qTox/qTox/commit/0f5b2151ee334b397e1eaaefd49e47e2a71e2c90), [3a656bb3](https://github.com/qTox/qTox/commit/3a656bb3ca623b9ec33b6130eeab0c8212874cf0), [b4c740b1](https://github.com/qTox/qTox/commit/b4c740b1b70bcf7c6ab78f2c3b99c018da9bae70), [db990ac7](https://github.com/qTox/qTox/commit/db990ac71f21120bfeb7fe5307b3ab9c3a0ba212), [dd4673cf](https://github.com/qTox/qTox/commit/dd4673cf6ad5a59e7cfc39ba3dd6faa25f76b85e))
+  *  update Czech translation from Weblate ([7c5eaeae](https://github.com/qTox/qTox/commit/7c5eaeae7b990aef63d82445a7b8f356c554f14d), [b12b1cdc](https://github.com/qTox/qTox/commit/b12b1cdc2ed37d14facea45f0f775c1539883a88))
+  *  update Esperanto translation from Weblate ([1e39d944](https://github.com/qTox/qTox/commit/1e39d94425789702c1222f71ccb0524d608d1d47))
+  *  update Estonian translation from Weblate ([e6bb215a](https://github.com/qTox/qTox/commit/e6bb215a23363b6feab5a3f590ef0c0ea91378c6))
+  *  update French translation from Weblate ([2519594a](https://github.com/qTox/qTox/commit/2519594aa2ec156bb6af3a192bdefe7a1ffa50f9), [cca4038f](https://github.com/qTox/qTox/commit/cca4038f655029b753e42cee45b46121c93fe3e6))
+  *  update German translation from Weblate ([03197e5c](https://github.com/qTox/qTox/commit/03197e5c97140030d5bda334ecea3e1a464e6e6e), [9125060d](https://github.com/qTox/qTox/commit/9125060d35d00c71cb23167625f3ca3d35306ac2))
+  *  update Hungarian translation from Weblate ([8cb357fd](https://github.com/qTox/qTox/commit/8cb357fda788b2f71f4cdd17a427f1b50ab16fed), [b0a564da](https://github.com/qTox/qTox/commit/b0a564dacde79ac361d6a9ba53db1e43ac0cfa08), [cdb47dce](https://github.com/qTox/qTox/commit/cdb47dce74d8991a12f93f1e2acf4965ffe34f41), [ff69b61f](https://github.com/qTox/qTox/commit/ff69b61f36541276b4a8764184f1927713ee900a))
+  *  update Italian translation ([6a520c9c](https://github.com/qTox/qTox/commit/6a520c9c90eed3cc9eaab28f7b64550edc39eada), [ed472001](https://github.com/qTox/qTox/commit/ed47200181b29ec7b37651f6d450273f4002ec01))
+  *  update Lithuanian translation from Weblate ([7d7a1845](https://github.com/qTox/qTox/commit/7d7a18454cef4118bf272b5849f122b68a2f1f5f))
+  *  update Polish translation ([5ed1048e](https://github.com/qTox/qTox/commit/5ed1048e7254bb657436b852a8c4b3561932971d))
+  *  update Portuguese translation from Weblate ([26ff01ba](https://github.com/qTox/qTox/commit/26ff01ba023c75e9f93914f7e082f3c3adab0643))
+  *  update Russian translation from Weblate ([15638d0c](https://github.com/qTox/qTox/commit/15638d0c31a008dc54fe63d1ac264c212d18c590), [16accc74](https://github.com/qTox/qTox/commit/16accc745ce13ef6ca2a35c67bae2714849b261d), [2fa4073d](https://github.com/qTox/qTox/commit/2fa4073d903b4bc648580bb50fed51cede06ad5e), [eb15b157](https://github.com/qTox/qTox/commit/eb15b157d014555d5b91d60bd4c7421034e2a315))
+  *  update Slovak translation from Weblate ([051672af](https://github.com/qTox/qTox/commit/051672afb52f893bd24a1aacc431354a6a0e0258), [cc6efe93](https://github.com/qTox/qTox/commit/cc6efe93bcaba5c696616ccaa231b7e93efe272c))
+
+#### Bug Fixes
+
+*   add missing Q_OBJECT macro to the PasswordEdit class ([f5011cdb](https://github.com/qTox/qTox/commit/f5011cdb2feb2da042e373b4e4094e967bde8120))
+*   Fixed compact layout ([f870bf19](https://github.com/qTox/qTox/commit/f870bf1953672d948907477415a5cd2143d14a03))
+*   remove unnecessary variable when checking whether save is a TES ([231e1d74](https://github.com/qTox/qTox/commit/231e1d746a9b97bb5da952c7565c0d6f052f26de))
+*   Status reflection for friend calls ([917812da](https://github.com/qTox/qTox/commit/917812daaabc8b8118526691e67a3f6e2dd8fcb2))
+*   dataToString correctness regression ([a4bda265](https://github.com/qTox/qTox/commit/a4bda2652550f3b2c2c8275dc8f607498f1c06ff))
+* **UI:**
+  *  make link in `About` setting page point to all contributors ([326d5219](https://github.com/qTox/qTox/commit/326d5219bc5bdabc87028e1040b98cde1e7c8950))
+  *  remove unnecessary space between a word and colon ([fba5f8cc](https://github.com/qTox/qTox/commit/fba5f8ccc44b3227dc7d064f6c4d2307b616b839))
+  *  copy friend's non-truncated status message instead of truncated ([9d1275b3](https://github.com/qTox/qTox/commit/9d1275b3963bfa87a4c1321d2d590db994e87ff3))
+  *  Changed tab order to be same with visual order ([f7899d7b](https://github.com/qTox/qTox/commit/f7899d7b5044706d339537ff9658087a7ad22e37))
+* **core:**  don't emit idSet signal twice ([355fb2ae](https://github.com/qTox/qTox/commit/355fb2ae413cad8f680ce3e8b1615c9415715135))
+* **l10n:**  fix wrongly positioned `%` in translations ([e831ba94](https://github.com/qTox/qTox/commit/e831ba9427f356513eb66e1c4c26f889cc1a129d))
+* **videoButton:**  Added disabling button while call is active ([eff27f69](https://github.com/qTox/qTox/commit/eff27f690e8a8af2e8f1fe0cd80f3b21dea2bed7))
+
+
+
+<a name=""></a>
 ## v1.6.0 (2016-11-13)
 
 
