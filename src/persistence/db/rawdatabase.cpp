@@ -481,6 +481,13 @@ bool RawDatabase::remove()
     return QFile::remove(path);
 }
 
+struct PassKeyDeleter
+{
+    void operator()(Tox_Pass_Key *pass_key) {
+        tox_pass_key_free(pass_key);
+    }
+};
+
 /**
  * @brief Functor used to free tox_pass_key memory.
  *
