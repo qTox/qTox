@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Pois käytöstä</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toista tämä testiääni ulostuloäänenvoimakkuutta säädettäessä.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -25,43 +25,43 @@
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Valitse alue</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Näyttö %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
-        <translation type="unfinished">Ääniasetukset</translation>
+        <translation>Ääniasetukset</translation>
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Teho</translation>
     </message>
     <message>
         <source>Playback device</source>
-        <translation type="unfinished">Toistolaite</translation>
+        <translation>Toistolaite</translation>
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished">Aseta kaiuttimien äänenvoimakkuus liukusäätimellä.</translation>
+        <translation>Aseta kaiuttimien äänenvoimakkuus liukusäätimellä.</translation>
     </message>
     <message>
         <source>Capture device</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallennuslaite</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Äänenvoimakkuus</translation>
     </message>
     <message>
         <source>Video Settings</source>
-        <translation type="unfinished">Videoasetukset</translation>
+        <translation>Videoasetukset</translation>
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished">Videolaite</translation>
+        <translation>Videolaite</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -69,22 +69,23 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished">Aseta kamerasi tarkkuus.
+        <translation>Aseta kamerasi tarkkuus.
 Korkeammilla arvoilla ystäväsi saavat paremman kuvanlaadun.
 Korkeampi kuvanlaatu vaatii kuitennii paremman internet-yhteyden.
-Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua varten, jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
+Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua varten,
+jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished">Tarkkuus</translation>
+        <translation>Tarkkuus</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Uudelleenhae laitteet</translation>
+        <translation>Uudelleenhae laitteet</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Testiääni</translation>
     </message>
 </context>
 <context>
@@ -95,32 +96,32 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Käynnistä qTox uudestaan asentaaksesi version %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox lataa päivitystä %1</translation>
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkuperäinen julkaisija: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Käytät qTox versiota %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished">Kommitti: %1</translation>
+        <translation>Kommitti: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">toxcore:n versio: %1</translation>
+        <translation>toxcore:n versio: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt versio: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
@@ -204,7 +205,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Oletushakemisto tiedostoille:</translation>
+        <translation>Oletushakemisto tiedostoille:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -229,7 +230,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
+        <translation>Valitse hakemisto automaattisesti hyväksyttäville tiedostoille</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -305,7 +306,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Et voi lisätä itseäsi kontaktiksi</translation>
+        <translation>Et voi lisätä itseäsi kaveriksesi!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -317,16 +318,11 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished">Hyväksy</translation>
+        <translation>Hyväksy</translation>
     </message>
     <message>
         <source>Reject</source>
-        <translation type="unfinished">Hylkää</translation>
-    </message>
-    <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Tätä Tox ID:tä ei ole olemassa</translation>
+        <translation>Hylkää</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
@@ -342,6 +338,11 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -386,12 +387,12 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Puhelu aktiivinen</translation>
+        <translation>Puhelu aktiivinen</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Et voi katkaista yhteyttäsi puhelun aikana!</translation>
+        <translation>Et voi katkaista yhteyttäsi puhelun aikana!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -423,12 +424,12 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation type="unfinished">Yhteysasetukset</translation>
+        <translation>Yhteysasetukset</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished">Ota käyttöön IPv6 (suositus)</translation>
+        <translation>Ota käyttöön IPv6 (suositus)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
@@ -438,38 +439,38 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation type="unfinished">Ota käyttöön UDP (suositus)</translation>
+        <translation>Ota käyttöön UDP (suositus)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
-        <translation type="unfinished">Välipalvelintyyppi:</translation>
+        <translation>Välityspalvelimen tyyppi:</translation>
     </message>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished">Osoite:</translation>
+        <translation>Osoite:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished">Portti:</translation>
+        <translation>Portti:</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ei mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <source>SOCKS5</source>
-        <translation type="unfinished">SOCKS5</translation>
+        <translation>SOCKS5</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished">HTTP</translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Yhdistä uudelleen</translation>
+        <translation>Yhdistä uudelleen</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -573,7 +574,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Puhelun kesto:</translation>
+        <translation>Puhelun kesto: </translation>
     </message>
     <message>
         <source>%1 is typing</source>
@@ -581,7 +582,7 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopioi</translation>
+        <translation>Kopioi</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
@@ -610,6 +611,14 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -672,11 +681,11 @@ Joskus yhteytesi ei välttämättä ole tarpeeksi hyvä korkeaa kuvanlaatua vart
     </message>
     <message>
         <source>/me offers friendship.</source>
-        <translation type="unfinished">tarjoaa kaveruutta.</translation>
+        <translation>/me tarjoaa kaveruutta.</translation>
     </message>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
-        <translation type="unfinished">tarjoaa kaveruutta, &quot;%1&quot;</translation>
+        <translation>/me tarjoaa kaveruutta, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>The previous password is incorrect; please try again:</source>
@@ -714,6 +723,10 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
         <source>Disable chat history</source>
         <translation>Poista keskusteluhistoria käytöstä</translation>
     </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileTransferWidget</name>
@@ -740,7 +753,7 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished">Odotetaan lähettämistä...</translation>
+        <translation>Odotetaan lähettämistä...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
@@ -828,22 +841,22 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
     <message>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished">7 päivää</translation>
+        <translation>Edelliset 7 päivää</translation>
     </message>
     <message>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished">Tässä kuussa</translation>
+        <translation>Tässä kuussa</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished">Yli 6 kuukautta</translation>
+        <translation>Yli 6 kuukautta vanhat</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished">Ei tietoa</translation>
+        <translation>Ei tietoa</translation>
     </message>
 </context>
 <context>
@@ -979,7 +992,7 @@ Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historia
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation type="unfinished">Yleiset</translation>
+        <translation>Yleiset</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -1244,7 +1257,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Ryhmäkutsut</translation>
     </message>
     <message>
         <source>Join</source>
@@ -2500,7 +2513,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished">Aktivoi ikkuna</translation>
+        <translation>Aktivoi ikkuna</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2648,31 +2661,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Profile</source>
         <translation type="unfinished">Profiili</translation>
     </message>
@@ -2772,7 +2760,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ryhmäkutsut</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
