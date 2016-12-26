@@ -19,11 +19,12 @@
 
 
 #include "toxid.h"
-
 #include "core.h"
 
 #include <tox/tox.h>
-#include <qregularexpression.h>
+
+#include <QRegularExpression>
+#include <cstdint>
 
 // Tox doesn't publicly define these
 #define NOSPAM_BYTES                4
@@ -69,8 +70,9 @@ ToxId::ToxId(const ToxId& other)
 /**
  * @brief Create a Tox ID from a QString.
  *
- * If the given id is not a valid Tox ID, then:
- * publicKey == id and noSpam == "" == checkSum.
+ * If the given rawId is not a valid Tox ID, but can be a Public Key then:
+ * publicKey == rawId and noSpam == 0 == checkSum.
+ * If the given rawId isn't a valid Public Key or Tox ID a ToxId with all zero bytes is created.
  *
  * @param id Tox ID string to convert to ToxId object
  */
@@ -93,10 +95,11 @@ ToxId::ToxId(const QString& id)
 /**
  * @brief Create a Tox ID from a QByteArray.
  *
- * If the given id is not a valid Tox ID, then:
- * publicKey == id and noSpam == "" == checkSum.
+ * If the given rawId is not a valid Tox ID, but can be a Public Key then:
+ * publicKey == rawId and noSpam == 0 == checkSum.
+ * If the given rawId isn't a valid Public Key or Tox ID a ToxId with all zero bytes is created.
  *
- * @param id Tox ID string to convert to ToxId object
+ * @param rawId Tox ID bytes to convert to ToxId object
  */
 ToxId::ToxId(const QByteArray& rawId)
 {
@@ -104,12 +107,15 @@ ToxId::ToxId(const QByteArray& rawId)
 }
 
 /**
- * @brief Create a Tox ID from a uint8_t* and length.
+ * @brief Create a Tox ID from uint8_t bytes and lenght, convenience function for toxcore interface.
  *
- * If the given id is not a valid Tox ID, then:
- * publicKey == id and noSpam == "" == checkSum.
+ * If the given rawId is not a valid Tox ID, but can be a Public Key then:
+ * publicKey == rawId and noSpam == 0 == checkSum.
+ * If the given rawId isn't a valid Public Key or Tox ID a ToxId with all zero bytes is created.
  *
- * @param id Tox ID string to convert to ToxId object
+ * @param rawId Pointer to bytes to convert to ToxId object
+ * @param len Number of bytes to read. Must be TOX_SECRET_KEY_SIZE for a Public Key or
+ *            TOX_ADDRESS_SIZE for a Tox ID.
  */
 ToxId::ToxId(const uint8_t& rawId, int len)
 {
@@ -126,7 +132,6 @@ void ToxId::checkToxId(const QByteArray& rawId)
     }
     else if (rawId.length() == TOX_ADDRESS_SIZE
              && isToxId(rawId.toHex().toUpper()))
-
     {
         toxId = QByteArray(rawId);                  // construct from full toxid
     }
@@ -137,9 +142,9 @@ void ToxId::checkToxId(const QByteArray& rawId)
 }
 
 /**
- * @brief Compares, that public key equals.
+ * @brief Compares the equality of the Public Key.
  * @param other Tox ID to compare.
- * @return True if both Tox ID have same public keys, false otherwise.
+ * @return True if both Tox IDs have the same public keys, false otherwise.
  */
 bool ToxId::operator==(const ToxId& other) const
 {
@@ -147,9 +152,9 @@ bool ToxId::operator==(const ToxId& other) const
 }
 
 /**
- * @brief Compares, that only public key not equals.
+ * @brief Compares the inequality of the Public Key.
  * @param other Tox ID to compare.
- * @return True if both Tox ID have different public keys, false otherwise.
+ * @return True if both Tox IDs have different public keys, false otherwise.
  */
 bool ToxId::operator!=(const ToxId& other) const
 {
@@ -157,7 +162,8 @@ bool ToxId::operator!=(const ToxId& other) const
 }
 
 /**
- * @brief Returns Tox ID converted to QString.
+ * @brief Returns the Tox ID converted to QString.
+ * Is equal to getPublicKey() if the Tox ID was constructed from only a Public Key.
  * @return The Tox ID as QString.
  */
 QString ToxId::toString() const
@@ -187,11 +193,11 @@ bool ToxId::isValidToxId(const QString& id)
 
 /**
  * @brief Gets the ToxID as bytes, convenience function for toxcore interface.
- * @return The ToxID
+ * @return The ToxID as uint8_t*
  */
 const uint8_t* ToxId::getBytes() const
 {
-    return reinterpret_cast<const uint8_t*> (toxId.constData());
+    return reinterpret_cast<const uint8_t*>(toxId.constData());
 }
 
 /**
@@ -204,12 +210,12 @@ QByteArray ToxId::getPublicKey() const
 }
 
 /**
- * @brief Gets the Public Key part of the ToxID, convenience fuction for toxcore interface.
- * @return Public Key of the ToxID
+ * @brief Gets the Public Key part of the ToxID, convenience function for toxcore interface.
+ * @return Public Key of the ToxID as uint8_t*
  */
 const uint8_t* ToxId::getPublicKeyBytes() const
 {
-    return reinterpret_cast<const uint8_t*> (toxId.mid(0, TOX_PUBLIC_KEY_SIZE).constData());
+    return reinterpret_cast<const uint8_t*>(toxId.mid(0, TOX_PUBLIC_KEY_SIZE).constData());
 }
 
 /**
