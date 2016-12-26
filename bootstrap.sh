@@ -29,17 +29,20 @@ fi
 
 ################ parameters ################
 # directory where the script is located
-SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
+readonly SCRIPT_DIR=$( cd $(dirname $0); pwd -P)
 
 # directory where dependencies will be installed
-INSTALL_DIR=libs
+readonly INSTALL_DIR=libs
 
 # just for convenience
-BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
+readonly BASE_DIR="${SCRIPT_DIR}/${INSTALL_DIR}"
+
+# toxcore version to checkout
+readonly TOXCORE_VERSION="v0.1.2"
 
 # directory names of cloned repositories
-TOX_CORE_DIR=libtoxcore-latest
-SQLCIPHER_DIR=sqlcipher-stable
+readonly TOXCORE_DIR="libtoxcore-$TOXCORE_VERSION"
+readonly SQLCIPHER_DIR="sqlcipher-stable"
 
 # default values for user given parameters
 INSTALL_TOX=true
@@ -115,7 +118,7 @@ mkdir -p "${BASE_DIR}"
 
 # remove not needed dirs
 remove_build_dirs() {
-    rm -rf "${BASE_DIR}/${TOX_CORE_DIR}"
+    rm -rf "${BASE_DIR}/${TOXCORE_DIR}"
     rm -rf "${BASE_DIR}/${SQLCIPHER_DIR}"
 }
 
@@ -130,10 +133,11 @@ remove_build_dirs
 #install libtoxcore
 if [[ $INSTALL_TOX = "true" ]]; then
     git clone https://github.com/toktok/c-toxcore.git \
-        "${BASE_DIR}/${TOX_CORE_DIR}" --depth 1
+        --branch $TOXCORE_VERSION \
+        --depth 1 \
+        "${BASE_DIR}/${TOXCORE_DIR}"
 
-    pushd ${BASE_DIR}/${TOX_CORE_DIR}
-    git checkout tags/v0.1.0
+    pushd ${BASE_DIR}/${TOXCORE_DIR}
     ./autogen.sh
 
     # configure
