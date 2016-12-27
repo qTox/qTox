@@ -127,31 +127,31 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur Github. Si vous découvrez un plantage ou une faille de sécurité dans qTox, s&apos;il vous plaît reportez-la en suivant les règles décrite dans notre article wiki %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">logiciel de suivi de problèmes</translation>
+        <translation>logiciel de suivi de problèmes</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Ecrire des rapports de plantage utiles</translation>
+        <translation>Écrire des rapports de plantage utiles</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquez ici pour rapporter une erreur.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Voir une liste complète de %1 sur Github</translation>
+        <translation>Voir une liste complète de %1 sur Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contributeurs</translation>
+        <translation>contributeurs</translation>
     </message>
 </context>
 <context>
@@ -262,7 +262,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Champ de saisie pour des notes à propos du contact</translation>
     </message>
 </context>
 <context>
@@ -325,24 +325,24 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>Rejeter</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Ce Tox ID n&apos;existe pas</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>ID Tox, soit 76 caractères en hexadécimal, soit nom@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrez l&apos;ID Tox de votre ami</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Message de demande d&apos;ami</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation>Entrez un message à envoyer avec la demande d&apos;ami ou laissez vide pour envoyer le message par défaut</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -586,32 +586,40 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vous essayez d&apos;envoyer un fichier séquentiel, ce qui ne fonctionnera pas</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">absent</translation>
+        <translation>absent</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupé</translation>
+        <translation>occupé</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">hors ligne</translation>
+        <translation>hors ligne</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">connecté</translation>
+        <translation>connecté</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 est maintenant %2</translation>
+        <translation>%1 est maintenant %2</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -714,6 +722,10 @@ La désactivation de l&apos;historique de discussion laissera l&apos;historique 
     <message>
         <source>Disable chat history</source>
         <translation>Désactiver l&apos;historique des communications</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1433,11 +1445,11 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Saisie du nom</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom visible pour les contacts</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1445,79 +1457,79 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Statut visible pour les contacts</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Votre ID Tox</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sauvegarder l&apos;image du QR Code dans un fichier</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier l&apos;image du QR Code dans le presse-papier</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom d&apos;utilisateur ToxMe à exposer sur ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Biographie falcutative de ToxMe à exposer sur ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresse du service ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Visibilité sur le service ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Mot de passe</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Mettre à jour l&apos;entrée ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Renommer le profil.</translation>
+        <translation>Renommer le profil.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Supprimer le profil.</translation>
+        <translation>Supprimer le profil.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Exporter le profil</translation>
+        <translation>Exporter le profil</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le mot de passe du profil</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer le mot de passe du profil</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mon nom:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mon statut:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Mon nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Ma biographie</translation>
     </message>
 </context>
 <context>
@@ -1722,11 +1734,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le profil</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la page du profil lorsque cliqué</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1734,11 +1746,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mettez votre message de statut qui sera affiché au autres</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">État</translation>
+        <translation>État</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1746,7 +1758,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Recherche de contacts</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
@@ -1762,31 +1774,31 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la page Ajout d&apos;ami</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat de groupe</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la page de gestion du chat de groupe</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Historique des transferts de fichier</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir l&apos;historique des transferts de fichier</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Options</translation>
+        <translation>Options</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les paramètres</translation>
     </message>
 </context>
 <context>
@@ -2386,7 +2398,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmer le mot de passe</translation>
     </message>
     <message>
         <source>Confirm password input</source>
@@ -2394,11 +2406,11 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished">Champ de saisie du mot de passe</translation>
+        <translation>Champ de saisie du mot de passe</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Champ de saisie du mot de passe, au moins 6 caractères</translation>
     </message>
 </context>
 <context>
@@ -2705,31 +2717,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Your status</source>
         <translation>Votre état</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>absent</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>occupé</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>hors ligne</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>connecté</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 est maintenant %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
