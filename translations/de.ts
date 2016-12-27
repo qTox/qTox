@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
+        <translation type="unfinished">Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -103,11 +103,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation>Originalauthor</translation>
+        <translation type="unfinished">Originalauthor</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation>Du verwendest qTox Version %1.</translation>
+        <translation type="unfinished">Du verwendest die qTox-Version %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -125,7 +125,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn Du einen Bug oder eine Sicherheitslücke findest, melde ihn bitte entsprechend unseren Richtlinien, die Du in unserem Wikipedia-Artikel %2 findest.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -179,7 +179,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation></translation>
+        <translation type="unfinished">Dialog</translation>
     </message>
     <message>
         <source>username</source>
@@ -195,19 +195,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation>Verwendete Namen:</translation>
+        <translation type="unfinished">Verwendete Namen:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation>HISTORIE DER NAMEN</translation>
+        <translation type="unfinished">HISTORIE DER NAMEN</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standardordner für Dateien:</translation>
+        <translation type="unfinished">Standardspeicherort für Dateien:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation>Automatische Annahme von Dateien ist deaktiviert</translation>
+        <translation type="unfinished">Automatische Annahme von Dateien ist deaktiviert</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -215,7 +215,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation>Gesprächsverlauf löschen (kann nicht rückgängig gemacht werden!)</translation>
+        <translation type="unfinished">Gesprächsverlauf löschen (kann nicht rückgängig gemacht werden!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -223,12 +223,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation>Du kannst hier Notizen eingeben.</translation>
+        <translation type="unfinished">Du kannst hier Notizen über diesen Kontakt eintragen.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation>Speicherort angeben</translation>
+        <translation type="unfinished">Speicherort für automatisch angenommene Dateien angeben</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -244,7 +244,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Manual</source>
-        <translation>Manuell</translation>
+        <translation type="unfinished">Manuell</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -256,7 +256,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aktiviert das automatische Annahme von Dateien von diesem Kontakt</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -272,7 +272,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
+        <translation type="unfinished">Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -295,7 +295,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation>Hier ist %1! Lust dich mit mir zu unterhalten?</translation>
+        <translation type="unfinished">Hallo, hier ist %1! Lust, dich mit mir zu unterhalten?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -323,11 +323,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Du kannst dich nicht selbst als Freund hinzufügen!</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Diese Tox-ID existiert nicht</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished">Tox-ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
     </message>
@@ -341,7 +336,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Nachricht eingeben, die mit der Freundschaftsanfrage gesendet werden soll oder leer lassen um die Standardnachricht zu senden</translation>
+        <translation>Nachricht eingeben, die mit der Freundschaftsanfrage gesendet werden soll oder leer lassen, um die Standardnachricht zu senden</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -352,7 +352,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Wenn du %1 nicht weißt, was du tust, solltest du hier nichts ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
+        <translation type="unfinished">Wenn du %1 nicht weißt, was du tust, solltest du hier nichts ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
     </message>
     <message>
         <source>really</source>
@@ -372,7 +372,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation>Alle Einstellungen werden zurückgesetzt. Bist du dir sicher?</translation>
+        <translation>Alle Einstellungen werden zurückgesetzt. Bist Du dir sicher?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -385,12 +385,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Call active</source>
         <comment>popup title</comment>
-        <translation>Anruf aktiv</translation>
+        <translation type="unfinished">Anruf aktiv</translation>
     </message>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation>Du kannst dich nicht abmelden, solange ein Anruf aktiv ist!</translation>
+        <translation type="unfinished">Du kannst dich nicht abmelden, solange ein noch Anruf aktiv ist!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -398,7 +398,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Protokolle (*.log)</translation>
+        <translation type="unfinished">Protokolle (*.log)</translation>
     </message>
 </context>
 <context>
@@ -406,7 +406,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation>Wenn gesetzt, werden die Benutzerdaten im Arbeitsverzeichnis statt im üblichen Konfigurations-Verzeichnis gesichert</translation>
+        <translation type="unfinished">Wenn gesetzt, werden die Benutzerdaten im Arbeitsverzeichnis statt im üblichen Konfigurations-Verzeichnis gesichert</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -414,11 +414,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation>Einstellungen zurücksetzen</translation>
+        <translation type="unfinished">Einstellungen zurücksetzen</translation>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Portable</translation>
+        <translation type="unfinished">Portable</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -427,12 +427,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation>IPv6 aktivieren (Empfohlen)</translation>
+        <translation>IPv6 aktivieren (empfohlen)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
         <extracomment>force tcp checkbox tooltip</extracomment>
-        <translation>Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
+        <translation type="unfinished">Wenn deaktiviert, lässt sich qTox z. B. über Tor verwenden. Die Deaktivierung belastet allerdings das Tox-Netzwerk.</translation>
     </message>
     <message>
         <source>Enable UDP (recommended)</source>
@@ -612,6 +612,14 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 ist jetzt %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -715,6 +723,10 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
     <message>
         <source>Disable chat history</source>
         <translation>Verlaufsfunktion deaktivieren</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1437,7 +1449,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Namenseingabe</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
@@ -1453,15 +1465,15 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Deine Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QR-Code als Bild speichern</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">QR-Code in Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
@@ -1905,7 +1917,7 @@ Deine jetzigen Freunde bleiben erhalten, aber mit deiner alten Tox ID kann dich 
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation>Wenn aktiviert, wird der Gesprächsverlauf dauerhaft gesichert.</translation>
+        <translation type="unfinished">Wenn aktiviert, wird der Gesprächsverlauf dauerhaft gesichert.</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2709,31 +2721,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Freundschaftsanfrage konnte nicht gesendet werden</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>abwesend</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>beschäftigt</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 ist jetzt %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
