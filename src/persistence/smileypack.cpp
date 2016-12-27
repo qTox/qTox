@@ -83,7 +83,14 @@ QStringList SmileyPack::loadDefaultPaths()
     paths.append('.' + QDir::separator() + EMOTICONS_SUB_DIR);
 
     // qTox exclusive emoticons
-    for(auto qtoxPath : QStandardPaths::standardLocations(QStandardPaths::DataLocation))
+    QStandardPaths::StandardLocation location;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+    location = QStandardPaths::AppDataLocation;
+#else
+#warning "Qt < 5.4.0 has a trouble with unicode symbols in path on few systems"
+    location = QStandardPaths::DataLocation;
+#endif
+    for(auto qtoxPath : QStandardPaths::standardLocations(location))
     {
         qtoxPath += QDir::separator() + EMOTICONS_SUB_DIR;
         if(!paths.contains(qtoxPath))
