@@ -21,8 +21,13 @@
 #include "persistence/settings.h"
 #include "widget/style.h"
 
-#include <QFileInfo>
+#include <QBuffer>
+#include <QCoreApplication>
+#include <QDir>
+#include <QDomDocument>
+#include <QDomElement>
 #include <QFile>
+#include <QFileInfo>
 #include <QFont>
 #include <QFontInfo>
 #include <QIcon>
@@ -32,11 +37,11 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QBuffer>
-#include <QStringBuilder>
 #include <QStandardPaths>
+#include <QStringBuilder>
 #include <QtConcurrent/QtConcurrentRun>
 
-#define EMOTICONS_SUB_DIR (QString)"emoticons"
+#define EMOTICONS_SUB_DIR QStringLiteral("emoticons")
 
 /**
  * @class SmileyPack
@@ -64,7 +69,8 @@ SmileyPack::SmileyPack()
 {
     loadingMutex.lock();
     QtConcurrent::run(this, &SmileyPack::load, Settings::getInstance().getSmileyPack());
-    connect(&Settings::getInstance(), &Settings::smileyPackChanged, this, &SmileyPack::onSmileyPackChanged);
+    connect(&Settings::getInstance(), &Settings::smileyPackChanged,
+            this, &SmileyPack::onSmileyPackChanged);
 }
 
 /**
@@ -123,24 +129,32 @@ QList<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& pa
     for (QString path : paths)
     {
         if (path.leftRef(1) == "~")
+        {
             path.replace(0, 1, QDir::homePath());
+        }
 
         QDir dir(path);
         if (!dir.exists())
+        {
             continue;
+        }
 
         for (const QString& subdirectory : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot))
         {
             dir.cd(subdirectory);
 
             QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
-            if (entries.size() > 0) // does it contain a file called emoticons.xml?
+            // Does it contain a file called emoticons.xml?
+            if (entries.size() > 0)
             {
                 QString packageName = dir.dirName();
                 QString absPath = entries[0].absoluteFilePath();
                 if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath)))
+                {
                     smileyPacks << QPair<QString, QString>(packageName, absPath);
+                }
             }
+
             dir.cdUp();
         }
     }
@@ -212,14 +226,18 @@ bool SmileyPack::load(const QString& filename)
             cacheSmiley(file); // preload all smileys
 
             if (!getCachedSmiley(emoticon).isNull())
+            {
                 emoticonSet.push_back(emoticon);
+            }
 
             stringElement = stringElement.nextSibling().toElement();
 
         }
 
         if (emoticonSet.size() > 0)
+        {
             emoticons.push_back(emoticonSet);
+        }
     }
 
     // success!
@@ -282,12 +300,16 @@ QIcon SmileyPack::getCachedSmiley(const QString& key)
 {
     // valid key?
     if (!filenameTable.contains(key))
+    {
         return QPixmap();
+    }
 
     // cache it if needed
     QString file = filenameTable.value(key);
     if (!iconCache.contains(file))
+    {
         cacheSmiley(file);
+    }
 
     return iconCache.value(file);
 }
