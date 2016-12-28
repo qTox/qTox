@@ -238,7 +238,7 @@ and others. Instructions here: http://backports.debian.org/Instructions/
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
-libsqlcipher-dev
+libsqlcipher-dev pkg-config
 ```
 
 
