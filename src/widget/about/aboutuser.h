@@ -28,6 +28,7 @@ private slots:
     void onAutoAcceptCallClicked();
     void onSelectDirClicked();
     void onRemoveHistoryClicked();
+    void onShowQRCodeClicked();
 };
 
 #endif // ABOUTUSER_H
