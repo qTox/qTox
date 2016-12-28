@@ -232,13 +232,15 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 **Note that only Debian >=8 stable (jessie) is supported.**
 
 If you use stable, you have to add backports to your `sources.list` for FFmpeg
-and others. Instructions here: http://backports.debian.org/Instructions/
+and others. Instructions here: http://backports.debian.org/Instructions/. You
+will also need debian-multimedia if you use Debian jessie. See
+https://deb-multimedia.org/ for the apt source line.
 
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
-libsqlcipher-dev
+libsqlcipher-dev libavdevice-dev libavcodec-dev
 ```
 
 
