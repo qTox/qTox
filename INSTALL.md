@@ -28,6 +28,7 @@
     - [openSUSE](#opensuse-toxcore)
     - [Slackware](#slackware-toxcore)
     - [Ubuntu >=15.04](#ubuntu-toxcore)
+  - [FFmpeg (Debian 8)](#ffmpeg)
   - [sqlcipher](#sqlcipher)
   - [Compile toxcore](#compile-toxcore)
   - [Compile qTox](#compile-qtox)
@@ -231,15 +232,18 @@ sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 #### Debian
 **Note that only Debian >=8 stable (jessie) is supported.**
 
-If you use stable, you have to add backports to your `sources.list` for FFmpeg
-and others. Instructions here: http://backports.debian.org/Instructions/
+If you use Debian 8, you have to compile FFmpeg manually and add backports to
+your `sources.list`. Adding backports:
+http://backports.debian.org/Instructions/
 
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
-libsqlcipher-dev pkg-config
+libsqlcipher-dev pkg-config yasm
 ```
+
+**Go to [FFmpeg](#ffmpeg) section to compile it.**
 
 
 <a name="fedora-other-deps" />
@@ -296,6 +300,69 @@ libsqlcipher-dev
 ```bash
 sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
 ```
+
+### FFmpeg
+
+If you have installed FFmpeg earlier (i.e. you don't run Debian 8), skip this
+section, and go directly to installing [**toxcore**](#toxcore-dependencies).
+
+To get ffmpeg compiled and put in directory `libs`, run this script in qTox
+directory:
+
+```bash
+[ ! -e "libs" ] && mkdir libs   # create directory libs if doesn't exist
+[ ! -e "ffmpeg" ] && mkdir ffmpeg
+
+cd libs/
+export PREFIX_DIR="$PWD"
+
+cd ../ffmpeg
+wget http://ffmpeg.org/releases/ffmpeg-3.2.2.tar.bz2
+tar xf ffmpeg*
+cd ffmpeg*
+
+
+./configure --prefix="$PREFIX_DIR" \
+            --enable-shared \
+            --disable-static \
+            --disable-programs \
+            --disable-protocols \
+            --disable-doc \
+            --disable-sdl \
+            --disable-avfilter \
+            --disable-avresample \
+            --disable-filters \
+            --disable-iconv \
+            --disable-network \
+            --disable-muxers \
+            --disable-postproc \
+            --disable-swresample \
+            --disable-swscale-alpha \
+            --disable-dct \
+            --disable-dwt \
+            --disable-lsp \
+            --disable-lzo \
+            --disable-mdct \
+            --disable-rdft \
+            --disable-fft \
+            --disable-faan \
+            --disable-vaapi \
+            --disable-vdpau \
+            --disable-zlib \
+            --disable-xlib \
+            --disable-bzlib \
+            --disable-lzma \
+            --disable-encoders
+
+
+make -j$(nproc)
+make install
+
+cd ../../
+
+export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
+```
+
 
 ### toxcore dependencies
 
@@ -385,6 +452,15 @@ Run in qTox directory to compile:
 ```bash
 qmake
 make
+```
+
+If you had to compile [FFmpeg](#ffmpeg) manually, run this script from qTox
+directory before starting qTox:
+
+```bash
+cd libs/lib
+export LD_LIBRARY_PATH="$PWD"
+cd ../../
 ```
 
 Now you can start compiled qTox with `./qtox`
