@@ -859,8 +859,8 @@ void Core::setAvatar(const QByteArray& data)
 ToxId Core::getSelfId() const
 {
     uint8_t friendAddress[TOX_ADDRESS_SIZE] = {0x00};
-    tox_self_get_address(tox, friendAddress.data());
-    return ToxId(friendAddress);
+    tox_self_get_address(tox, friendAddress);
+    return ToxId(friendAddress, TOX_ADDRESS_SIZE);
 }
 
 /**

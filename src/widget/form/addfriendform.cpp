@@ -164,13 +164,13 @@ void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
 
-    if (!ToxId::isToxId(id))
+    if (!ToxId::isValidToxId(id))
     {
         ToxId toxId = Toxme::lookup(id); // Try Toxme
         if (toxId.toString().isEmpty())
         {
             GUI::showWarning(tr("Couldn't add friend"),
-                             tr("This Tox ID does not exist", "Toxme error"));
+                             tr("This Tox ID is invalid or does not exist", "Toxme error"));
             return;
         }
         id = toxId.toString();
