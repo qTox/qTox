@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished">Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
+        <translation>Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -103,7 +103,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Original author: %1</source>
-        <translation type="unfinished">Originalauthor</translation>
+        <translation>Originalauthor: %1</translation>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
@@ -125,7 +125,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished">Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn Du einen Bug oder eine Sicherheitslücke findest, melde ihn bitte entsprechend unseren Richtlinien, die Du in unserem Wikipedia-Artikel %2 findest.</translation>
+        <translation>Eine Liste von bekannten Problemen kann in unserem %1 angesehen werden. Wenn Du einen Bug oder eine Sicherheitslücke findest, melde ihn bitte entsprechend unseren Richtlinien, die Du in unserem Wiki-Artikel %2 findest.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -135,16 +135,16 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">„Writing Useful Bug Reports“ (Englisch)</translation>
+        <translation>„Writing Useful Bug Reports“ (Englisch)</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished">Hier klicken, um einen Fehler zu melden.</translation>
+        <translation>Hier klicken, um einen Fehler zu melden.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Eine komplette Liste von %1 gibt es bei Github</translation>
+        <translation>Eine komplette Liste von %1 findest du auf Github</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -187,7 +187,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">Status-Nachricht</translation>
+        <translation>Status-Nachricht</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -195,7 +195,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished">Verwendete Namen:</translation>
+        <translation>Verwendete Namen:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
@@ -203,11 +203,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished">Standardspeicherort für Dateien:</translation>
+        <translation>Standardspeicherort für Dateien:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
-        <translation type="unfinished">Automatische Annahme von Dateien ist deaktiviert</translation>
+        <translation>Automatische Annahme von Dateien ist deaktiviert</translation>
     </message>
     <message>
         <source>Auto accept files</source>
@@ -215,7 +215,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished">Gesprächsverlauf löschen (kann nicht rückgängig gemacht werden!)</translation>
+        <translation>Gesprächsverlauf löschen (kann nicht rückgängig gemacht werden!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -223,12 +223,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
-        <translation type="unfinished">Du kannst hier Notizen über diesen Kontakt eintragen.</translation>
+        <translation>Du kannst hier Notizen über diesen Kontakt eintragen.</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Speicherort für automatisch angenommene Dateien angeben</translation>
+        <translation>Speicherort für automatisch angenommene Dateien angeben</translation>
     </message>
     <message>
         <source>History removed</source>
@@ -244,7 +244,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished">Manuell</translation>
+        <translation>Manuell</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -256,7 +256,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Aktiviert das automatische Annahme von Dateien von diesem Kontakt</translation>
+        <translation>Aktiviert die automatische Annahme von Dateien von diesem Kontakt</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -272,7 +272,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
@@ -295,7 +295,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished">Hallo, hier ist %1! Lust, dich mit mir zu unterhalten?</translation>
+        <translation>Hallo, hier ist %1! Lust, dich mit mir zu unterhalten?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -324,7 +324,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished">Tox-ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
+        <translation>Tox ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
@@ -352,7 +352,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished">Wenn du %1 nicht weißt, was du tust, solltest du hier nichts ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
+        <translation>Wenn du %1 nicht weißt, was du tust, solltest du hier %2 ändern. Änderungen, die du hier machst, könnten zu Problemen mit qTox und sogar dem Verlust deiner Daten, z.B. dem Verlauf, führen.</translation>
     </message>
     <message>
         <source>really</source>
@@ -360,7 +360,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>not</source>
-        <translation>nicht</translation>
+        <translation>nichts</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
@@ -585,7 +585,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Du versuchst eine kontinuierliche Datei zu senden, das wird nicht funktionieren!</translation>
     </message>
     <message>
         <source>away</source>
@@ -1435,7 +1435,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Dienst bei dem du dich registrieren willst.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1453,15 +1453,15 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Der für Kontakte sichtbarer Name</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eingabefeld für deine Statusnachricht</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Für deine Kontakte sichtbare Statusnachricht</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1477,27 +1477,27 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Benutzername, sichtbar auf ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionale ToxMe Biografie, sichtbar auf ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Adresse des ToxMe Dienstes</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sichtbarkeit auf ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Eintrag aktualisieren</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1513,27 +1513,27 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort vom Profil entfernen</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort des Profils ändern</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mein Name:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mein Status:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Mein Benutzername</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Meine Biografie</translation>
     </message>
 </context>
 <context>
@@ -1655,15 +1655,15 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabefeld für den Benutzernamen</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabefeld für das Passwort, es kann leer bleiben (kein Passwort) oder du wählst ein mindestens 6 Zeichen langes Passwort</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Feld um das Passwort zu bestätigen</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
@@ -1747,7 +1747,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eingabefeld für deine Statusnachricht</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
