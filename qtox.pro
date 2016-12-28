@@ -114,10 +114,32 @@ contains(DEFINES, QTOX_PLATFORM_EXT) {
 # Rules for Windows, Mac OSX, and Linux
 win32 {
     RC_FILE = windows/qtox.rc
-    LIBS += -L$$PWD/libs/lib -ltoxav -ltoxcore -ltoxencryptsave -lsodium -lvpx -lpthread
-    LIBS += -L$$PWD/libs/lib -lavdevice -lavformat -lavcodec -lavutil -lswscale -lOpenAL32 -lopus
-    LIBS += -lqrencode -lsqlcipher -lcrypto
-    LIBS += -lopengl32 -lole32 -loleaut32 -lvfw32 -lws2_32 -liphlpapi -lgdi32 -lshlwapi -luuid
+    LIBS += -L$$PWD/libs/lib \
+            -ltoxav \
+            -ltoxcore \
+            -ltoxencryptsave \
+            -lsodium \
+            -lvpx \
+            -lpthread \
+            -lavdevice \
+            -lavformat \
+            -lavcodec \
+            -lavutil \
+            -lswscale \
+            -lOpenAL32 \
+            -lopus \
+            -lqrencode \
+            -lsqlcipher \
+            -lcrypto \
+            -lopengl32 \
+            -lole32 \
+            -loleaut32 \
+            -lvfw32 \
+            -lws2_32 \
+            -liphlpapi \
+            -lgdi32 \
+            -lshlwapi \
+            -luuid
     LIBS += -lstrmiids # For DirectShow
 } else {
     macx {
@@ -125,13 +147,35 @@ win32 {
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
-        LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia -framework ApplicationServices
-        LIBS += -lqrencode -lsqlcipher
-        contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
-        #Files to be includes into the qTox.app/Contents/Resources folder
-        #OSX-Migrater.sh part of migrateProfiles() compatabilty code
-        APP_RESOURCE.files = img/icons/qtox_profile.icns OSX-Migrater.sh
+        LIBS += -L$$PWD/libs/lib/ \
+                -ltoxcore \
+                -ltoxav \
+                -ltoxencryptsave \
+                -lsodium \
+                -lvpx \
+                -lopus \
+                -framework OpenAL \
+                -lavformat \
+                -lavdevice \
+                -lavcodec \
+                -lavutil \
+                -lswscale \
+                -mmacosx-version-min=10.7 \
+                -framework AVFoundation \
+                -framework Foundation \
+                -framework CoreMedia \
+                -framework ApplicationServices \
+                -lqrencode \
+                -lsqlcipher
+        contains(DEFINES, QTOX_PLATFORM_EXT) {
+            LIBS += -framework IOKit \
+                    -framework CoreFoundation
+        }
+
+        # Files to be includes into the qTox.app/Contents/Resources folder
+        # OSX-Migrater.sh part of migrateProfiles() compatabilty code
+        APP_RESOURCE.files = img/icons/qtox_profile.icns \
+                             OSX-Migrater.sh
         APP_RESOURCE.path = Contents/Resources
         QMAKE_BUNDLE_DATA += APP_RESOURCE
         #Dynamic versioning for Info.plist
@@ -162,25 +206,89 @@ win32 {
         icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
         INSTALLS += icon_scalable
 
-        # If we're building a package, static link libtox[core,av] and libsodium, since they are not provided by any package
+        # If we're building a package, static link libtox[core,av] and
+        # libsodium, since they are not provided by any package
         contains(STATICPKG, YES) {
-            LIBS += -L$$PWD/libs/lib/ -lopus -lvpx -lopenal -Wl,-Bstatic -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lavformat -lavdevice -lavcodec -lavutil -lswscale -lz -Wl,-Bdynamic
-            LIBS += -Wl,-Bstatic -ljpeg -ltiff -lpng -ljasper -lIlmImf -lIlmThread -lIex -ldc1394 -lraw1394 -lHalf -lz -llzma -ljbig
-            LIBS += -Wl,-Bdynamic -lv4l1 -lv4l2 -lavformat -lavcodec -lavutil -lswscale -lusb-1.0
-            LIBS += -lqrencode -lsqlcipher
+            LIBS += -L$$PWD/libs/lib/ \
+                    -lopus \
+                    -lvpx \
+                    -lopenal \
+                    -Wl,-Bstatic \
+                    -ltoxcore \
+                    -ltoxav \
+                    -ltoxencryptsave \
+                    -lsodium \
+                    -lavformat \
+                    -lavdevice \
+                    -lavcodec \
+                    -lavutil \
+                    -lswscale \
+                    -lz \
+                    -ljpeg \
+                    -ltiff \
+                    -lpng \
+                    -ljasper \
+                    -lIlmImf \
+                    -lIlmThread \
+                    -lIex \
+                    -ldc1394 \
+                    -lraw1394 \
+                    -lHalf \
+                    -llzma \
+                    -ljbig \
+                    -Wl,-Bdynamic \
+                    -lv4l1 \
+                    -lv4l2 \
+                    -lavformat \
+                    -lavcodec \
+                    -lavutil \
+                    -lswscale \
+                    -lusb-1.0 \
+                    -lqrencode \
+                    -lsqlcipher
         } else {
-            LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lvpx -lsodium -lopenal -lavformat -lavdevice -lavcodec -lavutil -lswscale
-            LIBS += -lqrencode -lsqlcipher
+            LIBS += -L$$PWD/libs/lib/ \
+                    -ltoxcore \
+                    -ltoxav \
+                    -ltoxencryptsave \
+                    -lvpx \
+                    -lsodium \
+                    -lopenal \
+                    -lavformat \
+                    -lavdevice \
+                    -lavcodec \
+                    -lavutil \
+                    -lswscale \
+                    -lqrencode \
+                    -lsqlcipher
         }
 
         contains(DEFINES, QTOX_PLATFORM_EXT) {
-            LIBS += -lX11 -lXss
+            LIBS += -lX11 \
+                    -lXss
         }
 
         contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a ./libs/lib/libvpx.a ./libs/lib/libopus.a ./libs/lib/libtoxencryptsave.a ./libs/lib/libtoxcore.a ./libs/lib/libopenal.a ./libs/lib/libsodium.a ./libs/lib/libavdevice.a ./libs/lib/libavformat.a ./libs/lib/libavcodec.a ./libs/lib/libavutil.a ./libs/lib/libswscale.a ./libs/lib/libqrencode.a -ldl -lX11 -lXss
+            LIBS = ./libs/lib/libtoxav.a \
+                   ./libs/lib/libvpx.a \
+                   ./libs/lib/libopus.a \
+                   ./libs/lib/libtoxencryptsave.a \
+                   ./libs/lib/libtoxcore.a \
+                   ./libs/lib/libopenal.a \
+                   ./libs/lib/libsodium.a \
+                   ./libs/lib/libavdevice.a \
+                   ./libs/lib/libavformat.a \
+                   ./libs/lib/libavcodec.a \
+                   ./libs/lib/libavutil.a \
+                   ./libs/lib/libswscale.a \
+                   ./libs/lib/libqrencode.a \
+                   -ldl \
+                   -lX11 \
+                   -lXss
             contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-                LIBS += -lgobject-2.0 -lappindicator -lgtk-x11-2.0
+                LIBS += -lgobject-2.0 \
+                        -lappindicator \
+                        -lgtk-x11-2.0
             }
             LIBS += -s
         }
