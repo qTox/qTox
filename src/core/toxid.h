@@ -30,15 +30,16 @@ public:
     ToxId(const ToxId& other);
     explicit ToxId(const QString& id);
     explicit ToxId(const QByteArray& rawId);
-    explicit ToxId(const uint8_t& rawId, int len);
+    explicit ToxId(const uint8_t* rawId, int len);
 
     bool operator==(const ToxId& other) const;
     bool operator!=(const ToxId& other) const;
     QString toString() const;
     void clear();
+    bool isValid();
 
-    static bool isToxId(const QString& id);
-    static bool isValidToxId(const QString &id);
+    static bool isValidToxId(const QString& id);
+    static bool isToxId(const QString &id);
     const uint8_t* getBytes() const;
     QByteArray getToxId() const;
     QByteArray getPublicKey() const;
@@ -48,6 +49,9 @@ public:
 
 private:
     void checkToxId(const QByteArray& rawId);
+
+public:
+    static const QRegularExpression ToxIdRegEx;
 
 private:
     QByteArray toxId;

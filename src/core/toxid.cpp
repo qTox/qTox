@@ -35,6 +35,8 @@
 #define CHECKSUM_HEX_CHARS          (2*CHECKSUM_BYTES)
 #define TOXID_HEX_CHARS             (2*TOX_ADDRESS_SIZE)
 
+const QRegularExpression ToxId::ToxIdRegEx = QRegularExpression(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(TOXID_HEX_CHARS));
+
 /**
  * @class ToxId
  * @brief This class represents a Tox ID.
@@ -56,7 +58,7 @@
  * @brief The default constructor. Creates an empty Tox ID.
  */
 ToxId::ToxId()
-: toxId()
+: toxId(TOX_ADDRESS_SIZE, 0x00)
 {}
 
 /**
@@ -117,7 +119,7 @@ ToxId::ToxId(const QByteArray& rawId)
  * @param len Number of bytes to read. Must be TOX_SECRET_KEY_SIZE for a Public Key or
  *            TOX_ADDRESS_SIZE for a Tox ID.
  */
-ToxId::ToxId(const uint8_t& rawId, int len)
+ToxId::ToxId(const uint8_t* rawId, int len)
 {
     QByteArray tmpId(reinterpret_cast<const char *>(rawId), len);
     checkToxId(tmpId);
@@ -180,18 +182,6 @@ void ToxId::clear()
 }
 
 /**
- * @brief Check, that id is probably a valid Tox ID.
- * @param id Tox ID to check.
- * @return True if the string can be a ToxID, false otherwise.
- * @note Doesn't validate checksum.
- */
-bool ToxId::isValidToxId(const QString& id)
-{
-    const QRegularExpression hexRegExp("^[A-Fa-f0-9]+$");
-    return id.length() == TOXID_HEX_CHARS && id.contains(hexRegExp);
-}
-
-/**
  * @brief Gets the ToxID as bytes, convenience function for toxcore interface.
  * @return The ToxID as uint8_t*
  */
@@ -245,27 +235,49 @@ QString ToxId::getNoSpamString() const
  * @brief Check, that id is a valid Tox ID.
  * @param id Tox ID to check.
  * @return True if id is a valid Tox ID, false otherwise.
+ * @note Validates the checksum.
+ */
+bool ToxId::isValidToxId(const QString& id)
+{
+    if (!isToxId(id))
+    {
+        return false;
+    }
+    return ToxId(id).isValid();
+}
+
+/**
+ * @brief Check, that id is probably a valid Tox ID.
+ * @param id Tox ID to check.
+ * @return True if the string can be a ToxID, false otherwise.
+ * @note Doesn't validate checksum.
  */
 bool ToxId::isToxId(const QString& id)
 {
-    if (!isValidToxId(id))
+    return id.length() == TOXID_HEX_CHARS && id.contains(ToxIdRegEx);
+}
+
+/**
+ * @brief Check it it's a valid Tox ID by verifying the checksum
+ * @return True if it is a valid Tox ID, false otherwise.
+ */
+bool ToxId::isValid()
+{
+    if(toxId.length() != TOX_ADDRESS_SIZE)
     {
         return false;
     }
 
-    uint32_t size = PUBLIC_KEY_HEX_CHARS + NOSPAM_HEX_CHARS;
-    QString publicKeyStr = id.left(size);
-    QString checksumStr = id.right(CHECKSUM_HEX_CHARS);
+    const int size = TOX_PUBLIC_KEY_SIZE + NOSPAM_BYTES;
 
-    QByteArray publicKey = QByteArray::fromHex(publicKeyStr.toLatin1());
-    QByteArray checksum = QByteArray::fromHex(checksumStr.toLatin1());
-    uint8_t check[2] = {0};
+    QByteArray data = toxId.left(size);
+    QByteArray checksum = toxId.right(CHECKSUM_BYTES);
+    QByteArray calculated(CHECKSUM_BYTES, 0x00);
 
-    for (uint32_t i = 0; i < size / 2; i++)
+    for (int i = 0; i < size; i++)
     {
-        check[i % 2] ^= publicKey.data()[i];
+        calculated[i % 2] = calculated[i % 2] ^ data[i];
     }
 
-    QByteArray caclulated(reinterpret_cast<char*>(check), 2);
-    return caclulated == checksum;
- }
+    return calculated == checksum;
+}
