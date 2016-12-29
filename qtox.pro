@@ -405,7 +405,6 @@ HEADERS  += \
     src/chatlog/customtextdocument.h \
     src/chatlog/documentcache.h \
     src/chatlog/pixmapcache.h \
-    src/core/cdata.h \
     src/core/core.h \
     src/core/coreav.h \
     src/core/coredefines.h \
