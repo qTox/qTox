@@ -20,5 +20,13 @@
 # release build
 # 
 # should be run only when a new tag is pushed
-git push --force "https://${GH_DEPLOY_JENKINS}@github.com/qTox/qTox.git" \
-    $(git describe --abbrev=0):for-jenkins-release
+
+set -eu -o pipefail
+
+main() {
+    git clone https://github.com/qTox/qTox.git qTox
+    cd qTox
+    git checkout $(git describe --abbrev=0) -b for-jenkins-release
+    git push --force "https://${GH_DEPLOY_JENKINS}@github.com/qTox/qTox.git"
+}
+main
