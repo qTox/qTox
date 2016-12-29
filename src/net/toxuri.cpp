@@ -64,8 +64,8 @@ bool handleToxURI(const QString &toxURI)
 
     QString toxaddr = toxURI.mid(4);
 
-    QString toxId = Toxme::lookup(toxaddr).toString();
-    if (toxId.isEmpty())
+    ToxId toxId = Toxme::lookup(toxaddr);
+    if (!toxId.isValid())
     {
         QMessageBox::warning(0, "qTox",
                              ToxURIDialog::tr("%1 is not a valid Toxme address.")

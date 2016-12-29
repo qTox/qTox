@@ -19,16 +19,16 @@ ToxPk::ToxPk()
 
 /**
  * @brief The copy constructor.
- * @param other ToxKey to copy
+ * @param other ToxPk to copy
  */
 ToxPk::ToxPk(const ToxPk& other)
 : key(other.key)
 {}
 
 /**
- * @brief Constructs a ToxKey from bytes.
- * @param rawId The bytes to construct the ToxKey from. The lenght must be exactly
- *              TOX_PUBLIC_KEY_SIZE, else the ToxKey will be empty.
+ * @brief Constructs a ToxPk from bytes.
+ * @param rawId The bytes to construct the ToxPk from. The lenght must be exactly
+ *              TOX_PUBLIC_KEY_SIZE, else the ToxPk will be empty.
  */
 ToxPk::ToxPk(const QByteArray& rawId)
 {
@@ -53,9 +53,9 @@ ToxPk::ToxPk(const uint8_t* rawId)
 }
 
 /**
- * @brief Compares the equality of the ToxKey.
- * @param other ToxKey to compare.
- * @return True if both ToxKeys are equal, false otherwise.
+ * @brief Compares the equality of the ToxPk.
+ * @param other ToxPk to compare.
+ * @return True if both ToxPks are equal, false otherwise.
  */
 bool ToxPk::operator==(const ToxPk& other) const
 {
@@ -63,9 +63,9 @@ bool ToxPk::operator==(const ToxPk& other) const
 }
 
 /**
- * @brief Compares the inequality of the ToxKey.
- * @param other ToxKey to compare.
- * @return True if both ToxKeys are not equal, false otherwise.
+ * @brief Compares the inequality of the ToxPk.
+ * @param other ToxPk to compare.
+ * @return True if both ToxPks are not equal, false otherwise.
  */
 bool ToxPk::operator!=(const ToxPk& other) const
 {
@@ -73,7 +73,7 @@ bool ToxPk::operator!=(const ToxPk& other) const
 }
 
 /**
- * @brief Converts the ToxKey to a uppercase hex string.
+ * @brief Converts the ToxPk to a uppercase hex string.
  * @return QString containing the hex representation of the key
  */
 QString ToxPk::toString() const
@@ -84,7 +84,7 @@ QString ToxPk::toString() const
 /**
  * @brief Returns a pointer to the raw key data.
  * @return Pointer to the raw key data, which is exactly TOX_PUBLIC_KEY_SIZE bytes
- *         long. Returns a nullptr if the ToxKey is empty.
+ *         long. Returns a nullptr if the ToxPk is empty.
  */
 const uint8_t* ToxPk::getBytes() const
 {
@@ -97,7 +97,16 @@ const uint8_t* ToxPk::getBytes() const
 }
 
 /**
- * @brief Checks if the ToxKey contains a key.
+ * @brief Get a copy of the key
+ * @return Copied key bytes
+ */
+QByteArray ToxPk::getKey() const
+{
+    return QByteArray(key); // TODO: Is a copy really necessary?
+}
+
+/**
+ * @brief Checks if the ToxPk contains a key.
  * @return True if there is a key, False otherwise.
  */
 bool ToxPk::isEmpty() const

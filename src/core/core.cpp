@@ -276,8 +276,8 @@ void Core::start()
     if (!msg.isEmpty())
         emit statusMessageSet(msg);
 
-    QString id = getSelfId().toString();
-    if (!id.isEmpty())
+    ToxId id = getSelfId();
+    if (id.isValid())       // TODO: probably useless check, comes basically directly from toxcore
         emit idSet(id);
 
     // TODO: This is a backwards compatibility check,
@@ -424,9 +424,10 @@ void Core::bootstrapDht()
                     +':'+QString().setNum(dhtServer.port)+" ("+dhtServer.name+')';
 
         QByteArray address = dhtServer.address.toLatin1();
-        QByteArray pk = ToxId{dhtServer.userId}.getPublicKey();
+        // TODO: constucting the pk via ToxId is a workaround
+        ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
 
-        const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.constData());
+        const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.getBytes());
 
         if (!tox_bootstrap(tox, address.constData(), dhtServer.port, pkPtr, nullptr))
         {
@@ -446,7 +447,7 @@ void Core::bootstrapDht()
 void Core::onFriendRequest(Tox*/* tox*/, const uint8_t* cFriendPk,
                            const uint8_t* cMessage, size_t cMessageSize, void* core)
 {
-    QString friendPk = ToxId(cFriendPk, TOX_PUBLIC_KEY_SIZE).getPublicKeyString();
+    ToxPk friendPk(cFriendPk);
     emit static_cast<Core*>(core)->friendRequestReceived(friendPk, CString::toString(cMessage, cMessageSize));
 }
 
@@ -556,67 +557,73 @@ void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void
     emit static_cast<Core*>(core)->receiptRecieved(friendId, receipt);
 }
 
-void Core::acceptFriendRequest(const QString& userId)
+void Core::acceptFriendRequest(const ToxPk& friendPk)
 {
-    uint32_t friendId = tox_friend_add_norequest(tox, ToxId(userId).getPublicKeyBytes(), nullptr);
+    // TODO: error handling
+    uint32_t friendId = tox_friend_add_norequest(tox, friendPk.getBytes(), nullptr);
     if (friendId == std::numeric_limits<uint32_t>::max())
     {
-        emit failedToAddFriend(userId);
+        emit failedToAddFriend(friendPk);
     }
     else
     {
         profile.saveToxSave();
-        emit friendAdded(friendId, userId);
+        emit friendAdded(friendId, friendPk);
         emit friendshipChanged(friendId);
     }
 }
 
-void Core::requestFriendship(const QString& friendAddress, const QString& message)
+void Core::requestFriendship(const ToxId& friendAddress, const QString& message)
 {
-    ToxId friendToxId(friendAddress);
-    const QString userId = friendAddress.mid(0, TOX_PUBLIC_KEY_SIZE * 2);
+    ToxPk friendPk = friendAddress.getPublicKey();
 
-    if (!friendToxId.isValid())
+    if (!friendAddress.isValid())
     {
-        emit failedToAddFriend(userId,
+        emit failedToAddFriend(friendPk,
                                tr("Invalid Tox ID"));
     }
     else if (message.isEmpty())
     {
-        emit failedToAddFriend(userId, tr("You need to write a message with your request"));
+        emit failedToAddFriend(friendPk,
+                               tr("You need to write a message with your request"));
     }
     else if (message.size() > TOX_MAX_FRIEND_REQUEST_LENGTH)
     {
-        emit failedToAddFriend(userId, tr("Your message is too long!"));
+        emit failedToAddFriend(friendPk,
+                               tr("Your message is too long!"));
     }
-    else if (hasFriendWithAddress(userId))
+    else if (hasFriendWithPublicKey(friendPk))
     {
-        emit failedToAddFriend(userId, tr("Friend is already added"));
+        emit failedToAddFriend(friendPk,
+                               tr("Friend is already added"));
     }
     else
     {
         CString cMessage(message);
 
-        uint32_t friendId = tox_friend_add(tox, ToxId(friendAddress).getBytes(),
+        uint32_t friendId = tox_friend_add(tox, friendAddress.getBytes(),
                                       cMessage.data(), cMessage.size(), nullptr);
         if (friendId == std::numeric_limits<uint32_t>::max())
         {
             qDebug() << "Failed to request friendship";
-            emit failedToAddFriend(userId);
+            emit failedToAddFriend(friendPk);
         }
         else
         {
-            qDebug() << "Requested friendship of "<<friendId;
+            qDebug() << "Requested friendship of " << friendId;
             // Update our friendAddresses
-            Settings::getInstance().updateFriendAddress(userId);
+            Settings::getInstance().updateFriendAddress(friendAddress.toString());
+
+            // TODO: start: this really shouldn't be in Core
             QString inviteStr = tr("/me offers friendship.");
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);
 
             Profile* profile = Nexus::getProfile();
             if (profile->isHistoryEnabled())
-                profile->getHistory()->addNewMessage(userId, inviteStr, getSelfId().getPublicKeyString(), QDateTime::currentDateTime(), true, QString());
-            emit friendAdded(friendId, userId);
+                profile->getHistory()->addNewMessage(friendAddress.toString(), inviteStr, getSelfId().getPublicKey().toString(), QDateTime::currentDateTime(), true, QString());
+            // TODO: end
+            emit friendAdded(friendId, friendAddress.getPublicKey());
             emit friendshipChanged(friendId);
         }
     }
@@ -847,7 +854,7 @@ void Core::setAvatar(const QByteArray& data)
     {
         QPixmap pic;
         pic.loadFromData(data);
-        profile.saveAvatar(data, getSelfId().getPublicKeyString());
+        profile.saveAvatar(data, getSelfId().getPublicKey().toString());
         emit selfAvatarChanged(pic);
     }
     else
@@ -997,7 +1004,7 @@ void Core::loadFriends()
         {
             if (tox_friend_get_public_key(tox, ids[i], friendPk, nullptr))
             {
-                emit friendAdded(ids[i], ToxId(friendPk, TOX_PUBLIC_KEY_SIZE).getPublicKeyString());
+                emit friendAdded(ids[i], ToxPk(friendPk));
 
                 const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
                 if (nameSize && nameSize != SIZE_MAX)
@@ -1108,7 +1115,7 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
 /**
  * @brief Get the public key of a peer of a group
  */
-ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
+ToxPk Core::getGroupPeerKey(int groupId, int peerId) const
 {
     uint8_t friendPk[TOX_PUBLIC_KEY_SIZE] = {0x00};
     TOX_ERR_CONFERENCE_PEER_QUERY error;
@@ -1116,10 +1123,10 @@ ToxId Core::getGroupPeerToxId(int groupId, int peerId) const
     if (!parsePeerQueryError(error) || !success)
     {
         qWarning() << "getGroupPeerToxId: Unknown error";
-        return ToxId();
+        return ToxPk();
     }
 
-    return ToxId(friendPk, TOX_PUBLIC_KEY_SIZE);
+    return ToxPk(friendPk);
 }
 
 /**
@@ -1325,82 +1332,35 @@ bool Core::isFriendOnline(uint32_t friendId) const
 }
 
 /**
- * @brief Checks if we have a friend by address
- */
-bool Core::hasFriendWithAddress(const QString &addr) const
-{
-    // Valid length check
-    if (addr.length() != (TOX_ADDRESS_SIZE * 2))
-    {
-        return false;
-    }
-
-    QString pubkey = addr.left(TOX_PUBLIC_KEY_SIZE * 2);
-    return hasFriendWithPublicKey(pubkey);
-}
-
-/**
  * @brief Checks if we have a friend by public key
  */
-bool Core::hasFriendWithPublicKey(const QString &pubkey) const
+bool Core::hasFriendWithPublicKey(const ToxPk &publicKey) const
 {
-    // Valid length check
-    if (pubkey.length() != (TOX_PUBLIC_KEY_SIZE * 2))
-        return false;
-
-    bool found = false;
-    const size_t friendCount = tox_self_get_friend_list_size(tox);
-    if (friendCount > 0)
+    // Validity check
+    if (publicKey.isEmpty())
     {
-        uint32_t *ids = new uint32_t[friendCount];
-        tox_self_get_friend_list(tox, ids);
-        for (int32_t i = 0; i < static_cast<int32_t>(friendCount); ++i)
-        {
-            // getFriendAddress may return either id (public key) or address
-            QString addrOrId = getFriendAddress(ids[i]);
-
-            // Set true if found
-            if (addrOrId.toUpper().startsWith(pubkey.toUpper()))
-            {
-                found = true;
-                break;
-            }
-        }
-
-        delete[] ids;
+        return false;
     }
 
-    return found;
-}
+    // TODO: error handling
+    uint32_t  friendId = tox_friend_by_public_key(tox, publicKey.getBytes(), nullptr);
 
-/**
- * @brief Get the full address if known, or public key of a friend
- */
-QString Core::getFriendAddress(uint32_t friendNumber) const
-{
-    QString id = getFriendPublicKey(friendNumber);
-    QString addr = Settings::getInstance().getFriendAddress(id);
-    if (addr.size() > id.size())
-        return addr;
-
-    return id;
+    return friendId != std::numeric_limits<uint32_t>::max();
 }
 
 /**
  * @brief Get the public key part of the ToxID only
  */
-QString Core::getFriendPublicKey(uint32_t friendNumber) const
+ToxPk Core::getFriendPublicKey(uint32_t friendNumber) const
 {
     uint8_t rawid[TOX_PUBLIC_KEY_SIZE];
     if (!tox_friend_get_public_key(tox, friendNumber, rawid, nullptr))
     {
         qWarning() << "getFriendPublicKey: Getting public key failed";
-        return QString();
+        return ToxPk();
     }
-    QByteArray data((char*)rawid, TOX_PUBLIC_KEY_SIZE);
-    QString id = data.toHex().toUpper();
 
-    return id;
+    return ToxPk(rawid);
 }
 
 /**
@@ -1450,7 +1410,7 @@ QList<CString> Core::splitMessage(const QString &message, int maxLen)
     return splittedMsgs;
 }
 
-QString Core::getPeerName(const ToxId& id) const
+QString Core::getPeerName(const ToxPk& id) const
 {
     QString name;
     uint32_t friendId = tox_friend_by_public_key(tox, id.getBytes(), nullptr);
@@ -1487,11 +1447,12 @@ bool Core::isReady() const
 
 void Core::setNospam(uint32_t nospam)
 {
+    // TODO: make this endian independent
     uint8_t *nspm = reinterpret_cast<uint8_t*>(&nospam);
     std::reverse(nspm, nspm + 4);
     tox_self_set_nospam(tox, nospam);
 
-    emit idSet(getSelfId().toString());
+    emit idSet(getSelfId());
 }
 
 /**

@@ -163,26 +163,26 @@ void AddFriendForm::onUsernameSet(const QString& username)
 void AddFriendForm::onSendTriggered()
 {
     QString id = toxId.text().trimmed();
+    ToxId toxId;
 
     if (!ToxId::isValidToxId(id))
     {
-        ToxId toxId = Toxme::lookup(id); // Try Toxme
-        if (toxId.toString().isEmpty())
+        toxId = Toxme::lookup(id); // Try Toxme
+        if (!toxId.isValid())
         {
             GUI::showWarning(tr("Couldn't add friend"),
                              tr("This Tox ID is invalid or does not exist", "Toxme error"));
             return;
         }
-        id = toxId.toString();
     }
 
-    deleteFriendRequest(id);
-    if (id.toUpper() == Core::getInstance()->getSelfId().toString().toUpper())
+    deleteFriendRequest(toxId);
+    if (toxId == Core::getInstance()->getSelfId())
         GUI::showWarning(tr("Couldn't add friend"),
                          tr("You can't add yourself as a friend!",
                             "When trying to add your own Tox ID as friend"));
     else
-        emit friendRequested(id, getMessage());
+        emit friendRequested(toxId, getMessage());
 
     this->toxId.clear();
     this->message.clear();
@@ -231,13 +231,13 @@ void AddFriendForm::setIdFromClipboard()
     }
 }
 
-void AddFriendForm::deleteFriendRequest(const QString& toxId)
+void AddFriendForm::deleteFriendRequest(const ToxId& toxId)
 {
     int size = Settings::getInstance().getFriendRequestSize();
     for (int i = 0; i < size; ++i)
     {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
-        if (ToxId(toxId) == ToxId(request.address))
+        if (toxId == ToxId(request.address))
         {
             Settings::getInstance().removeFriendRequest(i);
             return;
@@ -252,7 +252,7 @@ void AddFriendForm::onFriendRequestAccepted()
     int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
     Settings::Request request = Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
-    emit friendRequestAccepted(request.address);
+    emit friendRequestAccepted(ToxId(request.address).getPublicKey());
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
 }
