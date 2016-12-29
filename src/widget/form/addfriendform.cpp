@@ -225,7 +225,7 @@ void AddFriendForm::setIdFromClipboard()
     const Core* core = Core::getInstance();
     if (core->isReady() && !id.isEmpty()
             && ToxId::isToxId(id)
-            && ToxId(id) == core->getSelfId())
+            && ToxId(id) != core->getSelfId())
     {
         toxId.setText(id);
     }
