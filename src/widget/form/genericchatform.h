@@ -62,11 +62,11 @@ public:
     virtual void show() final{}
     virtual void show(ContentLayout* contentLayout);
 
-    ChatMessage::Ptr addMessage(const ToxId& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addMessage(const ToxPk& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
     ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
 
     void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
-    void addAlertMessage(const ToxId& author, QString message, QDateTime datetime);
+    void addAlertMessage(const ToxPk& author, QString message, QDateTime datetime);
     bool isEmpty();
 
     ChatLog* getChatLog() const;
@@ -104,7 +104,7 @@ protected:
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
-    QString resolveToxId(const ToxId &id);
+    QString resolveToxId(const ToxPk &id);
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;
@@ -115,7 +115,7 @@ protected:
 
 protected:
     QAction* saveChatAction, *clearAction, *quoteAction, *copyLinkAction;
-    ToxId previousId;
+    ToxPk previousId;
     QDateTime prevMsgDateTime;
     Widget *parent;
     QMenu menu;

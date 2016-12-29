@@ -248,14 +248,14 @@ void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
     profilePicture->setPixmap(pic);
 }
 
-void ProfileForm::setToxId(const QString& id)
+void ProfileForm::setToxId(const ToxId& id)
 {
-    toxId->setText(id);
+    toxId->setText(id.toString());
     toxId->setCursorPosition(0);
 
     delete qr;
     qr = new QRWidget();
-    qr->setQRData("tox:"+id);
+    qr->setQRData("tox:"+id.toString());
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 

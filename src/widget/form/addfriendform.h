@@ -20,6 +20,8 @@
 #ifndef ADDFRIENDFORM_H
 #define ADDFRIENDFORM_H
 
+#include "src/core/toxid.h"
+
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
@@ -55,8 +57,8 @@ public:
     bool addFriendRequest(const QString& friendAddress, const QString& message);
 
 signals:
-    void friendRequested(const QString& friendAddress, const QString& message);
-    void friendRequestAccepted(const QString& friendAddress);
+    void friendRequested(const ToxId& friendAddress, const QString& message);
+    void friendRequestAccepted(const ToxPk& friendAddress);
     void friendRequestsSeen();
 
 public slots:
@@ -75,7 +77,7 @@ private:
     void removeFriendRequestWidget(QWidget *friendWidget);
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
-    void deleteFriendRequest(const QString &toxId);
+    void deleteFriendRequest(const ToxId& toxId);
     void setIdFromClipboard();
 
 private:

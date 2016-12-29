@@ -27,7 +27,9 @@
 #include <QFileInfo>
 
 #include "genericchatitemwidget.h"
+
 #include "src/core/corestructs.h"
+#include "src/core/toxid.h"
 
 #define PIXELS_TO_ACT 7
 
@@ -121,18 +123,18 @@ public slots:
     void onStatusSet(Status status);
     void onFailedToStartCore();
     void onBadProxyCore();
-    void onSelfAvatarLoaded(const QPixmap &pic);
+    void onSelfAvatarLoaded(const QPixmap& pic);
     void setUsername(const QString& username);
     void setStatusMessage(const QString &statusMessage);
-    void addFriend(int friendId, const QString& userId);
-    void addFriendFailed(const QString& userId, const QString& errorInfo = QString());
+    void addFriend(int friendId, const ToxPk& friendPk);
+    void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
     void onFriendshipChanged(int friendId);
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
     void onFriendDisplayChanged(FriendWidget* friendWidget, Status s);
     void onFriendMessageReceived(int friendId, const QString& message, bool isAction);
-    void onFriendRequestReceived(const QString& userId, const QString& message);
+    void onFriendRequestReceived(const ToxPk& friendPk, const QString& message);
     void updateFriendActivity(Friend* frnd);
     void onMessageSendResult(uint32_t friendId, const QString& message, int messageId);
     void onReceiptRecieved(int friendId, int receipt);
@@ -151,8 +153,8 @@ public slots:
     void onGroupDialogShown(Group* g);
 
 signals:
-    void friendRequestAccepted(const QString& userId);
-    void friendRequested(const QString& friendAddress, const QString& message);
+    void friendRequestAccepted(const ToxPk& friendPk);
+    void friendRequested(const ToxId& friendAddress, const QString& message);
     void statusSet(Status status);
     void statusSelected(Status status);
     void usernameChanged(const QString& username);
@@ -221,7 +223,7 @@ private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
     void setActiveToolMenuButton(ActiveToolMenuButton newActiveButton);
     void hideMainForms(GenericChatroomWidget* chatroomWidget);
-    Group *createGroup(int groupId);
+    Group* createGroup(int groupId);
     void removeFriend(Friend* f, bool fake = false);
     void removeGroup(Group* g, bool fake = false);
     void saveWindowGeometry();

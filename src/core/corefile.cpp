@@ -52,7 +52,7 @@ unsigned CoreFile::corefileIterationInterval()
     /*
        Sleep at most 1000ms if we have no FT, 10 for user FTs
        There is no real difference between 10ms sleep and 50ms sleep when it
-       comes to CPU usage – just keep the CPU usage low when there are no file
+       comes to CPU usage – just keep the CPU usage low when there are no file
        transfers, and speed things up when there is an ongoing file transfer.
     */
     constexpr unsigned fileInterval =   10,
@@ -311,7 +311,8 @@ void CoreFile::onFileReceiveCallback(Tox*, uint32_t friendId, uint32_t fileId,
 
     if (kind == TOX_FILE_KIND_AVATAR)
     {
-        QString friendAddr = core->getFriendPublicKey(friendId);
+        // TODO: port this to ToxPk
+        QString friendAddr = core->getFriendPublicKey(friendId).toString();
         if (!filesize)
         {
             qDebug() << QString("Received empty avatar request %1:%2").arg(friendId).arg(fileId);
@@ -482,7 +483,7 @@ void CoreFile::onFileRecvChunkCallback(Tox *tox, uint32_t friendId,
             if (!pic.isNull())
             {
                 qDebug() << "Got"<<file->avatarData.size()<<"bytes of avatar data from" <<friendId;
-                core->profile.saveAvatar(file->avatarData, core->getFriendPublicKey(friendId));
+                core->profile.saveAvatar(file->avatarData, core->getFriendPublicKey(friendId).toString());
                 emit core->friendAvatarChanged(friendId, pic);
             }
         }

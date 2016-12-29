@@ -48,16 +48,16 @@ Group::~Group()
 
 void Group::updatePeer(int peerId, QString name)
 {
-    ToxId id = Core::getInstance()->getGroupPeerToxId(groupId, peerId);
-    QString toxid = id.getPublicKey();
+    ToxPk peerKey = Core::getInstance()->getGroupPeerPk(groupId, peerId);
+    QByteArray peerPk = peerKey.getKey();
     peers[peerId] = name;
-    toxids[toxid] = name;
+    toxids[peerPk] = name;
 
-    Friend *f = FriendList::findFriend(id);
+    Friend *f = FriendList::findFriend(peerKey);
     if (f != nullptr && f->hasAlias())
     {
         peers[peerId] = f->getDisplayedName();
-        toxids[toxid] = f->getDisplayedName();
+        toxids[peerPk] = f->getDisplayedName();
     }
     else
     {
@@ -90,21 +90,21 @@ void Group::regeneratePeerList()
     nPeers = peers.size();
     for (int i = 0; i < nPeers; ++i)
     {
-        ToxId id = core->getGroupPeerToxId(groupId, i);
-        ToxId self = core->getSelfId();
+        ToxPk id = core->getGroupPeerPk(groupId, i);
+        ToxPk self = core->getSelfId().getPublicKey();
         if (id == self)
             selfPeerNum = i;
 
-        QString toxid = id.getPublicKey();
-        toxids[toxid] = peers[i];
-        if (toxids[toxid].isEmpty())
-            toxids[toxid] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+        QByteArray peerPk = id.getKey();
+        toxids[peerPk] = peers[i];
+        if (toxids[peerPk].isEmpty())
+            toxids[peerPk] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         Friend *f = FriendList::findFriend(id);
         if (f != nullptr && f->hasAlias())
         {
             peers[i] = f->getDisplayedName();
-            toxids[toxid] = f->getDisplayedName();
+            toxids[peerPk] = f->getDisplayedName();
         }
     }
 
@@ -168,9 +168,9 @@ int Group::getMentionedFlag() const
     return userWasMentioned;
 }
 
-QString Group::resolveToxId(const ToxId &id) const
+QString Group::resolveToxId(const ToxPk &id) const
 {
-    QString key = id.getPublicKeyString();
+    QByteArray key = id.getKey();
     auto it = toxids.find(key);
 
     if (it != toxids.end())
