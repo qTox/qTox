@@ -29,7 +29,7 @@
 class Friend;
 class GroupWidget;
 class GroupChatForm;
-class ToxId;
+class ToxPk;
 
 class Group : public QObject
 {
@@ -58,7 +58,7 @@ public:
     void setName(const QString& name);
     QString getName() const;
 
-    QString resolveToxId(const ToxId &id) const;
+    QString resolveToxId(const ToxPk& id) const;
 
 signals:
     void titleChanged(GroupWidget* widget);
@@ -68,7 +68,7 @@ private:
     GroupWidget* widget;
     GroupChatForm* chatForm;
     QStringList peers;
-    QMap<QString, QString> toxids;
+    QMap<QByteArray, QString> toxids;
     int hasNewMessages, userWasMentioned;
     int groupId;
     int nPeers;

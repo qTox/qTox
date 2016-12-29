@@ -1,9 +1,9 @@
-#ifndef TOXKEY_H
-#define TOXKEY_H
+#ifndef ToxPk_H
+#define ToxPk_H
 
 #include <cstdint>
 #include <QByteArray>
-#include <QByteArray>
+#include <QString>
 
 class ToxPk
 {
@@ -16,6 +16,7 @@ public:
     bool operator==(const ToxPk& other) const;
     bool operator!=(const ToxPk& other) const;
     QString toString() const;
+    QByteArray getKey() const;
     const uint8_t* getBytes() const;
     bool isEmpty() const;
 
@@ -23,4 +24,4 @@ private:
     QByteArray key;
 };
 
-#endif // TOXKEY_H
+#endif // ToxPk_H

@@ -21,14 +21,18 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
-#include <QVector>
-#include <QString>
-#include <QByteArray>
-#include <QPixmap>
-#include <QObject>
+#include "src/core/toxid.h"
+
 #include <tox/toxencryptsave.h>
-#include <memory>
+
 #include "src/persistence/history.h"
+
+#include <memory>
+#include <QByteArray>
+#include <QObject>
+#include <QPixmap>
+#include <QString>
+#include <QVector>
 
 class Core;
 class QThread;
@@ -82,7 +86,7 @@ public:
     static QString getDbPath(const QString& profileName);
 
 private slots:
-    void loadDatabase(const QString& id);
+    void loadDatabase(const ToxId &id);
 private:
     Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);

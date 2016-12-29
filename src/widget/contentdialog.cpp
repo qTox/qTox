@@ -541,7 +541,7 @@ void ContentDialog::dragEnterEvent(QDragEnterEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = FriendList::findFriend(toxId);
+        Friend *contact = FriendList::findFriend(toxId.getPublicKey());
         if (!contact)
             return;
 
@@ -576,7 +576,7 @@ void ContentDialog::dropEvent(QDropEvent *event)
     if (frnd)
     {
         ToxId toxId(event->mimeData()->text());
-        Friend *contact = FriendList::findFriend(toxId);
+        Friend *contact = FriendList::findFriend(toxId.getPublicKey());
         if (!contact)
             return;
 

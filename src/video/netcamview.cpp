@@ -37,7 +37,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     , friendId{friendId}
     , e(false)
 {
-    QString id = FriendList::findFriend(friendId)->getToxId().toString();
+    QString id = FriendList::findFriend(friendId)->getPublicKey().toString();
     videoSurface = new VideoSurface(Nexus::getProfile()->loadAvatar(id), this);
     videoSurface->setMinimumHeight(256);
     videoSurface->setContentsMargins(6, 6, 6, 6);

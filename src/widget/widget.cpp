@@ -993,10 +993,9 @@ void Widget::reloadHistory()
     }
 }
 
-void Widget::addFriend(int friendId, const QString &userId)
+void Widget::addFriend(int friendId, const ToxPk &friendPk)
 {
-    ToxId userToxId = ToxId(userId);
-    Friend* newfriend = FriendList::addFriend(friendId, userToxId);
+    Friend* newfriend = FriendList::addFriend(friendId, friendPk);
 
     QString name = newfriend->getDisplayedName();
     FriendWidget* widget = new FriendWidget(friendId, name);
@@ -1009,14 +1008,14 @@ void Widget::addFriend(int friendId, const QString &userId)
 
     const Settings& s = Settings::getInstance();
 
-    QDate activityDate = s.getFriendActivity(userToxId);
+    QDate activityDate = s.getFriendActivity(friendPk);
     QDate chatDate = friendForm->getLatestDate();
     if (chatDate > activityDate && chatDate.isValid())
     {
-        Settings::getInstance().setFriendActivity(userToxId, chatDate);
+        Settings::getInstance().setFriendActivity(friendPk, chatDate);
     }
 
-    contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(userToxId));
+    contactListWidget->addFriendWidget(widget, Status::Offline, s.getFriendCircleID(friendPk));
 
     connect(newfriend, &Friend::displayedNameChanged, this, &Widget::onFriendDisplayChanged);
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
@@ -1025,7 +1024,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
 
     // Try to get the avatar from the cache
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(userId);
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk.toString());
     if (!avatar.isNull())
     {
         friendForm->onAvatarChange(friendId, avatar);
@@ -1036,7 +1035,7 @@ void Widget::addFriend(int friendId, const QString &userId)
     widget->search(ui->searchContactText->text(), filterOffline(filter));
 }
 
-void Widget::addFriendFailed(const QString&, const QString& errorInfo)
+void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
 {
     QString info = QString(tr("Couldn't request friendship"));
     if (!errorInfo.isEmpty())
@@ -1226,7 +1225,7 @@ void Widget::onFriendMessageReceived(int friendId, const QString& message, bool 
     Profile* profile = Nexus::getProfile();
     if (profile->isHistoryEnabled())
     {
-        QString publicKey = f->getToxId().getPublicKeyString();
+        QString publicKey = f->getPublicKey().toString();
         QString name = f->getDisplayedName();
         QString text = message;
         if (isAction)
@@ -1278,7 +1277,7 @@ void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
     connect(core, &Core::friendAvatarRemoved,
             friendWidget, &FriendWidget::onAvatarRemoved);
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getToxId().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(frnd->getPublicKey().toString());
     if (!avatar.isNull())
     {
         friendWidget->onAvatarChange(frnd->getFriendID(), avatar);
@@ -1469,9 +1468,9 @@ bool Widget::newMessageAlert(QWidget* currentWindow, bool isActive, bool sound, 
     return true;
 }
 
-void Widget::onFriendRequestReceived(const QString& userId, const QString& message)
+void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& message)
 {
-    if (addFriendForm->addFriendRequest(userId, message))
+    if (addFriendForm->addFriendRequest(friendPk.toString(), message))
     {
         friendRequestsUpdate();
         newMessageAlert(window(), isActiveWindow(), true, true);
@@ -1480,12 +1479,12 @@ void Widget::onFriendRequestReceived(const QString& userId, const QString& messa
 
 void Widget::updateFriendActivity(Friend *frnd)
 {
-    QDate date = Settings::getInstance().getFriendActivity(frnd->getToxId());
+    QDate date = Settings::getInstance().getFriendActivity(frnd->getPublicKey());
     if (date != QDate::currentDate())
     {
         // Update old activity before after new one. Store old date first.
-        QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getToxId());
-        Settings::getInstance().setFriendActivity(frnd->getToxId(), QDate::currentDate());
+        QDate oldDate = Settings::getInstance().getFriendActivity(frnd->getPublicKey());
+        Settings::getInstance().setFriendActivity(frnd->getPublicKey(), QDate::currentDate());
         contactListWidget->moveWidget(friendWidgets[frnd->getFriendID()], frnd->getStatus());
         contactListWidget->updateActivityDate(oldDate);
     }
@@ -1505,7 +1504,7 @@ void Widget::removeFriend(Friend* f, bool fake)
 
         if (ask.removeHistory())
         {
-            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getToxId().getPublicKeyString());
+            Nexus::getProfile()->getHistory()->removeFriendHistory(f->getPublicKey().toString());
         }
     }
 
@@ -1669,7 +1668,7 @@ void Widget::copyFriendIdToClipboard(int friendId)
     if (f != nullptr)
     {
         QClipboard *clipboard = QApplication::clipboard();
-        clipboard->setText(Nexus::getCore()->getFriendAddress(f->getFriendID()), QClipboard::Clipboard);
+        clipboard->setText(Nexus::getCore()->getFriendPublicKey(f->getFriendID()).toString(), QClipboard::Clipboard);
     }
 }
 
@@ -1710,8 +1709,8 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     }
 
     const Core* core = Core::getInstance();
-    ToxId author = core->getGroupPeerToxId(groupnumber, peernumber);
-    bool isSelf = author == core->getSelfId();
+    ToxPk author = core->getGroupPeerKey(groupnumber, peernumber);
+    bool isSelf = author == core->getSelfId().getPublicKey();
 
     bool targeted = !isSelf && (message.contains(nameMention) || message.contains(sanitizedNameMention));
     if (targeted && !isAction)
