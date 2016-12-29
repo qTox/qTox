@@ -71,7 +71,7 @@ public slots:
 
 private slots:
     void setPasswordButtonsText();
-    void setToxId(const QString& id);
+    void setToxId(const ToxId &id);
     void copyIdClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();

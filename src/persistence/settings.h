@@ -31,7 +31,7 @@
 #include <QFlags>
 #include "src/core/corestructs.h"
 
-class ToxId;
+class ToxPk;
 class Profile;
 
 namespace Db {
@@ -152,11 +152,11 @@ public:
     void createPersonal(QString basename);
 
     void savePersonal();
-    void savePersonal(Profile *profile);
+    void savePersonal(Profile* profile);
 
     void loadGlobal();
     void loadPersonal();
-    void loadPersonal(Profile *profile);
+    void loadPersonal(Profile* profile);
 
     void resetToDefault();
 
@@ -203,7 +203,7 @@ signals:
     void globalAutoAcceptDirChanged(const QString& path);
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
-    void autoAcceptCallChanged(const ToxId& id, AutoAcceptCallFlags accept);
+    void autoAcceptCallChanged(const ToxPk& id, AutoAcceptCallFlags accept);
 
     // GUI
     void autoLoginChanged(bool enabled);
@@ -407,14 +407,14 @@ public:
     int getEmojiFontPointSize() const;
     void setEmojiFontPointSize(int value);
 
-    QString getContactNote(const ToxId& id) const;
-    void setContactNote(const ToxId& id, const QString& note);
+    QString getContactNote(const ToxPk& id) const;
+    void setContactNote(const ToxPk& id, const QString& note);
 
-    QString getAutoAcceptDir(const ToxId& id) const;
-    void setAutoAcceptDir(const ToxId& id, const QString& dir);
+    QString getAutoAcceptDir(const ToxPk& id) const;
+    void setAutoAcceptDir(const ToxPk& id, const QString& dir);
 
-    AutoAcceptCallFlags getAutoAcceptCall(const ToxId& id) const;
-    void setAutoAcceptCall(const ToxId& id, AutoAcceptCallFlags accept);
+    AutoAcceptCallFlags getAutoAcceptCall(const ToxPk& id) const;
+    void setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept);
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
@@ -461,16 +461,16 @@ public:
     QString getFriendAddress(const QString& publicKey) const;
     void updateFriendAddress(const QString& newAddr);
 
-    QString getFriendAlias(const ToxId& id) const;
-    void setFriendAlias(const ToxId& id, const QString& alias);
+    QString getFriendAlias(const ToxPk& id) const;
+    void setFriendAlias(const ToxPk& id, const QString& alias);
 
-    int getFriendCircleID(const ToxId& id) const;
-    void setFriendCircleID(const ToxId& id, int circleID);
+    int getFriendCircleID(const ToxPk& id) const;
+    void setFriendCircleID(const ToxPk& id, int circleID);
 
-    QDate getFriendActivity(const ToxId& id) const;
-    void setFriendActivity(const ToxId& id, const QDate &date);
+    QDate getFriendActivity(const ToxPk& id) const;
+    void setFriendActivity(const ToxPk& id, const QDate &date);
 
-    void removeFriendSettings(const ToxId& id);
+    void removeFriendSettings(const ToxPk& id);
 
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
@@ -533,7 +533,7 @@ private:
     Settings& operator=(const Settings&) = delete;
 
 private slots:
-    void savePersonal(QString profileName, const QString &password);
+    void savePersonal(QString profileName, const QString& password);
 
 private:
     bool loaded;
@@ -649,7 +649,7 @@ private:
         bool expanded;
     };
 
-    QHash<QString, friendProp> friendLst;
+    QHash<QByteArray, friendProp> friendLst;
 
     QVector<circleProp> circleLst;
 

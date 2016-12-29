@@ -70,7 +70,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
     installEventFilter(this); // Disable leave event.
 
     QPoint pos = event->globalPos();
-    ToxId id = FriendList::findFriend(friendId)->getToxId();
+    ToxPk id = FriendList::findFriend(friendId)->getPublicKey();
     QString dir = Settings::getInstance().getAutoAcceptDir(id);
     QMenu menu;
     QAction* openChatWindow = nullptr;
@@ -103,7 +103,7 @@ void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
         groupActions[groupAction] =  group;
     }
 
-    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId());
+    int circleId = Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getPublicKey());
     CircleWidget *circleWidget = CircleWidget::getFromID(circleId);
 
     QMenu* circleMenu = nullptr;
@@ -314,7 +314,7 @@ void FriendWidget::updateStatusLight()
 
     if (f->getEventFlag())
     {
-        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+        CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getPublicKey()));
         if (circleWidget != nullptr)
             circleWidget->setExpanded(true);
 
@@ -353,7 +353,7 @@ Friend* FriendWidget::getFriend() const
 void FriendWidget::search(const QString &searchString, bool hide)
 {
     searchName(searchString, hide);
-    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getToxId()));
+    CircleWidget* circleWidget = CircleWidget::getFromID(Settings::getInstance().getFriendCircleID(FriendList::findFriend(friendId)->getPublicKey()));
     if (circleWidget != nullptr)
         circleWidget->search(searchString);
 }
@@ -414,7 +414,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent *ev)
     if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
     {
         QMimeData* mdata = new QMimeData;
-        mdata->setText(getFriend()->getToxId().toString());
+        mdata->setText(getFriend()->getPublicKey().toString());
 
         QDrag* drag = new QDrag(this);
         drag->setMimeData(mdata);
@@ -428,6 +428,6 @@ void FriendWidget::setAlias(const QString& _alias)
     QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
-    Settings::getInstance().setFriendAlias(f->getToxId(), alias);
+    Settings::getInstance().setFriendAlias(f->getPublicKey(), alias);
     Settings::getInstance().savePersonal();
 }

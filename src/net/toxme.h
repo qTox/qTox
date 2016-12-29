@@ -45,7 +45,7 @@ public:
     static ToxId lookup(QString address);
     static QString createAddress(ExecCode &code, QString server, ToxId id, QString address,
                               bool keepPrivate=true, QString bio=QString());
-    static ExecCode deleteAddress(QString server, ToxId id);
+    static ExecCode deleteAddress(QString server, ToxPk id);
     static QString getErrorMessage(int errorCode);
     static QString translateErrorMessage(int errorCode);
 

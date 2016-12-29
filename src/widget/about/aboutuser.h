@@ -14,13 +14,13 @@ class AboutUser : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutUser(ToxId &toxID, QWidget *parent = 0);
+    explicit AboutUser(ToxPk &toxID, QWidget *parent = 0);
     ~AboutUser();
     void setFriend(Friend *f);
 
 private:
     Ui::AboutUser *ui;
-    ToxId toxId;
+    ToxPk friendPk;
 
 private slots:
     void onAcceptedClicked();
