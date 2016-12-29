@@ -414,6 +414,7 @@ HEADERS  += \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
     src/core/toxid.h \
+    src/core/toxpk.h \
     src/friend.h \
     src/friendlist.h \
     src/group.h \
@@ -533,6 +534,7 @@ SOURCES += \
     src/core/recursivesignalblocker.cpp \
     src/core/toxcall.cpp \
     src/core/toxid.cpp \
+    src/core/toxpk.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
