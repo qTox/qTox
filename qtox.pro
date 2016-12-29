@@ -125,9 +125,10 @@ win32 {
         ICON = img/icons/qtox.icns
         QMAKE_INFO_PLIST = osx/info.plist
         QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
-        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -lopus -framework OpenAL -lavformat -lavdevice -lavcodec -lavutil -lswscale -mmacosx-version-min=10.7
+        LIBS += -L$$PWD/libs/lib/ -ltoxcore -ltoxav -ltoxencryptsave -lsodium -lvpx -lopus -framework OpenAL -Wl,-Bstatic -lavformat -lavdevice -lavcodec -lavutil -lswscale -lsqlcipher -Wl,-Bdynamic -mmacosx-version-min=10.7
+        LIBS += 
         LIBS += -framework AVFoundation -framework Foundation -framework CoreMedia -framework ApplicationServices
-        LIBS += -lqrencode -lsqlcipher
+        LIBS += -lqrencode
         contains(DEFINES, QTOX_PLATFORM_EXT) { LIBS += -framework IOKit -framework CoreFoundation }
         #Files to be includes into the qTox.app/Contents/Resources folder
         #OSX-Migrater.sh part of migrateProfiles() compatabilty code
