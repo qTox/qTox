@@ -506,7 +506,8 @@ HEADERS  += \
     src/widget/tool/screenshotgrabber.h \
     src/widget/tool/toolboxgraphicsitem.h \
     src/widget/translator.h \
-    src/widget/widget.h
+    src/widget/widget.h \
+    src/core/toxkey.h
 
 SOURCES += \
     src/audio/audio.cpp \
@@ -626,4 +627,5 @@ SOURCES += \
     src/widget/tool/screenshotgrabber.cpp \
     src/widget/tool/toolboxgraphicsitem.cpp \
     src/widget/translator.cpp \
-    src/widget/widget.cpp
+    src/widget/widget.cpp \
+    src/core/toxkey.cpp
