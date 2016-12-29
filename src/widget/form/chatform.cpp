@@ -266,7 +266,7 @@ void ChatForm::startFileSend(ToxFile file)
 
     QString name;
     const Core* core = Core::getInstance();
-    ToxId self = core->getSelfId();
+    ToxPk self = core->getSelfId().getPublicKey();
     if (previousId != self)
     {
         name = core->getUsername();
@@ -286,7 +286,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     Widget::getInstance()->newFriendMessageAlert(file.friendId);
 
     QString name;
-    ToxId friendId = f->getToxId();
+    ToxPk friendId = f->getPublicKey();
     if (friendId != previousId)
     {
         name = f->getDisplayedName();
@@ -301,9 +301,9 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     FileTransferWidget* tfWidget = static_cast<FileTransferWidget*>(proxy->getWidget());
 
     // there is auto-accept for that conact
-    if (!Settings::getInstance().getAutoAcceptDir(f->getToxId()).isEmpty())
+    if (!Settings::getInstance().getAutoAcceptDir(f->getPublicKey()).isEmpty())
     {
-        tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getToxId()));
+        tfWidget->autoAcceptTransfer(Settings::getInstance().getAutoAcceptDir(f->getPublicKey()));
     }
     else if (Settings::getInstance().getAutoSaveEnabled())
     {   //global autosave to global directory
@@ -323,8 +323,8 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
                                                          ChatMessage::INFO,
                                                          QDateTime::currentDateTime()));
     /* AutoAcceptCall is set for this friend */
-    if ((video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Video)) ||
-       (!video && Settings::getInstance().getAutoAcceptCall(f->getToxId()).testFlag(Settings::AutoAcceptCall::Audio)))
+    if ((video && Settings::getInstance().getAutoAcceptCall(f->getPublicKey()).testFlag(Settings::AutoAcceptCall::Video)) ||
+       (!video && Settings::getInstance().getAutoAcceptCall(f->getPublicKey()).testFlag(Settings::AutoAcceptCall::Audio)))
     {
         uint32_t friendId = f->getFriendID();
         qDebug() << "automatic call answer";
@@ -587,7 +587,7 @@ void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
         return;
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getToxId(), message, isAction, timestamp, true);
+    addMessage(f->getPublicKey(), message, isAction, timestamp, true);
 }
 
 void ChatForm::onStatusMessage(const QString& message)
@@ -716,10 +716,10 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
     }
 
-    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().getPublicKeyString(), since, now);
+    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getPublicKey().toString(), since, now);
 
-    ToxId storedPrevId = previousId;
-    ToxId prevId;
+    ToxPk storedPrevId = previousId;
+    ToxPk prevId;
 
     QList<ChatLine::Ptr> historyMessages;
 
@@ -742,9 +742,9 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
 
         // Show each messages
         const Core* core = Core::getInstance();
-        ToxId authorId(it.sender);
+        ToxPk authorPk(ToxId(it.sender).getPublicKey());
         QString authorStr;
-        bool isSelf = authorId == core->getSelfId();
+        bool isSelf = authorPk == core->getSelfId().getPublicKey();
 
         if (!it.dispName.isEmpty())
         {
@@ -756,7 +756,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
         else
         {
-            authorStr = resolveToxId(authorId);
+            authorStr = resolveToxId(authorPk);
         }
 
         bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
@@ -769,10 +769,10 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                                                isSelf,
                                                needSending ? QDateTime() : msgDateTime);
 
-        if (!isAction && (prevId == authorId) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
+        if (!isAction && (prevId == authorPk) && (prevMsgDateTime.secsTo(msgDateTime) < getChatLog()->repNameAfter) )
             msg->hideSender();
 
-        prevId = authorId;
+        prevId = authorPk;
         prevMsgDateTime = msgDateTime;
 
         if (needSending)
@@ -1061,8 +1061,8 @@ void ChatForm::SendMessageStr(QString msg)
         if (profile->isHistoryEnabled())
         {
             auto* offMsgEngine = getOfflineMsgEngine();
-            profile->getHistory()->addNewMessage(f->getToxId().getPublicKeyString(), qt_msg_hist,
-                        Core::getInstance()->getSelfId().getPublicKeyString(), timestamp, status, Core::getInstance()->getUsername(),
+            profile->getHistory()->addNewMessage(f->getPublicKey().toString(), qt_msg_hist,
+                        Core::getInstance()->getSelfId().toString(), timestamp, status, Core::getInstance()->getUsername(),
                                         [offMsgEngine,rec,ma](int64_t id)
             {
                 offMsgEngine->registerReceipt(rec, id, ma);
