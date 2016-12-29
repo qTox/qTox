@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
+AboutUser::AboutUser(ToxKey &toxId, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutUser)
 {
@@ -22,27 +22,27 @@ AboutUser::AboutUser(ToxId &toxId, QWidget *parent) :
     connect(ui->selectSaveDir, &QPushButton::clicked, this,  &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
-    this->toxId = toxId;
-    QString dir = Settings::getInstance().getAutoAcceptDir(this->toxId);
+    this->friendPk = toxId;
+    QString dir = Settings::getInstance().getAutoAcceptDir(this->friendPk);
     ui->autoacceptfile->setChecked(!dir.isEmpty());
 
-    ui->autoacceptcall->setCurrentIndex(Settings::getInstance().getAutoAcceptCall(this->toxId));
+    ui->autoacceptcall->setCurrentIndex(Settings::getInstance().getAutoAcceptCall(this->friendPk));
 
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
 
     if(ui->autoacceptfile->isChecked())
-        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
+        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->friendPk));
 }
 
 void AboutUser::setFriend(Friend *f)
 {
     this->setWindowTitle(f->getDisplayedName());
     ui->userName->setText(f->getDisplayedName());
-    ui->publicKey->setText(QString(f->getToxId().toString()));
+    ui->publicKey->setText(QString(f->getPublicKey().toString()));
     ui->publicKey->setCursorPosition(0); //scroll textline to left
-    ui->note->setPlainText(Settings::getInstance().getContactNote(f->getToxId()));
+    ui->note->setPlainText(Settings::getInstance().getContactNote(f->getPublicKey()));
 
-    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getToxId().toString());
+    QPixmap avatar = Nexus::getProfile()->loadAvatar(f->getPublicKey().toString());
     ui->statusMessage->setText(f->getStatusMessage());
     if(!avatar.isNull()) {
         ui->avatar->setPixmap(avatar);
@@ -59,7 +59,7 @@ void AboutUser::onAutoAcceptDirClicked()
     {
         dir = QDir::homePath();
         ui->autoacceptfile->setChecked(false);
-        Settings::getInstance().setAutoAcceptDir(this->toxId, "");
+        Settings::getInstance().setAutoAcceptDir(this->friendPk, "");
         ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     }
     else if (ui->autoacceptfile->isChecked())
@@ -73,8 +73,8 @@ void AboutUser::onAutoAcceptDirClicked()
             ui->autoacceptfile->setChecked(false);
             return; // user canellced
         }
-        Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
-        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->toxId));
+        Settings::getInstance().setAutoAcceptDir(this->friendPk, dir);
+        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->friendPk));
     }
     Settings::getInstance().saveGlobal();
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
@@ -82,7 +82,7 @@ void AboutUser::onAutoAcceptDirClicked()
 
 void AboutUser::onAutoAcceptCallClicked()
 {
-    Settings::getInstance().setAutoAcceptCall(this->toxId,Settings::AutoAcceptCallFlags(QFlag(ui->autoacceptcall->currentIndex())));
+    Settings::getInstance().setAutoAcceptCall(this->friendPk,Settings::AutoAcceptCallFlags(QFlag(ui->autoacceptcall->currentIndex())));
     Settings::getInstance().savePersonal();
 }
 
@@ -94,7 +94,7 @@ void AboutUser::onSelectDirClicked()
                                             dir,
                                             QFileDialog::DontUseNativeDialog);
     ui->autoacceptfile->setChecked(true);
-    Settings::getInstance().setAutoAcceptDir(this->toxId, dir);
+    Settings::getInstance().setAutoAcceptDir(this->friendPk, dir);
     Settings::getInstance().savePersonal();
 }
 
@@ -103,8 +103,7 @@ void AboutUser::onSelectDirClicked()
  */
 void AboutUser::onAcceptedClicked()
 {
-    ToxId toxId = ToxId(ui->publicKey->text());
-    Settings::getInstance().setContactNote(toxId, ui->note->toPlainText());
+    Settings::getInstance().setContactNote(friendPk, ui->note->toPlainText());
     Settings::getInstance().saveGlobal();
 }
 
@@ -112,7 +111,7 @@ void AboutUser::onRemoveHistoryClicked()
 {
     History* history = Nexus::getProfile()->getHistory();
     if (history)
-        history->removeFriendHistory(toxId.getPublicKeyString());
+        history->removeFriendHistory(friendPk.toString());
     QMessageBox::information(this,
                                      tr("History removed"),
                                      tr("Chat history with %1 removed!").arg(ui->userName->text().toHtmlEscaped()),

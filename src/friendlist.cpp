@@ -25,17 +25,17 @@
 #include <QHash>
 
 QHash<int, Friend*> FriendList::friendList;
-QHash<QByteArray, int> FriendList::tox2id;
+QHash<QByteArray, int> FriendList::key2id;
 
-Friend* FriendList::addFriend(int friendId, const ToxId& userId)
+Friend* FriendList::addFriend(int friendId, const ToxKey& friendPk)
 {
     auto friendChecker = friendList.find(friendId);
     if (friendChecker != friendList.end())
         qWarning() << "addFriend: friendId already taken";
 
-    Friend* newfriend = new Friend(friendId, userId);
+    Friend* newfriend = new Friend(friendId, friendPk);
     friendList[friendId] = newfriend;
-    tox2id[userId.getPublicKey()] = friendId;
+    key2id[friendPk.getKey()] = friendId;
 
     return newfriend;
 }
@@ -55,7 +55,7 @@ void FriendList::removeFriend(int friendId, bool fake)
     if (f_it != friendList.end())
     {
         if (!fake)
-            Settings::getInstance().removeFriendSettings(f_it.value()->getToxId());
+            Settings::getInstance().removeFriendSettings(f_it.value()->getPublicKey());
         friendList.erase(f_it);
     }
 }
@@ -67,15 +67,15 @@ void FriendList::clear()
     friendList.clear();
 }
 
-Friend* FriendList::findFriend(const ToxId& userId)
+Friend* FriendList::findFriend(const ToxKey& friendPk)
 {
-    auto id = tox2id.find(userId.getPublicKey());
-    if (id != tox2id.end())
+    auto id = key2id.find(friendPk.getKey());
+    if (id != key2id.end())
     {
         Friend *f = findFriend(*id);
         if (!f)
             return nullptr;
-        if (f->getToxId() == userId)
+        if (f->getPublicKey() == friendPk)
             return f;
     }
 

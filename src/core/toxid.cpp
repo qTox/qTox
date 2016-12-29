@@ -20,6 +20,7 @@
 
 #include "toxid.h"
 #include "core.h"
+#include "toxkey.h"
 
 #include <tox/tox.h>
 
@@ -194,27 +195,9 @@ const uint8_t* ToxId::getBytes() const
  * @brief Gets the Public Key part of the ToxID
  * @return Public Key of the ToxID
  */
-QByteArray ToxId::getPublicKey() const
+ToxKey ToxId::getPublicKey() const
 {
-    return toxId.mid(0, TOX_PUBLIC_KEY_SIZE);
-}
-
-/**
- * @brief Gets the Public Key part of the ToxID, convenience function for toxcore interface.
- * @return Public Key of the ToxID as uint8_t*
- */
-const uint8_t* ToxId::getPublicKeyBytes() const
-{
-    return reinterpret_cast<const uint8_t*>(toxId.mid(0, TOX_PUBLIC_KEY_SIZE).constData());
-}
-
-/**
- * @brief Returns the Public Key converted to QString.
- * @return The Public Key as QString.
- */
-QString ToxId::getPublicKeyString() const
-{
-    return getPublicKey().toHex().toUpper();
+    return ToxKey(toxId.mid(0, TOX_PUBLIC_KEY_SIZE));
 }
 
 /**

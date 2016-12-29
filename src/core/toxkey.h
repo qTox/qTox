@@ -3,7 +3,7 @@
 
 #include <cstdint>
 #include <QByteArray>
-#include <QByteArray>
+#include <QString>
 
 class ToxKey
 {
@@ -16,6 +16,7 @@ public:
     bool operator==(const ToxKey& other) const;
     bool operator!=(const ToxKey& other) const;
     QString toString() const;
+    QByteArray getKey() const;
     const uint8_t* getBytes() const;
     bool isEmpty() const;
 

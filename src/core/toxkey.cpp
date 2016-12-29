@@ -104,6 +104,15 @@ const uint8_t *ToxKey::getBytes() const
 }
 
 /**
+ * @brief Get a copy of the key
+ * @return Copied key bytes
+ */
+QByteArray ToxKey::getKey() const
+{
+    return QByteArray(key); // TODO: Is a copy really necessary?
+}
+
+/**
  * @brief Checks if the ToxKey contains a key.
  * @return True if there is a key, False otherwise.
  */

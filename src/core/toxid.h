@@ -21,6 +21,10 @@
 #ifndef TOXID_H
 #define TOXID_H
 
+#include "toxkey.h"
+
+#include <cstdint>
+#include <QByteArray>
 #include <QString>
 
 class ToxId
@@ -42,9 +46,7 @@ public:
     static bool isToxId(const QString &id);
     const uint8_t* getBytes() const;
     QByteArray getToxId() const;
-    QByteArray getPublicKey() const;
-    const uint8_t* getPublicKeyBytes() const;
-    QString getPublicKeyString() const;
+    ToxKey getPublicKey() const;
     QString getNoSpamString() const;
 
 private:

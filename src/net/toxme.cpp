@@ -300,7 +300,7 @@ QString Toxme::getPass(QString json, ExecCode &code) {
  * @param id ToxId to delete.
  * @return Status code returned from server.
  */
-Toxme::ExecCode Toxme::deleteAddress(QString server, ToxId id)
+Toxme::ExecCode Toxme::deleteAddress(QString server, ToxKey id)
 {
     const QString payload{"{\"public_key\":\""+id.toString().left(64)+"\","
                           "\"timestamp\":"+QString().setNum(time(0))+"}"};

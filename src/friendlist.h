@@ -24,21 +24,21 @@ template <class T> class QList;
 template <class A, class B> class QHash;
 class Friend;
 class QByteArray;
-class ToxId;
+class ToxKey;
 
 class FriendList
 {
 public:
-    static Friend* addFriend(int friendId, const ToxId &userId);
+    static Friend* addFriend(int friendId, const ToxKey &friendPk);
     static Friend* findFriend(int friendId);
-    static Friend* findFriend(const ToxId &userId);
+    static Friend* findFriend(const ToxKey &friendPk);
     static QList<Friend*> getAllFriends();
     static void removeFriend(int friendId, bool fake = false);
     static void clear();
 
 private:
     static QHash<int, Friend*> friendList;
-    static QHash<QByteArray, int> tox2id;
+    static QHash<QByteArray, int> key2id;
 };
 
 #endif // FRIENDLIST_H

@@ -154,7 +154,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     ToxId toxId(event->mimeData()->text());
-    Friend *f = FriendList::findFriend(toxId);
+    Friend *f = FriendList::findFriend(toxId.getPublicKey());
     if (f != nullptr)
         event->acceptProposedAction();
 
@@ -178,12 +178,12 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
     // Check, that the user has a friend with the same ToxId
     ToxId toxId(event->mimeData()->text());
-    Friend *f = FriendList::findFriend(toxId);
+    Friend *f = FriendList::findFriend(toxId.getPublicKey());
     if (!f)
         return;
 
     // Save CircleWidget before changing the Id
-    int circleId = Settings::getInstance().getFriendCircleID(toxId);
+    int circleId = Settings::getInstance().getFriendCircleID(toxId.getPublicKey());
     CircleWidget* circleWidget = getFromID(circleId);
 
     addFriendWidget(widget, f->getStatus());
@@ -212,7 +212,7 @@ void CircleWidget::onExpand()
 void CircleWidget::onAddFriendWidget(FriendWidget* w)
 {
     Friend* f = FriendList::findFriend(w->friendId);
-    ToxId toxId = f->getToxId();
+    ToxKey toxId = f->getPublicKey();
     Settings::getInstance().setFriendCircleID(toxId, id);
 }
 
@@ -232,13 +232,13 @@ void CircleWidget::updateID(int index)
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
-            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
     }
     for (int i = 0; i < friendOfflineLayout()->count(); ++i)
     {
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
-            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getToxId(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
     }
 }

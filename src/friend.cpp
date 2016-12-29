@@ -30,16 +30,16 @@
 #include "src/grouplist.h"
 #include "src/group.h"
 
-Friend::Friend(uint32_t FriendId, const ToxId &UserId)
-    : userName{Core::getInstance()->getPeerName(UserId)}
-    , userID(UserId), friendId(FriendId)
+Friend::Friend(uint32_t FriendId, const ToxKey &FriendPk)
+    : userName{Core::getInstance()->getPeerName(FriendPk)}
+    , friendPk(FriendPk), friendId(FriendId)
     , hasNewEvents(0), friendStatus(Status::Offline)
 
 {
     if (userName.size() == 0)
-        userName = UserId.getPublicKeyString();
+        userName = FriendPk.toString();
 
-    userAlias = Settings::getInstance().getFriendAlias(UserId);
+    userAlias = Settings::getInstance().getFriendAlias(FriendPk);
 
     chatForm = new ChatForm(this);
 }
@@ -65,7 +65,7 @@ void Friend::loadHistory()
 void Friend::setName(QString name)
 {
    if (name.isEmpty())
-       name = userID.getPublicKeyString();
+       name = friendPk.toString();
 
     userName = name;
     if (userAlias.size() == 0)
@@ -124,9 +124,9 @@ bool Friend::hasAlias() const
     return !userAlias.isEmpty();
 }
 
-const ToxId &Friend::getToxId() const
+const ToxKey &Friend::getPublicKey() const
 {
-    return userID;
+    return friendPk;
 }
 
 uint32_t Friend::getFriendID() const

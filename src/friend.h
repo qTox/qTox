@@ -32,7 +32,7 @@ class Friend : public QObject
 {
     Q_OBJECT
 public:
-    Friend(uint32_t FriendId, const ToxId &UserId);
+    Friend(uint32_t FriendId, const ToxKey &FriendPk);
     Friend(const Friend& other)=delete;
     ~Friend();
     Friend& operator=(const Friend& other)=delete;
@@ -50,7 +50,7 @@ public:
     void setEventFlag(int f);
     int getEventFlag() const;
 
-    const ToxId &getToxId() const;
+    const ToxKey &getPublicKey() const;
     uint32_t getFriendID() const;
 
     void setStatus(Status s);
@@ -67,7 +67,7 @@ signals:
 
 private:
     QString userAlias, userName, statusMessage;
-    ToxId userID;
+    ToxKey friendPk;
     uint32_t friendId;
     int hasNewEvents;
     Status friendStatus;

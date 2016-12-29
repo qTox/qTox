@@ -417,7 +417,7 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
 
     QByteArray idData = ownerId.toUtf8();
-    QByteArray pubkeyData = core->getSelfId().getPublicKey();
+    QByteArray pubkeyData = core->getSelfId().getPublicKey().getKey();
     constexpr int hashSize = TOX_PUBLIC_KEY_SIZE;
     static_assert(hashSize >= crypto_generichash_BYTES_MIN
                   && hashSize <= crypto_generichash_BYTES_MAX, "Hash size not supported by libsodium");
@@ -434,7 +434,7 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
  */
 QPixmap Profile::loadAvatar()
 {
-    return loadAvatar(core->getSelfId().getPublicKeyString());
+    return loadAvatar(core->getSelfId().getPublicKey().getKey());
 }
 
 /**
@@ -495,7 +495,7 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
     return pic;
 }
 
-void Profile::loadDatabase(const QString& id)
+void Profile::loadDatabase(const ToxId& id)
 {
     if(isRemoved)
     {
@@ -503,7 +503,7 @@ void Profile::loadDatabase(const QString& id)
         return;
     }
 
-    QByteArray salt = ToxId {id}.getPublicKey();
+    QByteArray salt = id.getPublicKey().getKey();
     if(salt.size() != TOX_PASS_SALT_LENGTH)
     {
         qWarning() << "Couldn't compute salt from public key" << name;
@@ -572,7 +572,7 @@ QByteArray Profile::getAvatarHash(const QString& ownerId)
  */
 void Profile::removeAvatar()
 {
-    removeAvatar(core->getSelfId().getPublicKeyString());
+    removeAvatar(core->getSelfId().getPublicKey().toString());
 }
 
 /**
@@ -600,7 +600,7 @@ History* Profile::getHistory()
 void Profile::removeAvatar(const QString& ownerId)
 {
     QFile::remove(avatarPath(ownerId));
-    if (ownerId == core->getSelfId().getPublicKeyString())
+    if (ownerId == core->getSelfId().getPublicKey().toString())
         core->setAvatar({});
 }
 
@@ -789,7 +789,7 @@ void Profile::restartCore()
  */
 void Profile::setPassword(const QString& newPassword)
 {
-    QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKeyString());
+    QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKey().toString());
     QString oldPassword = password;
     password = newPassword;
     passkey = core->createPasskey(password);
@@ -801,14 +801,14 @@ void Profile::setPassword(const QString& newPassword)
     }
 
     Nexus::getDesktopGUI()->reloadHistory();
-    saveAvatar(avatar, core->getSelfId().getPublicKeyString());
+    saveAvatar(avatar, core->getSelfId().getPublicKey().toString());
 
     QVector<uint32_t> friendList = core->getFriendList();
     QVectorIterator<uint32_t> i(friendList);
     while (i.hasNext())
     {
-        QString friendPublicKey = core->getFriendPublicKey(i.next());
-        saveAvatar(loadAvatarData(friendPublicKey,oldPassword),friendPublicKey);
+        QString friendPublicKey = core->getFriendPublicKey(i.next()).toString();
+        saveAvatar(loadAvatarData(friendPublicKey, oldPassword), friendPublicKey);
     }
 }
 
