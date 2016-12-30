@@ -184,7 +184,7 @@ ToxId Toxme::lookup(QString address)
 
     response.truncate(idEnd);
 
-    return ToxId(response);
+    return ToxId(QString(response));
 }
 
 Toxme::ExecCode Toxme::extractError(QString json)
