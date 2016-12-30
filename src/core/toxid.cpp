@@ -35,7 +35,7 @@
 #define CHECKSUM_HEX_CHARS          (2*CHECKSUM_BYTES)
 #define TOXID_HEX_CHARS             (2*TOX_ADDRESS_SIZE)
 
-const QRegularExpression ToxId::ToxIdRegEx = QRegularExpression(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(TOXID_HEX_CHARS));
+const QRegularExpression ToxId::ToxIdRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(TOXID_HEX_CHARS));
 
 /**
  * @class ToxId
@@ -58,7 +58,7 @@ const QRegularExpression ToxId::ToxIdRegEx = QRegularExpression(QString("(^|\\s)
  * @brief The default constructor. Creates an empty Tox ID.
  */
 ToxId::ToxId()
-: toxId(TOX_ADDRESS_SIZE, 0x00)
+: toxId()
 {}
 
 /**
@@ -80,6 +80,7 @@ ToxId::ToxId(const ToxId& other)
  */
 ToxId::ToxId(const QString& id)
 {
+    // TODO: remove construction from PK only
     if (isToxId(id))
     {
         toxId = QByteArray::fromHex(id.toLatin1());
@@ -90,7 +91,7 @@ ToxId::ToxId(const QString& id)
     }
     else
     {
-        toxId = QByteArray(TOX_ADDRESS_SIZE, 0x00); // invalid id string
+        toxId = QByteArray();                   // invalid id string
     }
 }
 
@@ -128,6 +129,7 @@ ToxId::ToxId(const uint8_t* rawId, int len)
 
 void ToxId::constructToxId(const QByteArray& rawId)
 {
+    // TODO: remove construction from PK only
     if(rawId.length() == TOX_SECRET_KEY_SIZE)
     {
         toxId = QByteArray(rawId);                  // construct from PK only
@@ -139,7 +141,7 @@ void ToxId::constructToxId(const QByteArray& rawId)
     }
     else
     {
-        toxId = QByteArray(TOX_ADDRESS_SIZE, 0x00); // invalid id string
+        toxId = QByteArray();                       // invalid id
     }
 }
 
@@ -183,11 +185,16 @@ void ToxId::clear()
 
 /**
  * @brief Gets the ToxID as bytes, convenience function for toxcore interface.
- * @return The ToxID as uint8_t*
+ * @return The ToxID as uint8_t* if isValid() is true, else a nullptr.
  */
 const uint8_t* ToxId::getBytes() const
 {
-    return reinterpret_cast<const uint8_t*>(toxId.constData());
+    if(isValid())
+    {
+        return reinterpret_cast<const uint8_t*>(toxId.constData());
+    }
+
+    return nullptr;
 }
 
 /**

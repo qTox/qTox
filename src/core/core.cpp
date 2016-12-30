@@ -573,9 +573,15 @@ void Core::acceptFriendRequest(const QString& userId)
 
 void Core::requestFriendship(const QString& friendAddress, const QString& message)
 {
+    ToxId friendToxId(friendAddress);
     const QString userId = friendAddress.mid(0, TOX_PUBLIC_KEY_SIZE * 2);
 
-    if (message.isEmpty())
+    if (!friendToxId.isValid())
+    {
+        emit failedToAddFriend(userId,
+                               tr("Invalid Tox ID"));
+    }
+    else if (message.isEmpty())
     {
         emit failedToAddFriend(userId, tr("You need to write a message with your request"));
     }
@@ -583,7 +589,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
     {
         emit failedToAddFriend(userId, tr("Your message is too long!"));
     }
-    else if (hasFriendWithAddress(friendAddress))
+    else if (hasFriendWithAddress(userId))
     {
         emit failedToAddFriend(userId, tr("Friend is already added"));
     }
@@ -602,7 +608,7 @@ void Core::requestFriendship(const QString& friendAddress, const QString& messag
         {
             qDebug() << "Requested friendship of "<<friendId;
             // Update our friendAddresses
-            Settings::getInstance().updateFriendAddress(friendAddress);
+            Settings::getInstance().updateFriendAddress(userId);
             QString inviteStr = tr("/me offers friendship.");
             if (message.length())
                 inviteStr = tr("/me offers friendship, \"%1\"").arg(message);

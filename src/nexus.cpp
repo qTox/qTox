@@ -100,7 +100,6 @@ void Nexus::start()
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
     qRegisterMetaType<ToxId>("ToxId");
-    qRegisterMetaType<ToxKey>("ToxKey");
 
     loginScreen = new LoginScreen();
 
