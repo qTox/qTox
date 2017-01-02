@@ -124,6 +124,13 @@ win32 {
             -ltoxav \
             -ltoxcore \
             -ltoxencryptsave \
+            -ltoxgroup \
+            -ltoxmessenger \
+            -ltoxfriends \
+            -ltoxnetcrypto \
+            -ltoxdht \
+            -ltoxnetwork \
+            -ltoxcrypto \
             -lsodium \
             -lvpx \
             -lpthread \
