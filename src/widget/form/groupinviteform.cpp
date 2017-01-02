@@ -202,7 +202,7 @@ void GroupInviteForm::retranslateGroupLabel(CroppingLabel* label)
     int index = scroll->widget()->layout()->indexOf(groupWidget);
     GroupInvite invite = groupInvites.at(index);
 
-    QString name = Nexus::getCore()->getFriendUsername(invite.friendId);
+    QString name = Core::getInstance()->getFriendUsername(invite.friendId);
 
     QString date = invite.time.toString(Settings::getInstance().getDateFormat());
     QString time = invite.time.toString(Settings::getInstance().getTimestampFormat());

@@ -41,17 +41,25 @@ class Nexus : public QObject
 {
     Q_OBJECT
 public:
+    static Nexus& getInstance();
+    static QString getSupportedImageFilter();
+    static bool tryRemoveFile(const QString& filepath);
+
     void start();
     void showMainGUI();
 
-    static Nexus& getInstance();
-    static void destroyInstance();
-    static Core* getCore();
-    static Profile* getProfile();
-    static void setProfile(Profile* profile);
-    static Widget* getDesktopGUI();
-    static QString getSupportedImageFilter();
-    static bool tryRemoveFile(const QString& filepath);
+public:
+    inline Widget* getDesktopGUI() const
+    {
+        return widget;
+    }
+
+    inline Profile* getProfile() const
+    {
+        return mProfile;
+    }
+
+    void setProfile(Profile* mProfile);
 
 public slots:
     void showLogin();
@@ -85,11 +93,11 @@ private:
 #endif
 
 private:
-    explicit Nexus(QObject *parent = 0);
+    Nexus();
     ~Nexus();
 
 private:
-    Profile* profile;
+    Profile* mProfile;
     Widget* widget;
     LoginScreen* loginScreen;
 };

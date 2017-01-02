@@ -52,7 +52,7 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
 {
     QMutexLocker ml(&mutex);
 
-    Profile* profile = Nexus::getProfile();
+    Profile* profile = Nexus::getInstance().getProfile();
     auto it = receipts.find(receipt);
     if (it != receipts.end())
     {

@@ -716,7 +716,8 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
         }
     }
 
-    auto msgs = Nexus::getProfile()->getHistory()->getChatHistory(f->getToxId().getPublicKeyString(), since, now);
+    Profile* profile = Nexus::getInstance().getProfile();
+    auto msgs = profile->getHistory()->getChatHistory(f->getToxId().getPublicKeyString(), since, now);
 
     ToxId storedPrevId = previousId;
     ToxId prevId;
@@ -857,15 +858,16 @@ void ChatForm::onScreenshotTaken(const QPixmap &pixmap) {
 
 void ChatForm::onLoadHistory()
 {
-    if (!Nexus::getProfile()->isHistoryEnabled())
-        return;
-
-    LoadHistoryDialog dlg;
-
-    if (dlg.exec())
+    Profile* profile = Nexus::getInstance().getProfile();
+    if (profile->isHistoryEnabled())
     {
-        QDateTime fromTime = dlg.getFromDate();
-        loadHistory(fromTime);
+        LoadHistoryDialog dlg;
+
+        if (dlg.exec())
+        {
+            QDateTime fromTime = dlg.getFromDate();
+            loadHistory(fromTime);
+        }
     }
 }
 
@@ -1057,7 +1059,7 @@ void ChatForm::SendMessageStr(QString msg)
             rec = Core::getInstance()->sendMessage(f->getFriendID(), qt_msg);
 
 
-        Profile* profile = Nexus::getProfile();
+        Profile* profile = Nexus::getInstance().getProfile();
         if (profile->isHistoryEnabled())
         {
             auto* offMsgEngine = getOfflineMsgEngine();

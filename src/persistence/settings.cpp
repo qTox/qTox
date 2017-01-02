@@ -59,27 +59,28 @@
  */
 
 const QString Settings::globalSettingsFile = "qtox.ini";
-Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
-QThread* Settings::settingsThread{nullptr};
 
-Settings::Settings() :
-    loaded(false), useCustomDhtList{false},
-    makeToxPortable{false}, currentProfileId(0)
+Settings::Settings()
+    : settingsThread(new QThread)
+    , loaded(false)
+    , useCustomDhtList{false}
+    , makeToxPortable{false}
+    , currentProfileId(0)
 {
-    settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
-    settingsThread->start(QThread::LowPriority);
+    connect(settingsThread, &QThread::finished,
+            settingsThread, &QThread::deleteLater);
     moveToThread(settingsThread);
+    settingsThread->start(QThread::LowPriority);
     loadGlobal();
 }
 
 Settings::~Settings()
 {
     sync();
-    settingsThread->exit(0);
+    settingsThread->exit();
     settingsThread->wait();
-    delete settingsThread;
 }
 
 /**
@@ -87,16 +88,8 @@ Settings::~Settings()
  */
 Settings& Settings::getInstance()
 {
-    if (!settings)
-        settings = new Settings();
-
-    return *settings;
-}
-
-void Settings::destroyInstance()
-{
-    delete settings;
-    settings = nullptr;
+    static Settings settings;
+    return settings;
 }
 
 void Settings::loadGlobal()
@@ -334,7 +327,7 @@ void Settings::loadGlobal()
 
 void Settings::loadPersonal()
 {
-    Profile* profile = Nexus::getProfile();
+    Profile* profile = Nexus::getInstance().getProfile();
     if (!profile)
     {
         qCritical() << "No active profile, couldn't load personal settings";
@@ -471,7 +464,7 @@ void Settings::resetToDefault()
 
     // Remove file with profile settings
     QDir dir(getSettingsDirPath());
-    Profile *profile = Nexus::getProfile();
+    Profile *profile = Nexus::getInstance().getProfile();
     QString localPath = dir.filePath(profile->getName() + ".ini");
     QFile local(localPath);
     if (local.exists())
@@ -624,7 +617,7 @@ void Settings::saveGlobal()
  */
 void Settings::savePersonal()
 {
-    savePersonal(Nexus::getProfile());
+    savePersonal(Nexus::getInstance().getProfile());
 }
 
 /**

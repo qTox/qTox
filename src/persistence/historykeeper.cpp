@@ -91,8 +91,12 @@ bool HistoryKeeper::checkPassword(std::shared_ptr<Tox_Pass_Key> passkey, int enc
     if (!Settings::getInstance().getEnableLogging() && (encrypted == -1))
         return true;
 
+    const Profile* profile = Nexus::getInstance().getProfile();
     if ((encrypted == 1) || (encrypted == -1))
-        return EncryptedDb::check(passkey, getHistoryPath(Nexus::getProfile()->getName(), encrypted));
+    {
+        return EncryptedDb::check(passkey, getHistoryPath(profile->getName(),
+                                                          encrypted));
+    }
 
     return true;
 }
@@ -205,10 +209,15 @@ QString HistoryKeeper::getHistoryPath(QString currentProfile, int encrypted)
     if (currentProfile.isEmpty())
         currentProfile = Settings::getInstance().getCurrentProfile();
 
-    if (encrypted == 1 || (encrypted == -1 && Nexus::getProfile()->isEncrypted()))
+    const Profile* profile = Nexus::getInstance().getProfile();
+    if (encrypted == 1 || (encrypted == -1 && profile->isEncrypted()))
+    {
         return baseDir.filePath(currentProfile + ".qtox_history.encrypted");
+    }
     else
+    {
         return baseDir.filePath(currentProfile + ".qtox_history");
+    }
 }
 
 bool HistoryKeeper::isFileExist(bool encrypted)
@@ -228,9 +237,10 @@ void HistoryKeeper::removeHistory()
 
 QList<HistoryKeeper::HistMessage> HistoryKeeper::exportMessagesDeleteFile()
 {
-    auto msgs = getInstance(*Nexus::getProfile())->exportMessages();
+    const Profile* profile = Nexus::getInstance().getProfile();
+    auto msgs = getInstance(*profile)->exportMessages();
     qDebug() << "Messages exported";
-    getInstance(*Nexus::getProfile())->removeHistory();
+    getInstance(*profile)->removeHistory();
 
     return msgs;
 }

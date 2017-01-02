@@ -37,6 +37,7 @@ LoginScreen::LoginScreen(QWidget *parent) :
     ui(new Ui::LoginScreen),
     quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
 
     // permanently disables maximize button https://github.com/qTox/qTox/issues/1973

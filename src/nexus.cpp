@@ -49,15 +49,23 @@
  * This class is in charge of connecting various systems together
  * and forwarding signals appropriately to the right objects,
  * it is in charge of starting the GUI and the Core.
+ *
+ *
+ * @fn getProfile
+ * @brief Get current user profile.
+ * @return nullptr if not started, profile otherwise.
+ *
+ *
+ * @fn getDesktopGUI
+ * @brief Get desktop GUI widget.
+ * @return nullptr if not started, desktop widget otherwise.
  */
 
 Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
-static Nexus* nexus{nullptr};
-
-Nexus::Nexus(QObject *parent) :
-    QObject(parent),
-    profile{nullptr},
+Nexus::Nexus() :
+    QObject(),
+    mProfile{nullptr},
     widget{nullptr},
     loginScreen{nullptr}
 {
@@ -65,10 +73,7 @@ Nexus::Nexus(QObject *parent) :
 
 Nexus::~Nexus()
 {
-    delete widget;
-    delete loginScreen;
-    delete profile;
-    Settings::getInstance().saveGlobal();
+    delete mProfile;
 #ifdef Q_OS_MAC
     delete globalMenuBar;
 #endif
@@ -83,6 +88,7 @@ Nexus::~Nexus()
 void Nexus::start()
 {
     qDebug() << "Starting up";
+    assert(QThread::currentThread() == qApp->thread());
 
     // Setup the environment
     qRegisterMetaType<Status>("Status");
@@ -100,8 +106,6 @@ void Nexus::start()
     qRegisterMetaType<ToxFile::FileDirection>("ToxFile::FileDirection");
     qRegisterMetaType<std::shared_ptr<VideoFrame>>("std::shared_ptr<VideoFrame>");
     qRegisterMetaType<ToxId>("ToxId");
-
-    loginScreen = new LoginScreen();
 
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
@@ -135,12 +139,10 @@ void Nexus::start()
     windowMapper = new QSignalMapper(this);
     connect(windowMapper, SIGNAL(mapped(QObject*)), this, SLOT(onOpenWindow(QObject*)));
 
-    connect(loginScreen, &LoginScreen::windowStateChanged, this, &Nexus::onWindowStateChanged);
-
     retranslateUi();
 #endif
 
-    if (profile)
+    if (mProfile)
         showMainGUI();
     else
         showLogin();
@@ -151,31 +153,35 @@ void Nexus::start()
  */
 void Nexus::showLogin()
 {
+    loginScreen = new LoginScreen();
+
+#ifdef Q_OS_MAC
+    connect(loginScreen, &LoginScreen::windowStateChanged,
+            this, &Nexus::onWindowStateChanged);
+#endif
+
     delete widget;
     widget = nullptr;
 
-    delete profile;
-    profile = nullptr;
+    delete mProfile;
+    mProfile = nullptr;
 
     loginScreen->reset();
-    loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
     loginScreen->show();
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    loginScreen->move(QApplication::desktop()->screen()->rect().center() -
+                      loginScreen->rect().center());
+    qApp->setQuitOnLastWindowClosed(true);
 }
 
 void Nexus::showMainGUI()
 {
-    assert(profile);
+    assert(mProfile);
 
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
-    loginScreen->close();
-
-    // Create GUI
+    qApp->setQuitOnLastWindowClosed(false);
     widget = Widget::getInstance();
 
-    // Start GUI
-    widget->init();
-    GUI::getInstance();
+    delete loginScreen;
+    loginScreen = nullptr;
 
     // Zetok protection
     // There are small instants on startup during which no
@@ -183,8 +189,8 @@ void Nexus::showMainGUI()
     // e.g. between two modal windows. Disable the GUI to prevent that.
     GUI::setEnabled(false);
 
-    // Connections
-    Core* core = profile->getCore();
+    Core* core = mProfile->getCore();
+
     connect(core, &Core::connected,                  widget, &Widget::onConnected);
     connect(core, &Core::disconnected,               widget, &Widget::onDisconnected);
     connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore, Qt::BlockingQueuedConnection);
@@ -216,7 +222,7 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
-    profile->startCore();
+    core->start();
 }
 
 /**
@@ -224,38 +230,8 @@ void Nexus::showMainGUI()
  */
 Nexus& Nexus::getInstance()
 {
-    if (!nexus)
-        nexus = new Nexus;
-
-    return *nexus;
-}
-
-void Nexus::destroyInstance()
-{
-    delete nexus;
-    nexus = nullptr;
-}
-
-/**
- * @brief Get core instance.
- * @return nullptr if not started, core instance otherwise.
- */
-Core* Nexus::getCore()
-{
-    Nexus& nexus = getInstance();
-    if (!nexus.profile)
-        return nullptr;
-
-    return nexus.profile->getCore();
-}
-
-/**
- * @brief Get current user profile.
- * @return nullptr if not started, profile otherwise.
- */
-Profile* Nexus::getProfile()
-{
-    return getInstance().profile;
+    static Nexus nexus;
+    return nexus;
 }
 
 /**
@@ -264,18 +240,13 @@ Profile* Nexus::getProfile()
  */
 void Nexus::setProfile(Profile* profile)
 {
-    getInstance().profile = profile;
-    if (profile)
-        Settings::getInstance().loadPersonal(profile);
-}
+    delete mProfile;
+    mProfile = profile;
 
-/**
- * @brief Get desktop GUI widget.
- * @return nullptr if not started, desktop widget otherwise.
- */
-Widget* Nexus::getDesktopGUI()
-{
-    return getInstance().widget;
+    if (mProfile)
+    {
+        Settings::getInstance().loadPersonal(mProfile);
+    }
 }
 
 QString Nexus::getSupportedImageFilter()

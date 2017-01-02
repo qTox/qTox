@@ -18,10 +18,12 @@
 */
 
 #include "toxsave.h"
-#include "src/widget/gui.h"
-#include "src/core/core.h"
-#include "src/persistence/settings.h"
-#include "src/widget/tool/profileimporter.h"
+#include "nexus.h"
+#include "widget/widget.h"
+#include "core/core.h"
+#include "persistence/settings.h"
+#include "widget/tool/profileimporter.h"
+
 #include <QCoreApplication>
 #include <QFileInfo>
 
@@ -53,6 +55,6 @@ bool handleToxSave(const QString& path)
     while (!core->isReady())
         qApp->processEvents();
 
-    ProfileImporter importer(GUI::getMainWidget());
+    ProfileImporter importer(Nexus::getInstance().getDesktopGUI());
     return importer.importProfile(path);
 }
