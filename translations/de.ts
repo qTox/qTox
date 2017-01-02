@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation>Verwenden Sie den Schieberegler um die Verstärkung zwischen %1dB und %2dB festzulegen.</translation>
+        <translation>Verwende den Schieberegler um die Verstärkung zwischen %1dB und %2dB festzulegen.</translation>
     </message>
     <message>
         <source>Select region</source>
@@ -125,7 +125,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eine Liste von allen bekannten Problemen kann hier %1 auf Github gefunden werden. Wenn du einen Fehler oder eine Sicherheitslücke in qTox findest, bitte melde diese nach unseren Richtlinien in unserem Wiki-Artikel %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -139,17 +139,17 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished">Hier klicken, um einen Fehler zu melden.</translation>
+        <translation>Hier klicken, um einen Fehler zu melden.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Eine komplette Liste von %1 gibt es bei Github</translation>
+        <translation>Eine komplette Liste von allen %1 gibt es auf Github.</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>Mitwirkende</translation>
+        <translation>Mitwirkenden</translation>
     </message>
 </context>
 <context>
@@ -187,7 +187,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>status message</source>
-        <translation type="unfinished">Status-Nachricht</translation>
+        <translation>Status-Nachricht</translation>
     </message>
     <message>
         <source>Public key:</source>
@@ -256,11 +256,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisches Akzeptieren von Dateien, falls gesetzt</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabefeld für Notizen über den Kontakt</translation>
     </message>
 </context>
 <context>
@@ -329,15 +329,15 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished">Tox-ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
+        <translation>Tox-ID, bestehend aus entweder 76 hexadezimalen Zeichen oder name@beispiel.de</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished">Gib die Tox-ID deines Freunds ein</translation>
+        <translation>Gib die Tox-ID deines Freunds ein</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished">Nachricht deiner Freundschaftsanfrage</translation>
+        <translation>Nachricht deiner Freundschaftsanfrage</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
@@ -585,7 +585,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Du versuchst das Senden einer sequentiellen Datei. Dies wird nicht funktionieren.</translation>
     </message>
     <message>
         <source>away</source>
@@ -600,17 +600,17 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Offline</translation>
+        <translation>Offline</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">Online</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 ist jetzt %2</translation>
+        <translation>%1 ist jetzt %2</translation>
     </message>
 </context>
 <context>
@@ -648,8 +648,8 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Kreis entfernen</translation>
     </message>
     <message>
-        <source>Open all in new window</source>
-        <translation>Alle in neuem Fenster öffnen</translation>
+        <source>Open all in a new window</source>
+        <translation>Alle in einem neuen Fenster öffnen</translation>
     </message>
 </context>
 <context>
@@ -710,7 +710,7 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
     <message>
         <source>The chat history password failed. Please try another?</source>
         <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Entschuldigung, das Passwort für deinen Verlauf war nicht korrekt.  Nochmal versuchen?</translation>
+        <translation>Entschuldigung, das Passwort für deinen Verlauf war nicht korrekt. Nochmal versuchen?</translation>
     </message>
     <message>
         <source>Disable chat history</source>
@@ -741,7 +741,7 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
     </message>
     <message>
         <source>Filename</source>
-        <translatorcomment>Ausgelassen</translatorcomment>
+        <translatorcomment>filename</translatorcomment>
         <translation>Dateiname</translation>
     </message>
     <message>
@@ -893,19 +893,19 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation>Verschieben in Kreis...</translation>
+        <translation>Verschieben in eine Gruppe...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation>Zu neuem Kreis</translation>
+        <translation>Zu neuer Gruppe</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
-        <translation>Aus Kreis &quot;%1&quot; entfernen</translation>
+        <translation>Aus Gruppe &quot;%1&quot; entfernen</translation>
     </message>
     <message>
-        <source>Move  to circle &quot;%1&quot;</source>
-        <translation>In Kreis &quot;%1&quot; verschieben</translation>
+        <source>Move to circle &quot;%1&quot;</source>
+        <translation>In Gruppe &quot;%1&quot; verschieben</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
@@ -965,7 +965,7 @@ Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Ve
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
@@ -1053,7 +1053,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation type="unfinished">Zusammen mit Betriebssystem starten</translation>
+        <translation>Automatisch mit Betriebssystem starten</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
@@ -1078,7 +1078,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished">Nach der festgelegten Zeit wird dein Status auf „Abwesend“ gesetzt.</translation>
+        <translation>Nach der festgelegten Zeit wird dein Status auf „Abwesend“ gesetzt.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
@@ -1086,7 +1086,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished">Hinweis bei Statusänderungen deiner Freunde anzeigen</translation>
+        <translation>Statusänderungen deiner Freunde anzeigen</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1102,7 +1102,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Mit Betriebssystem starten (aktuelles Profil).</translation>
+        <translation>Mit Betriebssystem starten (aktuelles Profil)</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1110,7 +1110,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation>Auch Ton abspielen, wenn man beschäftigt ist.</translation>
+        <translation>Auch einen Ton abspielen, wenn man beschäftigt ist</translation>
     </message>
 </context>
 <context>
@@ -1177,7 +1177,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished">Link-Adresse kopieren</translation>
+        <translation>Link-Adresse kopieren</translation>
     </message>
 </context>
 <context>
@@ -1321,9 +1321,9 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
         <translation>Profil</translation>
     </message>
     <message>
-        <source>Rename profile.</source>
+        <source>Rename profile</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation>Profil umbenennen.</translation>
+        <translation>Profil umbenennen</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
@@ -1361,9 +1361,9 @@ Teile sie mit deinen Freunden um zu kommunizieren.</translation>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <source>Delete profile.</source>
+        <source>Delete profile</source>
         <comment>delete profile button tooltip</comment>
-        <translation>Profil löschen.</translation>
+        <translation>Profil löschen</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
@@ -1423,7 +1423,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Service zum registrieren</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1437,91 +1437,91 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Namenseingabe</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Name sichtbar für Kontakte</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Status-Nachricht Eingabefeld</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Status-Nachricht sichtbar für Kontakte</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Deine Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-Bild als Datei speichern</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>QR-Bild zur Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Nutzername, der auf ToxMe angezeigt werden soll</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionale Biographie, die auf ToxMe angezeigt werden soll</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe Service Adresse</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbarkeit auf dem ToxMe Service</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Update ToxMe-Eintrag</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Profil umbenennen.</translation>
+        <translation>Profil umbenennen</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Profil löschen.</translation>
+        <translation>Profil löschen</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Profil exportieren</translation>
+        <translation>Profil exportieren</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort aus dem Profil löschen</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil Passwort ändern</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mein Name:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mein Status:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Mein Nutzername</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Meine Biographie</translation>
     </message>
 </context>
 <context>
@@ -1643,35 +1643,35 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Nutzername-Eingabefeld</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort-Eingabefeld. Du kannst es leer lassen (kein Passwort), oder mindestens 6 Zeichen eingeben. </translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwortbestätigungsfeld</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle ein neues Profil</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste der Profile</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste der Profile</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwort-Eingabe</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade Auswahl automatisch</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1679,15 +1679,15 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade gewähltes Profil</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Neues Profil erstellen</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade ein existierendes Profil</translation>
     </message>
 </context>
 <context>
@@ -1711,7 +1711,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Eine neue Gruppe eröffnen</translation>
+        <translation>Einen Gruppe-Chat eröffnen</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
@@ -1727,19 +1727,19 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil öffnen</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Profil, wenn angeklickt</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Status-Nachricht Eingabefeld</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished">Status-Nachricht eingeben, die bei Anderen angezeigt werden soll</translation>
+        <translation>Status-Nachricht eingeben, die bei Anderen angezeigt werden soll.</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1747,51 +1747,51 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbarkeitsstatus setzen</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt suchen</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktsuche für bekannte Freunde</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortierung und Sichtbarkeit</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortierung der Freunde und Sichtbarkeit</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Freunde hinzufügen</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppenchat</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Gruppenchat-Management</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateitransferhistorie</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Dateitransferhistorie</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -1932,8 +1932,8 @@ Save format changes are possible, which may result in data loss.</source>
         <translation>Datei kann nicht geöffnet werden.</translation>
     </message>
     <message>
-        <source>Current profile: </source>
-        <translation>Aktuelles Profil: </translation>
+        <source>Current profile:</source>
+        <translation>Aktuelles Profil:</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1941,7 +1941,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation>Kann dieses Bild nicht lesen.</translation>
+        <translation>Dieses Bild kann nicht lesen werden.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
@@ -2332,7 +2332,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Entferne den Chat-Verlauf mit dem Freund, wenn gewählt</translation>
     </message>
 </context>
 <context>
@@ -2391,26 +2391,26 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätige Passwort</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätige Passworteingabe</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Passworteingabe</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Passworteingabe-Feld, mindestens 6 Zeichen lang</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Circle #%1</source>
-        <translation>Kreis #%1</translation>
+        <translation>Gruppe #%1</translation>
     </message>
 </context>
 <context>
@@ -2473,8 +2473,8 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <translation>Px</translation>
     </message>
     <message>
-        <source>Size: </source>
-        <translation>Größe: </translation>
+        <source>Size:</source>
+        <translation>Größe:</translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
@@ -2486,7 +2486,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Wählen Sie die Textstil Einstellung.</translation>
+        <translation>Wähle die Textstil Einstellungen.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2580,7 +2580,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source> px</source>
-        <translation> Pixel</translation>
+        <translation>Pixel</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2713,22 +2713,22 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation>abwesend</translation>
+        <translation>Abwesend</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation>beschäftigt</translation>
+        <translation>Beschäftigt</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation>offline</translation>
+        <translation>Offline</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation>online</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
@@ -2749,7 +2749,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished">Dein Status</translation>
+        <translation>Dein Status</translation>
     </message>
     <message>
         <source>Group invites</source>
@@ -2766,11 +2766,11 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Create new group...</source>
-        <translation>Neue Gruppe erstellen ...</translation>
+        <translation>Neuen Gruppenchat erstellen ...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
-        <translation>Neuen Kreis hinzufügen ...</translation>
+        <translation>Neuen Gruppe hinzufügen ...</translation>
     </message>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
@@ -2782,8 +2782,8 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
-            <numerusform>%n neue Gruppeneinladung</numerusform>
-            <numerusform>%n neue Gruppeneinladungen</numerusform>
+            <numerusform>%n neue Gruppenchatseinladung</numerusform>
+            <numerusform>%n neue Gruppenchatseinladungen</numerusform>
         </translation>
     </message>
     <message>
@@ -2805,7 +2805,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation></translation>
+        <translation>Offline</translation>
     </message>
     <message>
         <source>Friends</source>
@@ -2813,7 +2813,7 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     </message>
     <message>
         <source>Groups</source>
-        <translation>Gruppen</translation>
+        <translation>Gruppenchats</translation>
     </message>
     <message>
         <source>Search Contacts</source>
