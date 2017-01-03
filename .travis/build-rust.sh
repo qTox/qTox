@@ -57,11 +57,20 @@ build_libsodium() {
 }
 
 build_rust_bits() {
-    # TODO: make it a loop over paths once there are more rust bits
-    cd tools/update-server/qtox-updater-sign
-    cargo build --verbose
-    cargo test --verbose
-    # add `cargo doc` once it's needed?
+    local rusty_bits=(
+        tools/update-server/qtox-updater-genkeys
+        tools/update-server/qtox-updater-sign
+    )
+
+    for project in "${rusty_bits[@]}"
+    do
+        pushd .
+        cd "$project"
+        cargo build --verbose
+        cargo test --verbose
+        # add `cargo doc` once it's needed?
+        popd
+    done
 }
 
 main() {

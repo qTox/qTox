@@ -13,14 +13,3 @@ argument, or pipe data via stdin.
 # or
 ./qtox-updater-sign < sign-this-binary > signature_file
 ```
-
-# Compiling
-
-Requires `libsodium` and Rust.
-
-To build a debug version: `cargo build`
-
-To build a release version: `cargo build --release`
-
-This will produce `qtox-updater-sign` binary in `target/debug` or
-`target/release` directory respectively.
