@@ -107,16 +107,16 @@ Easy qTox install is provided for variety of distributions:
 * [Arch](#arch)
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
-     
+
 #### Community builds
-     
+
 There are community builds for wide range of distrubutions:
-     
+
 | Link         | Distros                                        | Architecture          |
 |--------------|------------------------------------------------|-----------------------|
 | [OBS]        | Arch, CentOS, Debian, Fedora, openSUSE, Ubuntu | x86, x86_64           |
 | [Ubuntu PPA] | Ubuntu                                         | arm64, armhf, ppc64el |
- 
+
 For release version, install `qtox`. To get latest changes, install
 `qtox-alpha`.
 
