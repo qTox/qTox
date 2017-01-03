@@ -377,6 +377,10 @@ or Qt classes use `<>` tags, e.g. `cstdio` and `QString` from `src/main.cpp`:
 
 ## Coding style
 
+There's a [coding style file](https://github.com/qTox/qTox/tree/master/tools/configs/qTox-Coding-Style.xml)
+for Qt Creator that handles some of the rules below.
+
+
 ```C++
 function()
 {
