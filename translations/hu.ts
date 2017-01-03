@@ -325,11 +325,6 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>Elutasítás</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Ez a Tox ID nem létezik</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox azonosító, 76 hexadecimális karakter, vagy nev@pelda.com</translation>
     </message>
@@ -344,6 +339,11 @@ ami a videóhívások problémáihoz vezethet.</translation>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Írja be az üzenetét a partnerkérelemhez, vagy hagyja üresen az alapértelmezett üzenet küldéséhez</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -613,6 +613,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 most %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ A chat előzmény letiltása sértetlenül hagyja a titkosított előzményeket 
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
         <translation>Kérem adja meg a &quot;%1&quot; profil csevegési előzményeinek jelszavát.</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1504,19 +1516,19 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation>Név:</translation>
+        <translation type="unfinished">Nevem:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Állapotom:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished">Felhasználónevem</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation>Biográfia</translation>
+        <translation type="unfinished">Rólam</translation>
     </message>
 </context>
 <context>
@@ -2643,31 +2655,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Partnerkérelem nem lehetséges</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>távol</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>elfoglalt</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>nem elérhető</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>elérhető</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 már %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
