@@ -46,12 +46,19 @@ CONFIG   += silent
 
 # Hardening flags (ASLR, warnings, etc)
 # TODO: add `-Werror` to hardening flags once all warnings are fixed
-QMAKE_CXXFLAGS += -fstack-protector-all \
-                  -fPIE \
-                  -Wstack-protector \
-                  -Wstrict-overflow \
-                  -Wstrict-aliasing \
-                  --param ssp-buffer-size=1
+win32 {
+    QMAKE_CXXFLAGS += -fPIE \
+                      -Wstrict-overflow \
+                      -Wstrict-aliasing
+} else {
+    QMAKE_CXXFLAGS += -fstack-protector-all \
+                      -fPIE \
+                      -Wstack-protector \
+                      -Wstrict-overflow \
+                      -Wstrict-aliasing \
+                      --param ssp-buffer-size=1
+}
+
 # osx & windows cannot into security (build on it fails with those enabled)
 unix:!macx {
     QMAKE_LFLAGS += -Wl,-z,now -Wl,-z,relro
@@ -117,6 +124,13 @@ win32 {
             -ltoxav \
             -ltoxcore \
             -ltoxencryptsave \
+            -ltoxgroup \
+            -ltoxmessenger \
+            -ltoxfriends \
+            -ltoxnetcrypto \
+            -ltoxdht \
+            -ltoxnetwork \
+            -ltoxcrypto \
             -lsodium \
             -lvpx \
             -lpthread \
@@ -273,6 +287,13 @@ win32 {
                    ./libs/lib/libopus.a \
                    ./libs/lib/libtoxencryptsave.a \
                    ./libs/lib/libtoxcore.a \
+                   ./libs/lib/libtoxgroup.a \
+                   ./libs/lib/libtoxmessenger.a \
+                   ./libs/lib/libtoxfriends.a \
+                   ./libs/lib/libtoxnetcrypto.a \
+                   ./libs/lib/libtoxdht.a \
+                   ./libs/lib/libtoxnetwork.a \
+                   ./libs/lib/libtoxcrypto.a \
                    ./libs/lib/libopenal.a \
                    ./libs/lib/libsodium.a \
                    ./libs/lib/libavdevice.a \

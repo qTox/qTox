@@ -46,3 +46,7 @@ qrc_*
 Makefile
 *.qm
 /.qmake.stash
+
+# Rust
+target/
+.cargo/
