@@ -1,4 +1,5 @@
 # Install Instructions
+
 - [Dependencies](#dependencies)
 - [Linux](#linux)
   - [Simple install](#simple-install)
@@ -38,7 +39,7 @@
 ## Dependencies
 
 | Name          | Version     | Modules                                           |
-|---------------|-------------|-------------------------------------------------- |
+|---------------|-------------|---------------------------------------------------|
 | [Qt]          | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
 | [toxcore]     | = 0.1.\*    | core, av                                          |
@@ -71,7 +72,7 @@ To disable: `DISABLE_PLATFORM_EXT=YES`
 | Name        | Version |
 |-------------|---------|
 | [Atk]       | >= 2.14 |
-| [Cairo]     | |
+| [Cairo]     |         |
 | [GdkPixbuf] | >= 2.31 |
 | [GLib]      | >= 2.0  |
 | [GTK+]      | >= 2.0  |
@@ -84,16 +85,16 @@ ENABLE_SYSTRAY_GTK_BACKEND=NO`
 
 Disabled by default.
 
-| Name        | Version |
-|-------------|---------|
-| [Atk]       | >= 2.14 |
-| [Cairo]     | |
-| [DBus Menu] | >= 0.6  |
-| [GdkPixbuf] | >= 2.31 |
-| [GLib]      | >= 2.0  |
-| [GTK+]      | >= 2.0  |
-| [libappindicator] | >= 0.4.92 |
-| [Pango]     | >= 1.18 |
+| Name              | Version         |
+|-------------------|-----------------|
+| [Atk]             | >= 2.14         |
+| [Cairo]           |                 |
+| [DBus Menu]       | >= 0.6          |
+| [GdkPixbuf]       | >= 2.31         |
+| [GLib]            | >= 2.0          |
+| [GTK+]            | >= 2.0          |
+| [libappindicator] | >= 0.4.92       |
+| [Pango]           | >= 1.18         |
 
 To enable: `ENABLE_SYSTRAY_UNITY_BACKEND=YES`
 
@@ -111,10 +112,10 @@ Easy qTox install is provided for variety of distributions:
      
 There are community builds for wide range of distrubutions:
      
-Link | Distros | Architecture
----- | ------- | ------------
-[OBS] | Arch, CentOS, Debian, Fedora, openSUSE, Ubuntu | x86, x86_64
-[Ubuntu PPA] | Ubuntu | arm64, armhf, ppc64el
+| Link         | Distros                                        | Architecture          |
+|--------------|------------------------------------------------|-----------------------|
+| [OBS]        | Arch, CentOS, Debian, Fedora, openSUSE, Ubuntu | x86, x86_64           |
+| [Ubuntu PPA] | Ubuntu                                         | arm64, armhf, ppc64el |
  
 For release version, install `qtox`. To get latest changes, install
 `qtox-alpha`.
@@ -213,7 +214,7 @@ git clone https://github.com/qTox/qTox.git qTox
 ```
 
 The following steps assumes that you cloned the repository at
-`/home/$USER/qTox`.  If you decided to choose another location, replace
+`/home/$USER/qTox`. If you decided to choose another location, replace
 corresponding parts.
 
 
@@ -376,7 +377,7 @@ sudo ldconfig
 
 
 ### Compile qTox
-**Make sure that all the dependencies are installed.**  If you experience
+**Make sure that all the dependencies are installed.** If you experience
 problems with compiling, it's most likely due to missing dependencies, so please
 make sure that you did install *all of them*.
 
@@ -599,7 +600,7 @@ by installer automatically. Make sure that paths containing alternative `sh`,
 
 ### Cloning the Repository
 
-Clone the repository (https://github.com/qTox/qTox.git) with your preferred  Git
+Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task
 (you may need to add the path to the `git.exe` system variable Path). The
 following steps assume that you cloned the repository at `C:\qTox`. If you

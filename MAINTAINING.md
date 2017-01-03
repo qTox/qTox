@@ -34,14 +34,14 @@ git config --global alias.logs 'log --show-signature'
 - **always** use [commit message format]
 - **always** GPG-sign your commits.
 - it's preferable to make a PR with changes that you're about to commit.
-  
+
   Yes, there might be a situation where something has to be fixed "right now"
   on master..
-  
+
   Perhaps a security fix, who knows what future holds. If it's not *that*
   important, you're still better off making a PR. Even when you'll just
   fast-forward commits from PR onto the `master` branch.
-  
+
   Reasoning for it is that it's always hard to catch bugs/mistakes that you
   create, while someone else who just briefly looked at the changeset possibly
   can see a problem `:)`
@@ -53,17 +53,17 @@ git config --global alias.logs 'log --show-signature'
   be signed, and websites can fairly well mess things up.
 - **always** test PR that is being merged.
 - **always** GPG-sign PR that you're merging.
-  
+
   Commits that are about to be merged don't have to be signed, but the
   merge-commit **must** be signed. To simplify the process, and ensure that
   things are done "right", it's preferable to use the [`merge-pr.sh`] script,
   which does that for you automatically.
 - **use** [`merge-pr.sh`] script to merge PRs, e.g. `./merge-pr.sh 1234`.
-  
+
   You don't have to use it, but then you're running into risk of breaking
   travis build of master & other PRs, since it verifies all commit messages,
   indlucing merge messages.
-  
+
   Risk, that can be avoided when one doesn't type manually merge message :wink:
 - **might want** to use [`test-pr.sh`].
 - give a PR some "breathing space" right after it's created – i.e. merging
@@ -117,32 +117,32 @@ To get translations into qTox:
 4. Cherry-pick from the oldest commit.
    - check if there are multiple commits from the same author for the same
      translation. If there are, cherry-pick them accordingly:
-     
+
      ```
      git cherry-pick <commit1> <commit2>
      ```
-     
+
 5. If there were multiple commits, squash them into a single one, leaving only
    a single `feat(l10n): …` line in the commit message.
 6. Get rid of Weblate's formatting and amend the commit using
    [`./tools/deweblate-translation-file.sh`], i.e.:
-   
+
    ```
    ./tools/deweblate-translation-file.sh
    ```
-   
+
 7. For translations that haven't yet been cherry-picked repeat steps 4-6.
 8. Once done with cherry-picking, update all translation files, so that Weblate
    would get newest strings that changed in qTox:
-   
+
    ```
    ./tools/update-translation-files.sh ALL
    ```
-   
+
 9. Once PR with translation gets merged, `Reset` Weblate to current `master`,
    since without reset there would be a git conflict that would prevent Weblate
    from getting new strings.
-    
+
 **It's a good idea to lock translations on Weblate while they're in merge
 process, so that no translation effort would be lost when resetting Weblate.**
 
