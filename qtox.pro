@@ -400,7 +400,8 @@ unix {
     INSTALLS = target desktop icon
 }
 
-RESOURCES += res.qrc
+RESOURCES += res.qrc \
+             translations/translations.qrc
 
 !contains(SMILEYS, NO) {
     RESOURCES += smileys/emojione.qrc
