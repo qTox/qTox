@@ -434,7 +434,7 @@ QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
  */
 QPixmap Profile::loadAvatar()
 {
-    return loadAvatar(core->getSelfId().getPublicKey().getKey());
+    return loadAvatar(core->getSelfId().getPublicKey().toString());
 }
 
 /**
