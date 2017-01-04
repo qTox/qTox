@@ -1,0 +1,38 @@
+<RCC>
+    <qresource prefix="/translations">
+        <file>ar.qm</file>
+        <file>be.qm</file>
+        <file>bg.qm</file>
+        <file>cs.qm</file>
+        <file>da.qm</file>
+        <file>de.qm</file>
+        <file>el.qm</file>
+        <file>eo.qm</file>
+        <file>es.qm</file>
+        <file>et.qm</file>
+        <file>fi.qm</file>
+        <file>fr.qm</file>
+        <file>he.qm</file>
+        <file>hr.qm</file>
+        <file>hu.qm</file>
+        <file>it.qm</file>
+        <file>ja.qm</file>
+        <file>jbo.qm</file>
+        <file>ko.qm</file>
+        <file>lt.qm</file>
+        <file>nl.qm</file>
+        <file>no_nb.qm</file>
+        <file>pl.qm</file>
+        <file>pr.qm</file>
+        <file>pt.qm</file>
+        <file>ru.qm</file>
+        <file>sk.qm</file>
+        <file>sl.qm</file>
+        <file>sv.qm</file>
+        <file>sw.qm</file>
+        <file>tr.qm</file>
+        <file>ug.qm</file>
+        <file>uk.qm</file>
+        <file>zh.qm</file>
+    </qresource>
+</RCC>
