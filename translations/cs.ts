@@ -325,11 +325,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>Odmítnout</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Toto Tox ID neexistuje</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -613,6 +613,14 @@ může způsobovat problémy během videohovorů.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 je nyní %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -657,7 +665,7 @@ může způsobovat problémy během videohovorů.</translation>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Toxíme</translation>
+        <translation>Toxuji na qToxe</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -714,6 +722,10 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
     <message>
         <source>Disable chat history</source>
         <translation>Zakázat historii zpráv</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1031,7 @@ Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužite
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation>Po zavření (X) se qTox minimalizuje to lišty,
+        <translation>Po zavření (X) se qTox minimalizuje do lišty,
 místo ukončení.</translation>
     </message>
     <message>
@@ -1040,7 +1052,7 @@ místo ukončení.</translation>
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
         <translation>Po stisknutí minimalizovat (_) se qTox schová do lišty,
-místo do spuštěných programů.</translation>
+místo panelu úloh.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
@@ -1703,7 +1715,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation>Vytvoři skupinovou konverzaci</translation>
+        <translation>Vytvořit skupinovou konverzaci</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
@@ -2672,31 +2684,6 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Nelze požádat o přátelství</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>pryč</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>zaneprázdněn</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>nepřítomný</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>přítomný</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 je nyní %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
