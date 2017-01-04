@@ -147,6 +147,37 @@ To get translations into qTox:
 process, so that no translation effort would be lost when resetting Weblate.**
 
 
+# Releases
+
+- tag versions that are to be released, make sure that they are GPG-signed,
+  i.e. `git tag -s v1.8.0`
+- use semantic versions for tags: `vMAJOR.MINOR.PATCH`
+  - `MAJOR` – bump version when there are breaking changes to video, audio,
+    text chats, groupchats, file transfers, and any other basic functionality.
+    For other things, `MINOR` and `PATCH` are to be bumped.
+  - `MINOR` – bump version when there are:
+    - new features added
+    - UI/feature breaking changes
+    - other non-breaking changes
+  - `PATCH` – bump when there have been only fixes added. If changes include
+    something more than just bugfixes, bump `MAJOR` or `MINOR` version
+    accordingly.
+- before creating a `MAJOR`/`MINOR` release generate changelog with `clog`.
+  - in a `MAJOR`/`MINOR` release tag should include information that changelog
+    is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
+- to release a `PATCH` version after non-fix changes have landed on `master`
+  branch, checkout latest `MAJOR`/`MINOR` version and `git cherry-pick -x`
+  commits from `master` that you want `PATCH` release to include. Once
+  cherry-picking has been done, tag HEAD of the branch.
+  - when making a `PATCH` tag, include in tag message short summary of what the
+    tag release fixes, and to whom it's interesting (often only some
+    OSes/distributions would find given `PATCH` release interesting).
+- bumping a higher-level version "resets" lower-version numbers, e.g.
+  `v1.7.1 → v2.0.0`
+- create and GPG-sign tarball using [`./tools/create-tarball.sh`] script, and
+  upload the tarball to a github release.
+
+
 # How to become a maintainer?
 
 Contribute, review & test pull requests, be active, oh and don't forget to
@@ -164,3 +195,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`merge-pr.sh`]: /merge-pr.sh
 [`test-pr.sh`]: /test-pr.sh
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
+[`./tools/create-tarball.sh`]: /tools/create-tarball.sh
