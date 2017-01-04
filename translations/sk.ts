@@ -238,7 +238,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation>História konverzácie s %1 bola odstránená!</translation>
+        <translation>História chatu s %1 bola odstránená!</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -292,12 +292,12 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>Poslať žiadosť o priateľstvo</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in friend requests if the field is left blank. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation>Som %1! Zatoxujeme si?</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -325,11 +325,6 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Toto Tox ID neexistuje</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -424,7 +424,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Connection Settings</source>
-        <translation>Nastavenie pripojenia</translation>
+        <translation>Nastavenia pripojenia</translation>
     </message>
     <message>
         <source>Enable IPv6 (recommended)</source>
@@ -597,7 +597,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>zaneprázdnený</translation>
     </message>
     <message>
         <source>offline</source>
@@ -612,6 +612,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -642,23 +650,23 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Rename circle</source>
         <comment>Menu for renaming a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Premenovať kruh</translation>
     </message>
     <message>
         <source>Remove circle</source>
         <comment>Menu for removing a circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť kruh</translation>
     </message>
     <message>
         <source>Open all in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť všetky v novom okne</translation>
     </message>
 </context>
 <context>
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxujem na qToxu</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -712,6 +720,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Disable chat history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -807,15 +819,15 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Transferred Files</source>
         <comment>&quot;Headline&quot; of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Prenesené súbory</translation>
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>Stiahnuté</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>Odoslané</translation>
     </message>
 </context>
 <context>
@@ -886,16 +898,16 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pozvať do skupiny</translation>
     </message>
     <message>
         <source>Move to circle...</source>
         <comment>Menu to move a friend into a different circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>Presunúť do kruhu...</translation>
     </message>
     <message>
         <source>To new circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Do nového kruhu</translation>
     </message>
     <message>
         <source>Remove from circle &apos;%1&apos;</source>
@@ -907,7 +919,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť chat v novom okne</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -915,7 +927,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>To new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Do novej skupiny</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
@@ -923,21 +935,21 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Set alias...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeniť meno...</translation>
     </message>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automaticky prijať súbory od tohto priateľa</translation>
     </message>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť priateľa</translation>
     </message>
     <message>
         <source>Show details</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť podrobnosti</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -958,7 +970,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaneprázdnený</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -1005,53 +1017,55 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk:</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť ikonu v systémovej lište</translation>
     </message>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nastaví svetlú ikonu v systémovej lište.</translation>
     </message>
     <message>
         <source>Light icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Svetlá ikona</translation>
     </message>
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox sa spustí minimalizovaný v systémovej lište.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustiť v systémovej lište</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
 instead of closing itself.</source>
         <comment>toolTip for close to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Po zatvorení (X) sa qTox minimalizuje do systémovej lišty,
+namiesto ukončenia.</translation>
     </message>
     <message>
         <source>Close to tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Zavrieť do systémovej lišty</translation>
     </message>
     <message>
         <source>After pressing minimize (_) qTox will minimize itself to tray,
 instead of system taskbar.</source>
         <comment>toolTip for minimize to tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Po minimalizovaní (_) sa qTox schová do systémovej lišty,
+namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Minimize to tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimalizovať do systémovej lišty</translation>
     </message>
     <message>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické spustenie</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
@@ -1059,48 +1073,48 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Set where files will be saved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte kam sa majú ukladať súbory.</translation>
     </message>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Je možné automatické prijatie nastaviť zvlášť pre každého priateľa, po kliknutí pravým na priateľa.</translation>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické prijatie súborov</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavte 0 pre vypnutie</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Váš stav sa pri neaktivite zmení na Preč po uplynutí nastaveného času.</translation>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky Preč po (0 pre vypnutie):</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Upozornenie pri zmene stavu kontaktov</translation>
     </message>
     <message>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pri novej správe:</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehrať zvuk</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Odoslanie správ offline</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustiť qTox pri štarte operačného systému (aktuálny profil).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1108,7 +1122,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Play sound while Busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Prehrať zvuk aj v stavu Zaneprázdnený</translation>
     </message>
 </context>
 <context>
@@ -1206,7 +1220,7 @@ instead of system taskbar.</source>
     <message>
         <source>1 user in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>1 užívateľ v chatu</translation>
     </message>
     <message>
         <source>%1 users in chat</source>
@@ -1246,11 +1260,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Create new group</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť novú skupinu</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvánky do skupín</translation>
     </message>
     <message>
         <source>Join</source>
@@ -1273,11 +1287,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Set title...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeniť názov...</translation>
     </message>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť chat v novom okne</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -1286,11 +1300,11 @@ instead of system taskbar.</source>
     <message>
         <source>Quit group</source>
         <comment>Menu to quit a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opustiť skupinu</translation>
     </message>
     <message>
         <source>1 user in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>1 užívateľ v chatu</translation>
     </message>
 </context>
 <context>
@@ -1699,19 +1713,19 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Add friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridať priateľov</translation>
     </message>
     <message>
         <source>Create a group chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvorenie skupinového chatu</translation>
     </message>
     <message>
         <source>View completed file transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť ukončené prenosy súborov</translation>
     </message>
     <message>
         <source>Change your settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeniť nastavenia</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1860,22 +1874,24 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vaši priatelia budú vidieť, že píšete.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation type="unfinished"></translation>
+        <translation>Odosielať upozornenia o písaní</translation>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>Udržiavať históriu chatu</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation type="unfinished"></translation>
+        <translation>NoSpam je časť vášho Tox ID.
+Keď dostávate nežiadúce žiadosti o priateľstvo, zmeňte si NoSpam.
+Po zmene vám nebudú môcť poslať žiadosť pomocou starého ID, ale zachováte si súčastných priateľov.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -1884,17 +1900,19 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation type="unfinished"></translation>
+        <translation>NoSpam je časť vášho ID, ktorú môžete ľubovoľne meniť.
+Keď dostávate nežiadúce žiadosti o priateľstvo, zmeňte si NoSpam.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation type="unfinished"></translation>
+        <translation>Generovať náhodný NoSpam</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Udržiavanie histórie chatu je stále vo vývoji.
+Sú možné zmeny formátu, ktoré môžu spôsobiť stratu dát.</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2229,7 +2247,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished"></translation>
+        <translation>Som %1! Zatoxujeme si?</translation>
     </message>
     <message>
         <source>None</source>
@@ -2302,7 +2320,7 @@ It will be installed when qTox restarts.</source>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť priateľa</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2604,7 +2622,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Busy</source>
         <comment>Button to set your status to &apos;Busy&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaneprázdnený</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
@@ -2671,7 +2689,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>File transfers</source>
-        <translation type="unfinished"></translation>
+        <translation>Prenosy súborov</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2696,31 +2714,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2738,7 +2731,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvánky do skupín</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2767,10 +2760,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n nová pozvánka do skupiny</numerusform>
+            <numerusform>%n nové pozvánky do skupín</numerusform>
+            <numerusform>%n nových pozvánok do skupín</numerusform>
         </translation>
     </message>
     <message>
