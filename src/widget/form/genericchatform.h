@@ -20,10 +20,11 @@
 #ifndef GENERICCHATFORM_H
 #define GENERICCHATFORM_H
 
-#include <QWidget>
-#include <QPoint>
 #include <QDateTime>
 #include <QMenu>
+#include <QPoint>
+#include <QWidget>
+
 #include "src/core/corestructs.h"
 #include "src/chatlog/chatmessage.h"
 #include "src/core/toxid.h"
@@ -46,6 +47,7 @@ class FlyoutOverlayWidget;
 class ContentLayout;
 class QSplitter;
 class GenericNetCamView;
+class QToolButton;
 
 namespace Ui {
     class MainWindow;
@@ -123,14 +125,17 @@ protected:
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
     QWidget *headWidget;
-    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
+    QPushButton* fileButton, *screenshotButton, *emoteButton, *callButton;
+    QPushButton* videoButton;
+    QToolButton *volButton, *micButton;
     FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;
     ChatTextEdit *msgEdit;
     QPushButton *sendButton;
     ChatLog *chatWidget;
     QDateTime earliestMessage;
-    QDateTime historyBaselineDate = QDateTime::currentDateTime(); // used by HistoryKeeper to load messages from t to historyBaselineDate (excluded)
+
+    QDateTime historyBaselineDate = QDateTime::currentDateTime();
     bool audioInputFlag;
     bool audioOutputFlag;
     QSplitter* bodySplitter;
