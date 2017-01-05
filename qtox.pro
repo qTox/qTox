@@ -388,7 +388,7 @@ macx {
     LIBPATH += /usr/local/lib
 }
 
-unix {
+freebsd {
     target.path  = $$PREFIX/bin
 
     desktop.files = qTox.desktop
