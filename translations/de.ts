@@ -406,7 +406,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished">Wenn gesetzt, werden die Benutzerdaten im Arbeitsverzeichnis statt im üblichen Konfigurations-Verzeichnis gesichert</translation>
+        <translation>Benutzerdaten im Arbeitsverzeichnis statt im üblichen Konfigurations-Verzeichnis abspeichern</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
