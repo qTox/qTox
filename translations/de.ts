@@ -328,7 +328,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished">Gib die Tox-ID deines Freunds ein</translation>
+        <translation>Tox ID deines Freundes eingeben</translation>
     </message>
     <message>
         <source>Friend request message</source>
@@ -390,7 +390,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished">Du kannst dich nicht abmelden, solange ein noch Anruf aktiv ist!</translation>
+        <translation>Du kannst dich nicht abmelden, solange ein Anruf noch aktiv ist!</translation>
     </message>
     <message>
         <source>Save File</source>
