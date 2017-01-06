@@ -115,15 +115,21 @@ qt5_add_resources(
   DEPENDS ${${PROJECT_NAME}_QM_FILES}
 )
 
-if(NOT ${SMILEYS})
-  set(SMILEYS, "")
+if(NOT SMILEYS)
+  set(SMILEYS "")
 endif()
 
-if(NOT ${SMILEYS} MATCHES "NO")
-  qt5_add_resources(smileys/emojione.qrc)
-  if(NOT ${SMILEYS} MATCHES "MIN")
-    qt5_add_resources(smileys/smileys.qrc)
+if(NOT "${SMILEYS}" STREQUAL "DISABLED")
+  qt5_add_resources(
+          ${PROJECT_NAME}_RESOURCES
+          smileys/emojione.qrc)
+
+  if(NOT "${SMILEYS}" STREQUAL "MIN")
+    qt5_add_resources(
+            ${PROJECT_NAME}_RESOURCES
+            smileys/smileys.qrc)
   endif()
+
 endif()
 
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc.in"

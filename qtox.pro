@@ -406,7 +406,7 @@ freebsd {
 RESOURCES += res.qrc \
              translations/translations.qrc
 
-!contains(SMILEYS, NO) {
+!contains(SMILEYS, DISABLED) {
     RESOURCES += smileys/emojione.qrc
     !contains(SMILEYS, MIN) {
         RESOURCES += smileys/smileys.qrc
