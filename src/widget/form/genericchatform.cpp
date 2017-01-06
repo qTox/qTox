@@ -49,7 +49,7 @@
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-GenericChatForm::GenericChatForm(QWidget *parent)
+GenericChatForm::GenericChatForm(QWidget* parent)
   : QWidget(parent, Qt::Window)
   , audioInputFlag(false)
   , audioOutputFlag(false)
@@ -498,7 +498,7 @@ void GenericChatForm::onSelectAllClicked()
 
 QString GenericChatForm::resolveToxId(const ToxPk &id)
 {
-    Friend *f = FriendList::findFriend(id);
+    Friend* f = FriendList::findFriend(id);
     if (f)
         return f->getDisplayedName();
 

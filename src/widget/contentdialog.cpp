@@ -62,7 +62,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     setStyleSheet(Style::getStylesheet(":/ui/contentDialog/contentDialog.css"));
     splitter->setHandleWidth(6);
 
-    QWidget *friendWidget = new QWidget();
+    QWidget* friendWidget = new QWidget();
     friendWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     friendWidget->setAutoFillBackground(true);
 

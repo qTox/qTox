@@ -26,7 +26,7 @@
 #include <QBitmap>
 #include <QTimer>
 
-FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget *parent)
+FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget* parent)
     : QWidget(parent)
 {
     setContentsMargins(0, 0, 0, 0);

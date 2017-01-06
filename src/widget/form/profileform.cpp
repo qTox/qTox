@@ -48,7 +48,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 
-ProfileForm::ProfileForm(QWidget *parent) :
+ProfileForm::ProfileForm(QWidget* parent) :
     QWidget{parent}, qr{nullptr}
 {
     bodyUI = new Ui::IdentitySettings;

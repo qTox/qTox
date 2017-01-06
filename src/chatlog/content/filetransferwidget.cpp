@@ -40,7 +40,7 @@
 
 #include <math.h>
 
-FileTransferWidget::FileTransferWidget(QWidget *parent, ToxFile file)
+FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
     , fileInfo(file)

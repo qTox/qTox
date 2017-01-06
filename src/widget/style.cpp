@@ -182,7 +182,7 @@ QString Style::resolve(QString qss, const QFont& baseFont)
     return qss;
 }
 
-void Style::repolish(QWidget *w)
+void Style::repolish(QWidget* w)
 {
     w->style()->unpolish(w);
     w->style()->polish(w);

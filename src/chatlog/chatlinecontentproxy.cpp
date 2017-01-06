@@ -58,7 +58,7 @@ QRectF ChatLineContentProxy::boundingRect() const
     return result;
 }
 
-void ChatLineContentProxy::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void ChatLineContentProxy::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->setClipRect(boundingRect());
     proxy->paint(painter, option, widget);
@@ -69,7 +69,7 @@ qreal ChatLineContentProxy::getAscent() const
     return 7.0;
 }
 
-QWidget *ChatLineContentProxy::getWidget() const
+QWidget* ChatLineContentProxy::getWidget() const
 {
     return proxy->widget();
 }

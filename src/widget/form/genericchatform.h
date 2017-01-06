@@ -55,7 +55,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(QWidget *parent = 0);
+    explicit GenericChatForm(QWidget* parent = 0);
     ~GenericChatForm();
 
     void setName(const QString &newName);
@@ -122,7 +122,7 @@ protected:
     int curRow;
     CroppingLabel *nameLabel;
     MaskablePixmapWidget *avatar;
-    QWidget *headWidget;
+    QWidget* headWidget;
     QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton, *videoButton, *volButton, *micButton;
     FlyoutOverlayWidget *fileFlyout;
     QVBoxLayout *headTextLayout;

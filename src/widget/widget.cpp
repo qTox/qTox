@@ -84,7 +84,7 @@ bool toxActivateEventHandler(const QByteArray&)
 
 Widget *Widget::instance{nullptr};
 
-Widget::Widget(QWidget *parent)
+Widget::Widget(QWidget* parent)
     : QMainWindow(parent),
       icon{nullptr},
       trayMenu{nullptr},
@@ -1252,7 +1252,7 @@ void Widget::onReceiptRecieved(int friendId, int receipt)
     f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
 }
 
-void Widget::addFriendDialog(Friend *frnd, ContentDialog *dialog)
+void Widget::addFriendDialog(Friend* frnd, ContentDialog *dialog)
 {
     ContentDialog *contentDialog = ContentDialog::getFriendDialog(frnd->getFriendId());
     bool isSeparate = Settings::getInstance().getSeparateWindow();
@@ -1510,7 +1510,7 @@ void Widget::onFriendRequestReceived(const ToxPk& friendPk, const QString& messa
     }
 }
 
-void Widget::updateFriendActivity(Friend *frnd)
+void Widget::updateFriendActivity(Friend* frnd)
 {
     const ToxPk &pk = frnd->getPublicKey();
     QDate date = Settings::getInstance().getFriendActivity(pk);
@@ -2209,7 +2209,7 @@ void Widget::processOfflineMsgs()
     if (OfflineMsgEngine::globalMutex.tryLock())
     {
         QList<Friend*> frnds = FriendList::getAllFriends();
-        for (Friend *f : frnds)
+        for (Friend* f : frnds)
         {
             f->getChatForm()->getOfflineMsgEngine()->deliverOfflineMsgs();
         }
@@ -2221,7 +2221,7 @@ void Widget::processOfflineMsgs()
 void Widget::clearAllReceipts()
 {
     QList<Friend*> frnds = FriendList::getAllFriends();
-    for (Friend *f : frnds)
+    for (Friend* f : frnds)
     {
         f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
     }

@@ -35,7 +35,7 @@
  * to create dialog forms.
  */
 
-ProfileImporter::ProfileImporter(QWidget *parent) : QWidget(parent)
+ProfileImporter::ProfileImporter(QWidget* parent) : QWidget(parent)
 {
 
 }

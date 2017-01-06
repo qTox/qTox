@@ -25,7 +25,7 @@
  * @brief pointer to dynamically call the constructor.
  */
 
-MaskablePixmapWidget::MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName)
+MaskablePixmapWidget::MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName)
     : QWidget(parent)
     , renderTarget(nullptr)
     , maskName(maskName)

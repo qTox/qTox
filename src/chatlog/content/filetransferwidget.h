@@ -39,7 +39,7 @@ class FileTransferWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileTransferWidget(QWidget *parent, ToxFile file);
+    explicit FileTransferWidget(QWidget* parent, ToxFile file);
     virtual ~FileTransferWidget();
     void autoAcceptTransfer(const QString& path);
     bool isActive() const;

@@ -43,7 +43,7 @@ QRectF NotificationIcon::boundingRect() const
     return QRectF(QPointF(-size.width() / 2.0, -size.height() / 2.0), size);
 }
 
-void NotificationIcon::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void NotificationIcon::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->setClipRect(boundingRect());
 

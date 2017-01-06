@@ -27,7 +27,7 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 
-FriendRequestDialog::FriendRequestDialog(QWidget *parent, const QString &userId, const QString &message) :
+FriendRequestDialog::FriendRequestDialog(QWidget* parent, const QString &userId, const QString &message) :
     QDialog(parent)
 {
     setAttribute(Qt::WA_QuitOnClose, false);

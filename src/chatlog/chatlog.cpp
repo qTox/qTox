@@ -882,7 +882,7 @@ bool ChatLog::isActiveFileTransfer(ChatLine::Ptr l)
         if (!proxy)
             continue;
 
-        QWidget *widget = proxy->getWidget();
+        QWidget* widget = proxy->getWidget();
         FileTransferWidget *transferWidget = qobject_cast<FileTransferWidget*>(widget);
         if (transferWidget && transferWidget->isActive())
             return true;

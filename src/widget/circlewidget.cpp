@@ -154,7 +154,7 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
 {
     ToxId toxId(event->mimeData()->text());
-    Friend *f = FriendList::findFriend(toxId.getPublicKey());
+    Friend* f = FriendList::findFriend(toxId.getPublicKey());
     if (f != nullptr)
         event->acceptProposedAction();
 
@@ -178,7 +178,7 @@ void CircleWidget::dropEvent(QDropEvent* event)
 
     // Check, that the user has a friend with the same ToxId
     ToxId toxId(event->mimeData()->text());
-    Friend *f = FriendList::findFriend(toxId.getPublicKey());
+    Friend* f = FriendList::findFriend(toxId.getPublicKey());
     if (!f)
         return;
 

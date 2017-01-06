@@ -28,7 +28,7 @@ class MicFeedbackWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MicFeedbackWidget(QWidget *parent = 0);
+    explicit MicFeedbackWidget(QWidget* parent = 0);
 
 protected:
     void paintEvent(QPaintEvent* event) override;

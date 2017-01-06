@@ -47,7 +47,7 @@ public:
     virtual QString getSelectedText() const final;
 
     virtual QRectF boundingRect() const final;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) final;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
 
     virtual void visibilityChanged(bool keepInMemory) final;
 

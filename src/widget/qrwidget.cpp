@@ -36,7 +36,7 @@
  * @link https://stackoverflow.com/questions/21400254/how-to-draw-a-qr-code-with-qt-in-native-c-c
  */
 
-QRWidget::QRWidget(QWidget *parent) : QWidget(parent), data("0")
+QRWidget::QRWidget(QWidget* parent) : QWidget(parent), data("0")
 //Note: The encoding fails with empty string so I just default to something else.
 //Use the setQRData() call to change this.
 {

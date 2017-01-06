@@ -74,7 +74,7 @@ private slots:
 private:
     void retranslateUi();
     void addFriendRequestWidget(const QString& friendAddress, const QString& message);
-    void removeFriendRequestWidget(QWidget *friendWidget);
+    void removeFriendRequestWidget(QWidget* friendWidget);
     void retranslateAcceptButton(QPushButton* acceptButton);
     void retranslateRejectButton(QPushButton* rejectButton);
     void deleteFriendRequest(const ToxId& toxId);
@@ -86,7 +86,7 @@ private:
     QLineEdit toxId;
     QTextEdit message;
     QVBoxLayout layout, headLayout;
-    QWidget *head, *main;
+    QWidget* head, *main;
     QString lastUsername;
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;

@@ -34,7 +34,7 @@ class LoginScreen : public QWidget
     Q_OBJECT
 
 public:
-    explicit LoginScreen(QWidget *parent = 0);
+    explicit LoginScreen(QWidget* parent = 0);
     ~LoginScreen();
     void reset();
 

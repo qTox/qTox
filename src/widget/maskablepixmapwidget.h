@@ -26,7 +26,7 @@ class MaskablePixmapWidget final : public QWidget
 {
     Q_OBJECT
 public:
-    MaskablePixmapWidget(QWidget *parent, QSize size, QString maskName = QString());
+    MaskablePixmapWidget(QWidget* parent, QSize size, QString maskName = QString());
     ~MaskablePixmapWidget();
     void autopickBackground();
     void setClickable(bool clickable);

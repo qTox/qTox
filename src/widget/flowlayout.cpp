@@ -41,7 +41,7 @@
 #include <QWidget>
 
 #include "flowlayout.h"
-FlowLayout::FlowLayout(QWidget *parent, int margin, int hSpacing, int vSpacing)
+FlowLayout::FlowLayout(QWidget* parent, int margin, int hSpacing, int vSpacing)
     : QLayout(parent), m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
     setContentsMargins(margin, margin, margin, margin);
@@ -149,7 +149,7 @@ int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
     QLayoutItem *item;
     foreach (item, itemList)
     {
-        QWidget *wid = item->widget();
+        QWidget* wid = item->widget();
         int spaceX = horizontalSpacing();
         if (spaceX == -1)
             spaceX = wid->style()->layoutSpacing(
@@ -186,11 +186,11 @@ int FlowLayout::smartSpacing(QStyle::PixelMetric pm) const
     }
     else if (parent->isWidgetType())
     {
-        QWidget *pw = static_cast<QWidget *>(parent);
+        QWidget* pw = static_cast<QWidget* >(parent);
         return pw->style()->pixelMetric(pm, 0, pw);
     }
     else
     {
-        return static_cast<QLayout *>(parent)->spacing();
+        return static_cast<QLayout* >(parent)->spacing();
     }
 }

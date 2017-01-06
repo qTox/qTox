@@ -23,7 +23,7 @@
 #include "src/widget/tool/croppinglabel.h"
 #include <QVariant>
 
-GenericChatItemWidget::GenericChatItemWidget(QWidget *parent)
+GenericChatItemWidget::GenericChatItemWidget(QWidget* parent)
     : QFrame(parent), compact(false)
 {
     setProperty("compact", Settings::getInstance().getCompactLayout());

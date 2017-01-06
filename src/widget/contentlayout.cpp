@@ -29,7 +29,7 @@ ContentLayout::ContentLayout()
     init();
 }
 
-ContentLayout::ContentLayout(QWidget *parent)
+ContentLayout::ContentLayout(QWidget* parent)
     : QVBoxLayout(parent)
 {
     init();

@@ -42,7 +42,7 @@ public:
 
     QRectF boundingRect() const override;
     void setWidth(qreal width) override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     qreal getAscent() const override;
 
     QWidget* getWidget() const;
