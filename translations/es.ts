@@ -85,7 +85,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished">Prueba de Sonido</translation>
+        <translation>Prueba de Sonido</translation>
     </message>
 </context>
 <context>
@@ -132,12 +132,12 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Informe de errores (bug-tracker)</translation>
+        <translation>Informe de errores</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Cómo escribir un informe de errores correctamente</translation>
+        <translation>Cómo escribir un informe de errores correctamente</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -146,7 +146,7 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Lista completa de %1 en Github</translation>
+        <translation>Lista completa de %1 en Github</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -325,11 +325,6 @@ se pueden producir problemas con las videollamadas.</translation>
         <translation>Formato inválido de Tox ID</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>La Tox ID no existe</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -567,7 +567,7 @@ se pueden producir problemas con las videollamadas.</translation>
     </message>
     <message>
         <source>Call duration: </source>
-        <translation>Duración de la llamada:</translation>
+        <translation>Duración de la llamada: </translation>
     </message>
     <message>
         <source>Load chat history...</source>
@@ -613,6 +613,14 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 ahora está %2</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -704,7 +712,8 @@ History will be disabled!</source>
         <source>
 Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
         <comment>part of history password dialog</comment>
-        <translation>Desactivar el cifrado del historial ahora va a dejar el historial cifrado intacto (pero inutilizable). En el futuro, si recuerdas la contraseña, puedes usarla para rehabilitar el cifrado del historial en la pestaña Privacidad.</translation>
+        <translation>
+Desactivar el cifrado del historial ahora va a dejar el historial cifrado intacto (pero inutilizable). En el futuro, si recuerdas la contraseña, puedes usarla para rehabilitar el cifrado del historial en la pestaña Privacidad.</translation>
     </message>
     <message>
         <source>The chat history password failed. Please try another?</source>
@@ -714,6 +723,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Disable chat history</source>
         <translation>Desactivar historial de chat</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1910,7 +1923,7 @@ Es posible que haya cambios en el formato de guardado, lo que puede generar una 
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
-        <translation>Perfil actual:</translation>
+        <translation>Perfil actual: </translation>
     </message>
     <message>
         <source>Choose a profile picture</source>
@@ -2763,31 +2776,6 @@ Será instalada cuando reinicies qTox.</translation>
     <message>
         <source>Your status</source>
         <translation>Tu estado</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>ausente</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>ocupado</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>desconectado</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>conectado</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 ahora está %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
