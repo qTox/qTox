@@ -127,7 +127,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished">Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur Github. Si vous découvrez un plantage ou une faille de sécurité dans qTox, s&apos;il vous plaît reportez-la en suivant les règles décrite dans notre article wiki %2.</translation>
+        <translation>Une liste de tous les problèmes connus peut être trouvée sur notre %1 sur Github. Si vous découvrez un plantage ou une faille de sécurité dans qTox, s&apos;il vous plaît reportez-la en suivant les règles décrites dans notre article wiki %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -242,7 +242,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation>Accepter automatiquement les appels:</translation>
+        <translation>Accepter automatiquement les appels :</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -258,7 +258,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Si activé, accepte automatiquement les fichiers du contact</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -366,7 +366,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>IMPORTANT NOTE</source>
-        <translation>NOTICE INPORTANTE</translation>
+        <translation>NOTE IMPORTANTE</translation>
     </message>
     <message>
         <source>Reset settings</source>
@@ -586,7 +586,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished">Vous essayez d&apos;envoyer un fichier séquentiel, ce qui ne fonctionnera pas</translation>
+        <translation>Vous essayez d&apos;envoyer un fichier séquentiel, ce qui ne fonctionnera pas !</translation>
     </message>
     <message>
         <source>away</source>
@@ -1172,7 +1172,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Not sent</source>
-        <translation>Envoi échoué</translation>
+        <translation type="unfinished">L&apos;envoi a échoué</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1184,7 +1184,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Copier l&apos;adresse du lien</translation>
     </message>
 </context>
 <context>
@@ -1445,7 +1445,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished">Saisie du nom</translation>
+        <translation>Saisie du nom</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
@@ -1453,7 +1453,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entrez votre message de statut</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
@@ -1465,7 +1465,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished">Sauvegarder l&apos;image du QR Code dans un fichier</translation>
+        <translation>Sauvegarder l&apos;image du code QR dans un fichier</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
@@ -1517,11 +1517,11 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation>Mon nom:</translation>
+        <translation>Mon prénom :</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation>Mon statut:</translation>
+        <translation>Mon statut :</translation>
     </message>
     <message>
         <source>My username</source>
@@ -1742,11 +1742,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Entrez votre message de statut</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished">Mettez votre message de statut qui sera affiché au autres</translation>
+        <translation>Mettez votre message de statut qui sera affiché aux autres</translation>
     </message>
     <message>
         <source>Status</source>
