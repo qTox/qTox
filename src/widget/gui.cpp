@@ -274,11 +274,10 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
  * @param hints Is the input method hints that will be used if the combobox is editable and an input method is active.
  * @return This function returns the text of the current item, or if editable is true, the current text of the combobox.
  */
-QString GUI::itemInputDialog(QWidget * parent, const QString & title,
-                    const QString & label, const QStringList & items,
-                    int current, bool editable, bool * ok,
-                    Qt::WindowFlags flags,
-                    Qt::InputMethodHints hints)
+QString GUI::itemInputDialog(QWidget*  parent, const QString& title,
+                             const QString& label, const QStringList& items,
+                             int current, bool editable, bool* ok,
+                             Qt::WindowFlags flags, Qt::InputMethodHints hints)
 {
     if (QThread::currentThread() == qApp->thread())
     {
@@ -395,11 +394,10 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
     return box.clickedButton() == pushButton1;
 }
 
-QString GUI::_itemInputDialog(QWidget * parent, const QString & title,
-                              const QString & label, const QStringList & items,
-                              int current, bool editable, bool * ok,
-                              Qt::WindowFlags flags,
-                              Qt::InputMethodHints hints)
+QString GUI::_itemInputDialog(QWidget*  parent, const QString& title,
+                              const QString& label, const QStringList& items,
+                              int current, bool editable, bool* ok,
+                              Qt::WindowFlags flags, Qt::InputMethodHints hints)
 {
     return QInputDialog::getItem(parent, title, label, items, current, editable, ok, flags, hints);
 }

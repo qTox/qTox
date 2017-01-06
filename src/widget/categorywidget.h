@@ -61,7 +61,7 @@ protected:
     void setContainerAttribute(Qt::WidgetAttribute attribute, bool enabled);
     QLayout* friendOnlineLayout() const;
     QLayout* friendOfflineLayout() const;
-    void emitChatroomWidget(QLayout *layout, int index);
+    void emitChatroomWidget(QLayout* layout, int index);
 
 private:
     virtual void onSetName() {}

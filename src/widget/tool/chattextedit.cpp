@@ -21,7 +21,7 @@
 #include "src/widget/translator.h"
 #include <QKeyEvent>
 
-ChatTextEdit::ChatTextEdit(QWidget *parent) :
+ChatTextEdit::ChatTextEdit(QWidget* parent) :
     QTextEdit(parent)
 {
     retranslateUi();

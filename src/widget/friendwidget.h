@@ -28,7 +28,7 @@ class FriendWidget : public GenericChatroomWidget
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    virtual void contextMenuEvent(QContextMenuEvent * event) override;
+    virtual void contextMenuEvent(QContextMenuEvent* event) override;
     virtual void setAsActiveChatroom() override;
     virtual void setAsInactiveChatroom() override;
     virtual void updateStatusLight() override;

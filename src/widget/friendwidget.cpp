@@ -77,7 +77,7 @@ FriendWidget::FriendWidget(int FriendId, QString id)
  * Default context menu event handler.
  * Redirect all event information to the signal.
  */
-void FriendWidget::contextMenuEvent(QContextMenuEvent * event)
+void FriendWidget::contextMenuEvent(QContextMenuEvent* event)
 {
     emit contextMenuCalled(event);
 }

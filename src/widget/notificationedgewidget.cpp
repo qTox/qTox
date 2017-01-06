@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-NotificationEdgeWidget::NotificationEdgeWidget(Position position, QWidget *parent)
+NotificationEdgeWidget::NotificationEdgeWidget(Position position, QWidget* parent)
     : QWidget(parent)
 {
     setAttribute(Qt::WA_StyledBackground); // Show background.

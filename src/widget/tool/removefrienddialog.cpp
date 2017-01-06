@@ -2,7 +2,7 @@
 #include <QPushButton>
 
 
-RemoveFriendDialog::RemoveFriendDialog(QWidget *parent, const Friend *f)
+RemoveFriendDialog::RemoveFriendDialog(QWidget* parent, const Friend* f)
     : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

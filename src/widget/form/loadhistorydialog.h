@@ -32,7 +32,7 @@ class LoadHistoryDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LoadHistoryDialog(QWidget *parent = 0);
+    explicit LoadHistoryDialog(QWidget* parent = 0);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();

@@ -47,9 +47,9 @@ public:
                             const QString& button1, const QString& button2,
                             bool defaultAns = false, bool warning = true);
 
-    static QString itemInputDialog(QWidget * parent, const QString & title,
-                    const QString & label, const QStringList & items,
-                    int current = 0, bool editable = true, bool * ok = 0,
+    static QString itemInputDialog(QWidget*  parent, const QString& title,
+                    const QString& label, const QStringList& items,
+                    int current = 0, bool editable = true, bool* ok = 0,
                     Qt::WindowFlags flags = 0,
                     Qt::InputMethodHints hints = Qt::ImhNone);
 
@@ -77,9 +77,9 @@ private slots:
     bool _askQuestion(const QString& title, const QString& msg,
                       const QString& button1, const QString& button2,
                       bool defaultAns = false, bool warning = true);
-    QString _itemInputDialog(QWidget * parent, const QString & title,
-                        const QString & label, const QStringList & items,
-                        int current = 0, bool editable = true, bool * ok = 0,
+    QString _itemInputDialog(QWidget* parent, const QString& title,
+                        const QString& label, const QStringList& items,
+                        int current = 0, bool editable = true, bool* ok = 0,
                         Qt::WindowFlags flags = 0,
                         Qt::InputMethodHints inputMethodHints = Qt::ImhNone);
     QString _passwordDialog(const QString& cancel, const QString& body);

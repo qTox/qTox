@@ -24,7 +24,7 @@
 #include <QScrollBar>
 #include <QDebug>
 
-AdjustingScrollArea::AdjustingScrollArea(QWidget *parent)
+AdjustingScrollArea::AdjustingScrollArea(QWidget* parent)
     : QScrollArea(parent)
 {
 

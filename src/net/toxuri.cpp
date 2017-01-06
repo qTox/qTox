@@ -82,7 +82,7 @@ bool handleToxURI(const QString &toxURI)
     return true;
 }
 
-ToxURIDialog::ToxURIDialog(QWidget *parent, const QString &userId, const QString &message) :
+ToxURIDialog::ToxURIDialog(QWidget* parent, const QString &userId, const QString &message) :
     QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);

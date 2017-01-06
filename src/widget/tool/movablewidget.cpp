@@ -22,7 +22,7 @@
 #include <QGraphicsOpacityEffect>
 #include <cmath>
 
-MovableWidget::MovableWidget(QWidget *parent)
+MovableWidget::MovableWidget(QWidget* parent)
     : QWidget(parent)
 {
     setMinimumHeight(64);

@@ -107,7 +107,7 @@ private:
     VideoSurface* videoSurface;
 };
 
-GroupNetCamView::GroupNetCamView(int group, QWidget *parent)
+GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     : GenericNetCamView(parent)
     , group(group)
 {

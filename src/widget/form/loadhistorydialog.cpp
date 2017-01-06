@@ -20,7 +20,7 @@
 #include "loadhistorydialog.h"
 #include "ui_loadhistorydialog.h"
 
-LoadHistoryDialog::LoadHistoryDialog(QWidget *parent) :
+LoadHistoryDialog::LoadHistoryDialog(QWidget* parent) :
     QDialog(parent),
     ui(new Ui::LoadHistoryDialog)
 {

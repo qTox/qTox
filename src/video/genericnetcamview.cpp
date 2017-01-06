@@ -23,7 +23,7 @@
 #include <QFrame>
 #include <QPushButton>
 
-GenericNetCamView::GenericNetCamView(QWidget *parent)
+GenericNetCamView::GenericNetCamView(QWidget* parent)
     : QWidget(parent)
 {
     verLayout = new QVBoxLayout(this);

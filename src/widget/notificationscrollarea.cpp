@@ -195,7 +195,7 @@ void NotificationScrollArea::findPreviousWidget()
         ensureWidgetVisible(next, 0, referencesAbove != 1 ? topEdge->height() : 0);
 }
 
-NotificationScrollArea::Visibility NotificationScrollArea::widgetVisible(QWidget *widget) const
+NotificationScrollArea::Visibility NotificationScrollArea::widgetVisible(QWidget* widget) const
 {
     int y = widget->mapTo(viewport(), QPoint()).y();
 

@@ -22,7 +22,7 @@
 
 #include "verticalonlyscroller.h"
 
-VerticalOnlyScroller::VerticalOnlyScroller(QWidget *parent) :
+VerticalOnlyScroller::VerticalOnlyScroller(QWidget* parent) :
     QScrollArea(parent)
 {
 }

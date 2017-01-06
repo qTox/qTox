@@ -51,7 +51,7 @@
  * @brief Used to correct the rounding factors on non-square rects
  */
 
-CallConfirmWidget::CallConfirmWidget(const QWidget *Anchor, const Friend& f) :
+CallConfirmWidget::CallConfirmWidget(const QWidget* Anchor, const Friend& f) :
     QWidget(), anchor(Anchor), f(f),
     rectW{120}, rectH{85},
     spikeW{30}, spikeH{15},

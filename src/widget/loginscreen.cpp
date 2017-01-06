@@ -32,7 +32,7 @@
 #include <QToolButton>
 #include <QDebug>
 
-LoginScreen::LoginScreen(QWidget *parent) :
+LoginScreen::LoginScreen(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::LoginScreen),
     quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}

@@ -55,7 +55,7 @@ class ProfileForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ProfileForm(QWidget *parent = nullptr);
+    explicit ProfileForm(QWidget* parent = nullptr);
     ~ProfileForm();
     virtual void show() final{}
     void show(ContentLayout* contentLayout);
@@ -97,7 +97,7 @@ private:
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
     QLabel* nameLabel;
-    QWidget *head;
+    QWidget* head;
     Core* core;
     QTimer timer;
     bool hasCheck = false;

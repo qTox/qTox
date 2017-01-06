@@ -31,7 +31,7 @@
 
 #include <math.h>
 
-EmoticonsWidget::EmoticonsWidget(QWidget *parent) :
+EmoticonsWidget::EmoticonsWidget(QWidget* parent) :
     QMenu(parent)
 {
     setStyleSheet(Style::getStylesheet(":/ui/emoticonWidget/emoticonWidget.css"));

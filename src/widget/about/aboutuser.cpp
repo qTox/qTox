@@ -8,7 +8,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-AboutUser::AboutUser(ToxPk &toxId, QWidget *parent) :
+AboutUser::AboutUser(ToxPk &toxId, QWidget* parent) :
     QDialog(parent),
     ui(new Ui::AboutUser)
 {
@@ -34,7 +34,7 @@ AboutUser::AboutUser(ToxPk &toxId, QWidget *parent) :
         ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->friendPk));
 }
 
-void AboutUser::setFriend(Friend *f)
+void AboutUser::setFriend(Friend* f)
 {
     this->setWindowTitle(f->getDisplayedName());
     ui->userName->setText(f->getDisplayedName());

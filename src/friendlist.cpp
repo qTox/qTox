@@ -72,7 +72,7 @@ Friend* FriendList::findFriend(const ToxPk& friendPk)
     auto id = key2id.find(friendPk.getKey());
     if (id != key2id.end())
     {
-        Friend *f = findFriend(*id);
+        Friend* f = findFriend(*id);
         if (!f)
             return nullptr;
         if (f->getPublicKey() == friendPk)
