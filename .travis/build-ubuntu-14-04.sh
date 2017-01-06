@@ -147,7 +147,7 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
 # first build qTox without support for optional dependencies
 echo '*** BUILDING "MINIMAL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES SMILEYS=NO
+qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES SMILEYS=DISABLED
 # ↓ reduce if build fails with OOM
 make -j$(nproc)
 # clean it up, and build normal version
