@@ -94,9 +94,17 @@ search_dependency(LIBQRENCODE         PACKAGE libqrencode)
 search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
-search_dependency(TOXCORE             PACKAGE libtoxcore)
-search_dependency(TOXAV               PACKAGE libtoxav)
 search_dependency(VPX                 PACKAGE vpx)
+search_dependency(TOXCORE             PACKAGE toxcore          OPTIONAL)
+search_dependency(TOXAV               PACKAGE toxav            OPTIONAL)
+search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL)
+
+if (NOT TOXCORE_FOUND OR
+        NOT TOXAV_FOUND OR
+        NOT TOXENCRYPTSAVE_FOUND)
+    search_dependency(TOXCORE             PACKAGE libtoxcore)
+    search_dependency(TOXAV               PACKAGE libtoxav)
+endif()
 
 search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
 
