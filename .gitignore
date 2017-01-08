@@ -48,6 +48,10 @@ Makefile
 *.qm
 /.qmake.stash
 
+# Public/Secret keys for release signing
+qtox-updater-skey
+qtox-updater-pkey
+
 # Rust
 target/
 .cargo/
