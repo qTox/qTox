@@ -36,11 +36,11 @@ while running on all major platforms.
 
 ====
 
-Windows | Linux | OS X | FreeBSD
---------|-------|------|--------
-**[64 bit installer]**, [signature][sig-64] | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]**
-[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | |
-[64 bit][64portable], [32 bit][32portable] portable | [Other] | |
+| Windows                                             | Linux                                          | OS X                        | FreeBSD    |
+|-----------------------------------------------------|------------------------------------------------|-----------------------------|------------|
+| **[64 bit installer]**, [signature][sig-64]         | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]** |
+| [32 bit installer], [signature][sig-32]             | **[Arch]**, **[Gentoo]**                       |                             |            |
+| [64 bit][64portable], [32 bit][32portable] portable | [Other]                                        |                             |            |
 
 _**Bold** options are recommended._
 
