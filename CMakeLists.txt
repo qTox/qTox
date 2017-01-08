@@ -199,6 +199,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/recursivesignalblocker.h
   src/core/toxcall.cpp
   src/core/toxcall.h
+  src/core/toxencrypt.cpp
+  src/core/toxencrypt.h
   src/core/toxid.cpp
   src/core/toxid.h
   src/core/toxpk.cpp
