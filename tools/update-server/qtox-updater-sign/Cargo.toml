@@ -1,7 +1,0 @@
-[package]
-name = "qtox-updater-sign"
-version = "0.1.0"
-authors = ["Zetok Zalbavar <zetok@openmailbox.org>"]
-
-[dependencies]
-sodiumoxide = "0.0.12"
