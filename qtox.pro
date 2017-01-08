@@ -438,6 +438,7 @@ HEADERS  += \
     src/core/indexedlist.h \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
+    src/core/toxencrypt.h \
     src/core/toxid.h \
     src/core/toxpk.h \
     src/friend.h \
@@ -558,6 +559,7 @@ SOURCES += \
     src/core/cstring.cpp \
     src/core/recursivesignalblocker.cpp \
     src/core/toxcall.cpp \
+    src/core/toxencrypt.cpp \
     src/core/toxid.cpp \
     src/core/toxpk.cpp \
     src/friend.cpp \
