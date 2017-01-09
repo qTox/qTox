@@ -1085,37 +1085,6 @@ void Widget::onFriendStatusChanged(int friendId, Status status)
 
     ContentDialog::updateFriendStatus(friendId);
 
-    if (Settings::getInstance().getStatusChangeNotificationEnabled())
-    {
-        QString fStatus = "";
-        switch (f->getStatus())
-        {
-        case Status::Away:
-            fStatus = tr("away", "contact status");
-            break;
-        case Status::Busy:
-            fStatus = tr("busy", "contact status");
-            break;
-        case Status::Offline:
-            fStatus = tr("offline", "contact status");
-            // Hide the "is typing" message when a friend goes offline
-            f->getChatForm()->setFriendTyping(false);
-            break;
-        case Status::Online:
-            fStatus = tr("online", "contact status");
-            break;
-        }
-
-        if (isActualChange)
-        {
-            QString message = tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
-                    .arg(f->getDisplayedName()).arg(fStatus);
-
-            f->getChatForm()->addSystemInfoMessage(message, ChatMessage::INFO,
-                                                   QDateTime::currentDateTime());
-        }
-    }
-
     if (isActualChange && status != Status::Offline)
     {
         // wait a little
