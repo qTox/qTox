@@ -171,11 +171,31 @@ bool CoreAV::anyActiveCalls() const
 /**
  * @brief Checks the call status for a Tox friend.
  * @param f the friend to check
+ * @return true, if call is started for the friend, false otherwise
+ */
+bool CoreAV::isCallStarted(const Friend* f) const
+{
+    return f && calls.contains(f->getFriendId());
+}
+
+/**
+ * @brief Checks the call status for a Tox group.
+ * @param g the group to check
+ * @return true, if call is started for the group, false otherwise
+ */
+bool CoreAV::isCallStarted(const Group* g) const
+{
+    return g && groupCalls.contains(g->getGroupId());
+}
+
+/**
+ * @brief Checks the call status for a Tox friend.
+ * @param f the friend to check
  * @return true, if call is active for the friend, false otherwise
  */
 bool CoreAV::isCallActive(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendId())
+    return isCallStarted(f)
             ? !(calls[f->getFriendId()].inactive)
             : false;
 }
@@ -187,14 +207,14 @@ bool CoreAV::isCallActive(const Friend* f) const
  */
 bool CoreAV::isCallActive(const Group* g) const
 {
-    return g && groupCalls.contains(g->getGroupId())
+    return isCallStarted(g)
             ? !(groupCalls[g->getGroupId()].inactive)
             : false;
 }
 
 bool CoreAV::isCallVideoEnabled(const Friend* f) const
 {
-    return f && calls.contains(f->getFriendId())
+    return isCallStarted(f)
             ? calls[f->getFriendId()].videoEnabled
             : false;
 }

@@ -49,6 +49,8 @@ public:
     const ToxAV* getToxAv() const;
 
     bool anyActiveCalls() const;
+    bool isCallStarted(const Friend* f) const;
+    bool isCallStarted(const Group* f) const;
     bool isCallActive(const Friend* f) const;
     bool isCallActive(const Group* g) const;
     bool isCallVideoEnabled(const Friend* f) const;

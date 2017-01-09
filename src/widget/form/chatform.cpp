@@ -439,7 +439,7 @@ void ChatForm::onRejectCallTriggered()
 void ChatForm::onCallTriggered()
 {
     CoreAV* av = Core::getInstance()->getAv();
-    if (av->isCallActive(f))
+    if (av->isCallStarted(f))
     {
         av->cancelCall(f->getFriendId());
     }
@@ -452,7 +452,7 @@ void ChatForm::onCallTriggered()
 void ChatForm::onVideoCallTriggered()
 {
     CoreAV* av = Core::getInstance()->getAv();
-    if (av->isCallActive(f))
+    if (av->isCallStarted(f))
     {
         // TODO: We want to activate video on the active call.
         if (av->isCallVideoEnabled(f))
