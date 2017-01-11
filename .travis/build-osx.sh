@@ -21,6 +21,8 @@ set -e -o pipefail
 
 # Build OSX
 build() {
+    export CC="ccache $CC"
+    export CXX="ccache $CXX"
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -b
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -d
