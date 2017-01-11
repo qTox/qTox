@@ -324,11 +324,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>Rejeitar</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Este ID Tox não existe</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -342,6 +337,11 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -612,6 +612,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 agora é %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ Desabilitando o histórico de conversas agora deixará seu histórico criptograf
     <message>
         <source>Disable chat history</source>
         <translation>Desabilitar o histórico de conversas</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2717,31 +2729,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Não foi possível adicionar o contato</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>ausente</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>ocupado</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 agora é %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

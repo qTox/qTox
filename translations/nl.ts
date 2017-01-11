@@ -325,11 +325,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>Afwijzen</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Deze Tox-ID bestaat niet</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -613,6 +613,14 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 is nu %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis be
     <message>
         <source>Disable chat history</source>
         <translation>Gespreksgeschiedenis uitschakelen</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2691,31 +2703,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kon geen vriendschapsverzoek maken</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>afwezig</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>bezet</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 is nu %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

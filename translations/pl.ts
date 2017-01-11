@@ -330,11 +330,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>Odrzuć</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Ten Tox ID nie istnieje</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox ID, 76 heksadecymalnych znaków lub nazwa@domena.com</translation>
     </message>
@@ -350,6 +345,11 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Napisz coś, lub zostaw puste by wysłać domyślną wiadomość w zapytaniu</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -624,6 +624,14 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 jest teraz %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -728,6 +736,10 @@ Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietknięt
         <comment>used only when pw set before load() doesn&apos;t work</comment>
         <translatorcomment>better translation?</translatorcomment>
         <translation>Hasło do historii rozmów zawiodło. Proszę, spróbuj inne?</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2751,31 +2763,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>Your status</source>
         <translation>Twój status</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>nieobecna/y</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>zajęta/y</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 jest teraz %2</translation>
     </message>
     <message>
         <source>Filter...</source>

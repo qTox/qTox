@@ -328,11 +328,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation type="unfinished">Avvis</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Denne Tox-IDen eksisterer ikke</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,6 +341,11 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -618,6 +618,14 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 er nå %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -719,6 +727,10 @@ Deaktivering av chatte-historikken nå vil la den krypterte historikken være in
     <message>
         <source>Disable chat history</source>
         <translation>Deaktivere chatte-historikk</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2721,31 +2733,6 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Kunne ikke lage venneforespørsel</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>borte</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>opptatt</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>avlogget</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>pålogget</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 er nå %2</translation>
     </message>
     <message>
         <source>Search Contacts</source>

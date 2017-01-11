@@ -327,11 +327,6 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation type="unfinished">Reddet</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Böyle bir Tox kimliği yoktur</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -345,6 +340,11 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -616,6 +616,14 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 bundan böyle %2 oldu</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -715,6 +723,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Disable chat history</source>
         <translation>Sohbet geçmişini devre dışı bırak</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2621,31 +2633,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Arkadaşlık teklif edilemedi</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>uzakta</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>meşgul</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>çevrimdışı</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>çevrimiçi</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 bundan böyle %2 oldu</translation>
     </message>
     <message>
         <source>Add friend</source>

@@ -325,11 +325,6 @@ which may lead to problems with video calls.</source>
         <translation>嘿，我是 %1，要不要使用 Tox 联系我？</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>此 Tox ID 不存在</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox ID，76 位十六进制字符或者类似于 name@example.com</translation>
     </message>
@@ -344,6 +339,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>输入消息后随好友请求一起发送或者留空以发送默认消息</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -613,6 +613,14 @@ which may lead to problems with video calls.</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 现在 %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
         <translation>请为账户&quot;%1&quot;的聊天历史记录输入密码。</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2654,31 +2666,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Your status</source>
         <translation>你的状态</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>离开</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>忙碌</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>离线</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>在线</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 %2 了</translation>
     </message>
     <message>
         <source>Offline</source>

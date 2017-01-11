@@ -328,11 +328,6 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation type="unfinished">Odbaci</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Ovaj Tox ID ne postoji</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,6 +341,11 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -616,6 +616,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 je sada %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -716,6 +724,10 @@ Onemogućavanje povijesti razgovora će ostaviti enkriptiranu povijest netaknutu
     <message>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2644,31 +2656,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Nije bilo moguće zatražiti prijateljstvo</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>odsutan(na)</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>zauzet(a)</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>offline</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>online</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 je sada %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

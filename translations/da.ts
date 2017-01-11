@@ -321,11 +321,6 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Tox ID findes ikke</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -339,6 +334,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -610,6 +610,14 @@ which may lead to problems with video calls.</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 er nu %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -708,6 +716,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Disable chat history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2689,31 +2701,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 er nu %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

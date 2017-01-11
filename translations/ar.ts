@@ -325,11 +325,6 @@ which may lead to problems with video calls.</source>
         <translation>رفض</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>رقم حساب التوكس هذا غير موجود</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>(Tox ID) هوية Tox , اما 76 حرف بصيغة ستة عشرية أو بشكل بريد الكتروني name@example.com</translation>
     </message>
@@ -344,6 +339,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>اكتب رسالة لارسالها مع طلب الصداقة او اترك فارغا لارسال الرسالة الافتراضية</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -613,6 +613,14 @@ which may lead to problems with video calls.</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 الأن %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Disable chat history</source>
         <translation>تعطيل سجل المحادثات</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2634,31 +2646,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>لا يمكن طلب الصداقة</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>في الخارج</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>مشغول</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>غير متصل</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>متصل</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 الأن %2</translation>
     </message>
     <message>
         <source>Add friend</source>

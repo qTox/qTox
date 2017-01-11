@@ -325,11 +325,6 @@ vaizdo skambučiais.</translation>
         <translation>Atmesti</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Tokio Tox ID nėra</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -613,6 +613,14 @@ vaizdo skambučiais.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 dabar %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -714,6 +722,10 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Disable chat history</source>
         <translation>Išjungti pokalbių žurnalą</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2754,31 +2766,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Your status</source>
         <translation>Jūsų būsena</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>pasišalinęs (-usi)</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>užsiėmęs (-usi)</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>neprisijungęs (-usi)</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>prisijungęs (-usi)</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 dabar %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

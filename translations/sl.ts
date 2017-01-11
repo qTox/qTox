@@ -325,11 +325,6 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <translation type="unfinished">Zavrni</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation type="unfinished">Ta Tox ID ne obstaja</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation type="unfinished"></translation>
     </message>
@@ -343,6 +338,11 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -613,6 +613,14 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation type="unfinished">%1 je zdaj %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -713,6 +721,10 @@ Onemogočitev zgodovine pogovorov bo ohranila trenutno šifrinano zgodovino; če
     <message>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2641,31 +2653,6 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Zahteva za stik ni bila uspešna</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>odsoten</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>zaseden</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>nedosegljiv</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>dosegljiv</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 je zdaj %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>

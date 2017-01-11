@@ -326,11 +326,6 @@ which may lead to problems with video calls.</source>
         <translation>Отхвърлям</translation>
     </message>
     <message>
-        <source>This Tox ID does not exist</source>
-        <comment>Toxme error</comment>
-        <translation>Този Tox ID не съществува</translation>
-    </message>
-    <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
         <translation>Tox ID, или 76 шеснадесетични символи или име@пример,com</translation>
     </message>
@@ -345,6 +340,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
         <translation>Напиши съобщение, за да изпратиш със молбата за приятелство или остави празно, за да изпратиш съобщение по подразбиране</translation>
+    </message>
+    <message>
+        <source>This Tox ID is invalid or does not exist</source>
+        <comment>Toxme error</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -614,6 +614,14 @@ which may lead to problems with video calls.</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
         <translation>%1 сега е %2</translation>
     </message>
+    <message>
+        <source>Can&apos;t start video call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -716,6 +724,10 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
         <translation>Моля въведете парола за чат историята за профилът &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Invalid Tox ID</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2639,31 +2651,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Неуспешно поискване на приятелство</translation>
-    </message>
-    <message>
-        <source>away</source>
-        <comment>contact status</comment>
-        <translation>отсъстващ</translation>
-    </message>
-    <message>
-        <source>busy</source>
-        <comment>contact status</comment>
-        <translation>Зает</translation>
-    </message>
-    <message>
-        <source>offline</source>
-        <comment>contact status</comment>
-        <translation>Извън линия</translation>
-    </message>
-    <message>
-        <source>online</source>
-        <comment>contact status</comment>
-        <translation>На линия</translation>
-    </message>
-    <message>
-        <source>%1 is now %2</source>
-        <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation>%1 е сега %2</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
