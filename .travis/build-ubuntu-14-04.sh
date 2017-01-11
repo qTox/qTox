@@ -48,6 +48,10 @@ sudo apt-get install -y --force-yes \
     qt53xmlpatterns \
     pkg-config || yes
 
+# make sure to use ccache for all the compiling
+export CC="ccache $CC"
+export CXX="ccache $CXX"
+
 # Qt
 source /opt/qt53/bin/qt53-env.sh || yes
 
