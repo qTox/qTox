@@ -343,7 +343,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>这个 Tox ID 无效或者不存在</translation>
     </message>
 </context>
 <context>
@@ -615,11 +615,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>无法开始视频通话</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>无法开始语音通话</translation>
     </message>
 </context>
 <context>
@@ -725,7 +725,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的 Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1530,6 +1530,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation>我的简介</translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1979,10 +1983,6 @@ Please use another image.</source>
     <message>
         <source>Please enter a new password.</source>
         <translation>请输入新密码。</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>管理中心</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2635,22 +2635,6 @@ It will be installed when qTox restarts.</source>
         <translation>由于你的代理服务器设置，核心组件Toxcore启动失败，qTox无法运行。请修改你的设置后重启qTox。</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>添加好友</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>群组邀请</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>文件传输</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>设置</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>无法添加为好友</translation>
     </message>
@@ -2709,10 +2693,6 @@ It will be installed when qTox restarts.</source>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>可执行文件</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>账户</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2803,6 +2783,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>显示</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">添加好友</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">群组邀请</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">文件传输</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">设置</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
