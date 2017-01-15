@@ -19,6 +19,15 @@
 # Fail out on error
 set -e -o pipefail
 
+# accelerate builds with ccache
+install_ccache() {
+    echo "Installing ccache ..."
+    brew install ccache
+    # make sure to use ccache for all the compiling
+    export CC="ccache $CC"
+    export CXX="ccache $CXX"
+}
+
 # Build OSX
 build() {
     bash ./osx/qTox-Mac-Deployer-ULTIMATE.sh -i
@@ -38,6 +47,7 @@ check() {
 }
 
 main() {
+    install_ccache
     build
     check
 }
