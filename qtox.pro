@@ -97,6 +97,7 @@ contains(DISABLE_PLATFORM_EXT, YES) {
 
 contains(JENKINS,YES) {
     INCLUDEPATH += ./libs/include/
+    TOX_CMAKE = YES
 } else {
     INCLUDEPATH += libs/include
 }
@@ -128,13 +129,6 @@ win32 {
             -ltoxav \
             -ltoxcore \
             -ltoxencryptsave \
-            -ltoxgroup \
-            -ltoxmessenger \
-            -ltoxfriends \
-            -ltoxnetcrypto \
-            -ltoxdht \
-            -ltoxnetwork \
-            -ltoxcrypto \
             -lsodium \
             -lvpx \
             -lpthread \
@@ -158,6 +152,16 @@ win32 {
             -lshlwapi \
             -luuid
     LIBS += -lstrmiids # For DirectShow
+
+    contains(TOX_CMAKE, YES) {
+        LIBS += -ltoxgroup \
+                -ltoxmessenger \
+                -ltoxfriends \
+                -ltoxnetcrypto \
+                -ltoxdht \
+                -ltoxnetwork \
+                -ltoxcrypto
+    }
 } else {
     macx {
         BUNDLEID = chat.tox.qtox
