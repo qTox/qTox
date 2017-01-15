@@ -106,6 +106,13 @@ install() {
         fcho "Installing homebrew ..."
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
+    
+    fcho "Installing ccache ..."
+    brew install ccache
+    # make sure to use ccache for all the compiling
+    export CC="ccache $CC"
+    export CXX="ccache $CXX"
+    
     if [[ $TRAVIS != true ]]
     then
         fcho "Updating brew formulas ..."
