@@ -71,7 +71,7 @@ Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Установите разрешение своей камеры.
 Чем больше значение, тем выше качество видео, которое увидят ваши друзья.
-Заметим, однако, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
+Заметьте, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
 Иногда подключение слишком слабое, что бы передать видео высокого качества,
 что может привести к проблемам при видеозвонке.</translation>
     </message>
@@ -346,7 +346,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Этот Tox ID некорректен или не существует</translation>
     </message>
 </context>
 <context>
@@ -619,11 +619,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно начать видеозвонок</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно начать аудиозвонок</translation>
     </message>
 </context>
 <context>
@@ -730,7 +730,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Некорректный Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1537,6 +1537,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation>Моя биография</translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1885,7 +1889,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Send typing notifications</source>
-        <translation>Показывать информация о наборе сообщения</translation>
+        <translation>Отправлять информацию о наборе сообщения</translation>
     </message>
     <message>
         <source>Keep chat history</source>
@@ -1896,8 +1900,8 @@ You may want to create one.</source>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>NoSpam это часть вашего Tox ID.
-Если вы часто получаете ошибочные запросы в друзья, вам достаточно изменить NoSpam.
+        <translation>АнтиСпам это часть вашего Tox ID.
+Если вы часто получаете ошибочные запросы в друзья, вам достаточно изменить АнтиСпам.
 Пользователи не смогут добавлять вас с вашим старым ID, но вы сохраните ваших текущих друзей.</translation>
     </message>
     <message>
@@ -1907,19 +1911,19 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>Антиспам это изменяемая часть вашего Tox ID.
+        <translation>АнтиСпам это изменяемая часть вашего Tox ID.
 Если к вам стали приходить частые и ненужные запросы в друзья, вам достаточно изменить это значение.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Сгенерировать случайное значение NoSpam</translation>
+        <translation>Сгенерировать случайное значение АнтиСпам</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>Хранение истории чата находится в разработке.
-Возможно изменение формата сохранения данных, что это может привести к потере данных.</translation>
+Возможно изменение формата сохранения данных, что может привести к потере данных.</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -2057,10 +2061,6 @@ Share it with your friends to communicate.</source>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Вы действительно хотите удалить этот профиль?</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Профиль пользователя</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2656,14 +2656,6 @@ It will be installed when qTox restarts.</source>
         <translation>Ваш статус</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Добавить друга</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Приглашения в группы</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Пусто&gt;</translation>
@@ -2719,10 +2711,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Search Contacts</source>
         <translation>Поиск контактов</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Передачи файлов</translation>
     </message>
     <message>
         <source>File</source>
@@ -2789,14 +2777,6 @@ It will be installed when qTox restarts.</source>
         <translation>Вы просите qTox открыть исполняемый файл. Исполняемые файлы могут нанести вред вашему компьютеру. Вы уверены, что хотите открыть этот файл?</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Настройки</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Профиль</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Не удалось запросить добавление в друзья</translation>
     </message>
@@ -2820,6 +2800,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Отобразить</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Добавить друга</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Передачи файлов</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
