@@ -17,11 +17,12 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QString>
-#include <QByteArray>
-
 #ifndef TOXENCRYPT_H
 #define TOXENCRYPT_H
+
+#include <memory>
+#include <QString>
+#include <QByteArray>
 
 struct Tox_Pass_Key;
 
@@ -33,14 +34,17 @@ public:
     ToxEncrypt(const ToxEncrypt& other) = delete;
     ToxEncrypt& operator=(const ToxEncrypt& other) = delete;
 
-    ToxEncrypt(const QString& password);
-    ToxEncrypt(const QString& password, const QByteArray& toxSave);
     static bool isEncrypted(const QByteArray& ciphertext);
     static QByteArray encryptPass(const QString& password, const QByteArray& plaintext);
     static QByteArray decryptPass(const QString& password, const QByteArray& ciphertext);
-    bool isValid() const;
+    static std::unique_ptr<ToxEncrypt> makeToxEncrypt(const QString& password);
+    static std::unique_ptr<ToxEncrypt> makeToxEncrypt(const QString& password, const QByteArray& toxSave);
     QByteArray encrypt(const QByteArray& plaintext) const;
     QByteArray decrypt(const QByteArray& ciphertext) const;
+
+private:
+    ToxEncrypt(const QString& password);
+    ToxEncrypt(const QString& password, const QByteArray& toxSave);
 
 private:
     Tox_Pass_Key* passKey = nullptr;

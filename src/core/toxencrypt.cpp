@@ -58,14 +58,13 @@ ToxEncrypt::ToxEncrypt(const QString& password)
     tox_pass_key_derive(passKey, reinterpret_cast<const uint8_t*>(pass.constData()),
                         static_cast<size_t>(pass.length()), &error);
 
-    if(error != TOX_ERR_KEY_DERIVATION_OK)
+    if (error != TOX_ERR_KEY_DERIVATION_OK)
     {
         qWarning() << getKeyDerivationError(error);
         tox_pass_key_free(passKey);
         passKey = nullptr;
     }
 }
-
 
 /**
  * @brief  Creates a new ToxEncrypt object, with the salt read from the toxSave data.
@@ -119,7 +118,6 @@ bool ToxEncrypt::isEncrypted(const QByteArray& ciphertext)
     return tox_is_data_encrypted(reinterpret_cast<const uint8_t*>(ciphertext.constData()));
 }
 
-
 /**
  * @brief  Encrypts the plaintext with the given password.
  * @return Encrypted data or empty QByteArray on failure.
@@ -150,7 +148,6 @@ QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& pl
 
     return ciphertext;
 }
-
 
 /**
  * @brief  Decrypts data encrypted with this module.
@@ -190,12 +187,41 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
 }
 
 /**
- * @brief  Checks if the object can be used for encryption and decryption.
- * @return True if encryption and decryption is possible, false otherwise.
+ * @brief  Factory method for the ToxEncrypt object.
+ * @param  password Password to use for encryption.
+ * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
+ *         or an empty std::unique_ptr on failure.
  */
-bool ToxEncrypt::isValid() const
+std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 {
-    return passKey != nullptr;
+    std::unique_ptr<ToxEncrypt> ptr(new ToxEncrypt(password));
+
+    // check if the ToxEncrypt object is valid
+    if (ptr->passKey == nullptr)
+    {
+        return std::unique_ptr<ToxEncrypt>{};
+    }
+
+    return ptr;
+}
+
+/**
+ * @brief  Factory method for the ToxEncrypt object.
+ * @param  password Password to use for encryption.
+ * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
+ *         or an empty std::unique_ptr on failure.
+ */
+std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, const QByteArray& toxSave)
+{
+    std::unique_ptr<ToxEncrypt> ptr(new ToxEncrypt(password, toxSave));
+
+    // check if the ToxEncrypt object is valid
+    if (ptr->passKey == nullptr)
+    {
+        return std::unique_ptr<ToxEncrypt>{};
+    }
+
+    return ptr;
 }
 
 /**
@@ -226,7 +252,6 @@ QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
 
     return ciphertext;
 }
-
 
 /**
  * @brief  Decrypts data encrypted with this module, using the stored key.
