@@ -33,6 +33,6 @@
         <file>tr.qm</file>
         <file>ug.qm</file>
         <file>uk.qm</file>
-        <file>zh.qm</file>
+        <file>zh_CN.qm</file>
     </qresource>
 </RCC>
