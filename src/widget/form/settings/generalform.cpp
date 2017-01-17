@@ -69,7 +69,7 @@ static QStringList locales = {"ar",
                               "tr",
                               "ug",
                               "uk",
-                              "zh"};
+                              "zh_CN"};
 static QStringList langs = {"Arabic",
                             "Беларуская",
                             "Български",
