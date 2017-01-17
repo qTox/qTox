@@ -128,8 +128,17 @@ win32 {
     LIBS += -L$$PWD/libs/lib \
             -ltoxav \
             -ltoxcore \
-            -ltoxencryptsave \
-            -lsodium \
+            -ltoxencryptsave
+    contains(TOX_CMAKE, YES) {
+        LIBS += -ltoxgroup \
+                -ltoxmessenger \
+                -ltoxfriends \
+                -ltoxnetcrypto \
+                -ltoxdht \
+                -ltoxnetwork \
+                -ltoxcrypto
+    }
+    LIBS += -lsodium \
             -lvpx \
             -lpthread \
             -lavdevice \
@@ -152,16 +161,6 @@ win32 {
             -lshlwapi \
             -luuid
     LIBS += -lstrmiids # For DirectShow
-
-    contains(TOX_CMAKE, YES) {
-        LIBS += -ltoxgroup \
-                -ltoxmessenger \
-                -ltoxfriends \
-                -ltoxnetcrypto \
-                -ltoxdht \
-                -ltoxnetwork \
-                -ltoxcrypto
-    }
 } else {
     macx {
         BUNDLEID = chat.tox.qtox
