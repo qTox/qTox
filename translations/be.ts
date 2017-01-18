@@ -622,6 +622,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation>Не магчыма пачаць аўдыявыклік</translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1537,7 +1545,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Мой профіль</translation>
     </message>
 </context>
 <context>
@@ -2800,27 +2808,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Дадаць сябра</translation>
+        <translation>Дадаць сябра</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Запрашэнні ў групу</translation>
+        <translation>Запрашэнні ў групу</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Перадачы файлаў</translation>
+        <translation>Перадачы файлаў</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Налады</translation>
+        <translation>Налады</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Мой профіль</translation>
     </message>
 </context>
 </TS>
