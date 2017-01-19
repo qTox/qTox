@@ -625,6 +625,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation>Невозможно начать аудиозвонок</translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1539,7 +1547,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Мой профиль</translation>
     </message>
 </context>
 <context>
@@ -2809,7 +2817,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Групповые приглашения</translation>
     </message>
     <message>
         <source>File transfers</source>
@@ -2824,7 +2832,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Мой профиль</translation>
     </message>
 </context>
 </TS>
