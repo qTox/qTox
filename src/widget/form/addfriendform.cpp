@@ -175,6 +175,10 @@ void AddFriendForm::onSendTriggered()
             return;
         }
     }
+    else
+    {
+        ToxId toxId(id);
+    }
 
     deleteFriendRequest(toxId);
     if (toxId == Core::getInstance()->getSelfId())
