@@ -162,13 +162,13 @@ void AddFriendForm::onUsernameSet(const QString& username)
 
 void AddFriendForm::onSendTriggered()
 {
-    QString id = toxId.text().trimmed();
-    ToxId toxId;
+    QString idText = toxId.text().trimmed();
+    ToxId friendId(idText);
 
-    if (!ToxId::isValidToxId(id))
+    if (!friendId.isValid())
     {
-        toxId = Toxme::lookup(id); // Try Toxme
-        if (!toxId.isValid())
+        friendId = Toxme::lookup(idText); // Try Toxme
+        if (!friendId.isValid())
         {
             GUI::showWarning(tr("Couldn't add friend"),
                              tr("This Tox ID is invalid or does not exist", "Toxme error"));
@@ -176,13 +176,13 @@ void AddFriendForm::onSendTriggered()
         }
     }
 
-    deleteFriendRequest(toxId);
-    if (toxId == Core::getInstance()->getSelfId())
+    deleteFriendRequest(friendId);
+    if (friendId == Core::getInstance()->getSelfId())
         GUI::showWarning(tr("Couldn't add friend"),
                          tr("You can't add yourself as a friend!",
                             "When trying to add your own Tox ID as friend"));
     else
-        emit friendRequested(toxId, getMessage());
+        emit friendRequested(friendId, getMessage());
 
     this->toxId.clear();
     this->message.clear();
