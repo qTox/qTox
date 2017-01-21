@@ -2812,22 +2812,22 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Добавить друга</translation>
+        <translation>Добавить друга</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation>Групповые приглашения</translation>
+        <translation>Приглашения в группы</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Передачи файлов</translation>
+        <translation>Передача файлов</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>My profile</source>
