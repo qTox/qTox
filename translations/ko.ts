@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>슬라이더를 사용해 스피커의 볼륨을 조절할 수 있습니다.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -77,7 +77,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>장치 재검색</translation>
+        <translation>장치 검색</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -109,7 +109,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Commit hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -123,21 +123,21 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 에서 qTox의 알려진 문제들을 확인할 수 있습니다. 버그나 보안 취약점을 발견하면 %2 위키 가이드라인에 따라 %3.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>버그추적</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>버그 리포트 작성</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>버그 제출하기.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -147,7 +147,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>contributors</translation>
     </message>
 </context>
 <context>
@@ -201,7 +201,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 저장 폴더:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -213,7 +213,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Remove history (operation can not be undone!)</source>
-        <translation type="unfinished"></translation>
+        <translation>기록 삭제하기 (삭제된 기록은 복구할 수 없습니다!)</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -226,11 +226,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>자동받기 폴더 선택</translation>
     </message>
     <message>
         <source>History removed</source>
-        <translation type="unfinished"></translation>
+        <translation>기록이 삭제되었습니다</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
@@ -250,7 +250,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Audio + Video</source>
-        <translation type="unfinished"></translation>
+        <translation>오디오 + 비디오</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
@@ -279,7 +279,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID 형식이 정확하지 않습니다</translation>
     </message>
     <message>
         <source>Message</source>
@@ -288,7 +288,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Send friend request</source>
-        <translation type="unfinished"></translation>
+        <translation>친구 요청하기</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -326,11 +326,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>친구의 Tox 아이디를 입력</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>친구 요청 메시지</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
@@ -339,7 +339,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>이 아이디는 존재하지 않습니다</translation>
     </message>
 </context>
 <context>
@@ -370,7 +370,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 설정을 초기화 하시겠습니까?</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -388,7 +388,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>통화중에는 연결을 종료할 수 없습니다!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -412,7 +412,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reset to default settings</source>
-        <translation type="unfinished"></translation>
+        <translation>설정초기화</translation>
     </message>
     <message>
         <source>Portable</source>
@@ -425,7 +425,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Enable IPv6 (recommended)</source>
         <extracomment>Text on a checkbox to enable IPv6</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>IPv6사용 (권장)</translation>
     </message>
     <message>
         <source>Disabling this allows, e.g., toxing over Tor. It adds load to the Tox network however, so uncheck only when necessary.</source>
@@ -435,7 +435,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Enable UDP (recommended)</source>
         <extracomment>Text on checkbox to disable UDP</extracomment>
-        <translation>UDP 사용 (추천)</translation>
+        <translation>UDP사용 (권장)</translation>
     </message>
     <message>
         <source>Proxy type:</source>
@@ -453,7 +453,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>없음</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -466,7 +466,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
+        <translation>다시 연결</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -485,7 +485,7 @@ which may lead to problems with video calls.</source>
     <name>ChatForm</name>
     <message>
         <source>Load chat history...</source>
-        <translation type="unfinished"></translation>
+        <translation>채팅 기록을 불러오는중...</translation>
     </message>
     <message>
         <source>Send a file</source>
@@ -493,11 +493,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>qTox wasn&apos;t able to open %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1을 열 수 없습니다</translation>
     </message>
     <message>
         <source>Unable to open</source>
-        <translation type="unfinished"></translation>
+        <translation>열 수 없습니다</translation>
     </message>
     <message>
         <source>Bad idea</source>
@@ -588,7 +588,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>자리 비움</translation>
     </message>
     <message>
         <source>busy</source>
@@ -598,7 +598,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished"></translation>
+        <translation>오프라인</translation>
     </message>
     <message>
         <source>online</source>
@@ -608,7 +608,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1님은 현재 %2</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -616,6 +616,14 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -627,7 +635,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>전체 선택</translation>
     </message>
     <message>
         <source>pending</source>
@@ -638,7 +646,7 @@ which may lead to problems with video calls.</source>
     <name>ChatTextEdit</name>
     <message>
         <source>Type your message here...</source>
-        <translation type="unfinished"></translation>
+        <translation>여기에 메시지를 입력하세요...</translation>
     </message>
 </context>
 <context>
@@ -670,11 +678,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
+        <translation>제한된 메시지 길이를 초과했습니다!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
-        <translation type="unfinished"></translation>
+        <translation>이미 추가된 친구입니다</translation>
     </message>
     <message>
         <source>/me offers friendship.</source>
@@ -687,11 +695,11 @@ which may lead to problems with video calls.</source>
     <message>
         <source>The previous password is incorrect; please try again:</source>
         <comment>used on retries in load()</comment>
-        <translation type="unfinished"></translation>
+        <translation>이전 비번이 정확하지 않습니다; 다시 시도:</translation>
     </message>
     <message>
         <source>Encrypted chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>암호화된 채팅기록</translation>
     </message>
     <message>
         <source>No encrypted chat history file found, or it was corrupted.
@@ -701,7 +709,7 @@ History will be disabled!</source>
     <message>
         <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
         <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished"></translation>
+        <translation>채팅기록파일 &quot;%1&quot; 확인을 위해 비번을 입력하세요.</translation>
     </message>
     <message>
         <source>
@@ -716,7 +724,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Disable chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>채팅 기록 해제</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -728,37 +736,37 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Form</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>폼</translation>
     </message>
     <message>
         <source>10Mb</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>10Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ETA:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파일이름</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>전송 대기...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>수신수락</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -777,7 +785,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>전송취소</translation>
     </message>
     <message>
         <source>Pause transfer</source>
@@ -790,7 +798,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일열기</translation>
     </message>
     <message>
         <source>Open file directory</source>
@@ -802,12 +810,12 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>전송수락</translation>
     </message>
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>파일보관</translation>
     </message>
 </context>
 <context>
@@ -819,11 +827,11 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>다운로드</translation>
     </message>
     <message>
         <source>Uploads</source>
-        <translation type="unfinished"></translation>
+        <translation>업로드</translation>
     </message>
 </context>
 <context>
@@ -831,27 +839,27 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Today</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>오늘</translation>
     </message>
     <message>
         <source>Yesterday</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>어제</translation>
     </message>
     <message>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>지난 7일</translation>
     </message>
     <message>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>이달내</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>6개월 이전</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -864,7 +872,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>친구요청</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
@@ -872,21 +880,21 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 아이디:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation>친구 요청 메시지:</translation>
     </message>
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation type="unfinished">수락</translation>
+        <translation>수락</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation type="unfinished">거부</translation>
+        <translation>거부</translation>
     </message>
 </context>
 <context>
@@ -894,7 +902,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Invite to group</source>
         <comment>Menu to invite a friend to a groupchat</comment>
-        <translation type="unfinished"></translation>
+        <translation>그룹 초대</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -950,7 +958,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">자동받기 폴더 선택</translation>
     </message>
     <message>
         <source>New message</source>
@@ -958,7 +966,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">온라인</translation>
     </message>
     <message>
         <source>Away</source>
@@ -971,7 +979,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">오프라인</translation>
     </message>
 </context>
 <context>
@@ -993,19 +1001,19 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">자동받기 폴더 선택</translation>
     </message>
 </context>
 <context>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>일반설정</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
@@ -1013,7 +1021,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>현시언어:</translation>
     </message>
     <message>
         <source>Show system tray icon</source>
@@ -1059,11 +1067,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>자동시작</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>시작할때 업데이트 확인</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
@@ -1088,7 +1096,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Auto away after (0 to disable):</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
@@ -1096,11 +1104,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>On new message:</source>
-        <translation type="unfinished"></translation>
+        <translation>새 메시지가 있을때:</translation>
     </message>
     <message>
         <source>Play sound</source>
-        <translation type="unfinished"></translation>
+        <translation>소리재생</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
@@ -1112,7 +1120,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">파일 저장 폴더:</translation>
     </message>
     <message>
         <source>Play sound while Busy</source>
@@ -1159,11 +1167,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Accept video call</source>
-        <translation type="unfinished">비디오 통화 수락</translation>
+        <translation>비디오 통화 수락</translation>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished">비디오 통화 종료</translation>
+        <translation>비디오 통화 종료</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
@@ -1250,7 +1258,7 @@ instead of system taskbar.</source>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">그룹</translation>
     </message>
     <message>
         <source>Create new group</source>
@@ -1305,11 +1313,11 @@ instead of system taskbar.</source>
     <name>IdentitySettings</name>
     <message>
         <source>Public Information</source>
-        <translation type="unfinished"></translation>
+        <translation>공개 정보</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation type="unfinished">Tox ID</translation>
+        <translation>Tox ID</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1319,16 +1327,16 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID (클릭해서 복사)</translation>
     </message>
     <message>
         <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>프로필</translation>
     </message>
     <message>
         <source>Rename profile.</source>
         <comment>tooltip for renaming profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>프로필 이름 변경.</translation>
     </message>
     <message>
         <source>Go back to the login screen</source>
@@ -1338,15 +1346,15 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Logout</source>
         <comment>import profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>로그아웃</translation>
     </message>
     <message>
         <source>Remove password</source>
-        <translation type="unfinished"></translation>
+        <translation>계정 비밀번호 삭제</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>계정 비밀번호 변경</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
@@ -1354,21 +1362,21 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지 저장</translation>
     </message>
     <message>
         <source>Copy image</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지 복사</translation>
     </message>
     <message>
         <source>Rename</source>
         <comment>rename profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>이름변경</translation>
     </message>
     <message>
         <source>Delete profile.</source>
         <comment>delete profile button tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>프로필 삭제.</translation>
     </message>
     <message>
         <source>Allows you to export your Tox profile to a file.
@@ -1379,16 +1387,16 @@ Profile does not contain your history.</source>
     <message>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>내보내기</translation>
     </message>
     <message>
         <source>Delete</source>
         <comment>delete profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>삭제</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>서버</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
@@ -1408,7 +1416,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe 등록</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
@@ -1493,11 +1501,11 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">프로필 이름 변경.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">프로필 삭제.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1525,6 +1533,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1694,11 +1706,11 @@ You may want to create one.</source>
     <name>MainWindow</name>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">이름</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">상태</translation>
     </message>
     <message>
         <source>...</source>
@@ -1743,7 +1755,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">상태</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1787,7 +1799,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">설정</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -1874,7 +1886,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Keep chat history</source>
-        <translation type="unfinished"></translation>
+        <translation>채팅기록 유지</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
@@ -2018,10 +2030,6 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
@@ -2091,7 +2099,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">계정 비밀번호 변경</translation>
     </message>
     <message>
         <source>Set profile password</source>
@@ -2240,7 +2248,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <source>Desktop</source>
@@ -2418,11 +2426,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">사용자 아이디:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">친구 요청 메시지:</translation>
     </message>
     <message>
         <source>Send</source>
@@ -2443,11 +2451,11 @@ It will be installed when qTox restarts.</source>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">없음</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>인터페이스</translation>
     </message>
 </context>
 <context>
@@ -2458,7 +2466,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>기본폰트:</translation>
     </message>
     <message>
         <source>px</source>
@@ -2576,7 +2584,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>테마</translation>
     </message>
     <message>
         <source>Style:</source>
@@ -2600,7 +2608,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Online</source>
         <comment>Button to set your status to &apos;Online&apos;</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">온라인</translation>
     </message>
     <message>
         <source>Away</source>
@@ -2619,10 +2627,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2648,7 +2652,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">로그아웃</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2676,30 +2680,18 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
-        <translation type="unfinished"></translation>
+        <translation>실행파일</translation>
     </message>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>실행파일을 열기하는것은 위험할 수 있습니다. 파일을 열기하시겠습니까?</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
-        <translation type="unfinished"></translation>
+        <translation>친구요청을 할 수 없습니다</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
@@ -2707,19 +2699,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished"></translation>
+        <translation>이름</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2728,11 +2716,11 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Message failed to send</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 전송에 실패하였습니다</translation>
     </message>
     <message>
         <source>Create new group...</source>
-        <translation type="unfinished"></translation>
+        <translation>새 그룹 만들기...</translation>
     </message>
     <message>
         <source>Add new circle...</source>
@@ -2760,24 +2748,24 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>전체</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished"></translation>
+        <translation>온라인</translation>
     </message>
     <message>
         <source>Offline</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>오프라인</translation>
     </message>
     <message>
         <source>Friends</source>
-        <translation type="unfinished"></translation>
+        <translation>친구</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished"></translation>
+        <translation>그룹</translation>
     </message>
     <message>
         <source>Search Contacts</source>
@@ -2785,11 +2773,36 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Groupchat #%1</source>
-        <translation type="unfinished"></translation>
+        <translation>그룹채팅 #%1</translation>
     </message>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation>보기</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">설정</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
