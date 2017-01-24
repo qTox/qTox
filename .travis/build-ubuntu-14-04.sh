@@ -151,12 +151,12 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
 # first build qTox without support for optional dependencies
 echo '*** BUILDING "MINIMAL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX" ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO ENABLE_SYSTRAY_GTK_BACKEND=NO DISABLE_PLATFORM_EXT=YES SMILEYS=DISABLED
+cmake . -DCMAKE_C_COMPILER="$CC" -DCMAKE_CXX_COMPILER="$CXX" -DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO -DENABLE_SYSTRAY_GTK_BACKEND=NO -DDISABLE_PLATFORM_EXT=YES -DSMILEYS=DISABLED
 # ↓ reduce if build fails with OOM
 make -j$(nproc)
 # clean it up, and build normal version
 make clean
 echo '*** BUILDING "FULL" VERSION ***'
-qmake qtox.pro QMAKE_CC="$CC" QMAKE_CXX="$CXX"
+cmake . -DCMAKE_C_COMPILER="$CC" -DCMAKE_CXX_COMPILER="$CXX"
 # ↓ reduce if build fails with OOM
 make -j$(nproc)
