@@ -40,6 +40,7 @@
 #include <QStandardPaths>
 #include <QStringBuilder>
 #include <QtConcurrent/QtConcurrentRun>
+#include <locale.h>
 
 #define EMOTICONS_SUB_DIR QStringLiteral("emoticons")
 
@@ -84,6 +85,11 @@ SmileyPack& SmileyPack::getInstance()
 
 QStringList SmileyPack::loadDefaultPaths()
 {
+#if defined(Q_OS_FREEBSD)
+    // TODO: Remove when will be fixed.
+    // Workaround to fix https://bugreports.qt.io/browse/QTBUG-57522
+    setlocale(LC_ALL, "");
+#endif
     QStringList paths = QStringList{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons"};
     // qTox should find emoticons next to the binary
     paths.append('.' + QDir::separator() + EMOTICONS_SUB_DIR);
