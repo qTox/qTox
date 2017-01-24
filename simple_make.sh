@@ -27,6 +27,7 @@ apt_install() {
         qt5-default
         qt5-qmake
         qttools5-dev-tools
+        cmake
     )
 
     local codename=$(lsb_release -c -s)
@@ -134,6 +135,7 @@ zypper_install() {
         patterns-openSUSE-devel_basis
         qrencode-devel
         sqlcipher-devel
+        cmake
     )
     sudo zypper in "${zypper_packages[@]}"
 }
@@ -157,11 +159,7 @@ main() {
     fi
 
     ./bootstrap.sh
-    if [ -e /etc/redhat-release -o -e /etc/zypp ]; then
-        qmake-qt5
-    else
-        qmake
-    fi
+    cmake .
     make -j$(nproc)
 }
 main

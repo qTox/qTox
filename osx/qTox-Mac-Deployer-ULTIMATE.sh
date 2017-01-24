@@ -40,7 +40,6 @@ QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
 QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
-QMAKE="${QT_DIR_VER}/bin/qmake" # Don't change
 MACDEPLOYQT="${QT_DIR_VER}/bin/macdeployqt" # Don't change
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
@@ -226,8 +225,8 @@ build() {
     mkdir $BUILD_DIR
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
-    fcho "Starting qmake ... "
-    $QMAKE $QTOX_DIR/qtox.pro
+    fcho "Starting cmake ... "
+    cmake $QTOX_DIR
     make
 }
 
