@@ -72,13 +72,13 @@ git config --global alias.logs 'log --show-signature'
   the PR before merging.
   - with trivial changes, like fixing typos or something along those lines,
     feel free to merge right away.
-- if you're about to merge PR, assign yourself to it.
-- if you decide that PR actually isn't to be (yet) merged, de-assign yourself.
 - if PR requires some changes, comment what parts need to be adjusted, and
   assign the `PR-needs-changes` label – after requested changes are done,
   remove the label.
 - if PR doesn't apply properly on top of current master (when using
   [`merge-pr.sh`] script), request a rebase and tag PR with `PR-needs-rebase`.
+- if PR requires changes but there has been no activity from PR submitter for
+  more than 2 months, close the PR.
 
 
 # Issues
