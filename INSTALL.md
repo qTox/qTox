@@ -44,6 +44,7 @@
 | [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
 | [toxcore]     | = 0.1.\*    | core, av                                          |
 | [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
+| [CMake]       | >= 2.8.11   |                                                   |
 | [OpenAL Soft] | >= 1.16.0   |                                                   |
 | [qrencode]    | >= 3.0.3    |                                                   |
 | [sqlcipher]   | >= 3.2.0    |                                                   |
@@ -51,8 +52,8 @@
 
 ## Optional dependencies
 
-They can be disabled/enabled by passing arguments to `qmake` command when
-building qTox.
+They can be disabled/enabled by passing arguments to `cmake` as
+`-D{name}={value}` command when building qTox.
 
 If they are missing, qTox is built without support for the functionality.
 
@@ -72,7 +73,7 @@ To disable: `DISABLE_PLATFORM_EXT=YES`
 | Name        | Version |
 |-------------|---------|
 | [Atk]       | >= 2.14 |
-| [Cairo]     | |
+| [Cairo]     |         |
 | [GdkPixbuf] | >= 2.31 |
 | [GLib]      | >= 2.0  |
 | [GTK+]      | >= 2.0  |
@@ -85,16 +86,16 @@ ENABLE_SYSTRAY_GTK_BACKEND=NO`
 
 Disabled by default.
 
-| Name        | Version |
-|-------------|---------|
-| [Atk]       | >= 2.14 |
-| [Cairo]     | |
-| [DBus Menu] | >= 0.6  |
-| [GdkPixbuf] | >= 2.31 |
-| [GLib]      | >= 2.0  |
-| [GTK+]      | >= 2.0  |
+| Name              | Version   |
+|-------------------|-----------|
+| [Atk]             | >= 2.14   |
+| [Cairo]           |           |
+| [DBus Menu]       | >= 0.6    |
+| [GdkPixbuf]       | >= 2.31   |
+| [GLib]            | >= 2.0    |
+| [GTK+]            | >= 2.0    |
 | [libappindicator] | >= 0.4.92 |
-| [Pango]     | >= 1.18 |
+| [Pango]           | >= 1.18   |
 
 To enable: `ENABLE_SYSTRAY_UNITY_BACKEND=YES`
 
@@ -237,7 +238,7 @@ your `sources.list`. Adding backports:
 http://backports.debian.org/Instructions/
 
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
+sudo apt-get install build-essential cmake qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
 libsqlcipher-dev pkg-config yasm
@@ -287,7 +288,7 @@ http://slackbuilds.org/repository/14.1/network/qTox/
 <a name="ubuntu-other-deps" />
 #### Ubuntu >=15.04
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools \
+sudo apt-get install build-essential cmake qt5-qmake qt5-default qttools5-dev-tools \
 libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
 libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev \
 libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev \
@@ -298,7 +299,11 @@ libsqlcipher-dev
 <a name="ubuntu-other-1604-deps" />
 #### Ubuntu >=16.04:
 ```bash
-sudo apt-get install build-essential qt5-qmake qt5-default qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
+sudo apt-get install build-essential cmake qt5-qmake qt5-default \
+qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev \
+libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev \
+libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev \
+libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
 ```
 
 ### FFmpeg
@@ -450,7 +455,7 @@ make sure that you did install *all of them*.
 
 Run in qTox directory to compile:
 ```bash
-qmake
+cmake .
 make
 ```
 
@@ -467,16 +472,6 @@ Now you can start compiled qTox with `./qtox`
 
 Congratulations, you've compiled qTox `:)`
 
-
-#### openSUSE / Fedora
-
-Note to Fedora users: check qt5 version before building default is 4.8 on fedora
-21 / 22, everything up until `qmake-qt5` will build fine but then `qmake-qt5`
-will freak out.
-```bash
-qmake-qt5
-make
-```
 
 #### Debian / Ubuntu / Mint
 If the compiling process stops with a missing dependency like:
@@ -583,15 +578,13 @@ sudo bash bootstrap-osx.sh
 
 #### Compiling
 You can build qTox with Qt Creator
-[seperate download](http://www.qt.io/download-open-source/#section-6) or you can
-hunt down the version of home brew qt5 your using in the
-`/usr/local/Cellar/qt5/` directory. e.g.
-`/usr/local/Cellar/qt5/5.5.1_2/bin/qmake` with `5.5.1_2` being the version of
-Qt5 that's been installed.
+[seperate download](http://www.qt.io/download-open-source/#section-6) or
+manually with cmake
 
 With that; in your terminal you can compile qTox in the git dir:
 ```bash
-/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ./qtox.pro
+cmake .
+make
 ```
 
 Or a cleaner method would be to:
@@ -599,7 +592,7 @@ Or a cleaner method would be to:
 cd ./git/dir/qTox
 mkdir ./build
 cd build
-/usr/local/Cellar/qt5/5.5.1_2/bin/qmake ../qtox.pro
+cmake ..
 ```
 
 #### Deploying
