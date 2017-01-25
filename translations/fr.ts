@@ -1778,11 +1778,11 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordre et visibilité</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Régler l&apos;ordre et la visibilité des amis</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
@@ -2410,7 +2410,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmer le mot de passe</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -2804,7 +2804,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invitations à un groupe</translation>
     </message>
     <message>
         <source>File transfers</source>
