@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Přehrát testovací zvuk při změne hlasitosti výstupu.</translation>
+        <translation>Při změně výstupní hlasitosti přehrát testovací zvuk .</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -619,6 +619,14 @@ může způsobovat problémy během videohovorů.</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1530,6 +1538,10 @@ Při exportu nebude nahrána vaše historie.</translation>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2063,10 +2075,6 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Soubory nemohou být odstraněny!</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Profil uživatele</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2651,17 +2659,9 @@ Bude nainstalována po restartu qTox.</translation>
         <translation>Předchozí konverzace</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Přidat přítele</translation>
-    </message>
-    <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>toxcore nelze spustit s vaším nastavením proxy. qTox nelze spustit prosím změňte nastavení a restartujte.</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Přenosy souborů</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2672,14 +2672,6 @@ Bude nainstalována po restartu qTox.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Požadujete aby qTox spustil soubor Spustitelné soubory mohou být rizikem pro váš počítač. Jste si jistý, že chcete tento soubor spustit?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Nastavení</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2761,10 +2753,6 @@ Bude nainstalována po restartu qTox.</translation>
         <translation>Váš status</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished">&lt;Prázdné&gt;</translation>
@@ -2807,6 +2795,31 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Zobrazit</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Přidat přítele</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Pozvánky do skupin</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Přenosy souborů</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Nastavení</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
