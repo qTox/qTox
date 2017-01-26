@@ -5,31 +5,31 @@
     <name>AVForm</name>
     <message>
         <source>Audio/Video</source>
-        <translation>Ljud/Video</translation>
+        <translation>Ljud/video</translation>
     </message>
     <message>
         <source>Default resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard upplösning</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiverad</translation>
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spela en testljud när du byter utgångsvolymen.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd skjutreglaget för att ställa in förstärkningen av din inmatningsenhet som sträcker sig från %1dB till %2dB.</translation>
     </message>
     <message>
         <source>Select region</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj region</translation>
     </message>
     <message>
         <source>Screen %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärm %1</translation>
     </message>
     <message>
         <source>Audio Settings</source>
@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished"></translation>
+        <translation>Förstärkning</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation type="unfinished"></translation>
+        <translation>Använder skjutreglaget för att ställa in volym på dina högtalare.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -615,6 +615,14 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1522,6 +1530,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2041,10 +2053,6 @@ Please use another image.</source>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2614,18 +2622,6 @@ It will be installed when qTox restarts.</source>
         <translation>Texcore misslyckades att starta med dina proxy-inställningar. qTox kan inte köras; ändra dina inställningar och starta om.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2662,14 +2658,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Din status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2787,6 +2775,31 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
