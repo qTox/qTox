@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Gain</source>
-        <translation type="unfinished">Gain</translation>
+        <translation>Gain</translation>
     </message>
     <message>
         <source>Playback device</source>
@@ -1774,7 +1774,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished">Champ de recherche de contact pour les amis connus</translation>
+        <translation>Champ de recherche de contact pour les amis connus</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
