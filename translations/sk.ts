@@ -622,6 +622,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -958,7 +966,7 @@ Disabling chat history now will leave the encrypted history intact (but not usab
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nová správa</translation>
     </message>
     <message>
         <source>Online</source>
@@ -1533,6 +1541,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2030,10 +2042,6 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Profil používateľa</translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
@@ -2466,78 +2474,78 @@ It will be installed when qTox restarts.</source>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>Base font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Základné písmo:</translation>
     </message>
     <message>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <source>Size: </source>
-        <translation type="unfinished"></translation>
+        <translation>Veľkosť: </translation>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový štýl textu sa nemusí načítať do reštartu qToxu.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Štýl textu:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte preferovaný štýl textu.</translation>
     </message>
     <message>
         <source>Plaintext</source>
-        <translation type="unfinished"></translation>
+        <translation>Obyčajný text</translation>
     </message>
     <message>
         <source>Show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť formátovanie znakov</translation>
     </message>
     <message>
         <source>Don&apos;t show formatting characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezobrazovať formátovanie znakov</translation>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>Nová správa</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazí okno keď dostanete novú správu, a žiadne okno qToxu nie je otvorené.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť okno</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aktivuje okno qToxu keď dostanete správu.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivovať okno</translation>
     </message>
     <message>
         <source>Contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam kontaktov</translation>
     </message>
     <message>
         <source>Always notify about new messages in groupchats.</source>
         <comment>toolTip for Group chat always notify</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vždy upozorniť na nové správy v skupinových chatoch.</translation>
     </message>
     <message>
         <source>Group chats always notify</source>
-        <translation type="unfinished"></translation>
+        <translation>Upozornenia v skupinových chatoch</translation>
     </message>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
@@ -2551,11 +2559,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Your contact list will be shown in compact mode.</source>
         <comment>toolTip for compact layout setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam kontaktov sa zobrazí v kompaktnom režime.</translation>
     </message>
     <message>
         <source>Compact contact list</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompaktný zoznam kontaktov</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
@@ -2584,7 +2592,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -2631,10 +2639,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add friend</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2688,10 +2692,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Prenosy súborov</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation type="unfinished"></translation>
@@ -2700,14 +2700,6 @@ It will be installed when qTox restarts.</source>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished">Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2728,10 +2720,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Your status</source>
         <translation>Váš status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Pozvánky do skupín</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2807,6 +2795,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Zobraziť</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Pozvánky do skupín</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Prenosy súborov</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
