@@ -221,7 +221,7 @@ void ChatForm::onTextEditChanged()
     else
     {
         isTyping = false;
-        core->sendTyping(f->getFriendID(), isTyping);
+        core->sendTyping(f->getFriendId(), isTyping);
     }
 }
 
@@ -780,7 +780,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
     }
 
     History* history = Nexus::getProfile()->getHistory();
-    QString pk = f->getToxId().getPublicKeyString();
+    QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistory(pk, since, now);
 
     ToxPk storedPrevId = previousId;
@@ -834,7 +834,7 @@ void ChatForm::loadHistory(QDateTime since, bool processUndelivered)
                     authorStr, messageText, type, isSelf, dateTime);
 
         uint prev = prevMsgDateTime.secsTo(msgDateTime);
-        if (!isAction && prevId == authorId && prev < getChatLog()->repNameAfter)
+        if (!isAction && prevId == authorPk && prev < getChatLog()->repNameAfter)
         {
             msg->hideSender();
         }
@@ -1164,8 +1164,8 @@ void ChatForm::SendMessageStr(QString msg)
         if (profile->isHistoryEnabled())
         {
             auto* offMsgEngine = getOfflineMsgEngine();
-            QString selfPk = Core::getInstance()->getSelfId().publicKey;
-            QString pk = f->getToxId().getPublicKeyString();
+            QString selfPk = Core::getInstance()->getSelfId().toString();
+            QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
             profile->getHistory()->addNewMessage(
                         pk, qt_msg_hist, selfPk, timestamp, status,
