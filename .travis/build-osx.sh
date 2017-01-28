@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 by The qTox Project Contributors
+#    Copyright © 2016-2017 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@ set -e -o pipefail
 install_ccache() {
     echo "Installing ccache ..."
     brew install ccache
-    # make sure to use ccache for all the compiling
-    export CC="ccache $CC"
-    export CXX="ccache $CXX"
 }
 
 # Build OSX

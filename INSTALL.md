@@ -34,6 +34,7 @@
   - [Compile qTox](#compile-qtox)
 - [OS X](#osx)
 - [Windows](#windows)
+- [Compile-time switches](#compile-time-switches)
 
 <a name="dependencies" />
 ## Dependencies
@@ -52,8 +53,8 @@
 
 ## Optional dependencies
 
-They can be disabled/enabled by passing arguments to `cmake` as
-`-D{name}={value}` command when building qTox.
+They can be disabled/enabled by passing arguments to `cmake` command when
+building qTox.
 
 If they are missing, qTox is built without support for the functionality.
 
@@ -66,7 +67,7 @@ If they are missing, qTox is built without support for the functionality.
 | [libXScrnSaver] | >= 1.2   |
 | [libX11]        | >= 1.6.0 |
 
-To disable: `DISABLE_PLATFORM_EXT=YES`
+Disabled if dependencies are missing during compilation.
 
 #### KDE Status Notifier / GTK tray backend
 
@@ -79,8 +80,7 @@ To disable: `DISABLE_PLATFORM_EXT=YES`
 | [GTK+]      | >= 2.0  |
 | [Pango]     | >= 1.18 |
 
-To disable: `ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO
-ENABLE_SYSTRAY_GTK_BACKEND=NO`
+To disable: `-DENABLE_STATUSNOTIFIER=False -DENABLE_GTK_SYSTRAY=False`
 
 #### Unity tray backend
 
@@ -97,7 +97,7 @@ Disabled by default.
 | [libappindicator] | >= 0.4.92 |
 | [Pango]           | >= 1.18   |
 
-To enable: `ENABLE_SYSTRAY_UNITY_BACKEND=YES`
+To enable: `-DENABLE_APPINDICATOR=True`
 
 
 <a name="linux" />
@@ -238,10 +238,25 @@ your `sources.list`. Adding backports:
 http://backports.debian.org/Instructions/
 
 ```bash
-sudo apt-get install build-essential cmake qt5-qmake qt5-default qttools5-dev-tools \
-libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
-libqrencode-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev ffmpeg \
-libsqlcipher-dev pkg-config yasm
+sudo apt-get install \
+    build-essential \
+    cmake \
+    ffmpeg \
+    libgdk-pixbuf2.0-dev \
+    libglib2.0-dev \
+    libgtk2.0-dev \
+    libopenal-dev \
+    libqrencode-dev \
+    libqt5opengl5-dev \
+    libqt5svg5-dev \
+    libsqlcipher-dev \
+    libxss-dev \
+    pkg-config \
+    qrencode \
+    qt5-default \
+    qt5-qmake \
+    qttools5-dev-tools \
+    yasm
 ```
 
 **Go to [FFmpeg](#ffmpeg) section to compile it.**
@@ -288,22 +303,54 @@ http://slackbuilds.org/repository/14.1/network/qTox/
 <a name="ubuntu-other-deps" />
 #### Ubuntu >=15.04
 ```bash
-sudo apt-get install build-essential cmake qt5-qmake qt5-default qttools5-dev-tools \
-libqt5opengl5-dev libqt5svg5-dev libopenal-dev libxss-dev qrencode \
-libqrencode-dev libavutil-ffmpeg-dev libswresample-ffmpeg-dev \
-libavcodec-ffmpeg-dev libswscale-ffmpeg-dev libavfilter-ffmpeg-dev \
-libavdevice-ffmpeg-dev libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev \
-libsqlcipher-dev
+sudo apt-get install \
+    build-essential cmake \
+    libavcodec-ffmpeg-dev \
+    libavdevice-ffmpeg-dev \
+    libavfilter-ffmpeg-dev \
+    libavutil-ffmpeg-dev \
+    libgdk-pixbuf2.0-dev \
+    libglib2.0-dev \
+    libgtk2.0-dev \
+    libopenal-dev \
+    libqrencode-dev \
+    libqt5opengl5-dev \
+    libqt5svg5-dev \
+    libsqlcipher-dev \
+    libswresample-ffmpeg-dev \
+    libswscale-ffmpeg-dev \
+    libxss-dev \
+    qrencode \
+    qt5-default \
+    qt5-qmake \
+    qttools5-dev-tools
 ```
 
 <a name="ubuntu-other-1604-deps" />
 #### Ubuntu >=16.04:
 ```bash
-sudo apt-get install build-essential cmake qt5-qmake qt5-default \
-qttools5-dev-tools libqt5opengl5-dev libqt5svg5-dev libopenal-dev \
-libxss-dev qrencode libqrencode-dev libavutil-dev libswresample-dev \
-libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev \
-libglib2.0-dev libgdk-pixbuf2.0-dev libgtk2.0-dev libsqlcipher-dev
+sudo apt-get install \
+    build-essential \
+    cmake \
+    libavcodec-dev \
+    libavdevice-dev \
+    libavfilter-dev \
+    libavutil-dev \
+    libgdk-pixbuf2.0-dev \
+    libglib2.0-dev \
+    libgtk2.0-dev \
+    libopenal-dev \
+    libqrencode-dev \
+    libqt5opengl5-dev \
+    libqt5svg5-dev \
+    libsqlcipher-dev \
+    libswresample-dev \
+    libswscale-dev \
+    libxss-dev \
+    qrencode \
+    qt5-default \
+    qt5-qmake \
+    qttools5-dev-tools
 ```
 
 ### FFmpeg
@@ -678,6 +725,25 @@ decided to choose another location, replace corresponding parts.
 ### Getting dependencies
 Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
 dependencies compile them and put to appropriate directories.
+
+
+## Compile-time switches
+
+They are passed as an argument to `cmake` command. E.g. with a switch `SWITCH`
+that has value `YES` it would be passed to `cmake` in a following manner:
+
+```bash
+cmake -DSWITCH=yes
+```
+
+Switches:
+
+- `SMILEYS`, values:
+  - if not defined or there is not supported value, all emoticon packs are
+    included
+  - `DISABLED` – disables support for emoticons
+  - `MIN` – minimal support for emoticons, only a single emoticon pack is
+    included
 
 
 [Atk]: https://wiki.gnome.org/Accessibility

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2015-2016 by The qTox Project Contributors
+#    Copyright © 2015-2017 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -48,10 +48,6 @@ sudo apt-get install -y --force-yes \
     qt53xmlpatterns \
     pkg-config || yes
 
-# make sure to use ccache for all the compiling
-export CC="ccache $CC"
-export CXX="ccache $CXX"
-
 # Qt
 source /opt/qt53/bin/qt53-env.sh || yes
 
@@ -72,7 +68,7 @@ cd ffmpeg*
 # demuxers, decoders and parsers needed for webcams:
 # mjpeg, h264
 
-./configure --prefix="$PREFIX_DIR" \
+CC="ccache $CC" CXX="ccache $CXX" ./configure --prefix="$PREFIX_DIR" \
     --disable-avfilter \
     --disable-avresample \
     --disable-bzlib \
@@ -120,7 +116,7 @@ cd ffmpeg*
     --enable-decoder=h264 \
     --enable-decoder=mjpeg
 
-make -j$(nproc)
+CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
 make install
 cd ../../
 # libsodium
@@ -128,7 +124,8 @@ git clone git://github.com/jedisct1/libsodium.git
 cd libsodium
 git checkout tags/1.0.8
 ./autogen.sh
-./configure && make -j$(nproc)
+CC="ccache $CC" CXX="ccache $CXX" ./configure
+CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc)
 sudo checkinstall --install --pkgname libsodium --pkgversion 1.0.8 --nodoc -y
 sudo ldconfig
 cd ..
@@ -136,8 +133,8 @@ cd ..
 git clone --branch v0.1.0 --depth=1 https://github.com/toktok/c-toxcore.git toxcore
 cd toxcore
 autoreconf -if
-./configure
-make -j$(nproc) > /dev/null
+CC="ccache $CC" CXX="ccache $CXX" ./configure
+CC="ccache $CC" CXX="ccache $CXX" make -j$(nproc) > /dev/null
 sudo make install
 echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
@@ -149,14 +146,33 @@ $CXX --version
 # needed, otherwise ffmpeg doesn't get detected
 export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
-# first build qTox without support for optional dependencies
-echo '*** BUILDING "MINIMAL" VERSION ***'
-cmake . -DCMAKE_C_COMPILER="$CC" -DCMAKE_CXX_COMPILER="$CXX" -DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=NO -DENABLE_SYSTRAY_GTK_BACKEND=NO -DDISABLE_PLATFORM_EXT=YES -DSMILEYS=DISABLED
-# ↓ reduce if build fails with OOM
-make -j$(nproc)
-# clean it up, and build normal version
-make clean
-echo '*** BUILDING "FULL" VERSION ***'
-cmake . -DCMAKE_C_COMPILER="$CC" -DCMAKE_CXX_COMPILER="$CXX"
-# ↓ reduce if build fails with OOM
-make -j$(nproc)
+
+build_qtox() {
+    bdir() {
+        pushd .
+        cd $BUILDDIR
+        make -j$(nproc)
+        # check if `qtox` file has been made, is non-empty and is an executable
+        [[ -s qtox ]] && [[ -x qtox ]]
+        popd
+    }
+
+    local BUILDDIR=_build
+
+    # first build qTox without support for optional dependencies
+    echo '*** BUILDING "MINIMAL" VERSION ***'
+    cmake -H. -B"$BUILDDIR" \
+        -DSMILEYS=DISABLED \
+        -DENABLE_STATUSNOTIFIER=False \
+        -DENABLE_GTK_SYSTRAY=False
+
+    bdir
+
+    # clean it up, and build normal version
+    rm -rf "$BUILDDIR"
+
+    echo '*** BUILDING "FULL" VERSION ***'
+    cmake -H. -B"$BUILDDIR"
+    bdir
+}
+build_qtox

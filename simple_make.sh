@@ -8,6 +8,7 @@ apt_install() {
         autotools-dev
         check
         checkinstall
+        cmake
         git build-essential
         libavdevice-dev
         libgdk-pixbuf2.0-dev
@@ -27,7 +28,6 @@ apt_install() {
         qt5-default
         qt5-qmake
         qttools5-dev-tools
-        cmake
     )
 
     local codename=$(lsb_release -c -s)
@@ -115,27 +115,27 @@ fedora_locallib() {
 
 zypper_install() {
     local zypper_packages=(
+        cmake
         git
-        libffmpeg-devel
-        libopus-devel
         libQt5Concurrent-devel
-        libqt5-linguist
         libQt5Network-devel
         libQt5OpenGL-devel
+        libQt5Sql-devel
+        libQt5Sql5-sqlite
+        libQt5Xml-devel
+        libXScrnSaver-devel
+        libffmpeg-devel
+        libopus-devel
+        libqt5-linguist
         libqt5-qtbase-common-devel
         libqt5-qtsvg-devel
-        libQt5Sql5-sqlite
-        libQt5Sql-devel
-        libQt5Xml-devel
         libsodium-devel
         libvpx-devel
-        libXScrnSaver-devel
         openal-soft-devel
         patterns-openSUSE-devel_basis
         patterns-openSUSE-devel_basis
         qrencode-devel
         sqlcipher-devel
-        cmake
     )
     sudo zypper in "${zypper_packages[@]}"
 }
@@ -159,7 +159,7 @@ main() {
     fi
 
     ./bootstrap.sh
-    cmake .
+    cmake -H. -B_build
     make -j$(nproc)
 }
 main
