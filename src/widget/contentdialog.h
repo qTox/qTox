@@ -74,9 +74,7 @@ public:
 signals:
     void friendDialogShown(Friend* f);
     void groupDialogShown(Group* g);
-#ifdef Q_OS_MAC
     void activated();
-#endif
 
 public slots:
     void updateTitleAndStatusIcon(const QString& username);
