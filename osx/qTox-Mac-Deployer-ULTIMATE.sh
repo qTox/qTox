@@ -2,7 +2,7 @@
 
 #
 #    Copyright © 2015 by RowenStipe
-#    Copyright © 2016 by The qTox Project Contributors
+#    Copyright © 2016-2017 by The qTox Project Contributors
 #
 #    This program is libre software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -166,6 +166,8 @@ install() {
     then
         fcho "Updating brew formulas ..."
         brew update > /dev/null
+    else
+        brew install cmake
     fi
     brew install ffmpeg qrencode qt5 sqlcipher
 
@@ -226,8 +228,9 @@ build() {
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
     fcho "Starting cmake ... "
-    cmake $QTOX_DIR
-    make
+    export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
+    cmake -H$QTOX_DIR -B.
+    make -j$(sysctl -n hw.ncpu)
 }
 
 deploy() {
