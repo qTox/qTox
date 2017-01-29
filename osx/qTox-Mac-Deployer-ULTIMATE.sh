@@ -40,8 +40,6 @@ QT_DIR="/usr/local/Cellar/qt5" # Folder name of QT install
 QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
-MACDEPLOYQT="${QT_DIR_VER}/bin/macdeployqt" # Don't change
-
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
@@ -51,7 +49,6 @@ LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
 BUILD_DIR="${MAIN_DIR}/qTox-Mac_Build${SUBGIT}"
 DEPLOY_DIR="${MAIN_DIR}/qTox-Mac_Deployed${SUBGIT}"
-
 
 # helper function to "pretty-print"
 fcho() {
@@ -114,7 +111,7 @@ install() {
     if [[ $TRAVIS != true ]]
     then
         sleep 3
-        brew install git wget libtool autoconf automake
+        brew install git wget libtool autoconf automake pkgconfig
     fi
     brew install check libvpx opus libsodium
 
@@ -243,10 +240,8 @@ deploy() {
         exit 0
     fi
     mkdir $DEPLOY_DIR
+    make install
     cp -r $BUILD_DIR/qTox.app $DEPLOY_DIR/qTox.app
-    cd $DEPLOY_DIR
-    fcho "Now working in ${PWD}"
-    $MACDEPLOYQT qTox.app
 }
 
 bootstrap() {
@@ -265,14 +260,7 @@ bootstrap() {
 dmgmake() {
     fcho "------------------------------"
     fcho "Starting DMG creation"
-    cd $DEPLOY_DIR
-    ln -s /Applications "./Install to Applications"
-    cp -r -f $QTOX_DIR/osx/background-DMG ./.background
-    cp -f $QTOX_DIR/osx/DS_Store-DMG ./.DS_Store
-    cp -f $QTOX_DIR/LICENSE ./LICENSE
-    cp -f $QTOX_DIR/README.md ./README.md
-    cd $QTOX_DIR
-    hdiutil create -volname qTox${SUBGIT} -srcfolder $DEPLOY_DIR -format UDZO qTox${SUBGIT}.dmg
+    cp $BUILD_DIR/qTox.dmg $QTOX_DIR/
 }
 
 helpme() {

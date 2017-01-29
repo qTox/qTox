@@ -35,17 +35,11 @@ set -eu -o pipefail
 # uses `get_version()`
 source "../tools/lib/git.source"
 
-
 # append version to .plist file(s) after the right line
-append_version() {
-    local after_line='		<key>CFBundleVersion'
-    local append="		<string>$(get_version)<\/string>"
-
-    for plist in *.plist
-    do
-        git checkout "$plist"
-        sed -i"" -e "/$after_line/a\\
-$append" "$plist"
-    done
+update_version() {
+    ver=$(get_version)
+    defaults write "$(pwd)/info.plist" CFBundleVersion $ver
+    defaults write "$(pwd)/info.plist" CFBundleShortVersionString $ver
+    plutil -convert xml1 info.plist
 }
-append_version
+update_version
