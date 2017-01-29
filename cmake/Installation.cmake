@@ -22,6 +22,12 @@ if(APPLE)
   execute_process(COMMAND ${MACDEPLOYQT_PATH}/macdeployqt ${BUNDLE_PATH} -no-strip)
   message(STATUS \"Updating library paths\")
   execute_process(COMMAND ${CMAKE_SOURCE_DIR}/osx/macfixrpath ${BUNDLE_PATH})
+  " COMPONENT Runtime
+  )
+  
+  install(FILES "img/icons/*.icns" DESTINATION "${BUNDLE_PATH}/Contents/Resources/")
+  
+  install(CODE "
   message(STATUS \"Creating dmg image\")
   execute_process(COMMAND hdiutil create -volname ${PROJECT_NAME} -srcfolder ${BUNDLE_PATH} -ov -format UDZO ${PROJECT_NAME}.dmg)
   " COMPONENT Runtime

@@ -250,7 +250,6 @@ deploy() {
     fcho "Now working in ${PWD}"
     $MACDEPLOYQT qTox.app
     $MACFIXRPATH qTox.app
-    cp $MACICONS qTox.app/Contents/Resources/
 }
 
 bootstrap() {
