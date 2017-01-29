@@ -37,7 +37,7 @@ source "../tools/lib/git.source"
 
 # append version to .plist file(s) after the right line
 update_version() {
-    ver=$(get_version)
+    local ver=$(get_version)
     defaults write "$(pwd)/info.plist" CFBundleVersion $ver
     defaults write "$(pwd)/info.plist" CFBundleShortVersionString $ver
     plutil -convert xml1 info.plist
