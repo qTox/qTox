@@ -1,0 +1,36 @@
+#!/bin/bash
+
+QTOX_DIR="$1"
+
+pushd "$2" &> /dev/null
+BUNDLE_PATH="$(pwd)"
+popd &>/dev/null
+
+pushd "$BUNDLE_PATH/../" &> /dev/null
+BUILD_DIR="$(pwd)"
+popd &>/dev/null
+
+DMG_DIR="$BUILD_DIR/dmg.tmp"
+APP_VER=$(defaults read "$BUNDLE_PATH/Contents/Info.plist" CFBundleVersion)
+
+if [ ! -d "$BUNDLE_PATH" ]; then
+    echo "Please pass path to qTox.app as an argument!"
+    exit 1 
+fi
+
+rm -rf "$DMG_DIR"
+rm -f "$BUILD_DIR/qTox.dmg"
+mkdir "$DMG_DIR"
+cp -r "$BUNDLE_PATH" "$DMG_DIR/"
+
+pushd "$DMG_DIR" &> /dev/null
+ln -s /Applications "./Install to Applications"
+mkdir .background
+cp -f $QTOX_DIR/osx/background-DMG/qTox-DMG-bak.tiff .background/backgroundImage.tiff
+cp -f $QTOX_DIR/osx/DS_Store-DMG ./.DS_Store
+cp -f $QTOX_DIR/LICENSE ./LICENSE
+cp -f $QTOX_DIR/README.md ./README.md
+
+popd &>/dev/null
+
+hdiutil create -volname "qTox $APP_VER" -srcfolder "$DMG_DIR/" -format UDZO "$BUILD_DIR/qTox.dmg"
