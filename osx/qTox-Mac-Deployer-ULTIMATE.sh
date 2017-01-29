@@ -41,6 +41,8 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 MACDEPLOYQT="${QT_DIR_VER}/bin/macdeployqt" # Don't change
+MACFIXRPATH="${QTOX_DIR}/osx/macfixrpath"
+MACICONS="${QTOX_DIR}/img/icons/"*.icns
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
 
@@ -114,7 +116,7 @@ install() {
     if [[ $TRAVIS != true ]]
     then
         sleep 3
-        brew install git wget libtool autoconf automake
+        brew install git wget libtool autoconf automake pkgconfig
     fi
     brew install check libvpx opus libsodium
 
@@ -247,6 +249,8 @@ deploy() {
     cd $DEPLOY_DIR
     fcho "Now working in ${PWD}"
     $MACDEPLOYQT qTox.app
+    $MACFIXRPATH qTox.app
+    cp $MACICONS qTox.app/Contents/Resources/
 }
 
 bootstrap() {
