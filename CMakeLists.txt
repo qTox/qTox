@@ -432,20 +432,26 @@ endif()
 
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
 
-if (NOT ENABLE_STATUSNOTIFIER)
+if (NOT DEFINED ENABLE_STATUSNOTIFIER)
   set(ENABLE_STATUSNOTIFIER True)
 endif()
 
-if(${ENABLE_STATUSNOTIFIER} AND GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
-  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-    src/platform/statusnotifier/closures.c
-    src/platform/statusnotifier/closures.h
-    src/platform/statusnotifier/enums.c
-    src/platform/statusnotifier/enums.h
-    src/platform/statusnotifier/interfaces.h
-    src/platform/statusnotifier/statusnotifier.c
-    src/platform/statusnotifier/statusnotifier.h)
-  add_definitions(-DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=1)
+if(${ENABLE_STATUSNOTIFIER})
+  search_dependency(GDK_PIXBUF  PACKAGE gdk-pixbuf-2.0   OPTIONAL)
+  search_dependency(GLIB        PACKAGE glib-2.0         OPTIONAL)
+  search_dependency(GTK         PACKAGE gtk+-2.0         OPTIONAL)
+
+  if(GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
+      set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+        src/platform/statusnotifier/closures.c
+        src/platform/statusnotifier/closures.h
+        src/platform/statusnotifier/enums.c
+        src/platform/statusnotifier/enums.h
+        src/platform/statusnotifier/interfaces.h
+        src/platform/statusnotifier/statusnotifier.c
+        src/platform/statusnotifier/statusnotifier.h)
+      add_definitions(-DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=1)
+  endif()
 endif()
 
 if(AVFOUNDATION_FOUND)
@@ -454,19 +460,33 @@ if(AVFOUNDATION_FOUND)
     src/platform/camera/avfoundation.h)
 endif()
 
-if (NOT ENABLE_APPINDICATOR)
+if (NOT DEFINED ENABLE_APPINDICATOR)
   set(ENABLE_APPINDICATOR False)
 endif()
-if(${ENABLE_APPINDICATOR} AND APPINDICATOR_FOUND)
-  add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
+
+if(${ENABLE_APPINDICATOR})
+  search_dependency(APPINDICATOR PACKAGE appindicator-0.1 OPTIONAL)
+  search_dependency(GDK_PIXBUF   PACKAGE gdk-pixbuf-2.0   OPTIONAL)
+  search_dependency(GLIB         PACKAGE glib-2.0         OPTIONAL)
+  search_dependency(GTK          PACKAGE gtk+-2.0         OPTIONAL)
+
+  if(APPINDICATOR_FOUND)
+    add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
+  endif()
 endif()
 
-if (NOT ENABLE_GTK_SYSTRAY)
+if (NOT DEFINED ENABLE_GTK_SYSTRAY)
   set(ENABLE_GTK_SYSTRAY True)
 endif()
 
-if(${ENABLE_GTK_SYSTRAY} AND GTK_FOUND)
-  add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
+if(${ENABLE_GTK_SYSTRAY})
+  if(NOT GTK_FOUND)
+    search_dependency(GTK       PACKAGE gtk+-2.0         OPTIONAL)
+  endif()
+
+  if(GTK_FOUND)
+    add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
+  endif()
 endif()
 
 add_library(${PROJECT_NAME}_static
