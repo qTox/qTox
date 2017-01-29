@@ -81,11 +81,6 @@ function(search_dependency pkg)
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
 endfunction()
 
-search_dependency(APPINDICATOR        PACKAGE appindicator-0.1 OPTIONAL)
-search_dependency(GDK_PIXBUF          PACKAGE gdk-pixbuf-2.0   OPTIONAL)
-search_dependency(GLIB                PACKAGE glib-2.0         OPTIONAL)
-search_dependency(GTK                 PACKAGE gtk+-2.0         OPTIONAL)
-
 search_dependency(LIBAVCODEC          PACKAGE libavcodec)
 search_dependency(LIBAVDEVICE         PACKAGE libavdevice)
 search_dependency(LIBAVFORMAT         PACKAGE libavformat)
