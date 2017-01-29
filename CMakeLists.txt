@@ -502,34 +502,4 @@ function(auto_test subsystem module)
     COMMAND ${module}_test)
 endfunction()
 
-################################################################################
-#
-# :: Installation
-#
-################################################################################
-
-if(APPLE)
-  set(MACOSX_BUNDLE_SHORT_VERSION_STRING 1.4.1)
-  set(SHORT_VERSION ${MACOSX_BUNDLE_SHORT_VERSION_STRING})
-  set_target_properties(${PROJECT_NAME} PROPERTIES
-    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/osx/info.plist")
-
-  find_path(MACDEPLOYQT_PATH macdeployqt PATH_SUFFIXES bin)
-  if(NOT MACDEPLOYQT_PATH)
-    message(FATAL_ERROR "Could not find macdeployqt for OSX bundling. You can point MACDEPLOYQT_PATH to it's path.")
-  endif()
-
-  set(BUNDLE_PATH "${CMAKE_BINARY_DIR}/${PROJECT_NAME}.app")
-
-  install(CODE "
-  message(STATUS \"Creating app bundle\")
-  execute_process(COMMAND ${MACDEPLOYQT_PATH}/macdeployqt ${BUNDLE_PATH} -no-strip)
-  message(STATUS \"Updating library paths\")
-  execute_process(COMMAND ${CMAKE_SOURCE_DIR}/osx/macfixrpath ${BUNDLE_PATH})
-  message(STATUS \"Creating dmg image\")
-  execute_process(COMMAND hdiutil create -volname ${PROJECT_NAME} -srcfolder ${BUNDLE_PATH} -ov -format UDZO ${PROJECT_NAME}.dmg)
-  " COMPONENT Runtime
-  )
-else()
-  install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
-endif()
+include(Installation)
