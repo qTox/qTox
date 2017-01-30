@@ -13,6 +13,7 @@ apt_install() {
         libavdevice-dev
         libgdk-pixbuf2.0-dev
         libglib2.0-dev
+        libgtest-dev
         libgtk2.0-dev
         libopenal-dev
         libopus-dev
