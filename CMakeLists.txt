@@ -33,7 +33,6 @@ set(CMAKE_OSX_SYSROOT
   ${CMAKE_OSX_SYSROOT}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
 
 project(qtox)
-include(CTest)
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
@@ -486,22 +485,5 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
-################################################################################
-#
-# :: Tests
-#
-################################################################################
-
-function(auto_test subsystem module)
-  add_executable(${module}_test
-    test/${subsystem}/${module}_test.cpp)
-  target_link_libraries(${module}_test
-    ${PROJECT_NAME}_static
-    ${ALL_LIBRARIES}
-    Qt5::Test)
-  add_test(
-    NAME test_${module}
-    COMMAND ${module}_test)
-endfunction()
-
+include(Testing)
 include(Installation)
