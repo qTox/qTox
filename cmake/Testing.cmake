@@ -14,9 +14,15 @@ function(auto_test subsystem module)
     test/${subsystem}/${module}_test.cpp)
   target_link_libraries(test_${module}
     ${PROJECT_NAME}_static
-    ${ALL_LIBRARIES}
+    ${CHECK_LIBRARIES}
     Qt5::Test)
   add_test(
     NAME test_${module}
     COMMAND test_${module})
 endfunction()
+
+search_dependency(CHECK PACKAGE check OPTIONAL)
+if (CHECK_FOUND)
+  auto_test(core toxpk)
+  auto_test(core toxid)
+endif()
