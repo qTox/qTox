@@ -338,7 +338,7 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Parašykite žinutę, kurią siųsti kartu su draugo užklausa arba palikite tuščią, kad būtų išsiųsta numatytoji žinutė</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
@@ -591,27 +591,27 @@ vaizdo skambučiais.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">pasišalinęs (-usi)</translation>
+        <translation>pasišalinęs (-usi)</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">užsiėmęs (-usi)</translation>
+        <translation>užsiėmęs (-usi)</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">neprisijungęs (-usi)</translation>
+        <translation>neprisijungęs (-usi)</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">prisijungęs (-usi)</translation>
+        <translation>prisijungęs (-usi)</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 dabar %2</translation>
+        <translation>%1 dabar %2</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -620,6 +620,14 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Can&apos;t start audio call</source>
         <translation>Nepavyksta pradėti garso skambutį</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1411,12 +1419,12 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis ToxMe paslaugoje</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vardas, skirtas ToxMe paslaugai.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
@@ -1430,7 +1438,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe paslauga, kurioje registruotis.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1444,7 +1452,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Vardo įvestis</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
@@ -1452,7 +1460,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Būsenos žinutės įvestis</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
@@ -1472,19 +1480,19 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe naudotojo vardas, kuris bus rodomas ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebūtina ToxMe biografija, kuri bus rodoma ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe paslaugos adresas</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Matomumas ToxMe paslaugoje</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1492,7 +1500,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti ToxMe įrašą</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1532,7 +1540,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano profilis</translation>
     </message>
 </context>
 <context>
@@ -1654,11 +1662,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo vardo įvesties laukas</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvesties laukas, jūs galite palikti jį tuščią (jokio slaptažodžio) arba parašyti bent 6 simbolius</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1666,11 +1674,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Mygtukas sukurti naują profilį</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilių sąrašas</translation>
     </message>
     <message>
         <source>List of profiles</source>
@@ -1678,11 +1686,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvestis</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai įkelti žymimasis langelis</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1690,15 +1698,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Mygtukas įkelti pasirinktą profilį</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujo profilio kūrimo puslapis</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Esamo profilio įkėlimo puslapis</translation>
     </message>
 </context>
 <context>
@@ -1741,11 +1749,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustelėjus, atverti profilio puslapį</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Būsenos žinutės įvestis</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
@@ -1757,15 +1765,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti prieinamumo būseną</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų paieška</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų paieškos įvestis, skirta žinomiems draugams</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1773,11 +1781,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti draugų rikiavimą ir matomumą</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti draugų pridėjimo puslapį</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1785,15 +1793,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti grupės pokalbio tvarkymo puslapį</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Failų persiuntimų istorija</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti failų persiuntimų istoriją</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2342,7 +2350,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Jei nustatyta, šalinti visą pokalbių su draugu istoriją</translation>
     </message>
 </context>
 <context>
@@ -2401,19 +2409,19 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Patvirtinkite slaptažodį</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio patvirtinimo įvestis</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvestis</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvesties laukas, mažiausiai 6 simbolių ilgio</translation>
     </message>
 </context>
 <context>
@@ -2796,27 +2804,27 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Pridėti kontaktą</translation>
+        <translation>Pridėti draugą</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Pakvietimai į grupes</translation>
+        <translation>Pakvietimai į grupes</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Failų siuntimai</translation>
+        <translation>Failų persiuntimai</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mano profilis</translation>
     </message>
 </context>
 </TS>
