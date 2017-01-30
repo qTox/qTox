@@ -8,6 +8,7 @@ set(TEST_NAME unit_test)
 
 set(TEST_SOURCES
   test/main.cpp
+  test/core/toxpk_test.cpp
 )
 
 if (NOT ENABLE_UNIT_TESTS)
