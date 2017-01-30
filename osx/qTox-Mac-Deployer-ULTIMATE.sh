@@ -217,6 +217,9 @@ build() {
     fcho "------------------------------"
     fcho "Starting build process ..."
     # update version info
+    cd $QTOX_DIR
+    fcho "Now working in ${PWD}"
+    fcho "Setting the version ..."
     ./tools/update-versions.sh
 
     rm -rf $BUILD_DIR
@@ -224,7 +227,7 @@ build() {
     mkdir $BUILD_DIR
     cd $BUILD_DIR
     fcho "Now working in ${PWD}"
-    fcho "Starting cmake ... "
+    fcho "Starting cmake ..."
     export CMAKE_PREFIX_PATH=$(brew --prefix qt5)
     cmake -H$QTOX_DIR -B.
     make -j$(sysctl -n hw.ncpu)
