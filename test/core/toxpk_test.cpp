@@ -56,7 +56,7 @@ TEST_F(ToxPkTest, copyTest) {
 TEST_F(ToxPkTest, testKey) {
     ToxPk pk(testPk);
     ASSERT_EQ(testPk, pk.getKey());
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < ToxPk::getPkSize(); i++) {
         ASSERT_EQ(testPkArray[i], pk.getBytes()[i]);
     }
 }
