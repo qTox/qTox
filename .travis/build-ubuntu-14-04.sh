@@ -146,15 +146,13 @@ $CXX --version
 # needed, otherwise ffmpeg doesn't get detected
 export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
-
 build_qtox() {
     bdir() {
-        pushd .
         cd $BUILDDIR
         make -j$(nproc)
         # check if `qtox` file has been made, is non-empty and is an executable
         [[ -s qtox ]] && [[ -x qtox ]]
-        popd
+        cd -
     }
 
     local BUILDDIR=_build
@@ -175,4 +173,14 @@ build_qtox() {
     cmake -H. -B"$BUILDDIR"
     bdir
 }
+
+test_qtox() {
+    local BUILDDIR=_build
+
+    cd $BUILDDIR
+    make test
+    cd -
+}
+
 build_qtox
+test_qtox
