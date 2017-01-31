@@ -9,6 +9,7 @@ apt_install() {
         check
         checkinstall
         cmake
+        google-mock
         git build-essential
         libavdevice-dev
         libgdk-pixbuf2.0-dev
