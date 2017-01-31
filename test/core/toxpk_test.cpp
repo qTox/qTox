@@ -58,7 +58,7 @@ START_TEST(publicKeyTest)
 {
     ToxPk pk(testPk);
     ck_assert(testPk == pk.getKey());
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < ToxPk::getPkSize(); i++) {
         ck_assert(testPkArray[i] == pk.getBytes()[i]);
     }
 }
