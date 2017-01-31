@@ -83,8 +83,8 @@ QString ToxPk::toString() const
 
 /**
  * @brief Returns a pointer to the raw key data.
- * @return Pointer to the raw key data, which is exactly TOX_PUBLIC_KEY_SIZE bytes
- *         long. Returns a nullptr if the ToxPk is empty.
+ * @return Pointer to the raw key data, which is exactly `ToxPk::getPkSize()`
+ *         bytes long. Returns a nullptr if the ToxPk is empty.
  */
 const uint8_t* ToxPk::getBytes() const
 {
@@ -112,4 +112,13 @@ QByteArray ToxPk::getKey() const
 bool ToxPk::isEmpty() const
 {
     return key.isEmpty();
+}
+
+/**
+ * @brief Get size of public key in bytes.
+ * @return Size of public key in bytes.
+ */
+int ToxPk::getPkSize()
+{
+    return TOX_PUBLIC_KEY_SIZE;
 }
