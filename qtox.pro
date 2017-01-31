@@ -46,18 +46,14 @@ CONFIG   += silent
 
 # Hardening flags (ASLR, warnings, etc)
 # TODO: add `-Werror` to hardening flags once all warnings are fixed
-win32 {
-    QMAKE_CXXFLAGS += -pie \
-                      -fPIE \
-                      -Wstrict-overflow \
-                      -Wstrict-aliasing
-} else {
+QMAKE_CXXFLAGS += -fPIE \
+                  -Wstrict-overflow \
+                  -Wstrict-aliasing
+QMAKE_LFLAGS   += -pie
+
+!win32 {
     QMAKE_CXXFLAGS += -fstack-protector-all \
-                      -pie \
-                      -fPIE \
-                      -Wstack-protector \
-                      -Wstrict-overflow \
-                      -Wstrict-aliasing
+                      -Wstack-protector
 }
 
 # osx & windows cannot into security (build on it fails with those enabled)
