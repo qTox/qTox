@@ -20,6 +20,7 @@ public:
     const uint8_t* getBytes() const;
     bool isEmpty() const;
 
+    static int getPkSize();
 private:
     QByteArray key;
 };
