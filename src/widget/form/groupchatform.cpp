@@ -298,7 +298,9 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
 
     int friendId = frnd->getFriendId();
     int groupId = group->getGroupId();
-    Core::getInstance()->groupInviteFriend(friendId, groupId);
+    if (frnd->getStatus() != Status::Offline) {
+        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    }
 }
 
 void GroupChatForm::onMicMuteToggle()
