@@ -113,6 +113,7 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent *event)
 
     menu.addSeparator();
     QMenu* inviteMenu = menu.addMenu(tr("Invite to group","Menu to invite a friend to a groupchat"));
+    inviteMenu->setEnabled(getFriend()->getStatus() != Status::Offline);
     QAction* newGroupAction = inviteMenu->addAction(tr("To new group"));
     inviteMenu->addSeparator();
     QMap<QAction*, Group*> groupActions;
