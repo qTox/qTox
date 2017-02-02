@@ -2239,7 +2239,7 @@ QString Widget::getStatusIconPath(Status status)
 
 inline QIcon Widget::prepareIcon(QString path, uint32_t w, uint32_t h)
 {
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_UNIX
 
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
