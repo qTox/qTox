@@ -28,10 +28,12 @@ extern "C" {
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
 
+#define USING_V4L defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+
 #ifdef Q_OS_WIN
 #include "src/platform/camera/directshow.h"
 #endif
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
 #include "src/platform/camera/v4l2.h"
 #endif
 #ifdef Q_OS_OSX
@@ -150,7 +152,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
 
     AVDictionary* options = nullptr;
     if (!iformat);
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     else if (devName.startsWith("x11grab#"))
     {
         QSize screen;
@@ -359,7 +361,7 @@ QVector<QPair<QString, QString>> CameraDevice::getDeviceList()
     else if (iformat->name == QString("dshow"))
         devices += DirectShow::getDeviceList();
 #endif
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     else if (iformat->name == QString("video4linux2,v4l2"))
         devices += v4l2::getDeviceList();
 #endif
@@ -467,7 +469,7 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
     else if (iformat->name == QString("dshow"))
         return DirectShow::getDeviceModes(devName);
 #endif
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     else if (iformat->name == QString("video4linux2,v4l2"))
         return v4l2::getDeviceModes(devName);
 #endif
@@ -488,7 +490,7 @@ QVector<VideoMode> CameraDevice::getVideoModes(QString devName)
  */
 QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
 {
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     return v4l2::getPixelFormatString(pixel_format);
 #else
     return QString("unknown");
@@ -504,7 +506,7 @@ QString CameraDevice::getPixelFormatString(uint32_t pixel_format)
  */
 bool CameraDevice::betterPixelFormat(uint32_t a, uint32_t b)
 {
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
 	return v4l2::betterPixelFormat(a, b);
 #else
 	return false;
@@ -524,7 +526,7 @@ bool CameraDevice::getDefaultInputFormat()
     avdevice_register_all();
 
     // Desktop capture input formats
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     idesktopFormat = av_find_input_format("x11grab");
 #endif
 #ifdef Q_OS_WIN
@@ -532,7 +534,7 @@ bool CameraDevice::getDefaultInputFormat()
 #endif
 
     // Webcam input formats
-#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if USING_V4L
     if ((iformat = av_find_input_format("v4l2")))
         return true;
 #endif
