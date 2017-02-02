@@ -69,8 +69,8 @@ protected:
     virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
-    void onTopButtonClicked();
-    void onBottomButtonClicked();
+    void onLeftButtonClicked();
+    void onRightButtonClicked();
     void onPreviewButtonClicked();
 
 private:
