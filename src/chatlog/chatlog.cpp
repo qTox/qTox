@@ -82,14 +82,12 @@ ChatLog::ChatLog(QWidget* parent)
     });
     addAction(copyAction);
 
-#ifdef Q_OS_LINUX
     // Ctrl+Insert shortcut
     QShortcut* copyCtrlInsShortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Insert), this);
     connect(copyCtrlInsShortcut, &QShortcut::activated, this, [this]()
     {
         copySelectedText();
     });
-#endif
 
     // select all action (ie. Ctrl+A)
     selectAllAction = new QAction(this);
@@ -119,9 +117,7 @@ ChatLog::ChatLog(QWidget* parent)
     // selection
     connect(this, &ChatLog::selectionChanged, this, [this]() {
         copyAction->setEnabled(hasTextToBeCopied());
-#ifdef Q_OS_LINUX
         copySelectedText(true);
-#endif
     });
 
     retranslateUi();
