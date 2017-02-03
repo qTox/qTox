@@ -102,6 +102,7 @@ protected slots:
 
 private:
     void retranslateUi();
+    static QString fontToCss(const QFont& font, const char* name);
 
 protected:
     void showNetcam();
