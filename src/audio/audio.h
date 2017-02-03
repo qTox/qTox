@@ -81,6 +81,9 @@ public:
     qreal inputGain() const;
     void setInputGain(qreal dB);
 
+    qreal bitRate() const;
+    void setBitRate(qreal bitRate);
+
     void reinitInput(const QString& inDevDesc);
     bool reinitOutput(const QString& outDevDesc);
 

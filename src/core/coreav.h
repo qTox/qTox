@@ -109,6 +109,7 @@ private:
 
 private:
     static constexpr uint32_t AUDIO_DEFAULT_BITRATE = 64;
+    static uint32_t audioBitRate;
     static constexpr uint32_t VIDEO_DEFAULT_BITRATE = 6144;
 
 private:
