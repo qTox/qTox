@@ -80,6 +80,22 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
+    bitRateSlider->setToolTip(
+                tr("Use slider to control Opus bitrate encoding from %1kb/s to"
+                   " %2kb/s").arg(audio.minBitRate()).arg(audio.maxBitRate()));
+    bitRateSlider->setMinimum(audio.minBitRate());
+    bitRateSlider->setMaximum(audio.maxBitRate());
+    bitRateSlider->setTickPosition(QSlider::TicksBothSides);
+    bitRateSlider->setTickInterval(1);
+    bitRateSlider->setTracking(false);
+    bitRateSlider->installEventFilter(this);
+    
+    bitRateSpinBox->setToolTip(
+                tr("Use slider to control Opus bitrate encoding from %1kb/s to"
+                   " %2kb/s").arg(audio.minBitRate()).arg(audio.maxBitRate()));
+    bitRateSpinBox->setMinimum(audio.minBitRate());
+    bitRateSpinBox->setMaximum(audio.maxBitRate());
+    bitRateSpinBox->installEventFilter(this);
     eventsInit();
 
     QDesktopWidget *desktop = QApplication::desktop();
@@ -549,6 +565,22 @@ void AVForm::on_microphoneSlider_valueChanged(int value)
 
     Settings::getInstance().setAudioInGainDecibel(dB);
     Audio::getInstance().setInputGain(dB);
+}
+
+void AVForm::on_bitRateSlider_valueChanged(int value)
+{
+    qDebug() << QString("Bit rate changed to %1").arg(value);
+    Settings::getInstance().setAudioBitRate(value);
+    Audio::getInstance().setBitRate(value);
+
+    if(bitRateSpinBox->value() != value)
+        bitRateSpinBox->setValue(value);
+}
+
+void AVForm::on_bitRateSpinBox_valueChanged(int value)
+{
+    if(bitRateSlider->value() != value)
+        bitRateSlider->setValue(value);
 }
 
 void AVForm::createVideoSurface()
