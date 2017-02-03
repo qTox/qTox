@@ -237,10 +237,12 @@ bool CoreAV::answerCall(uint32_t friendNum)
         return ret;
     }
 
+    Audio &audio = Audio::getInstance();
+    const uint32_t audio_bit_rate = static_cast<uint32_t>(audio.bitRate());
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
+    if (toxav_answer(toxav, friendNum, audio_bit_rate, VIDEO_DEFAULT_BITRATE, &err))
     {
         calls[friendNum].inactive = false;
         return true;
@@ -281,8 +283,11 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
         return false;
     }
 
+    Audio &audio = Audio::getInstance();
+    const uint32_t audio_bit_rate = static_cast<uint32_t>(audio.bitRate());
+    qDebug() << QString("Using an audio bit rate of %1").arg(audio_bit_rate);
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+    if (!toxav_call(toxav, friendNum, audio_bit_rate, videoBitrate, nullptr))
         return false;
 
     auto call = calls.insert({friendNum, video, *this});
@@ -362,6 +367,10 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t *pcm, size_t samples, 
     {
         return true;
     }
+
+    Audio &audio = Audio::getInstance();
+    const uint32_t audio_bit_rate = static_cast<uint32_t>(audio.bitRate());
+    toxav_bit_rate_set(toxav, callId, audio_bit_rate, -1, nullptr);
 
     // TOXAV_ERR_SEND_FRAME_SYNC means toxav failed to lock, retry 5 times in this case
     TOXAV_ERR_SEND_FRAME err;

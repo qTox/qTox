@@ -44,13 +44,10 @@
           <property name="bottomMargin">
            <number>6</number>
           </property>
-          <item row="0" column="1" colspan="2">
-           <widget class="QComboBox" name="outDevCombobox"/>
-          </item>
-          <item row="3" column="1" colspan="2">
-           <widget class="QSlider" name="microphoneSlider">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+          <item row="0" column="0">
+           <widget class="QLabel" name="outDevLabel">
+            <property name="text">
+             <string>Playback device</string>
             </property>
            </widget>
           </item>
@@ -61,17 +58,20 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1" colspan="2">
-           <widget class="QComboBox" name="inDevCombobox"/>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="outDevLabel">
-            <property name="text">
-             <string>Playback device</string>
+          <item row="3" column="2" colspan="2">
+           <widget class="QSlider" name="microphoneSlider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="0" column="2" colspan="2">
+           <widget class="QComboBox" name="outDevCombobox"/>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QComboBox" name="inDevCombobox"/>
+          </item>
+          <item row="1" column="2">
            <widget class="QSlider" name="playbackSlider">
             <property name="toolTip">
              <string>Use slider to set volume of your speakers.</string>
@@ -98,13 +98,55 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="1" column="3">
            <widget class="QCheckBox" name="cbEnableTestSound">
             <property name="text">
              <string>Test Sound</string>
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Bit Rate</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QSlider" name="bitRateSlider">
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="inputMethodHints">
+             <set>Qt::ImhDigitsOnly|Qt::ImhPreferNumbers</set>
+            </property>
+            <property name="minimum">
+             <number>6</number>
+            </property>
+            <property name="maximum">
+             <number>64</number>
+            </property>
+            <property name="value">
+             <number>64</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QSpinBox" name="bitRateSpinBox">
+            <property name="minimum">
+             <number>6</number>
+            </property>
+            <property name="maximum">
+             <number>64</number>
+            </property>
+            <property name="value">
+             <number>64</number>
             </property>
            </widget>
           </item>

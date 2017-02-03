@@ -45,6 +45,8 @@ public:
         , maxInputGain{30.0}
         , gain{0.0}
         , gainFactor{0.0}
+        , minBitRate{6}
+        , maxBitRate{64}
     {
     }
 
@@ -76,13 +78,25 @@ public:
         gainFactor = qPow(10.0, (gain / 20.0));
     }
 
+    qint32 bitRate() const
+    {
+        return audioBitRate;
+    }
+
+    void setBitRate(qint32 audioBitRate_)
+    {
+        audioBitRate = audioBitRate_;
+    }
+
 public:
     qreal   minInputGain;
     qreal   maxInputGain;
-
+    qint32   minBitRate;
+    qint32   maxBitRate;
 private:
     qreal   gain;
     qreal   gainFactor;
+    qint32   audioBitRate;
 };
 
 /**
@@ -155,6 +169,7 @@ Audio::Audio()
     captureTimer.start();
     connect(&playMono16Timer, &QTimer::timeout, this, &Audio::playMono16SoundCleanup);
     playMono16Timer.setSingleShot(true);
+    setBitRate(64);
 
     audioThread->start();
 }
@@ -279,6 +294,48 @@ void Audio::setInputGain(qreal dB)
     d->setInputGain(dB);
 }
 
+/**
+ * @brief The Opus encoding bitrate
+ *
+ * @return the Opus encoding bitrate in kbps
+ */
+
+qint32 Audio::bitRate() const
+{
+    // Can't lock it because of doCapture reference
+    //QMutexLocker locker(&audioLock);
+    return d->bitRate();
+}
+
+/**
+ * @brief Set the Opus encoding bitrate
+ */
+
+void Audio::setBitRate(qint32 bitRate)
+{
+    QMutexLocker locker(&audioLock);
+    d->setBitRate(bitRate);
+}
+
+/**
+ * @brief The max Opus encoding bitrate
+ */
+
+qint32 Audio::maxBitRate() const
+{
+    return 510;
+}
+
+/**
+ * @brief The min Opus encoding bitrate
+ */
+
+qint32 Audio::minBitRate() const 
+{
+    return 6;
+}
+
+
 void Audio::reinitInput(const QString& inDevDesc)
 {
     QMutexLocker locker(&audioLock);
@@ -380,6 +437,7 @@ bool Audio::initInput(const QString& deviceName)
     }
 
     d->setInputGain(Settings::getInstance().getAudioInGainDecibel());
+    d->setBitRate(Settings::getInstance().getAudioBitRate());
 
     qDebug() << "Opened audio input" << deviceName;
     alcCaptureStart(alInDev);

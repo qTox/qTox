@@ -63,6 +63,8 @@ private slots:
     void on_playbackSlider_valueChanged(int value);
     void on_cbEnableTestSound_stateChanged();
     void on_microphoneSlider_valueChanged(int value);
+    void on_bitRateSlider_valueChanged(int value);
+    void on_bitRateSpinBox_valueChanged(int value);
 
     // camera
     void on_videoDevCombobox_currentIndexChanged(int index);
