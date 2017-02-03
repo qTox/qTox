@@ -237,10 +237,12 @@ bool CoreAV::answerCall(uint32_t friendNum)
         return ret;
     }
 
+    Audio &audio = Audio::getInstance();
+    uint32_t audio_bit_rate = static_cast<uint32_t>(audio.bitRate());
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err))
+    if (toxav_answer(toxav, friendNum, audio_bit_rate, VIDEO_DEFAULT_BITRATE, &err))
     {
         calls[friendNum].inactive = false;
         return true;
@@ -281,8 +283,10 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
         return false;
     }
 
+    Audio &audio = Audio::getInstance();
+    qDebug() << QString("Using an audio bit rate of %1").arg(static_cast<uint32_t>(audio.bitRate()));
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+    if (!toxav_call(toxav, friendNum, audio.bitRate(), videoBitrate, nullptr))
         return false;
 
     auto call = calls.insert({friendNum, video, *this});

@@ -295,6 +295,8 @@ void Settings::loadGlobal()
         audioOutDevEnabled = s.value("audioOutDevEnabled", true).toBool();
         audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
+        // qTox default for max
+        audioBitRate = s.value("audioBitRate", 64).toInt();
     }
     s.endGroup();
 
@@ -604,6 +606,7 @@ void Settings::saveGlobal()
         s.setValue("audioOutDevEnabled", audioOutDevEnabled);
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
+	s.setValue("audioBitRate", audioBitRate);
     }
     s.endGroup();
 
@@ -1930,6 +1933,22 @@ void Settings::setOutVolume(int volume)
     {
         outVolume = volume;
         emit outVolumeChanged(outVolume);
+    }
+}
+
+int Settings::getAudioBitRate() const
+{
+    QMutexLocker locker{&bigLock};
+    return audioBitRate;
+}
+
+void Settings::setAudioBitRate(int bitrate)
+{
+    QMutexLocker locker{&bigLock};
+    if(bitrate != audioBitRate)
+    {
+        audioBitRate = bitrate;
+        emit audioBitRateChanged(audioBitRate);
     }
 }
 

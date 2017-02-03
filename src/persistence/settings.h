@@ -116,6 +116,9 @@ class Settings : public QObject
                FINAL)
     Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume
                NOTIFY outVolumeChanged FINAL)
+    // new
+    Q_PROPERTY(int audioBitRate READ getAudioBitRate WRITE setAudioBitRate
+               NOTIFY audioBitRateChanged FINAL)
 
     // Video
     Q_PROPERTY(QString videoDev READ getVideoDev WRITE setVideoDev
@@ -244,6 +247,7 @@ signals:
     void outDevChanged(const QString& name);
     void audioOutDevEnabledChanged(bool enabled);
     void outVolumeChanged(int volume);
+    void audioBitRateChanged(int bitrate);
     void enableTestSoundChanged(bool enabled);
 
     // Video
@@ -370,6 +374,9 @@ public:
 
     int getOutVolume() const;
     void setOutVolume(int volume);
+
+    int getAudioBitRate() const;
+    void setAudioBitRate(int bitrate);
 
     bool getEnableTestSound() const;
     void setEnableTestSound(bool newValue);
@@ -623,6 +630,7 @@ private:
     QString outDev;
     bool audioOutDevEnabled;
     int outVolume;
+    int audioBitRate;
     bool enableTestSound;
 
     // Video
