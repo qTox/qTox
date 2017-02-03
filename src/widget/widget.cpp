@@ -1747,6 +1747,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     }
     else if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT)
     {
+        CoreAV::groupNameListChanged(groupnumber, peernumber);
         // g->removePeer(peernumber);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has left the chat").arg(name), "white", QDateTime::currentDateTime());
