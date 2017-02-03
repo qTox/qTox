@@ -41,6 +41,7 @@ Windows | Linux | OS X | FreeBSD
 **[64 bit installer]**, [signature][sig-64] | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]**
 [32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
+[Chocolatey Package][chocolateypackage] | | |
 
 _**Bold** options are recommended._
 
@@ -140,6 +141,7 @@ Linux OBS repositories, managed by `abbat`:
 [32portable]: https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip
 [64 bit installer]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
 [64portable]: https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip
+[chocolateypackage]: https://chocolatey.org/packages/qtox
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [CentOS, Debian, Fedora, openSUSE, Ubuntu]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
