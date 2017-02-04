@@ -216,14 +216,6 @@ update() {
 build() {
     fcho "------------------------------"
     fcho "Starting build process ..."
-    if [[ $TRAVIS != true ]]; then
-        # update version info
-        cd $QTOX_DIR
-        fcho "Now working in ${PWD}"
-        fcho "Setting the version ..."
-        ./tools/update-versions.sh
-    fi
-
     rm -rf $BUILD_DIR
     rm -rf $DEPLOY_DIR
     mkdir $BUILD_DIR
