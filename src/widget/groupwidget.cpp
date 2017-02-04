@@ -258,7 +258,9 @@ void GroupWidget::dropEvent(QDropEvent *ev)
         return;
 
     int friendId = frnd->getFriendId();
-    Core::getInstance()->groupInviteFriend(friendId, groupId);
+    if (frnd->getStatus() != Status::Offline) {
+        Core::getInstance()->groupInviteFriend(friendId, groupId);
+    }
 
     if (!active)
         setBackgroundRole(QPalette::Window);
