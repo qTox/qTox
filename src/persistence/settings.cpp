@@ -20,7 +20,6 @@
 
 #include "settings.h"
 #include "src/persistence/smileypack.h"
-#include "src/persistence/db/plaindb.h"
 #include "src/core/corestructs.h"
 #include "src/core/core.h"
 #include "src/widget/gui.h"
@@ -218,10 +217,6 @@ void Settings::loadGlobal()
         makeToxPortable = s.value("makeToxPortable", makeToxPortable).toBool();
         enableIPv6 = s.value("enableIPv6", enableIPv6).toBool();
         forceTCP = s.value("forceTCP", forceTCP).toBool();
-
-        int type = s.value("dbSyncType", static_cast<int>(Db::syncType::stFull)).toInt();
-        Db::syncType sType = static_cast<Db::syncType>(type);
-        setDbSyncType(sType);
     }
     s.endGroup();
 
@@ -1386,23 +1381,6 @@ void Settings::setEnableLogging(bool newValue)
     {
         enableLogging = newValue;
         emit enableLoggingChanged(enableLogging);
-    }
-}
-
-Db::syncType Settings::getDbSyncType() const
-{
-    QMutexLocker locker{&bigLock};
-    return dbSyncType;
-}
-
-void Settings::setDbSyncType(Db::syncType newValue)
-{
-    QMutexLocker locker{&bigLock};
-
-    if (newValue != dbSyncType)
-    {
-        dbSyncType = newValue;
-        emit dbSyncTypeChanged(dbSyncType);
     }
 }
 

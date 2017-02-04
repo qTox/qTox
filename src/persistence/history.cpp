@@ -22,7 +22,6 @@
 
 #include "db/rawdatabase.h"
 #include "history.h"
-#include "historykeeper.h"
 #include "profile.h"
 #include "settings.h"
 
@@ -315,38 +314,4 @@ void History::markAsSent(qint64 messageId)
 
     db->execLater(QString("DELETE FROM faux_offline_pending WHERE id=%1;")
                   .arg(messageId));
-}
-
-/**
- * @brief Imports messages from the old history file.
- * @param oldHistory Old history to import.
- */
-void History::import(const HistoryKeeper& oldHistory)
-{
-    if (!isValid())
-    {
-        qWarning() << "New database not open, import failed";
-        return;
-    }
-
-    qDebug() << "Importing old database...";
-    QTime t = QTime::currentTime();
-    t.start();
-    QVector<RawDatabase::Query> queries;
-    constexpr int batchSize = 1000;
-    queries.reserve(batchSize);
-    QList<HistoryKeeper::HistMessage> oldMessages = oldHistory.exportMessagesDeleteFile();
-    for (const HistoryKeeper::HistMessage& msg : oldMessages)
-    {
-        queries += generateNewMessageQueries(msg.chat, msg.message, msg.sender,
-                                             msg.timestamp, true, msg.dispName);
-        if (queries.size() >= batchSize)
-        {
-            db->execLater(queries);
-            queries.clear();
-        }
-    }
-    db->execLater(queries);
-    db->sync();
-    qDebug() << "Imported old database in" << t.elapsed() << "ms";
 }

@@ -31,7 +31,6 @@
 #include "profile.h"
 #include "profilelocker.h"
 #include "settings.h"
-#include "historykeeper.h"
 #include "src/core/core.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
@@ -153,11 +152,6 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     }
 
     Profile* p = new Profile(name, password, false);
-    if (p->history && HistoryKeeper::isFileExist(!password.isEmpty()))
-    {
-        p->history->import(*HistoryKeeper::getInstance(*p));
-    }
-
     return p;
 }
 
@@ -671,8 +665,6 @@ QVector<QString> Profile::remove()
 
     QFile profileMain {path + ".tox"};
     QFile profileConfig {path + ".ini"};
-    QFile historyLegacyUnencrypted {HistoryKeeper::getHistoryPath(name, 0)};
-    QFile historyLegacyEncrypted {HistoryKeeper::getHistoryPath(name, 1)};
 
     QVector<QString> ret;
 
@@ -685,17 +677,6 @@ QVector<QString> Profile::remove()
     {
         ret.push_back(profileConfig.fileName());
         qWarning() << "Could not remove file " << profileConfig.fileName();
-    }
-
-    if (!historyLegacyUnencrypted.remove() && historyLegacyUnencrypted.exists())
-    {
-        ret.push_back(historyLegacyUnencrypted.fileName());
-        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
-    }
-    if (!historyLegacyEncrypted.remove() && historyLegacyEncrypted.exists())
-    {
-        ret.push_back(historyLegacyEncrypted.fileName());
-        qWarning() << "Could not remove file " << historyLegacyUnencrypted.fileName();
     }
 
     QString dbPath = getDbPath(name);
