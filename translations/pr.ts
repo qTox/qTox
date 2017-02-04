@@ -470,7 +470,7 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rehook</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -616,10 +616,18 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Can&apos;t begin talkin&apos; n&apos; face showin&apos;</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation>Can&apos;t begin talkin&apos;</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -878,7 +886,7 @@ Disablin&apos; message loggin&apos; will leave the secreted message barrel intac
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Yar&apos; own ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -960,7 +968,7 @@ Disablin&apos; message loggin&apos; will leave the secreted message barrel intac
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation>New talkin&apos;</translation>
     </message>
     <message>
         <source>Online</source>
@@ -988,7 +996,7 @@ Disablin&apos; message loggin&apos; will leave the secreted message barrel intac
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Decypher</translation>
     </message>
     <message>
         <source>You must enter a non-empty password:</source>
@@ -1065,7 +1073,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation type="unfinished"></translation>
+        <translation>Self-Sailing</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
@@ -1531,6 +1539,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2024,10 +2036,6 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished"></translation>
@@ -2424,7 +2432,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yar&apos; own ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -2500,7 +2508,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">New talkin&apos;</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -2628,10 +2636,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2682,10 +2686,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation type="unfinished"></translation>
@@ -2693,14 +2693,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2721,10 +2713,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Group invites</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2797,6 +2785,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Reveal</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
