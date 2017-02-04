@@ -19,9 +19,10 @@
 
 #include "settingsserializer.h"
 #include "serialize.h"
-#include "src/nexus.h"
+
+#include "src/core/toxencrypt.h"
 #include "src/persistence/profile.h"
-#include "src/core/core.h"
+
 #include <QSaveFile>
 #include <QFile>
 #include <QDebug>
@@ -328,9 +329,8 @@ void SettingsSerializer::save()
     // Encrypt
     if (!password.isEmpty())
     {
-        Core* core = Nexus::getCore();
-        auto passkey = core->createPasskey(password);
-        data = core->encryptData(data, *passkey);
+        // TODO: use passkey
+        data = ToxEncrypt::encryptPass(password, data);
     }
 
     f.write(data);
@@ -367,13 +367,7 @@ void SettingsSerializer::readSerialized()
             return;
         }
 
-        Core* core = Nexus::getCore();
-
-        uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t *>(data.data()), salt, nullptr);
-        auto passkey = core->createPasskey(password, salt);
-
-        data = core->decryptData(data, *passkey);
+        data = ToxEncrypt::decryptPass(password, data);
         if (data.isEmpty())
         {
             qCritical() << "Failed to decrypt the settings file";

@@ -53,11 +53,6 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile)
     : name{name}, password{password}
     , newProfile{isNewProfile}, isRemoved{false}
 {
-    if (!password.isEmpty())
-    {
-        passkey = core->createPasskey(password);
-    }
-
     Settings& s = Settings::getInstance();
     s.setCurrentProfile(name);
     s.saveGlobal();
@@ -92,6 +87,8 @@ Profile* Profile::loadProfile(QString name, const QString& password)
         return nullptr;
     }
 
+    std::unique_ptr<ToxEncrypt> tmpKey;
+
     // Check password
     {
         QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
@@ -121,7 +118,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
         }
 
         QByteArray data = saveFile.readAll();
-        if (tox_is_data_encrypted((uint8_t*)data.data()))
+        if (ToxEncrypt::isEncrypted(data))
         {
             if (password.isEmpty())
             {
@@ -130,11 +127,15 @@ Profile* Profile::loadProfile(QString name, const QString& password)
                 return nullptr;
             }
 
-            uint8_t salt[TOX_PASS_SALT_LENGTH];
-            tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt, nullptr);
-            auto tmpkey = Core::createPasskey(password, salt);
+            tmpKey = ToxEncrypt::makeToxEncrypt(password, data);
+            if (!tmpKey)
+            {
+                qCritical() << "Failed to derive key of the tox save file";
+                ProfileLocker::unlock();
+                return nullptr;
+            }
 
-            data = Core::decryptData(data, *tmpkey);
+            data = tmpKey->decrypt(data);
             if (data.isEmpty())
             {
                 qCritical() << "Failed to decrypt the tox save file";
@@ -152,6 +153,8 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     }
 
     Profile* p = new Profile(name, password, false);
+    p->passkey = std::move(tmpKey);
+
     return p;
 }
 
@@ -165,6 +168,17 @@ Profile* Profile::loadProfile(QString name, const QString& password)
  */
 Profile* Profile::createProfile(QString name, QString password)
 {
+    std::unique_ptr<ToxEncrypt> tmpKey;
+    if(!password.isEmpty())
+    {
+        tmpKey = ToxEncrypt::makeToxEncrypt(password);
+        if (!tmpKey)
+        {
+            qCritical() << "Failed to derive key for the tox save";
+            return nullptr;
+        }
+    }
+
     if (ProfileLocker::hasLock())
     {
         qCritical() << "Tried to create profile "<<name<<", but another profile is already locked!";
@@ -183,8 +197,12 @@ Profile* Profile::createProfile(QString name, QString password)
         return nullptr;
     }
 
+
     Settings::getInstance().createPersonal(name);
-    return new Profile(name, password, true);
+    Profile* p = new Profile(name, password, true);
+    p->passkey = std::move(tmpKey);
+
+    return p;
 }
 
 Profile::~Profile()
@@ -308,7 +326,7 @@ QByteArray Profile::loadToxSave()
     }
 
     data = saveFile.readAll();
-    if (tox_is_data_encrypted((uint8_t*)data.data()))
+    if (ToxEncrypt::isEncrypted(data))
     {
         if (password.isEmpty())
         {
@@ -317,14 +335,12 @@ QByteArray Profile::loadToxSave()
             goto fail;
         }
 
-        uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t*>(data.data()), salt, nullptr);
-        passkey = core->createPasskey(password, salt);
-
-        data = core->decryptData(data, *passkey);
+        data = passkey->decrypt(data);
         if (data.isEmpty())
         {
             qCritical() << "Failed to decrypt the tox save file";
+            data.clear();
+            goto fail;
         }
     }
     else
@@ -374,8 +390,7 @@ void Profile::saveToxSave(QByteArray data)
 
     if (!password.isEmpty())
     {
-        passkey = core->createPasskey(password);
-        data = core->encryptData(data, *passkey);
+        data = passkey->encrypt(data);
         if (data.isEmpty())
         {
             qCritical() << "Failed to encrypt, can't save!";
@@ -480,10 +495,8 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
     QByteArray pic = file.readAll();
     if (encrypted && !pic.isEmpty())
     {
-        uint8_t salt[TOX_PASS_SALT_LENGTH];
-        tox_get_salt(reinterpret_cast<uint8_t*>(pic.data()), salt, nullptr);
-        auto passkey = core->createPasskey(password, salt);
-        pic = core->decryptData(pic, *passkey);
+        // TODO: check if we can use passkey-decrypt(pic) here
+        pic = ToxEncrypt::decryptPass(password, pic);
     }
 
     return pic;
@@ -526,7 +539,7 @@ void Profile::saveAvatar(QByteArray pic, const QString& ownerId)
 {
     if (!password.isEmpty() && !pic.isEmpty())
     {
-        pic = core->encryptData(pic, *passkey);
+        pic = passkey->encrypt(pic);
     }
 
     QString path = avatarPath(ownerId);
@@ -745,7 +758,7 @@ QString Profile::getPassword() const
     return password;
 }
 
-const Tox_Pass_Key& Profile::getPasskey() const
+const ToxEncrypt& Profile::getPasskey() const
 {
     return *passkey;
 }
@@ -772,10 +785,19 @@ void Profile::setPassword(const QString& newPassword)
 {
     QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKey().toString());
     QString oldPassword = password;
+    std::unique_ptr<ToxEncrypt> oldpasskey = std::move(passkey);
     password = newPassword;
-    passkey = core->createPasskey(password);
+    passkey = ToxEncrypt::makeToxEncrypt(password);
+    if(!passkey)
+    {
+        qCritical() << "Failed to derive key from password, the profile won't use the new password";
+        password = oldPassword;
+        passkey = std::move(oldpasskey);
+        return;
+    }
     saveToxSave();
 
+    // TODO: ensure the database and the tox save file use the same password
     if (database)
     {
         database->setPassword(newPassword);
