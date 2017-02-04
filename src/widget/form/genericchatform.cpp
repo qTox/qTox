@@ -95,8 +95,6 @@ GenericChatForm::GenericChatForm(QWidget *parent)
             chatWidget, &ChatLog::forceRelayout);
 
     msgEdit = new ChatTextEdit();
-    // TODO: make it work without restart
-    msgEdit->setCurrentFont(s.getChatMessageFont());
 
     sendButton = new QPushButton();
     emoteButton = new QPushButton();
@@ -127,7 +125,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
-    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css"));
+    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+                         + fontToCss(s.getChatMessageFont(), "QTextEdit"));
     msgEdit->setFixedHeight(50);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
@@ -669,6 +668,18 @@ void GenericChatForm::retranslateUi()
     clearAction->setText(tr("Clear displayed messages"));
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
+}
+
+QString GenericChatForm::fontToCss(const QFont& font, const char* name)
+{
+    return QString("%1{font-family: \"%2\"; font-size: %3px; font-style: \"%4\"; font-weight: %5;}")
+        .arg(name)
+        .arg(font.family())
+        .arg(font.pixelSize())
+        .arg(font.style() == QFont::StyleNormal ? "normal"
+           : font.style() == QFont::StyleItalic ? "italic"
+           : "bold")
+        .arg(font.weight()*10); // QFont weight is 0..100, but CSS font-weight is 0..1000
 }
 
 void GenericChatForm::showNetcam()
