@@ -458,12 +458,8 @@ HEADERS  += \
     src/net/toxme.h \
     src/net/toxuri.h \
     src/nexus.h \
-    src/persistence/db/encrypteddb.h \
-    src/persistence/db/genericddinterface.h \
-    src/persistence/db/plaindb.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
-    src/persistence/historykeeper.h \
     src/persistence/offlinemsgengine.h \
     src/persistence/profile.h \
     src/persistence/profilelocker.h \
@@ -580,12 +576,8 @@ SOURCES += \
     src/net/toxme.cpp \
     src/net/toxuri.cpp \
     src/nexus.cpp \
-    src/persistence/db/encrypteddb.cpp \
-    src/persistence/db/genericddinterface.cpp \
-    src/persistence/db/plaindb.cpp \
     src/persistence/db/rawdatabase.cpp \
     src/persistence/history.cpp \
-    src/persistence/historykeeper.cpp \
     src/persistence/offlinemsgengine.cpp \
     src/persistence/profile.cpp \
     src/persistence/profilelocker.cpp \

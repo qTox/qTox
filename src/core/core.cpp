@@ -280,11 +280,6 @@ void Core::start()
     if (id.isValid())       // TODO: probably useless check, comes basically directly from toxcore
         emit idSet(id);
 
-    // TODO: This is a backwards compatibility check,
-    // once most people have been upgraded away from the old HistoryKeeper, remove this
-    if (Nexus::getProfile()->isEncrypted())
-        checkEncryptedHistory();
-
     loadFriends();
 
     tox_callback_friend_request(tox, onFriendRequest);

@@ -27,7 +27,6 @@
 #include "src/core/cstring.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/historykeeper.h"
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 #include <QApplication>
@@ -123,53 +122,4 @@ QByteArray Core::getSaltFromFile(QString filename)
 
     QByteArray res(reinterpret_cast<const char*>(salt), TOX_PASS_SALT_LENGTH);
     return res;
-}
-
-void Core::checkEncryptedHistory()
-{
-    QString path = HistoryKeeper::getHistoryPath();
-    bool exists = QFile::exists(path) && QFile(path).size()>0;
-    if (!exists)
-        return;
-
-    QByteArray salt = getSaltFromFile(path);
-    if (exists && salt.size() == 0)
-    {   // maybe we should handle this better
-        GUI::showWarning(tr("Encrypted chat history"), tr("No encrypted chat history file found, or it was corrupted.\nHistory will be disabled!"));
-        HistoryKeeper::resetInstance();
-        return;
-    }
-
-    auto passkey = createPasskey(Nexus::getProfile()->getPassword(), reinterpret_cast<uint8_t*>(salt.data()));
-
-    QString a(tr("Please enter the password for the chat history for the profile \"%1\".", "used in load() when no hist pw set").arg(Nexus::getProfile()->getName()));
-    QString b(tr("The previous password is incorrect; please try again:", "used on retries in load()"));
-    QString c(tr("\nDisabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.", "part of history password dialog"));
-    QString dialogtxt;
-
-
-    if (!exists || HistoryKeeper::checkPassword(passkey))
-        return;
-
-    dialogtxt = tr("The chat history password failed. Please try another?", "used only when pw set before load() doesn't work");
-    dialogtxt += "\n" + c;
-
-    bool error = true;
-    do
-    {
-        QString pw = GUI::passwordDialog(tr("Disable chat history"), dialogtxt);
-
-        if (pw.isEmpty())
-        {
-            Settings::getInstance().setEnableLogging(false);
-            return;
-        }
-        else
-        {
-            passkey = createPasskey(pw, reinterpret_cast<uint8_t*>(salt.data()));
-        }
-
-        error = exists && !HistoryKeeper::checkPassword(passkey);
-        dialogtxt = a + "\n" + c + "\n" + b;
-    } while (error);
 }
