@@ -35,6 +35,7 @@ public:
     ToxEncrypt(const ToxEncrypt& other) = delete;
     ToxEncrypt& operator=(const ToxEncrypt& other) = delete;
 
+    static int getMinBytes();
     static bool isEncrypted(const QByteArray& ciphertext);
     static QByteArray encryptPass(const QString& password, const QByteArray& plaintext);
     static QByteArray decryptPass(const QString& password, const QByteArray& ciphertext);
