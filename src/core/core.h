@@ -79,12 +79,6 @@ public:
     ToxId getSelfId() const;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
-    static std::shared_ptr<Tox_Pass_Key> createPasskey(const QString &password, uint8_t* salt = nullptr);
-    static QByteArray encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey);
-    static QByteArray encryptData(const QByteArray& data);
-    static QByteArray decryptData(const QByteArray& data, const Tox_Pass_Key &encryptionKey);
-    static QByteArray decryptData(const QByteArray& data);
-
     bool isReady() const;
 
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
