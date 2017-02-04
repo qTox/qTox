@@ -556,7 +556,6 @@ SOURCES += \
     src/chatlog/pixmapcache.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
-    src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
     src/core/cstring.cpp \

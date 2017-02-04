@@ -22,8 +22,7 @@
 #define PROFILE_H
 
 #include "src/core/toxid.h"
-
-#include <tox/toxencryptsave.h>
+#include "src/core/toxencrypt.h"
 
 #include "src/persistence/history.h"
 
@@ -56,7 +55,7 @@ public:
     bool checkPassword();
     QString getPassword() const;
     void setPassword(const QString& newPassword);
-    const Tox_Pass_Key& getPasskey() const;
+    const ToxEncrypt& getPasskey() const;
 
     QByteArray loadToxSave();
     void saveToxSave();
@@ -96,7 +95,7 @@ private:
     Core* core;
     QThread* coreThread;
     QString name, password;
-    std::shared_ptr<Tox_Pass_Key> passkey;
+    std::unique_ptr<ToxEncrypt> passkey;
     std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;

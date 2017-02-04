@@ -192,7 +192,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/coreav.h
   src/core/core.cpp
   src/core/coredefines.h
-  src/core/coreencryption.cpp
   src/core/corefile.cpp
   src/core/corefile.h
   src/core/core.h
