@@ -626,10 +626,18 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można rozpocząć połączenia wideo</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation>Nie można rozpocząć połączenia audio</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -739,7 +747,7 @@ Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietknięt
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Niepoprawne Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1485,7 +1493,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Status widoczna tylko dla listy kontaktów</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1546,18 +1554,22 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Moje imię:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mój status:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Moja nazwa użytkownika</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished">Moja biografia</translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1778,7 +1790,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ustaw swój status, który będzie pokazany innym</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1798,19 +1810,19 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortowanie i widoczność</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ustaw sortowanie znajomych i widoczność</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otwórz Dodaj znajomych</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Czat grupowy</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
@@ -1818,11 +1830,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Historia transferów</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otwórz historię transferów</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2106,10 +2118,6 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Pliki nie zostały usunięte!</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Profil użytkownika</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2682,10 +2690,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Nie udało się uruchomić toxcore z twoimi ustawieniami proxy. qTox nie może działać, proszę zmodyfikuj ustawienia i zrestartuj.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Dodaj znajomych</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Dodaj nowy krąg...</translation>
     </message>
@@ -2721,10 +2725,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Szukaj znajomych</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transfery plików</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translatorcomment>better translation?</translatorcomment>
@@ -2734,14 +2734,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Zażądano od qToxa aby otworzyć plik wykonywalny. Wykonywalne pliki mogą potencjalnie uszkodzić twój komputer. Czy na pewno chcesz otworzyć ten plik?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2813,10 +2805,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Nie udało się wysłać wiadmości</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation>Zaproszenia do grup</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Brak&gt;</translation>
@@ -2859,6 +2847,31 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Pokaż</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dodaj znajomych</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Zaproszenia do grup</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transfery plików</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Ustawienia</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
