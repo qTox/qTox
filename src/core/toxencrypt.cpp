@@ -56,6 +56,16 @@ passKey{key}
 {}
 
 /**
+ * @brief  Gets the minimum number of bytes needed for isEncrypted()
+ * @return Minimum number of bytes needed to check if data was encrypted
+ *         using this module.
+ */
+int ToxEncrypt::getMinBytes()
+{
+    return TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
+}
+
+/**
  * @brief Checks if the data was encrypted by this module.
  * @param ciphertext The data to check.
  * @return True if the data was encrypted using this module, false otherwise.
@@ -141,7 +151,8 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
 }
 
 /**
- * @brief  Factory method for the ToxEncrypt object.
+ * @brief  Factory method for the ToxEncrypt object. Derives a key from the
+ *         password and a new random salt.
  * @param  password Password to use for encryption.
  * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
  *         or an empty std::unique_ptr on failure.
@@ -165,7 +176,8 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 }
 
 /**
- * @brief  Factory method for the ToxEncrypt object.
+ * @brief  Factory method for the ToxEncrypt object. Derives a key from the
+ *         password and the salt in toxSave.
  * @param  password Password to use for encryption.
  * @param  toxSave The data to read the salt for decryption from.
  * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
