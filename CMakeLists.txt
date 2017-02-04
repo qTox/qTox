@@ -232,18 +232,10 @@ set(${PROJECT_NAME}_SOURCES
   src/net/toxuri.h
   src/nexus.cpp
   src/nexus.h
-  src/persistence/db/encrypteddb.cpp
-  src/persistence/db/encrypteddb.h
-  src/persistence/db/genericddinterface.cpp
-  src/persistence/db/genericddinterface.h
-  src/persistence/db/plaindb.cpp
-  src/persistence/db/plaindb.h
   src/persistence/db/rawdatabase.cpp
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
   src/persistence/history.h
-  src/persistence/historykeeper.cpp
-  src/persistence/historykeeper.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
   src/persistence/profile.cpp

@@ -32,7 +32,6 @@
 #include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
-#include "src/persistence/db/plaindb.h"
 #include "src/persistence/profile.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
