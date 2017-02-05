@@ -20,6 +20,7 @@
 #include "friend.h"
 #include "friendlist.h"
 #include "src/persistence/settings.h"
+#include "widget/form/chatform.h"
 #include <QMenu>
 #include <QDebug>
 #include <QHash>
@@ -36,6 +37,10 @@ Friend* FriendList::addFriend(int friendId, const ToxPk& friendPk)
     Friend* newfriend = new Friend(friendId, friendPk);
     friendList[friendId] = newfriend;
     key2id[friendPk.getKey()] = friendId;
+
+    // connect signal
+    QObject::connect(&Settings::getInstance(), &Settings::chatMessageFontChanged,
+                     newfriend->getChatForm(), &ChatForm::onChatMessageFontChanged);
 
     return newfriend;
 }
