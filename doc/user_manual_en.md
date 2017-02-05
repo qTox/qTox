@@ -415,6 +415,7 @@ The following shortcuts are currently supported:
 | `CTRL` + `TAB` | Switch to the next contact |
 | `CTRL` + `SHIFT` + `TAB` | Switch to the previous contact|
 | `ALT` + `q` | Quote selected text |
+| `F11` | Toggle fullscreen mode |
 
 ## Emoji Packs
 
