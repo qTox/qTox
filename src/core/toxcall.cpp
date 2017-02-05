@@ -192,6 +192,16 @@ ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
 {
 }
 
+ToxGroupCall::~ToxGroupCall()
+{
+    Audio& audio = Audio::getInstance();
+
+    for(quint32 v : peer)
+    {
+        audio.unsubscribeOutput(v);
+    }
+}
+
 ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept
 {
     ToxCall::operator =(move(other));

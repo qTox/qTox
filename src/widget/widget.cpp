@@ -1739,6 +1739,7 @@ void Widget::onGroupNamelistChanged(int groupnumber, int peernumber, uint8_t Cha
     TOX_CONFERENCE_STATE_CHANGE change = static_cast<TOX_CONFERENCE_STATE_CHANGE>(Change);
     if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_JOIN)
     {
+        CoreAV::groupNameListChanged(groupnumber, peernumber);
         // g->addPeer(peernumber,name);
         g->regeneratePeerList();
         // g->getChatForm()->addSystemInfoMessage(tr("%1 has joined the chat").arg(name), "white", QDateTime::currentDateTime());
