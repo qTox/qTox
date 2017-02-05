@@ -697,42 +697,6 @@ Take heed, fer higher qualities demand clearer skies.If yer seas are stormy, yer
         <translation>/me wants to be hearties, and %1</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Yer passphrase ain&apos;t right. Give &apos;er another go:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Locked-up message logs</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>No locked chest o&apos; messages found, or &apos;twas broken.
-Message loggin&apos;s been turned off!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Enter the passphrase for the secret logs for &quot;%1&quot;, if ye will.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Disablin&apos; message loggin&apos; will leave the secreted message barrel intact for another day. If you remember yer passphrase ye can get in again later from the Privacy tab.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>The message log passphrase ain&apos;t right. Give &apos;er another go?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Disable loggin&apos; o&apos; messages</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -968,7 +932,7 @@ Disablin&apos; message loggin&apos; will leave the secreted message barrel intac
     </message>
     <message>
         <source>New message</source>
-        <translation>New talkin&apos;</translation>
+        <translation>New writin&apos;</translation>
     </message>
     <message>
         <source>Online</source>
@@ -1045,11 +1009,11 @@ Disablin&apos; message loggin&apos; will leave the secreted message barrel intac
     <message>
         <source>qTox will start minimized in tray.</source>
         <comment>toolTip for Start in tray setting</comment>
-        <translation type="unfinished"></translation>
+        <translation>ship will sail small in tray.</translation>
     </message>
     <message>
         <source>Start in tray</source>
-        <translation type="unfinished"></translation>
+        <translation>Sail in tray</translation>
     </message>
     <message>
         <source>After pressing close (X) qTox will minimize to tray,
@@ -1073,7 +1037,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autostart</source>
-        <translation>Self-Sailing</translation>
+        <translation>Self-Sailin&apos;</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
@@ -1090,7 +1054,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Autoaccept files</source>
-        <translation type="unfinished"></translation>
+        <translation>Self-Movin&apos; parcels</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
@@ -1137,7 +1101,7 @@ instead of system taskbar.</source>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation type="unfinished"></translation>
+        <translation>Send yer writin&apos;</translation>
     </message>
     <message>
         <source>Smileys</source>
@@ -2191,6 +2155,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Failed ta add th&apos; hearty</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Don&apos;t gab at yerself, lad, &apos;s unsightly</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2448,10 +2432,6 @@ It will be installed when qTox restarts.</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2508,7 +2488,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">New talkin&apos;</translation>
+        <translation>New writin&apos;</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
