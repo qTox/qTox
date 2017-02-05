@@ -52,6 +52,7 @@ public:
     void setTypingNotificationVisible(bool visible);
     void scrollToLine(ChatLine::Ptr line);
     void selectAll();
+    void fontChanged(const QFont& font);
 
     QString getSelectedText() const;
 

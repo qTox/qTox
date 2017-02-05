@@ -93,6 +93,8 @@ GenericChatForm::GenericChatForm(QWidget *parent)
     const Settings& s = Settings::getInstance();
     connect(&s, &Settings::emojiFontPointSizeChanged,
             chatWidget, &ChatLog::forceRelayout);
+    connect(&s, &Settings::chatMessageFontChanged,
+            this, &GenericChatForm::onChatMessageFontChanged);
 
     msgEdit = new ChatTextEdit();
 
@@ -477,6 +479,15 @@ void GenericChatForm::onCopyLogClicked()
 void GenericChatForm::focusInput()
 {
     msgEdit->setFocus();
+}
+
+void GenericChatForm::onChatMessageFontChanged(const QFont& font) {
+    // chat log
+    chatWidget->fontChanged(font);
+    chatWidget->forceRelayout();
+    // message editor
+    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+                         + fontToCss(font, "QTextEdit"));
 }
 
 void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)
