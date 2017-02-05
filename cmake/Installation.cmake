@@ -5,8 +5,6 @@
 ################################################################################
 
 if(APPLE)
-  set(MACOSX_BUNDLE_SHORT_VERSION_STRING 1.4.1)
-  set(SHORT_VERSION ${MACOSX_BUNDLE_SHORT_VERSION_STRING})
   set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/osx/info.plist")
 
@@ -22,8 +20,15 @@ if(APPLE)
   execute_process(COMMAND ${MACDEPLOYQT_PATH}/macdeployqt ${BUNDLE_PATH} -no-strip)
   message(STATUS \"Updating library paths\")
   execute_process(COMMAND ${CMAKE_SOURCE_DIR}/osx/macfixrpath ${BUNDLE_PATH})
+  " COMPONENT Runtime
+  )
+  
+  install(FILES img/icons/qtox.icns DESTINATION ${BUNDLE_PATH}/Contents/Resources/)
+  install(FILES img/icons/qtox_profile.icns DESTINATION ${BUNDLE_PATH}/Contents/Resources/)
+
+  install(CODE "
   message(STATUS \"Creating dmg image\")
-  execute_process(COMMAND hdiutil create -volname ${PROJECT_NAME} -srcfolder ${BUNDLE_PATH} -ov -format UDZO ${PROJECT_NAME}.dmg)
+  execute_process(COMMAND ${CMAKE_SOURCE_DIR}/osx/createdmg ${CMAKE_SOURCE_DIR} ${BUNDLE_PATH})
   " COMPONENT Runtime
   )
 else()
