@@ -261,6 +261,7 @@ void Widget::init()
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(nextContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(previousContact()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(nextContact()));
+    new QShortcut(Qt::Key_F11, this, SLOT(toggleFullscreen()));
 
 #ifdef Q_OS_MAC
     QMenuBar* globalMenu = Nexus::getInstance().globalMenuBar;
@@ -1574,6 +1575,17 @@ void Widget::onFriendDialogShown(Friend* f)
 void Widget::onGroupDialogShown(Group* g)
 {
     onDialogShown(g->getGroupWidget());
+}
+
+void Widget::toggleFullscreen() {
+    if (!windowState().testFlag(Qt::WindowFullScreen))
+    {
+        setWindowState(windowState() | Qt::WindowFullScreen);
+    }
+    else
+    {
+        setWindowState(windowState() & ~Qt::WindowFullScreen);
+    }
 }
 
 ContentDialog* Widget::createContentDialog() const
