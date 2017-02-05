@@ -151,6 +151,7 @@ public slots:
     void previousContact();
     void onFriendDialogShown(Friend* f);
     void onGroupDialogShown(Group* g);
+    void toggleFullscreen();
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
