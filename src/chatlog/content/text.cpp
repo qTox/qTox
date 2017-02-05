@@ -143,6 +143,11 @@ QString Text::getSelectedText() const
     return selectedText;
 }
 
+void Text::fontChanged(const QFont& font)
+{
+    defFont = font;
+}
+
 QRectF Text::boundingRect() const
 {
     return QRectF(QPointF(0, 0), size);

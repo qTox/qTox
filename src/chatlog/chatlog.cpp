@@ -647,6 +647,14 @@ void ChatLog::selectAll()
     updateMultiSelectionRect();
 }
 
+void ChatLog::fontChanged(const QFont& font)
+{
+    for (ChatLine::Ptr l : lines)
+    {
+        l->fontChanged(font);
+    }
+}
+
 void ChatLog::forceRelayout()
 {
     startResizeWorker();
