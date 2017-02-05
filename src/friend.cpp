@@ -20,8 +20,11 @@
 
 #include "friend.h"
 #include "widget/form/chatform.h"
+#include "widget/form/settingswidget.h"
+#include "widget/form/settings/userinterfaceform.h"
 #include "widget/friendwidget.h"
 #include "widget/gui.h"
+#include "widget/widget.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
@@ -45,6 +48,11 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
     userAlias = Settings::getInstance().getFriendAlias(friendPk);
 
     chatForm = new ChatForm(this);
+
+    // connect signal
+    auto uiForm = Widget::getInstance()->getSettingsWidget()->getUserInterfaceForm();
+    QObject::connect(uiForm, SIGNAL(fontChanged(const QFont&)),
+                   chatForm, SLOT(onFontChanged(const QFont&)));
 }
 
 Friend::~Friend()

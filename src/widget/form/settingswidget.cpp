@@ -74,6 +74,10 @@ void SettingsWidget::setBodyHeadStyle(QString style)
     settingsWidgets->setStyle(QStyleFactory::create(style));
 }
 
+UserInterfaceForm* SettingsWidget::getUserInterfaceForm() {
+    return static_cast<UserInterfaceForm*>(cfgForms[1]);
+}
+
 void SettingsWidget::showAbout()
 {
     onTabChanged(settingsWidgets->count() - 1);

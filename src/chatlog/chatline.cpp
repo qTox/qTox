@@ -118,6 +118,12 @@ void ChatLine::selectionFocusChanged(bool focusIn)
         c->selectionFocusChanged(focusIn);
 }
 
+void ChatLine::fontChanged(const QFont& font)
+{
+    for (ChatLineContent* c : content)
+        c->fontChanged(font);
+}
+
 int ChatLine::getColumnCount()
 {
     return content.size();

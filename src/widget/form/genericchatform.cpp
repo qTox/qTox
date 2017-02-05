@@ -641,6 +641,15 @@ void GenericChatForm::copyLink()
     QApplication::clipboard()->setText(linkText);
 }
 
+void GenericChatForm::onFontChanged(const QFont& font) {
+    // chat log
+    chatWidget->fontChanged(font);
+    chatWidget->forceRelayout();
+    // message editor
+    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+                         + fontToCss(font, "QTextEdit"));
+}
+
 void GenericChatForm::retranslateUi()
 {
     QString callObjectName = callButton->objectName();

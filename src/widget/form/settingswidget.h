@@ -33,6 +33,7 @@ class AVForm;
 class QLabel;
 class QTabWidget;
 class ContentLayout;
+class UserInterfaceForm;
 
 class SettingsWidget : public QWidget
 {
@@ -44,6 +45,7 @@ public:
     bool isShown() const;
     void show(ContentLayout* contentLayout);
     void setBodyHeadStyle(QString style);
+    UserInterfaceForm* getUserInterfaceForm();
 
     void showAbout();
 

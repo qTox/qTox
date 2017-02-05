@@ -337,6 +337,7 @@ void UserInterfaceForm::on_txtChatFont_currentFontChanged(const QFont& f)
         tmpFont.setPixelSize(px);
 
     Settings::getInstance().setChatMessageFont(tmpFont);
+    emit fontChanged(tmpFont);
 }
 
 void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
@@ -349,5 +350,6 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
     {
         tmpFont.setPixelSize(px);
         s.setChatMessageFont(tmpFont);
+        emit fontChanged(tmpFont);
     }
 }

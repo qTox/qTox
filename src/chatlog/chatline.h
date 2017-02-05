@@ -29,6 +29,7 @@ class ChatLog;
 class ChatLineContent;
 class QGraphicsScene;
 class QStyleOptionGraphicsItem;
+class QFont;
 
 struct ColumnFormat
 {
@@ -75,6 +76,7 @@ public:
     void setVisible(bool visible);
     void selectionCleared();
     void selectionFocusChanged(bool focusIn);
+    void fontChanged(const QFont& font);
 
     int getColumnCount();
     int getRow() const;

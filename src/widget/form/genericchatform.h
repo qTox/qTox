@@ -99,6 +99,7 @@ protected slots:
     void onSplitterMoved(int pos, int index);
     void quoteSelectedText();
     void copyLink();
+    void onFontChanged(const QFont& font);
 
 private:
     void retranslateUi();

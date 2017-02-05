@@ -55,6 +55,8 @@ private slots:
     void on_txtChatFont_currentFontChanged(const QFont& f);
     void on_txtChatFontSize_valueChanged(int arg1);
 
+signals:
+    void fontChanged(const QFont& font);
 
 private:
     void retranslateUi();

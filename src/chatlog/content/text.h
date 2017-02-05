@@ -45,6 +45,7 @@ public:
     virtual void selectionFocusChanged(bool focusIn) final;
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
+    virtual void fontChanged(const QFont& font) final;
 
     virtual QRectF boundingRect() const final;
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;

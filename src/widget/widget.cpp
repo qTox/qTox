@@ -2301,6 +2301,10 @@ Status Widget::getStatusFromString(QString status)
         return Status::Offline;
 }
 
+SettingsWidget* Widget::getSettingsWidget() {
+    return settingsWidget;
+}
+
 void Widget::searchContacts()
 {
     QString searchString = ui->searchContactText->text();

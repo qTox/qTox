@@ -105,6 +105,7 @@ public:
     static QPixmap getStatusIconPixmap(QString path, uint32_t w, uint32_t h);
     static QString getStatusTitle(Status status);
     static Status getStatusFromString(QString status);
+    SettingsWidget* getSettingsWidget();
 
     void searchCircle(CircleWidget* circleWidget);
     void searchItem(GenericChatItemWidget* chatItem, GenericChatItemWidget::ItemType type);
