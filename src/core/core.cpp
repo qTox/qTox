@@ -534,6 +534,10 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_T
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
                                  TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
+    CoreAV* coreAv = static_cast<Core*>(core)->getAv();
+    if((change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT) && (coreAv->isGroupAvEnabled(groupId))) {
+        CoreAV::invalidateGroupCallPeerSource(groupId, peerId);
+    }
     qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
     emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }

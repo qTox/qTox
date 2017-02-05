@@ -497,11 +497,22 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
         return;
 
     Audio& audio = Audio::getInstance();
-    if (!call.alSource)
-        audio.subscribeOutput(call.alSource);
+    if (!call.peers[peer])
+        audio.subscribeOutput(call.peers[peer]);
 
-    audio.playAudioBuffer(call.alSource, data, samples, channels,
+    audio.playAudioBuffer(call.peers[peer], data, samples, channels,
                           sample_rate);
+}
+
+/**
+ * @brief Called from core to make sure the source for that peer is invalidated when they leave.
+ * @param group Group Index
+ * @param peer Peer Index
+ */
+void CoreAV::invalidateGroupCallPeerSource(int group, int peer) {
+    Audio &audio = Audio::getInstance();
+    audio.unsubscribeOutput(groupCalls[group].peers[peer]);
+    groupCalls[group].peers[peer] = 0;
 }
 
 /**
@@ -662,7 +673,7 @@ void CoreAV::invalidateCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        call.alSource = 0;
+        call.peers.clear();
     }
 
     for (ToxFriendCall& call : calls)
