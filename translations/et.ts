@@ -2808,7 +2808,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Grupikutsed</translation>
     </message>
     <message>
         <source>File transfers</source>

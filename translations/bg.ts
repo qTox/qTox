@@ -622,6 +622,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1534,6 +1542,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2062,10 +2074,6 @@ Please use another image.</source>
     <message>
         <source>Please enter a new password.</source>
         <translation>Моля въведете нова парола.</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Профил на потребителя</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2637,18 +2645,6 @@ It will be installed when qTox restarts.</source>
         <translation>Toxcore не успя да стартира с вашите прокси настройки. Tox не може да зареди; моля, променете вашите настройки и рестартирайте Tox.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Прибави приятел</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Трансфери на файлове</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Настройки</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>Неуспешно поискване на приятелство</translation>
     </message>
@@ -2685,14 +2681,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Your status</source>
         <translation>Вашия статус</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Покани за групи</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Профил</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2811,6 +2799,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Покажи</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Прибави приятел</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Покани за групи</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Трансфери на файлове</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -621,6 +621,14 @@ in zato lahko pride do problemov pri video pogovorih.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1532,6 +1540,10 @@ Profil ne vsebuje tvoje zgodovine pogovorov.</translation>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2053,10 +2065,6 @@ Please use another image.</source>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2629,14 +2637,6 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
         <translation>Toxcore se ni uspešno zagnal s tvojimi proxy nastavitvami. qTox ne more delovati, prosim spremeni nastavitve in ponovno zaženi.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Dodaj stik</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Prenosti datotek</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Zagonska datoteka</translation>
@@ -2645,10 +2645,6 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Želiš odpreti zagonsko datoteko. Te datoteke so lahko nevarne in škodijo računalniku. Želiš vseeno odpreti?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Nastavitve</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2677,14 +2673,6 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Tvoje stanje</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2806,6 +2794,31 @@ Nameščena bo ob ponovne zagonu qToxa.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dodaj stik</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Prenosti datotek</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Nastavitve</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

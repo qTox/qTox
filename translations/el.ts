@@ -623,6 +623,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1530,6 +1538,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2064,10 +2076,6 @@ Share it with your friends to communicate.</source>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation>Δεν ήταν δυνατή η διαγραφή αρχείων!</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Προφίλ χρήστη</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2647,22 +2655,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">Δεν μπόρεσε να σταλεί η αίτηση φιλίας</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Προσθήκη φίλου</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Μεταφορές αρχείων</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Ρυθμίσεις</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Προφίλ</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation type="unfinished">Ο/η %1 όρισε τον τίτλο σε %2</translation>
     </message>
@@ -2762,10 +2754,6 @@ It will be installed when qTox restarts.</source>
         <translation>Προηγούμενη συνομιλία</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation type="unfinished">Ομαδικές προσκλήσεις</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Άδειο&gt;</translation>
@@ -2806,6 +2794,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Εμφάνιση</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Προσθήκη φίλου</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Ομαδικές προσκλήσεις</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Μεταφορές αρχείων</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Ρυθμίσεις</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

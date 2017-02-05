@@ -626,6 +626,14 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1533,6 +1541,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2065,10 +2077,6 @@ Del den med venner du vil kommunisere med.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation type="unfinished">Brukerprofil</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2660,10 +2668,6 @@ Den vil bli installert når qTox restarter.</translation>
         <translation>Grupper</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Legg til venn</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Fil</translation>
     </message>
@@ -2709,10 +2713,6 @@ Den vil bli installert når qTox restarter.</translation>
         <translation>toxcore mislyktes i å starte med dine proxy-innstillinger. qTox kan ikke kjøre; vennligst forandre på instillingene og restart.</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Filoverføringer</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Kjørbar fil</translation>
@@ -2721,14 +2721,6 @@ Den vil bli installert når qTox restarter.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Du har spurt qTox om å åpne en kjørbar fil. Kjørbare filer kan forårsake skader på din maskin. Er du sikker du vil åpne denne filen?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Instillinger</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2761,10 +2753,6 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Din status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2806,6 +2794,31 @@ Den vil bli installert når qTox restarter.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Legg til venn</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Filoverføringer</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Instillinger</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
