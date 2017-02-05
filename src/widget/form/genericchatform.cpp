@@ -479,6 +479,15 @@ void GenericChatForm::focusInput()
     msgEdit->setFocus();
 }
 
+void GenericChatForm::onChatMessageFontChanged(const QFont& font) {
+    // chat log
+    chatWidget->fontChanged(font);
+    chatWidget->forceRelayout();
+    // message editor
+    msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
+                         + fontToCss(font, "QTextEdit"));
+}
+
 void GenericChatForm::addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime)
 {
     previousId = ToxPk();
