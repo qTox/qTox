@@ -622,6 +622,14 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1531,6 +1539,10 @@ El perfil no contiene tu historial.</translation>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2050,10 +2062,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>Remove</source>
         <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Perfil de Usuario</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2637,14 +2645,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Se produjo un error al iniciar toxcore con la configuración actual de proxy. Por favor modifica la configuración y reinicia qTox.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Agregar amigo</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Invitaciones a grupos</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Vacío&gt;</translation>
@@ -2700,10 +2700,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Buscar amigos</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transferencias</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
@@ -2754,14 +2750,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Has seleccionado que qTox abra un archivo ejecutable. Los archivos ejecutables pueden ser dañinos para tu computador. ¿Estás seguro de que quieres abrirlo?</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Opciones</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Perfil</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>No se pudo solicitar amistad</translation>
     </message>
@@ -2807,6 +2795,31 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Mostrar</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Agregar amigo</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transferencias</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Opciones</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

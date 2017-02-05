@@ -620,6 +620,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1526,6 +1534,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2057,10 +2069,6 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation type="unfinished">Perfil de Usuário</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2661,10 +2669,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation>O Toxcore falhou ao inicializar suas configurações de proxy. O qTox não pode ser executado, por favor modifique suas configurações e reinicialize o aplicativo.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Adicionar contato</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Arquivo</translation>
     </message>
@@ -2705,10 +2709,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation>Conversa Anterior</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transferências de arquivo</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Arquivo executável</translation>
@@ -2717,14 +2717,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Configurações</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Perfil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2753,10 +2745,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Seu status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished">Convites à grupos</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2798,6 +2786,31 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Adicionar contato</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Convites à grupos</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transferências de arquivo</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Configurações</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

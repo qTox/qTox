@@ -621,6 +621,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1527,6 +1535,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2044,10 +2056,6 @@ Please use another image.</source>
     <message>
         <source>Please enter a new password.</source>
         <translation>يرجى إدخال كلمة مرور جديدة.</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>مستخدم الملف الشخصي</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2648,22 +2656,6 @@ It will be installed when qTox restarts.</source>
         <translation>لا يمكن طلب الصداقة</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>إضافة صديق</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>نقل الملفات</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>الاعدادات</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>الملف الشخصي</translation>
-    </message>
-    <message>
         <source>%1 has set the title to %2</source>
         <translation>%1 قد وضع عنوان على %2</translation>
     </message>
@@ -2773,10 +2765,6 @@ It will be installed when qTox restarts.</source>
         <translation>المحادثة السابقة</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation>إضافات المجموعات</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;فارغ&gt;</translation>
@@ -2815,6 +2803,31 @@ It will be installed when qTox restarts.</source>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>عرض</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">إضافة صديق</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">نقل الملفات</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">الاعدادات</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

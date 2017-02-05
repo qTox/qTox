@@ -620,6 +620,14 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1535,6 +1543,10 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
         <source>My biography</source>
         <translation>Meine Biografie</translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2034,10 +2046,6 @@ Bitte benutze ein anderes.</translation>
     <message>
         <source>Please enter a new password.</source>
         <translation>Bitte gib ein neues Passwort ein.</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Nutzerprofil</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2643,10 +2651,6 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
 Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einstellungen und versuch es erneut.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Einen Freund hinzufügen</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Datei</translation>
     </message>
@@ -2697,10 +2701,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <translation>Vorherige Unterhaltung</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Dateiübertragungen</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Ausführbare Datei</translation>
@@ -2709,14 +2709,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Du hast qTox aufgefordert, eine Datei auszuführen. Bitte beachte, dass ausführbare Dateien ein Sicherheitsrisiko darstellen können. Bist du dir sicher, dass du die Datei ausführen möchtest?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Einstellungen</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2737,10 +2729,6 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
     <message>
         <source>Your status</source>
         <translation type="unfinished">Dein Status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Gruppeneinladungen</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2814,6 +2802,31 @@ Leider führen deine Proxy-Einstellungen zu Problemen. Bitte ändere deine Einst
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Öffnen</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Einen Freund hinzufügen</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Gruppeneinladungen</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dateiübertragungen</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

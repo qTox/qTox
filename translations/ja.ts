@@ -621,6 +621,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1526,6 +1534,10 @@ Profile does not contain your history.</source>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2037,10 +2049,6 @@ Please use another image.</source>
     <message>
         <source>Please enter a new password.</source>
         <translation type="unfinished">新しいパスワードを入力してください。</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation type="unfinished">ユーザープロファイル</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2641,26 +2649,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">友達リクエストできません</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation type="unfinished">友達を追加</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished">グループ招待</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation type="unfinished">ファイル転送</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished">設定</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished">プロファイル</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished">&lt; 空 &gt;</translation>
@@ -2797,6 +2785,31 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">友達を追加</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">グループ招待</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">ファイル転送</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">設定</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

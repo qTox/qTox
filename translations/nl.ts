@@ -621,6 +621,14 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1531,6 +1539,10 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2063,10 +2075,6 @@ Deel dit met je vrienden om te communiceren.</translation>
         <source>Files could not be deleted!</source>
         <comment>deletion failed title</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Gebruikersprofiel</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2631,10 +2639,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander je instellingen en herstart.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Voeg vriend toe</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Bestand</translation>
     </message>
@@ -2679,10 +2683,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>toxcore kon niet opstarten, de applicatie zal afsluiten na het sluiten van dit bericht.</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Bestandsoverdrachten</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Uitvoerbaar bestand</translation>
@@ -2691,14 +2691,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Je hebt qTox gevraagd een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan je computer. Weet je zeker dat je dit bestand wilt openen?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Instellingen</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profiel</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2761,10 +2753,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Je status</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished"></translation>
@@ -2804,6 +2792,31 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Voeg vriend toe</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Bestandsoverdrachten</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Instellingen</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

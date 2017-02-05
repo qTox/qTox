@@ -621,6 +621,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1530,6 +1538,10 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
         <source>My biography</source>
         <translation type="unfinished">Rólam</translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -2057,10 +2069,6 @@ Válasszon egy másik képet.</translation>
     <message>
         <source>Please enter a new password.</source>
         <translation>Adjon meg egy új jelszót.</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation>Felhasználói profil</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2631,14 +2639,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <translation>A Tox nem indult el ezekkel a proxy beállításokkal. A qTox nem fut; módosítsa a beállításait, és indítsa újra.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Partner hozzáadása</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Fájl átvitelek</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Futtatható fájl</translation>
@@ -2647,10 +2647,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Meg akart nyitni egy futtatható fájlt. Ezek a fájlok potenciálisan veszélyeztethetik a számítógépét. Valóban meg szeretné nyitni ezt a fájlt?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2679,14 +2675,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Your status</source>
         <translation>Állapotüzenet</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Csoport meghívások</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2803,6 +2791,31 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Mutat</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Partner hozzáadása</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Csoport meghívások</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Fájl átvitelek</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Beállítások</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -624,6 +624,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1533,6 +1541,10 @@ Profil ne sadrži vašu povijest.</translation>
         <source>My biography</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoadHistoryDialog</name>
@@ -1917,10 +1929,6 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
 </context>
 <context>
     <name>ProfileForm</name>
-    <message>
-        <source>User Profile</source>
-        <translation>Korisnički profil</translation>
-    </message>
     <message>
         <source>Choose a profile picture</source>
         <translation>Odaberi sliku profila</translation>
@@ -2628,14 +2636,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation>toxcore se nije uspio pokrenuti s vašim proxy postavkama. qTox ne može biti pokrenut; promjenite svoje proxy postavke i pokrenite Tox ponovo.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Dodaj prijatelja</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Prijenosi datoteka</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Izvršna datoteka</translation>
@@ -2644,14 +2644,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Pitali ste qTox da otvori izvršnu datoteku. Izvršne datoteke mogu oštetiti vaše računalo. Sigurno želite otvoriti ovu datoteku?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Postavke</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2680,10 +2672,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Vaš status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2803,6 +2791,31 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dodaj prijatelja</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Prijenosi datoteka</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Postavke</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
