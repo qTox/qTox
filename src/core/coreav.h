@@ -25,6 +25,7 @@
 #include <memory>
 #include <atomic>
 #include "src/core/toxcall.h"
+#include <tox/tox.h>
 #include <tox/toxav.h>
 
 class Friend;
@@ -66,6 +67,7 @@ public:
     void leaveGroupCall(int groupNum);
     void muteCallInput(const Group* g, bool mute);
     void muteCallOutput(const Group* g, bool mute);
+    void groupNamelistChanged(uint32_t groupId, uint32_t peerId, TOX_CONFERENCE_STATE_CHANGE change);
     bool isGroupCallInputMuted(const Group* g) const;
     bool isGroupCallOutputMuted(const Group* g) const;
     bool isGroupAvEnabled(int groupNum) const;

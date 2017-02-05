@@ -540,7 +540,10 @@ void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
                                  TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
     qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
-    emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
+    Core *c = reinterpret_cast<Core*>(core);
+    emit c->groupNamelistChanged(groupId, peerId, change);
+
+    c->getAv()->groupNamelistChanged(groupId, peerId, change);
 }
 
 void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId,

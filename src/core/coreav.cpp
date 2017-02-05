@@ -497,10 +497,14 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
         return;
 
     Audio& audio = Audio::getInstance();
-    if (!call.alSource)
-        audio.subscribeOutput(call.alSource);
 
-    audio.playAudioBuffer(call.alSource, data, samples, channels,
+    if (call.alSource.size() <= peer)
+        call.alSource.resize(peer + 1);
+
+    if (!call.alSource[peer])
+        audio.subscribeOutput(call.alSource[peer]);
+
+    audio.playAudioBuffer(call.alSource[peer], data, samples, channels,
                           sample_rate);
 }
 
@@ -583,6 +587,29 @@ void CoreAV::muteCallOutput(const Group* g, bool mute)
         groupCalls[g->getGroupId()].muteVol = mute;
 }
 
+
+/**
+ * @brief Called from core to notify about peer changes
+ * @param groupId Group index
+ * @param peerId Peer index
+ * @param change Kind of peer change
+ */
+void CoreAV::groupNamelistChanged(uint32_t groupId, uint32_t peerId, TOX_CONFERENCE_STATE_CHANGE change)
+{
+    Q_UNUSED(peerId);
+
+    if (change != TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT || !isGroupAvEnabled(groupId))
+        return;
+
+    if (!groupCalls.contains(groupId))
+        return;
+
+    // Unsubscribe from last audio source
+    auto &alSource = groupCalls[groupId].alSource;
+    Audio::getInstance().unsubscribeOutput(alSource.last());
+    alSource.removeLast();
+}
+
 /**
  * @brief Returns the group calls input (microphone) state.
  * @param groupId The group id to check
@@ -662,12 +689,12 @@ void CoreAV::invalidateCallSources()
 {
     for (ToxGroupCall& call : groupCalls)
     {
-        call.alSource = 0;
+        call.clearAlSource();
     }
 
     for (ToxFriendCall& call : calls)
     {
-        call.alSource = 0;
+        call.clearAlSource();
     }
 }
 

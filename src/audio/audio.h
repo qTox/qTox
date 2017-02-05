@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QMutex>
 #include <QTimer>
+#include <QVector>
 
 #include <cassert>
 
@@ -90,7 +91,9 @@ public:
     static QStringList inDeviceNames();
 
     void subscribeOutput(ALuint& sid);
+    void subscribeOutput(QVector<ALuint>& sids);
     void unsubscribeOutput(ALuint& sid);
+    void unsubscribeOutput(QVector<ALuint>& sids);
 
     void subscribeInput();
     void unsubscribeInput();

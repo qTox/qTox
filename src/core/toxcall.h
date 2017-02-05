@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <QtGlobal>
 #include <QMetaObject>
+#include <QVector>
 
 #include "src/core/indexedlist.h"
 
@@ -27,6 +28,8 @@ public:
      inline operator int() {return callId;}
      ToxCall& operator=(const ToxCall& other) = delete;
      ToxCall& operator=(ToxCall&& other) noexcept;
+
+     inline void clearAlSource() {alSource = 0;}
 
 protected:
      QMetaObject::Connection audioInConn;
@@ -72,6 +75,11 @@ struct ToxGroupCall : public ToxCall
 
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
 
+    inline void clearAlSource()
+    {
+        alSource.erase(alSource.begin(), alSource.end());
+    }
+    QVector<quint32> alSource;
     // If you add something here, don't forget to override the ctors and move operators!
 };
 

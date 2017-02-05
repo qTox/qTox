@@ -686,6 +686,14 @@ void Audio::subscribeOutput(ALuint& sid)
              << outSources.size();
 }
 
+void Audio::subscribeOutput(QVector<ALuint> &sids)
+{
+    for (ALuint &sid : sids)
+    {
+        subscribeOutput(sid);
+    }
+}
+
 void Audio::unsubscribeOutput(ALuint &sid)
 {
     QMutexLocker locker(&audioLock);
@@ -708,6 +716,13 @@ void Audio::unsubscribeOutput(ALuint &sid)
 
     if (outSources.isEmpty())
         cleanupOutput();
+}
+
+void Audio::unsubscribeOutput(QVector<ALuint> &sids) {
+    for (ALuint &sid : sids)
+    {
+        unsubscribeOutput(sid);
+    }
 }
 
 void Audio::startLoop()
