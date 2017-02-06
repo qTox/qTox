@@ -436,6 +436,7 @@ HEADERS  += \
     src/chatlog/customtextdocument.h \
     src/chatlog/documentcache.h \
     src/chatlog/pixmapcache.h \
+    src/chatlog/textformatter.h \
     src/core/core.h \
     src/core/coreav.h \
     src/core/coredefines.h \
@@ -554,6 +555,7 @@ SOURCES += \
     src/chatlog/customtextdocument.cpp\
     src/chatlog/documentcache.cpp \
     src/chatlog/pixmapcache.cpp \
+    src/chatlog/textformatter.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
     src/core/coreencryption.cpp \
