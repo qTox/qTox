@@ -83,6 +83,7 @@ signals:
 
 public slots:
     void focusInput();
+    void onChatMessageFontChanged(const QFont& font);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);

@@ -75,6 +75,10 @@ QString ChatLineContent::getSelectedText() const
     return QString();
 }
 
+void ChatLineContent::fontChanged(const QFont& font)
+{
+}
+
 qreal ChatLineContent::getAscent() const
 {
     return 0.0;
