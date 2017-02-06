@@ -19,6 +19,7 @@
 
 #include "chatmessage.h"
 #include "chatlinecontentproxy.h"
+#include "textformatter.h"
 #include "content/text.h"
 #include "content/timestamp.h"
 #include "content/spinner.h"
@@ -56,8 +57,11 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //text styling
-    if (Settings::getInstance().getStylePreference() != Settings::StyleType::NONE)
-        text = detectStyle(text);
+    if (Settings::getInstance().getStylePreference() != Settings::StyleType::NONE) {
+        TextFormatter tf = TextFormatter(text);
+        text = tf.applyStyling(Settings::getInstance().getStylePreference() == Settings::StyleType::WITHOUT_CHARS);
+    }
+
 
     switch(type)
     {
@@ -199,71 +203,6 @@ void ChatMessage::hideDate()
         c->hide();
 }
 
-QString ChatMessage::detectStyle(const QString &str)
-{
-    QString out = str;
-
-    // Create regex for text styling syntax
-    QRegExp exp("(\\*)([^\\*]{2,})(\\*)"            		// Bold         *text*
-                "|(\\*\\*)([^\\*\\*]{2,})(\\*\\*)"  		// Bold         **text**
-                "|(\\/)([^\\/]{2,})(\\/)"           		// Italics      /text/
-                "|(\\/\\/)([^\\/\\/]{2,})(\\/\\/)"  		// Italics      //text//
-                "|(\\_)([^\\_]{2,})(\\_)"           		// Underline    _text_
-                "|(\\_\\_)([^\\_\\_]{2,})(\\_\\_)"  		// Underline    __text__
-                "|(\\~)([^\\~]{2,})(\\~)"           		// Strike       ~text~
-                "|(\\~\\~)([^\\~\\~]{2,})(\\~\\~)"      	// Strike       ~~text~~
-                "|(\\`)([^\\`]{2,})(\\`)"                   // Codeblock    `text`
-                "|(\\`\\`\\`)([^\\`\\`\\`]{2,})(\\`\\`\\`)" // Codeblock    ```\ntext\n```
-                );
-
-    int offset = 0;
-    while ((offset = exp.indexIn(out, offset)) != -1)
-    {
-        QString snipCheck = out.mid(offset-1,exp.cap(0).length()+2);
-        QString snippet = exp.cap(0).trimmed();
-        QString htmledSnippet;
-
-        // Only parse if surrounded by spaces, newline(s) and/or beginning/end of line
-        if ((snipCheck.startsWith(' ') || snipCheck.startsWith('>') || offset == 0)
-            && ((snipCheck.endsWith(' ') || snipCheck.endsWith('<')) || offset + snippet.length() == out.length()))
-        {
-            int mul = 0; // Determines how many characters to strip from text
-            // Set mul depending on styleownPreference
-            if (Settings::getInstance().getStylePreference() == Settings::StyleType::WITHOUT_CHARS)
-                mul = 2;
-
-            // Match captured string to corresponding style format
-            if (exp.cap(1) == "*" && snippet.length() > 2) // Bold *text*
-                htmledSnippet = QString("<b>%1</b>").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(4) == "**" && snippet.length() > 4) // Bold **text**
-                htmledSnippet = QString("<b>%1</b>").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(7) == "/" && snippet.length() > 2) // Italics /text/
-                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(10) == "//" && snippet.length() > 4) // Italics //text//
-                htmledSnippet = QString("<i>%1</i>").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(13) == "_"&& snippet.length() > 2) // Underline _text_
-                htmledSnippet = QString("<u>%1</u>").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(16) == "__" && snippet.length() > 4) // Underline __text__
-                htmledSnippet = QString("<u>%1</u>").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(19) == "~" && snippet.length() > 2) // Strike ~text~
-                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(22) == "~~" && snippet.length() > 4) // Strike ~~text~~
-                htmledSnippet = QString("<s>%1</s>").arg(snippet.mid(mul,snippet.length()-2*mul));
-            else if (exp.cap(25) == "`" && snippet.length() > 2) // Codeblock `text`
-                htmledSnippet = QString("<font color=#595959><code>%1</code></font>").arg(snippet.mid(mul/2,snippet.length()-mul));
-            else if (exp.cap(28) == "```" && snippet.length() > 6) // Codeblock ```text```
-                htmledSnippet = QString("<font color=#595959><code>%1</code></font>").arg(snippet.mid(4*mul,snippet.length()-8*mul));
-            else
-                htmledSnippet = snippet;
-            out.replace(offset, exp.cap().length(), htmledSnippet);
-            offset += htmledSnippet.length();
-        } else
-            offset += snippet.length();
-    }
-
-    return out;
-}
-
 QString ChatMessage::detectAnchors(const QString &str)
 {
     QString out = str;
@@ -324,7 +263,7 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
         }
 
         if (i < messageLines.size() - 1)
-            quotedText += "<br/>";
+            quotedText += '\n';
     }
 
     return quotedText;
