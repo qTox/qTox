@@ -188,6 +188,8 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/documentcache.h
   src/chatlog/pixmapcache.cpp
   src/chatlog/pixmapcache.h
+  src/chatlog/textformatter.cpp
+  src/chatlog/textformatter.h
   src/core/coreav.cpp
   src/core/coreav.h
   src/core/core.cpp
