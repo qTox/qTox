@@ -748,6 +748,7 @@ Switches:
 
 [Atk]: https://wiki.gnome.org/Accessibility
 [Cairo]: https://www.cairographics.org/
+[CMake]: https://cmake.org/
 [DBus Menu]: https://launchpad.net/libdbusmenu
 [FFmpeg]: https://www.ffmpeg.org/
 [GCC]: https://gcc.gnu.org/
