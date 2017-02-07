@@ -589,7 +589,7 @@ void CoreAV::muteCallOutput(const Group* g, bool mute)
 
 
 /**
- * @brief Called from core to notify about peer changes
+ * @brief In group with enabled AV unsubscribes from last OpenAL source to reclaim memory when peer leaves
  * @param groupId Group index
  * @param peerId Peer index
  * @param change Kind of peer change
@@ -598,13 +598,18 @@ void CoreAV::groupNamelistChanged(uint32_t groupId, uint32_t peerId, TOX_CONFERE
 {
     Q_UNUSED(peerId);
 
+    // Continue only when peer left group and AV enabled in group
     if (change != TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT || !isGroupAvEnabled(groupId))
         return;
 
     if (!groupCalls.contains(groupId))
         return;
 
-    // Unsubscribe from last audio source
+    /* In tox core peers always located continuously and since
+     * here is no association of alSource with individual peer, we can
+     * call resize() to reflect actual peer count in internal QVector
+     * structure
+     */
     auto &alSource = groupCalls[groupId].alSource;
     Audio::getInstance().unsubscribeOutput(alSource.last());
     alSource.removeLast();

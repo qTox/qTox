@@ -14,6 +14,9 @@
  * @var bool ToxCall::inactive
  * @brief True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
  *
+ * @var quint32 ToxCall::alSource
+ * @brief OpenAL's audio source required to play audio coming from active call
+ *
  * @var bool ToxFriendCall::videoEnabled
  * @brief True if our user asked for a video call, sending and recieving.
  *
@@ -22,6 +25,9 @@
  *
  * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
  * @brief State of the peer (not ours!)
+ *
+ * @var QVector<quint32> ToxGroupCall::alSource
+ * @brief Multiple OpenAL's audio sources needed to play audio coming from peers
  */
 
 using namespace std;
