@@ -499,7 +499,17 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer,
     Audio& audio = Audio::getInstance();
 
     if (call.alSource.size() <= peer)
-        call.alSource.resize(peer + 1);
+    {
+        TOX_ERR_CONFERENCE_PEER_QUERY err;
+        uint32_t peer_count = tox_conference_peer_count(reinterpret_cast<Tox*>(tox), group, &err);
+
+        if (err != TOX_ERR_CONFERENCE_PEER_QUERY_OK)
+        {
+            qCritical() << "Failed to get peer count of conference " << group;
+            return;
+        }
+        call.alSource.resize(peer_count);
+    }
 
     if (!call.alSource[peer])
         audio.subscribeOutput(call.alSource[peer]);
