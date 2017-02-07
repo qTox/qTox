@@ -22,6 +22,9 @@
  *
  * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
  * @brief State of the peer (not ours!)
+ *
+ * @var QMap ToxGroupCall::peers
+ * @brief Keeps sources for users in group calls.
  */
 
 using namespace std;
