@@ -220,8 +220,8 @@ Must be one of the following:
 ##### Revert
 
 If the commit reverts a previous commit, it should begin with `revert: `,
-followed by the header of the reverted commit. In the body it should say:
-`Revert commit <hash>.`, where the hash is the SHA of the commit being
+followed by the header of the reverted commit. In the body it should say: `This
+reverts commit <hash>.`, where the hash is the SHA of the commit being
 reverted.
 
 #### Scope
