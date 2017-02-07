@@ -263,7 +263,7 @@ For example:
 * `tray` – change affects tray icon
 * `l10n` – translation update
 * `i18n` – something has been made translatable
-* `build` – change affects build system / scripts, e.g. `qtox.pro`,
+* `build` – change affects build system / scripts, e.g. `CMakeLists.txt`,
   `simple_make.sh`, etc.
 * `travis` – change affects Travis CI
 * `CONTRIBUTING` – change to the contributing guidelines
