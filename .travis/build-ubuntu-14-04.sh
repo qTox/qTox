@@ -31,8 +31,10 @@ sudo apt-get install -y --force-yes \
     build-essential \
     check \
     checkinstall \
+    google-mock \
     libgdk-pixbuf2.0-dev \
     libglib2.0-dev \
+    libgtest-dev \
     libgtk2.0-dev \
     libopenal-dev \
     libopus-dev \
@@ -146,15 +148,27 @@ $CXX --version
 # needed, otherwise ffmpeg doesn't get detected
 export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
+build_googletest() {
+    git clone https://github.com/google/googletest --depth 1 -b release-1.8.0
+    
+    local BUILDDIR=googletest/build
+    mkdir $BUILDDIR
+    cd $BUILDDIR
+    cmake ..
+    make -j$(nproc)
+    sudo make install
+    cd -
+}
+
+build_googletest
 
 build_qtox() {
     bdir() {
-        pushd .
         cd $BUILDDIR
         make -j$(nproc)
         # check if `qtox` file has been made, is non-empty and is an executable
         [[ -s qtox ]] && [[ -x qtox ]]
-        popd
+        cd -
     }
 
     local BUILDDIR=_build
@@ -175,4 +189,6 @@ build_qtox() {
     cmake -H. -B"$BUILDDIR"
     bdir
 }
+
 build_qtox
+./_build/unit_test
