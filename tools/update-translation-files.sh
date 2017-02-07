@@ -26,7 +26,7 @@
 set -eu -o pipefail
 
 readonly COMMIT_MSG="chore(i18n): update translation files for Weblate"
-readonly LUPDATE_CMD="lupdate -pro qtox.pro -no-obsolete -locations none -ts"
+readonly LUPDATE_CMD="lupdate src -no-obsolete -locations none -ts"
 
 if [[ "$@" = "ALL" ]]
 then
