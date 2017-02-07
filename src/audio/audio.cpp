@@ -718,7 +718,8 @@ void Audio::unsubscribeOutput(ALuint &sid)
         cleanupOutput();
 }
 
-void Audio::unsubscribeOutput(QVector<ALuint> &sids) {
+void Audio::unsubscribeOutput(QVector<ALuint> &sids)
+{
     for (ALuint &sid : sids)
     {
         unsubscribeOutput(sid);

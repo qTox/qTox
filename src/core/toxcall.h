@@ -29,7 +29,9 @@ public:
      ToxCall& operator=(const ToxCall& other) = delete;
      ToxCall& operator=(ToxCall&& other) noexcept;
 
-     inline void clearAlSource() {alSource = 0;}
+     inline void clearAlSource() {
+         alSource = 0;
+     }
 
 protected:
      QMetaObject::Connection audioInConn;
