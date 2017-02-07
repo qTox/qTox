@@ -623,11 +623,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>只有在通话过程中才能执行麦克风静音操作</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>只有在通话过程中才能执行禁用声音操作</translation>
     </message>
 </context>
 <context>
@@ -688,48 +688,12 @@ which may lead to problems with video calls.</source>
         <translation>/me 提供了好友关系,“%1”</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>刚才输入的密码是错误的，请重新输入：</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>加密聊天记录</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>未找到加密的历史记录文件，或者文件已损坏。
-历史记录功能已被关闭！</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-现在禁用聊天记录不会对加密过的记录造成什么改变（但还是不能使用）；如果你之后想起了密码，你可以到“隐私”选项卡内使用正确的密码重新启用加密，从而使用历史记录。</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>聊天记录密码失败，重试？</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>关闭聊天历史记录</translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation>你需要写一封邮件说明你的请求</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <translation>你的消息太长了！</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>请为账户&quot;%1&quot;的聊天历史记录输入密码。</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -2197,6 +2161,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">无法添加好友</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 不是一个有效的 Toxme 地址。</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">确认</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">你不能加自己为好友！</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2454,10 +2438,6 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>取消</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 不是一个有效的 Toxme 地址。</translation>
     </message>
 </context>
 <context>
