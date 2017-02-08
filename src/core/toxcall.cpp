@@ -14,6 +14,9 @@
  * @var bool ToxCall::inactive
  * @brief True while we're not participating. (stopped group call, ringing but hasn't started yet, ...)
  *
+ * @var quint32 ToxCall::alSource
+ * @brief OpenAL's audio source required to play audio coming from active call
+ *
  * @var bool ToxFriendCall::videoEnabled
  * @brief True if our user asked for a video call, sending and recieving.
  *
@@ -22,12 +25,15 @@
  *
  * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
  * @brief State of the peer (not ours!)
+ *
+ * @var QVector<quint32> ToxGroupCall::alSource
+ * @brief Multiple OpenAL's audio sources needed to play audio coming from peers
  */
 
 using namespace std;
 
 ToxCall::ToxCall(uint32_t CallId)
-    : callId{CallId}, alSource{0},
+    : callId{CallId}, alSource{},
       inactive{true}, muteMic{false}, muteVol{false}
 {
     Audio& audio = Audio::getInstance();
@@ -36,12 +42,12 @@ ToxCall::ToxCall(uint32_t CallId)
 }
 
 ToxCall::ToxCall(ToxCall&& other) noexcept
-    : audioInConn{other.audioInConn}, callId{other.callId}, alSource{other.alSource},
+    : audioInConn{other.audioInConn}, callId{other.callId}, alSource{move(other.alSource)},
       inactive{other.inactive}, muteMic{other.muteMic}, muteVol{other.muteVol}
 {
     other.audioInConn = QMetaObject::Connection();
     other.callId = numeric_limits<decltype(callId)>::max();
-    other.alSource = 0;
+    other.clearAlSource();
 
     // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
@@ -66,8 +72,8 @@ ToxCall& ToxCall::operator=(ToxCall&& other) noexcept
     inactive = other.inactive;
     muteMic = other.muteMic;
     muteVol = other.muteVol;
-    alSource = other.alSource;
-    other.alSource = 0;
+    alSource = move(other.alSource);
+    other.clearAlSource();
 
     // required -> ownership of audio input is moved to new instance
     Audio& audio = Audio::getInstance();
