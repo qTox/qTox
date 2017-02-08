@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volym</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation type="unfinished"></translation>
+        <translation>Video-enhet</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -81,23 +81,23 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation type="unfinished"></translation>
+        <translation>Prova ljud</translation>
     </message>
 </context>
 <context>
     <name>AboutForm</name>
     <message>
         <source>Restart qTox to install version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta om qTox för att installera version %1</translation>
     </message>
     <message>
         <source>qTox is downloading update %1</source>
         <comment>%1 is the version of the update</comment>
-        <translation type="unfinished"></translation>
+        <translation>qTox laddar ner uppdatering %1</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Original author: %1</source>
@@ -105,7 +105,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>You are using qTox version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du använder qTox version %1.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
@@ -113,11 +113,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>toxcore version: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt-version: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
@@ -128,7 +128,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>bugg-tracker</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
@@ -137,7 +137,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicka här för att rapportera en bugg.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
@@ -147,14 +147,14 @@ which may lead to problems with video calls.</source>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished"></translation>
+        <translation>bidragare</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Version</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -684,45 +684,11 @@ which may lead to problems with video calls.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2181,6 +2147,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Du kan inte lägga till dig själv som vän!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2436,10 +2422,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
