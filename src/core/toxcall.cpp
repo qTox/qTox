@@ -22,6 +22,9 @@
  *
  * @var TOXAV_FRIEND_CALL_STATE ToxFriendCall::state
  * @brief State of the peer (not ours!)
+ *
+ * @var QMap ToxGroupCall::peers
+ * @brief Keeps sources for users in group calls.
  */
 
 using namespace std;
@@ -190,6 +193,16 @@ ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV &av)
 ToxGroupCall::ToxGroupCall(ToxGroupCall&& other) noexcept
     : ToxCall(move(other))
 {
+}
+
+ToxGroupCall::~ToxGroupCall()
+{
+    Audio& audio = Audio::getInstance();
+
+    for(quint32 v : peers)
+    {
+        audio.unsubscribeOutput(v);
+    }
 }
 
 ToxGroupCall &ToxGroupCall::operator=(ToxGroupCall &&other) noexcept

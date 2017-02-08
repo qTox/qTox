@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <QtGlobal>
 #include <QMetaObject>
+#include <QMap>
 
 #include "src/core/indexedlist.h"
 
@@ -69,8 +70,11 @@ struct ToxGroupCall : public ToxCall
     ToxGroupCall() = default;
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
+    ~ToxGroupCall();
 
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
+
+    QMap<int, quint32> peers;
 
     // If you add something here, don't forget to override the ctors and move operators!
 };
