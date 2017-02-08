@@ -111,7 +111,6 @@ public:
     static constexpr uint32_t AUDIO_CHANNELS = 2;
 
 signals:
-    void groupAudioPlayed(int group, int peer, unsigned short volume);
     void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
 
 private:

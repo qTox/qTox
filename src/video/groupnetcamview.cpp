@@ -140,22 +140,20 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     splitter->addWidget(scrollArea);
     scrollArea->setWidget(widget);
 
-    connect(&Audio::getInstance(), &Audio::groupAudioPlayed, this, &GroupNetCamView::groupAudioPlayed);
-
     QTimer* timer = new QTimer(this);
     timer->setInterval(1000);
-    connect(timer, &QTimer::timeout, this, &GroupNetCamView::findActivePeer);
+    connect(timer, &QTimer::timeout, this, &GroupNetCamView::onUpdateActivePeer);
     timer->start();
 
     connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap)
     {
         selfVideoSurface->getVideoSurface()->setAvatar(pixmap);
-        findActivePeer();
+        setActive();
     });
     connect(Core::getInstance(), &Core::usernameSet, [this](const QString& username)
     {
         selfVideoSurface->setText(username);
-        findActivePeer();
+        setActive();
     });
     connect(Core::getInstance(), &Core::friendAvatarChanged, this, &GroupNetCamView::friendAvatarChanged);
 
@@ -180,7 +178,7 @@ void GroupNetCamView::addPeer(int peer, const QString& name)
     peerVideo.video = labeledVideo;
     videoList.insert(peer, peerVideo);
 
-    findActivePeer();
+    setActive();
 }
 
 void GroupNetCamView::removePeer(int peer)
@@ -194,8 +192,13 @@ void GroupNetCamView::removePeer(int peer)
         labeledVideo->deleteLater();
         videoList.remove(peer);
 
-        findActivePeer();
+        setActive();
     }
+}
+
+void GroupNetCamView::onUpdateActivePeer()
+{
+    setActive();
 }
 
 void GroupNetCamView::setActive(int peer)
@@ -228,34 +231,6 @@ void GroupNetCamView::setActive(int peer)
     }
 }
 
-void GroupNetCamView::groupAudioPlayed(int Group, int peer, unsigned short volume)
-{
-    if (group != Group)
-        return;
-
-    auto peerVideo = videoList.find(peer);
-
-    if (peerVideo != videoList.end())
-        peerVideo.value().volume = volume;
-}
-
-void GroupNetCamView::findActivePeer()
-{
-    int candidate = -1;
-    int maximum = 0;
-
-    for (auto peer = videoList.begin(); peer != videoList.end(); ++peer)
-    {
-        if (peer.value().volume > maximum)
-        {
-            maximum = peer.value().volume;
-            candidate = peer.key();
-        }
-    }
-
-    setActive(candidate);
-}
-
 void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
 {
     Friend* f = FriendList::findFriend(FriendId);
@@ -269,7 +244,7 @@ void GroupNetCamView::friendAvatarChanged(int FriendId, const QPixmap &pixmap)
             if (peerVideo != videoList.end())
             {
                 peerVideo.value().video->getVideoSurface()->setAvatar(pixmap);
-                findActivePeer();
+                setActive();
             }
 
             break;

@@ -38,17 +38,16 @@ public slots:
     void groupAudioPlayed(int group, int peer, unsigned short volume);
 
 private slots:
-    void findActivePeer();
+    void onUpdateActivePeer();
     void friendAvatarChanged(int FriendId, const QPixmap& pixmap);
 
 private:
     struct PeerVideo
     {
         LabeledVideo* video;
-        unsigned short volume = 0;
     };
 
-    void setActive(int peer);
+    void setActive(int peer = -1);
 
     QHBoxLayout* horLayout;
     QMap<int, PeerVideo> videoList;
