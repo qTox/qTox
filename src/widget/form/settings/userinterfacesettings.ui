@@ -81,7 +81,11 @@
           <item row="0" column="1">
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
-             <widget class="QFontComboBox" name="txtChatFont"/>
+             <widget class="QFontComboBox" name="txtChatFont">
+              <property name="editable">
+               <bool>false</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QSpinBox" name="txtChatFontSize">
