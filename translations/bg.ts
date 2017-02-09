@@ -1160,7 +1160,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished">Копирай линк адресът</translation>
+        <translation>Копирай линковия адрес</translation>
     </message>
 </context>
 <context>
