@@ -127,7 +127,7 @@ which may lead to problems with video calls.</source>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Лист с всички познати проблеми може да намерите в нашия %1 при Github. Ако намерите бъг или уязвимост на сигурността във qTox, моля докладвайте спрямо нашите насоки в нашата %2 уики статия.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -146,7 +146,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вижте пълен лист със %1 при Github</translation>
     </message>
     <message>
         <source>contributors</source>
@@ -274,7 +274,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Message</source>
@@ -344,7 +344,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Този Tox ID е невалиден или не съществува</translation>
     </message>
 </context>
 <context>
@@ -355,7 +355,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Освен ако %1 знаете какво правите, моля %2 сменяйте нищо тук. Промените направени тук може да доведат до проблеми с qTox и дори загуба на данни, например история.</translation>
     </message>
     <message>
         <source>really</source>
@@ -616,19 +616,19 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Видео обаждане неможе да започне</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Аудио повикване неможе да започне</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофонът може да бъде заглушен само по време на обаждане</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Звукът може да бъде изключен само по време на обаждане</translation>
     </message>
 </context>
 <context>
@@ -690,37 +690,6 @@ which may lead to problems with video calls.</source>
         <translation>/me преглага приятелство, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Предишната парола е грешна; моля опитайте отново:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Криптирана чат история</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Не е намерен криптиран файл с чат история, или е корумпиран.
-Историята ще бъде изключена!</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Изключването на чат история сега ще остави криптираната история цяла (но неизползваема); ако след време помните паролата, може да включите наново енкрипцията от раздела Поверителност с правилната парола за да ползвате историята.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Паролата за чат историята не е правилна. Моля опитайте друга?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Изключи чат история</translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation>Трябва да напишете съобщение заедно с вашата молба</translation>
     </message>
@@ -729,13 +698,8 @@ Disabling chat history now will leave the encrypted history intact (but not usab
         <translation>Вашето съобщение е твърде дълго!</translation>
     </message>
     <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Моля въведете парола за чат историята за профилът &quot;%1&quot;.</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Невалиден Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1196,7 +1160,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation>Копирай линка адрес</translation>
+        <translation type="unfinished">Копирай линк адресът</translation>
     </message>
 </context>
 <context>
@@ -1322,7 +1286,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ID</translation>
+        <translation></translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1528,23 +1492,23 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Моето име:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Моето състояние:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Моето потребителско име</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Моята биография</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Моят профил</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1741,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Претърсване на контакти за познати приятели</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1917,7 +1881,7 @@ People will be unable to add you with your old ID, but you will keep your curren
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation></translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
@@ -2363,7 +2327,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Space</source>
         <comment>[Space] key on the keyboard</comment>
-        <translation>Space</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Escape</source>
@@ -2803,7 +2767,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Прибави приятел</translation>
+        <translation>Прибави приятел</translation>
     </message>
     <message>
         <source>Group invites</source>
@@ -2818,12 +2782,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Моят профил</translation>
     </message>
 </context>
 </TS>
