@@ -147,7 +147,7 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
         return QByteArray{};
     }
 
-    return ciphertext;
+    return plaintext;
 }
 
 /**
@@ -275,7 +275,7 @@ QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
         return QByteArray{};
     }
 
-    return ciphertext;
+    return plaintext;
 }
 
 /**
