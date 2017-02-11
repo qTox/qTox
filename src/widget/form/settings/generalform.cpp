@@ -69,7 +69,9 @@ static QStringList locales = {"ar",
                               "tr",
                               "ug",
                               "uk",
-                              "zh_CN"};
+                              "zh_CN",
+                              "zh_TW"
+};
 static QStringList langs = {"Arabic",
                             "Беларуская",
                             "Български",
@@ -104,7 +106,9 @@ static QStringList langs = {"Arabic",
                             "Türkçe",
                             "ئۇيغۇرچە",
                             "Українська",
-                            "中文（中国）"};
+                            "中文（中国）",
+                            "繁體中文（台灣）"
+};
 
 /**
  * @class GeneralForm
