@@ -162,6 +162,8 @@ process, so that no translation effort would be lost when resetting Weblate.**
   - `PATCH` – bump when there have been only fixes added. If changes include
     something more than just bugfixes, bump `MAJOR` or `MINOR` version
     accordingly.
+- update version for windows/osx packages using [`./tools/update-versions.sh`]
+  script
 - before creating a `MAJOR`/`MINOR` release generate changelog with `clog`.
   - in a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
@@ -196,3 +198,4 @@ helping for a while, ask to be added to the `qTox` organization on GitHub.
 [`test-pr.sh`]: /test-pr.sh
 [`./tools/deweblate-translation-file.sh`]: /tools/deweblate-translation-file.sh
 [`./tools/create-tarball.sh`]: /tools/create-tarball.sh
+[`./tools/update-versions.sh`]: /tools/update-versions.sh
