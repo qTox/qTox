@@ -34,5 +34,6 @@
         <file>ug.qm</file>
         <file>uk.qm</file>
         <file>zh_CN.qm</file>
+        <file>zh_TW.qm</file>
     </qresource>
 </RCC>
