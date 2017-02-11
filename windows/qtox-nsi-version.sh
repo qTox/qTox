@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 Zetok Zalbavar <zetok@openmailbox.org>
+#    Copyright © 2016-2017 Zetok Zalbavar <zetok@openmailbox.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,36 +15,42 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# script to append correct qTox version to `.nsi` files from
-# `git describe`
-#
-# NOTE: it checkouts the files before appending a version to them!
+
+# script to change qTox version in `.nsi` files to supplied one
 #
 # requires:
 #  * files `qtox.nsi` and `qtox64.nsi` in working dir
-#  * git – tags in format `v0.0.0`
 #  * GNU sed
 
 # usage:
 #
-#   ./$script
+#   ./$script $version
+#
+# $version has to be composed of at least one number/dot
 
 set -eu -o pipefail
 
-# uses `get_version()`
-source "../tools/lib/git.source"
 
-
-# append version to .nsi files after a certain line
-append_version() {
-    local after_line='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayName" "qTox"'
-    local append='	${WriteRegStr} ${REG_ROOT} "${UNINSTALL_PATH}" "DisplayVersion"'
-
+# change version in .nsi files in the right line
+change_version() {
     for nsi in *.nsi
     do
-        git checkout "$nsi"
-        sed -i "/$after_line/a\\$append \"$(get_version)\"" "$nsi"
+        sed -i -r "/DisplayVersion/ s/\"[0-9\\.]+\"$/\"$@\"/" "$nsi"
     done
 }
 
-append_version
+# exit if supplied arg is not a version
+is_version() {
+    if [[ ! $@ =~ [0-9\\.]+ ]]
+    then
+        echo "Not a version: $@"
+        exit 1
+    fi
+}
+
+main() {
+    is_version "$@"
+
+    change_version "$@"
+}
+main "$@"
