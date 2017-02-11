@@ -370,7 +370,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Reset settings</source>
-        <translation>重置設置</translation>
+        <translation>重置设置</translation>
     </message>
     <message>
         <source>All settings will be reset to default. Are you sure?</source>
@@ -964,7 +964,7 @@ which may lead to problems with video calls.</source>
     <name>GeneralForm</name>
     <message>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <source>Choose an auto accept directory</source>
@@ -976,7 +976,7 @@ which may lead to problems with video calls.</source>
     <name>GeneralSettings</name>
     <message>
         <source>General Settings</source>
-        <translation>一般设定</translation>
+        <translation>通用设置</translation>
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
