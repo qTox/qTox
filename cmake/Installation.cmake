@@ -4,6 +4,11 @@
 #
 ################################################################################
 
+# set correct version to update files
+set(QTOX_VERSION "1.8.1")
+execute_process(COMMAND ${CMAKE_SOURCE_DIR}/tools/update-versions.sh
+    ${QTOX_VERSION})
+
 if(APPLE)
   set_target_properties(${PROJECT_NAME} PROPERTIES
     MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/osx/info.plist")
