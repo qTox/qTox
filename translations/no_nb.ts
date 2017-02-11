@@ -701,42 +701,6 @@ Det kan oppstå problemer med videosamtalene hvis du har valgt høyere videokval
         <translation>/me tilbyr vennskap, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Det forrige passordet er feil, vennligst prøv igjen:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Kryptert chatte-historikk</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Den kryptert filen for chatte-historikken kunne ikke bli funnet, eller den har blitt ødelagt.
-Historikk vil bli deaktivert!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Skriv inn passordet for samtalehistorikken for profilen &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Deaktivering av chatte-historikken nå vil la den krypterte historikken være intakt (men ikke brukbar); hvis du senere skulle huske passordet, kan du reaktivere kryptering fra Personvern-kategorien med det korrekte passordet for å bruke historikk.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Passordet for chatte-historikken mislyktes. Vennligst forsøk et annet?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Deaktivere chatte-historikk</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
