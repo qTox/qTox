@@ -45,4 +45,4 @@ Language | Status
 [ئۇيغۇرچە](https://hosted.weblate.org/engage/tox/ug/) | [![Translation status](https://hosted.weblate.org/widgets/tox/ug/svg-badge.svg)](https://hosted.weblate.org/engage/tox/ug/?utm_source=widget)
 [Українська](https://hosted.weblate.org/engage/tox/uk/) | [![Translation status](https://hosted.weblate.org/widgets/tox/uk/svg-badge.svg)](https://hosted.weblate.org/engage/tox/uk/?utm_source=widget)
 [简体中文（中国）](https://hosted.weblate.org/engage/tox/zh_CN/) | [![Translation status](https://hosted.weblate.org/widgets/tox/zh_CN/svg-badge.svg)](https://hosted.weblate.org/engage/tox/zh_CN/?utm_source=widget)
-[繁體中文（台灣）](https://hosted.weblate.org/engage/tox/zh_TW/) | [![Translation status](https://hosted.weblate.org/widgets/tox/zh_CN/svg-badge.svg)](https://hosted.weblate.org/engage/tox/zh_TW/?utm_source=widget)
+[繁體中文（台灣）](https://hosted.weblate.org/engage/tox/zh_TW/) | [![Translation status](https://hosted.weblate.org/widgets/tox/zh_TW/svg-badge.svg)](https://hosted.weblate.org/engage/tox/zh_TW/?utm_source=widget)
