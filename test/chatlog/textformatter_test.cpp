@@ -1,0 +1,230 @@
+#include "src/chatlog/textformatter.h"
+#include "test/common.h"
+
+#include <iostream>
+#include <QString>
+#include <QVector>
+#include <QVector>
+#include <QMap>
+#include <QList>
+
+#include <check.h>
+
+using StringToString = QMap<QString, QString>;
+
+static const StringToString signsToTags
+{
+    { "*", "b" },
+    { "**", "b" },
+    { "/", "i" }
+};
+
+static const StringToString commonWorkCases
+{
+    // Basic
+    { QStringLiteral("%1a%1"), QStringLiteral("<%2>%1a%1</%2>") },
+    { QStringLiteral("%1aa%1"), QStringLiteral("<%2>%1aa%1</%2>") },
+    { QStringLiteral("%1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2>") },
+
+    // Additional text from both sides
+    { QStringLiteral("aaa%1a%1"), QStringLiteral("aaa<%2>%1a%1</%2>") },
+    { QStringLiteral("%1a%1aaa"), QStringLiteral("<%2>%1a%1</%2>aaa") },
+
+    // Must allow same formatting more than one time, divided by two and more symbols due to QRegularExpressionIterator
+    { QStringLiteral("%1aaa%1 aaa %1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2> aaa <%2>%1aaa%1</%2>") }
+};
+
+static const QVector<QString> commonExceptions
+{
+    // No whitespaces near to formatting symbols from both sides
+    QStringLiteral("%1 a%1"),
+    QStringLiteral("%1a %1"),
+
+    // No newlines
+    QStringLiteral("%1aa\n%1"),
+
+    // Only exact combinations of symbols must encapsulate formatting string
+    QStringLiteral("%1%1aaa%1"),
+    QStringLiteral("%1aaa%1%1")
+};
+
+static const StringToString singleSlash
+{
+    // Must work with inserted tags
+    { QStringLiteral("/aaa<b>aaa aaa</b>/"), QStringLiteral("<i>aaa<b>aaa aaa</b></i>") }
+};
+
+static const StringToString doubleSign
+{
+    { QStringLiteral("**aaa * aaa**"), QStringLiteral("<b>aaa * aaa</b>") }
+};
+
+static const StringToString mixedFormatting
+{
+    // Must allow mixed formatting if there is no tag overlap in result
+    { QStringLiteral("aaa *aaa /aaa/ aaa*"), QStringLiteral("aaa <b>aaa <i>aaa</i> aaa</b>") },
+    { QStringLiteral("aaa *aaa /aaa* aaa/"), QStringLiteral("aaa <b>aaa /aaa</b> aaa/") }
+};
+
+static const StringToString multilineCode
+{
+    // Must allow newlines
+    { QStringLiteral("```int main()\n{\n    return 0;\n}```"),
+      QStringLiteral("<font color=#595959><code>int main()\n{\n    return 0;\n}</code></font>") }
+};
+
+/**
+ * @brief commonTest Testing cases which are common for all types of formatting except multiline code
+ * @param noSymbols True if it's not allowed to show formatting symbols
+ * @param map Grouped cases
+ * @param signs Combination of formatting symbols
+ */
+void commonTest(bool noSymbols, const StringToString map, const QString signs)
+{
+    for (QString key : map.keys())
+    {
+        QString source = key.arg(signs);
+        TextFormatter tf = TextFormatter(source);
+        QString result = map[key].arg(noSymbols ? "" : signs, signsToTags[signs]);
+        ck_assert(tf.applyStyling(noSymbols) == result);
+    }
+}
+
+/**
+ * @brief commonExceptionsTest Testing exception cases
+ * @param signs Combination of formatting symbols
+ */
+void commonExceptionsTest(const QString signs)
+{
+    for (QString source : commonExceptions)
+    {
+        TextFormatter tf = TextFormatter(source.arg(signs));
+        ck_assert(tf.applyStyling(true) == source.arg(signs));
+    }
+}
+
+/**
+ * @brief specialTest Testing some uncommon, special cases
+ * @param map Grouped cases
+ */
+void specialTest(const StringToString map)
+{
+    for (QString key : map.keys())
+    {
+        TextFormatter tf = TextFormatter(key);
+        ck_assert(tf.applyStyling(true) == map[key]);
+    }
+}
+
+START_TEST(singleSignNoSymbolsTest)
+{
+    commonTest(true, commonWorkCases, "*");
+}
+END_TEST
+
+START_TEST(slashNoSymbolsTest)
+{
+    commonTest(true, commonWorkCases, "/");
+}
+END_TEST
+
+START_TEST(doubleSignNoSymbolsTest)
+{
+    commonTest(true, commonWorkCases, "**");
+}
+END_TEST
+
+START_TEST(singleSignWithSymbolsTest)
+{
+    commonTest(false, commonWorkCases, "*");
+}
+END_TEST
+
+START_TEST(slashWithSymbolsTest)
+{
+    commonTest(false, commonWorkCases, "/");
+}
+END_TEST
+
+START_TEST(doubleSignWithSymbolsTest)
+{
+    commonTest(false, commonWorkCases, "**");
+}
+END_TEST
+
+START_TEST(singleSignExceptionsTest)
+{
+    commonExceptionsTest("*");
+}
+END_TEST
+
+START_TEST(slashExceptionsTest)
+{
+    commonExceptionsTest("/");
+}
+END_TEST
+
+START_TEST(doubleSignExceptionsTest)
+{
+    commonExceptionsTest("**");
+}
+END_TEST
+
+START_TEST(slashSpecialTest)
+{
+    specialTest(singleSlash);
+}
+END_TEST
+
+START_TEST(doubleSignSpecialTest)
+{
+    specialTest(doubleSign);
+}
+END_TEST
+
+START_TEST(mixedFormattingTest)
+{
+    specialTest(mixedFormatting);
+}
+END_TEST
+
+START_TEST(multilineCodeTest)
+{
+    specialTest(multilineCode);
+}
+END_TEST
+
+static Suite* textFormatterSuite(void)
+{
+    Suite* s = suite_create("TextFormatter");
+
+    DEFTESTCASE(singleSignNoSymbols);
+    DEFTESTCASE(slashNoSymbols);
+    DEFTESTCASE(doubleSignNoSymbols);
+    DEFTESTCASE(singleSignWithSymbols);
+    DEFTESTCASE(slashWithSymbols);
+    DEFTESTCASE(doubleSignWithSymbols);
+    DEFTESTCASE(singleSignExceptions);
+    DEFTESTCASE(slashExceptions);
+    DEFTESTCASE(doubleSignExceptions);
+    DEFTESTCASE(slashSpecial);
+    DEFTESTCASE(doubleSignSpecial);
+    DEFTESTCASE(mixedFormatting);
+    DEFTESTCASE(multilineCode);
+
+    return s;
+}
+
+int main(int argc, char *argv[])
+{
+    srand((unsigned int) time(NULL));
+
+    Suite* tf = textFormatterSuite();
+    SRunner* runner = srunner_create(tf);
+    srunner_run_all(runner, CK_NORMAL);
+
+    int res = srunner_ntests_failed(runner);
+    srunner_free(runner);
+
+    return res;
+}
