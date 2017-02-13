@@ -696,42 +696,6 @@ může způsobovat problémy během videohovorů.</translation>
         <translation>nabídnout přátelství, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Encrypted chat history</source>
-        <translation>Zašifrovaná historie zpráv</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nenalezen zašifrovaný soubor s historií zpráv, nebo byl porušen.
-Historie nebude povolena!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Prosím zadejte heslo pro historii zpráv pro profil &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Zadané heslo není správné, zkuste to prosím znovu:</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužitelnou; pokud si později vzpomenete na heslo můžete ji opět v nastavení povolit.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Heslo pro historii zpráv selhalo. Zkusíte prosím jiné?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Zakázat historii zpráv</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2197,6 +2161,26 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Nepodařilo se přidat přítele</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 není platnou adresou Toxme.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Nelze přidat sám sebe jako přítele!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Resizing</source>
@@ -2368,7 +2352,7 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Ztlačte %1 pro odeslání vybrané oblasti, %2 pro skrytí/zobrazení okna qTox, nebo %2 pro zrušení.</translation>
+        <translation>Ztlačte %1 pro odeslání vybrané oblasti, %2 pro skrytí/zobrazení okna qTox, nebo %3 pro zrušení.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2454,10 +2438,6 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Zrušit</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 není platnou adresou Toxme.</translation>
     </message>
 </context>
 <context>
