@@ -69,7 +69,9 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation type="unfinished"></translation>
+        <translation>카메라 해상도를 설정하십시오.
+해상도가 높으면 고품질 비디오를 전송합니다.
+고품질 비디오는 인터넷 연결상태가 좋은곳에서 사용하실것을 추천합니다.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -88,7 +90,7 @@ which may lead to problems with video calls.</source>
     <name>AboutForm</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>About</translation>
     </message>
     <message>
         <source>Restart qTox to install version %1</source>
@@ -193,11 +195,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Used aliases:</source>
-        <translation type="unfinished"></translation>
+        <translation>사용한 닉네임:</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished"></translation>
+        <translation>닉네임 기록</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -234,7 +236,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 채팅기록이 삭제되었습니다!</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -242,7 +244,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>설명서</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -334,7 +336,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>친구요청 메시지를 입력하세요</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
@@ -691,40 +693,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>이전 비번이 정확하지 않습니다; 다시 시도:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>암호화된 채팅기록</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>채팅기록파일 &quot;%1&quot; 확인을 위해 비번을 입력하세요.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>채팅 기록 해제</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -2185,6 +2153,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">친구를 추가할 수 없습니다</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">자기 자신을 친구로 추가할 수 없습니다!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2440,10 +2428,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
