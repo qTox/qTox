@@ -136,9 +136,9 @@ Linux OBS repositories, managed by `abbat`:
 ```
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-[32 bit installer]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[32 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win32/download
 [32portable]: https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip
-[64 bit installer]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
+[64 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win64/download
 [64portable]: https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
@@ -159,8 +159,8 @@ Linux OBS repositories, managed by `abbat`:
 [reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
 [Reviewing and testing pull requests]: /CONTRIBUTING.md#reviews
 [Roadmap]: https://github.com/qTox/qTox/milestones
-[sig-32]: https://qtox-win.pkg.tox.chat/qtox/win32/setup-qtox.exe.asc
-[sig-64]: https://qtox-win.pkg.tox.chat/qtox/win64/setup-qtox.exe.asc
+[sig-32]: https://qtox-win.pkg.tox.chat/qtox/win32/download-sig
+[sig-64]: https://qtox-win.pkg.tox.chat/qtox/win64/download-sig
 [Testing]: https://github.com/qTox/qTox/wiki/Testing
 [Translating, it's easy]: /translations/README.md
 [User Manual]: /doc/user_manual_en.md
