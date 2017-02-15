@@ -31,6 +31,7 @@
 
 class CameraDevice;
 struct AVCodecContext;
+struct AVCodecParameters;
 
 class CameraSource : public VideoSource
 {
@@ -64,7 +65,7 @@ private:
     QString deviceName;
     CameraDevice* device;
     VideoMode mode;
-    AVCodecContext* cctx, *cctxOrig;
+    AVCodecContext* cctx;
     int videoStreamIndex;
     QReadWriteLock streamMutex;
     std::atomic_bool _isOpen;
