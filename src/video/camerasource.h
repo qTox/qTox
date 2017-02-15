@@ -64,7 +64,9 @@ private:
     QString deviceName;
     CameraDevice* device;
     VideoMode mode;
-    AVCodecContext *cctx, *cctxOrig;
+    AVCodecContext* cctx;
+    // TODO: Remove when ffmpeg version will be bumped to the 3.1.0
+    AVCodecContext* cctxOrig;
     int videoStreamIndex;
     QReadWriteLock streamMutex;
     std::atomic_bool _isOpen;
