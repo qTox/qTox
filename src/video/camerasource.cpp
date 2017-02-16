@@ -395,27 +395,46 @@ void CameraSource::closeDevice()
 void CameraSource::stream()
 {
     auto streamLoop = [=]() {
-        AVFrame* frame = av_frame_alloc();
-        if (!frame)
-            return;
-
         AVPacket packet;
-        if (av_read_frame(device->context, &packet) < 0)
+        if (av_read_frame(device->context, &packet) != 0) {
             return;
+        }
+
+#if LIBAVCODEC_VERSION_INT < 3747941
+        AVFrame* frame = av_frame_alloc();
+        if (!frame) {
+            return;
+        }
 
         // Only keep packets from the right stream;
         if (packet.stream_index == videoStreamIndex) {
             // Decode video frame
             int frameFinished;
             avcodec_decode_video2(cctx, frame, &frameFinished, &packet);
-            if (!frameFinished)
+            if (!frameFinished) {
                 return;
+            }
 
             VideoFrame* vframe = new VideoFrame(id, frame);
             emit frameAvailable(vframe->trackFrame());
         }
+#else
 
-        // Free the packet that was allocated by av_read_frame
+        // Forward packets to the decoder and grab the decoded frame
+        bool isVideo = packet.stream_index == videoStreamIndex;
+        bool readyToRecive = isVideo && !avcodec_send_packet(cctx, &packet);
+
+        if (readyToRecive) {
+            AVFrame* frame = av_frame_alloc();
+            if (frame && !avcodec_receive_frame(cctx, frame)) {
+                VideoFrame* vframe = new VideoFrame(id, frame);
+                emit frameAvailable(vframe->trackFrame());
+            } else {
+                av_frame_free(&frame);
+            }
+        }
+#endif
+
         av_packet_unref(&packet);
     };
 
