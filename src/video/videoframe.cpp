@@ -599,7 +599,9 @@ AVFrame* VideoFrame::generateAVFrame(const QSize& dimensions, const int pixelFor
 
     if (!swsCtx) {
         av_freep(&ret->data[0]);
+#if LIBAVCODEC_VERSION_INT < 3747941
         av_frame_unref(ret);
+#endif
         av_frame_free(&ret);
         return nullptr;
     }
@@ -645,7 +647,9 @@ AVFrame* VideoFrame::storeAVFrame(AVFrame* frame, const QSize& dimensions, const
 
         // Free new frame
         av_freep(&frame->data[0]);
+#if LIBAVCODEC_VERSION_INT < 3747941
         av_frame_unref(frame);
+#endif
         av_frame_free(&frame);
 
         return old_ret;
@@ -676,11 +680,15 @@ void VideoFrame::deleteFrameBuffer()
             if (freeSourceFrame) {
                 av_freep(&frame->data[0]);
             }
+#if LIBAVCODEC_VERSION_INT < 3747941
             av_frame_unref(frame);
+#endif
             av_frame_free(&frame);
         } else {
             av_freep(&frame->data[0]);
+#if LIBAVCODEC_VERSION_INT < 3747941
             av_frame_unref(frame);
+#endif
             av_frame_free(&frame);
         }
     }
