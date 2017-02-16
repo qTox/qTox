@@ -370,29 +370,26 @@ void CameraSource::stream()
 {
     auto streamLoop = [=]()
     {
-        AVFrame* frame = av_frame_alloc();
-        if (!frame)
-            return;
-
         AVPacket packet;
-        if (av_read_frame(device->context, &packet) < 0)
-            return;
 
-        // Only keep packets from the right stream;
-        if (packet.stream_index == videoStreamIndex)
+        // Forward packets to the decoder and grab the decoded frame
+        if (!av_read_frame(device->context, &packet)
+                && packet.stream_index == videoStreamIndex
+                && !avcodec_send_packet(cctx, &packet))
         {
-            // Decode video frame
-            int frameFinished;
-            avcodec_decode_video2(cctx, frame, &frameFinished, &packet);
-            if (!frameFinished)
-                return;
-
-            VideoFrame* vframe = new VideoFrame(id, frame);
-            emit frameAvailable(vframe->trackFrame());
+            AVFrame* frame = av_frame_alloc();
+            if (frame && !avcodec_receive_frame(cctx, frame))
+            {
+                VideoFrame* vframe = new VideoFrame(id, frame);
+                emit frameAvailable(vframe->trackFrame());
+            }
+            else
+            {
+                av_frame_free(&frame);
+            }
         }
 
-      // Free the packet that was allocated by av_read_frame
-      av_packet_unref(&packet);
+        av_packet_unref(&packet);
     };
 
     forever
