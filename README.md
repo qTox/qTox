@@ -137,9 +137,9 @@ Linux OBS repositories, managed by `abbat`:
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
 [32 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win32/download
-[32portable]: https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip
+[32portable]: https://qtox-win.pkg.tox.chat/qtox/win32/download-portable
 [64 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win64/download
-[64portable]: https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip
+[64portable]: https://qtox-win.pkg.tox.chat/qtox/win64/download-portable
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [CentOS, Debian, Fedora, openSUSE, Ubuntu]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
