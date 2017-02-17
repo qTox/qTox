@@ -478,10 +478,10 @@ bool AutoUpdater::downloadUpdate()
         if (fileFile.open(QIODevice::ReadOnly) && fileFile.size() == (qint64)fileMeta.size)
         {
             qDebug() << "Skipping already downloaded file   '" + fileMeta.installpath+ "'";
-            fileFile.close();
             progressValue = initialProgress + step;
             continue;
         }
+        fileFile.close();
 
         qDebug() << "Downloading '" + fileMeta.installpath + "' ...";
 
