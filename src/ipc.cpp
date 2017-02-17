@@ -175,6 +175,10 @@ bool IPC::isCurrentOwner()
     }
 }
 
+/**
+ * @brief Register a handler for an IPC event
+ * @param handler The handler callback. Should not block for more than a second, at worst
+ */
 void IPC::registerEventHandler(const QString &name, IPCEventHandler handler)
 {
     eventHandlers[name] = handler;

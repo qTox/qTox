@@ -295,7 +295,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    Nexus::getInstance().start();
+    Nexus& nexus = Nexus::getInstance();
+    nexus.start();
 
     // Event was not handled by already running instance therefore we handle it ourselves
     if (eventType == "uri")
@@ -303,8 +304,10 @@ int main(int argc, char *argv[])
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
 
-    // Run
-    int errorcode = a.exec();
+    // Run (unless we already quit before starting!)
+    int errorcode = 0;
+    if (nexus.isRunning())
+        errorcode = a.exec();
 
     Nexus::destroyInstance();
     CameraSource::destroyInstance();

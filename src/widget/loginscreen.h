@@ -42,6 +42,10 @@ public:
 
 signals:
     void windowStateChanged(Qt::WindowStates states);
+    void closed();
+
+protected:
+    virtual void closeEvent(QCloseEvent *event) final override;
 
 private slots:
     void onAutoLoginToggled(int state);

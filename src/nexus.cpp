@@ -59,15 +59,20 @@ Nexus::Nexus(QObject *parent) :
     QObject(parent),
     profile{nullptr},
     widget{nullptr},
-    loginScreen{nullptr}
+    loginScreen{nullptr},
+    running{true},
+    quitOnLastWindowClosed{true}
 {
 }
 
 Nexus::~Nexus()
 {
     delete widget;
+    widget = nullptr;
     delete loginScreen;
+    loginScreen = nullptr;
     delete profile;
+    profile = nullptr;
     Settings::getInstance().saveGlobal();
 #ifdef Q_OS_MAC
     delete globalMenuBar;
@@ -103,6 +108,14 @@ void Nexus::start()
     qRegisterMetaType<ToxId>("ToxId");
 
     loginScreen = new LoginScreen();
+
+    // We need this LastWindowClosed dance because the LoginScreen may be shown
+    // and closed in a processEvents() loop before the start of the real
+    // exec() event loop, meaning we wouldn't receive the onLastWindowClosed,
+    // and so we wouldn't have a chance to tell the processEvents() loop to quit.
+    qApp->setQuitOnLastWindowClosed(false);
+    connect(qApp, &QApplication::lastWindowClosed, this, &Nexus::onLastWindowClosed);
+    connect(loginScreen, &LoginScreen::closed, this, &Nexus::onLastWindowClosed);
 
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
@@ -161,14 +174,14 @@ void Nexus::showLogin()
     loginScreen->reset();
     loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
     loginScreen->show();
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    quitOnLastWindowClosed = true;
 }
 
 void Nexus::showMainGUI()
 {
     assert(profile);
 
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
+    quitOnLastWindowClosed = false;
     loginScreen->close();
 
     // Create GUI
@@ -218,6 +231,26 @@ void Nexus::showMainGUI()
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
+}
+
+/**
+ * @brief Calls QApplication::quit(), and causes Nexus::isRunning() to return false
+ */
+void Nexus::quit()
+{
+    running = false;
+    qApp->quit();
+}
+
+/**
+ * @brief Returns true until Nexus::quit is called.
+ *
+ * Any blocking processEvents() loop should check this as a return condition,
+ * since the application can not quit until control is returned to the event loop.
+ */
+bool Nexus::isRunning()
+{
+    return running;
 }
 
 /**
@@ -308,6 +341,12 @@ void Nexus::showLoginLater()
 {
     GUI::setEnabled(false);
     QMetaObject::invokeMethod(&getInstance(), "showLogin", Qt::QueuedConnection);
+}
+
+void Nexus::onLastWindowClosed()
+{
+    if (quitOnLastWindowClosed)
+        quit();
 }
 
 #ifdef Q_OS_MAC

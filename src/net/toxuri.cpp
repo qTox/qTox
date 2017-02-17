@@ -51,16 +51,25 @@ bool toxURIEventHandler(const QByteArray& eventData)
  */
 bool handleToxURI(const QString &toxURI)
 {
-    Core* core = Core::getInstance();
+    Nexus& nexus = Nexus::getInstance();
+    Core* core = nexus.getCore();
 
     while (!core)
     {
-        core = Core::getInstance();
+        if (!nexus.isRunning())
+            return false;
+
+        core = nexus.getCore();
         qApp->processEvents();
     }
 
     while (!core->isReady())
+    {
+        if (!nexus.isRunning())
+            return false;
+
         qApp->processEvents();
+    }
 
     QString toxaddr = toxURI.mid(4);
 
@@ -70,18 +79,26 @@ bool handleToxURI(const QString &toxURI)
         toxId = Toxme::lookup(toxaddr);
         if (!toxId.isValid())
         {
-            QMessageBox::warning(0, "qTox",
-                                         ToxURIDialog::tr("%1 is not a valid Toxme address.")
-                                         .arg(toxaddr));
+            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning, "qTox",
+                                   QMessageBox::tr("%1 is not a valid Toxme address.")
+                                   .arg(toxaddr), QMessageBox::Ok, nullptr);
+            messageBox->setButtonText(QMessageBox::Ok, QMessageBox::tr("Ok"));
+            QObject::connect(messageBox, &QMessageBox::finished, messageBox, &QMessageBox::deleteLater);
+            messageBox->show();
             return false;
         }
     }
 
-    ToxURIDialog dialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
+    ToxURIDialog *dialog = new ToxURIDialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
                                                 "Default message in Tox URI friend requests. Write something appropriate!")
                         .arg(Nexus::getCore()->getUsername()));
-    if (dialog.exec() == QDialog::Accepted)
-        Core::getInstance()->requestFriendship(toxId, dialog.getRequestMessage());
+    QObject::connect(dialog, &ToxURIDialog::finished, [=](int result) {
+        if (result == QDialog::Accepted)
+                Core::getInstance()->requestFriendship(toxId, dialog->getRequestMessage());
+
+        dialog->deleteLater();
+    });
+    dialog->open();
 
     return true;
 }
