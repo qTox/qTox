@@ -94,10 +94,13 @@ Core::~Core()
                                       Q_ARG(bool, false));
     }
     coreThread->exit(0);
-    while (coreThread->isRunning())
+    if (QThread::currentThread() != coreThread)
     {
-        qApp->processEvents();
-        coreThread->wait(500);
+        while (coreThread->isRunning())
+        {
+            qApp->processEvents();
+            coreThread->wait(500);
+        }
     }
 
     deadifyTox();

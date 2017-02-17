@@ -211,7 +211,10 @@ Profile::~Profile()
         saveToxSave();
     }
 
-    delete core;
+    core->deleteLater();
+    while (coreThread->isRunning())
+        qApp->processEvents();
+
     delete coreThread;
     if (!isRemoved)
     {

@@ -126,6 +126,11 @@ bool LoginScreen::event(QEvent* event)
     return QWidget::event(event);
 }
 
+void LoginScreen::closeEvent(QCloseEvent*)
+{
+    emit closed();
+}
+
 void LoginScreen::onNewProfilePageClicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
