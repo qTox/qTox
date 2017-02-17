@@ -77,14 +77,28 @@ bool handleToxURI(const QString &toxURI)
         toxId = Toxme::lookup(toxaddr);
         if (!toxId.isValid())
         {
-            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning, "qTox",
-                                   QMessageBox::tr("%1 is not a valid Toxme address.")
-                                   .arg(toxaddr), QMessageBox::Ok, nullptr);
+            QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
+                                                      QMessageBox::tr("Couldn't add friend"),
+                                                      QMessageBox::tr("%1 is not a valid Toxme address.")
+                                                      .arg(toxaddr), QMessageBox::Ok, nullptr);
             messageBox->setButtonText(QMessageBox::Ok, QMessageBox::tr("Ok"));
             QObject::connect(messageBox, &QMessageBox::finished, messageBox, &QMessageBox::deleteLater);
             messageBox->show();
             return false;
         }
+    }
+
+    if (toxId == core->getSelfId())
+    {
+        QMessageBox *messageBox = new QMessageBox(QMessageBox::Warning,
+                                                  QMessageBox::tr("Couldn't add friend"),
+                                                  QMessageBox::tr("You can't add yourself as a friend!",
+                                                     "When trying to add your own Tox ID as friend"),
+                                                  QMessageBox::Ok, nullptr);
+        messageBox->setButtonText(QMessageBox::Ok, QMessageBox::tr("Ok"));
+        QObject::connect(messageBox, &QMessageBox::finished, messageBox, &QMessageBox::deleteLater);
+        messageBox->show();
+        return false;
     }
 
     ToxURIDialog *dialog = new ToxURIDialog(0, toxaddr, QObject::tr("%1 here! Tox me maybe?",
