@@ -33,6 +33,7 @@
 #include <QPlainTextEdit>
 #include <QPushButton>
 #include <QCoreApplication>
+#include <QThread>
 
 bool toxURIEventHandler(const QByteArray& eventData)
 {
@@ -61,6 +62,7 @@ bool handleToxURI(const QString &toxURI)
 
         core = nexus.getCore();
         qApp->processEvents();
+        QThread::msleep(10);
     }
 
     while (!core->isReady())
@@ -69,6 +71,7 @@ bool handleToxURI(const QString &toxURI)
             return false;
 
         qApp->processEvents();
+        QThread::msleep(10);
     }
 
     QString toxaddr = toxURI.mid(4);
