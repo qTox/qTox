@@ -322,25 +322,34 @@ QString GUI::passwordDialog(const QString& cancel, const QString& body)
 
 void GUI::_clearContacts()
 {
-    Nexus::getDesktopGUI()->clearContactsList();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->clearContactsList();
 }
 
 void GUI::_setEnabled(bool state)
 {
-    Nexus::getDesktopGUI()->setEnabled(state);
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->setEnabled(state);
 }
 
 void GUI::_setWindowTitle(const QString& title)
 {
+    QWidget* w = getMainWidget();
+    if (!w)
+        return;
     if (title.isEmpty())
-        getMainWidget()->setWindowTitle("qTox");
+        w->setWindowTitle("qTox");
     else
-        getMainWidget()->setWindowTitle("qTox - " + title);
+        w->setWindowTitle("qTox - " + title);
 }
 
 void GUI::_reloadTheme()
 {
-    Nexus::getDesktopGUI()->reloadTheme();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->reloadTheme();
 }
 
 void GUI::_showInfo(const QString& title, const QString& msg)
@@ -366,7 +375,9 @@ void GUI::_showError(const QString& title, const QString& msg)
 
 void GUI::_showUpdateDownloadProgress()
 {
-    Nexus::getDesktopGUI()->showUpdateDownloadProgress();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->showUpdateDownloadProgress();
 }
 
 bool GUI::_askQuestion(const QString& title, const QString& msg,
