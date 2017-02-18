@@ -1024,6 +1024,9 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     connect(widget, &FriendWidget::copyFriendIdToClipboard, this, &Widget::copyFriendIdToClipboard);
     connect(widget, &FriendWidget::contextMenuCalled, widget, &FriendWidget::onContextMenuCalled);
     connect(widget, SIGNAL(removeFriend(int)), this, SLOT(removeFriend(int)));
+    Core* core = Core::getInstance();
+    connect(core, &Core::friendAvatarChanged, widget, &FriendWidget::onAvatarChange);
+    connect(core, &Core::friendAvatarRemoved, widget, &FriendWidget::onAvatarRemoved);
 
     // Try to get the avatar from the cache
     QPixmap avatar = Nexus::getProfile()->loadAvatar(friendPk.toString());
