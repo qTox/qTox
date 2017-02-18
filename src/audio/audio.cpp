@@ -45,6 +45,8 @@ public:
         , maxInputGain{30.0}
         , gain{0.0}
         , gainFactor{0.0}
+	, minBitRate{6.0}
+	, maxBitRate{64.0}
     {
     }
 
@@ -76,13 +78,25 @@ public:
         gainFactor = qPow(10.0, (gain / 20.0));
     }
 
+    qreal bitRate() const
+    {
+        return audioBitRate;
+    }
+
+    void setBitRate(qreal audioBitRate_)
+    {
+        audioBitRate = qBound(minBitRate, audioBitRate_, maxBitRate);
+    }
+
 public:
     qreal   minInputGain;
     qreal   maxInputGain;
-
+    qreal   minBitRate;
+    qreal   maxBitRate;
 private:
     qreal   gain;
     qreal   gainFactor;
+    qreal   audioBitRate;
 };
 
 /**
@@ -277,6 +291,27 @@ void Audio::setInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
     d->setInputGain(dB);
+}
+
+/**
+ * @brief The Opus encoding bitrate
+ * 
+ * @return the Opus encoding bitrate in kbps	       
+ */
+
+qreal Audio::bitRate() const
+{
+    QMutexLocker locker(&audioLock);
+    return d->bitRate();
+}
+
+/**
+ * @brief Set the Opus encoding bitrate
+ */
+
+void Audio::setBitRate(qreal bitRate){
+    QMutexLocker locker(&audioLock);
+    d->setBitRate(bitRate);
 }
 
 void Audio::reinitInput(const QString& inDevDesc)

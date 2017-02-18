@@ -80,6 +80,14 @@ AVForm::AVForm()
     microphoneSlider->setTracking(false);
     microphoneSlider->installEventFilter(this);
 
+    bitRateSlider->setToolTip(
+                tr("Use slider to control Opus bitrate encoding"));
+    bitRateSlider->setMinimum(8);
+    bitRateSlider->setMaximum(64);
+    bitRateSlider->setTickPosition(QSlider::TicksBothSides);
+    bitRateSlider->setTickInterval(1);
+    bitRateSlider->setTracking(false);
+
     eventsInit();
 
     QDesktopWidget *desktop = QApplication::desktop();
@@ -549,6 +557,13 @@ void AVForm::on_microphoneSlider_valueChanged(int value)
 
     Settings::getInstance().setAudioInGainDecibel(dB);
     Audio::getInstance().setInputGain(dB);
+}
+
+void AVForm::on_bitRateSlider_valueChanged(int value)
+{
+    const qreal bitRate = value;
+    Settings::getInstance().setAudioBitRate(bitRate);
+    Audio::getInstance().setBitRate(bitRate);
 }
 
 void AVForm::createVideoSurface()
