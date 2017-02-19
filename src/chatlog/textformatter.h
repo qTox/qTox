@@ -11,7 +11,7 @@ private:
 
     int patternEscapeSignsCount(const QString& str);
 
-    int getCapturedLength(const QRegularExpressionMatch& match, const int exprNumber);
+    bool isTagIntersection(const QString str);
 
     QString applyHtmlFontStyling(bool dontShowFormattingSymbols);
 
