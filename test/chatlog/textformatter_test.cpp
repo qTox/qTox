@@ -1,7 +1,25 @@
+/*
+    Copyright © 2017 by The qTox Project Contributors
+
+    This file is part of qTox, a Qt-based graphical interface for Tox.
+
+    qTox is libre software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    qTox is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with qTox.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "src/chatlog/textformatter.h"
 #include "test/common.h"
 
-#include <iostream>
 #include <QString>
 #include <QVector>
 #include <QVector>
@@ -74,81 +92,81 @@ static const StringToString multilineCode
 };
 
 /**
- * @brief commonTest Testing cases which are common for all types of formatting except multiline code
+ * @brief Testing cases which are common for all types of formatting except multiline code
  * @param noSymbols True if it's not allowed to show formatting symbols
  * @param map Grouped cases
  * @param signs Combination of formatting symbols
  */
-void commonTest(bool noSymbols, const StringToString map, const QString signs)
+static void commonTest(bool showSymbols, const StringToString map, const QString signs)
 {
     for (QString key : map.keys())
     {
         QString source = key.arg(signs);
         TextFormatter tf = TextFormatter(source);
-        QString result = map[key].arg(noSymbols ? "" : signs, signsToTags[signs]);
-        ck_assert(tf.applyStyling(noSymbols) == result);
+        QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
+        ck_assert(tf.applyStyling(showSymbols) == result);
     }
 }
 
 /**
- * @brief commonExceptionsTest Testing exception cases
+ * @brief Testing exception cases
  * @param signs Combination of formatting symbols
  */
-void commonExceptionsTest(const QString signs)
+static void commonExceptionsTest(const QString signs)
 {
     for (QString source : commonExceptions)
     {
         TextFormatter tf = TextFormatter(source.arg(signs));
-        ck_assert(tf.applyStyling(true) == source.arg(signs));
+        ck_assert(tf.applyStyling(false) == source.arg(signs));
     }
 }
 
 /**
- * @brief specialTest Testing some uncommon, special cases
+ * @brief Testing some uncommon, special cases
  * @param map Grouped cases
  */
-void specialTest(const StringToString map)
+static void specialTest(const StringToString map)
 {
     for (QString key : map.keys())
     {
         TextFormatter tf = TextFormatter(key);
-        ck_assert(tf.applyStyling(true) == map[key]);
+        ck_assert(tf.applyStyling(false) == map[key]);
     }
 }
 
 START_TEST(singleSignNoSymbolsTest)
 {
-    commonTest(true, commonWorkCases, "*");
+    commonTest(false, commonWorkCases, "*");
 }
 END_TEST
 
 START_TEST(slashNoSymbolsTest)
 {
-    commonTest(true, commonWorkCases, "/");
+    commonTest(false, commonWorkCases, "/");
 }
 END_TEST
 
 START_TEST(doubleSignNoSymbolsTest)
 {
-    commonTest(true, commonWorkCases, "**");
+    commonTest(false, commonWorkCases, "**");
 }
 END_TEST
 
 START_TEST(singleSignWithSymbolsTest)
 {
-    commonTest(false, commonWorkCases, "*");
+    commonTest(true, commonWorkCases, "*");
 }
 END_TEST
 
 START_TEST(slashWithSymbolsTest)
 {
-    commonTest(false, commonWorkCases, "/");
+    commonTest(true, commonWorkCases, "/");
 }
 END_TEST
 
 START_TEST(doubleSignWithSymbolsTest)
 {
-    commonTest(false, commonWorkCases, "**");
+    commonTest(true, commonWorkCases, "**");
 }
 END_TEST
 
