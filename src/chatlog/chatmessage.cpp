@@ -57,10 +57,11 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString &sender, const QSt
     text = detectQuotes(detectAnchors(text), type);
 
     //text styling
-    auto styleType = Settings::getInstance().getStylePreference();
-    if (styleType != Settings::StyleType::NONE) {
+    Settings::StyleType styleType = Settings::getInstance().getStylePreference();
+    if (styleType != Settings::StyleType::NONE)
+    {
         TextFormatter tf = TextFormatter(text);
-        text = tf.applyStyling(styleType == Settings::StyleType::WITHOUT_CHARS);
+        text = tf.applyStyling(styleType == Settings::StyleType::WITH_CHARS);
     }
 
 
@@ -254,17 +255,22 @@ QString ChatMessage::detectQuotes(const QString& str, MessageType type)
         // don't quote first line in action message. This makes co-existence of
         // quotes and action messages possible, since only first line can cause
         // problems in case where there is quote in it used.
-        if (QRegExp("^(&gt;|＞).*").exactMatch(messageLines[i])) {
+        if (QRegExp("^(&gt;|＞).*").exactMatch(messageLines[i]))
+        {
             if (i > 0 || type != ACTION)
                 quotedText += "<span class=quote>" + messageLines[i] + "</span>";
             else
                 quotedText += messageLines[i];
-        } else {
+        }
+        else
+        {
             quotedText += messageLines[i];
         }
 
         if (i < messageLines.size() - 1)
+        {
             quotedText += '\n';
+        }
     }
 
     return quotedText;
