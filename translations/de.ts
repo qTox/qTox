@@ -697,42 +697,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
 „%1“</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Das hat leider nicht geklappt. Versuch es erneut:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Verschlüsselter Gesprächsverlauf</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Die Verlaufsdatei wurde nicht gefunden oder ist beschädigt.
-Die Verlaufsfunktion wird erst einmal ausgeschaltet!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Um den Chat-Verlauf anzusehen, gib das Passwort für %1 ein.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Wenn du die Verlaufsfunktion jetzt deaktivierst, wird dir die verschlüsselte Verlaufsdatei erhalten bleiben. Sollte dir später das Passwort wieder einfallen, kannst du deinen alten Verlauf weiterverwenden, indem du die Verschlüsselung wieder aktivierst und das korrekte Passwort benutzt.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Entschuldigung, das Passwort für deinen Verlauf war nicht korrekt.  Nochmal versuchen?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Verlaufsfunktion deaktivieren</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2204,6 +2168,26 @@ Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Freund konnte nicht hinzugefügt werden</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 ist keine gültige Toxme-Adresse.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Du kannst dich nicht selbst als Freund hinzufügen!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2461,10 +2445,6 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Abbrechen</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 ist keine gültige Toxme-Adresse.</translation>
     </message>
 </context>
 <context>

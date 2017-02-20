@@ -699,40 +699,6 @@ Fakat daha iyi bir internet bağlantısına ihtiyacınız olacaktır.
         <translation>/me arkadaşlık teklif ediyor, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Encrypted chat history</source>
-        <translation>Şifreli sohbet geçmişi</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Şifreli sohbet geçmişi bulunamadı, belki de dosya hasar gördüğü için. Geçmiş kaydı devre dışı bırakıldı!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Lütfen &quot;%1&quot; için bir sohbet geçmişi parolası belirleyin.</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Girdiğiniz parola yanlış, lütfen tekrar deneyin:</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>Sohbet geçmişi kaydı devre dışı bırakılıyor, daha önce kaydedilenler muhafaza edilecek (ama kullanım dışı olarak); eğer daha sonra parolayı hatırlarsanız, şifrelemeyi, Gizlilik sekmesinden, tekrar etkinleştirebilirsiniz.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Parola yanlış, tekrar dener misiniz?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Sohbet geçmişini devre dışı bırak</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2187,6 +2153,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Arkadaş eklenemedi</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Kendinizi, arkadaşınız olarak ekleyemezsiniz!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Resizing</source>
@@ -2443,10 +2429,6 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>İptal</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

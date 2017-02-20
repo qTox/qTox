@@ -696,42 +696,6 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <translation>/me ti ha aggiunto come contatto, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>La password inserita non è corretta, riprova:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Cronologia chat criptata</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nessuna cronologia chat criptata trovata, o è corrotta.
-La cronologia sarà disabilitata!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Inserisci la password per la cronologia chat del profilo &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Disabilitando la cronologia delle chat lascerà la cronologia criptata intatta (ma non usabile); se più avanti ti ricorderai la password, potrai riabilitare la cronologia delle chat criptata dalla scheda &quot;Privacy&quot;.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>La password per sbloccare la cronologia della chat non è corretta. Vuoi provarne un&apos;altra?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Disabilita cronologia chat</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2199,6 +2163,26 @@ Condividilo con chi vuoi comunicare.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Impossibile aggiungere il contatto</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 non è un indirizzo Toxme valido.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Non puoi aggiungere te stesso come contatto!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2456,10 +2440,6 @@ Verrà installata al riavvio del programma.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Annulla</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 non è un indirizzo Toxme valido.</translation>
     </message>
 </context>
 <context>

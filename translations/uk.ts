@@ -705,43 +705,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>/me пропонує дружбу, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translatorcomment>можливо, не &quot;попередній&quot;, а &quot;перший&quot;</translatorcomment>
-        <translation>Попередній пароль неправильний; спробуйте ще раз:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Зашифрована історія</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Не знайдено зашифрованої історії чату або вона була пошкоджена.
-Історія чату буде вимкнена!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Будь ласка, введіть пароль для історії переписки для профілю &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation type="unfinished">
-Вимкнення історії переписки залишить Вашу зашифровану історію неушкодженою (але невикористовуємою); якщо пізніше Ви пам&apos;ятатимете пароль, Ви зможете знову увімкнути шифрування з вкладки &quot;Приватність&quot;.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Щось не так з паролем для історії чату. Спробуйте інший?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Вимкнути історію чату</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2209,6 +2172,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Не можемо додати друга</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ок</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Ви не можете додати самого себе до друзів!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2469,10 +2452,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Скасувати</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
