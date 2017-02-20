@@ -700,42 +700,6 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>/me pakub sõprust, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>Encrypted chat history</source>
-        <translation>Krüpteeritud vestluste ajalugu</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Krüpteeritud vestluste ajalugu ei leitud või on vastav fail kahjustada saanud.
-Logi ei peeta!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Palun sisesta profiili &quot;%1&quot; vestluste ajaloo salasõna.</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Sisestatud salasõna oli vale. Palun proovi uuesti:</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Vestluste ajaloo logimise väljalülitamine ei hävita krüpteeritud ajalugu, ent samas ei ole seda võimalik ka kasutada. Kui parool hiljem meenub, saab krüpteerimise privaatsuse nimelise saki alt jälle sisse lülitada, sisestades seal õige salasõna.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Vestluste ajaloo salasõna oli vale. Proovid ehk uuesti?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Lülita vestluste logimine välja</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation>Vale Tox ID</translation>
     </message>
@@ -2202,6 +2166,26 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Sõbra lisamine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 pole õige Toxme aadress.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Olgu</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Ennast pole võimalik sõbraks lisada!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Resizing</source>
@@ -2460,10 +2444,6 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Katkesta</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 pole õige Toxme aadress.</translation>
     </message>
 </context>
 <context>

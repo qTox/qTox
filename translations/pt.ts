@@ -697,41 +697,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <translation>/me oferece contato, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>A senha anterior está incorreta. Por favor tente novamente:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Histórico de conversas criptografado</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Não foi encontrado o histórico de conversas criptografado, ou este está corrompido. O histórico será desabilitado!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Por favor insira a senha para o histórico de conversas do perfil &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Desabilitando o histórico de conversas agora deixará seu histórico criptografado intacto (mas não usável). Caso você lembre a senha posteriormente, poderá reabilitar a criptografia na aba de Privacidade com a senha correta para o histórico.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>A senha do histórico de conversas falhou. Deseja tentar outra?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Desabilitar o histórico de conversas</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2191,6 +2156,26 @@ Compartilhe com seus contatos para se comunicar.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Não foi possível adicionar amigo</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Você não pode adicionar a si mesmo como contato!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2448,10 +2433,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

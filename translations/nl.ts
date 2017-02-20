@@ -696,42 +696,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <translation>/me biedt vriendschap aan, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Het vorige wachtwoord was incorrect; probeer het alsjeblieft opnieuw:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Versleutelde gespreksgeschiedenis</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Er kon geen versleutelde gespreksgeschiedenis gevonden worden, of deze is corrupt geraakt.
-Gespreksgeschiedenis zal uitgeschakeld worden!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Vul het wachtwoord in voor de gespreksgeschiedenis van het profiel &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis bewaren maar onbruikbaar maken. Indien je je het wachtwoord later weer herinnert, kun je versleuteling opnieuw aanzetten in het Privacy-tabblad met het correcte wachtwoord om deze geschiedenis te herstellen.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Het wachtwoord voor de versleuteling van gespreksgeschiedenis was verkeerd. Probeer een ander wachtwoord.</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Gespreksgeschiedenis uitschakelen</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2197,6 +2161,26 @@ Deel dit met je vrienden om te communiceren.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Kon vriend niet toevoegen</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Je kunt jezelf niet als vriend toevoegen!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2454,10 +2438,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Annuleer</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
