@@ -349,7 +349,7 @@ git config --global commit.gpgsign true
 
 # Coding Guidelines
 
-See [coding_standards.md][Coding Standards].
+See [coding_standards.md].
 
 ## Limitations
 
@@ -366,4 +366,4 @@ Symbols that should be forbidden for filenames under Windows:
 
 [pull request]: https://github.com/qTox/qTox/pulls
 [`test-pr.sh`]: /test-pr.sh
-[Coding Standards]: https://github.com/qTox/qTox/blob/master/doc/coding_standards.md
+[coding_standards.md]: /doc/coding_standards.md
