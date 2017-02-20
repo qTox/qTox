@@ -691,47 +691,11 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation>/meni nudi prijateljstvo, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Prethodna lozinka nije ispravna, pokušajte ponovo:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Enkriptirana povijest razgovora</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nije pronađena enkriptirana datoteka povijesti, ili je oštećena.
-Povijest će biti onemogućena!</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Onemogućavanje povijesti razgovora će ostaviti enkriptiranu povijest netaknutu (ali beskorisnu); ako se kasnije sjetite lozinke, možete ponovo omogućiti enkripciju u kartici &quot;Privatnost&quot; sa ispravnom lozinkom.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Lozinka za povijest razgovora nije ispravna. Pokušati ponovo?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Onemogući povijest razgovora</translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2194,6 +2158,26 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Ne mogah dodati prijatelja</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Ne možete sami sebe dodati kao prijatelja!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2451,10 +2435,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Otkaži</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

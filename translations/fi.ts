@@ -696,42 +696,6 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>/me tarjoaa kaveruutta, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Edellinen salasana on väärin, yritä uudelleen:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Salakirjoitettu keskusteluhistoria</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Salakirjoitetun keskusteluhistorian tiedostoa ei löytynyt tai se on turmeltunut.
-Historia on pois käytöstä!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Syötä profiilin &quot;%1&quot; keskusteluhistorian salasana.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Keskusteluhistorian asettaminen pois päältä nyt säilyttää salatun historian (jota ei kuitenkaan voi käyttää); jos myöhemmin muistaa salasanan, salauksen voi asettaa takaisin päälle Yksityisyys-välilehdeltä.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Väärä keskusteluhistorian salasana. Kokeile uudelleen?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Poista keskusteluhistoria käytöstä</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,6 +2150,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Kontaktin lisääminen epäonnistui</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Et voi lisätä itseäsi kaveriksesi!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2442,10 +2426,6 @@ It will be installed when qTox restarts.</source>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation type="unfinished">Peru</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
