@@ -709,43 +709,6 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>/me oferuje znajomość, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Poprzednie hasło jest niepoprawne; proszę spróbuj ponownie:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Zaszyfruj historię rozmów</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nie znaleziono pliku historii, lub był on uszkodzony. Historia zostanie wyłączona!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Proszę, wprowadź hasło dla historii rozmów dla profilu &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Wyłącz historię rozmów</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietkniętą (nie używaną); jeśli później przypomnisz sobie hasło, możesz ponownie włączyć szyfrowanie w karcie Prywatność poprzez użycie poprawnego hasła.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Hasło do historii rozmów zawiodło. Proszę, spróbuj inne?</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation>Niepoprawne Tox ID</translation>
     </message>

@@ -696,42 +696,6 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>/me souhaiterait vous ajouter dans sa liste d&apos;amis, « %1 »</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Le mot de passe est incorrect, merci de réessayer :</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Historique de discussions chiffré</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Aucun fichier chiffré contenant un historique de chat n&apos;a été trouvé, ou il est endommagé.
-L&apos;historique ne sera pas disponible !</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Merci d&apos;entrer le mot de passe pour l&apos;historique du chat du profil %1.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-La désactivation de l&apos;historique de discussion laissera l&apos;historique actuel chiffré intact (mais non utilisable); Si vous vous rappelez du mot de passe par la suite, vous aurez la possibilité de réactiver le chiffrement depuis l&apos;onglet « vie privée » pour utiliser l&apos;historique.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Le mot de passe est incorrect. Merci de réessayer ?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Désactiver l&apos;historique des communications</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
         <translation>Identifiant Tox invalide</translation>
     </message>

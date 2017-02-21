@@ -112,6 +112,7 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/ug.ts
   translations/uk.ts
   translations/zh_CN.ts
+  translations/zh_TW.ts
 )
 
 qt5_add_resources(

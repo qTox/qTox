@@ -627,11 +627,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофон может быть выключен только во время звонка</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Звук может быть выключен только во время звонка</translation>
     </message>
 </context>
 <context>
@@ -699,42 +699,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me предлагает дружбу, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Предыдущий пароль неправильный. Повторите ввод:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Зашифрованная история чата</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Зашифрованная история чата не найдена или повреждена.
-История будет отключена!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Пожалуйста, введите пароль для истории чата профиля «%1».</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Выключение истории чата сейчас оставит зашифрованную историю нетронутой (но она не будет использоваться). Если позже вы вспомните пароль, то сможете включить шифрование на вкладке Конфиденциальность с правильным паролем, что бы использовать историю.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Пароль к истории чата не верен. Попробуете другой?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Выключить историю чата</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -2503,15 +2467,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
+        <translation>Для применения нового стиля текстовых сообщений может потребоваться перезагрузка qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>Формат текстовых сообщений:</translation>
+        <translation>Стиль текстовых сообщений:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Выберите формат текстовых сообщений.</translation>
+        <translation>Выберите стиль текстовых сообщений.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2541,11 +2505,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation>Передать фокус окну, при получении сообщения.</translation>
+        <translation>Сменить фокус на окно при получении сообщения.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Активизировать окно</translation>
+        <translation>Сменить фокус на окно</translation>
     </message>
     <message>
         <source>Contact list</source>
