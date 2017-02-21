@@ -31,8 +31,8 @@ be optional and be disabled when compiling/running in a Qt 5.3 environment.
 qTox is compiled without support for [C++11 exceptions][Exceptions], meaning
 that any code contribution or dependency cannot throw a C++ exception at
 runtime or else the application will crash. For code present in the qTox
-repository, this is enforced by the use of the `exceptions_off` qmake
-configuration.
+repository, this is enforced by the use of the `-fno-exceptions` flag in the
+CMake configuration.
 
 Note: This restriction prohibits the use of external libraries that may throw
 unhandled exceptions to qTox code. External libraries using exceptions, but
