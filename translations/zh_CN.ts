@@ -1233,18 +1233,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>群组邀请</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>加入</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>拒绝</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>由 %1 在 %3 邀请到 %2。</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1881,8 +1869,8 @@ People will be unable to add you with your old ID, but you will keep your curren
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>NoSpam 是你的 Tox 账号中可以随意改变的一部分。
-如果你受到垃圾好友请求骚扰，那就更改 NoSpam。</translation>
+        <translation>NoSpam 是你的 Tox ID 中可以随意改变的一部分。
+如果你收到好友请求的骚扰，那就改变你的 NoSpam。</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
@@ -2164,20 +2152,20 @@ Share it with your friends to communicate.</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">无法添加好友</translation>
+        <translation>无法添加好友</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 不是一个有效的 Toxme 地址。</translation>
+        <translation>%1 不是一个有效的 Toxme 地址。</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">确认</translation>
+        <translation>确认</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">你不能加自己为好友！</translation>
+        <translation>你不能加自己为好友！</translation>
     </message>
 </context>
 <context>
