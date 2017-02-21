@@ -306,7 +306,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Negalite naudoti savo Tox ID!</translation>
+        <translation>Negalite pridėti savęs kaip kontakto!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -330,15 +330,15 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Įrašykite savo draugo Tox ID</translation>
+        <translation>Įrašykite kontakto Tox ID</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Draugo užklausos žinutė</translation>
+        <translation>Kontakto užklausos žinutė</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation>Parašykite žinutę, kurią siųsti kartu su draugo užklausa arba palikite tuščią, kad būtų išsiųsta numatytoji žinutė</translation>
+        <translation>Parašykite žinutę, kurią siųsti kartu su kontakto užklausa arba palikite tuščią, kad būtų išsiųsta numatytoji žinutė</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
@@ -623,11 +623,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrofonas gali būti nutildytas tik skambučio metu</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Garsas gali būti išjungtas tik skambučio metu</translation>
     </message>
 </context>
 <context>
@@ -905,7 +905,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Pašalinti kontaktą</translation>
+        <translation>Šalinti kontaktą</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1233,18 +1233,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <source>Group invites</source>
         <translation>Pakvietimai į grupes</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Prisijungti</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Atmesti</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Esate pakviesti naudotojo %1, %2 ties %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1288,7 +1276,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
+        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams jus surasti.
 Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
@@ -1329,7 +1317,7 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Šiame kode išsaugotas Jūsų Tox ID. Pasidalykite juo su savo kontaktais.</translation>
+        <translation>Šiame kode yra jūsų Tox ID. Pasidalykite juo su savo kontaktais.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1737,7 +1725,7 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Kontaktų paieškos įvestis, skirta žinomiems draugams</translation>
+        <translation>Kontaktų paieškos įvestis, skirta žinomiems kontaktams</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1745,11 +1733,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation>Nustatyti draugų rikiavimą ir matomumą</translation>
+        <translation>Nustatyti kontaktų rikiavimą ir matomumą</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation>Atverti draugų pridėjimo puslapį</translation>
+        <translation>Atverti kontaktų pridėjimo puslapį</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1867,10 +1855,10 @@ Plural:10–20,30,40,..</translatorcomment>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>„Nospam“ yra Jūsų Tox ID dalis.
+        <translation>„Nospam“ yra jūsų Tox ID dalis.
 Jį pakeitus nebegausite nepageidaujamų kontaktinių užklausų.
-Priimti kontaktai vis dar galės su Jumis bendrauti, bet nauji kontaktai,
-nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</translation>
+Priimti kontaktai vis dar galės su jumis bendrauti, bet nauji kontaktai,
+nežinantys jūsų naujojo Tox ID, nebegalės atsiųsti jums užklausų.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -1879,7 +1867,7 @@ nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</transl
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>„NoSpam“ – Jūsų Tox ID dalis, kurią galima bet kada pakeisti.
+        <translation>„NoSpam“ – jūsų Tox ID dalis, kurią galima bet kada pakeisti.
 Jei gaunate nepageidaujamų kontaktinių užklausų, pakeiskite „NoSpam“.</translation>
     </message>
     <message>
@@ -2022,7 +2010,7 @@ Pasirinkite kitą.</translation>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
+        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams jus surasti.
 Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
@@ -2169,20 +2157,20 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Nepavyko pridėti kontakto</translation>
+        <translation>Nepavyko pridėti kontakto</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 nėra taisyklingas Toxme adresas.</translation>
+        <translation>%1 nėra taisyklingas Toxme adresas.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Gerai</translation>
+        <translation>Gerai</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Negalite naudoti savo Tox ID!</translation>
+        <translation>Negalite pridėti savęs kaip kontakto!</translation>
     </message>
 </context>
 <context>
@@ -2318,7 +2306,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Pašalinti kontaktą</translation>
+        <translation>Šalinti kontaktą</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2334,7 +2322,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation>Jei nustatyta, šalinti visą pokalbių su draugu istoriją</translation>
+        <translation>Jei nustatyta, šalinti visą pokalbių su kontaktu istoriją</translation>
     </message>
 </context>
 <context>
@@ -2784,7 +2772,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation>Pridėti draugą</translation>
+        <translation>Pridėti kontaktą</translation>
     </message>
     <message>
         <source>Group invites</source>
