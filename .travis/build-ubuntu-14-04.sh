@@ -182,5 +182,18 @@ test_qtox() {
     cd -
 }
 
-build_qtox
-test_qtox
+# CMake is supposed to process files, e.g. ones with versions.
+# Check whether those changes have been committed.
+check_if_differs() {
+    echo "Checking whether files processed by CMake have been committed..."
+    echo ""
+    # ↓ `0` exit status only if there are no changes
+    git diff --exit-code
+}
+
+main() {
+    build_qtox
+    test_qtox
+    check_if_differs
+}
+main
