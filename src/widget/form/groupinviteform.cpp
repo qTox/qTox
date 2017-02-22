@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015 by The qTox Project Contributors
+    Copyright © 2015-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -27,9 +27,6 @@
 #include "src/widget/translator.h"
 #include "ui_mainwindow.h"
 
-#include <algorithm>
-#include <tox/tox.h>
-
 #include <QVBoxLayout>
 #include <QDateTime>
 #include <QDebug>
@@ -39,6 +36,15 @@
 #include <QSignalMapper>
 #include <QWindow>
 
+#include <algorithm>
+#include <tox/tox.h>
+
+/**
+ * @class GroupInviteForm
+ *
+ * @brief This form contains all group invites you received
+ */
+
 GroupInviteForm::GroupInviteForm()
     : createButton(new QPushButton(this))
     , inviteBox(new QGroupBox(this))
@@ -47,7 +53,7 @@ GroupInviteForm::GroupInviteForm()
     , headWidget(new QWidget(this))
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
-    connect(createButton, &QPushButton::clicked, [=]()
+    connect(createButton, &QPushButton::clicked, [this]()
     {
         emit groupCreate(TOX_CONFERENCE_TYPE_AV);
     });
@@ -80,6 +86,10 @@ GroupInviteForm::~GroupInviteForm()
     Translator::unregister(this);
 }
 
+/**
+ * @brief Detects that form is shown
+ * @return True if form is visible
+ */
 bool GroupInviteForm::isShown() const
 {
     bool result = isVisible();
@@ -90,6 +100,10 @@ bool GroupInviteForm::isShown() const
     return result;
 }
 
+/**
+ * @brief Shows the form
+ * @param contentLayout Main layout that contains all components of the form
+ */
 void GroupInviteForm::show(ContentLayout* contentLayout)
 {
     contentLayout->mainContent->layout()->addWidget(this);
@@ -98,20 +112,26 @@ void GroupInviteForm::show(ContentLayout* contentLayout)
     headWidget->show();
 }
 
+/**
+ * @brief Adds group invite
+ * @param friendId Id of a friend that invited you
+ * @param type Type of the invitation - text or AV
+ * @param invite Information that invited person needs to see an invitation
+ */
 void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
 {
-    GroupInviteWidget* addingInviteWidget = new GroupInviteWidget(this, GroupInvite(friendId, type, invite));
-    scroll->widget()->layout()->addWidget(addingInviteWidget);
-    invites.append(addingInviteWidget);
-    connect(addingInviteWidget, &GroupInviteWidget::accepted,
-            [=] (const GroupInvite& inviteInfo) {
+    GroupInviteWidget* widget = new GroupInviteWidget(this, GroupInvite(friendId, type, invite));
+    scroll->widget()->layout()->addWidget(widget);
+    invites.append(widget);
+    connect(widget, &GroupInviteWidget::accepted,
+            [this] (const GroupInvite& inviteInfo) {
         deleteInviteWidget(inviteInfo);
         emit groupInviteAccepted(inviteInfo.getFriendId(),
                                  inviteInfo.getType(),
                                  inviteInfo.getInvite());
     });
-    connect(addingInviteWidget, &GroupInviteWidget::rejected,
-            [=] (const GroupInvite& inviteInfo) {
+    connect(widget, &GroupInviteWidget::rejected,
+            [this] (const GroupInvite& inviteInfo) {
         deleteInviteWidget(inviteInfo);
     });
     if (isVisible()) {
@@ -125,6 +145,10 @@ void GroupInviteForm::showEvent(QShowEvent* event)
     emit groupInvitesSeen();
 }
 
+/**
+ * @brief Deletes accepted/declined group invite widget
+ * @param inviteInfo Invite information of accepted/declined widget
+ */
 void GroupInviteForm::deleteInviteWidget(const GroupInvite &inviteInfo)
 {
     auto deletingWidget = std::find_if(invites.begin(), invites.end(),
