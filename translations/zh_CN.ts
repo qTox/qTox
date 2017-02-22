@@ -2638,7 +2638,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation>登出</translation>
+        <translation>注销</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2647,7 +2647,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Log out</source>
-        <translation>登出</translation>
+        <translation>注销</translation>
     </message>
     <message>
         <source>%1 has set the title to %2</source>
