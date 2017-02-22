@@ -110,7 +110,8 @@ translations, on the other, it lessened problems that were happening with
 
 To get translations into qTox:
 
-1. Add Weblate: `git remote add weblate git://git.weblate.org/qtox.git`
+1. Add Weblate: `git remote add weblate
+   https://hosted.weblate.org/git/tox/qtox/`
 2. Fetch newest: `git fetch weblate`
 3. Check what has been changed compared to master: `git log --no-merges
    master..weblate/master`
@@ -145,6 +146,27 @@ To get translations into qTox:
     
 **It's a good idea to lock translations on Weblate while they're in merge
 process, so that no translation effort would be lost when resetting Weblate.**
+
+## Adding new translations
+
+Files to edit when adding a new translation:
+
+- `CMakeLists.txt`
+- `src/widget/form/settings/generalform.cpp`
+- `translations/README.md`
+- `translations/i18n.pri`
+- `translations/translations.qrc`
+
+Follow steps for adding translations from Weblate up to step 5. Next:
+
+1. Edit files to add translation to qTox.
+2. Before committing, clean up translation from Weblate and commit the change:
+
+   ```
+   ./tools/update-translation-files.sh translations/$TRANSLATION.ts
+   git commit --amend translations/$TRANSLATION.ts
+   ```
+3. Commit the changes to other files adding language to qTox.
 
 
 # Releases
