@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Используйте ползунок для установки уровня звука динамиков.</translation>
+        <translation>Используйте ползунок для установки громкости динамиков.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Видеоустройство</translation>
+        <translation>Видео устройство</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -72,8 +72,8 @@ which may lead to problems with video calls.</source>
         <translation>Установите разрешение своей камеры.
 Чем больше значение, тем выше качество видео, которое увидят ваши друзья.
 Заметьте, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
-Иногда подключение слишком слабое, что бы передать видео высокого качества,
-что может привести к проблемам при видеозвонке.</translation>
+Иногда подключение может быть недостаточно хорошим, что бы передать видео высокого качества,
+что может привести к проблемам при видео звонке.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -1240,18 +1240,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Групповые приглашения</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Присоединиться</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Отклонить</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Приглашение от %1 в %2 %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -2173,20 +2161,20 @@ Share it with your friends to communicate.</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Невозможно добавить друга</translation>
+        <translation>Не удалось добавить друга</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 не является корректным адресом Toxme.</translation>
+        <translation>%1 - не корректный адрес Toxme.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ок</translation>
+        <translation>Ок</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Вы не можете добавить самого себя в друзья!</translation>
+        <translation>Вы не можете добавить себя в друзья!</translation>
     </message>
 </context>
 <context>
