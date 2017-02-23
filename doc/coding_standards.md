@@ -76,18 +76,15 @@ public:
     {
         // Some code here
 
-        switch (...)
-        {
-            case 0:
-            {
+        switch (...) {
+            case 0: {
                 // Some code here
             }
         }
 
         // More code
 
-        if (...)
-        {
+        if (...) {
             // Conditional code
         }
     }
@@ -120,22 +117,17 @@ void foo(int a, int b)
     int z = x + y;         // Example binary operator
     int x = z > 2 ? 1 : 3; // Example ternary operator
 
-    if (z >= 1)
-    {
+    if (z >= 1) {
         // Some code here
-    }
-    else
-    {
+    } else {
         // More code here
     }
 
-    for (std::size_t i = 0; i < 56; ++i)
-    {
+    for (std::size_t i = 0; i < 56; ++i) {
         // For loop body
     }
 
-    while (true)
-    {
+    while (true) {
         // While loop body
     }
 }
@@ -184,9 +176,12 @@ statements. Clang-format will attempt to target this limit, going over the
 limit slightly if there are tokens that should not be split. Comments should
 wrap around unless they include elements that cannot be split (e.g. URLs).
 
-Line breaks should be added before all opening braces and after all template
-specializations except for the `extern "C"` specifier. Lambdas have special
-rules that need to be handled seperately, see section below.
+Line breaks should be added before braces on enum, function, record definitions
+and after all template specializations except for the `extern "C"` specifier.
+Lambdas have special rules that need to be handled separately, see section
+below.
+
+Other control structures should not have line breaks before braces.
 
 Braces should be added for all control structures, even those whose bodies only
 contain a single line.
@@ -217,12 +212,9 @@ void example(T veryLongArgumentName, T anotherVeryLongArgumentName, T aThirdVery
     // This is a very long comment that has been broken into two lines due to it exceeding the 100
     // characters per line rules.
 
-    if (...)
-    {
+    if (...) {
         // Single line control statements are still required to use braces.
-    }
-    else
-    {
+    } else {
         // Multiline block
         // Multiline block
     }
@@ -320,13 +312,13 @@ int a = 0;
 
 ++a; // Preferred over "a++".
 
-for (std::size_t i = 0; i < 5; ++i) // Usage of ++i rather than i++.
-{
+// Usage of ++i rather than i++.
+for (std::size_t i = 0; i < 5; ++i) {
     // for-loop code
 }
 
-if (a++ == 0) // Allowed since ++a is not equivalent.
-{
+// Allowed since ++a is not equivalent.
+if (a++ == 0) {
     // if statement body
 }
 ```
