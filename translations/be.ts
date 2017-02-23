@@ -1238,18 +1238,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Запрашэнні ў групу</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Далучыцца</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Адмовіцца</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Запрошаны %1 у «%2» а %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -2172,20 +2160,20 @@ Share it with your friends to communicate.</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Не атрымалася дадаць сябра</translation>
+        <translation>Не атрымалася дадаць сябра</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 — некарэктны адрас Toxme.</translation>
+        <translation>%1 — некарэктны адрас Toxme.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Добра</translation>
+        <translation>Добра</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Вы не можаце дадаць сябе як сябра!</translation>
+        <translation>Вы не можаце дадаць сябе як сябра!</translation>
     </message>
 </context>
 <context>
