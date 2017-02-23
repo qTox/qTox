@@ -34,14 +34,16 @@
 
 set -eu -o pipefail
 
+readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly BASE_DIR="$SCRIPT_DIR/../"
 
 update_windows() {
-    ( cd windows
+    ( cd "$BASE_DIR/windows"
         ./qtox-nsi-version.sh "$@" )
 }
 
 update_osx() {
-    ( cd osx
+    ( cd "$BASE_DIR/osx"
         ./update-plist-version.sh "$@" )
 }
 
