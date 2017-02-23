@@ -36,7 +36,7 @@ BinPackParameters: true
 
 # Break handling
 ColumnLimit: 100
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Mozilla
 BreakBeforeBinaryOperators: NonAssignment
 AlwaysBreakTemplateDeclarations: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
