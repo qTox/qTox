@@ -4,6 +4,12 @@ QWidget
     font: @big;
 }
 
+QTabBar {
+    background-color: white;
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+}
+
 QTextEdit
 {
     border-color: @lightGrey;
