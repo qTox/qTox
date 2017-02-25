@@ -38,6 +38,7 @@ BinPackParameters: true
 ColumnLimit: 100
 BreakBeforeBraces: Mozilla
 BreakBeforeBinaryOperators: NonAssignment
+BreakConstructorInitializersBeforeComma: true
 AlwaysBreakTemplateDeclarations: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 Cpp11BracedListStyle: true
