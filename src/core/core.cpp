@@ -498,9 +498,11 @@ void Core::onUserStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_USER_STATUS 
 void Core::onConnectionStatusChanged(Tox*/* tox*/, uint32_t friendId, TOX_CONNECTION status, void* core)
 {
     Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
-    emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
-    if (friendStatus == Status::Offline)
+    // Ignore Online because it will be emited from onUserStatusChanged
+    if (friendStatus == Status::Offline) {
+        emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
         static_cast<Core*>(core)->checkLastOnline(friendId);
+    }
     CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, friendStatus != Status::Offline);
 }
 
