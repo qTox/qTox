@@ -514,6 +514,7 @@ HEADERS  += \
     src/widget/notificationscrollarea.h \
     src/widget/passwordedit.h \
     src/widget/qrwidget.h \
+    src/widget/splitterrestorer.h \
     src/widget/style.h \
     src/widget/systemtrayicon.h \
     src/widget/systemtrayicon_private.h \
@@ -633,6 +634,7 @@ SOURCES += \
     src/widget/notificationscrollarea.cpp \
     src/widget/passwordedit.cpp \
     src/widget/qrwidget.cpp \
+    src/widget/splitterrestorer.cpp \
     src/widget/style.cpp \
     src/widget/systemtrayicon.cpp \
     src/widget/tool/activatedialog.cpp \

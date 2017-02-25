@@ -18,6 +18,7 @@
 */
 
 #include "contentdialog.h"
+#include "splitterrestorer.h"
 
 #include <QBoxLayout>
 #include <QDragEnterEvent>
@@ -94,29 +95,26 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     splitter->setCollapsible(1, false);
     boxLayout->addWidget(splitter);
 
-    connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
-
     const Settings& s = Settings::getInstance();
     connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
+    connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
 
     setMinimumSize(500, 220);
     setAttribute(Qt::WA_DeleteOnClose);
 
-    QByteArray geometry = Settings::getInstance().getDialogGeometry();
+    QByteArray geometry = s.getDialogGeometry();
 
-    if (!geometry.isNull())
+    if (!geometry.isNull()) {
         restoreGeometry(geometry);
-    else
+    } else {
         resize(720, 400);
+    }
 
-
-    QByteArray splitterState = Settings::getInstance().getDialogSplitterState();
-
-    if (!splitterState.isNull())
-        splitter->restoreState(splitterState);
+    QByteArray splitterState = s.getDialogSplitterState();
+    SplitterRestorer restorer(splitter);
+    restorer.restore(splitterState, size());
 
     currentDialog = this;
-
     setAcceptDrops(true);
 
     new QShortcut(Qt::CTRL + Qt::Key_Q, this, SLOT(close()));
