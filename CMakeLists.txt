@@ -386,6 +386,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/passwordedit.h
   src/widget/qrwidget.cpp
   src/widget/qrwidget.h
+  src/widget/splitterrestorer.cpp
+  src/widget/splitterrestorer.h
   src/widget/style.cpp
   src/widget/style.h
   src/widget/systemtrayicon.cpp
