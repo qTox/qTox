@@ -46,6 +46,7 @@
 #include "friendwidget.h"
 #include "groupwidget.h"
 #include "maskablepixmapwidget.h"
+#include "splitterrestorer.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -346,7 +347,7 @@ void Widget::init()
 #endif
 
     contentLayout = nullptr;
-    onSeparateWindowChanged(Settings::getInstance().getSeparateWindow(), false);
+    onSeparateWindowChanged(s.getSeparateWindow(), false);
 
     ui->addButton->setCheckable(true);
     ui->groupButton->setCheckable(true);
@@ -359,21 +360,13 @@ void Widget::init()
     }
 
     //restore window state
-    restoreGeometry(Settings::getInstance().getWindowGeometry());
-    restoreState(Settings::getInstance().getWindowState());
-    if (!ui->mainSplitter->restoreState(Settings::getInstance().getSplitterState()))
-    {
-        // Set the status panel (friendlist) to a reasonnable width by default/on first start
-        constexpr int spWidthPc = 33;
-        ui->mainSplitter->resize(size());
-        QList<int> sizes = ui->mainSplitter->sizes();
-        sizes[0] = ui->mainSplitter->width()*spWidthPc/100;
-        sizes[1] = ui->mainSplitter->width() - sizes[0];
-        ui->mainSplitter->setSizes(sizes);
-    }
+    restoreGeometry(s.getWindowGeometry());
+    restoreState(s.getWindowState());
+    SplitterRestorer restorer(ui->mainSplitter);
+    restorer.restore(s.getSplitterState(), size());
 
 #if (AUTOUPDATE_ENABLED)
-    if (Settings::getInstance().getCheckUpdates())
+    if (s.getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
 #endif
 
@@ -400,7 +393,7 @@ void Widget::init()
     retranslateUi();
     Translator::registerHandler(std::bind(&Widget::retranslateUi, this), this);
 
-    if (!Settings::getInstance().getShowSystemTray())
+    if (!s.getShowSystemTray())
     {
         show();
     }
