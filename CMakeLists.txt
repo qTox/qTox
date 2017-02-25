@@ -236,6 +236,8 @@ set(${PROJECT_NAME}_SOURCES
   src/friendlist.h
   src/group.cpp
   src/group.h
+  src/groupinvite.cpp
+  src/groupinvite.h
   src/grouplist.cpp
   src/grouplist.h
   src/ipc.cpp
@@ -328,6 +330,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/groupchatform.h
   src/widget/form/groupinviteform.cpp
   src/widget/form/groupinviteform.h
+  src/widget/form/groupinvitewidget.cpp
+  src/widget/form/groupinvitewidget.h
   src/widget/form/loadhistorydialog.cpp
   src/widget/form/loadhistorydialog.h
   src/widget/form/profileform.cpp
