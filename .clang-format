@@ -7,7 +7,7 @@ Standard: Cpp11
 IndentWidth: 4
 ContinuationIndentWidth: 4
 AccessModifierOffset: -4
-IndentCaseLabels: true
+IndentCaseLabels: false
 NamespaceIndentation: None
 
 # Spacing
