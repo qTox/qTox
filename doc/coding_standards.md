@@ -77,9 +77,9 @@ public:
         // Some code here
 
         switch (...) {
-            case 0: {
-                // Some code here
-            }
+        case 0: {
+            // Some code here
+        }
         }
 
         // More code
