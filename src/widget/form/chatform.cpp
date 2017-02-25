@@ -525,7 +525,7 @@ void ChatForm::updateCallButtons()
 
         videoButton->setObjectName(online ? "green" : "");
         videoButton->setToolTip(online ? tr("Start video call") :
-                                        tr("Can't start audio call"));
+                                        tr("Can't start video call"));
     }
 
     callButton->setStyleSheet(Style::getStylesheet(QStringLiteral(":/ui/callButton/callButton.css")));
