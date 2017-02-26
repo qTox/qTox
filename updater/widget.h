@@ -55,7 +55,7 @@ public slots:
     void update();
 
 private:
-    Ui::Widget *ui;
+    Ui::Widget* ui;
     QStringList backups;
     const Settings& settings;
 };

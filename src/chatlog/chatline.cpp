@@ -25,13 +25,11 @@
 
 ChatLine::ChatLine()
 {
-
 }
 
 ChatLine::~ChatLine()
 {
-    for (ChatLineContent* c : content)
-    {
+    for (ChatLineContent* c : content) {
         if (c->scene())
             c->scene()->removeItem(c);
 
@@ -49,8 +47,7 @@ void ChatLine::setRow(int idx)
 
 void ChatLine::visibilityChanged(bool visible)
 {
-    if (isVisible != visible)
-    {
+    if (isVisible != visible) {
         for (ChatLineContent* c : content)
             c->visibilityChanged(visible);
     }
@@ -63,7 +60,7 @@ int ChatLine::getRow() const
     return row;
 }
 
-ChatLineContent *ChatLine::getContent(int col) const
+ChatLineContent* ChatLine::getContent(int col) const
 {
     if (col < static_cast<int>(content.size()) && col >= 0)
         return content[col];
@@ -71,10 +68,9 @@ ChatLineContent *ChatLine::getContent(int col) const
     return nullptr;
 }
 
-ChatLineContent *ChatLine::getContent(QPointF scenePos) const
+ChatLineContent* ChatLine::getContent(QPointF scenePos) const
 {
-    for (ChatLineContent* c: content)
-    {
+    for (ChatLineContent* c : content) {
         if (c->sceneBoundingRect().contains(scenePos))
             return c;
     }
@@ -84,14 +80,13 @@ ChatLineContent *ChatLine::getContent(QPointF scenePos) const
 
 void ChatLine::removeFromScene()
 {
-    for (ChatLineContent* c : content)
-    {
+    for (ChatLineContent* c : content) {
         if (c->scene())
             c->scene()->removeItem(c);
     }
 }
 
-void ChatLine::addToScene(QGraphicsScene *scene)
+void ChatLine::addToScene(QGraphicsScene* scene)
 {
     if (!scene)
         return;
@@ -135,7 +130,8 @@ void ChatLine::updateBBox()
     bbox.setWidth(width);
 
     for (ChatLineContent* c : content)
-        bbox.setHeight(qMax(c->sceneBoundingRect().top() - bbox.top() + c->sceneBoundingRect().height(), bbox.height()));
+        bbox.setHeight(qMax(c->sceneBoundingRect().top() - bbox.top() + c->sceneBoundingRect().height(),
+                            bbox.height()));
 }
 
 QRectF ChatLine::sceneBoundingRect() const
@@ -152,10 +148,9 @@ void ChatLine::addColumn(ChatLineContent* item, ColumnFormat fmt)
     content.push_back(item);
 }
 
-void ChatLine::replaceContent(int col, ChatLineContent *lineContent)
+void ChatLine::replaceContent(int col, ChatLineContent* lineContent)
 {
-    if (col >= 0 && col < static_cast<int>(content.size()) && lineContent)
-    {
+    if (col >= 0 && col < static_cast<int>(content.size()) && lineContent) {
         QGraphicsScene* scene = content[col]->scene();
         delete content[col];
 
@@ -179,11 +174,10 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     width = w;
     bbox.setTopLeft(scenePos);
 
-    qreal fixedWidth = (content.size()-1) * columnSpacing;
+    qreal fixedWidth = (content.size() - 1) * columnSpacing;
     qreal varWidth = 0.0; // used for normalisation
 
-    for (int i = 0; i < format.size(); ++i)
-    {
+    for (int i = 0; i < format.size(); ++i) {
         if (format[i].policy == ColumnFormat::FixedSize)
             fixedWidth += format[i].size;
         else
@@ -199,8 +193,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
     qreal xOffset = 0.0;
     QVector<qreal> xPos(content.size());
 
-    for (int i = 0; i < content.size(); ++i)
-    {
+    for (int i = 0; i < content.size(); ++i) {
         // calculate the effective width of the current column
         qreal width;
         if (format[i].policy == ColumnFormat::FixedSize)
@@ -214,8 +207,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         // calculate horizontal alignment
         qreal xAlign = 0.0;
 
-        switch(format[i].hAlign)
-        {
+        switch (format[i].hAlign) {
         case ColumnFormat::Left:
             break;
         case ColumnFormat::Right:
@@ -233,8 +225,7 @@ void ChatLine::layout(qreal w, QPointF scenePos)
         maxVOffset = qMax(maxVOffset, content[i]->getAscent());
     }
 
-    for (int i = 0; i < content.size(); ++i)
-    {
+    for (int i = 0; i < content.size(); ++i) {
         // calculate vertical alignment
         // vertical alignment may depend on width, so we do it in a second pass
         qreal yOffset = maxVOffset - content[i]->getAscent();

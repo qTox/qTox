@@ -33,16 +33,23 @@
  * @brief Frames per second supported by the device at this resolution
  */
 
-VideoMode::VideoMode(int width, int height, int x, int y, int FPS, int format) :
-    width(width), height(height), x(x), y(y),
-    FPS(FPS), pixel_format(format)
+VideoMode::VideoMode(int width, int height, int x, int y, int FPS, int format)
+    : width(width)
+    , height(height)
+    , x(x)
+    , y(y)
+    , FPS(FPS)
+    , pixel_format(format)
 {
 }
 
-VideoMode::VideoMode(QRect rect) :
-    width(rect.width()), height(rect.height()),
-    x(rect.x()), y(rect.y()),
-    FPS(0), pixel_format(0)
+VideoMode::VideoMode(QRect rect)
+    : width(rect.width())
+    , height(rect.height())
+    , x(rect.x())
+    , y(rect.y())
+    , FPS(0)
+    , pixel_format(0)
 {
 }
 
@@ -51,19 +58,15 @@ QRect VideoMode::toRect() const
     return QRect(x, y, width, height);
 }
 
-bool VideoMode::operator==(const VideoMode &other) const
+bool VideoMode::operator==(const VideoMode& other) const
 {
-    return width == other.width
-            && height == other.height
-            && x == other.x
-            && y == other.y
-            && FPS == other.FPS
-            && pixel_format == other.pixel_format;
+    return width == other.width && height == other.height && x == other.x && y == other.y
+           && FPS == other.FPS && pixel_format == other.pixel_format;
 }
 
-uint32_t VideoMode::norm(const VideoMode &other) const
+uint32_t VideoMode::norm(const VideoMode& other) const
 {
-    return qAbs(this->width-other.width) + qAbs(this->height-other.height);
+    return qAbs(this->width - other.width) + qAbs(this->height - other.height);
 }
 
 /**

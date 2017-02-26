@@ -21,12 +21,12 @@
 #include "translator.h"
 #include "src/persistence/settings.h"
 #include <QApplication>
-#include <QString>
-#include <QLocale>
-#include <QTranslator>
-#include <QLibraryInfo>
 #include <QDebug>
+#include <QLibraryInfo>
+#include <QLocale>
 #include <QMutexLocker>
+#include <QString>
+#include <QTranslator>
 #include <algorithm>
 
 QTranslator* Translator::translator{nullptr};
@@ -49,28 +49,21 @@ void Translator::translate()
     if ((locale = Settings::getInstance().getTranslation()).isEmpty())
         locale = QLocale::system().name().section('_', 0, 0);
 
-    if (locale != "en")
-    {
-        if (translator->load(locale, ":translations/"))
-        {
+    if (locale != "en") {
+        if (translator->load(locale, ":translations/")) {
             qDebug() << "Loaded translation" << locale;
 
             // system menu translation
-            QTranslator *qtTranslator = new QTranslator();
-            QString s_locale = "qt_"+locale;
+            QTranslator* qtTranslator = new QTranslator();
+            QString s_locale = "qt_" + locale;
             QString location = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-            if (qtTranslator->load(s_locale, location))
-            {
+            if (qtTranslator->load(s_locale, location)) {
                 QApplication::installTranslator(qtTranslator);
                 qDebug() << "System translation loaded" << locale;
-            }
-            else
-            {
+            } else {
                 qDebug() << "System translation not loaded" << locale;
             }
-        }
-        else
-        {
+        } else {
             qDebug() << "Error loading translation" << locale;
         }
         QCoreApplication::installTranslator(translator);
@@ -78,13 +71,12 @@ void Translator::translate()
 
     // After the language is changed from RTL to LTR, the layout direction isn't
     // always restored
-    const QString direction = QApplication::tr("LTR",
-                 "Translate this string to the string 'RTL' in"
-                 " right-to-left languages (for example Hebrew and"
-                 " Arabic) to get proper widget layout");
+    const QString direction =
+        QApplication::tr("LTR", "Translate this string to the string 'RTL' in"
+                                " right-to-left languages (for example Hebrew and"
+                                " Arabic) to get proper widget layout");
 
-    QGuiApplication::setLayoutDirection(
-                direction == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
+    QGuiApplication::setLayoutDirection(direction == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
 
     for (auto pair : callbacks)
         pair.second();
@@ -95,7 +87,7 @@ void Translator::translate()
  * @param f Function, wich will called.
  * @param owner Widget to retanslate.
  */
-void Translator::registerHandler(std::function<void()> f, void *owner)
+void Translator::registerHandler(std::function<void()> f, void* owner)
 {
     QMutexLocker locker{&lock};
     callbacks.push_back({owner, f});
@@ -105,9 +97,10 @@ void Translator::registerHandler(std::function<void()> f, void *owner)
  * @brief Unregisters all handlers of an owner.
  * @param owner Owner to unregister.
  */
-void Translator::unregister(void *owner)
+void Translator::unregister(void* owner)
 {
     QMutexLocker locker{&lock};
     callbacks.erase(std::remove_if(begin(callbacks), end(callbacks),
-                    [=](const Callback& c){return c.first==owner;}), end(callbacks));
+                                   [=](const Callback& c) { return c.first == owner; }),
+                    end(callbacks));
 }

@@ -21,12 +21,12 @@
 #ifndef CAMERADEVICE_H
 #define CAMERADEVICE_H
 
+#include "videomode.h"
 #include <QHash>
-#include <QString>
 #include <QMutex>
+#include <QString>
 #include <QVector>
 #include <atomic>
-#include "videomode.h"
 
 struct AVFormatContext;
 struct AVInputFormat;
@@ -48,13 +48,13 @@ public:
 
     static QString getDefaultDeviceName();
 
-    static bool isScreen(const QString &devName);
+    static bool isScreen(const QString& devName);
 
 private:
-    CameraDevice(const QString &devName, AVFormatContext *context);
+    CameraDevice(const QString& devName, AVFormatContext* context);
     static CameraDevice* open(QString devName, AVDictionary** options);
     static bool getDefaultInputFormat();
-    static QVector<QPair<QString, QString> > getRawDeviceListGeneric();
+    static QVector<QPair<QString, QString>> getRawDeviceListGeneric();
     static QVector<VideoMode> getScreenModes();
 
 public:
@@ -65,7 +65,7 @@ private:
     std::atomic_int refcount;
     static QHash<QString, CameraDevice*> openDevices;
     static QMutex openDeviceLock, iformatLock;
-    static AVInputFormat* iformat, *idesktopFormat;
+    static AVInputFormat *iformat, *idesktopFormat;
 };
 
 #endif // CAMERADEVICE_H

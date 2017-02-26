@@ -23,10 +23,9 @@
 #define PLATFORM_AUTORUN_H
 
 
-namespace Platform
-{
-    bool setAutorun(bool on);
-    bool getAutorun();
+namespace Platform {
+bool setAutorun(bool on);
+bool getAutorun();
 }
 
 #endif // PLATFORM_AUTORUN_H

@@ -35,7 +35,8 @@ public:
 
 protected:
     virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) final override;
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+                       QWidget* widget) final override;
 
 private:
     ScreenshotGrabber* screnshootGrabber;

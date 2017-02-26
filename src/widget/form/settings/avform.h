@@ -20,9 +20,9 @@
 #ifndef AVFORM_H
 #define AVFORM_H
 
+#include <QList>
 #include <QObject>
 #include <QString>
-#include <QList>
 
 #include "genericsettings.h"
 #include "ui_avform.h"
@@ -38,7 +38,10 @@ class AVForm : public GenericForm, private Ui::AVForm
 public:
     AVForm();
     ~AVForm();
-    QString getFormName() final override {return tr("Audio/Video");}
+    QString getFormName() final override
+    {
+        return tr("Audio/Video");
+    }
 
 private:
     void getAudioInDevices();
@@ -46,7 +49,7 @@ private:
     void getVideoDevices();
 
     static int getModeSize(VideoMode mode);
-    void selectBestModes(QVector<VideoMode> &allVideoModes);
+    void selectBestModes(QVector<VideoMode>& allVideoModes);
     void fillCameraModesComboBox();
     void fillScreenModesComboBox();
     int searchPreferredIndex();
@@ -75,13 +78,13 @@ protected:
 
 private:
     void hideEvent(QHideEvent* event) final override;
-    void showEvent(QShowEvent*event) final override;
-    void open(const QString &devName, const VideoMode &mode);
+    void showEvent(QShowEvent* event) final override;
+    void open(const QString& devName, const VideoMode& mode);
 
 private:
     bool subscribedToAudioIn;
-    VideoSurface *camVideoSurface;
-    CameraSource &camera;
+    VideoSurface* camVideoSurface;
+    CameraSource& camera;
     QVector<QPair<QString, QString>> videoDeviceList;
     QVector<VideoMode> videoModes;
 };

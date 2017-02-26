@@ -20,49 +20,62 @@
 #ifndef SETTINGSSERIALIZER_H
 #define SETTINGSSERIALIZER_H
 
-#include <QSettings>
-#include <QVector>
-#include <QString>
 #include <QDataStream>
+#include <QSettings>
+#include <QString>
+#include <QVector>
 
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, const QString &password=QString());
+    SettingsSerializer(QString filePath, const QString& password = QString());
 
     static bool isSerializedFormat(QString filePath);
 
     void load();
     void save();
 
-    void beginGroup(const QString &prefix);
+    void beginGroup(const QString& prefix);
     void endGroup();
 
-    int beginReadArray(const QString &prefix);
-    void beginWriteArray(const QString &prefix, int size = -1);
+    int beginReadArray(const QString& prefix);
+    void beginWriteArray(const QString& prefix, int size = -1);
     void endArray();
     void setArrayIndex(int i);
 
-    void setValue(const QString &key, const QVariant &value);
-    QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
+    void setValue(const QString& key, const QVariant& value);
+    QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const;
 
 private:
     enum class RecordTag : uint8_t
     {
-        Value=0,
-        GroupStart=1,
-        ArrayStart=2,
-        ArrayValue=3,
-        ArrayEnd=4,
+        Value = 0,
+        GroupStart = 1,
+        ArrayStart = 2,
+        ArrayValue = 3,
+        ArrayEnd = 4,
     };
     friend QDataStream& writeStream(QDataStream& dataStream, const SettingsSerializer::RecordTag& tag);
     friend QDataStream& readStream(QDataStream& dataStream, SettingsSerializer::RecordTag& tag);
 
     struct Value
     {
-        Value() : group{-2},array{-2},arrayIndex{-2},key{QString()},value{}{}
+        Value()
+            : group{-2}
+            , array{-2}
+            , arrayIndex{-2}
+            , key{QString()}
+            , value{}
+        {
+        }
         Value(qint64 group, qint64 array, int arrayIndex, QString key, QVariant value)
-            : group{group}, array{array}, arrayIndex{arrayIndex}, key{key}, value{value} {}
+            : group{group}
+            , array{array}
+            , arrayIndex{arrayIndex}
+            , key{key}
+            , value{value}
+        {
+        }
         qint64 group;
         qint64 array;
         int arrayIndex;
@@ -79,8 +92,8 @@ private:
     };
 
 private:
-    const Value *findValue(const QString& key) const;
-    Value *findValue(const QString& key);
+    const Value* findValue(const QString& key) const;
+    Value* findValue(const QString& key);
     void readSerialized();
     void readIni();
     void removeValue(const QString& key);

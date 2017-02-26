@@ -21,9 +21,9 @@
 #ifndef SERIALIZE_H
 #define SERIALIZE_H
 
-#include <cstdint>
 #include <QByteArray>
 #include <QString>
+#include <cstdint>
 
 QString dataToString(QByteArray data);
 uint64_t dataToUint64(const QByteArray& data);

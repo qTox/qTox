@@ -57,8 +57,8 @@
  *
  * Restores all controls from the settings.
  */
-UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
-    GenericForm(QPixmap(":/img/settings/general.png"))
+UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
+    : GenericForm(QPixmap(":/img/settings/general.png"))
 {
     parent = myParent;
 
@@ -68,7 +68,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
 
-    Settings &s = Settings::getInstance();
+    Settings& s = Settings::getInstance();
     const QFont chatBaseFont = s.getChatMessageFont();
     bodyUI->txtChatFontSize->setValue(QFontInfo(chatBaseFont).pixelSize());
     bodyUI->txtChatFont->setCurrentFont(chatBaseFont);
@@ -92,8 +92,7 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     for (auto entry : SmileyPack::listSmileyPacks())
         bodyUI->smileyPackBrowser->addItem(entry.first, entry.second);
 
-    smileLabels = {bodyUI->smile1, bodyUI->smile2, bodyUI->smile3,
-                   bodyUI->smile4, bodyUI->smile5};
+    smileLabels = {bodyUI->smile1, bodyUI->smile2, bodyUI->smile3, bodyUI->smile4, bodyUI->smile5};
 
     int currentPack = bodyUI->smileyPackBrowser->findData(s.getSmileyPack());
     bodyUI->smileyPackBrowser->setCurrentIndex(currentPack);
@@ -119,9 +118,10 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
 
     QLocale ql;
     QStringList timeFormats;
-    timeFormats << ql.timeFormat(QLocale::ShortFormat)
-                << ql.timeFormat(QLocale::LongFormat)
-                << "hh:mm AP" << "hh:mm:ss AP" << "hh:mm:ss";
+    timeFormats << ql.timeFormat(QLocale::ShortFormat) << ql.timeFormat(QLocale::LongFormat)
+                << "hh:mm AP"
+                << "hh:mm:ss AP"
+                << "hh:mm:ss";
     timeFormats.removeDuplicates();
     bodyUI->timestamp->addItems(timeFormats);
 
@@ -137,12 +137,13 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent) :
     on_timestamp_editTextChanged(timeFormat);
 
     QStringList dateFormats;
-    dateFormats << QStringLiteral("yyyy-MM-dd")             // ISO 8601
+    dateFormats << QStringLiteral("yyyy-MM-dd") // ISO 8601
                 // format strings from system locale
-                << ql.dateFormat(QLocale::LongFormat)
-                << ql.dateFormat(QLocale::ShortFormat)
-                << ql.dateFormat(QLocale::NarrowFormat)
-                << "dd-MM-yyyy" << "d-MM-yyyy" << "dddd dd-MM-yyyy" << "dddd d-MM";
+                << ql.dateFormat(QLocale::LongFormat) << ql.dateFormat(QLocale::ShortFormat)
+                << ql.dateFormat(QLocale::NarrowFormat) << "dd-MM-yyyy"
+                << "d-MM-yyyy"
+                << "dddd dd-MM-yyyy"
+                << "dddd d-MM";
 
     dateFormats.removeDuplicates();
     bodyUI->dateFormats->addItems(dateFormats);
@@ -208,7 +209,7 @@ void UserInterfaceForm::on_useEmoticons_stateChanged()
 void UserInterfaceForm::on_textStyleComboBox_currentTextChanged()
 {
     Settings::StyleType styleType =
-            static_cast<Settings::StyleType>(bodyUI->textStyleComboBox->currentIndex());
+        static_cast<Settings::StyleType>(bodyUI->textStyleComboBox->currentIndex());
     Settings::getInstance().setStylePreference(styleType);
 }
 
@@ -227,8 +228,7 @@ void UserInterfaceForm::reloadSmileys()
     QList<QStringList> emoticons = SmileyPack::getInstance().getEmoticons();
 
     // sometimes there are no emoticons available, don't crash in this case
-    if (emoticons.isEmpty())
-    {
+    if (emoticons.isEmpty()) {
         qDebug() << "reloadSmilies: No emoticons found";
         return;
     }
@@ -237,20 +237,18 @@ void UserInterfaceForm::reloadSmileys()
     for (int i = 0; i < emoticons.size(); ++i)
         smileys.push_front(emoticons.at(i).first());
 
-    const QSize size(18,18);
-    for (int i = 0; i < smileLabels.size(); ++i)
-    {
+    const QSize size(18, 18);
+    for (int i = 0; i < smileLabels.size(); ++i) {
         QIcon icon = SmileyPack::getInstance().getAsIcon(smileys[i]);
         smileLabels[i]->setPixmap(icon.pixmap(size));
         smileLabels[i]->setToolTip(smileys[i]);
     }
 
-    //set maximum size of emoji
+    // set maximum size of emoji
     QDesktopWidget desktop;
     // 8 is the count of row and column in emoji's in widget
     const int sideSize = 8;
-    int maxSide = qMin(desktop.geometry().height() / sideSize,
-                       desktop.geometry().width() / sideSize);
+    int maxSide = qMin(desktop.geometry().height() / sideSize, desktop.geometry().width() / sideSize);
     QSize maxSize(maxSide, maxSide);
 
     QIcon icon = SmileyPack::getInstance().getAsIcon(smileys[0]);
@@ -320,8 +318,7 @@ void UserInterfaceForm::retranslateUi()
         static_cast<int>(Settings::getInstance().getStylePreference()));
 
     QStringList colorThemes(Style::getThemeColorNames());
-    for (int i = 0; i < colorThemes.size(); ++i)
-    {
+    for (int i = 0; i < colorThemes.size(); ++i) {
         bodyUI->themeColorCBox->setItemText(i, colorThemes[i]);
     }
 
@@ -345,8 +342,7 @@ void UserInterfaceForm::on_txtChatFontSize_valueChanged(int px)
     QFont tmpFont = s.getChatMessageFont();
     const int fontSize = QFontInfo(tmpFont).pixelSize();
 
-    if (px != fontSize)
-    {
+    if (px != fontSize) {
         tmpFont.setPixelSize(px);
         s.setChatMessageFont(tmpFont);
     }

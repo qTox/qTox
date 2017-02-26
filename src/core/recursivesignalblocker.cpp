@@ -53,8 +53,7 @@ void RecursiveSignalBlocker::recursiveBlock(QObject* object)
 {
     mBlockers << new QSignalBlocker(object);
 
-    for (QObject* child : object->children())
-    {
+    for (QObject* child : object->children()) {
         recursiveBlock(child);
     }
 }

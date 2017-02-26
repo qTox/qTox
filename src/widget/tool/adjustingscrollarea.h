@@ -30,7 +30,7 @@ public:
     virtual ~AdjustingScrollArea() = default;
 
 protected:
-    virtual void resizeEvent(QResizeEvent *ev) override;
+    virtual void resizeEvent(QResizeEvent* ev) override;
     virtual QSize sizeHint() const final override;
 };
 

@@ -23,10 +23,10 @@
 #ifndef TABCOMPLETER_H
 #define TABCOMPLETER_H
 
-#include <QString>
-#include <QMap>
 #include "src/group.h"
 #include "src/widget/tool/chattextedit.h"
+#include <QMap>
+#include <QString>
 
 class TabCompleter : public QObject
 {
@@ -39,9 +39,13 @@ public slots:
     void reset();
 
 private:
-    struct SortableString {
-        explicit SortableString(const QString &n) : contents{n} {}
-        bool operator<(const SortableString &other) const;
+    struct SortableString
+    {
+        explicit SortableString(const QString& n)
+            : contents{n}
+        {
+        }
+        bool operator<(const SortableString& other) const;
         QString contents;
     };
 

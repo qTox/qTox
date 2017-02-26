@@ -19,8 +19,8 @@
 
 #include <QtCore/qsystemdetection.h>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
-#include <X11/XKBlib.h>
 #include "src/platform/capslock.h"
+#include <X11/XKBlib.h>
 #undef KeyPress
 #undef KeyRelease
 #undef FocusIn
@@ -28,10 +28,9 @@
 
 bool Platform::capsLockEnabled()
 {
-    Display * d = XOpenDisplay((char*)0);
+    Display* d = XOpenDisplay((char*)0);
     bool caps_state = false;
-    if (d)
-    {
+    if (d) {
         unsigned n;
         XkbGetIndicatorState(d, XkbUseCoreKbd, &n);
         caps_state = (n & 0x01) == 1;
@@ -41,4 +40,4 @@ bool Platform::capsLockEnabled()
 }
 
 
-#endif  // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+#endif // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)

@@ -23,7 +23,6 @@ class GenericChatItemWidget;
 class GenericChatItemLayout
 {
 public:
-
     GenericChatItemLayout();
     ~GenericChatItemLayout();
 
@@ -31,7 +30,7 @@ public:
     int indexOfSortedWidget(GenericChatItemWidget* widget) const;
     bool existsSortedWidget(GenericChatItemWidget* widget) const;
     void removeSortedWidget(GenericChatItemWidget* widget);
-    void search(const QString &searchString, bool hideAll = false);
+    void search(const QString& searchString, bool hideAll = false);
 
     QLayout* getLayout() const;
 

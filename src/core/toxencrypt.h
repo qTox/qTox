@@ -17,8 +17,8 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QString>
 #include <QByteArray>
+#include <QString>
 
 #ifndef TOXENCRYPT_H
 #define TOXENCRYPT_H
@@ -40,7 +40,8 @@ public:
     static QByteArray encryptPass(const QString& password, const QByteArray& plaintext);
     static QByteArray decryptPass(const QString& password, const QByteArray& ciphertext);
     static std::unique_ptr<ToxEncrypt> makeToxEncrypt(const QString& password);
-    static std::unique_ptr<ToxEncrypt> makeToxEncrypt(const QString& password, const QByteArray& toxSave);
+    static std::unique_ptr<ToxEncrypt> makeToxEncrypt(const QString& password,
+                                                      const QByteArray& toxSave);
     QByteArray encrypt(const QByteArray& plaintext) const;
     QByteArray decrypt(const QByteArray& ciphertext) const;
 

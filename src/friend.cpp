@@ -23,8 +23,8 @@
 #include "src/group.h"
 #include "src/grouplist.h"
 #include "src/nexus.h"
-#include "src/persistence/settings.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
 #include "src/widget/form/chatform.h"
 
 Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
@@ -35,8 +35,7 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
     , hasNewEvents(false)
     , friendStatus(Status::Offline)
 {
-    if (userName.isEmpty())
-    {
+    if (userName.isEmpty()) {
         userName = friendPk.toString();
     }
 
@@ -55,8 +54,7 @@ Friend::~Friend()
  */
 void Friend::loadHistory()
 {
-    if (Nexus::getProfile()->isHistoryEnabled())
-    {
+    if (Nexus::getProfile()->isHistoryEnabled()) {
         chatForm->loadHistory(QDateTime::currentDateTime().addDays(-7), true);
     }
 
@@ -65,13 +63,11 @@ void Friend::loadHistory()
 
 void Friend::setName(QString name)
 {
-    if (name.isEmpty())
-    {
+    if (name.isEmpty()) {
         name = friendPk.toString();
     }
 
-    if (userName != name)
-    {
+    if (userName != name) {
         userName = name;
         emit nameChanged(friendId, name);
     }
@@ -79,8 +75,7 @@ void Friend::setName(QString name)
 
 void Friend::setAlias(QString alias)
 {
-    if (userAlias != alias)
-    {
+    if (userAlias != alias) {
         userAlias = alias;
         emit aliasChanged(friendId, alias);
     }
@@ -88,8 +83,7 @@ void Friend::setAlias(QString alias)
 
 void Friend::setStatusMessage(QString message)
 {
-    if (statusMessage != message)
-    {
+    if (statusMessage != message) {
         statusMessage = message;
         emit statusMessageChanged(friendId, message);
     }
@@ -102,8 +96,7 @@ QString Friend::getStatusMessage()
 
 QString Friend::getDisplayedName() const
 {
-    if (userAlias.isEmpty())
-    {
+    if (userAlias.isEmpty()) {
         return userName;
     }
 
@@ -137,8 +130,7 @@ bool Friend::getEventFlag() const
 
 void Friend::setStatus(Status s)
 {
-    if (friendStatus != s)
-    {
+    if (friendStatus != s) {
         friendStatus = s;
         emit statusChanged(friendId, friendStatus);
     }
@@ -149,7 +141,7 @@ Status Friend::getStatus() const
     return friendStatus;
 }
 
-ChatForm *Friend::getChatForm()
+ChatForm* Friend::getChatForm()
 {
     return chatForm;
 }

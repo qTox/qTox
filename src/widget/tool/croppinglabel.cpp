@@ -18,10 +18,10 @@
 */
 
 #include "croppinglabel.h"
-#include <QResizeEvent>
-#include <QLineEdit>
 #include <QKeyEvent>
-#include <QTextDocument> 
+#include <QLineEdit>
+#include <QResizeEvent>
+#include <QTextDocument>
 
 CroppingLabel::CroppingLabel(QWidget* parent)
     : QLabel(parent)
@@ -34,15 +34,15 @@ CroppingLabel::CroppingLabel(QWidget* parent)
     class LineEdit : public QLineEdit
     {
     public:
-        explicit LineEdit(QWidget* parent = 0) :
-            QLineEdit(parent)
-        {}
+        explicit LineEdit(QWidget* parent = 0)
+            : QLineEdit(parent)
+        {
+        }
 
     protected:
         void keyPressEvent(QKeyEvent* event) override
         {
-            if (event->key() == Qt::Key_Escape)
-            {
+            if (event->key() == Qt::Key_Escape) {
                 undo();
                 clearFocus();
             }
@@ -53,9 +53,7 @@ CroppingLabel::CroppingLabel(QWidget* parent)
 
     textEdit = new LineEdit(this);
     textEdit->hide();
-    textEdit->setInputMethodHints(Qt::ImhNoAutoUppercase
-                                  | Qt::ImhNoPredictiveText
-                                  | Qt::ImhPreferLatin);
+    textEdit->setInputMethodHints(Qt::ImhNoAutoUppercase | Qt::ImhNoPredictiveText | Qt::ImhPreferLatin);
 
     connect(textEdit, &QLineEdit::editingFinished, this, &CroppingLabel::editingFinished);
 }
@@ -105,7 +103,7 @@ QSize CroppingLabel::minimumSizeHint() const
     return QSize(fontMetrics().width("..."), QLabel::minimumSizeHint().height());
 }
 
-void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
+void CroppingLabel::mouseReleaseEvent(QMouseEvent* e)
 {
     if (editable)
         showTextEdit();
@@ -117,8 +115,7 @@ void CroppingLabel::mouseReleaseEvent(QMouseEvent *e)
 
 void CroppingLabel::paintEvent(QPaintEvent* paintEvent)
 {
-    if (blockPaintEvents)
-    {
+    if (blockPaintEvents) {
         paintEvent->ignore();
         return;
     }

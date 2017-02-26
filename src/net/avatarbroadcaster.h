@@ -27,7 +27,7 @@
 class AvatarBroadcaster
 {
 private:
-    AvatarBroadcaster()=delete;
+    AvatarBroadcaster() = delete;
 
 public:
     static void setAvatar(QByteArray data);

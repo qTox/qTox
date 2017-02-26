@@ -65,7 +65,7 @@ public:
     static QString resolve(QString qss, const QFont& baseFont = QFont());
     static void repolish(QWidget* w);
     static void setThemeColor(int color);
-    static void setThemeColor(const QColor &color);
+    static void setThemeColor(const QColor& color);
     static void applyTheme();
     static QPixmap scaleSvgImage(const QString& path, uint32_t width, uint32_t height);
 

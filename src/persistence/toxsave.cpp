@@ -18,9 +18,9 @@
 */
 
 #include "toxsave.h"
-#include "src/widget/gui.h"
 #include "src/core/core.h"
 #include "src/persistence/settings.h"
+#include "src/widget/gui.h"
 #include "src/widget/tool/profileimporter.h"
 #include <QCoreApplication>
 #include <QFileInfo>
@@ -44,8 +44,7 @@ bool handleToxSave(const QString& path)
 {
     Core* core = Core::getInstance();
 
-    while (!core)
-    {
+    while (!core) {
         core = Core::getInstance();
         qApp->processEvents();
     }

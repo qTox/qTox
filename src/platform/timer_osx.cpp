@@ -26,8 +26,8 @@
 #include <QtCore/qsystemdetection.h>
 #if defined(__APPLE__) && defined(__MACH__)
 #include "src/platform/timer.h"
-#include <IOKit/IOKitLib.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <IOKit/IOKitLib.h>
 
 uint32_t Platform::getIdleTime()
 {
@@ -38,8 +38,7 @@ uint32_t Platform::getIdleTime()
     CFTypeRef property;
     uint64_t idleTime_ns = 0;
 
-    if (!service)
-    {
+    if (!service) {
         mach_port_t master;
         IOMasterPort(MACH_PORT_NULL, &master);
         service = IOServiceGetMatchingService(master, IOServiceMatching("IOHIDSystem"));
@@ -52,4 +51,4 @@ uint32_t Platform::getIdleTime()
     return idleTime_ns / 1000000;
 }
 
-#endif  // defined(__APPLE__) && defined(__MACH__)
+#endif // defined(__APPLE__) && defined(__MACH__)

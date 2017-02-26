@@ -20,14 +20,14 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <QHash>
-#include <QString>
-#include <QFuture>
-#include <QVector>
-#include <QReadWriteLock>
-#include <atomic>
-#include "src/video/videosource.h"
 #include "src/video/videomode.h"
+#include "src/video/videosource.h"
+#include <QFuture>
+#include <QHash>
+#include <QReadWriteLock>
+#include <QString>
+#include <QVector>
+#include <atomic>
 
 class CameraDevice;
 struct AVCodecContext;
@@ -64,7 +64,7 @@ private:
     QString deviceName;
     CameraDevice* device;
     VideoMode mode;
-    AVCodecContext* cctx, *cctxOrig;
+    AVCodecContext *cctx, *cctxOrig;
     int videoStreamIndex;
     QReadWriteLock streamMutex;
     std::atomic_bool _isOpen;

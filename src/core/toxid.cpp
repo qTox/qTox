@@ -24,17 +24,17 @@
 
 #include <tox/tox.h>
 
-#include <cstdint>
 #include <QRegularExpression>
+#include <cstdint>
 
 // Tox doesn't publicly define these
-#define NOSPAM_BYTES                4
-#define CHECKSUM_BYTES              2
+#define NOSPAM_BYTES 4
+#define CHECKSUM_BYTES 2
 
-#define PUBLIC_KEY_HEX_CHARS        (2*TOX_PUBLIC_KEY_SIZE)
-#define NOSPAM_HEX_CHARS            (2*NOSPAM_BYTES)
-#define CHECKSUM_HEX_CHARS          (2*CHECKSUM_BYTES)
-#define TOXID_HEX_CHARS             (2*TOX_ADDRESS_SIZE)
+#define PUBLIC_KEY_HEX_CHARS (2 * TOX_PUBLIC_KEY_SIZE)
+#define NOSPAM_HEX_CHARS (2 * NOSPAM_BYTES)
+#define CHECKSUM_HEX_CHARS (2 * CHECKSUM_BYTES)
+#define TOXID_HEX_CHARS (2 * TOX_ADDRESS_SIZE)
 
 const QRegularExpression ToxId::ToxIdRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s)").arg(TOXID_HEX_CHARS));
 
@@ -59,16 +59,18 @@ const QRegularExpression ToxId::ToxIdRegEx(QString("(^|\\s)[A-Fa-f0-9]{%1}($|\\s
  * @brief The default constructor. Creates an empty Tox ID.
  */
 ToxId::ToxId()
-: toxId()
-{}
+    : toxId()
+{
+}
 
 /**
  * @brief The copy constructor.
  * @param other ToxId to copy
  */
 ToxId::ToxId(const ToxId& other)
-: toxId(other.toxId)
-{}
+    : toxId(other.toxId)
+{
+}
 
 /**
  * @brief Create a Tox ID from a QString.
@@ -82,17 +84,12 @@ ToxId::ToxId(const ToxId& other)
 ToxId::ToxId(const QString& id)
 {
     // TODO: remove construction from PK only
-    if (isToxId(id))
-    {
+    if (isToxId(id)) {
         toxId = QByteArray::fromHex(id.toLatin1());
-    }
-    else if(id.length() >= PUBLIC_KEY_HEX_CHARS)
-    {
+    } else if (id.length() >= PUBLIC_KEY_HEX_CHARS) {
         toxId = QByteArray::fromHex(id.left(PUBLIC_KEY_HEX_CHARS).toLatin1());
-    }
-    else
-    {
-        toxId = QByteArray();                   // invalid id string
+    } else {
+        toxId = QByteArray(); // invalid id string
     }
 }
 
@@ -123,7 +120,7 @@ ToxId::ToxId(const QByteArray& rawId)
  */
 ToxId::ToxId(const uint8_t* rawId, int len)
 {
-    QByteArray tmpId(reinterpret_cast<const char *>(rawId), len);
+    QByteArray tmpId(reinterpret_cast<const char*>(rawId), len);
     constructToxId(tmpId);
 }
 
@@ -131,18 +128,12 @@ ToxId::ToxId(const uint8_t* rawId, int len)
 void ToxId::constructToxId(const QByteArray& rawId)
 {
     // TODO: remove construction from PK only
-    if(rawId.length() == TOX_SECRET_KEY_SIZE)
-    {
-        toxId = QByteArray(rawId);                  // construct from PK only
-    }
-    else if (rawId.length() == TOX_ADDRESS_SIZE
-             && isToxId(rawId.toHex().toUpper()))
-    {
-        toxId = QByteArray(rawId);                  // construct from full toxid
-    }
-    else
-    {
-        toxId = QByteArray();                       // invalid id
+    if (rawId.length() == TOX_SECRET_KEY_SIZE) {
+        toxId = QByteArray(rawId); // construct from PK only
+    } else if (rawId.length() == TOX_ADDRESS_SIZE && isToxId(rawId.toHex().toUpper())) {
+        toxId = QByteArray(rawId); // construct from full toxid
+    } else {
+        toxId = QByteArray(); // invalid id
     }
 }
 
@@ -190,8 +181,7 @@ void ToxId::clear()
  */
 const uint8_t* ToxId::getBytes() const
 {
-    if(isValid())
-    {
+    if (isValid()) {
         return reinterpret_cast<const uint8_t*>(toxId.constData());
     }
 
@@ -213,8 +203,7 @@ ToxPk ToxId::getPublicKey() const
  */
 QString ToxId::getNoSpamString() const
 {
-    if(toxId.length() == TOX_ADDRESS_SIZE)
-    {
+    if (toxId.length() == TOX_ADDRESS_SIZE) {
         return toxId.mid(TOX_PUBLIC_KEY_SIZE, NOSPAM_BYTES).toHex().toUpper();
     }
 
@@ -249,8 +238,7 @@ bool ToxId::isToxId(const QString& id)
  */
 bool ToxId::isValid() const
 {
-    if(toxId.length() != TOX_ADDRESS_SIZE)
-    {
+    if (toxId.length() != TOX_ADDRESS_SIZE) {
         return false;
     }
 
@@ -260,8 +248,7 @@ bool ToxId::isValid() const
     QByteArray checksum = toxId.right(CHECKSUM_BYTES);
     QByteArray calculated(CHECKSUM_BYTES, 0x00);
 
-    for (int i = 0; i < size; i++)
-    {
+    for (int i = 0; i < size; i++) {
         calculated[i % 2] = calculated[i % 2] ^ data[i];
     }
 

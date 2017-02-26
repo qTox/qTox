@@ -33,7 +33,8 @@ GenericChatItemLayout::~GenericChatItemLayout()
     delete layout;
 }
 
-void GenericChatItemLayout::addSortedWidget(GenericChatItemWidget* widget, int stretch, Qt::Alignment alignment)
+void GenericChatItemLayout::addSortedWidget(GenericChatItemWidget* widget, int stretch,
+                                            Qt::Alignment alignment)
 {
     int closest = indexOfClosestSortedWidget(widget);
     layout->insertWidget(closest, widget, stretch, alignment);
@@ -49,7 +50,8 @@ int GenericChatItemLayout::indexOfSortedWidget(GenericChatItemWidget* widget) co
     if (index >= layout->count())
         return -1;
 
-    GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+    GenericChatItemWidget* atMid =
+        qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
     assert(atMid != nullptr);
 
     if (atMid == widget)
@@ -73,18 +75,19 @@ void GenericChatItemLayout::removeSortedWidget(GenericChatItemWidget* widget)
     if (layout->itemAt(index) == nullptr)
         return;
 
-    GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+    GenericChatItemWidget* atMid =
+        qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
     assert(atMid != nullptr);
 
     if (atMid == widget)
         layout->removeWidget(widget);
 }
 
-void GenericChatItemLayout::search(const QString &searchString, bool hideAll)
+void GenericChatItemLayout::search(const QString& searchString, bool hideAll)
 {
-    for (int index = 0; index < layout->count(); ++index)
-    {
-        GenericChatItemWidget* widgetAt = qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
+    for (int index = 0; index < layout->count(); ++index) {
+        GenericChatItemWidget* widgetAt =
+            qobject_cast<GenericChatItemWidget*>(layout->itemAt(index)->widget());
         assert(widgetAt != nullptr);
 
         widgetAt->searchName(searchString, hideAll);
@@ -100,10 +103,10 @@ int GenericChatItemLayout::indexOfClosestSortedWidget(GenericChatItemWidget* wid
 {
     // Binary search: Deferred test of equality.
     int min = 0, max = layout->count();
-    while (min < max)
-    {
+    while (min < max) {
         int mid = (max - min) / 2 + min;
-        GenericChatItemWidget* atMid = qobject_cast<GenericChatItemWidget*>(layout->itemAt(mid)->widget());
+        GenericChatItemWidget* atMid =
+            qobject_cast<GenericChatItemWidget*>(layout->itemAt(mid)->widget());
         assert(atMid != nullptr);
 
         bool lessThan = false;

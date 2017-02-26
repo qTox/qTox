@@ -59,13 +59,13 @@ void PrivacyForm::on_cbKeepHistory_stateChanged()
 {
     Settings::getInstance().setEnableLogging(bodyUI->cbKeepHistory->isChecked());
     Widget::getInstance()->clearAllReceipts();
-    if (!bodyUI->cbKeepHistory->isChecked())
-    {
+    if (!bodyUI->cbKeepHistory->isChecked()) {
         QMessageBox::StandardButton dialogDelHistory;
-        dialogDelHistory = QMessageBox::question(0, tr("Confirmation"), tr("Do you want to permanently delete all chat history?"),
-                                      QMessageBox::Yes|QMessageBox::No);
-        if (dialogDelHistory == QMessageBox::Yes)
-        {
+        dialogDelHistory =
+            QMessageBox::question(0, tr("Confirmation"),
+                                  tr("Do you want to permanently delete all chat history?"),
+                                  QMessageBox::Yes | QMessageBox::No);
+        if (dialogDelHistory == QMessageBox::Yes) {
             Nexus::getProfile()->getHistory()->eraseHistory();
         }
     }
@@ -101,7 +101,7 @@ void PrivacyForm::on_randomNosapamButton_clicked()
 
     uint32_t newNospam{0};
     for (int i = 0; i < 4; ++i)
-        newNospam = (newNospam<<8) + (qrand() % 256); // Generate byte by byte. For some reason.
+        newNospam = (newNospam << 8) + (qrand() % 256); // Generate byte by byte. For some reason.
 
     Core::getInstance()->setNospam(newNospam);
     bodyUI->nospamLineEdit->setText(Core::getInstance()->getSelfId().getNoSpamString());
@@ -111,8 +111,7 @@ void PrivacyForm::on_nospamLineEdit_textChanged()
 {
     QString str = bodyUI->nospamLineEdit->text();
     int curs = bodyUI->nospamLineEdit->cursorPosition();
-    if (str.length() != 8)
-    {
+    if (str.length() != 8) {
         str = QString("00000000").replace(0, str.length(), str);
         bodyUI->nospamLineEdit->setText(str);
         bodyUI->nospamLineEdit->setCursorPosition(curs);

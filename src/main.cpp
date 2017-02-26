@@ -17,25 +17,25 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "widget/widget.h"
 #include "persistence/settings.h"
-#include "src/nexus.h"
 #include "src/ipc.h"
-#include "src/net/toxuri.h"
 #include "src/net/autoupdate.h"
-#include "src/persistence/toxsave.h"
+#include "src/net/toxuri.h"
+#include "src/nexus.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/toxsave.h"
+#include "src/video/camerasource.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
-#include "src/video/camerasource.h"
+#include "widget/widget.h"
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QMutex>
 #include <QFontDatabase>
+#include <QMutex>
 #include <QMutexLocker>
 
 #include <sodium.h>
@@ -47,7 +47,8 @@
 
 #ifdef LOG_TO_FILE
 static QAtomicPointer<FILE> logFileFile = nullptr;
-static QList<QByteArray>* logBuffer = new QList<QByteArray>();   //Store log messages until log file opened
+static QList<QByteArray>* logBuffer =
+    new QList<QByteArray>(); // Store log messages until log file opened
 QMutex* logBufferMutex = new QMutex();
 #endif
 
@@ -55,7 +56,7 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 {
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
     if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
-            && msg == QString("QFSFileEngine::open: No file name specified"))
+        && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
     QString file = ctxt.file;
@@ -63,31 +64,29 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     // nullptr in release builds.
     QString path = QString(__FILE__);
     path = path.left(path.lastIndexOf('/') + 1);
-    if (file.startsWith(path))
-    {
+    if (file.startsWith(path)) {
         file = file.mid(path.length());
     }
 
     // Time should be in UTC to save user privacy on log sharing
     QTime time = QDateTime::currentDateTime().toUTC().time();
-    QString LogMsg = QString("[%1 UTC] %2:%3 : ")
-                .arg(time.toString("HH:mm:ss.zzz")).arg(file).arg(ctxt.line);
-    switch (type)
-    {
-        case QtDebugMsg:
-            LogMsg += "Debug";
-            break;
-        case QtWarningMsg:
-            LogMsg += "Warning";
-            break;
-        case QtCriticalMsg:
-            LogMsg += "Critical";
-            break;
-        case QtFatalMsg:
-            LogMsg += "Fatal";
-            break;
-        default:
-            break;
+    QString LogMsg =
+        QString("[%1 UTC] %2:%3 : ").arg(time.toString("HH:mm:ss.zzz")).arg(file).arg(ctxt.line);
+    switch (type) {
+    case QtDebugMsg:
+        LogMsg += "Debug";
+        break;
+    case QtWarningMsg:
+        LogMsg += "Warning";
+        break;
+    case QtCriticalMsg:
+        LogMsg += "Critical";
+        break;
+    case QtFatalMsg:
+        LogMsg += "Fatal";
+        break;
+    default:
+        break;
     }
 
     LogMsg += ": " + msg + "\n";
@@ -95,25 +94,21 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     fwrite(LogMsgBytes.constData(), 1, LogMsgBytes.size(), stderr);
 
 #ifdef LOG_TO_FILE
-    FILE * logFilePtr = logFileFile.load(); // atomically load the file pointer
-    if (!logFilePtr)
-    {
+    FILE* logFilePtr = logFileFile.load(); // atomically load the file pointer
+    if (!logFilePtr) {
         logBufferMutex->lock();
         if (logBuffer)
             logBuffer->append(LogMsgBytes);
 
         logBufferMutex->unlock();
-    }
-    else
-    {
+    } else {
         logBufferMutex->lock();
-        if (logBuffer)
-        {
+        if (logBuffer) {
             // empty logBuffer to file
             foreach (QByteArray msg, *logBuffer)
                 fwrite(msg.constData(), 1, msg.size(), logFilePtr);
 
-            delete logBuffer;   // no longer needed
+            delete logBuffer; // no longer needed
             logBuffer = nullptr;
         }
         logBufferMutex->unlock();
@@ -124,7 +119,7 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 #endif
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
@@ -141,7 +136,7 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_OSX)
     // TODO: Add setting to enable this feature.
-    //osx::moveToAppFolder();
+    // osx::moveToAppFolder();
     osx::migrateProfiles();
 #endif
 
@@ -151,11 +146,14 @@ int main(int argc, char *argv[])
 
     // Process arguments
     QCommandLineParser parser;
-    parser.setApplicationDescription("qTox, version: " + QString(GIT_VERSION) + "\nBuilt: " + __TIME__ + " " + __DATE__);
+    parser.setApplicationDescription("qTox, version: " + QString(GIT_VERSION) + "\nBuilt: "
+                                     + __TIME__ + " " + __DATE__);
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addPositionalArgument("uri", QObject::tr("Tox URI to parse"));
-    parser.addOption(QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."), QObject::tr("profile")));
+    parser.addOption(
+        QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."),
+                           QObject::tr("profile")));
     parser.process(a);
 
     IPC& ipc = IPC::getInstance();
@@ -171,18 +169,17 @@ int main(int argc, char *argv[])
     QDir(logFileDir).mkpath(".");
 
     QString logfile = logFileDir + "qtox.log";
-    FILE * mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
+    FILE* mainLogFilePtr = fopen(logfile.toLocal8Bit().constData(), "a");
 
     // Trim log file if over 1MB
-    if (QFileInfo(logfile).size() > 1000000)
-    {
+    if (QFileInfo(logfile).size() > 1000000) {
         qDebug() << "Log file over 1MB, rotating...";
 
         // close old logfile (need for windows)
         if (mainLogFilePtr)
             fclose(mainLogFilePtr);
 
-        QDir dir (logFileDir);
+        QDir dir(logFileDir);
 
         // Check if log.1 already exists, and if so, delete it
         if (dir.remove(logFileDir + "qtox.log.1"))
@@ -200,7 +197,7 @@ int main(int argc, char *argv[])
     if (!mainLogFilePtr)
         qCritical() << "Couldn't open logfile" << logfile;
 
-    logFileFile.store(mainLogFilePtr);   // atomically set the logFile
+    logFileFile.store(mainLogFilePtr); // atomically set the logFile
 #endif
 
     // Windows platform plugins DLL hell fix
@@ -213,7 +210,7 @@ int main(int argc, char *argv[])
     // Install Unicode 6.1 supporting font
     QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
 
-    // Check whether we have an update waiting to be installed
+// Check whether we have an update waiting to be installed
 #if AUTOUPDATE_ENABLED
     if (AutoUpdater::isLocalUpdateReady())
         AutoUpdater::installLocalUpdate(); ///< NORETURN
@@ -229,64 +226,49 @@ int main(int argc, char *argv[])
 
     uint32_t ipcDest = 0;
     QString eventType, firstParam;
-    if (parser.isSet("p"))
-    {
+    if (parser.isSet("p")) {
         profileName = parser.value("p");
-        if (!Profile::exists(profileName))
-        {
-            qCritical() << "-p profile" << profileName + ".tox" << "doesn't exist";
+        if (!Profile::exists(profileName)) {
+            qCritical() << "-p profile" << profileName + ".tox"
+                        << "doesn't exist";
             return EXIT_FAILURE;
         }
         ipcDest = Settings::makeProfileId(profileName);
         autoLogin = true;
-    }
-    else
-    {
+    } else {
         profileName = Settings::getInstance().getCurrentProfile();
     }
 
-    if (parser.positionalArguments().size() == 0)
-    {
+    if (parser.positionalArguments().size() == 0) {
         eventType = "activate";
-    }
-    else
-    {
+    } else {
         firstParam = parser.positionalArguments()[0];
-        // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI and we exit
+        // Tox URIs. If there's already another qTox instance running, we ask it to handle the URI
+        // and we exit
         // Otherwise we start a new qTox instance and process it ourselves
-        if (firstParam.startsWith("tox:"))
-        {
+        if (firstParam.startsWith("tox:")) {
             eventType = "uri";
-        }
-        else if (firstParam.endsWith(".tox"))
-        {
+        } else if (firstParam.endsWith(".tox")) {
             eventType = "save";
-        }
-        else
-        {
+        } else {
             qCritical() << "Invalid argument";
             return EXIT_FAILURE;
         }
     }
 
-    if (!ipc.isCurrentOwner())
-    {
+    if (!ipc.isCurrentOwner()) {
         time_t event = ipc.postEvent(eventType, firstParam.toUtf8(), ipcDest);
         // If someone else processed it, we're done here, no need to actually start qTox
-        if (ipc.waitUntilAccepted(event, 2))
-        {
+        if (ipc.waitUntilAccepted(event, 2)) {
             qDebug() << "Event" << eventType << "was handled by other client.";
             return EXIT_SUCCESS;
         }
     }
 
     // Autologin
-    if (autoLogin)
-    {
-        if (Profile::exists(profileName))
-        {
-            if (!Profile::isEncrypted(profileName))
-            {
+    if (autoLogin) {
+        if (Profile::exists(profileName)) {
+            if (!Profile::isEncrypted(profileName)) {
                 Profile* profile = Profile::loadProfile(profileName);
                 if (profile)
                     Nexus::getInstance().setProfile(profile);
@@ -315,7 +297,7 @@ int main(int argc, char *argv[])
     qDebug() << "Clean exit with status" << errorcode;
 
 #ifdef LOG_TO_FILE
-    logFileFile.store(nullptr);   // atomically disable logging to file
+    logFileFile.store(nullptr); // atomically disable logging to file
     fclose(mainLogFilePtr);
 #endif
     return errorcode;

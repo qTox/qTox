@@ -27,4 +27,4 @@ bool Platform::capsLockEnabled()
     return false;
 }
 
-#endif  // defined(__APPLE__) && defined(__MACH__)
+#endif // defined(__APPLE__) && defined(__MACH__)

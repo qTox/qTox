@@ -51,10 +51,10 @@ protected:
     void setElidedText();
     void hideTextEdit();
     void showTextEdit();
-    virtual void resizeEvent(QResizeEvent *ev) final override;
+    virtual void resizeEvent(QResizeEvent* ev) final override;
     virtual QSize sizeHint() const final override;
     virtual QSize minimumSizeHint() const final override;
-    virtual void mouseReleaseEvent(QMouseEvent *e) final override;
+    virtual void mouseReleaseEvent(QMouseEvent* e) final override;
 
 private slots:
     void editingFinished();

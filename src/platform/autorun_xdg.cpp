@@ -19,43 +19,39 @@
 
 #include <QApplication>
 #if defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
-#include "src/platform/autorun.h"
 #include "src/persistence/settings.h"
-#include <QProcessEnvironment>
+#include "src/platform/autorun.h"
 #include <QDir>
+#include <QProcessEnvironment>
 
-namespace Platform
+namespace Platform {
+QString getAutostartDirPath()
 {
-    QString getAutostartDirPath()
-    {
-        QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-        QString config = env.value("XDG_CONFIG_HOME");
-        if (config.isEmpty())
-            config = QDir::homePath() + "/" + ".config";
-        return config + "/autostart";
-    }
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString config = env.value("XDG_CONFIG_HOME");
+    if (config.isEmpty())
+        config = QDir::homePath() + "/" + ".config";
+    return config + "/autostart";
+}
 
-    QString getAutostartFilePath(QString dir)
-    {
-        return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() +
-               ".desktop";
-    }
+QString getAutostartFilePath(QString dir)
+{
+    return dir + "/qTox - " + Settings::getInstance().getCurrentProfile() + ".desktop";
+}
 
-    inline QString currentCommandLine()
-    {
-        return "\"" + QApplication::applicationFilePath() + "\" -p \"" +
-                Settings::getInstance().getCurrentProfile() + "\"";
-    }
+inline QString currentCommandLine()
+{
+    return "\"" + QApplication::applicationFilePath() + "\" -p \""
+           + Settings::getInstance().getCurrentProfile() + "\"";
+}
 }
 
 bool Platform::setAutorun(bool on)
 {
     QString dirPath = getAutostartDirPath();
     QFile desktop(getAutostartFilePath(dirPath));
-    if (on)
-    {
-        if (!QDir().mkpath(dirPath) ||
-            !desktop.open(QFile::WriteOnly | QFile::Truncate))
+    if (on) {
+        if (!QDir().mkpath(dirPath) || !desktop.open(QFile::WriteOnly | QFile::Truncate))
             return false;
         desktop.write("[Desktop Entry]\n");
         desktop.write("Type=Application\n");
@@ -65,8 +61,7 @@ bool Platform::setAutorun(bool on)
         desktop.write("\n");
         desktop.close();
         return true;
-    }
-    else
+    } else
         return desktop.remove();
 }
 
@@ -75,4 +70,4 @@ bool Platform::getAutorun()
     return QFile(getAutostartFilePath(getAutostartDirPath())).exists();
 }
 
-#endif  // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)
+#endif // defined(Q_OS_UNIX) && !defined(__APPLE__) && !defined(__MACH__)

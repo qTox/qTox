@@ -31,7 +31,7 @@ class GroupNetCamView : public GenericNetCamView
 public:
     GroupNetCamView(int group, QWidget* parent = 0);
     void clearPeers();
-    void addPeer(int peer, const QString &name);
+    void addPeer(int peer, const QString& name);
     void removePeer(int peer);
 
 public slots:

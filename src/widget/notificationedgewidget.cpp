@@ -19,8 +19,8 @@
 
 #include "notificationedgewidget.h"
 #include "style.h"
-#include <QLabel>
 #include <QBoxLayout>
+#include <QLabel>
 
 #include <QDebug>
 
@@ -54,7 +54,7 @@ void NotificationEdgeWidget::updateNotificationCount(int count)
     textLabel->setText(tr("Unread message(s)", "", count));
 }
 
-void NotificationEdgeWidget::mouseReleaseEvent(QMouseEvent *event)
+void NotificationEdgeWidget::mouseReleaseEvent(QMouseEvent* event)
 {
     emit clicked();
     QWidget::mousePressEvent(event);

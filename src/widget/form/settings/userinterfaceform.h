@@ -33,7 +33,10 @@ class UserInterfaceForm : public GenericForm
 public:
     explicit UserInterfaceForm(SettingsWidget* myParent);
     ~UserInterfaceForm();
-    virtual QString getFormName() final override {return tr("User Interface");}
+    virtual QString getFormName() final override
+    {
+        return tr("User Interface");
+    }
 
 private slots:
     void on_smileyPackBrowser_currentIndexChanged(int index);

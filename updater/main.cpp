@@ -18,47 +18,48 @@
 */
 
 
-#include "widget.h"
 #include "settings.h"
+#include "widget.h"
 #include <QApplication>
+#include <QDateTime>
 #include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QMutex>
-#include <QDateTime>
-#include <QDir>
 #include <QStandardPaths>
 #include <memory>
 #include <windows.h>
 
-static std::unique_ptr<QTextStream> logFileStream {nullptr};
-static std::unique_ptr<QFile> logFileFile {nullptr};
+static std::unique_ptr<QTextStream> logFileStream{nullptr};
+static std::unique_ptr<QFile> logFileFile{nullptr};
 static QMutex mutex;
 
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
     if (ctxt.function == QString("virtual bool QFSFileEngine::open(QIODevice::OpenMode)")
-            && msg == QString("QFSFileEngine::open: No file name specified"))
+        && msg == QString("QFSFileEngine::open: No file name specified"))
         return;
 
     QString LogMsg = QString("[%1] %2:%3 : ")
-            .arg(QTime::currentTime().toString("HH:mm:ss.zzz")).arg(ctxt.file).arg(ctxt.line);
-    switch (type)
-    {
-        case QtDebugMsg:
-            LogMsg += "Debug";
-            break;
-        case QtWarningMsg:
-            LogMsg += "Warning";
-            break;
-        case QtCriticalMsg:
-            LogMsg += "Critical";
-            break;
-        case QtFatalMsg:
-            LogMsg += "Fatal";
-            break;
-        default:
-            break;
+                         .arg(QTime::currentTime().toString("HH:mm:ss.zzz"))
+                         .arg(ctxt.file)
+                         .arg(ctxt.line);
+    switch (type) {
+    case QtDebugMsg:
+        LogMsg += "Debug";
+        break;
+    case QtWarningMsg:
+        LogMsg += "Warning";
+        break;
+    case QtCriticalMsg:
+        LogMsg += "Critical";
+        break;
+    case QtFatalMsg:
+        LogMsg += "Fatal";
+        break;
+    default:
+        break;
     }
 
     LogMsg += ": " + msg + "\n";
@@ -74,26 +75,24 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
     logFileStream->flush();
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     qInstallMessageHandler(logMessageHandler);
     QApplication a(argc, argv);
     Settings s;
 
     logFileStream.reset(new QTextStream);
-    logFileFile.reset(new QFile(s.getSettingsDirPath()+"qtox.log"));
-    if (logFileFile->open(QIODevice::Append))
-    {
+    logFileFile.reset(new QFile(s.getSettingsDirPath() + "qtox.log"));
+    if (logFileFile->open(QIODevice::Append)) {
         logFileStream->setDevice(logFileFile.get());
-        *logFileStream << QDateTime::currentDateTime().toString("\nyyyy-MM-dd HH:mm:ss' Updater file logger starting\n'");
-    }
-    else
-    {
+        *logFileStream << QDateTime::currentDateTime().toString(
+            "\nyyyy-MM-dd HH:mm:ss' Updater file logger starting\n'");
+    } else {
         qWarning() << "Couldn't open log file!\n";
         logFileStream.release();
     }
 
-    long unsigned int bufsize=100;
+    long unsigned int bufsize = 100;
     char buf[100];
     GetUserNameA(buf, &bufsize);
     qDebug() << "Updater running as user" << buf;

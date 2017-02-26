@@ -27,7 +27,7 @@
 class ProfileLocker
 {
 private:
-    ProfileLocker()=delete;
+    ProfileLocker() = delete;
 
 public:
     static bool isLockable(QString profile);

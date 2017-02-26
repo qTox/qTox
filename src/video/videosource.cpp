@@ -28,4 +28,4 @@
  */
 
 // Initialize sourceIDs to 0
-VideoSource::AtomicIDType VideoSource::sourceIDs {0};
+VideoSource::AtomicIDType VideoSource::sourceIDs{0};

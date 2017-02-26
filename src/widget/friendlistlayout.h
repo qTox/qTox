@@ -15,9 +15,9 @@
 #ifndef FRIENDLISTLAYOUT_H
 #define FRIENDLISTLAYOUT_H
 
-#include <QBoxLayout>
-#include "src/core/corestructs.h"
 #include "genericchatitemlayout.h"
+#include "src/core/corestructs.h"
+#include <QBoxLayout>
 
 class FriendWidget;
 class FriendListWidget;
@@ -37,7 +37,8 @@ public:
     int friendTotalCount() const;
 
     bool hasChatrooms() const;
-    void searchChatrooms(const QString& searchString, bool hideOnline = false, bool hideOffline = false);
+    void searchChatrooms(const QString& searchString, bool hideOnline = false,
+                         bool hideOffline = false);
 
     QLayout* getLayoutOnline() const;
     QLayout* getLayoutOffline() const;
