@@ -25,6 +25,13 @@ matrix:
     # the actual compilin'
     - os: linux
       env: JOB=build-ubuntu-14-04
+      addons:
+        apt:
+          sources:
+            # for code formatting
+            - llvm-toolchain-precise-3.8
+          packages:
+            - clang-format-3.8
     - os: osx
       osx_image: xcode7.3
       env: JOB=build-osx

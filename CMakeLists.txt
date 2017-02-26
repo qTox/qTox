@@ -522,8 +522,9 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
+include(ProcessCode)
+include(Installation)
 # test(s?) are broken on osx (just travis?)
 if (NOT APPLE)
     include(Testing)
 endif()
-include(Installation)
