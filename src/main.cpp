@@ -208,7 +208,9 @@ int main(int argc, char* argv[])
     qDebug() << "commit: " << GIT_VERSION << "\n";
 
     // Install Unicode 6.1 supporting font
-    QFontDatabase::addApplicationFont("://DejaVuSans.ttf");
+    if (QFontDatabase::addApplicationFont("://font/DejaVuSans.ttf") == -1) {
+        qWarning() << "Couldn't load font";
+    }
 
 // Check whether we have an update waiting to be installed
 #if AUTOUPDATE_ENABLED

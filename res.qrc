@@ -3,7 +3,7 @@
         <file alias="settings.ini">res/settings.ini</file>
     </qresource>
     <qresource prefix="/font">
-        <file alias="DejaVuSans.ttf">res/DejaVuSans.ttf</file>
+        <file alias="DejaVuSans.ttf">res/font/DejaVuSans.ttf</file>
     </qresource>
     <qresource prefix="/">
         <file>audio/notification.pcm</file>
