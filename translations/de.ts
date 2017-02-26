@@ -1238,18 +1238,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Gruppeneinladungen</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Annehmen</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Ablehnen</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Eingeladen von %1 am %2 um %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

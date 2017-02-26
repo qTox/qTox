@@ -1231,18 +1231,6 @@ instead of closing itself.</source>
         <source>Group invites</source>
         <translation>グループ招待</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation type="unfinished">参加</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation type="unfinished">拒否</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

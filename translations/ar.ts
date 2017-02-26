@@ -1231,18 +1231,6 @@ instead of closing itself.</source>
         <source>Group invites</source>
         <translation>إضافات المجموعة</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>انضمام</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>رفض</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>تم دعوته بواسطة %1 على %2 في %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

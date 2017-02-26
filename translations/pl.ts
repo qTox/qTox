@@ -1257,18 +1257,6 @@ zamiast do paska zadań.</translation>
         <source>Group invites</source>
         <translation>Zaproszenia do grup</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Dołącz</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Odrzuć</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Zaproszony przez %1 na %2 o %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

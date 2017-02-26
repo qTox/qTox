@@ -1233,18 +1233,6 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
         <source>Group invites</source>
         <translation>Inviti ad un gruppo</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Entra</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Rifiuta</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invitato da %1 su %2 a %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
