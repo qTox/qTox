@@ -89,7 +89,7 @@ CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
     : deviceName{"none"}, device{nullptr}, mode(VideoMode()),
-      cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
+      cctx{nullptr}, videoStreamIndex{-1},
       _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
     subscriptions = 0;
@@ -189,8 +189,6 @@ CameraSource::~CameraSource()
 
     if (cctx)
         avcodec_free_context(&cctx);
-    if (cctxOrig)
-        avcodec_close(cctxOrig);
 
     if (device)
     {
@@ -226,7 +224,7 @@ bool CameraSource::subscribe()
     {
         while (device && !device->close()) {}
         device = nullptr;
-        cctx = cctxOrig = nullptr;
+        cctx = nullptr;
         videoStreamIndex = -1;
         return false;
     }
@@ -289,10 +287,10 @@ bool CameraSource::openDevice()
     for (int i = 0; i < subscriptions; ++i)
         device->open();
 
-    // Find the first video stream
+    // Find the first video stream, if any
     for (unsigned i = 0; i < device->context->nb_streams; ++i)
     {
-        if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+        if (device->context->streams[i]->codecpar->codec_type == AVMEDIA_TYPE_VIDEO)
         {
             videoStreamIndex = i;
             break;
@@ -305,20 +303,20 @@ bool CameraSource::openDevice()
         return false;
     }
 
-    // Get a pointer to the codec context for the video stream
-    cctxOrig = device->context->streams[videoStreamIndex]->codec;
-    codec = avcodec_find_decoder(cctxOrig->codec_id);
+    // Get the stream's codec's parameters and find a matching decoder
+    AVCodecParameters* cparams = device->context->streams[videoStreamIndex]->codecpar;
+    codec = avcodec_find_decoder(cparams->codec_id);
     if (!codec)
     {
         qWarning() << "Codec not found";
         return false;
     }
 
-    // Copy context, since we apparently aren't allowed to use the original
+    // Create a context for our codec, using the existing parameters
     cctx = avcodec_alloc_context3(codec);
-    if (avcodec_copy_context(cctx, cctxOrig) != 0)
+    if (avcodec_parameters_to_context(cctx, cparams) < 0)
     {
-        qWarning() << "Can't copy context";
+        qWarning() << "Can't create AV context from parameters";
         return false;
     }
 
@@ -358,10 +356,8 @@ void CameraSource::closeDevice()
     VideoFrame::untrackFrames(id, true);
 
     // Free our resources and close the device
-    videoStreamIndex = -1;
     avcodec_free_context(&cctx);
-    avcodec_close(cctxOrig);
-    cctxOrig = nullptr;
+    videoStreamIndex = -1;
     while (device && !device->close()) {}
     device = nullptr;
 }
@@ -374,29 +370,26 @@ void CameraSource::stream()
 {
     auto streamLoop = [=]()
     {
-        AVFrame* frame = av_frame_alloc();
-        if (!frame)
-            return;
-
         AVPacket packet;
-        if (av_read_frame(device->context, &packet) < 0)
-            return;
 
-        // Only keep packets from the right stream;
-        if (packet.stream_index == videoStreamIndex)
+        // Forward packets to the decoder and grab the decoded frame
+        if (!av_read_frame(device->context, &packet)
+                && packet.stream_index == videoStreamIndex
+                && !avcodec_send_packet(cctx, &packet))
         {
-            // Decode video frame
-            int frameFinished;
-            avcodec_decode_video2(cctx, frame, &frameFinished, &packet);
-            if (!frameFinished)
-                return;
-
-            VideoFrame* vframe = new VideoFrame(id, frame);
-            emit frameAvailable(vframe->trackFrame());
+            AVFrame* frame = av_frame_alloc();
+            if (frame && !avcodec_receive_frame(cctx, frame))
+            {
+                VideoFrame* vframe = new VideoFrame(id, frame);
+                emit frameAvailable(vframe->trackFrame());
+            }
+            else
+            {
+                av_frame_free(&frame);
+            }
         }
 
-      // Free the packet that was allocated by av_read_frame
-      av_packet_unref(&packet);
+        av_packet_unref(&packet);
     };
 
     forever

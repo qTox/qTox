@@ -44,7 +44,7 @@
 | [Qt]          | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
 | [toxcore]     | = 0.1.\*    | core, av                                          |
-| [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
+| [FFmpeg]      | >= 3.1.0    | avformat, avdevice, avcodec, avutil, swscale      |
 | [CMake]       | >= 2.8.11   |                                                   |
 | [OpenAL Soft] | >= 1.16.0   |                                                   |
 | [qrencode]    | >= 3.0.3    |                                                   |
