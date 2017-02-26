@@ -1233,18 +1233,6 @@ au lieu de se fermer.</translation>
         <source>Group invites</source>
         <translation>Invitations à un groupe</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Joindre</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Décliner</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invité par %1 le %2 à %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

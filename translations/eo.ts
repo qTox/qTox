@@ -1227,18 +1227,6 @@ instead of closing itself.</source>
         <source>Group invites</source>
         <translation type="unfinished">Grupo-invitoj</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Aliĝi</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Nei</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

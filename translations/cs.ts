@@ -1233,18 +1233,6 @@ místo panelu úloh.</translation>
         <source>Group invites</source>
         <translation type="unfinished">Pozvánky do skupin</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Připojit se</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Odmítnout</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Pozvaný uživatelem %1 dne %2 o %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

@@ -1236,18 +1236,6 @@ instead of closing itself.</source>
         <source>Group invites</source>
         <translation>Grupikutsed</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Liitu</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Keeldu</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Kutse esitas %1, kui oli %2 kl. %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

@@ -1233,18 +1233,6 @@ a rendszertálca helyett.</translation>
         <source>Group invites</source>
         <translation>Csoport meghívások</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Csatlakozás</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Elutasít</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Meghívta %1. Meghívás dátuma: %2, ideje: %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

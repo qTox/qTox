@@ -1234,18 +1234,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <source>Group invites</source>
         <translation>Invitaciones a grupos</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Unirse</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Declinar</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invitado por %1 el %2 a las %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

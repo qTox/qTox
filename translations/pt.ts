@@ -1232,18 +1232,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Convites à grupos</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Unir-se</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Recusar</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Convidado por %1 a %2 às %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

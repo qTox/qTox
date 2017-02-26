@@ -1237,18 +1237,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Покани за групи</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Присъедини се</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Затвори</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Поканен от %1 на %2 в %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>

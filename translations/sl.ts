@@ -1235,18 +1235,6 @@ namesto da bi ostal med programi.</translation>
         <source>Group invites</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
