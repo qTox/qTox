@@ -33,6 +33,7 @@ class QSet;
 
 class QSplitter;
 class QVBoxLayout;
+class ContentDialog;
 class ContentLayout;
 class GenericChatroomWidget;
 class FriendWidget;
@@ -41,6 +42,8 @@ class FriendListLayout;
 class SettingsWidget;
 class Friend;
 class Group;
+
+using ContactInfo = std::tuple<ContentDialog*, GenericChatroomWidget*>;
 
 class ContentDialog : public ActivateDialog
 {
@@ -104,17 +107,15 @@ private:
     void saveDialogGeometry();
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;
+    int getCurrentLayout(QLayout*& layout);
 
     bool hasWidget(int id, GenericChatroomWidget* chatroomWidget,
-                   const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static bool existsWidget(int id, bool focus,
-                             const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static void
-    updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static bool
-    isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static ContentDialog*
-    getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+                   const QHash<int, ContactInfo>& list);
+    void removeCurrent(QHash<int, ContactInfo> infos);
+    static bool existsWidget(int id, bool focus, const QHash<int, ContactInfo>& list);
+    static void updateStatus(int id, const QHash<int, ContactInfo>& list);
+    static bool isWidgetActive(int id, const QHash<int, ContactInfo>& list);
+    static ContentDialog* getDialog(int id, const QHash<int, ContactInfo>& list);
 
     QSplitter* splitter;
     FriendListLayout* friendLayout;
@@ -127,8 +128,8 @@ private:
     int videoCount;
 
     static ContentDialog* currentDialog;
-    static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> friendList;
-    static QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> groupList;
+    static QHash<int, ContactInfo> friendList;
+    static QHash<int, ContactInfo> groupList;
 };
 
 #endif // CONTENTDIALOG_H
