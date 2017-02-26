@@ -7,7 +7,7 @@
 class QFile;
 class QTimer;
 
-enum class Status : int
+enum class Status
 {
     Online = 0,
     Away,
