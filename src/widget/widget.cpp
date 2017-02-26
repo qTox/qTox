@@ -353,12 +353,6 @@ void Widget::init()
         onAddClicked();
     }
 
-    // restore window state
-    restoreGeometry(s.getWindowGeometry());
-    restoreState(s.getWindowState());
-    SplitterRestorer restorer(ui->mainSplitter);
-    restorer.restore(s.getSplitterState(), size());
-
 #if (AUTOUPDATE_ENABLED)
     if (s.getCheckUpdates())
         AutoUpdater::checkUpdatesAsyncInteractive();
@@ -665,6 +659,14 @@ void Widget::onSeparateWindowClicked(bool separate)
 
 void Widget::updateSeparate(bool separate)
 {
+    const Settings& s = Settings::getInstance();
+
+    //restore window state
+    restoreGeometry(s.getWindowGeometry());
+    restoreState(s.getWindowState());
+    SplitterRestorer restorer(ui->mainSplitter);
+    restorer.restore(s.getSplitterState(), size());
+
     if (separate) {
         if (contentLayout) {
             contentLayout->clear();
