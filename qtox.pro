@@ -448,6 +448,7 @@ HEADERS  += \
     src/friend.h \
     src/friendlist.h \
     src/group.h \
+    src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
     src/net/autoupdate.h \
@@ -487,6 +488,7 @@ HEADERS  += \
     src/widget/form/genericchatform.h \
     src/widget/form/groupchatform.h \
     src/widget/form/groupinviteform.h \
+    src/widget/form/groupinvitewidget.h \
     src/widget/form/loadhistorydialog.h \
     src/widget/form/profileform.h \
     src/widget/form/setpassworddialog.h \
@@ -566,6 +568,7 @@ SOURCES += \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
+    src/groupinvite.cpp \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
@@ -607,6 +610,7 @@ SOURCES += \
     src/widget/form/genericchatform.cpp \
     src/widget/form/groupchatform.cpp \
     src/widget/form/groupinviteform.cpp \
+    src/widget/form/groupinvitewidget.cpp \
     src/widget/form/loadhistorydialog.cpp \
     src/widget/form/profileform.cpp \
     src/widget/form/setpassworddialog.cpp \
