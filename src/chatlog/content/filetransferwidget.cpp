@@ -40,6 +40,11 @@
 
 #include <math.h>
 
+// The leftButton is used to accept, pause, or resume a file transfer, as well as to open a
+// received file.
+// The rightButton is used to cancel a file transfer, or to open the directory a file was
+// downloaded to.
+
 FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     : QWidget(parent)
     , ui(new Ui::FileTransferWidget)
@@ -47,6 +52,7 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
     , lastTick(QTime::currentTime())
     , backgroundColor(Style::getColor(Style::LightGrey))
     , buttonColor(Style::getColor(Style::Yellow))
+    , buttonBackgroundColor(Style::getColor(Style::White))
     , active(true)
 {
     ui->setupUi(this);
@@ -93,8 +99,10 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
             &FileTransferWidget::fileTransferRemotePausedUnpaused);
     connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this,
             &FileTransferWidget::fileTransferBrokenUnbroken);
-    connect(ui->topButton, &QPushButton::clicked, this, &FileTransferWidget::onTopButtonClicked);
-    connect(ui->bottomButton, &QPushButton::clicked, this, &FileTransferWidget::onBottomButtonClicked);
+    connect(ui->leftButton, &QPushButton::clicked, this,
+            &FileTransferWidget::onLeftButtonClicked);
+    connect(ui->rightButton, &QPushButton::clicked, this,
+            &FileTransferWidget::onRightButtonClicked);
     connect(ui->previewButton, &QPushButton::clicked, this,
             &FileTransferWidget::onPreviewButtonClicked);
 
@@ -190,8 +198,8 @@ void FileTransferWidget::setButtonColor(const QColor& c)
 
 bool FileTransferWidget::drawButtonAreaNeeded() const
 {
-    return (ui->bottomButton->isVisible() || ui->topButton->isVisible())
-           && !(ui->topButton->isVisible() && ui->topButton->objectName() == "ok");
+    return (ui->rightButton->isVisible() || ui->leftButton->isVisible())
+           && !(ui->leftButton->isVisible() && ui->leftButton->objectName() == "ok");
 }
 
 void FileTransferWidget::paintEvent(QPaintEvent*)
@@ -203,27 +211,45 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
 
     qreal ratio = static_cast<qreal>(geometry().height()) / static_cast<qreal>(geometry().width());
     const int r = 24;
-    const int buttonFieldWidth = 34;
+    const int buttonFieldWidth = 32;
     const int lineWidth = 1;
 
     // draw background
     if (drawButtonAreaNeeded())
-        painter.setClipRect(QRect(0, 0, width() - buttonFieldWidth, height()));
-
-    painter.setBrush(QBrush(backgroundColor));
-    painter.drawRoundRect(geometry(), r * ratio, r);
-
-    if (drawButtonAreaNeeded()) {
-        // draw button background (top)
-        painter.setBrush(QBrush(buttonColor));
-        painter.setClipRect(QRect(width() - buttonFieldWidth + lineWidth, 0, buttonFieldWidth,
-                                  height() / 2 - ceil(lineWidth / 2.0)));
+        // Draw the widget background:
+        painter.setClipRect(QRect(0, 0, width(), height()));
+        painter.setBrush(QBrush(backgroundColor));
         painter.drawRoundRect(geometry(), r * ratio, r);
 
-        // draw button background (bottom)
+    if (drawButtonAreaNeeded()) {
+        // Draw the button background:
+        QPainterPath buttonBackground;
+        buttonBackground.addRoundRect(width()-2*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth,
+                                      buttonFieldWidth+lineWidth, 50, 50);
+        buttonBackground.addRect(width()-2*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth*2,
+                                 buttonFieldWidth/2);
+        buttonBackground.addRect(width()-1.5*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth*2,
+                                 buttonFieldWidth+1);
+        buttonBackground.setFillRule(Qt::WindingFill);
+        painter.setBrush(QBrush(buttonBackgroundColor));
+        painter.drawPath(buttonBackground);
+
+        // Draw the left button:
+        QPainterPath leftButton;
+        leftButton.addRoundRect(QRect(width()-2*buttonFieldWidth-lineWidth, 0, buttonFieldWidth,
+                                      buttonFieldWidth), 50, 50);
+        leftButton.addRect(QRect(width()-2*buttonFieldWidth-lineWidth, 0, buttonFieldWidth/2,
+                                 buttonFieldWidth/2));
+        leftButton.addRect(QRect(width()-1.5*buttonFieldWidth-lineWidth, 0, buttonFieldWidth/2,
+                                 buttonFieldWidth));
+        leftButton.setFillRule(Qt::WindingFill);
         painter.setBrush(QBrush(buttonColor));
-        painter.setClipRect(QRect(width() - buttonFieldWidth + lineWidth,
-                                  height() / 2 + lineWidth / 2, buttonFieldWidth, height() / 2));
+        painter.drawPath(leftButton);
+
+        // Draw the right button:
+        painter.setBrush(QBrush(buttonColor));
+        painter.setClipRect(QRect(width()-buttonFieldWidth, 0, buttonFieldWidth,
+                                  buttonFieldWidth));
         painter.drawRoundRect(geometry(), r * ratio, r);
     }
 }
@@ -363,15 +389,15 @@ void FileTransferWidget::onFileTransferFinished(ToxFile file)
     setupButtons();
     hideWidgets();
 
-    ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
-    ui->topButton->setObjectName("ok");
-    ui->topButton->setToolTip(tr("Open file"));
-    ui->topButton->show();
+    ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
+    ui->leftButton->setObjectName("ok");
+    ui->leftButton->setToolTip(tr("Open file"));
+    ui->leftButton->show();
 
-    ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
-    ui->bottomButton->setObjectName("dir");
-    ui->bottomButton->setToolTip(tr("Open file directory"));
-    ui->bottomButton->show();
+    ui->rightButton->setIcon(QIcon(":/ui/fileTransferInstance/dir.svg"));
+    ui->rightButton->setObjectName("dir");
+    ui->rightButton->setToolTip(tr("Open file directory"));
+    ui->rightButton->show();
 
     // preview
     if (fileInfo.direction == ToxFile::RECEIVING)
@@ -408,8 +434,8 @@ QString FileTransferWidget::getHumanReadableSize(qint64 size)
 
 void FileTransferWidget::hideWidgets()
 {
-    ui->topButton->hide();
-    ui->bottomButton->hide();
+    ui->leftButton->hide();
+    ui->rightButton->hide();
     ui->progressBar->hide();
     ui->progressLabel->hide();
     ui->etaLabel->hide();
@@ -419,43 +445,43 @@ void FileTransferWidget::setupButtons()
 {
     switch (fileInfo.status) {
     case ToxFile::TRANSMITTING:
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
-        ui->topButton->setObjectName("pause");
-        ui->topButton->setToolTip(tr("Pause transfer"));
+        ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
+        ui->leftButton->setObjectName("pause");
+        ui->leftButton->setToolTip(tr("Pause transfer"));
 
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
-        ui->bottomButton->setObjectName("cancel");
-        ui->bottomButton->setToolTip(tr("Cancel transfer"));
+        ui->rightButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
+        ui->rightButton->setObjectName("cancel");
+        ui->rightButton->setToolTip(tr("Cancel transfer"));
 
         setButtonColor(Style::getColor(Style::Green));
         break;
 
     case ToxFile::PAUSED:
-        ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
-        ui->topButton->setObjectName("resume");
-        ui->topButton->setToolTip(tr("Resume transfer"));
+        ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/arrow_white.svg"));
+        ui->leftButton->setObjectName("resume");
+        ui->leftButton->setToolTip(tr("Resume transfer"));
 
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
-        ui->bottomButton->setObjectName("cancel");
-        ui->bottomButton->setToolTip(tr("Cancel transfer"));
+        ui->rightButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
+        ui->rightButton->setObjectName("cancel");
+        ui->rightButton->setToolTip(tr("Cancel transfer"));
 
         setButtonColor(Style::getColor(Style::LightGrey));
         break;
 
     case ToxFile::STOPPED:
     case ToxFile::BROKEN:
-        ui->bottomButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
-        ui->bottomButton->setObjectName("cancel");
-        ui->bottomButton->setToolTip(tr("Cancel transfer"));
+        ui->rightButton->setIcon(QIcon(":/ui/fileTransferInstance/no.svg"));
+        ui->rightButton->setObjectName("cancel");
+        ui->rightButton->setToolTip(tr("Cancel transfer"));
 
         if (fileInfo.direction == ToxFile::SENDING) {
-            ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
-            ui->topButton->setObjectName("pause");
-            ui->topButton->setToolTip(tr("Pause transfer"));
+            ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/pause.svg"));
+            ui->leftButton->setObjectName("pause");
+            ui->leftButton->setToolTip(tr("Pause transfer"));
         } else {
-            ui->topButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
-            ui->topButton->setObjectName("accept");
-            ui->topButton->setToolTip(tr("Accept transfer"));
+            ui->leftButton->setIcon(QIcon(":/ui/fileTransferInstance/yes.svg"));
+            ui->leftButton->setObjectName("accept");
+            ui->leftButton->setToolTip(tr("Accept transfer"));
         }
         break;
     }
@@ -526,14 +552,14 @@ void FileTransferWidget::showPreview(const QString& filename)
     }
 }
 
-void FileTransferWidget::onTopButtonClicked()
+void FileTransferWidget::onLeftButtonClicked()
 {
-    handleButton(ui->topButton);
+    handleButton(ui->leftButton);
 }
 
-void FileTransferWidget::onBottomButtonClicked()
+void FileTransferWidget::onRightButtonClicked()
 {
-    handleButton(ui->bottomButton);
+    handleButton(ui->rightButton);
 }
 
 void FileTransferWidget::onPreviewButtonClicked()
