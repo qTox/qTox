@@ -25,9 +25,11 @@
 class TextFormatter
 {
 private:
-    QString sourceString;
+    QString message;
 
-    QString applyHtmlFontStyling(bool showFormattingSymbols);
+    void wrapUrl();
+
+    void applyHtmlFontStyling(bool showFormattingSymbols);
 
 public:
     explicit TextFormatter(const QString& str);

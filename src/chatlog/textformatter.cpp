@@ -24,21 +24,24 @@
 #include <QRegularExpression>
 #include <QVector>
 
+#include <functional>
+
 enum TextStyle
 {
     BOLD = 0,
     ITALIC,
     UNDERLINE,
     STRIKE,
-    CODE
+    CODE,
+    HREF
 };
 
 static const QString COMMON_PATTERN = QStringLiteral("(?<=^|[^%1<])"
-                                                     "[%1]{%3}"
+                                                     "[%1]{%2}"
                                                      "(?![%1 \\n])"
                                                      ".+?"
                                                      "(?<![%1< \\n])"
-                                                     "[%1]{%3}"
+                                                     "[%1]{%2}"
                                                      "(?=$|[^%1])");
 
 static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
@@ -50,28 +53,43 @@ static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
                                                      "(?=$|[^`])");
 
 // Items in vector associated with TextStyle values respectively. Do NOT change this order
-static const QVector<QString> fontStylePatterns{QStringLiteral("<b>%1</b>"),
+static const QVector<QString> htmlPatterns{QStringLiteral("<b>%1</b>"),
                                                 QStringLiteral("<i>%1</i>"),
                                                 QStringLiteral("<u>%1</u>"),
                                                 QStringLiteral("<s>%1</s>"),
                                                 QStringLiteral(
-                                                    "<font color=#595959><code>%1</code></font>")};
+                                                    "<font color=#595959><code>%1</code></font>"),
+                                                QStringLiteral("<a href=\"%1%2\">%2</a>")};
 
-// Unfortunately, can't use simple QMap because ordered applying of styles is required
 static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
-    {QRegularExpression(COMMON_PATTERN.arg("*", "1")), fontStylePatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "1")), fontStylePatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "1")), fontStylePatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "1")), fontStylePatterns[STRIKE]},
-    {QRegularExpression(COMMON_PATTERN.arg("`", "1")), fontStylePatterns[CODE]},
-    {QRegularExpression(COMMON_PATTERN.arg("*", "2")), fontStylePatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "2")), fontStylePatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "2")), fontStylePatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "2")), fontStylePatterns[STRIKE]},
-    {QRegularExpression(MULTILINE_CODE), fontStylePatterns[CODE]}};
+    {QRegularExpression(COMMON_PATTERN.arg("*", "1")), htmlPatterns[BOLD]},
+    {QRegularExpression(COMMON_PATTERN.arg("/", "1")), htmlPatterns[ITALIC]},
+    {QRegularExpression(COMMON_PATTERN.arg("_", "1")), htmlPatterns[UNDERLINE]},
+    {QRegularExpression(COMMON_PATTERN.arg("~", "1")), htmlPatterns[STRIKE]},
+    {QRegularExpression(COMMON_PATTERN.arg("`", "1")), htmlPatterns[CODE]},
+    {QRegularExpression(COMMON_PATTERN.arg("*", "2")), htmlPatterns[BOLD]},
+    {QRegularExpression(COMMON_PATTERN.arg("/", "2")), htmlPatterns[ITALIC]},
+    {QRegularExpression(COMMON_PATTERN.arg("_", "2")), htmlPatterns[UNDERLINE]},
+    {QRegularExpression(COMMON_PATTERN.arg("~", "2")), htmlPatterns[STRIKE]},
+    {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
+
+static const QVector<QRegularExpression> urlPatterns {
+    QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
+                       "[^. \\n]+\\.[^ \\n]+"),
+    QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
+    QRegularExpression("\\bfile://(localhost)?/[^ \\n]+"),
+    QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
+    QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
+};
+
+/**
+ * @class TextFormatter
+ *
+ * @brief This class applies formatting to the text messages, e.g. font styling and URL highlighting
+ */
 
 TextFormatter::TextFormatter(const QString& str)
-    : sourceString(str)
+    : message(str)
 {
 }
 
@@ -111,17 +129,36 @@ static bool isTagIntersection(const QString& str)
 }
 
 /**
+ * @brief Applies a function for URL's which can be extracted from passed string
+ * @param str String in which we are looking for URL's
+ * @param func Function which is applying to URL
+ */
+static void processUrl(QString& str, std::function<QString(QString&)> func)
+{
+    for (QRegularExpression exp : urlPatterns) {
+        QRegularExpressionMatchIterator iter = exp.globalMatch(str);
+        while (iter.hasNext()) {
+            QRegularExpressionMatch match = iter.next();
+            int startPos = match.capturedStart();
+            int length = match.capturedLength();
+            QString url = str.mid(startPos, length);
+            str.replace(startPos, length, func(url));
+        }
+    }
+}
+
+/**
  * @brief Applies styles to the font of text that was passed to the constructor
  * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
  * string
- * @return Source text with styled font
  */
-QString TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
+void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
-    QString out = sourceString;
-
+    processUrl(message, [] (QString& str) {
+        return str.replace("/", "&#47");
+    });
     for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
-        QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(out);
+        QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(message);
         int insertedTagSymbolsCount = 0;
 
         while (matchesIterator.hasNext()) {
@@ -133,19 +170,29 @@ QString TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
             int capturedStart = match.capturedStart() + insertedTagSymbolsCount;
             int capturedLength = match.capturedLength();
 
-            QString stylingText = out.mid(capturedStart, capturedLength);
+            QString stylingText = message.mid(capturedStart, capturedLength);
             int choppingSignsCount = showFormattingSymbols ? 0 : patternSignsCount(stylingText);
             int textStart = capturedStart + choppingSignsCount;
             int textLength = capturedLength - 2 * choppingSignsCount;
 
-            QString styledText = pair.second.arg(out.mid(textStart, textLength));
+            QString styledText = pair.second.arg(message.mid(textStart, textLength));
 
-            out.replace(capturedStart, capturedLength, styledText);
+            message.replace(capturedStart, capturedLength, styledText);
             // Subtracting length of "%1"
             insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
         }
     }
-    return out;
+    message.replace("&#47", "/");
+}
+
+/**
+ * @brief Wraps all found URL's in HTML hyperlink tag
+ */
+void TextFormatter::wrapUrl()
+{
+    processUrl(message, [] (QString& str) {
+        return htmlPatterns[TextStyle::HREF].arg(str.startsWith("www") ? "http://" : "", str);
+    });
 }
 
 /**
@@ -156,5 +203,8 @@ QString TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
  */
 QString TextFormatter::applyStyling(bool showFormattingSymbols)
 {
-    return applyHtmlFontStyling(showFormattingSymbols);
+    message.toHtmlEscaped();
+    applyHtmlFontStyling(showFormattingSymbols);
+    wrapUrl();
+    return message;
 }
