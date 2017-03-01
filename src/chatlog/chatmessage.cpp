@@ -55,7 +55,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
         text = SmileyPack::getInstance().smileyfied(text);
 
     // quotes (green text)
-    text = detectQuotes(detectAnchors(text), type);
+    text = detectQuotes(text, type);
 
     // text styling
     Settings::StyleType styleType = Settings::getInstance().getStylePreference();
@@ -225,45 +225,6 @@ void ChatMessage::hideDate()
     ChatLineContent* c = getContent(2);
     if (c)
         c->hide();
-}
-
-QString ChatMessage::detectAnchors(const QString& str)
-{
-    QString out = str;
-
-    // detect URIs
-    QRegExp exp(
-        "("
-        "(?:\\b)((www\\.)|(http[s]?|ftp)://)" // (protocol)://(printable - non-special character)
-        // http://ONEORMOREALHPA-DIGIT
-        "\\w+\\S+)" // any other character, lets domains and other
-        // ↓ link to a file, or samba share
-        //   https://en.wikipedia.org/wiki/File_URI_scheme
-        "|(?:\\b)((file|smb)://)([\\S| ]*)"
-        "|(?:\\b)(tox:[a-zA-Z\\d]{76})"     // link with full user address
-        "|(?:\\b)(mailto:\\S+@\\S+\\.\\S+)" //@mail link
-        "|(?:\\b)(tox:\\S+@\\S+)"); // starts with `tox` then : and only alpha-digits till the end
-                                    // also accepts tox:agilob@net as simplified TOX ID
-
-    int offset = 0;
-    while ((offset = exp.indexIn(out, offset)) != -1) {
-        QString url = exp.cap();
-        // If there's a trailing " it's a HTML attribute, e.g. a smiley img's title=":tox:"
-        if (url == "tox:\"") {
-            offset += url.length();
-            continue;
-        }
-        QString htmledUrl;
-        // add scheme if not specified
-        if (exp.cap(2) == "www.")
-            htmledUrl = QString("<a href=\"http://%1\">%1</a>").arg(url);
-        else
-            htmledUrl = QString("<a href=\"%1\">%1</a>").arg(url);
-        out.replace(offset, exp.cap().length(), htmledUrl);
-        offset += htmledUrl.length();
-    }
-
-    return out;
 }
 
 QString ChatMessage::detectQuotes(const QString& str, MessageType type)
