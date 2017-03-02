@@ -49,12 +49,12 @@ void MaskablePixmapWidget::setClickable(bool clickable)
         unsetCursor();
 }
 
-void MaskablePixmapWidget::setPixmap(const QPixmap& pmap)
+void MaskablePixmapWidget::setPixmap(const QPixmap &pmap)
 {
-    if (!pmap.isNull()) {
+    if (!pmap.isNull())
+    {
         unscaled = pmap;
-        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding,
-                             Qt::SmoothTransformation);
+        pixmap = pmap.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         update();
     }
 }
@@ -74,29 +74,28 @@ void MaskablePixmapWidget::setSize(QSize size)
     if (!pmapMask.isNull())
         mask = pmapMask.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-    if (!unscaled.isNull()) {
-        pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding,
-                                 Qt::SmoothTransformation);
+    if (!unscaled.isNull())
+    {
+        pixmap = unscaled.scaled(width() - 2, height() - 2, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
         update();
     }
 }
 
-void MaskablePixmapWidget::paintEvent(QPaintEvent*)
+void MaskablePixmapWidget::paintEvent(QPaintEvent *)
 {
     renderTarget->fill(Qt::transparent);
 
-    QPoint offset((width() - pixmap.size().width()) / 2,
-                  (height() - pixmap.size().height()) / 2); // centering the pixmap
+    QPoint offset((width() - pixmap.size().width())/2,(height() - pixmap.size().height())/2); // centering the pixmap
 
     QPainter painter(renderTarget);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.drawPixmap(offset, pixmap);
+    painter.drawPixmap(offset,pixmap);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationIn);
-    painter.drawPixmap(0, 0, mask);
+    painter.drawPixmap(0,0,mask);
     painter.end();
 
     painter.begin(this);
-    painter.drawPixmap(0, 0, *renderTarget);
+    painter.drawPixmap(0,0,*renderTarget);
 }
 
 void MaskablePixmapWidget::mousePressEvent(QMouseEvent*)

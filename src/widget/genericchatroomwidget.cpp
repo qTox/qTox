@@ -18,23 +18,22 @@
 */
 
 #include "genericchatroomwidget.h"
-#include "maskablepixmapwidget.h"
-#include "src/persistence/settings.h"
 #include "src/widget/style.h"
+#include "src/persistence/settings.h"
+#include "maskablepixmapwidget.h"
 #include "src/widget/tool/croppinglabel.h"
 #include <QBoxLayout>
 #include <QMouseEvent>
 
 GenericChatroomWidget::GenericChatroomWidget(QWidget* parent)
-    : GenericChatItemWidget(parent)
-    , active{false}
+    : GenericChatItemWidget(parent), active{false}
 {
     // avatar
     QSize size;
     if (isCompact())
-        size = QSize(20, 20);
+        size = QSize(20,20);
     else
-        size = QSize(40, 40);
+        size = QSize(40,40);
 
     avatar = new MaskablePixmapWidget(this, size, ":/img/avatar_mask.svg");
 
@@ -46,7 +45,8 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget* parent)
     nameLabel->setForegroundRole(QPalette::WindowText);
 
     Settings& s = Settings::getInstance();
-    connect(&s, &Settings::compactLayoutChanged, this, &GenericChatroomWidget::compactChange);
+    connect(&s, &Settings::compactLayoutChanged,
+            this, &GenericChatroomWidget::compactChange);
 
     setAutoFillBackground(true);
     reloadTheme();
@@ -54,7 +54,7 @@ GenericChatroomWidget::GenericChatroomWidget(QWidget* parent)
     compactChange(isCompact());
 }
 
-bool GenericChatroomWidget::eventFilter(QObject*, QEvent*)
+bool GenericChatroomWidget::eventFilter(QObject *, QEvent *)
 {
     return true; // Disable all events.
 }
@@ -79,10 +79,11 @@ void GenericChatroomWidget::compactChange(bool _compact)
     setLayoutDirection(Qt::LeftToRight); // parent might have set Qt::RightToLeft
 
     // avatar
-    if (isCompact()) {
-        delete textLayout; // Not needed
+    if (isCompact())
+    {
+        delete textLayout;  // Not needed
         setFixedHeight(25);
-        avatar->setSize(QSize(20, 20));
+        avatar->setSize(QSize(20,20));
         mainLayout->addSpacing(18);
         mainLayout->addWidget(avatar);
         mainLayout->addSpacing(5);
@@ -94,9 +95,11 @@ void GenericChatroomWidget::compactChange(bool _compact)
         mainLayout->activate();
         statusMessageLabel->setFont(Style::getFont(Style::Small));
         nameLabel->setFont(Style::getFont(Style::Medium));
-    } else {
+    }
+    else
+    {
         setFixedHeight(55);
-        avatar->setSize(QSize(40, 40));
+        avatar->setSize(QSize(40,40));
         textLayout->addStretch();
         textLayout->addWidget(nameLabel);
         textLayout->addWidget(statusMessageLabel);
@@ -122,23 +125,26 @@ bool GenericChatroomWidget::isActive()
 void GenericChatroomWidget::setActive(bool _active)
 {
     active = _active;
-    if (active) {
+    if (active)
+    {
         setBackgroundRole(QPalette::Light);
         statusMessageLabel->setForegroundRole(QPalette::HighlightedText);
         nameLabel->setForegroundRole(QPalette::HighlightedText);
-    } else {
+    }
+    else
+    {
         setBackgroundRole(QPalette::Window);
         statusMessageLabel->setForegroundRole(QPalette::WindowText);
         nameLabel->setForegroundRole(QPalette::WindowText);
     }
 }
 
-void GenericChatroomWidget::setName(const QString& name)
+void GenericChatroomWidget::setName(const QString &name)
 {
     nameLabel->setText(name);
 }
 
-void GenericChatroomWidget::setStatusMsg(const QString& status)
+void GenericChatroomWidget::setStatusMsg(const QString &status)
 {
     statusMessageLabel->setText(status);
 }
@@ -163,19 +169,19 @@ void GenericChatroomWidget::reloadTheme()
     QPalette p;
 
     p = statusMessageLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey));       // Base color
+    p.setColor(QPalette::WindowText, Style::getColor(Style::LightGrey)); // Base color
     p.setColor(QPalette::HighlightedText, Style::getColor(Style::MediumGrey)); // Color when active
     statusMessageLabel->setPalette(p);
 
     p = nameLabel->palette();
-    p.setColor(QPalette::WindowText, Style::getColor(Style::White));         // Base color
+    p.setColor(QPalette::WindowText, Style::getColor(Style::White)); // Base color
     p.setColor(QPalette::HighlightedText, Style::getColor(Style::DarkGrey)); // Color when active
     nameLabel->setPalette(p);
 
     p = palette();
-    p.setColor(QPalette::Window, Style::getColor(Style::ThemeMedium));   // Base background color
+    p.setColor(QPalette::Window, Style::getColor(Style::ThemeMedium)); // Base background color
     p.setColor(QPalette::Highlight, Style::getColor(Style::ThemeLight)); // On mouse over
-    p.setColor(QPalette::Light, Style::getColor(Style::White));          // When active
+    p.setColor(QPalette::Light, Style::getColor(Style::White)); // When active
     setPalette(p);
 }
 

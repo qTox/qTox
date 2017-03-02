@@ -20,8 +20,8 @@
 
 #include "avatarbroadcaster.h"
 #include "src/core/core.h"
-#include <QDebug>
 #include <QObject>
+#include <QDebug>
 
 /**
  * @class AvatarBroadcaster
@@ -35,7 +35,8 @@ QByteArray AvatarBroadcaster::avatarData;
 QMap<uint32_t, bool> AvatarBroadcaster::friendsSentTo;
 
 static QMetaObject::Connection autoBroadcastConn;
-static auto autoBroadcast = [](uint32_t friendId, Status) {
+static auto autoBroadcast = [](uint32_t friendId, Status)
+{
     AvatarBroadcaster::sendAvatarTo(friendId);
 };
 
@@ -78,6 +79,5 @@ void AvatarBroadcaster::enableAutoBroadcast(bool state)
 {
     QObject::disconnect(autoBroadcastConn);
     if (state)
-        autoBroadcastConn =
-            QObject::connect(Core::getInstance(), &Core::friendStatusChanged, autoBroadcast);
+        autoBroadcastConn = QObject::connect(Core::getInstance(), &Core::friendStatusChanged, autoBroadcast);
 }

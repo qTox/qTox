@@ -20,8 +20,8 @@
 
 #include "profilelocker.h"
 #include "src/persistence/settings.h"
-#include <QDebug>
 #include <QDir>
+#include <QDebug>
 
 /**
  * @class ProfileLocker
@@ -38,7 +38,7 @@ QString ProfileLocker::curLockName;
 
 QString ProfileLocker::lockPathFromName(const QString& name)
 {
-    return Settings::getInstance().getSettingsDirPath() + '/' + name + ".lock";
+    return Settings::getInstance().getSettingsDirPath()+'/'+name+".lock";
 }
 
 /**
@@ -71,7 +71,8 @@ bool ProfileLocker::lock(QString profile)
 
     QLockFile* newLock = new QLockFile(lockPathFromName(profile));
     newLock->setStaleLockTime(0);
-    if (!newLock->tryLock()) {
+    if (!newLock->tryLock())
+    {
         delete newLock;
         return false;
     }
@@ -104,17 +105,22 @@ void ProfileLocker::unlock()
  */
 void ProfileLocker::assertLock()
 {
-    if (!lockfile) {
+    if (!lockfile)
+    {
         qCritical() << "assertLock: We don't seem to own any lock!";
         deathByBrokenLock();
     }
 
-    if (!QFile(lockPathFromName(curLockName)).exists()) {
+    if (!QFile(lockPathFromName(curLockName)).exists())
+    {
         QString tmp = curLockName;
         unlock();
-        if (lock(tmp)) {
+        if (lock(tmp))
+        {
             qCritical() << "assertLock: Lock file was lost, but could be restored";
-        } else {
+        }
+        else
+        {
             qCritical() << "assertLock: Lock file was lost, and could *NOT* be restored";
             deathByBrokenLock();
         }

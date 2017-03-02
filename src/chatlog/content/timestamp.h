@@ -20,8 +20,8 @@
 #ifndef TIMESTAMP_H
 #define TIMESTAMP_H
 
-#include "text.h"
 #include <QDateTime>
+#include "text.h"
 
 class Timestamp : public Text
 {

@@ -29,7 +29,7 @@ public:
     explicit ChatTextEdit(QWidget* parent = 0);
     ~ChatTextEdit();
     void setLastMessage(QString lm);
-    void sendKeyEvent(QKeyEvent* event);
+    void sendKeyEvent(QKeyEvent * event);
 
 signals:
     void enterPressed();
@@ -37,7 +37,7 @@ signals:
     void keyPressed();
 
 protected:
-    virtual void keyPressEvent(QKeyEvent* event) final override;
+    virtual void keyPressEvent(QKeyEvent * event) final override;
 
 private:
     void retranslateUi();

@@ -21,20 +21,19 @@
 #ifndef TOXME_H
 #define TOXME_H
 
-#include "src/core/toxid.h"
+#include <QString>
 #include <QMap>
 #include <QMutex>
 #include <QNetworkReply>
-#include <QString>
 #include <memory>
+#include "src/core/toxid.h"
 
 class QNetworkAccessManager;
 
 class Toxme
 {
 public:
-    enum ExecCode
-    {
+    enum ExecCode {
         ExecError = -50,
         Ok = 0,
         Updated = 1,
@@ -44,18 +43,18 @@ public:
     };
 
     static ToxId lookup(QString address);
-    static QString createAddress(ExecCode& code, QString server, ToxId id, QString address,
-                                 bool keepPrivate = true, QString bio = QString());
+    static QString createAddress(ExecCode &code, QString server, ToxId id, QString address,
+                              bool keepPrivate=true, QString bio=QString());
     static ExecCode deleteAddress(QString server, ToxPk id);
     static QString getErrorMessage(int errorCode);
     static QString translateErrorMessage(int errorCode);
 
 private:
     Toxme() = delete;
-    static QByteArray makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError& error);
+    static QByteArray makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error);
     static QByteArray prepareEncryptedJson(QString url, int action, QString payload);
-    static QByteArray getServerPubkey(QString url, QNetworkReply::NetworkError& error);
-    static QString getPass(QString json, ExecCode& code);
+    static QByteArray getServerPubkey(QString url, QNetworkReply::NetworkError &error);
+    static QString getPass(QString json, ExecCode &code);
     static ExecCode extractError(QString json);
 
 private:

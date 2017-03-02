@@ -25,8 +25,9 @@
 #include <cstdint>
 
 
-namespace Platform {
-uint32_t getIdleTime();
+namespace Platform
+{
+    uint32_t getIdleTime();
 }
 
 #endif // PLATFORM_TIMER_H

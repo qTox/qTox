@@ -21,10 +21,10 @@
 #ifndef COREAV_H
 #define COREAV_H
 
-#include "src/core/toxcall.h"
 #include <QObject>
-#include <atomic>
 #include <memory>
+#include <atomic>
+#include "src/core/toxcall.h"
 #include <tox/toxav.h>
 
 class Friend;
@@ -54,11 +54,9 @@ public:
     bool isCallActive(const Friend* f) const;
     bool isCallActive(const Group* g) const;
     bool isCallVideoEnabled(const Friend* f) const;
-    bool sendCallAudio(uint32_t friendNum, const int16_t* pcm, size_t samples, uint8_t chans,
-                       uint32_t rate);
+    bool sendCallAudio(uint32_t friendNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
     void sendCallVideo(uint32_t friendNum, std::shared_ptr<VideoFrame> frame);
-    bool sendGroupCallAudio(int groupNum, const int16_t* pcm, size_t samples, uint8_t chans,
-                            uint32_t rate);
+    bool sendGroupCallAudio(int groupNum, const int16_t *pcm, size_t samples, uint8_t chans, uint32_t rate);
 
     VideoSource* getVideoSourceFromCall(int callNumber);
     void invalidateCallSources();
@@ -77,12 +75,14 @@ public:
     void toggleMuteCallInput(const Friend* f);
     void toggleMuteCallOutput(const Friend* f);
 
-    static void groupCallCallback(void* tox, int group, int peer, const int16_t* data, unsigned samples,
-                                  uint8_t channels, unsigned sample_rate, void* core);
+    static void groupCallCallback(void* tox, int group, int peer,
+                                  const int16_t* data, unsigned samples,
+                                  uint8_t channels, unsigned sample_rate,
+                                  void* core);
     static void invalidateGroupCallPeerSource(int group, int peer);
 
 public slots:
-    bool startCall(uint32_t friendNum, bool video = false);
+    bool startCall(uint32_t friendNum, bool video=false);
     bool answerCall(uint32_t friendNum);
     bool cancelCall(uint32_t friendNum);
     void timeoutCall(uint32_t friendNum);
@@ -95,19 +95,17 @@ signals:
     void avEnd(uint32_t friendId);
 
 private slots:
-    static void callCallback(ToxAV* toxAV, uint32_t friendNum, bool audio, bool video, void* self);
-    static void stateCallback(ToxAV*, uint32_t friendNum, uint32_t state, void* self);
-    static void bitrateCallback(ToxAV* toxAV, uint32_t friendNum, uint32_t arate, uint32_t vrate,
-                                void* self);
+    static void callCallback(ToxAV *toxAV, uint32_t friendNum, bool audio, bool video, void* self);
+    static void stateCallback(ToxAV *, uint32_t friendNum, uint32_t state, void* self);
+    static void bitrateCallback(ToxAV *toxAV, uint32_t friendNum, uint32_t arate, uint32_t vrate, void* self);
     void killTimerFromThread();
 
 private:
     void process();
-    static void audioFrameCallback(ToxAV* toxAV, uint32_t friendNum, const int16_t* pcm,
-                                   size_t sampleCount, uint8_t channels, uint32_t samplingRate,
-                                   void* self);
-    static void videoFrameCallback(ToxAV* toxAV, uint32_t friendNum, uint16_t w, uint16_t h,
-                                   const uint8_t* y, const uint8_t* u, const uint8_t* v,
+    static void audioFrameCallback(ToxAV *toxAV, uint32_t friendNum, const int16_t *pcm, size_t sampleCount,
+                                  uint8_t channels, uint32_t samplingRate, void* self);
+    static void videoFrameCallback(ToxAV *toxAV, uint32_t friendNum, uint16_t w, uint16_t h,
+                                   const uint8_t *y, const uint8_t *u, const uint8_t *v,
                                    int32_t ystride, int32_t ustride, int32_t vstride, void* self);
 
 private:

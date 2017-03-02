@@ -20,8 +20,8 @@
 #ifndef LOADHISTORYDIALOG_H
 #define LOADHISTORYDIALOG_H
 
-#include <QDateTime>
 #include <QDialog>
+#include <QDateTime>
 
 namespace Ui {
 class LoadHistoryDialog;
@@ -38,7 +38,7 @@ public:
     QDateTime getFromDate();
 
 private:
-    Ui::LoadHistoryDialog* ui;
+    Ui::LoadHistoryDialog *ui;
 };
 
 #endif // LOADHISTORYDIALOG_H

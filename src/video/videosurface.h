@@ -20,10 +20,10 @@
 #ifndef SELFCAMVIEW_H
 #define SELFCAMVIEW_H
 
-#include "src/video/videosource.h"
 #include <QWidget>
-#include <atomic>
 #include <memory>
+#include <atomic>
+#include "src/video/videosource.h"
 
 class VideoSurface : public QWidget
 {

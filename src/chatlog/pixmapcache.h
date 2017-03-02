@@ -20,9 +20,9 @@
 #ifndef ICONCACHE_H
 #define ICONCACHE_H
 
-#include <QHash>
 #include <QIcon>
 #include <QPixmap>
+#include <QHash>
 
 class PixmapCache
 {
@@ -31,9 +31,7 @@ public:
     static PixmapCache& getInstance();
 
 protected:
-    PixmapCache()
-    {
-    }
+    PixmapCache() {}
     PixmapCache(PixmapCache&) = delete;
     PixmapCache& operator=(const PixmapCache&) = delete;
 

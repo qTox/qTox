@@ -20,15 +20,15 @@
 #ifndef GROUPINVITE_H
 #define GROUPINVITE_H
 
+#include <cstdint>
 #include <QByteArray>
 #include <QDateTime>
-#include <cstdint>
 
 class GroupInvite
 {
 public:
     GroupInvite(int32_t friendID, uint8_t inviteType, const QByteArray& data);
-    bool operator==(const GroupInvite& other) const;
+    bool operator ==(const GroupInvite& other) const;
 
     int32_t getFriendId() const;
     uint8_t getType() const;

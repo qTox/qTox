@@ -51,13 +51,15 @@ signals:
     void hidden();
 
 private:
+
     void finishedAnimation();
     void startAnimation(bool forward);
 
     QWidget* container;
-    QPropertyAnimation* animation;
+    QPropertyAnimation *animation;
     qreal percent = 1.0f;
     QPoint startPos;
+
 };
 
 #endif // FLYOUTOVERLAYWIDGET_HPP

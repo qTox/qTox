@@ -20,9 +20,9 @@
 #include "loadhistorydialog.h"
 #include "ui_loadhistorydialog.h"
 
-LoadHistoryDialog::LoadHistoryDialog(QWidget* parent)
-    : QDialog(parent)
-    , ui(new Ui::LoadHistoryDialog)
+LoadHistoryDialog::LoadHistoryDialog(QWidget* parent) :
+    QDialog(parent),
+    ui(new Ui::LoadHistoryDialog)
 {
     ui->setupUi(this);
 }
@@ -35,8 +35,8 @@ LoadHistoryDialog::~LoadHistoryDialog()
 QDateTime LoadHistoryDialog::getFromDate()
 {
     QDateTime res(ui->fromDate->selectedDate());
-    if (res.date().month() != ui->fromDate->monthShown()
-        || res.date().year() != ui->fromDate->yearShown()) {
+    if (res.date().month() != ui->fromDate->monthShown() || res.date().year() != ui->fromDate->yearShown())
+    {
         QDate newDate(ui->fromDate->yearShown(), ui->fromDate->monthShown(), 1);
         res.setDate(newDate);
     }

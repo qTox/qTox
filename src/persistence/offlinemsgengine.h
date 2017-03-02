@@ -20,12 +20,12 @@
 #ifndef OFFLINEMSGENGINE_H
 #define OFFLINEMSGENGINE_H
 
-#include "src/chatlog/chatmessage.h"
-#include <QDateTime>
-#include <QMap>
-#include <QMutex>
 #include <QObject>
 #include <QSet>
+#include <QMutex>
+#include <QDateTime>
+#include <QMap>
+#include "src/chatlog/chatmessage.h"
 
 class Friend;
 class QTimer;
@@ -34,21 +34,19 @@ class OfflineMsgEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit OfflineMsgEngine(Friend*);
+    explicit OfflineMsgEngine(Friend *);
     virtual ~OfflineMsgEngine();
     static QMutex globalMutex;
 
     void dischargeReceipt(int receipt);
-    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
-                         const QDateTime& timestamp = QDateTime::currentDateTime());
+    void registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg, const QDateTime &timestamp = QDateTime::currentDateTime());
 
 public slots:
     void deliverOfflineMsgs();
     void removeAllReceipts();
 
 private:
-    struct MsgPtr
-    {
+    struct MsgPtr {
         ChatMessage::Ptr msg;
         QDateTime timestamp;
         int receipt;

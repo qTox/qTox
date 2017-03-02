@@ -20,8 +20,8 @@
 #include "aboutform.h"
 #include "ui_aboutsettings.h"
 
-#include <QDebug>
 #include <QTimer>
+#include <QDebug>
 #include <tox/tox.h>
 
 #include "src/core/recursivesignalblocker.h"
@@ -73,39 +73,41 @@ void AboutForm::replaceVersions()
     // TODO: When we finally have stable releases: build-in a way to tell
     // nightly builds from stable releases.
 
-    QString TOXCORE_VERSION = QString::number(TOX_VERSION_MAJOR) + "."
-                              + QString::number(TOX_VERSION_MINOR) + "."
-                              + QString::number(TOX_VERSION_PATCH);
+    QString TOXCORE_VERSION = QString::number(TOX_VERSION_MAJOR) + "." +
+            QString::number(TOX_VERSION_MINOR) + "." +
+            QString::number(TOX_VERSION_PATCH);
 
-    bodyUI->youAreUsing->setText(tr("You are using qTox version %1.").arg(QString(GIT_DESCRIBE)));
+    bodyUI->youAreUsing->setText(tr("You are using qTox version %1.")
+                                 .arg(QString(GIT_DESCRIBE)));
 
     QString commitLink = "https://github.com/qTox/qTox/commit/" + QString(GIT_VERSION);
-    bodyUI->gitVersion->setText(
-        tr("Commit hash: %1").arg(createLink(commitLink, QString(GIT_VERSION))));
+    bodyUI->gitVersion->setText(tr("Commit hash: %1")
+                                .arg(createLink(commitLink, QString(GIT_VERSION))));
 
     bodyUI->toxCoreVersion->setText(tr("toxcore version: %1").arg(TOXCORE_VERSION));
     bodyUI->qtVersion->setText(tr("Qt version: %1").arg(QT_VERSION_STR));
 
-    QString issueBody = QString("##### Brief Description\n\n"
-                                "OS: Windows / OS X / Linux (include version and/or distro)\n"
-                                "qTox version: %1\n"
-                                "Commit hash: %2\n"
-                                "toxcore: %3\n"
-                                "Qt: %4\n"
-                                "Hardware: \n…\n\n"
-                                "Reproducible: Always / Almost Always / Sometimes"
-                                " / Rarely / Couldn't Reproduce\n\n"
-                                "##### Steps to reproduce\n\n"
-                                "1. \n2. \n3. …\n\n"
-                                "##### Observed Behavior\n\n\n"
-                                "##### Expected Behavior\n\n\n"
-                                "##### Additional Info\n"
-                                "(links, images, etc go here)\n\n"
-                                "----\n\n"
-                                "More information on how to write good bug reports in the wiki: "
-                                "https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports.\n\n"
-                                "Please remove any unnecessary template section before submitting.")
-                            .arg(GIT_DESCRIBE, GIT_VERSION, TOXCORE_VERSION, QT_VERSION_STR);
+    QString issueBody = QString(
+            "##### Brief Description\n\n"
+            "OS: Windows / OS X / Linux (include version and/or distro)\n"
+            "qTox version: %1\n"
+            "Commit hash: %2\n"
+            "toxcore: %3\n"
+            "Qt: %4\n"
+            "Hardware: \n…\n\n"
+            "Reproducible: Always / Almost Always / Sometimes"
+            " / Rarely / Couldn't Reproduce\n\n"
+            "##### Steps to reproduce\n\n"
+            "1. \n2. \n3. …\n\n"
+            "##### Observed Behavior\n\n\n"
+            "##### Expected Behavior\n\n\n"
+            "##### Additional Info\n"
+            "(links, images, etc go here)\n\n"
+            "----\n\n"
+            "More information on how to write good bug reports in the wiki: "
+            "https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports.\n\n"
+            "Please remove any unnecessary template section before submitting.")
+            .arg(GIT_DESCRIBE, GIT_VERSION, TOXCORE_VERSION, QT_VERSION_STR);
 
     issueBody.replace("#", "%23").replace(":", "%3A");
 
@@ -117,25 +119,30 @@ void AboutForm::replaceVersions()
 
            "`%1` is replaced by translation of `bug tracker`"
            "\n`%2` is replaced by translation of `Writing Useful Bug Reports`")
-            .arg(createLink("https://github.com/qTox/qTox/issues",
-                            tr("bug-tracker", "Replaces `%1` in the `A list of all known…`")))
-            .arg(createLink("https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports",
-                            tr("Writing Useful Bug Reports",
-                               "Replaces `%2` in the `A list of all known…`"))));
+        .arg(createLink("https://github.com/qTox/qTox/issues",
+             tr("bug-tracker",
+                "Replaces `%1` in the `A list of all known…`")))
+        .arg(createLink("https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports",
+             tr("Writing Useful Bug Reports",
+                "Replaces `%2` in the `A list of all known…`")))
+    );
 
     bodyUI->clickToReport->setText(
-        createLink("https://github.com/qTox/qTox/issues/new?body=" + QUrl(issueBody).toEncoded(),
-                   QString("<b>%1</b>").arg(tr("Click here to report a bug."))));
+        createLink("https://github.com/qTox/qTox/issues/new?body="
+                        + QUrl(issueBody).toEncoded(),
+                   QString("<b>%1</b>")
+                      .arg(tr("Click here to report a bug.")))
+    );
 
 
-    QString authorInfo =
-        QString("<p>%1</p><p>%2</p>")
-            .arg(tr("Original author: %1").arg(createLink("https://github.com/tux3", "tux3")))
-            .arg(
-                tr("See a full list of %1 at Github",
-                   "`%1` is replaced with translation of word `contributors`")
-                    .arg(createLink("https://qtox.github.io/gitstats/authors.html",
-                                    tr("contributors", "Replaces `%1` in `See a full list of…`"))));
+    QString authorInfo = QString("<p>%1</p><p>%2</p>")
+            .arg(tr("Original author: %1")
+                 .arg(createLink("https://github.com/tux3", "tux3")))
+            .arg(tr("See a full list of %1 at Github",
+                    "`%1` is replaced with translation of word `contributors`")
+                 .arg(createLink("https://qtox.github.io/gitstats/authors.html",
+                                 tr("contributors",
+                                    "Replaces `%1` in `See a full list of…`"))));
 
     bodyUI->authorInfo->setText(authorInfo);
 }
@@ -148,9 +155,8 @@ void AboutForm::replaceVersions()
  */
 QString AboutForm::createLink(QString path, QString text) const
 {
-    return QString::fromUtf8(
-               "<a href=\"%1\" style=\"text-decoration: underline; color:#0000ff;\">%2</a>")
-        .arg(path, text);
+    return QString::fromUtf8("<a href=\"%1\" style=\"text-decoration: underline; color:#0000ff;\">%2</a>")
+            .arg(path, text);
 }
 
 AboutForm::~AboutForm()
@@ -167,15 +173,17 @@ void AboutForm::showUpdateProgress()
     QString version = AutoUpdater::getProgressVersion();
     int value = AutoUpdater::getProgressValue();
 
-    if (version.isEmpty()) {
+    if (version.isEmpty())
+    {
         bodyUI->updateProgress->setVisible(value != 0);
         bodyUI->updateText->setVisible(value != 0);
-    } else {
+    }
+    else
+    {
         if (value == 100)
             bodyUI->updateText->setText(tr("Restart qTox to install version %1").arg(version));
         else
-            bodyUI->updateText->setText(
-                tr("qTox is downloading update %1", "%1 is the version of the update").arg(version));
+            bodyUI->updateText->setText(tr("qTox is downloading update %1", "%1 is the version of the update").arg(version));
         bodyUI->updateProgress->setValue(value);
 
         bodyUI->updateProgress->setVisible(value != 0 && value != 100);
@@ -183,12 +191,12 @@ void AboutForm::showUpdateProgress()
     }
 }
 
-void AboutForm::hideEvent(QHideEvent*)
+void AboutForm::hideEvent(QHideEvent *)
 {
     progressTimer->stop();
 }
 
-void AboutForm::showEvent(QShowEvent*)
+void AboutForm::showEvent(QShowEvent *)
 {
     progressTimer->start();
 }

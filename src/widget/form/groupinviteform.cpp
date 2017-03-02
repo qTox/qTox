@@ -19,21 +19,21 @@
 
 #include "groupinviteform.h"
 
-#include "ui_mainwindow.h"
+#include "src/widget/form/groupinvitewidget.h"
 #include "src/core/core.h"
 #include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/contentlayout.h"
-#include "src/widget/form/groupinvitewidget.h"
 #include "src/widget/translator.h"
+#include "ui_mainwindow.h"
 
+#include <QVBoxLayout>
 #include <QDateTime>
 #include <QDebug>
 #include <QGroupBox>
 #include <QLabel>
 #include <QPushButton>
 #include <QSignalMapper>
-#include <QVBoxLayout>
 #include <QWindow>
 
 #include <algorithm>
@@ -53,8 +53,10 @@ GroupInviteForm::GroupInviteForm()
     , headWidget(new QWidget(this))
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
-    connect(createButton, &QPushButton::clicked,
-            [this]() { emit groupCreate(TOX_CONFERENCE_TYPE_AV); });
+    connect(createButton, &QPushButton::clicked, [this]()
+    {
+        emit groupCreate(TOX_CONFERENCE_TYPE_AV);
+    });
 
     QWidget* innerWidget = new QWidget(scroll);
     innerWidget->setLayout(new QVBoxLayout());
@@ -91,7 +93,8 @@ GroupInviteForm::~GroupInviteForm()
 bool GroupInviteForm::isShown() const
 {
     bool result = isVisible();
-    if (result) {
+    if (result)
+    {
         headWidget->window()->windowHandle()->alert(0);
     }
     return result;
@@ -120,13 +123,17 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
     GroupInviteWidget* widget = new GroupInviteWidget(this, GroupInvite(friendId, type, invite));
     scroll->widget()->layout()->addWidget(widget);
     invites.append(widget);
-    connect(widget, &GroupInviteWidget::accepted, [this](const GroupInvite& inviteInfo) {
+    connect(widget, &GroupInviteWidget::accepted,
+            [this] (const GroupInvite& inviteInfo) {
         deleteInviteWidget(inviteInfo);
-        emit groupInviteAccepted(inviteInfo.getFriendId(), inviteInfo.getType(),
+        emit groupInviteAccepted(inviteInfo.getFriendId(),
+                                 inviteInfo.getType(),
                                  inviteInfo.getInvite());
     });
     connect(widget, &GroupInviteWidget::rejected,
-            [this](const GroupInvite& inviteInfo) { deleteInviteWidget(inviteInfo); });
+            [this] (const GroupInvite& inviteInfo) {
+        deleteInviteWidget(inviteInfo);
+    });
     if (isVisible()) {
         emit groupInvitesSeen();
     }
@@ -142,12 +149,12 @@ void GroupInviteForm::showEvent(QShowEvent* event)
  * @brief Deletes accepted/declined group invite widget
  * @param inviteInfo Invite information of accepted/declined widget
  */
-void GroupInviteForm::deleteInviteWidget(const GroupInvite& inviteInfo)
+void GroupInviteForm::deleteInviteWidget(const GroupInvite &inviteInfo)
 {
-    auto deletingWidget =
-        std::find_if(invites.begin(), invites.end(), [=](const GroupInviteWidget* widget) {
-            return inviteInfo == widget->getInviteInfo();
-        });
+    auto deletingWidget = std::find_if(invites.begin(), invites.end(),
+                                       [=] (const GroupInviteWidget* widget) {
+        return inviteInfo == widget->getInviteInfo();
+    });
     (*deletingWidget)->deleteLater();
     scroll->widget()->layout()->removeWidget(*deletingWidget);
     invites.erase(deletingWidget);
@@ -156,11 +163,13 @@ void GroupInviteForm::deleteInviteWidget(const GroupInvite& inviteInfo)
 void GroupInviteForm::retranslateUi()
 {
     headLabel->setText(tr("Groups"));
-    if (createButton) {
+    if (createButton)
+    {
         createButton->setText(tr("Create new group"));
     }
     inviteBox->setTitle(tr("Group invites"));
-    for (GroupInviteWidget* invite : invites) {
+    for (GroupInviteWidget* invite : invites)
+    {
         invite->retranslateUi();
     }
 }

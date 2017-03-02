@@ -19,20 +19,20 @@
 
 #include "settingswidget.h"
 
-#include <QLabel>
 #include <QTabWidget>
+#include <QLabel>
 #include <QWindow>
 
 #include "src/video/camerasource.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/form/settings/aboutform.h"
-#include "src/widget/form/settings/advancedform.h"
-#include "src/widget/form/settings/avform.h"
-#include "src/widget/form/settings/generalform.h"
-#include "src/widget/form/settings/privacyform.h"
-#include "src/widget/form/settings/userinterfaceform.h"
-#include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/form/settings/generalform.h"
+#include "src/widget/form/settings/userinterfaceform.h"
+#include "src/widget/form/settings/privacyform.h"
+#include "src/widget/form/settings/avform.h"
+#include "src/widget/form/settings/advancedform.h"
+#include "src/widget/form/settings/aboutform.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent, Qt::Window)
@@ -49,10 +49,10 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     UserInterfaceForm* uifrm = new UserInterfaceForm(this);
     PrivacyForm* pfrm = new PrivacyForm();
     AVForm* avfrm = new AVForm();
-    AdvancedForm* expfrm = new AdvancedForm();
-    AboutForm* abtfrm = new AboutForm();
+    AdvancedForm *expfrm = new AdvancedForm();
+    AboutForm *abtfrm = new AboutForm();
 
-    cfgForms = {{gfrm, uifrm, pfrm, avfrm, expfrm, abtfrm}};
+    cfgForms = {{ gfrm, uifrm, pfrm, avfrm, expfrm, abtfrm }};
     for (GenericForm* cfgForm : cfgForms)
         settingsWidgets->addTab(cfgForm, cfgForm->getFormIcon(), cfgForm->getFormName());
 
@@ -78,7 +78,8 @@ void SettingsWidget::showAbout()
 
 bool SettingsWidget::isShown() const
 {
-    if (settingsWidgets->isVisible()) {
+    if (settingsWidgets->isVisible())
+    {
         settingsWidgets->window()->windowHandle()->alert(0);
         return true;
     }

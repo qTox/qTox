@@ -18,15 +18,14 @@
 */
 
 #include "filesform.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/translator.h"
 #include "src/widget/widget.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
 #include <QFileInfo>
 #include <QWindow>
 
 FilesForm::FilesForm()
-    : QObject()
-    , doneIcon(":/ui/fileTransferWidget/fileDone.svg")
+    : QObject(), doneIcon(":/ui/fileTransferWidget/fileDone.svg")
 {
     head = new QWidget();
     QFont bold;
@@ -58,7 +57,8 @@ FilesForm::~FilesForm()
 
 bool FilesForm::isShown() const
 {
-    if (main.isVisible()) {
+    if (main.isVisible())
+    {
         head->window()->windowHandle()->alert(0);
         return true;
     }
@@ -93,14 +93,14 @@ void FilesForm::onFileUploadComplete(const QString& path)
 // whenever they're not saved anywhere custom, thanks to the hack)
 // I could do some digging around, but for now I'm tired and others already
 // might know it without me needing to dig, so...
-void FilesForm::onFileActivated(QListWidgetItem* item)
+void FilesForm::onFileActivated(QListWidgetItem *item)
 {
     Widget::confirmExecutableOpen(QFileInfo(item->data(Qt::UserRole).toString()));
 }
 
 void FilesForm::retranslateUi()
 {
-    headLabel.setText(tr("Transferred Files", "\"Headline\" of the window"));
+    headLabel.setText(tr("Transferred Files","\"Headline\" of the window"));
     main.setTabText(0, tr("Downloads"));
     main.setTabText(1, tr("Uploads"));
 }

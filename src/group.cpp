@@ -18,24 +18,22 @@
 */
 
 #include "group.h"
-#include "friend.h"
-#include "friendlist.h"
-#include "src/core/core.h"
-#include "widget/form/groupchatform.h"
 #include "widget/groupwidget.h"
+#include "widget/form/groupchatform.h"
+#include "friendlist.h"
+#include "friend.h"
+#include "src/core/core.h"
 #include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
 Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId)
-    , nPeers{0}
-    , avGroupchat{IsAvGroupchat}
+    : groupId(GroupId), nPeers{0}, avGroupchat{IsAvGroupchat}
 {
     widget = new GroupWidget(groupId, Name);
     chatForm = new GroupChatForm(this);
 
-    // in groupchats, we only notify on messages containing your name <-- dumb
+    //in groupchats, we only notify on messages containing your name <-- dumb
     // sound notifications should be on all messages, but system popup notification
     // on naming is appropriate
     hasNewMessages = 0;
@@ -56,10 +54,13 @@ void Group::updatePeer(int peerId, QString name)
     toxids[peerPk] = name;
 
     Friend* f = FriendList::findFriend(peerKey);
-    if (f != nullptr && f->hasAlias()) {
+    if (f != nullptr && f->hasAlias())
+    {
         peers[peerId] = f->getDisplayedName();
         toxids[peerPk] = f->getDisplayedName();
-    } else {
+    }
+    else
+    {
         widget->onUserListChanged();
         chatForm->onUserListChanged();
         emit userListChanged(getGroupWidget());
@@ -87,7 +88,8 @@ void Group::regeneratePeerList()
     peers = core->getGroupPeerNames(groupId);
     toxids.clear();
     nPeers = peers.size();
-    for (int i = 0; i < nPeers; ++i) {
+    for (int i = 0; i < nPeers; ++i)
+    {
         ToxPk id = core->getGroupPeerPk(groupId, i);
         ToxPk self = core->getSelfId().getPublicKey();
         if (id == self)
@@ -96,11 +98,11 @@ void Group::regeneratePeerList()
         QByteArray peerPk = id.getKey();
         toxids[peerPk] = peers[i];
         if (toxids[peerPk].isEmpty())
-            toxids[peerPk] =
-                tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
+            toxids[peerPk] = tr("<Empty>", "Placeholder when someone's name in a group chat is empty");
 
         Friend* f = FriendList::findFriend(id);
-        if (f != nullptr && f->hasAlias()) {
+        if (f != nullptr && f->hasAlias())
+        {
             peers[i] = f->getDisplayedName();
             toxids[peerPk] = f->getDisplayedName();
         }
@@ -126,12 +128,12 @@ int Group::getPeersCount() const
     return nPeers;
 }
 
-GroupChatForm* Group::getChatForm()
+GroupChatForm *Group::getChatForm()
 {
     return chatForm;
 }
 
-GroupWidget* Group::getGroupWidget()
+GroupWidget *Group::getGroupWidget()
 {
     return widget;
 }
@@ -166,7 +168,7 @@ int Group::getMentionedFlag() const
     return userWasMentioned;
 }
 
-QString Group::resolveToxId(const ToxPk& id) const
+QString Group::resolveToxId(const ToxPk &id) const
 {
     QByteArray key = id.getKey();
     auto it = toxids.find(key);

@@ -43,8 +43,12 @@ GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite)
     , inviteMessageLabel(new CroppingLabel(this))
     , inviteInfo(invite)
 {
-    connect(acceptButton, &QPushButton::clicked, [=]() { emit accepted(inviteInfo); });
-    connect(rejectButton, &QPushButton::clicked, [=]() { emit rejected(inviteInfo); });
+    connect(acceptButton, &QPushButton::clicked, [=] () {
+        emit accepted(inviteInfo);
+    });
+    connect(rejectButton, &QPushButton::clicked, [=] () {
+        emit rejected(inviteInfo);
+    });
     widgetLayout->addWidget(inviteMessageLabel);
     widgetLayout->addWidget(acceptButton);
     widgetLayout->addWidget(rejectButton);
@@ -62,8 +66,9 @@ void GroupInviteWidget::retranslateUi()
     QString date = inviteDate.toString(Settings::getInstance().getDateFormat());
     QString time = inviteDate.toString(Settings::getInstance().getTimestampFormat());
 
-    inviteMessageLabel->setText(
-        tr("Invited by %1 on %2 at %3.").arg("<b>%1</b>").arg(name.toHtmlEscaped(), date, time));
+    inviteMessageLabel->setText(tr("Invited by %1 on %2 at %3.")
+                                .arg("<b>%1</b>")
+                                .arg(name.toHtmlEscaped(), date, time));
     acceptButton->setText(tr("Join"));
     rejectButton->setText(tr("Decline"));
 }

@@ -25,6 +25,7 @@
 class TextFormatter
 {
 private:
+
     QString sourceString;
 
     QString applyHtmlFontStyling(bool showFormattingSymbols);

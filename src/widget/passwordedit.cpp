@@ -11,9 +11,9 @@
 
 PasswordEdit::EventHandler* PasswordEdit::eventHandler{nullptr};
 
-PasswordEdit::PasswordEdit(QWidget* parent)
-    : QLineEdit(parent)
-    , action(new QAction(this))
+PasswordEdit::PasswordEdit(QWidget* parent) :
+    QLineEdit(parent),
+    action(new QAction(this))
 {
     setEchoMode(QLineEdit::Password);
 
@@ -44,9 +44,11 @@ void PasswordEdit::unregisterHandler()
 #ifdef ENABLE_CAPSLOCK_INDICATOR
     int idx;
 
-    if (eventHandler && (idx = eventHandler->actions.indexOf(action)) >= 0) {
+    if (eventHandler && (idx = eventHandler->actions.indexOf(action)) >= 0)
+    {
         eventHandler->actions.remove(idx);
-        if (eventHandler->actions.isEmpty()) {
+        if (eventHandler->actions.isEmpty())
+        {
             delete eventHandler;
             eventHandler = nullptr;
         }
@@ -86,9 +88,10 @@ void PasswordEdit::EventHandler::updateActions()
         action->setVisible(caps);
 }
 
-bool PasswordEdit::EventHandler::eventFilter(QObject* obj, QEvent* event)
+bool PasswordEdit::EventHandler::eventFilter(QObject *obj, QEvent *event)
 {
-    switch (event->type()) {
+    switch (event->type())
+    {
     case QEvent::WindowActivate:
     case QEvent::KeyRelease:
         updateActions();

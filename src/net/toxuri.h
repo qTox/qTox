@@ -33,11 +33,11 @@ class ToxURIDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit ToxURIDialog(QWidget* parent, const QString& userId, const QString& message);
+    explicit ToxURIDialog(QWidget* parent, const QString &userId, const QString &message);
     QString getRequestMessage();
 
 private:
-    QPlainTextEdit* messageEdit;
+    QPlainTextEdit *messageEdit;
 };
 
 #endif // TOXURI_H

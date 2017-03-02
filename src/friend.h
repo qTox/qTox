@@ -20,10 +20,10 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 
-#include "core/toxid.h"
-#include "src/core/corestructs.h"
 #include <QObject>
 #include <QString>
+#include "src/core/corestructs.h"
+#include "core/toxid.h"
 
 class FriendWidget;
 class ChatForm;
@@ -56,7 +56,7 @@ public:
     void setStatus(Status s);
     Status getStatus() const;
 
-    ChatForm* getChatForm();
+    ChatForm *getChatForm();
 
 signals:
     // TODO: move signals to DB object

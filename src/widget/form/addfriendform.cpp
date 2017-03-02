@@ -18,26 +18,26 @@
 */
 
 #include "addfriendform.h"
-#include "src/core/core.h"
-#include "src/net/toxme.h"
-#include "src/net/toxme.h"
-#include "src/nexus.h"
-#include "src/persistence/settings.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/gui.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/translator.h"
-#include <QApplication>
-#include <QClipboard>
-#include <QErrorMessage>
 #include <QFont>
 #include <QMessageBox>
+#include <QErrorMessage>
+#include <QApplication>
+#include <QClipboard>
 #include <QRegularExpression>
-#include <QScrollArea>
-#include <QSignalMapper>
 #include <QTabWidget>
-#include <QWindow>
+#include <QSignalMapper>
 #include <tox/tox.h>
+#include "src/nexus.h"
+#include "src/core/core.h"
+#include "src/net/toxme.h"
+#include "src/persistence/settings.h"
+#include "src/widget/gui.h"
+#include "src/widget/translator.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/net/toxme.h"
+#include <QWindow>
+#include <QScrollArea>
 
 /**
  * @var QString AddFriendForm::lastUsername
@@ -79,19 +79,19 @@ AddFriendForm::AddFriendForm()
     connect(Nexus::getCore(), &Core::usernameSet, this, &AddFriendForm::onUsernameSet);
 
     // accessibility stuff
-    toxIdLabel.setAccessibleDescription(
-        tr("Tox ID, either 76 hexadecimal characters or name@example.com"));
+    toxIdLabel.setAccessibleDescription(tr("Tox ID, either 76 hexadecimal characters or name@example.com"));
     toxId.setAccessibleDescription(tr("Type in Tox ID of your friend"));
     messageLabel.setAccessibleDescription(tr("Friend request message"));
-    message.setAccessibleDescription(tr(
-        "Type message to send with the friend request or leave empty to send a default message"));
+    message.setAccessibleDescription(
+        tr("Type message to send with the friend request or leave empty to send a default message"));
 
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
 
     int size = Settings::getInstance().getFriendRequestSize();
 
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
         addFriendRequestWidget(request.address, request.message);
     }
@@ -106,7 +106,8 @@ AddFriendForm::~AddFriendForm()
 
 bool AddFriendForm::isShown() const
 {
-    if (head->isVisible()) {
+    if (head->isVisible())
+    {
         head->window()->windowHandle()->alert(0);
         return true;
     }
@@ -140,9 +141,10 @@ void AddFriendForm::setMode(Mode mode)
     tabWidget->setCurrentIndex(mode);
 }
 
-bool AddFriendForm::addFriendRequest(const QString& friendAddress, const QString& message)
+bool AddFriendForm::addFriendRequest(const QString &friendAddress, const QString &message)
 {
-    if (Settings::getInstance().addFriendRequest(friendAddress, message)) {
+    if (Settings::getInstance().addFriendRequest(friendAddress, message))
+    {
         addFriendRequestWidget(friendAddress, message);
         if (isShown())
             onCurrentChanged(tabWidget->currentIndex());
@@ -163,9 +165,11 @@ void AddFriendForm::onSendTriggered()
     QString idText = toxId.text().trimmed();
     ToxId friendId(idText);
 
-    if (!friendId.isValid()) {
+    if (!friendId.isValid())
+    {
         friendId = Toxme::lookup(idText); // Try Toxme
-        if (!friendId.isValid()) {
+        if (!friendId.isValid())
+        {
             GUI::showWarning(tr("Couldn't add friend"),
                              tr("This Tox ID is invalid or does not exist", "Toxme error"));
             return;
@@ -184,25 +188,31 @@ void AddFriendForm::onSendTriggered()
     this->message.clear();
 }
 
-void AddFriendForm::onIdChanged(const QString& id)
+void AddFriendForm::onIdChanged(const QString &id)
 {
     QString tId = id.trimmed();
     QRegularExpression dnsIdExpression("^\\S+@\\S+$");
     bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
 
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
-    QString toxIdComment(
-        tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
+    QString toxIdComment(tr("either 76 hexadecimal characters or name@example.com", "Tox ID format description"));
 
-    if (isValidId) {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" (") + toxIdComment + QStringLiteral(")"));
-    } else {
-        toxIdLabel.setText(toxIdText + QStringLiteral(" <font color='red'>(") + toxIdComment
-                           + QStringLiteral(")</font>"));
+    if (isValidId)
+    {
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" (") +
+                           toxIdComment +
+                           QStringLiteral(")"));
+    }
+    else
+    {
+        toxIdLabel.setText(toxIdText +
+                           QStringLiteral(" <font color='red'>(") +
+                           toxIdComment +
+                           QStringLiteral(")</font>"));
     }
 
-    toxId.setStyleSheet(isValidId ? QStringLiteral("")
-                                  : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
+    toxId.setStyleSheet(isValidId ? QStringLiteral("") : QStringLiteral("QLineEdit { background-color: #FFC1C1; }"));
     toxId.setToolTip(isValidId ? QStringLiteral("") : tr("Invalid Tox ID format"));
 
     sendButton.setEnabled(isValidId && !tId.isEmpty());
@@ -213,7 +223,10 @@ void AddFriendForm::setIdFromClipboard()
     QClipboard* clipboard = QApplication::clipboard();
     QString id = clipboard->text().trimmed();
     const Core* core = Core::getInstance();
-    if (core->isReady() && !id.isEmpty() && ToxId::isToxId(id) && ToxId(id) != core->getSelfId()) {
+    if (core->isReady() && !id.isEmpty()
+            && ToxId::isToxId(id)
+            && ToxId(id) != core->getSelfId())
+    {
         toxId.setText(id);
     }
 }
@@ -221,9 +234,11 @@ void AddFriendForm::setIdFromClipboard()
 void AddFriendForm::deleteFriendRequest(const ToxId& toxId)
 {
     int size = Settings::getInstance().getFriendRequestSize();
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i)
+    {
         Settings::Request request = Settings::getInstance().getFriendRequest(i);
-        if (toxId == ToxId(request.address)) {
+        if (toxId == ToxId(request.address))
+        {
             Settings::getInstance().removeFriendRequest(i);
             return;
         }
@@ -236,8 +251,7 @@ void AddFriendForm::onFriendRequestAccepted()
     QWidget* friendWidget = acceptButton->parentWidget();
     int index = requestsLayout->indexOf(friendWidget);
     removeFriendRequestWidget(friendWidget);
-    Settings::Request request =
-        Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
+    Settings::Request request = Settings::getInstance().getFriendRequest(requestsLayout->count() - index - 1);
     emit friendRequestAccepted(ToxId(request.address).getPublicKey());
     Settings::getInstance().removeFriendRequest(requestsLayout->count() - index - 1);
     Settings::getInstance().savePersonal();
@@ -255,7 +269,8 @@ void AddFriendForm::onFriendRequestRejected()
 
 void AddFriendForm::onCurrentChanged(int index)
 {
-    if (index == FriendRequest && Settings::getInstance().getUnreadFriendRequests() != 0) {
+    if (index == FriendRequest && Settings::getInstance().getUnreadFriendRequests() != 0)
+    {
         Settings::getInstance().clearUnreadFriendRequests();
         Settings::getInstance().savePersonal();
         emit friendRequestsSeen();
@@ -265,12 +280,11 @@ void AddFriendForm::onCurrentChanged(int index)
 void AddFriendForm::retranslateUi()
 {
     headLabel.setText(tr("Add Friends"));
-    messageLabel.setText(tr("Message", "The message you send in friend requests"));
+    messageLabel.setText(tr("Message","The message you send in friend requests"));
     sendButton.setText(tr("Send friend request"));
-    message.setPlaceholderText(tr("%1 here! Tox me maybe?", "Default message in friend requests if "
-                                                            "the field is left blank. Write "
-                                                            "something appropriate!")
-                                   .arg(lastUsername));
+    message.setPlaceholderText(tr("%1 here! Tox me maybe?",
+                "Default message in friend requests if the field is left blank. Write something appropriate!")
+                .arg(lastUsername));
 
     onIdChanged(toxId.text());
 
@@ -284,7 +298,7 @@ void AddFriendForm::retranslateUi()
         retranslateRejectButton(rejectButton);
 }
 
-void AddFriendForm::addFriendRequestWidget(const QString& friendAddress, const QString& message)
+void AddFriendForm::addFriendRequestWidget(const QString &friendAddress, const QString &message)
 {
     QWidget* friendWidget = new QWidget(tabWidget);
     QHBoxLayout* friendLayout = new QHBoxLayout(friendWidget);
@@ -299,7 +313,8 @@ void AddFriendForm::addFriendRequestWidget(const QString& friendAddress, const Q
 
     QLabel* messageLabel = new QLabel(message);
     // allow to select text, but treat links as plaintext to prevent phishing
-    messageLabel->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+    messageLabel->setTextInteractionFlags(Qt::TextSelectableByMouse |
+                                          Qt::TextSelectableByKeyboard);
     messageLabel->setTextFormat(Qt::PlainText);
     messageLabel->setWordWrap(true);
     horLayout->addWidget(messageLabel, 1);
@@ -328,12 +343,12 @@ void AddFriendForm::removeFriendRequestWidget(QWidget* friendWidget)
     friendWidget->deleteLater();
 }
 
-void AddFriendForm::retranslateAcceptButton(QPushButton* acceptButton)
+void AddFriendForm::retranslateAcceptButton(QPushButton *acceptButton)
 {
     acceptButton->setText(tr("Accept"));
 }
 
-void AddFriendForm::retranslateRejectButton(QPushButton* rejectButton)
+void AddFriendForm::retranslateRejectButton(QPushButton *rejectButton)
 {
     rejectButton->setText(tr("Reject"));
 }

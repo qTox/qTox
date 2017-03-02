@@ -20,10 +20,8 @@
 #ifndef FRIENDLIST_H
 #define FRIENDLIST_H
 
-template <class T>
-class QList;
-template <class A, class B>
-class QHash;
+template <class T> class QList;
+template <class A, class B> class QHash;
 class Friend;
 class QByteArray;
 class ToxPk;

@@ -1,8 +1,8 @@
 #ifndef INDEXEDLIST_H
 #define INDEXEDLIST_H
 
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 
 template <typename T>
 class IndexedList
@@ -19,22 +19,28 @@ public:
     template <typename cmp_type>
     bool contains(cmp_type i)
     {
-        return std::find_if(begin(), end(), [i](T& t) { return static_cast<cmp_type>(t) == i; })
-               != end();
+        return std::find_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        }) != end();
     }
 
     template <typename cmp_type>
     void remove(cmp_type i)
     {
-        v.erase(std::remove_if(begin(), end(), [i](T& t) { return static_cast<cmp_type>(t) == i; }),
-                end());
+        v.erase(std::remove_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        }), end());
     }
 
     template <typename cmp_type>
     T& operator[](cmp_type i)
     {
-        iterator it =
-            std::find_if(begin(), end(), [i](T& t) { return static_cast<cmp_type>(t) == i; });
+        iterator it = std::find_if(begin(), end(), [i](T& t)
+        {
+            return static_cast<cmp_type>(t) == i;
+        });
 
         if (it == end())
             it = insert({});

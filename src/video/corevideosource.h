@@ -21,10 +21,10 @@
 #ifndef COREVIDEOSOURCE_H
 #define COREVIDEOSOURCE_H
 
+#include <vpx/vpx_image.h>
+#include <atomic>
 #include "videosource.h"
 #include <QMutex>
-#include <atomic>
-#include <vpx/vpx_image.h>
 
 class CoreVideoSource : public VideoSource
 {
@@ -37,7 +37,7 @@ public:
 private:
     CoreVideoSource();
 
-    void pushFrame(const vpx_image_t* frame);
+    void pushFrame(const vpx_image_t *frame);
     void setDeleteOnClose(bool newstate);
 
     void stopSource();
@@ -49,8 +49,8 @@ private:
     QMutex biglock;
     std::atomic_bool stopped;
 
-    friend class CoreAV;
-    friend struct ToxFriendCall;
+friend class CoreAV;
+friend struct ToxFriendCall;
 };
 
 #endif // COREVIDEOSOURCE_H

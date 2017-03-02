@@ -21,12 +21,12 @@
 #ifndef AUTOUPDATE_H
 #define AUTOUPDATE_H
 
+#include <QString>
 #include <QList>
 #include <QMutex>
-#include <QString>
+#include <sodium.h>
 #include <atomic>
 #include <functional>
-#include <sodium.h>
 
 #ifdef Q_OS_WIN
 #define AUTOUPDATE_ENABLED 1
@@ -48,7 +48,8 @@ public:
 
         bool operator==(const UpdateFileMeta& other)
         {
-            return (size == other.size && id == other.id && installpath == other.installpath
+            return (size == other.size
+                    && id == other.id && installpath == other.installpath
                     && memcmp(sig, other.sig, crypto_sign_BYTES) == 0);
         }
     };
@@ -71,7 +72,7 @@ public:
     static VersionInfo getUpdateVersion();
     static bool downloadUpdate();
     static bool isLocalUpdateReady();
-    [[noreturn]] static void installLocalUpdate();
+    [[ noreturn ]] static void installLocalUpdate();
     static void abortUpdates();
     static QString getProgressVersion();
     static int getProgressValue();
@@ -81,8 +82,7 @@ protected:
     static QByteArray getUpdateFlist();
     static QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist);
     static bool isUpToDate(UpdateFileMeta file);
-    static UpdateFile getUpdateFile(UpdateFileMeta fileMeta,
-                                    std::function<void(int, int)> progressCallback);
+    static UpdateFile getUpdateFile(UpdateFileMeta fileMeta, std::function<void(int,int)> progressCallback);
     static void checkUpdatesAsyncInteractiveWorker();
     static void setProgressVersion(QString version);
 

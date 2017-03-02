@@ -19,32 +19,32 @@
 */
 
 #include "settings.h"
-#include "src/core/core.h"
-#include "src/core/corestructs.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/profilelocker.h"
-#include "src/persistence/settingsserializer.h"
 #include "src/persistence/smileypack.h"
+#include "src/core/corestructs.h"
+#include "src/core/core.h"
 #include "src/widget/gui.h"
 #include "src/widget/style.h"
+#include "src/persistence/profilelocker.h"
+#include "src/persistence/settingsserializer.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
 #ifdef QTOX_PLATFORM_EXT
 #include "src/platform/autorun.h"
 #endif
 #include "src/ipc.h"
 
+#include <QFont>
 #include <QApplication>
-#include <QCryptographicHash>
-#include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QFont>
-#include <QList>
-#include <QMutexLocker>
-#include <QNetworkProxy>
 #include <QStandardPaths>
+#include <QDebug>
+#include <QList>
 #include <QStyleFactory>
+#include <QCryptographicHash>
+#include <QMutexLocker>
 #include <QThread>
+#include <QNetworkProxy>
 
 /**
  * @var QHash<QString, QByteArray> Settings::widgetSettings
@@ -62,11 +62,9 @@ Settings* Settings::settings{nullptr};
 QMutex Settings::bigLock{QMutex::Recursive};
 QThread* Settings::settingsThread{nullptr};
 
-Settings::Settings()
-    : loaded(false)
-    , useCustomDhtList{false}
-    , makeToxPortable{false}
-    , currentProfileId(0)
+Settings::Settings() :
+    loaded(false), useCustomDhtList{false},
+    makeToxPortable{false}, currentProfileId(0)
 {
     settingsThread = new QThread();
     settingsThread->setObjectName("qTox Settings");
@@ -109,15 +107,19 @@ void Settings::loadGlobal()
 
     createSettingsDir();
 
-    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator() + globalSettingsFile;
+    QString localSettingsPath = qApp->applicationDirPath() + QDir::separator()
+            + globalSettingsFile;
 
-    if (QFile(localSettingsPath).exists()) {
+    if (QFile(localSettingsPath).exists())
+    {
         QSettings ps(localSettingsPath, QSettings::IniFormat);
         ps.setIniCodec("UTF-8");
         ps.beginGroup("Advanced");
-        makeToxPortable = ps.value("makeToxPortable", false).toBool();
+            makeToxPortable = ps.value("makeToxPortable", false).toBool();
         ps.endGroup();
-    } else {
+    }
+    else
+    {
         makeToxPortable = false;
     }
 
@@ -125,7 +127,8 @@ void Settings::loadGlobal()
     QString filePath = dir.filePath(globalSettingsFile);
 
     // If no settings file exist -- use the default one
-    if (!QFile(filePath).exists()) {
+    if (!QFile(filePath).exists())
+    {
         qDebug() << "No settings file found, using defaults";
         filePath = ":/conf/" + globalSettingsFile;
     }
@@ -143,11 +146,13 @@ void Settings::loadGlobal()
 
     s.beginGroup("DHT Server");
     {
-        if (s.value("useCustomList").toBool()) {
+        if (s.value("useCustomList").toBool())
+        {
             useCustomDhtList = true;
             qDebug() << "Using custom bootstrap nodes list";
             int serverListSize = s.beginReadArray("dhtServerList");
-            for (int i = 0; i < serverListSize; i++) {
+            for (int i = 0; i < serverListSize; i ++)
+            {
                 s.setArrayIndex(i);
                 DhtServer server;
                 server.name = s.value("name").toString();
@@ -157,7 +162,9 @@ void Settings::loadGlobal()
                 dhtServerList << server;
             }
             s.endArray();
-        } else {
+        }
+        else
+        {
             useCustomDhtList = false;
         }
     }
@@ -185,7 +192,8 @@ void Settings::loadGlobal()
         showSystemTray = s.value("showSystemTray", true).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
         closeToTray = s.value("closeToTray", false).toBool();
-        if (currentProfile.isEmpty()) {
+        if (currentProfile.isEmpty())
+        {
             currentProfile = s.value("currentProfile", "").toString();
             currentProfileId = makeProfileId(currentProfile);
         }
@@ -195,10 +203,10 @@ void Settings::loadGlobal()
         busySound = s.value("busySound", false).toBool();
         fauxOfflineMessaging = s.value("fauxOfflineMessaging", true).toBool();
         autoSaveEnabled = s.value("autoSaveEnabled", false).toBool();
-        globalAutoAcceptDir = s.value("globalAutoAcceptDir",
-                                      QStandardPaths::locate(QStandardPaths::HomeLocation, QString(),
-                                                             QStandardPaths::LocateDirectory))
-                                  .toString();
+        globalAutoAcceptDir = s.value("globalAutoAcceptDir", QStandardPaths::locate(
+                                          QStandardPaths::HomeLocation,
+                                          QString(),
+                                          QStandardPaths::LocateDirectory)).toString();
         stylePreference = static_cast<StyleType>(s.value("stylePreference", 1).toInt());
     }
     s.endGroup();
@@ -296,21 +304,23 @@ void Settings::loadGlobal()
     s.endGroup();
 
     // Read the embedded DHT bootstrap nodes list if needed
-    if (dhtServerList.isEmpty()) {
+    if (dhtServerList.isEmpty())
+    {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
         rcs.setIniCodec("UTF-8");
         rcs.beginGroup("DHT Server");
-        int serverListSize = rcs.beginReadArray("dhtServerList");
-        for (int i = 0; i < serverListSize; i++) {
-            rcs.setArrayIndex(i);
-            DhtServer server;
-            server.name = rcs.value("name").toString();
-            server.userId = rcs.value("userId").toString();
-            server.address = rcs.value("address").toString();
-            server.port = static_cast<quint16>(rcs.value("port").toUInt());
-            dhtServerList << server;
-        }
-        rcs.endArray();
+            int serverListSize = rcs.beginReadArray("dhtServerList");
+            for (int i = 0; i < serverListSize; i ++)
+            {
+                rcs.setArrayIndex(i);
+                DhtServer server;
+                server.name = rcs.value("name").toString();
+                server.userId = rcs.value("userId").toString();
+                server.address = rcs.value("address").toString();
+                server.port = static_cast<quint16>(rcs.value("port").toUInt());
+                dhtServerList << server;
+            }
+            rcs.endArray();
         rcs.endGroup();
     }
 
@@ -320,7 +330,8 @@ void Settings::loadGlobal()
 void Settings::loadPersonal()
 {
     Profile* profile = Nexus::getProfile();
-    if (!profile) {
+    if (!profile)
+    {
         qCritical() << "No active profile, couldn't load personal settings";
         return;
     }
@@ -339,7 +350,7 @@ void Settings::loadPersonal(Profile* profile)
     if (QFile(tmp).exists()) // otherwise, filePath remains the global file
         filePath = tmp;
 
-    qDebug() << "Loading personal settings from" << filePath;
+    qDebug()<<"Loading personal settings from"<<filePath;
 
     SettingsSerializer ps(filePath, profile->getPassword());
     ps.load();
@@ -356,7 +367,8 @@ void Settings::loadPersonal(Profile* profile)
     {
         int size = ps.beginReadArray("Friend");
         friendLst.reserve(size);
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i ++)
+        {
             ps.setArrayIndex(i);
             friendProp fp;
             fp.addr = ps.value("addr").toString();
@@ -364,11 +376,10 @@ void Settings::loadPersonal(Profile* profile)
             fp.note = ps.value("note").toString();
             fp.autoAcceptDir = ps.value("autoAcceptDir").toString();
 
-            if (fp.autoAcceptDir == "")
+            if(fp.autoAcceptDir == "")
                 fp.autoAcceptDir = ps.value("autoAccept").toString();
 
-            fp.autoAcceptCall =
-                Settings::AutoAcceptCallFlags(QFlag(ps.value("autoAcceptCall", 0).toInt()));
+            fp.autoAcceptCall = Settings::AutoAcceptCallFlags(QFlag(ps.value("autoAcceptCall", 0).toInt()));
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
@@ -384,7 +395,8 @@ void Settings::loadPersonal(Profile* profile)
         int size = ps.beginReadArray("Request");
         friendRequests.clear();
         friendRequests.reserve(size);
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i ++)
+        {
             ps.setArrayIndex(i);
             Request request;
             request.address = ps.value("addr").toString();
@@ -424,7 +436,8 @@ void Settings::loadPersonal(Profile* profile)
         int size = ps.beginReadArray("Circle");
         circleLst.clear();
         circleLst.reserve(size);
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i ++)
+        {
             ps.setArrayIndex(i);
             circleProp cp;
             cp.name = ps.value("name").toString();
@@ -438,7 +451,7 @@ void Settings::loadPersonal(Profile* profile)
     ps.beginGroup("Toxme");
     {
         toxmeInfo = ps.value("info", "").toString();
-        toxmeBio = ps.value("bio", "").toString();
+        toxmeBio  = ps.value("bio", "").toString();
         toxmePriv = ps.value("priv", false).toBool();
         toxmePass = ps.value("pass", "").toString();
     }
@@ -452,7 +465,7 @@ void Settings::resetToDefault()
 
     // Remove file with profile settings
     QDir dir(getSettingsDirPath());
-    Profile* profile = Nexus::getProfile();
+    Profile *profile = Nexus::getProfile();
     QString localPath = dir.filePath(profile->getName() + ".ini");
     QFile local(localPath);
     if (local.exists())
@@ -465,7 +478,7 @@ void Settings::resetToDefault()
 void Settings::saveGlobal()
 {
     if (QThread::currentThread() != settingsThread)
-        return (void)QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
+        return (void) QMetaObject::invokeMethod(&getInstance(), "saveGlobal");
 
     QMutexLocker locker{&bigLock};
     if (!loaded)
@@ -489,7 +502,8 @@ void Settings::saveGlobal()
     {
         s.setValue("useCustomList", useCustomDhtList);
         s.beginWriteArray("dhtServerList", dhtServerList.size());
-        for (int i = 0; i < dhtServerList.size(); i++) {
+        for (int i = 0; i < dhtServerList.size(); i ++)
+        {
             s.setArrayIndex(i);
             s.setValue("name", dhtServerList[i].name);
             s.setValue("userId", dhtServerList[i].userId);
@@ -502,9 +516,9 @@ void Settings::saveGlobal()
 
     s.beginGroup("General");
     {
-        s.setValue("translation", translation);
+        s.setValue("translation",translation);
         s.setValue("showSystemTray", showSystemTray);
-        s.setValue("autostartInTray", autostartInTray);
+        s.setValue("autostartInTray",autostartInTray);
         s.setValue("closeToTray", closeToTray);
         s.setValue("currentProfile", currentProfile);
         s.setValue("autoAwayTime", autoAwayTime);
@@ -520,7 +534,7 @@ void Settings::saveGlobal()
 
     s.beginGroup("Advanced");
     {
-        s.setValue("makeToxPortable", makeToxPortable);
+        s.setValue("makeToxPortable",makeToxPortable);
         s.setValue("enableIPv6", enableIPv6);
         s.setValue("forceTCP", forceTCP);
         s.setValue("dbSyncType", static_cast<int>(dbSyncType));
@@ -613,7 +627,8 @@ void Settings::savePersonal()
  */
 void Settings::savePersonal(Profile* profile)
 {
-    if (!profile) {
+    if (!profile)
+    {
         qDebug() << "Could not save personal settings because there is no active profile";
         return;
     }
@@ -623,8 +638,8 @@ void Settings::savePersonal(Profile* profile)
 void Settings::savePersonal(QString profileName, const QString& password)
 {
     if (QThread::currentThread() != settingsThread)
-        return (void)QMetaObject::invokeMethod(&getInstance(), "savePersonal",
-                                               Q_ARG(QString, profileName), Q_ARG(QString, password));
+        return (void) QMetaObject::invokeMethod(&getInstance(), "savePersonal",
+                                                Q_ARG(QString, profileName), Q_ARG(QString, password));
 
     QMutexLocker locker{&bigLock};
     if (!loaded)
@@ -639,7 +654,8 @@ void Settings::savePersonal(QString profileName, const QString& password)
     {
         ps.beginWriteArray("Friend", friendLst.size());
         int index = 0;
-        for (auto& frnd : friendLst) {
+        for (auto& frnd : friendLst)
+        {
             ps.setArrayIndex(index);
             ps.setValue("addr", frnd.addr);
             ps.setValue("alias", frnd.alias);
@@ -661,7 +677,8 @@ void Settings::savePersonal(QString profileName, const QString& password)
     {
         ps.beginWriteArray("Request", friendRequests.size());
         int index = 0;
-        for (auto& request : friendRequests) {
+        for (auto& request : friendRequests)
+        {
             ps.setArrayIndex(index);
             ps.setValue("addr", request.address);
             ps.setValue("message", request.message);
@@ -691,7 +708,8 @@ void Settings::savePersonal(QString profileName, const QString& password)
     {
         ps.beginWriteArray("Circle", circleLst.size());
         int index = 0;
-        for (auto& circle : circleLst) {
+        for (auto& circle : circleLst)
+        {
             ps.setArrayIndex(index);
             ps.setValue("name", circle.name);
             ps.setValue("expanded", circle.expanded);
@@ -735,23 +753,18 @@ QString Settings::getSettingsDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
 #elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox")
-           + QDir::separator();
+                           + QDir::separator() + "tox")+QDir::separator();
 #endif
 }
 
@@ -763,27 +776,22 @@ QString Settings::getAppDataDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
 #elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
     /*
      * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
      * For now we need support Qt 5.3, so we use deprecated DataLocation
      * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
      */
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))+QDir::separator();
 #endif
 }
 
@@ -795,22 +803,17 @@ QString Settings::getAppCacheDirPath() const
 {
     QMutexLocker locker{&bigLock};
     if (makeToxPortable)
-        return qApp->applicationDirPath() + QDir::separator();
+        return qApp->applicationDirPath()+QDir::separator();
 
-// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
-                           + QDir::separator() + "tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox")+QDir::separator();
 #elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-                           + QDir::separator() + "Library" + QDir::separator()
-                           + "Application Support" + QDir::separator() + "Tox")
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
+                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
 #else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))
-           + QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))+QDir::separator();
 #endif
 }
 
@@ -824,7 +827,8 @@ void Settings::setDhtServerList(const QList<DhtServer>& newDhtServerList)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newDhtServerList != dhtServerList) {
+    if (newDhtServerList != dhtServerList)
+    {
         dhtServerList = newDhtServerList;
         emit dhtServerListChanged(dhtServerList);
     }
@@ -839,7 +843,8 @@ void Settings::setEnableTestSound(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != enableTestSound) {
+    if (newValue != enableTestSound)
+    {
         enableTestSound = newValue;
         emit enableTestSoundChanged(enableTestSound);
     }
@@ -855,7 +860,8 @@ void Settings::setEnableIPv6(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != enableIPv6) {
+    if (newValue != enableIPv6)
+    {
         enableIPv6 = newValue;
         emit enableIPv6Changed(enableIPv6);
     }
@@ -871,7 +877,8 @@ void Settings::setMakeToxPortable(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != makeToxPortable) {
+    if (newValue != makeToxPortable)
+    {
         QFile(getSettingsDirPath() + globalSettingsFile).remove();
         makeToxPortable = newValue;
         saveGlobal();
@@ -898,7 +905,8 @@ void Settings::setAutorun(bool newValue)
 
     bool autorun = Platform::getAutorun();
 
-    if (newValue != autorun) {
+    if (newValue != autorun)
+    {
         Platform::setAutorun(newValue);
         emit autorunChanged(autorun);
     }
@@ -923,7 +931,8 @@ void Settings::setStyle(const QString& newStyle)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newStyle != style) {
+    if (newStyle != style)
+    {
         style = newStyle;
         emit styleChanged(style);
     }
@@ -939,7 +948,8 @@ void Settings::setShowSystemTray(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != showSystemTray) {
+    if (newValue != showSystemTray)
+    {
         showSystemTray = newValue;
         emit showSystemTrayChanged(newValue);
     }
@@ -949,7 +959,8 @@ void Settings::setUseEmoticons(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != useEmoticons) {
+    if (newValue != useEmoticons)
+    {
         useEmoticons = newValue;
         emit useEmoticonsChanged(useEmoticons);
     }
@@ -965,7 +976,8 @@ void Settings::setAutoSaveEnabled(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != autoSaveEnabled) {
+    if (newValue != autoSaveEnabled)
+    {
         autoSaveEnabled = newValue;
         emit autoSaveEnabledChanged(autoSaveEnabled);
     }
@@ -981,7 +993,8 @@ void Settings::setAutostartInTray(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != autostartInTray) {
+    if (newValue != autostartInTray)
+    {
         autostartInTray = newValue;
         emit autostartInTrayChanged(autostartInTray);
     }
@@ -997,7 +1010,8 @@ void Settings::setCloseToTray(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != closeToTray) {
+    if (newValue != closeToTray)
+    {
         closeToTray = newValue;
         emit closeToTrayChanged(newValue);
     }
@@ -1013,7 +1027,8 @@ void Settings::setMinimizeToTray(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != minimizeToTray) {
+    if (newValue != minimizeToTray)
+    {
         minimizeToTray = newValue;
         emit minimizeToTrayChanged(minimizeToTray);
     }
@@ -1029,7 +1044,8 @@ void Settings::setLightTrayIcon(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != lightTrayIcon) {
+    if (newValue != lightTrayIcon)
+    {
         lightTrayIcon = newValue;
         emit lightTrayIconChanged(lightTrayIcon);
     }
@@ -1045,7 +1061,8 @@ void Settings::setStatusChangeNotificationEnabled(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != statusChangeNotificationEnabled) {
+    if (newValue != statusChangeNotificationEnabled)
+    {
         statusChangeNotificationEnabled = newValue;
         emit statusChangeNotificationEnabledChanged(statusChangeNotificationEnabled);
     }
@@ -1061,7 +1078,8 @@ void Settings::setShowInFront(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != showInFront) {
+    if (newValue != showInFront)
+    {
         showInFront = newValue;
         emit showInFrontChanged(showInFront);
     }
@@ -1077,7 +1095,8 @@ void Settings::setNotifySound(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != notifySound) {
+    if (newValue != notifySound)
+    {
         notifySound = newValue;
         emit notifySoundChanged(notifySound);
     }
@@ -1093,7 +1112,8 @@ void Settings::setBusySound(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != busySound) {
+    if (newValue != busySound)
+    {
         busySound = newValue;
         emit busySoundChanged(busySound);
     }
@@ -1109,7 +1129,8 @@ void Settings::setGroupAlwaysNotify(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != groupAlwaysNotify) {
+    if (newValue != groupAlwaysNotify)
+    {
         groupAlwaysNotify = newValue;
         emit groupAlwaysNotifyChanged(groupAlwaysNotify);
     }
@@ -1125,7 +1146,8 @@ void Settings::setTranslation(const QString& newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != translation) {
+    if (newValue != translation)
+    {
         translation = newValue;
         emit translationChanged(translation);
     }
@@ -1158,11 +1180,15 @@ void Settings::setToxmeInfo(const QString& info)
 {
     QMutexLocker locker{&bigLock};
 
-    if (info != toxmeInfo) {
-        if (info.split("@").size() == 2) {
+    if (info != toxmeInfo)
+    {
+        if (info.split("@").size() == 2)
+        {
             toxmeInfo = info;
             emit toxmeInfoChanged(toxmeInfo);
-        } else {
+        }
+        else
+        {
             qWarning() << info << "is not a valid toxme string -> value ignored.";
         }
     }
@@ -1178,7 +1204,8 @@ void Settings::setToxmeBio(const QString& bio)
 {
     QMutexLocker locker{&bigLock};
 
-    if (bio != toxmeBio) {
+    if (bio != toxmeBio)
+    {
         toxmeBio = bio;
         emit toxmeBioChanged(toxmeBio);
     }
@@ -1194,7 +1221,8 @@ void Settings::setToxmePriv(bool priv)
 {
     QMutexLocker locker{&bigLock};
 
-    if (priv != toxmePriv) {
+    if (priv != toxmePriv)
+    {
         toxmePriv = priv;
         emit toxmePrivChanged(toxmePriv);
     }
@@ -1210,7 +1238,8 @@ void Settings::setToxmePass(const QString& pass)
 {
     QMutexLocker locker{&bigLock};
 
-    if (pass != toxmePass) {
+    if (pass != toxmePass)
+    {
         toxmePass = pass;
 
         // password is not exposed for security reasons
@@ -1228,7 +1257,8 @@ void Settings::setForceTCP(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != forceTCP) {
+    if (newValue != forceTCP)
+    {
         forceTCP = newValue;
         emit forceTCPChanged(forceTCP);
     }
@@ -1237,20 +1267,21 @@ void Settings::setForceTCP(bool newValue)
 QNetworkProxy Settings::getProxy() const
 {
     QNetworkProxy proxy;
-    switch (Settings::getProxyType()) {
-    case ProxyType::ptNone:
-        proxy.setType(QNetworkProxy::NoProxy);
-        break;
-    case ProxyType::ptSOCKS5:
-        proxy.setType(QNetworkProxy::Socks5Proxy);
-        break;
-    case ProxyType::ptHTTP:
-        proxy.setType(QNetworkProxy::HttpProxy);
-        break;
-    default:
-        proxy.setType(QNetworkProxy::NoProxy);
-        qWarning() << "Invalid Proxy type, setting to NoProxy";
-        break;
+    switch(Settings::getProxyType())
+    {
+        case ProxyType::ptNone:
+            proxy.setType(QNetworkProxy::NoProxy);
+            break;
+        case ProxyType::ptSOCKS5:
+            proxy.setType(QNetworkProxy::Socks5Proxy);
+            break;
+        case ProxyType::ptHTTP:
+            proxy.setType(QNetworkProxy::HttpProxy);
+            break;
+        default:
+            proxy.setType(QNetworkProxy::NoProxy);
+            qWarning() << "Invalid Proxy type, setting to NoProxy";
+            break;
     }
 
     proxy.setHostName(Settings::getProxyAddr());
@@ -1268,7 +1299,8 @@ void Settings::setProxyType(ProxyType newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != proxyType) {
+    if (newValue != proxyType)
+    {
         proxyType = newValue;
         emit proxyTypeChanged(proxyType);
     }
@@ -1284,7 +1316,8 @@ void Settings::setProxyAddr(const QString& newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != proxyAddr) {
+    if (newValue != proxyAddr)
+    {
         proxyAddr = newValue;
         emit proxyAddressChanged(proxyAddr);
     }
@@ -1300,7 +1333,8 @@ void Settings::setProxyPort(quint16 newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != proxyPort) {
+    if (newValue != proxyPort)
+    {
         proxyPort = newValue;
         emit proxyPortChanged(proxyPort);
     }
@@ -1322,7 +1356,8 @@ void Settings::setCurrentProfile(const QString& profile)
 {
     QMutexLocker locker{&bigLock};
 
-    if (profile != currentProfile) {
+    if (profile != currentProfile)
+    {
         currentProfile = profile;
         currentProfileId = makeProfileId(currentProfile);
         emit currentProfileChanged(currentProfile);
@@ -1340,7 +1375,8 @@ void Settings::setEnableLogging(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != enableLogging) {
+    if (newValue != enableLogging)
+    {
         enableLogging = newValue;
         emit enableLoggingChanged(enableLogging);
     }
@@ -1364,7 +1400,8 @@ void Settings::setAutoAwayTime(int newValue)
     if (newValue < 0)
         newValue = 10;
 
-    if (newValue != autoAwayTime) {
+    if (newValue != autoAwayTime)
+    {
         autoAwayTime = newValue;
         emit autoAwayTimeChanged(autoAwayTime);
     }
@@ -1386,9 +1423,12 @@ void Settings::setAutoAcceptDir(const ToxPk& id, const QString& dir)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         it->autoAcceptDir = dir;
-    } else {
+    }
+    else
+    {
         updateFriendAddress(id.toString());
         setAutoAcceptDir(id, dir);
     }
@@ -1410,7 +1450,8 @@ void Settings::setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if(it != friendLst.end())
+    {
         it->autoAcceptCall = accept;
         emit autoAcceptCallChanged(id, accept);
     }
@@ -1432,10 +1473,13 @@ void Settings::setContactNote(const ToxPk& id, const QString& note)
     QMutexLocker locker{&bigLock};
 
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         qDebug() << note;
         it->note = note;
-    } else {
+    }
+    else
+    {
         updateFriendAddress(id.toString());
         setContactNote(id, note);
     }
@@ -1451,7 +1495,8 @@ void Settings::setGlobalAutoAcceptDir(const QString& newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != globalAutoAcceptDir) {
+    if (newValue != globalAutoAcceptDir)
+    {
         globalAutoAcceptDir = newValue;
         emit globalAutoAcceptDirChanged(globalAutoAcceptDir);
     }
@@ -1467,7 +1512,8 @@ void Settings::setChatMessageFont(const QFont& font)
 {
     QMutexLocker locker(&bigLock);
 
-    if (font != chatMessageFont) {
+    if (font != chatMessageFont)
+    {
         chatMessageFont = font;
         emit chatMessageFontChanged(chatMessageFont);
     }
@@ -1477,7 +1523,9 @@ void Settings::setWidgetData(const QString& uniqueName, const QByteArray& data)
 {
     QMutexLocker locker{&bigLock};
 
-    if (!widgetSettings.contains(uniqueName) || widgetSettings[uniqueName] != data) {
+    if (!widgetSettings.contains(uniqueName) ||
+        widgetSettings[uniqueName] != data)
+    {
         widgetSettings[uniqueName] = data;
         emit widgetDataChanged(uniqueName);
     }
@@ -1499,7 +1547,8 @@ void Settings::setSmileyPack(const QString& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != smileyPack) {
+    if (value != smileyPack)
+    {
         smileyPack = value;
         emit smileyPackChanged(smileyPack);
     }
@@ -1515,7 +1564,8 @@ void Settings::setEmojiFontPointSize(int value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != emojiFontPointSize) {
+    if (value != emojiFontPointSize)
+    {
         emojiFontPointSize = value;
         emit emojiFontPointSizeChanged(emojiFontPointSize);
     }
@@ -1531,7 +1581,8 @@ void Settings::setTimestampFormat(const QString& format)
 {
     QMutexLocker locker{&bigLock};
 
-    if (format != timestampFormat) {
+    if (format != timestampFormat)
+    {
         timestampFormat = format;
         emit timestampFormatChanged(timestampFormat);
     }
@@ -1547,7 +1598,8 @@ void Settings::setDateFormat(const QString& format)
 {
     QMutexLocker locker{&bigLock};
 
-    if (format != dateFormat) {
+    if (format != dateFormat)
+    {
         dateFormat = format;
         emit dateFormatChanged(dateFormat);
     }
@@ -1563,7 +1615,8 @@ void Settings::setStylePreference(StyleType newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != stylePreference) {
+    if (newValue != stylePreference)
+    {
         stylePreference = newValue;
         emit stylePreferenceChanged(stylePreference);
     }
@@ -1579,7 +1632,8 @@ void Settings::setWindowGeometry(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != windowGeometry) {
+    if (value != windowGeometry)
+    {
         windowGeometry = value;
         emit windowGeometryChanged(windowGeometry);
     }
@@ -1595,7 +1649,8 @@ void Settings::setWindowState(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != windowState) {
+    if (value != windowState)
+    {
         windowState = value;
         emit windowStateChanged(windowState);
     }
@@ -1611,7 +1666,8 @@ void Settings::setCheckUpdates(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != checkUpdates) {
+    if (newValue != checkUpdates)
+    {
         checkUpdates = newValue;
         emit checkUpdatesChanged(checkUpdates);
     }
@@ -1627,7 +1683,8 @@ void Settings::setShowWindow(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != showWindow) {
+    if (newValue != showWindow)
+    {
         showWindow = newValue;
         emit showWindowChanged(showWindow);
     }
@@ -1643,7 +1700,8 @@ void Settings::setSplitterState(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != splitterState) {
+    if(value != splitterState)
+    {
         splitterState = value;
         emit splitterStateChanged(splitterState);
     }
@@ -1659,7 +1717,8 @@ void Settings::setDialogGeometry(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != dialogGeometry) {
+    if (value != dialogGeometry)
+    {
         dialogGeometry = value;
         emit dialogGeometryChanged(dialogGeometry);
     }
@@ -1675,7 +1734,8 @@ void Settings::setDialogSplitterState(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != dialogSplitterState) {
+    if (value != dialogSplitterState)
+    {
         dialogSplitterState = value;
         emit dialogSplitterStateChanged(dialogSplitterState);
     }
@@ -1691,7 +1751,8 @@ void Settings::setDialogSettingsGeometry(const QByteArray& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != dialogSettingsGeometry) {
+    if (value != dialogSettingsGeometry)
+    {
         dialogSettingsGeometry = value;
         emit dialogSettingsGeometryChanged(dialogSettingsGeometry);
     }
@@ -1707,7 +1768,8 @@ void Settings::setMinimizeOnClose(bool newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != minimizeOnClose) {
+    if (newValue != minimizeOnClose)
+    {
         minimizeOnClose = newValue;
         emit minimizeOnCloseChanged(minimizeOnClose);
     }
@@ -1723,7 +1785,8 @@ void Settings::setTypingNotification(bool enabled)
 {
     QMutexLocker locker{&bigLock};
 
-    if (enabled != typingNotification) {
+    if (enabled != typingNotification)
+    {
         typingNotification = enabled;
         emit typingNotificationChanged(typingNotification);
     }
@@ -1739,7 +1802,8 @@ void Settings::setInDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
 
-    if (deviceSpecifier != inDev) {
+    if (deviceSpecifier != inDev)
+    {
         inDev = deviceSpecifier;
         emit inDevChanged(inDev);
     }
@@ -1755,7 +1819,8 @@ void Settings::setAudioInDevEnabled(bool enabled)
 {
     QMutexLocker locker(&bigLock);
 
-    if (enabled != audioInDevEnabled) {
+    if (enabled != audioInDevEnabled)
+    {
         audioInDevEnabled = enabled;
         emit audioInDevEnabledChanged(enabled);
     }
@@ -1771,7 +1836,8 @@ void Settings::setAudioInGainDecibel(qreal dB)
 {
     QMutexLocker locker{&bigLock};
 
-    if (dB < audioInGainDecibel || dB > audioInGainDecibel) {
+    if (dB < audioInGainDecibel || dB > audioInGainDecibel)
+    {
         audioInGainDecibel = dB;
         emit audioInGainDecibelChanged(audioInGainDecibel);
     }
@@ -1787,7 +1853,8 @@ void Settings::setVideoDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
 
-    if (deviceSpecifier != videoDev) {
+    if(deviceSpecifier != videoDev)
+    {
         videoDev = deviceSpecifier;
         emit videoDevChanged(videoDev);
     }
@@ -1803,7 +1870,8 @@ void Settings::setOutDev(const QString& deviceSpecifier)
 {
     QMutexLocker locker{&bigLock};
 
-    if (deviceSpecifier != outDev) {
+    if (deviceSpecifier != outDev)
+    {
         outDev = deviceSpecifier;
         emit outDevChanged(outDev);
     }
@@ -1819,7 +1887,8 @@ void Settings::setAudioOutDevEnabled(bool enabled)
 {
     QMutexLocker locker(&bigLock);
 
-    if (enabled != audioOutDevEnabled) {
+    if(enabled != audioOutDevEnabled)
+    {
         audioOutDevEnabled = enabled;
         emit audioOutDevEnabledChanged(audioOutDevEnabled);
     }
@@ -1835,7 +1904,8 @@ void Settings::setOutVolume(int volume)
 {
     QMutexLocker locker{&bigLock};
 
-    if (volume != outVolume) {
+    if (volume != outVolume)
+    {
         outVolume = volume;
         emit outVolumeChanged(outVolume);
     }
@@ -1843,7 +1913,7 @@ void Settings::setOutVolume(int volume)
 
 QRect Settings::getScreenRegion() const
 {
-    QMutexLocker locker(&bigLock);
+    QMutexLocker locker (&bigLock);
     return screenRegion;
 }
 
@@ -1851,7 +1921,8 @@ void Settings::setScreenRegion(const QRect& value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != screenRegion) {
+    if (value != screenRegion)
+    {
         screenRegion = value;
         emit screenRegionChanged(screenRegion);
     }
@@ -1867,7 +1938,8 @@ void Settings::setScreenGrabbed(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != screenGrabbed) {
+    if (value != screenGrabbed)
+    {
         screenGrabbed = value;
         emit screenGrabbedChanged(screenGrabbed);
     }
@@ -1883,7 +1955,8 @@ void Settings::setCamVideoRes(QRect newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != camVideoRes) {
+    if (newValue != camVideoRes)
+    {
         camVideoRes = newValue;
         emit camVideoResChanged(camVideoRes);
     }
@@ -1899,7 +1972,8 @@ void Settings::setCamVideoFPS(unsigned short newValue)
 {
     QMutexLocker locker{&bigLock};
 
-    if (newValue != camVideoFPS) {
+    if (newValue != camVideoFPS)
+    {
         camVideoFPS = newValue;
         emit camVideoFPSChanged(camVideoFPS);
     }
@@ -1923,9 +1997,12 @@ void Settings::updateFriendAddress(const QString& newAddr)
     // TODO: using ToxId here is a hack
     QByteArray key = ToxId(newAddr).getPublicKey().getKey();
     auto it = friendLst.find(key);
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         it->addr = newAddr;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = newAddr;
         fp.alias = "";
@@ -1949,9 +2026,12 @@ void Settings::setFriendAlias(const ToxPk& id, const QString& alias)
 {
     QMutexLocker locker{&bigLock};
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         it->alias = alias;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = id.toString();
         fp.alias = alias;
@@ -1973,9 +2053,12 @@ int Settings::getFriendCircleID(const ToxPk& id) const
 void Settings::setFriendCircleID(const ToxPk& id, int circleID)
 {
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         it->circleID = circleID;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = id.toString();
         fp.alias = "";
@@ -1998,9 +2081,12 @@ QDate Settings::getFriendActivity(const ToxPk& id) const
 void Settings::setFriendActivity(const ToxPk& id, const QDate& activity)
 {
     auto it = friendLst.find(id.getKey());
-    if (it != friendLst.end()) {
+    if (it != friendLst.end())
+    {
         it->activity = activity;
-    } else {
+    }
+    else
+    {
         friendProp fp;
         fp.addr = id.toString();
         fp.alias = "";
@@ -2028,7 +2114,8 @@ void Settings::setFauxOfflineMessaging(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != fauxOfflineMessaging) {
+    if (value != fauxOfflineMessaging)
+    {
         fauxOfflineMessaging = value;
         emit fauxOfflineMessagingChanged(fauxOfflineMessaging);
     }
@@ -2044,7 +2131,8 @@ void Settings::setCompactLayout(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != compactLayout) {
+    if (value != compactLayout)
+    {
         compactLayout = value;
         emit compactLayoutChanged(value);
     }
@@ -2060,7 +2148,8 @@ void Settings::setSeparateWindow(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != separateWindow) {
+    if (value != separateWindow)
+    {
         separateWindow = value;
         emit separateWindowChanged(value);
     }
@@ -2076,7 +2165,8 @@ void Settings::setDontGroupWindows(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != dontGroupWindows) {
+    if (value != dontGroupWindows)
+    {
         dontGroupWindows = value;
         emit dontGroupWindowsChanged(dontGroupWindows);
     }
@@ -2092,7 +2182,8 @@ void Settings::setGroupchatPosition(bool value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != groupchatPosition) {
+    if (value != groupchatPosition)
+    {
         groupchatPosition = value;
         emit groupchatPositionChanged(value);
     }
@@ -2143,12 +2234,14 @@ bool Settings::addFriendRequest(const QString& friendAddress, const QString& mes
 {
     QMutexLocker locker{&bigLock};
 
-    for (auto queued : friendRequests) {
-        if (queued.address == friendAddress) {
-            queued.message = message;
-            queued.read = false;
-            return false;
-        }
+    for (auto queued : friendRequests)
+    {
+       if (queued.address == friendAddress)
+       {
+           queued.message = message;
+           queued.read = false;
+           return false;
+       }
     }
 
     Request request;
@@ -2223,7 +2316,8 @@ void Settings::setThemeColor(int value)
 {
     QMutexLocker locker{&bigLock};
 
-    if (value != themeColor) {
+    if (value != themeColor)
+    {
         themeColor = value;
         emit themeColorChanged(themeColor);
     }
@@ -2239,7 +2333,8 @@ void Settings::setAutoLogin(bool state)
 {
     QMutexLocker locker{&bigLock};
 
-    if (state != autoLogin) {
+    if (state != autoLogin)
+    {
         autoLogin = state;
         emit autoLoginChanged(autoLogin);
     }
@@ -2259,8 +2354,8 @@ void Settings::createPersonal(QString basename)
     QSettings ps(path, QSettings::IniFormat);
     ps.setIniCodec("UTF-8");
     ps.beginGroup("Friends");
-    ps.beginWriteArray("Friend", 0);
-    ps.endArray();
+        ps.beginWriteArray("Friend", 0);
+        ps.endArray();
     ps.endGroup();
 
     ps.beginGroup("Privacy");
@@ -2283,7 +2378,8 @@ void Settings::createSettingsDir()
  */
 void Settings::sync()
 {
-    if (QThread::currentThread() != settingsThread) {
+    if (QThread::currentThread() != settingsThread)
+    {
         QMetaObject::invokeMethod(&getInstance(), "sync", Qt::BlockingQueuedConnection);
         return;
     }

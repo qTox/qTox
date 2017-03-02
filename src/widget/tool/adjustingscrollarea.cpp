@@ -19,20 +19,20 @@
 
 #include "adjustingscrollarea.h"
 
-#include <QDebug>
 #include <QEvent>
 #include <QLayout>
 #include <QScrollBar>
+#include <QDebug>
 
 AdjustingScrollArea::AdjustingScrollArea(QWidget* parent)
     : QScrollArea(parent)
 {
+
 }
 
-void AdjustingScrollArea::resizeEvent(QResizeEvent* ev)
+void AdjustingScrollArea::resizeEvent(QResizeEvent *ev)
 {
-    int scrollBarWidth =
-        verticalScrollBar()->isVisible() ? verticalScrollBar()->sizeHint().width() : 0;
+    int scrollBarWidth = verticalScrollBar()->isVisible() ? verticalScrollBar()->sizeHint().width() : 0;
 
     if (layoutDirection() == Qt::RightToLeft)
         setViewportMargins(-scrollBarWidth, 0, 0, 0);
@@ -43,7 +43,8 @@ void AdjustingScrollArea::resizeEvent(QResizeEvent* ev)
 
 QSize AdjustingScrollArea::sizeHint() const
 {
-    if (widget()) {
+    if (widget())
+    {
         int scrollbarWidth = verticalScrollBar()->isVisible() ? verticalScrollBar()->width() : 0;
         return widget()->sizeHint() + QSize(scrollbarWidth, 0);
     }

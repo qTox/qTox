@@ -18,34 +18,32 @@
 */
 
 #include "src/net/autoupdate.h"
-#include "src/nexus.h"
 #include "src/persistence/serialize.h"
 #include "src/persistence/settings.h"
-#include "src/widget/gui.h"
 #include "src/widget/widget.h"
-#include <QCoreApplication>
-#include <QDir>
-#include <QFile>
-#include <QMessageBox>
-#include <QMutexLocker>
+#include "src/widget/gui.h"
+#include "src/nexus.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QCoreApplication>
+#include <QFile>
+#include <QDir>
 #include <QProcess>
 #include <QtConcurrent/QtConcurrent>
+#include <QMessageBox>
+#include <QMutexLocker>
 #include <iostream>
 
 #ifdef Q_OS_WIN
-#include <shellapi.h>
 #include <windows.h>
+#include <shellapi.h>
 #endif
 
 /**
  * @file autoupdate.cpp
  *
- * For now we only support auto updates on Windows and OS X, although extending it is not a
- * technical issue.
- * Linux users are expected to use their package managers or update manually through official
- * channels.
+ * For now we only support auto updates on Windows and OS X, although extending it is not a technical issue.
+ * Linux users are expected to use their package managers or update manually through official channels.
  */
 
 #ifdef Q_OS_WIN
@@ -57,24 +55,22 @@ const QString AutoUpdater::platform = "win32";
 const QString AutoUpdater::updaterBin = "qtox-updater.exe";
 const QString AutoUpdater::updateServer = "https://qtox-win.pkg.tox.chat";
 
-unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] = {0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8,
-                                                              0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9,
-                                                              0xc4, 0x92, 0xd9, 0xa2, 0x17, 0x83,
-                                                              0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd,
-                                                              0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed,
-                                                              0x00, 0x13};
+unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
+{
+    0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8, 0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9, 0xc4, 0x92, 0xd9, 0xa2,
+    0x17, 0x83, 0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd, 0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed, 0x00, 0x13
+};
 
 #elif defined(Q_OS_OSX)
 const QString AutoUpdater::platform = "osx";
 const QString AutoUpdater::updaterBin = "/Applications/qtox.app/Contents/MacOS/updater";
 const QString AutoUpdater::updateServer = "https://dist-build.tox.im";
 
-unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                                              0x00, 0x00};
+unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES] =
+{
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
 
 #else
 const QString AutoUpdater::platform;
@@ -126,12 +122,9 @@ unsigned char AutoUpdater::key[crypto_sign_PUBLICKEYBYTES];
  * @brief No, we can't just make the QString atomic
  */
 
-const QString AutoUpdater::checkURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/version";
-const QString AutoUpdater::flistURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/flist";
-const QString AutoUpdater::filesURI =
-    AutoUpdater::updateServer + "/qtox/" + AutoUpdater::platform + "/files/";
+const QString AutoUpdater::checkURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/version";
+const QString AutoUpdater::flistURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/flist";
+const QString AutoUpdater::filesURI = AutoUpdater::updateServer+"/qtox/"+AutoUpdater::platform+"/files/";
 std::atomic_bool AutoUpdater::abortFlag{false};
 std::atomic_bool AutoUpdater::isDownloadingUpdate{false};
 std::atomic<float> AutoUpdater::progressValue{0};
@@ -156,8 +149,7 @@ bool AutoUpdater::isUpdateAvailable()
     if (isDownloadingUpdate)
         return false;
 
-    QString updaterPath =
-        updaterBin.startsWith('/') ? updaterBin : qApp->applicationDirPath() + '/' + updaterBin;
+    QString updaterPath = updaterBin.startsWith('/') ? updaterBin : qApp->applicationDirPath()+'/'+updaterBin;
     if (!QFile::exists(updaterPath))
         return false;
 
@@ -183,16 +175,18 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     if (abortFlag)
         return versionInfo;
 
-    QNetworkAccessManager* manager = new QNetworkAccessManager;
+    QNetworkAccessManager *manager = new QNetworkAccessManager;
     manager->setProxy(Settings::getInstance().getProxy());
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(checkURI)));
-    while (!reply->isFinished()) {
+    while (!reply->isFinished())
+    {
         if (abortFlag)
             return versionInfo;
         qApp->processEvents();
     }
 
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError)
+    {
         qWarning() << "getUpdateVersion: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
@@ -202,11 +196,12 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     QByteArray data = reply->readAll();
     reply->deleteLater();
     manager->deleteLater();
-    if (data.size() < (int)(1 + crypto_sign_BYTES))
+    if (data.size() < (int)(1+crypto_sign_BYTES))
         return versionInfo;
 
     // Check updater protocol version
-    if ((int)data[0] != '3') {
+    if ((int)data[0] != '3')
+    {
         qWarning() << "getUpdateVersion: Bad version " << (uint8_t)data[0];
         return versionInfo;
     }
@@ -214,19 +209,20 @@ AutoUpdater::VersionInfo AutoUpdater::getUpdateVersion()
     // Check the signature
     QByteArray sigData = data.mid(1, crypto_sign_BYTES);
     unsigned char* sig = (unsigned char*)sigData.data();
-    QByteArray msgData = data.mid(1 + crypto_sign_BYTES);
+    QByteArray msgData = data.mid(1+crypto_sign_BYTES);
     unsigned char* msg = (unsigned char*)msgData.data();
 
-    if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0) {
-        qCritical() << "getUpdateVersion: RECEIVED FORGED VERSION FILE FROM " << updateServer;
+    if (crypto_sign_verify_detached(sig, msg, msgData.size(), key) != 0)
+    {
+        qCritical() << "getUpdateVersion: RECEIVED FORGED VERSION FILE FROM "<<updateServer;
         return versionInfo;
     }
 
     int sepPos = msgData.indexOf('!');
     versionInfo.timestamp = QString(msgData.left(sepPos)).toInt();
-    versionInfo.versionString = msgData.mid(sepPos + 1);
+    versionInfo.versionString = msgData.mid(sepPos+1);
 
-    qDebug() << "timestamp:" << versionInfo.timestamp << ", str:" << versionInfo.versionString;
+    qDebug() << "timestamp:"<<versionInfo.timestamp << ", str:"<<versionInfo.versionString;
 
     return versionInfo;
 }
@@ -240,27 +236,32 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
 {
     QList<UpdateFileMeta> flist;
 
-    if (flistData.isEmpty()) {
+    if (flistData.isEmpty())
+    {
         qWarning() << "parseflist: Empty data";
         return flist;
     }
 
     // Check version
-    if (flistData[0] != '1') {
-        qWarning() << "parseflist: Bad version " << (uint8_t)flistData[0];
+    if (flistData[0] != '1')
+    {
+        qWarning() << "parseflist: Bad version "<<(uint8_t)flistData[0];
         return flist;
     }
     flistData = flistData.mid(1);
 
     // Check signature
-    if (flistData.size() < (int)(crypto_sign_BYTES)) {
+    if (flistData.size() < (int)(crypto_sign_BYTES))
+    {
         qWarning() << "parseflist: Truncated data";
         return flist;
-    } else {
+    }
+    else
+    {
         QByteArray msgData = flistData.mid(crypto_sign_BYTES);
         unsigned char* msg = (unsigned char*)msgData.data();
-        if (crypto_sign_verify_detached((unsigned char*)flistData.data(), msg, msgData.size(), key)
-            != 0) {
+        if (crypto_sign_verify_detached((unsigned char*)flistData.data(), msg, msgData.size(), key) != 0)
+        {
             qCritical() << "parseflist: FORGED FLIST FILE";
             return flist;
         }
@@ -268,7 +269,8 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::parseFlist(QByteArray flistData)
     }
 
     // Parse. We assume no errors handling needed since the signature is valid.
-    while (!flistData.isEmpty()) {
+    while (!flistData.isEmpty())
+    {
         UpdateFileMeta newFile;
 
         memcpy(newFile.sig, flistData.data(), crypto_sign_BYTES);
@@ -298,16 +300,18 @@ QByteArray AutoUpdater::getUpdateFlist()
 {
     QByteArray flist;
 
-    QNetworkAccessManager* manager = new QNetworkAccessManager;
+    QNetworkAccessManager *manager = new QNetworkAccessManager;
     manager->setProxy(Settings::getInstance().getProxy());
     QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(flistURI)));
-    while (!reply->isFinished()) {
+    while (!reply->isFinished())
+    {
         if (abortFlag)
             return flist;
         qApp->processEvents();
     }
 
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError)
+    {
         qWarning() << "getUpdateFlist: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
@@ -345,7 +349,7 @@ QList<AutoUpdater::UpdateFileMeta> AutoUpdater::genUpdateDiff(QList<UpdateFileMe
 bool AutoUpdater::isUpToDate(AutoUpdater::UpdateFileMeta fileMeta)
 {
     QString appDir = qApp->applicationDirPath();
-    QFile file(appDir + QDir::separator() + fileMeta.installpath);
+    QFile file(appDir+QDir::separator()+fileMeta.installpath);
     if (!file.open(QIODevice::ReadOnly))
         return false;
 
@@ -359,31 +363,31 @@ bool AutoUpdater::isUpToDate(AutoUpdater::UpdateFileMeta fileMeta)
 
 /**
  * @brief Tries to fetch the file from the update server.
- * @note Note that a file with an empty but non-null QByteArray is not an error, merely a file of
- * size 0.
+ * @note Note that a file with an empty but non-null QByteArray is not an error, merely a file of size 0.
  * @note Will try to follow qTox's proxy settings, may block and processEvents.
  * @param fileMeta Meta data fo file to update.
- * @param progressCallback Callback function, which will connected with
- * QNetworkReply::downloadProgress
+ * @param progressCallback Callback function, which will connected with QNetworkReply::downloadProgress
  * @return A file with a null QByteArray on error.
  */
 AutoUpdater::UpdateFile AutoUpdater::getUpdateFile(UpdateFileMeta fileMeta,
-                                                   std::function<void(int, int)> progressCallback)
+                                        std::function<void(int,int)> progressCallback)
 {
     UpdateFile file;
     file.metadata = fileMeta;
 
-    QNetworkAccessManager* manager = new QNetworkAccessManager;
+    QNetworkAccessManager *manager = new QNetworkAccessManager;
     manager->setProxy(Settings::getInstance().getProxy());
-    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(filesURI + fileMeta.id)));
+    QNetworkReply* reply = manager->get(QNetworkRequest(QUrl(filesURI+fileMeta.id)));
     QObject::connect(reply, &QNetworkReply::downloadProgress, progressCallback);
-    while (!reply->isFinished()) {
+    while (!reply->isFinished())
+    {
         if (abortFlag)
             return file;
         qApp->processEvents();
     }
 
-    if (reply->error() != QNetworkReply::NoError) {
+    if (reply->error() != QNetworkReply::NoError)
+    {
         qWarning() << "getUpdateFile: network error: " + reply->errorString();
         reply->deleteLater();
         manager->deleteLater();
@@ -409,7 +413,7 @@ bool AutoUpdater::downloadUpdate()
         return false;
 
     bool expectFalse = false;
-    if (!isDownloadingUpdate.compare_exchange_strong(expectFalse, true))
+    if (!isDownloadingUpdate.compare_exchange_strong(expectFalse,true))
         return false;
 
     // Get a list of files to update
@@ -420,7 +424,8 @@ bool AutoUpdater::downloadUpdate()
     // Progress
     progressValue = 0;
 
-    if (abortFlag) {
+    if (abortFlag)
+    {
         isDownloadingUpdate = false;
         return false;
     }
@@ -433,15 +438,17 @@ bool AutoUpdater::downloadUpdate()
     if (!updateDir.exists())
         QDir().mkdir(updateDirStr);
     updateDir = QDir(updateDirStr);
-    if (!updateDir.exists()) {
+    if (!updateDir.exists())
+    {
         qWarning() << "downloadUpdate: Can't create update directory, aborting...";
         isDownloadingUpdate = false;
         return false;
     }
 
     // Write the new flist for the updater
-    QFile newFlistFile(updateDirStr + "flist");
-    if (!newFlistFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+    QFile newFlistFile(updateDirStr+"flist");
+    if (!newFlistFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
         qWarning() << "downloadUpdate: Can't save new flist file, aborting...";
         isDownloadingUpdate = false;
         return false;
@@ -452,21 +459,25 @@ bool AutoUpdater::downloadUpdate()
     progressValue = 1;
 
     // Download and write each new file
-    for (UpdateFileMeta fileMeta : diff) {
-        float initialProgress = progressValue, step = 99. / diff.size();
-        auto stepProgressCallback = [&](int current, int total) {
-            progressValue = initialProgress + step * (float)current / total;
+    for (UpdateFileMeta fileMeta : diff)
+    {
+        float initialProgress = progressValue, step = 99./diff.size();
+        auto stepProgressCallback = [&](int current, int total)
+        {
+            progressValue = initialProgress + step * (float)current/total;
         };
 
-        if (abortFlag) {
+        if (abortFlag)
+        {
             isDownloadingUpdate = false;
             return false;
         }
 
         // Skip files we already have
-        QFile fileFile(updateDirStr + fileMeta.installpath);
-        if (fileFile.open(QIODevice::ReadOnly) && fileFile.size() == (qint64)fileMeta.size) {
-            qDebug() << "Skipping already downloaded file   '" + fileMeta.installpath + "'";
+        QFile fileFile(updateDirStr+fileMeta.installpath);
+        if (fileFile.open(QIODevice::ReadOnly) && fileFile.size() == (qint64)fileMeta.size)
+        {
+            qDebug() << "Skipping already downloaded file   '" + fileMeta.installpath+ "'";
             progressValue = initialProgress + step;
             continue;
         }
@@ -475,7 +486,7 @@ bool AutoUpdater::downloadUpdate()
         qDebug() << "Downloading '" + fileMeta.installpath + "' ...";
 
         // Create subdirs if necessary
-        QString fileDirStr{QFileInfo(updateDirStr + fileMeta.installpath).absolutePath()};
+        QString fileDirStr{QFileInfo(updateDirStr+fileMeta.installpath).absolutePath()};
         if (!QDir(fileDirStr).exists())
             QDir().mkpath(fileDirStr);
 
@@ -483,21 +494,23 @@ bool AutoUpdater::downloadUpdate()
         UpdateFile file = getUpdateFile(fileMeta, stepProgressCallback);
         if (abortFlag)
             goto fail;
-        if (file.data.isNull()) {
+        if (file.data.isNull())
+        {
             qCritical() << "downloadUpdate: Error downloading a file, aborting...";
             goto fail;
         }
 
         // Check signature
         if (crypto_sign_verify_detached(file.metadata.sig, (unsigned char*)file.data.data(),
-                                        file.data.size(), key)
-            != 0) {
+                                        file.data.size(), key) != 0)
+        {
             qCritical() << "downloadUpdate: RECEIVED FORGED FILE, aborting...";
             goto fail;
         }
 
         // Save
-        if (!fileFile.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        if (!fileFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
             qCritical() << "downloadUpdate: Can't save new update file, aborting...";
             goto fail;
         }
@@ -543,7 +556,7 @@ bool AutoUpdater::isLocalUpdateReady()
         return false;
 
     // Check that we have a flist and generate a diff
-    QFile updateFlistFile(updateDirStr + "flist");
+    QFile updateFlistFile(updateDirStr+"flist");
     if (!updateFlistFile.open(QIODevice::ReadOnly))
         return false;
     QByteArray updateFlistData = updateFlistFile.readAll();
@@ -553,11 +566,12 @@ bool AutoUpdater::isLocalUpdateReady()
     QList<UpdateFileMeta> diff = genUpdateDiff(updateFlist);
 
     // Check that we have every file
-    for (UpdateFileMeta fileMeta : diff) {
-        if (!QFile::exists(updateDirStr + fileMeta.installpath))
+    for (UpdateFileMeta fileMeta : diff)
+    {
+        if (!QFile::exists(updateDirStr+fileMeta.installpath))
             return false;
 
-        QFile f(updateDirStr + fileMeta.installpath);
+        QFile f(updateDirStr+fileMeta.installpath);
         if (f.size() != (int64_t)fileMeta.size)
             return false;
     }
@@ -577,7 +591,8 @@ void AutoUpdater::installLocalUpdate()
     qDebug() << "About to start the qTox updater to install a local update";
 
     // Prepare to delete the update if we fail so we don't fail again.
-    auto failExit = []() {
+    auto failExit = []()
+    {
         qCritical() << "Failed to start the qTox updater, removing the update and exiting";
         QString updateDirStr = Settings::getInstance().getSettingsDirPath() + "/update/";
         QDir(updateDirStr).removeRecursively();
@@ -588,16 +603,17 @@ void AutoUpdater::installLocalUpdate()
     if (platform.isEmpty())
         failExit();
 
-// Workaround QTBUG-7645
-// QProcess fails silently when elevation is required instead of showing a UAC prompt on Win7/Vista
+    // Workaround QTBUG-7645
+    // QProcess fails silently when elevation is required instead of showing a UAC prompt on Win7/Vista
 #ifdef Q_OS_WIN
     QString modulePath = qApp->applicationDirPath().replace('/', '\\');
-    HINSTANCE result = ::ShellExecuteW(0, L"open", updaterBin.toStdWString().c_str(), 0,
-                                       modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
-    if (result == (HINSTANCE)SE_ERR_ACCESSDENIED) {
+    HINSTANCE result = ::ShellExecuteW(0, L"open", updaterBin.toStdWString().c_str(),
+                                       0, modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
+    if (result == (HINSTANCE)SE_ERR_ACCESSDENIED)
+    {
         // Requesting elevation
-        result = ::ShellExecuteW(0, L"runas", updaterBin.toStdWString().c_str(), 0,
-                                 modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
+        result = ::ShellExecuteW(0, L"runas", updaterBin.toStdWString().c_str(),
+                                 0, modulePath.toStdWString().c_str(), SW_SHOWNORMAL);
     }
     if (result <= (HINSTANCE)32)
         failExit();
@@ -640,7 +656,9 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
     QDir updateDir(updateDirStr);
 
 
-    if (updateDir.exists() && QFile(updateDirStr + "flist").exists()) {
+
+    if (updateDir.exists() && QFile(updateDirStr+"flist").exists())
+    {
         setProgressVersion(getUpdateVersion().versionString);
         downloadUpdate();
         return;
@@ -650,17 +668,16 @@ void AutoUpdater::checkUpdatesAsyncInteractiveWorker()
     QString contentText = QObject::tr("An update is available, do you want to download it now?\n"
                                       "It will be installed when qTox restarts.");
     if (!newVersion.versionString.isEmpty())
-        contentText +=
-            "\n\n"
-            + QObject::tr("Version %1, %2")
-                  .arg(newVersion.versionString,
-                       QDateTime::fromMSecsSinceEpoch(newVersion.timestamp * 1000).toString());
+        contentText += "\n\n" + QObject::tr("Version %1, %2").arg(newVersion.versionString,
+                                QDateTime::fromMSecsSinceEpoch(newVersion.timestamp*1000).toString());
 
 
     if (abortFlag)
         return;
 
-    if (GUI::askQuestion(QObject::tr("Update", "The title of a message box"), contentText, true, false)) {
+    if (GUI::askQuestion(QObject::tr("Update", "The title of a message box"),
+                              contentText, true, false))
+    {
         setProgressVersion(newVersion.versionString);
         GUI::showUpdateDownloadProgress();
         downloadUpdate();

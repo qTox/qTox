@@ -20,9 +20,9 @@
 #include "friend.h"
 #include "friendlist.h"
 #include "src/persistence/settings.h"
+#include <QMenu>
 #include <QDebug>
 #include <QHash>
-#include <QMenu>
 
 QHash<int, Friend*> FriendList::friendList;
 QHash<QByteArray, int> FriendList::key2id;
@@ -52,7 +52,8 @@ Friend* FriendList::findFriend(int friendId)
 void FriendList::removeFriend(int friendId, bool fake)
 {
     auto f_it = friendList.find(friendId);
-    if (f_it != friendList.end()) {
+    if (f_it != friendList.end())
+    {
         if (!fake)
             Settings::getInstance().removeFriendSettings(f_it.value()->getPublicKey());
         friendList.erase(f_it);
@@ -69,7 +70,8 @@ void FriendList::clear()
 Friend* FriendList::findFriend(const ToxPk& friendPk)
 {
     auto id = key2id.find(friendPk.getKey());
-    if (id != key2id.end()) {
+    if (id != key2id.end())
+    {
         Friend* f = findFriend(*id);
         if (!f)
             return nullptr;

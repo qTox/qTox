@@ -39,10 +39,10 @@ private slots:
     void PageButtonsUpdate();
 
 protected:
-    void mouseReleaseEvent(QMouseEvent* ev) final override;
-    void mousePressEvent(QMouseEvent* ev) final override;
-    void wheelEvent(QWheelEvent* event) final override;
-    void keyPressEvent(QKeyEvent* e) final override;
+    void mouseReleaseEvent(QMouseEvent *ev) final override;
+    void mousePressEvent(QMouseEvent *ev) final override;
+    void wheelEvent(QWheelEvent * event) final override;
+    void keyPressEvent(QKeyEvent *e) final override;
 
 private:
     QStackedWidget stack;
@@ -50,6 +50,7 @@ private:
 
 public:
     QSize sizeHint() const override;
+
 };
 
 #endif // EMOTICONSWIDGET_H

@@ -23,16 +23,16 @@ extern "C" {
 #include <libavformat/avformat.h>
 #include <libswscale/swscale.h>
 }
-#include "cameradevice.h"
-#include "camerasource.h"
-#include "videoframe.h"
-#include "src/persistence/settings.h"
-#include <QDebug>
-#include <QReadLocker>
 #include <QWriteLocker>
+#include <QReadLocker>
+#include <QDebug>
 #include <QtConcurrent/QtConcurrentRun>
-#include <functional>
 #include <memory>
+#include <functional>
+#include "src/persistence/settings.h"
+#include "camerasource.h"
+#include "cameradevice.h"
+#include "videoframe.h"
 
 /**
  * @class CameraSource
@@ -58,8 +58,7 @@ extern "C" {
  * @brief Short name of the device for CameraDevice's open(QString)
  *
  * @var CameraDevice* CameraSource::device
- * @brief Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences
- * when becomes null.
+ * @brief Non-owning pointer to an open CameraDevice, or nullptr. Not atomic, synced with memfences when becomes null.
  *
  * @var VideoMode CameraSource::mode
  * @brief What mode we tried to open the device in, all zeros means default mode
@@ -89,15 +88,9 @@ extern "C" {
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceName{"none"}
-    , device{nullptr}
-    , mode(VideoMode())
-    , cctx{nullptr}
-    , cctxOrig{nullptr}
-    , videoStreamIndex{-1}
-    , _isOpen{false}
-    , streamBlocker{false}
-    , subscriptions{0}
+    : deviceName{"none"}, device{nullptr}, mode(VideoMode()),
+      cctx{nullptr}, cctxOrig{nullptr}, videoStreamIndex{-1},
+      _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
     subscriptions = 0;
     av_register_all();
@@ -116,7 +109,8 @@ CameraSource& CameraSource::getInstance()
 
 void CameraSource::destroyInstance()
 {
-    if (instance) {
+    if (instance)
+    {
         delete instance;
         instance = nullptr;
     }
@@ -137,7 +131,8 @@ void CameraSource::open(const QString& deviceName)
 {
     bool isScreen = CameraDevice::isScreen(deviceName);
     VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
-    if (!isScreen) {
+    if (!isScreen)
+    {
         mode = VideoMode(Settings::getInstance().getCamVideoRes());
         mode.FPS = Settings::getInstance().getCamVideoFPS();
     }
@@ -149,7 +144,8 @@ void CameraSource::open(const QString& DeviceName, VideoMode Mode)
 {
     QWriteLocker locker{&streamMutex};
 
-    if (DeviceName == deviceName && Mode == mode) {
+    if (DeviceName == deviceName && Mode == mode)
+    {
         return;
     }
 
@@ -183,7 +179,8 @@ CameraSource::~CameraSource()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isOpen)
+    {
         return;
     }
 
@@ -195,7 +192,8 @@ CameraSource::~CameraSource()
     if (cctxOrig)
         avcodec_close(cctxOrig);
 
-    if (device) {
+    if (device)
+    {
         for (int i = 0; i < subscriptions; ++i)
             device->close();
 
@@ -213,17 +211,20 @@ bool CameraSource::subscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isOpen)
+    {
         ++subscriptions;
         return true;
     }
 
-    if (openDevice()) {
+    if (openDevice())
+    {
         ++subscriptions;
         return true;
-    } else {
-        while (device && !device->close()) {
-        }
+    }
+    else
+    {
+        while (device && !device->close()) {}
         device = nullptr;
         cctx = cctxOrig = nullptr;
         videoStreamIndex = -1;
@@ -235,19 +236,24 @@ void CameraSource::unsubscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isOpen)
+    {
         --subscriptions;
         return;
     }
 
-    if (!device) {
+    if (!device)
+    {
         qWarning() << "Unsubscribing with zero subscriber";
         return;
     }
 
-    if (subscriptions - 1 == 0) {
+    if (subscriptions - 1 == 0)
+    {
         closeDevice();
-    } else {
+    }
+    else
+    {
         device->close();
     }
     subscriptions--;
@@ -262,7 +268,8 @@ bool CameraSource::openDevice()
 {
     qDebug() << "Opening device " << deviceName;
 
-    if (device) {
+    if (device)
+    {
         device->open();
         return true;
     }
@@ -271,7 +278,8 @@ bool CameraSource::openDevice()
     AVCodec* codec;
     device = CameraDevice::open(deviceName, mode);
 
-    if (!device) {
+    if (!device)
+    {
         qWarning() << "Failed to open device!";
         return false;
     }
@@ -282,14 +290,17 @@ bool CameraSource::openDevice()
         device->open();
 
     // Find the first video stream
-    for (unsigned i = 0; i < device->context->nb_streams; ++i) {
-        if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO) {
+    for (unsigned i = 0; i < device->context->nb_streams; ++i)
+    {
+        if (device->context->streams[i]->codec->codec_type == AVMEDIA_TYPE_VIDEO)
+        {
             videoStreamIndex = i;
             break;
         }
     }
 
-    if (videoStreamIndex == -1) {
+    if (videoStreamIndex == -1)
+    {
         qWarning() << "Video stream not found";
         return false;
     }
@@ -297,14 +308,16 @@ bool CameraSource::openDevice()
     // Get a pointer to the codec context for the video stream
     cctxOrig = device->context->streams[videoStreamIndex]->codec;
     codec = avcodec_find_decoder(cctxOrig->codec_id);
-    if (!codec) {
+    if (!codec)
+    {
         qWarning() << "Codec not found";
         return false;
     }
 
     // Copy context, since we apparently aren't allowed to use the original
     cctx = avcodec_alloc_context3(codec);
-    if (avcodec_copy_context(cctx, cctxOrig) != 0) {
+    if (avcodec_copy_context(cctx, cctxOrig) != 0)
+    {
         qWarning() << "Can't copy context";
         return false;
     }
@@ -312,7 +325,8 @@ bool CameraSource::openDevice()
     cctx->refcounted_frames = 1;
 
     // Open codec
-    if (avcodec_open2(cctx, codec, nullptr) < 0) {
+    if (avcodec_open2(cctx, codec, nullptr)<0)
+    {
         qWarning() << "Can't open codec";
         avcodec_free_context(&cctx);
         return false;
@@ -348,8 +362,7 @@ void CameraSource::closeDevice()
     avcodec_free_context(&cctx);
     avcodec_close(cctxOrig);
     cctxOrig = nullptr;
-    while (device && !device->close()) {
-    }
+    while (device && !device->close()) {}
     device = nullptr;
 }
 
@@ -359,7 +372,8 @@ void CameraSource::closeDevice()
  */
 void CameraSource::stream()
 {
-    auto streamLoop = [=]() {
+    auto streamLoop = [=]()
+    {
         AVFrame* frame = av_frame_alloc();
         if (!frame)
             return;
@@ -369,7 +383,8 @@ void CameraSource::stream()
             return;
 
         // Only keep packets from the right stream;
-        if (packet.stream_index == videoStreamIndex) {
+        if (packet.stream_index == videoStreamIndex)
+        {
             // Decode video frame
             int frameFinished;
             avcodec_decode_video2(cctx, frame, &frameFinished, &packet);
@@ -380,8 +395,8 @@ void CameraSource::stream()
             emit frameAvailable(vframe->trackFrame());
         }
 
-        // Free the packet that was allocated by av_read_frame
-        av_packet_unref(&packet);
+      // Free the packet that was allocated by av_read_frame
+      av_packet_unref(&packet);
     };
 
     forever
@@ -389,7 +404,8 @@ void CameraSource::stream()
         QReadLocker locker{&streamMutex};
 
         // Exit if device is no longer valid
-        if (!device) {
+        if(!device)
+        {
             break;
         }
 

@@ -22,10 +22,10 @@
 
 #include "ui_mainwindow.h"
 
-#include <QFileInfo>
 #include <QMainWindow>
 #include <QPointer>
 #include <QSystemTrayIcon>
+#include <QFileInfo>
 
 #include "genericchatitemwidget.h"
 
@@ -98,14 +98,14 @@ public:
     explicit Widget(QWidget* parent = 0);
     ~Widget();
     void init();
-    void setCentralWidget(QWidget* widget, const QString& widgetName);
+    void setCentralWidget(QWidget* widget, const QString &widgetName);
     QString getUsername();
     Camera* getCamera();
     static Widget* getInstance();
     void showUpdateDownloadProgress();
     void addFriendDialog(Friend* frnd, ContentDialog* dialog);
     void addGroupDialog(Group* group, ContentDialog* dialog);
-    bool newFriendMessageAlert(int friendId, bool sound = true);
+    bool newFriendMessageAlert(int friendId, bool sound=true);
     bool newGroupMessageAlert(int groupId, bool notify);
     bool getIsWindowMinimized();
     void updateIcons();
@@ -115,7 +115,7 @@ public:
     ContentDialog* createContentDialog() const;
     ContentLayout* createContentDialog(DialogType type) const;
 
-    static void confirmExecutableOpen(const QFileInfo& file);
+    static void confirmExecutableOpen(const QFileInfo &file);
 
     void clearAllReceipts();
     void reloadHistory();
@@ -145,7 +145,7 @@ public slots:
     void onBadProxyCore();
     void onSelfAvatarLoaded(const QPixmap& pic);
     void setUsername(const QString& username);
-    void setStatusMessage(const QString& statusMessage);
+    void setStatusMessage(const QString &statusMessage);
     void addFriend(int friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
     void onFriendshipChanged(int friendId);
@@ -184,12 +184,12 @@ signals:
     void windowStateChanged(Qt::WindowStates states);
 
 protected:
-    virtual bool eventFilter(QObject* obj, QEvent* event) final override;
-    virtual bool event(QEvent* e) final override;
-    virtual void closeEvent(QCloseEvent* event) final override;
-    virtual void changeEvent(QEvent* event) final override;
-    virtual void resizeEvent(QResizeEvent* event) final override;
-    virtual void moveEvent(QMoveEvent* event) final override;
+    virtual bool eventFilter(QObject *obj, QEvent *event) final override;
+    virtual bool event(QEvent * e) final override;
+    virtual void closeEvent(QCloseEvent *event) final override;
+    virtual void changeEvent(QEvent *event) final override;
+    virtual void resizeEvent(QResizeEvent *event) final override;
+    virtual void moveEvent(QMoveEvent *event) final override;
 
 private slots:
     void onAddClicked();
@@ -211,7 +211,7 @@ private slots:
     void onSetShowSystemTray(bool newValue);
     void onSplitterMoved(int pos, int index);
     void processOfflineMsgs();
-    void friendListContextMenu(const QPoint& pos);
+    void friendListContextMenu(const QPoint &pos);
     void friendRequestsUpdate();
     void groupInvitesUpdate();
     void groupInvitesClear();
@@ -241,14 +241,14 @@ private:
     void focusChatInput();
 
 private:
-    SystemTrayIcon* icon = nullptr;
-    QMenu* trayMenu;
-    QAction* statusOnline;
-    QAction* statusAway;
-    QAction* statusBusy;
-    QAction* actionLogout;
-    QAction* actionQuit;
-    QAction* actionShow;
+    SystemTrayIcon *icon = nullptr;
+    QMenu *trayMenu;
+    QAction *statusOnline;
+    QAction *statusAway;
+    QAction *statusBusy;
+    QAction *actionLogout;
+    QAction *actionQuit;
+    QAction *actionShow;
 
     QMenu* filterMenu;
 
@@ -263,20 +263,20 @@ private:
     QAction* filterDisplayName;
     QAction* filterDisplayActivity;
 
-    Ui::MainWindow* ui;
-    QSplitter* centralLayout;
+    Ui::MainWindow *ui;
+    QSplitter *centralLayout;
     QPoint dragPosition;
     ContentLayout* contentLayout;
-    AddFriendForm* addFriendForm;
+    AddFriendForm *addFriendForm;
     GroupInviteForm* groupInviteForm;
-    ProfileForm* profileForm;
+    ProfileForm *profileForm;
     QPointer<SettingsWidget> settingsWidget;
-    FilesForm* filesForm;
-    static Widget* instance;
-    GenericChatroomWidget* activeChatroomWidget;
-    FriendListWidget* contactListWidget;
-    MaskablePixmapWidget* profilePicture;
-    bool notify(QObject* receiver, QEvent* event);
+    FilesForm *filesForm;
+    static Widget *instance;
+    GenericChatroomWidget *activeChatroomWidget;
+    FriendListWidget *contactListWidget;
+    MaskablePixmapWidget *profilePicture;
+    bool notify(QObject *receiver, QEvent *event);
     bool autoAwayActive = false;
     QTimer *timer, *offlineMsgTimer;
     QRegExp nameMention, sanitizedNameMention;

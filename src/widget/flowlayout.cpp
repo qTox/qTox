@@ -42,28 +42,25 @@
 
 #include "flowlayout.h"
 FlowLayout::FlowLayout(QWidget* parent, int margin, int hSpacing, int vSpacing)
-    : QLayout(parent)
-    , m_hSpace(hSpacing)
-    , m_vSpace(vSpacing)
+    : QLayout(parent), m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
     setContentsMargins(margin, margin, margin, margin);
 }
 
 FlowLayout::FlowLayout(int margin, int hSpacing, int vSpacing)
-    : m_hSpace(hSpacing)
-    , m_vSpace(vSpacing)
+    : m_hSpace(hSpacing), m_vSpace(vSpacing)
 {
     setContentsMargins(margin, margin, margin, margin);
 }
 
 FlowLayout::~FlowLayout()
 {
-    QLayoutItem* item;
+    QLayoutItem *item;
     while ((item = takeAt(0)))
         delete item;
 }
 
-void FlowLayout::addItem(QLayoutItem* item)
+void FlowLayout::addItem(QLayoutItem *item)
 {
     itemList.append(item);
 }
@@ -89,12 +86,12 @@ int FlowLayout::count() const
     return itemList.size();
 }
 
-QLayoutItem* FlowLayout::itemAt(int index) const
+QLayoutItem *FlowLayout::itemAt(int index) const
 {
     return itemList.value(index);
 }
 
-QLayoutItem* FlowLayout::takeAt(int index)
+QLayoutItem *FlowLayout::takeAt(int index)
 {
     if (index >= 0 && index < itemList.size())
         return itemList.takeAt(index);
@@ -118,7 +115,7 @@ int FlowLayout::heightForWidth(int width) const
     return height;
 }
 
-void FlowLayout::setGeometry(const QRect& rect)
+void FlowLayout::setGeometry(const QRect &rect)
 {
     QLayout::setGeometry(rect);
     doLayout(rect, false);
@@ -132,15 +129,15 @@ QSize FlowLayout::sizeHint() const
 QSize FlowLayout::minimumSize() const
 {
     QSize size;
-    QLayoutItem* item;
+    QLayoutItem *item;
     foreach (item, itemList)
         size = size.expandedTo(item->minimumSize());
 
-    size += QSize(2 * margin(), 2 * margin());
+    size += QSize(2*margin(), 2*margin());
     return size;
 }
 
-int FlowLayout::doLayout(const QRect& rect, bool testOnly) const
+int FlowLayout::doLayout(const QRect &rect, bool testOnly) const
 {
     int left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
@@ -149,21 +146,23 @@ int FlowLayout::doLayout(const QRect& rect, bool testOnly) const
     int y = effectiveRect.y();
     int lineHeight = 0;
 
-    QLayoutItem* item;
-    foreach (item, itemList) {
+    QLayoutItem *item;
+    foreach (item, itemList)
+    {
         QWidget* wid = item->widget();
         int spaceX = horizontalSpacing();
         if (spaceX == -1)
-            spaceX = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
-                                                 Qt::Horizontal);
+            spaceX = wid->style()->layoutSpacing(
+                QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Horizontal);
 
         int spaceY = verticalSpacing();
         if (spaceY == -1)
-            spaceY = wid->style()->layoutSpacing(QSizePolicy::PushButton, QSizePolicy::PushButton,
-                                                 Qt::Vertical);
+            spaceY = wid->style()->layoutSpacing(
+                QSizePolicy::PushButton, QSizePolicy::PushButton, Qt::Vertical);
 
         int nextX = x + item->sizeHint().width() + spaceX;
-        if (nextX - spaceX > effectiveRect.right() && lineHeight > 0) {
+        if (nextX - spaceX > effectiveRect.right() && lineHeight > 0)
+        {
             x = effectiveRect.x();
             y = y + lineHeight + spaceY;
             nextX = x + item->sizeHint().width() + spaceX;
@@ -180,13 +179,18 @@ int FlowLayout::doLayout(const QRect& rect, bool testOnly) const
 }
 int FlowLayout::smartSpacing(QStyle::PixelMetric pm) const
 {
-    QObject* parent = this->parent();
-    if (!parent) {
+    QObject *parent = this->parent();
+    if (!parent)
+    {
         return -1;
-    } else if (parent->isWidgetType()) {
-        QWidget* pw = static_cast<QWidget*>(parent);
+    }
+    else if (parent->isWidgetType())
+    {
+        QWidget* pw = static_cast<QWidget* >(parent);
         return pw->style()->pixelMetric(pm, 0, pw);
-    } else {
-        return static_cast<QLayout*>(parent)->spacing();
+    }
+    else
+    {
+        return static_cast<QLayout* >(parent)->spacing();
     }
 }

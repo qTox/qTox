@@ -20,10 +20,8 @@
 #ifndef GROUPLIST_H
 #define GROUPLIST_H
 
-template <class A, class B>
-class QHash;
-template <class T>
-class QList;
+template <class A, class B> class QHash;
+template <class T> class QList;
 class Group;
 class QString;
 

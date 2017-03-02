@@ -21,9 +21,9 @@
 #ifndef TRANSLATOR_H
 #define TRANSLATOR_H
 
-#include <QMutex>
-#include <QPair>
 #include <QVector>
+#include <QPair>
+#include <QMutex>
 #include <functional>
 
 class QTranslator;

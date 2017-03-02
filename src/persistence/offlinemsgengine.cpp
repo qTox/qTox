@@ -18,11 +18,11 @@
 */
 
 #include "offlinemsgengine.h"
-#include "src/core/core.h"
 #include "src/friend.h"
+#include "src/persistence/settings.h"
+#include "src/core/core.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
 #include <QMutexLocker>
 #include <QTimer>
 
@@ -38,9 +38,9 @@
 const int OfflineMsgEngine::offlineTimeout = 20000;
 QMutex OfflineMsgEngine::globalMutex;
 
-OfflineMsgEngine::OfflineMsgEngine(Friend* frnd)
-    : mutex(QMutex::Recursive)
-    , f(frnd)
+OfflineMsgEngine::OfflineMsgEngine(Friend* frnd) :
+    mutex(QMutex::Recursive),
+    f(frnd)
 {
 }
 
@@ -54,10 +54,12 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
 
     Profile* profile = Nexus::getProfile();
     auto it = receipts.find(receipt);
-    if (it != receipts.end()) {
+    if (it != receipts.end())
+    {
         int mID = it.value();
         auto msgIt = undeliveredMsgs.find(mID);
-        if (msgIt != undeliveredMsgs.end()) {
+        if (msgIt != undeliveredMsgs.end())
+        {
             if (profile->isHistoryEnabled())
                 profile->getHistory()->markAsSent(mID);
             msgIt.value().msg->markAsSent(QDateTime::currentDateTime());
@@ -67,8 +69,7 @@ void OfflineMsgEngine::dischargeReceipt(int receipt)
     }
 }
 
-void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg,
-                                       const QDateTime& timestamp)
+void OfflineMsgEngine::registerReceipt(int receipt, int64_t messageID, ChatMessage::Ptr msg, const QDateTime &timestamp)
 {
     QMutexLocker ml(&mutex);
 
@@ -93,19 +94,24 @@ void OfflineMsgEngine::deliverOfflineMsgs()
     removeAllReceipts();
     undeliveredMsgs.clear();
 
-    for (auto iter = msgs.begin(); iter != msgs.end(); ++iter) {
+    for (auto iter = msgs.begin(); iter != msgs.end(); ++iter)
+    {
         auto val = iter.value();
         auto key = iter.key();
 
-        if (val.timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout) {
+        if (val.timestamp.msecsTo(QDateTime::currentDateTime()) < offlineTimeout)
+        {
             registerReceipt(val.receipt, key, val.msg, val.timestamp);
             continue;
         }
         QString messageText = val.msg->toString();
         int rec;
-        if (val.msg->isAction()) {
+        if (val.msg->isAction())
+        {
             rec = Core::getInstance()->sendAction(f->getFriendId(), messageText);
-        } else {
+        }
+        else
+        {
             rec = Core::getInstance()->sendMessage(f->getFriendId(), messageText);
         }
 

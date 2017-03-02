@@ -23,9 +23,7 @@
 #include "genericchatform.h"
 #include <QMap>
 
-namespace Ui {
-class MainWindow;
-}
+namespace Ui {class MainWindow;}
 class Group;
 class TabCompleter;
 class FlowLayout;
@@ -70,7 +68,7 @@ private:
     QList<QLabel*> peerLabels;
     QMap<int, QTimer*> peerAudioTimers;
     FlowLayout* namesListLayout;
-    QLabel* nusersLabel;
+    QLabel *nusersLabel;
     TabCompleter* tabber;
     bool inCall;
     QString correctNames(QString& name);

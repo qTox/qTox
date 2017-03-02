@@ -24,7 +24,7 @@ private:
         EventHandler();
         ~EventHandler();
         void updateActions();
-        bool eventFilter(QObject* obj, QEvent* event);
+        bool eventFilter(QObject *obj, QEvent *event);
     };
 
     void registerHandler();
