@@ -69,8 +69,8 @@ protected:
     virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
-    void onTopButtonClicked();
-    void onBottomButtonClicked();
+    void onLeftButtonClicked();
+    void onRightButtonClicked();
     void onPreviewButtonClicked();
 
 private:
@@ -85,6 +85,7 @@ private:
     QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;
     QColor buttonColor;
+    QColor buttonBackgroundColor;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;

@@ -118,6 +118,86 @@
           <property name="verticalSpacing">
            <number>0</number>
           </property>
+          <item row="0" column="1">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Preferred</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="CroppingLabel" name="filenameLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Filename</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>1</width>
+              <height>21</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QProgressBar" name="progressBar">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>12</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="value">
+             <number>24</number>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="invertedAppearance">
+             <bool>false</bool>
+            </property>
+            <property name="format">
+             <string/>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QWidget" name="statusWidget" native="true">
             <layout class="QHBoxLayout" name="_2">
@@ -187,86 +267,6 @@
             </layout>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QProgressBar" name="progressBar">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>12</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="value">
-             <number>24</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="invertedAppearance">
-             <bool>false</bool>
-            </property>
-            <property name="format">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="CroppingLabel" name="filenameLabel">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Filename</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <spacer name="verticalSpacer_5">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>1</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="1">
-           <spacer name="verticalSpacer_6">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>1</width>
-              <height>21</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="1">
-           <spacer name="verticalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>1</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
          </layout>
         </item>
         <item row="1" column="0">
@@ -325,8 +325,20 @@
         </item>
        </layout>
       </item>
-      <item>
+      <item alignment="Qt::AlignTop">
        <widget class="QWidget" name="buttonWidget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>65</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>65</width>
+          <height>32</height>
+         </size>
+        </property>
         <layout class="QGridLayout" name="gridLayout">
          <property name="leftMargin">
           <number>0</number>
@@ -343,18 +355,24 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="bottomButton">
+         <item row="0" column="3" alignment="Qt::AlignRight">
+          <widget class="QPushButton" name="rightButton">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>32</width>
-             <height>16777215</height>
+             <height>32</height>
             </size>
            </property>
            <property name="cursor">
@@ -369,24 +387,30 @@
            </property>
            <property name="iconSize">
             <size>
-             <width>32</width>
-             <height>18</height>
+             <width>14</width>
+             <height>14</height>
             </size>
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QPushButton" name="topButton">
+         <item row="0" column="2" alignment="Qt::AlignLeft">
+          <widget class="QPushButton" name="leftButton">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>32</width>
-             <height>16777215</height>
+             <height>32</height>
             </size>
            </property>
            <property name="cursor">
@@ -401,37 +425,11 @@
            </property>
            <property name="iconSize">
             <size>
-             <width>32</width>
-             <height>18</height>
+             <width>14</width>
+             <height>14</height>
             </size>
            </property>
           </widget>
-         </item>
-         <item row="0" column="1">
-          <spacer name="verticalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="1" column="1">
-          <spacer name="verticalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>40</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>
@@ -450,8 +448,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>previewButton</tabstop>
-  <tabstop>topButton</tabstop>
-  <tabstop>bottomButton</tabstop>
  </tabstops>
  <resources>
   <include location="../../../res.qrc"/>
