@@ -46,8 +46,8 @@ protected:
     virtual bool sceneEventFilter(QGraphicsItem* watched, QEvent* event) final override;
 
 private:
-    enum State
-    {
+
+    enum State {
         None,
         Resizing,
         HandleResizing,
@@ -85,7 +85,9 @@ private:
     QGraphicsRectItem* bottomCenter;
     QGraphicsRectItem* bottomLeft;
     QGraphicsRectItem* leftCenter;
+
 };
+
 
 
 #endif // SCREENGRABBERCHOOSERRECTITEM_HPP

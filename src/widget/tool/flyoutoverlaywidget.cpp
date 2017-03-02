@@ -20,10 +20,10 @@
 
 #include "flyoutoverlaywidget.h"
 
-#include <QBitmap>
+#include <QPropertyAnimation>
 #include <QHBoxLayout>
 #include <QPainter>
-#include <QPropertyAnimation>
+#include <QBitmap>
 #include <QTimer>
 
 FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget* parent)
@@ -39,10 +39,12 @@ FlyoutOverlayWidget::FlyoutOverlayWidget(QWidget* parent)
     connect(animation, &QAbstractAnimation::finished, this, &FlyoutOverlayWidget::finishedAnimation);
     setFlyoutPercent(0);
     hide();
+
 }
 
 FlyoutOverlayWidget::~FlyoutOverlayWidget()
 {
+
 }
 
 int FlyoutOverlayWidget::animationDuration() const
@@ -67,7 +69,8 @@ void FlyoutOverlayWidget::setFlyoutPercent(qreal progress)
     QSize self = size();
     setMask(QRegion(0, 0, self.width() * progress + 1, self.height()));
     move(startPos.x() + self.width() - self.width() * percent, startPos.y());
-    setVisible(progress != 0);
+    setVisible (progress != 0);
+
 }
 
 bool FlyoutOverlayWidget::isShown() const
@@ -111,6 +114,7 @@ void FlyoutOverlayWidget::finishedAnimation()
     // Delay it by a few frames to let the system catch up on rendering
     if (hide)
         QTimer::singleShot(50, this, SIGNAL(hidden()));
+
 }
 
 void FlyoutOverlayWidget::startAnimation(bool forward)
@@ -119,4 +123,5 @@ void FlyoutOverlayWidget::startAnimation(bool forward)
     animation->setDirection(forward ? QAbstractAnimation::Forward : QAbstractAnimation::Backward);
     animation->start();
     animation->setCurrentTime(animation->duration() * percent);
+
 }

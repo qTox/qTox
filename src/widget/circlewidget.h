@@ -33,7 +33,7 @@ public:
     static CircleWidget* getFromID(int id);
 
 signals:
-    void renameRequested(CircleWidget* circleWidget, const QString& newName);
+    void renameRequested(CircleWidget* circleWidget, const QString &newName);
 
 protected:
     void contextMenuEvent(QContextMenuEvent* event) final override;

@@ -20,59 +20,76 @@
 #include "src/chatlog/textformatter.h"
 #include "test/common.h"
 
-#include <QList>
-#include <QMap>
 #include <QString>
 #include <QVector>
 #include <QVector>
+#include <QMap>
+#include <QList>
 
 #include <check.h>
 
 using StringToString = QMap<QString, QString>;
 
-static const StringToString signsToTags{{"*", "b"}, {"**", "b"}, {"/", "i"}};
+static const StringToString signsToTags
+{
+    { "*", "b" },
+    { "**", "b" },
+    { "/", "i" }
+};
 
-static const StringToString
-    commonWorkCases{// Basic
-                    {QStringLiteral("%1a%1"), QStringLiteral("<%2>%1a%1</%2>")},
-                    {QStringLiteral("%1aa%1"), QStringLiteral("<%2>%1aa%1</%2>")},
-                    {QStringLiteral("%1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2>")},
+static const StringToString commonWorkCases
+{
+    // Basic
+    { QStringLiteral("%1a%1"), QStringLiteral("<%2>%1a%1</%2>") },
+    { QStringLiteral("%1aa%1"), QStringLiteral("<%2>%1aa%1</%2>") },
+    { QStringLiteral("%1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2>") },
 
-                    // Additional text from both sides
-                    {QStringLiteral("aaa%1a%1"), QStringLiteral("aaa<%2>%1a%1</%2>")},
-                    {QStringLiteral("%1a%1aaa"), QStringLiteral("<%2>%1a%1</%2>aaa")},
+    // Additional text from both sides
+    { QStringLiteral("aaa%1a%1"), QStringLiteral("aaa<%2>%1a%1</%2>") },
+    { QStringLiteral("%1a%1aaa"), QStringLiteral("<%2>%1a%1</%2>aaa") },
 
-                    // Must allow same formatting more than one time, divided by two and more
-                    // symbols due to QRegularExpressionIterator
-                    {QStringLiteral("%1aaa%1 aaa %1aaa%1"),
-                     QStringLiteral("<%2>%1aaa%1</%2> aaa <%2>%1aaa%1</%2>")}};
+    // Must allow same formatting more than one time, divided by two and more symbols due to QRegularExpressionIterator
+    { QStringLiteral("%1aaa%1 aaa %1aaa%1"), QStringLiteral("<%2>%1aaa%1</%2> aaa <%2>%1aaa%1</%2>") }
+};
 
-static const QVector<QString>
-    commonExceptions{// No whitespaces near to formatting symbols from both sides
-                     QStringLiteral("%1 a%1"), QStringLiteral("%1a %1"),
+static const QVector<QString> commonExceptions
+{
+    // No whitespaces near to formatting symbols from both sides
+    QStringLiteral("%1 a%1"),
+    QStringLiteral("%1a %1"),
 
-                     // No newlines
-                     QStringLiteral("%1aa\n%1"),
+    // No newlines
+    QStringLiteral("%1aa\n%1"),
 
-                     // Only exact combinations of symbols must encapsulate formatting string
-                     QStringLiteral("%1%1aaa%1"), QStringLiteral("%1aaa%1%1")};
+    // Only exact combinations of symbols must encapsulate formatting string
+    QStringLiteral("%1%1aaa%1"),
+    QStringLiteral("%1aaa%1%1")
+};
 
-static const StringToString singleSlash{
+static const StringToString singleSlash
+{
     // Must work with inserted tags
-    {QStringLiteral("/aaa<b>aaa aaa</b>/"), QStringLiteral("<i>aaa<b>aaa aaa</b></i>")}};
+    { QStringLiteral("/aaa<b>aaa aaa</b>/"), QStringLiteral("<i>aaa<b>aaa aaa</b></i>") }
+};
 
-static const StringToString doubleSign{
-    {QStringLiteral("**aaa * aaa**"), QStringLiteral("<b>aaa * aaa</b>")}};
+static const StringToString doubleSign
+{
+    { QStringLiteral("**aaa * aaa**"), QStringLiteral("<b>aaa * aaa</b>") }
+};
 
-static const StringToString mixedFormatting{
+static const StringToString mixedFormatting
+{
     // Must allow mixed formatting if there is no tag overlap in result
-    {QStringLiteral("aaa *aaa /aaa/ aaa*"), QStringLiteral("aaa <b>aaa <i>aaa</i> aaa</b>")},
-    {QStringLiteral("aaa *aaa /aaa* aaa/"), QStringLiteral("aaa <b>aaa /aaa</b> aaa/")}};
+    { QStringLiteral("aaa *aaa /aaa/ aaa*"), QStringLiteral("aaa <b>aaa <i>aaa</i> aaa</b>") },
+    { QStringLiteral("aaa *aaa /aaa* aaa/"), QStringLiteral("aaa <b>aaa /aaa</b> aaa/") }
+};
 
-static const StringToString multilineCode{
+static const StringToString multilineCode
+{
     // Must allow newlines
-    {QStringLiteral("```int main()\n{\n    return 0;\n}```"),
-     QStringLiteral("<font color=#595959><code>int main()\n{\n    return 0;\n}</code></font>")}};
+    { QStringLiteral("```int main()\n{\n    return 0;\n}```"),
+      QStringLiteral("<font color=#595959><code>int main()\n{\n    return 0;\n}</code></font>") }
+};
 
 /**
  * @brief Testing cases which are common for all types of formatting except multiline code
@@ -82,7 +99,8 @@ static const StringToString multilineCode{
  */
 static void commonTest(bool showSymbols, const StringToString map, const QString signs)
 {
-    for (QString key : map.keys()) {
+    for (QString key : map.keys())
+    {
         QString source = key.arg(signs);
         TextFormatter tf = TextFormatter(source);
         QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
@@ -96,7 +114,8 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
  */
 static void commonExceptionsTest(const QString signs)
 {
-    for (QString source : commonExceptions) {
+    for (QString source : commonExceptions)
+    {
         TextFormatter tf = TextFormatter(source.arg(signs));
         ck_assert(tf.applyStyling(false) == source.arg(signs));
     }
@@ -108,7 +127,8 @@ static void commonExceptionsTest(const QString signs)
  */
 static void specialTest(const StringToString map)
 {
-    for (QString key : map.keys()) {
+    for (QString key : map.keys())
+    {
         TextFormatter tf = TextFormatter(key);
         ck_assert(tf.applyStyling(false) == map[key]);
     }
@@ -213,9 +233,9 @@ static Suite* textFormatterSuite(void)
     return s;
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    srand((unsigned int)time(NULL));
+    srand((unsigned int) time(NULL));
 
     Suite* tf = textFormatterSuite();
     SRunner* runner = srunner_create(tf);

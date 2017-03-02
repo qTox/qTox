@@ -20,10 +20,10 @@
 #ifndef CHATFORM_H
 #define CHATFORM_H
 
-#include <QElapsedTimer>
-#include <QLabel>
 #include <QSet>
+#include <QLabel>
 #include <QTimer>
+#include <QElapsedTimer>
 
 #include "genericchatform.h"
 #include "src/core/corestructs.h"
@@ -82,17 +82,18 @@ private slots:
     void onMicMuteToggle();
     void onVolMuteToggle();
 
-    void onFileSendFailed(uint32_t friendId, const QString& fname);
+    void onFileSendFailed(uint32_t friendId, const QString &fname);
     void onFriendStatusChanged(quint32 friendId, Status status);
     void onFriendTypingChanged(quint32 friendId, bool isTyping);
     void onFriendNameChanged(const QString& name);
-    void onFriendMessageReceived(quint32 friendId, const QString& message, bool isAction);
+    void onFriendMessageReceived(quint32 friendId, const QString& message,
+                                 bool isAction);
     void onStatusMessage(const QString& message);
     void onReceiptReceived(quint32 friendId, int receipt);
     void onLoadHistory();
     void onUpdateTime();
     void onScreenshotClicked();
-    void onScreenshotTaken(const QPixmap& pixmap);
+    void onScreenshotTaken(const QPixmap &pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
 
@@ -116,14 +117,15 @@ protected:
     void showEvent(QShowEvent* event) final override;
 
 private:
+
     Friend* f;
-    CroppingLabel* statusMessageLabel;
+    CroppingLabel *statusMessageLabel;
     QMenu statusMessageMenu;
-    QLabel* callDuration;
-    QTimer* callDurationTimer;
+    QLabel *callDuration;
+    QTimer *callDurationTimer;
     QTimer typingTimer;
     QElapsedTimer timeElapsed;
-    OfflineMsgEngine* offlineEngine;
+    OfflineMsgEngine *offlineEngine;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
 

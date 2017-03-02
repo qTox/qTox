@@ -21,15 +21,15 @@
 #include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 
-#include <QDebug>
 #include <QFile>
-#include <QFontInfo>
+#include <QDebug>
 #include <QMap>
-#include <QPainter>
 #include <QRegularExpression>
-#include <QStyle>
-#include <QSvgRenderer>
 #include <QWidget>
+#include <QStyle>
+#include <QFontInfo>
+#include <QSvgRenderer>
+#include <QPainter>
 
 /**
  * @enum Style::Font
@@ -67,35 +67,47 @@ QFont appFont(int pixelSize, int weight)
 
 QString qssifyFont(QFont font)
 {
-    return QString("%1 %2px \"%3\"").arg(font.weight() * 8).arg(font.pixelSize()).arg(font.family());
+    return QString("%1 %2px \"%3\"")
+            .arg(font.weight()*8)
+            .arg(font.pixelSize())
+            .arg(font.family());
 }
 
 // colors as defined in
 // https://github.com/ItsDuke/Tox-UI/blob/master/UI%20GUIDELINES.md
 static QColor palette[] = {
-    QColor("#6bc260"), QColor("#cebf44"), QColor("#c84e4e"), QColor("#000000"), QColor("#1c1c1c"),
-    QColor("#414141"), QColor("#414141").lighter(120), QColor("#d1d1d1"), QColor("#ffffff"),
+    QColor("#6bc260"),
+    QColor("#cebf44"),
+    QColor("#c84e4e"),
+    QColor("#000000"),
+    QColor("#1c1c1c"),
+    QColor("#414141"),
+    QColor("#414141").lighter(120),
+    QColor("#d1d1d1"),
+    QColor("#ffffff"),
     QColor("#ff7700"),
 
     // Theme colors
-    QColor("#1c1c1c"), QColor("#2a2a2a"), QColor("#414141"), QColor("#4e4e4e"),
+    QColor("#1c1c1c"),
+    QColor("#2a2a2a"),
+    QColor("#414141"),
+    QColor("#4e4e4e"),
 };
 
 static QMap<QString, QString> dict;
 
 QStringList Style::getThemeColorNames()
 {
-    return {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"),
-            QObject::tr("Violet")};
+    return {QObject::tr("Default"), QObject::tr("Blue"), QObject::tr("Olive"), QObject::tr("Red"), QObject::tr("Violet")};
 }
 
-QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"),
-                                         QColor("#c23716"), QColor("#4617b5")};
+QList<QColor> Style::themeColorColors = {QColor(), QColor("#004aa4"), QColor("#97ba00"), QColor("#c23716"), QColor("#4617b5")};
 
-QString Style::getStylesheet(const QString& filename, const QFont& baseFont)
+QString Style::getStylesheet(const QString &filename, const QFont& baseFont)
 {
     QFile file(filename);
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+    if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
         qWarning() << "Stylesheet " << filename << " not found";
         return QString();
     }
@@ -116,13 +128,13 @@ QFont Style::getFont(Style::Font font)
     static int defSize = QFontInfo(QFont()).pixelSize();
 
     static QFont fonts[] = {
-        appFont(defSize + 3, QFont::Bold),   // extra big
-        appFont(defSize + 1, QFont::Normal), // big
-        appFont(defSize + 1, QFont::Bold),   // big bold
-        appFont(defSize, QFont::Normal),     // medium
-        appFont(defSize, QFont::Bold),       // medium bold
-        appFont(defSize - 1, QFont::Normal), // small
-        appFont(defSize - 1, QFont::Light),  // small light
+        appFont(defSize + 3, QFont::Bold),      // extra big
+        appFont(defSize + 1, QFont::Normal),    // big
+        appFont(defSize + 1, QFont::Bold),      // big bold
+        appFont(defSize    , QFont::Normal),    // medium
+        appFont(defSize    , QFont::Bold),      // medium bold
+        appFont(defSize - 1, QFont::Normal),    // small
+        appFont(defSize - 1, QFont::Light),     // small light
     };
 
     return fonts[font];
@@ -130,36 +142,40 @@ QFont Style::getFont(Style::Font font)
 
 QString Style::resolve(QString qss, const QFont& baseFont)
 {
-    if (dict.isEmpty()) {
-        dict = {// colors
-                {"@green", Style::getColor(Style::Green).name()},
-                {"@yellow", Style::getColor(Style::Yellow).name()},
-                {"@red", Style::getColor(Style::Red).name()},
-                {"@black", Style::getColor(Style::Black).name()},
-                {"@darkGrey", Style::getColor(Style::DarkGrey).name()},
-                {"@mediumGrey", Style::getColor(Style::MediumGrey).name()},
-                {"@mediumGreyLight", Style::getColor(Style::MediumGreyLight).name()},
-                {"@lightGrey", Style::getColor(Style::LightGrey).name()},
-                {"@white", Style::getColor(Style::White).name()},
-                {"@orange", Style::getColor(Style::Orange).name()},
-                {"@themeDark", Style::getColor(Style::ThemeDark).name()},
-                {"@themeMediumDark", Style::getColor(Style::ThemeMediumDark).name()},
-                {"@themeMedium", Style::getColor(Style::ThemeMedium).name()},
-                {"@themeLight", Style::getColor(Style::ThemeLight).name()},
+    if (dict.isEmpty())
+    {
+        dict = {
+            // colors
+            {"@green", Style::getColor(Style::Green).name()},
+            {"@yellow", Style::getColor(Style::Yellow).name()},
+            {"@red", Style::getColor(Style::Red).name()},
+            {"@black", Style::getColor(Style::Black).name()},
+            {"@darkGrey", Style::getColor(Style::DarkGrey).name()},
+            {"@mediumGrey", Style::getColor(Style::MediumGrey).name()},
+            {"@mediumGreyLight", Style::getColor(Style::MediumGreyLight).name()},
+            {"@lightGrey", Style::getColor(Style::LightGrey).name()},
+            {"@white", Style::getColor(Style::White).name()},
+            {"@orange", Style::getColor(Style::Orange).name()},
+            {"@themeDark", Style::getColor(Style::ThemeDark).name()},
+            {"@themeMediumDark", Style::getColor(Style::ThemeMediumDark).name()},
+            {"@themeMedium", Style::getColor(Style::ThemeMedium).name()},
+            {"@themeLight", Style::getColor(Style::ThemeLight).name()},
 
-                // fonts
-                {"@baseFont",
-                 QString::fromUtf8("'%1' %2px").arg(baseFont.family()).arg(QFontInfo(baseFont).pixelSize())},
-                {"@extraBig", qssifyFont(Style::getFont(Style::ExtraBig))},
-                {"@big", qssifyFont(Style::getFont(Style::Big))},
-                {"@bigBold", qssifyFont(Style::getFont(Style::BigBold))},
-                {"@medium", qssifyFont(Style::getFont(Style::Medium))},
-                {"@mediumBold", qssifyFont(Style::getFont(Style::MediumBold))},
-                {"@small", qssifyFont(Style::getFont(Style::Small))},
-                {"@smallLight", qssifyFont(Style::getFont(Style::SmallLight))}};
+            // fonts
+            {"@baseFont", QString::fromUtf8("'%1' %2px")
+             .arg(baseFont.family()).arg(QFontInfo(baseFont).pixelSize())},
+            {"@extraBig", qssifyFont(Style::getFont(Style::ExtraBig))},
+            {"@big", qssifyFont(Style::getFont(Style::Big))},
+            {"@bigBold", qssifyFont(Style::getFont(Style::BigBold))},
+            {"@medium", qssifyFont(Style::getFont(Style::Medium))},
+            {"@mediumBold", qssifyFont(Style::getFont(Style::MediumBold))},
+            {"@small", qssifyFont(Style::getFont(Style::Small))},
+            {"@smallLight", qssifyFont(Style::getFont(Style::SmallLight))}
+        };
     }
 
-    for (const QString& key : dict.keys()) {
+    for (const QString& key : dict.keys())
+    {
         qss.replace(QRegularExpression(QString("%1\\b").arg(key)), dict[key]);
     }
 
@@ -171,9 +187,11 @@ void Style::repolish(QWidget* w)
     w->style()->unpolish(w);
     w->style()->polish(w);
 
-    for (QObject* o : w->children()) {
+    for (QObject* o : w->children())
+    {
         QWidget* c = qobject_cast<QWidget*>(o);
-        if (c) {
+        if (c)
+        {
             c->style()->unpolish(c);
             c->style()->polish(c);
         }
@@ -194,15 +212,18 @@ void Style::setThemeColor(int color)
  *
  * Pass an invalid QColor to reset to defaults.
  */
-void Style::setThemeColor(const QColor& color)
+void Style::setThemeColor(const QColor &color)
 {
-    if (!color.isValid()) {
+    if (!color.isValid())
+    {
         // Reset to default
         palette[ThemeDark] = QColor("#1c1c1c");
         palette[ThemeMediumDark] = QColor("#2a2a2a");
         palette[ThemeMedium] = QColor("#414141");
         palette[ThemeLight] = QColor("#4e4e4e");
-    } else {
+    }
+    else
+    {
         palette[ThemeDark] = color.darker(155);
         palette[ThemeMediumDark] = color.darker(135);
         palette[ThemeMedium] = color.darker(120);

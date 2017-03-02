@@ -20,9 +20,9 @@
 #ifndef FRIENDLISTWIDGET_H
 #define FRIENDLISTWIDGET_H
 
-#include "genericchatitemlayout.h"
-#include "src/core/corestructs.h"
 #include <QWidget>
+#include "src/core/corestructs.h"
+#include "genericchatitemlayout.h"
 
 class QVBoxLayout;
 class QGridLayout;
@@ -55,8 +55,7 @@ public:
     void addCircleWidget(int id);
     void addCircleWidget(FriendWidget* widget = nullptr);
     void removeCircleWidget(CircleWidget* widget);
-    void searchChatrooms(const QString& searchString, bool hideOnline = false,
-                         bool hideOffline = false, bool hideGroups = false);
+    void searchChatrooms(const QString &searchString, bool hideOnline = false, bool hideOffline = false, bool hideGroups = false);
 
     void cycleContacts(GenericChatroomWidget* activeChatroomWidget, bool forward);
 

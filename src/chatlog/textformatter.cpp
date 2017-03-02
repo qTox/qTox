@@ -24,8 +24,7 @@
 #include <QRegularExpression>
 #include <QVector>
 
-enum TextStyle
-{
+enum TextStyle {
     BOLD = 0,
     ITALIC,
     UNDERLINE,
@@ -50,27 +49,31 @@ static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
                                                      "(?=$|[^`])");
 
 // Items in vector associated with TextStyle values respectively. Do NOT change this order
-static const QVector<QString> fontStylePatterns{QStringLiteral("<b>%1</b>"),
-                                                QStringLiteral("<i>%1</i>"),
-                                                QStringLiteral("<u>%1</u>"),
-                                                QStringLiteral("<s>%1</s>"),
-                                                QStringLiteral(
-                                                    "<font color=#595959><code>%1</code></font>")};
+static const QVector<QString> fontStylePatterns
+{
+    QStringLiteral("<b>%1</b>"),
+    QStringLiteral("<i>%1</i>"),
+    QStringLiteral("<u>%1</u>"),
+    QStringLiteral("<s>%1</s>"),
+    QStringLiteral("<font color=#595959><code>%1</code></font>")
+};
 
 // Unfortunately, can't use simple QMap because ordered applying of styles is required
-static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
-    {QRegularExpression(COMMON_PATTERN.arg("*", "1")), fontStylePatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "1")), fontStylePatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "1")), fontStylePatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "1")), fontStylePatterns[STRIKE]},
-    {QRegularExpression(COMMON_PATTERN.arg("`", "1")), fontStylePatterns[CODE]},
-    {QRegularExpression(COMMON_PATTERN.arg("*", "2")), fontStylePatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "2")), fontStylePatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "2")), fontStylePatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "2")), fontStylePatterns[STRIKE]},
-    {QRegularExpression(MULTILINE_CODE), fontStylePatterns[CODE]}};
+static const QVector<QPair<QRegularExpression, QString>> textPatternStyle
+{
+    { QRegularExpression(COMMON_PATTERN.arg("*", "1")), fontStylePatterns[BOLD] },
+    { QRegularExpression(COMMON_PATTERN.arg("/", "1")), fontStylePatterns[ITALIC] },
+    { QRegularExpression(COMMON_PATTERN.arg("_", "1")), fontStylePatterns[UNDERLINE] },
+    { QRegularExpression(COMMON_PATTERN.arg("~", "1")), fontStylePatterns[STRIKE] },
+    { QRegularExpression(COMMON_PATTERN.arg("`", "1")), fontStylePatterns[CODE] },
+    { QRegularExpression(COMMON_PATTERN.arg("*", "2")), fontStylePatterns[BOLD] },
+    { QRegularExpression(COMMON_PATTERN.arg("/", "2")), fontStylePatterns[ITALIC] },
+    { QRegularExpression(COMMON_PATTERN.arg("_", "2")), fontStylePatterns[UNDERLINE] },
+    { QRegularExpression(COMMON_PATTERN.arg("~", "2")), fontStylePatterns[STRIKE] },
+    { QRegularExpression(MULTILINE_CODE),               fontStylePatterns[CODE] }
+};
 
-TextFormatter::TextFormatter(const QString& str)
+TextFormatter::TextFormatter(const QString &str)
     : sourceString(str)
 {
 }
@@ -85,7 +88,8 @@ static int patternSignsCount(const QString& str)
     QChar escapeSign = str.at(0);
     int result = 0;
     int length = str.length();
-    while (result < length && str[result] == escapeSign) {
+    while (result < length && str[result] == escapeSign)
+    {
         ++result;
     }
     return result;
@@ -104,29 +108,34 @@ static bool isTagIntersection(const QString& str)
     int closingTagCount = 0;
 
     QRegularExpressionMatchIterator iter = TAG_PATTERN.globalMatch(str);
-    while (iter.hasNext()) {
-        iter.next().captured()[0] == '/' ? ++closingTagCount : ++openingTagCount;
+    while (iter.hasNext())
+    {
+        iter.next().captured()[0] == '/'
+                ? ++closingTagCount
+                : ++openingTagCount;
     }
     return openingTagCount != closingTagCount;
 }
 
 /**
  * @brief Applies styles to the font of text that was passed to the constructor
- * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
- * string
+ * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting string
  * @return Source text with styled font
  */
 QString TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
     QString out = sourceString;
 
-    for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
+    for (QPair<QRegularExpression, QString> pair : textPatternStyle)
+    {
         QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(out);
         int insertedTagSymbolsCount = 0;
 
-        while (matchesIterator.hasNext()) {
+        while (matchesIterator.hasNext())
+        {
             QRegularExpressionMatch match = matchesIterator.next();
-            if (isTagIntersection(match.captured())) {
+            if (isTagIntersection(match.captured()))
+            {
                 continue;
             }
 
@@ -150,8 +159,7 @@ QString TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 
 /**
  * @brief Applies all styling for the text
- * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
- * string
+ * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting string
  * @return Styled string
  */
 QString TextFormatter::applyStyling(bool showFormattingSymbols)

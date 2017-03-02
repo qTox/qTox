@@ -21,11 +21,11 @@
 #define SMILEYPACK_H
 
 #include <QHash>
-#include <QIcon>
-#include <QMutex>
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QIcon>
+#include <QMutex>
 
 class SmileyPack : public QObject
 {

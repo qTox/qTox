@@ -20,22 +20,22 @@
 
 #include "loginscreen.h"
 #include "ui_loginscreen.h"
-#include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/profilelocker.h"
+#include "src/nexus.h"
 #include "src/persistence/settings.h"
 #include "src/widget/form/setpassworddialog.h"
+#include "src/widget/translator.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/profileimporter.h"
-#include "src/widget/translator.h"
-#include <QDebug>
 #include <QMessageBox>
 #include <QToolButton>
+#include <QDebug>
 
-LoginScreen::LoginScreen(QWidget* parent)
-    : QWidget(parent)
-    , ui(new Ui::LoginScreen)
-    , quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
+LoginScreen::LoginScreen(QWidget* parent) :
+    QWidget(parent),
+    ui(new Ui::LoginScreen),
+    quitShortcut{QKeySequence(Qt::CTRL + Qt::Key_Q), this}
 {
     ui->setupUi(this);
 
@@ -51,13 +51,12 @@ LoginScreen::LoginScreen(QWidget* parent)
     connect(ui->newPass, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
     connect(ui->newPassConfirm, &QLineEdit::returnPressed, this, &LoginScreen::onCreateNewProfile);
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginScreen::onLogin);
-    connect(ui->loginUsernames, &QComboBox::currentTextChanged, this,
-            &LoginScreen::onLoginUsernameSelected);
+    connect(ui->loginUsernames, &QComboBox::currentTextChanged, this, &LoginScreen::onLoginUsernameSelected);
     connect(ui->loginPassword, &QLineEdit::returnPressed, this, &LoginScreen::onLogin);
     connect(ui->newPass, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->newPassConfirm, &QLineEdit::textChanged, this, &LoginScreen::onPasswordEdited);
     connect(ui->autoLoginCB, &QCheckBox::stateChanged, this, &LoginScreen::onAutoLoginToggled);
-    connect(ui->importButton, &QPushButton::clicked, this, &LoginScreen::onImportProfile);
+    connect(ui->importButton,  &QPushButton::clicked, this, &LoginScreen::onImportProfile);
 
     reset();
     this->setStyleSheet(Style::getStylesheet(":/ui/loginScreen/loginScreen.css"));
@@ -86,16 +85,20 @@ void LoginScreen::reset()
     Profile::scanProfiles();
     QString lastUsed = Settings::getInstance().getCurrentProfile();
     QVector<QString> profiles = Profile::getProfiles();
-    for (QString profile : profiles) {
+    for (QString profile : profiles)
+    {
         ui->loginUsernames->addItem(profile);
         if (profile == lastUsed)
-            ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count() - 1);
+            ui->loginUsernames->setCurrentIndex(ui->loginUsernames->count()-1);
     }
 
-    if (profiles.isEmpty()) {
+    if (profiles.isEmpty())
+    {
         ui->stackedWidget->setCurrentIndex(0);
         ui->newUsername->setFocus();
-    } else {
+    }
+    else
+    {
         ui->stackedWidget->setCurrentIndex(1);
         ui->loginPassword->setFocus();
     }
@@ -107,7 +110,8 @@ void LoginScreen::reset()
 
 bool LoginScreen::event(QEvent* event)
 {
-    switch (event->type()) {
+    switch (event->type())
+    {
 #ifdef Q_OS_MAC
     case QEvent::WindowActivate:
     case QEvent::WindowStateChange:
@@ -142,37 +146,35 @@ void LoginScreen::onCreateNewProfile()
     QString name = ui->newUsername->text();
     QString pass = ui->newPass->text();
 
-    if (name.isEmpty()) {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("The username must not be empty."));
+    if (name.isEmpty())
+    {
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The username must not be empty."));
         return;
     }
 
-    if (pass.size() != 0 && pass.size() < 6) {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("The password must be at least 6 characters long."));
+    if (pass.size()!=0 && pass.size() < 6)
+    {
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The password must be at least 6 characters long."));
         return;
     }
 
-    if (ui->newPassConfirm->text() != pass) {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("The passwords you've entered are different.\nPlease make sure to "
-                                 "enter same password twice."));
+    if (ui->newPassConfirm->text() != pass)
+    {
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("The passwords you've entered are different.\nPlease make sure to enter same password twice."));
         return;
     }
 
-    if (Profile::exists(name)) {
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("A profile with this name already exists."));
+    if (Profile::exists(name))
+    {
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("A profile with this name already exists."));
         return;
     }
 
     Profile* profile = Profile::createProfile(name, pass);
-    if (!profile) {
+    if (!profile)
+    {
         // Unknown error
-        QMessageBox::critical(this, tr("Couldn't create a new profile"),
-                              tr("Unknown error: Couldn't create a new profile.\nIf you "
-                                 "encountered this error, please report it."));
+        QMessageBox::critical(this, tr("Couldn't create a new profile"), tr("Unknown error: Couldn't create a new profile.\nIf you encountered this error, please report it."));
         return;
     }
 
@@ -182,25 +184,27 @@ void LoginScreen::onCreateNewProfile()
     nexus.showMainGUI();
 }
 
-void LoginScreen::onLoginUsernameSelected(const QString& name)
+void LoginScreen::onLoginUsernameSelected(const QString &name)
 {
     if (name.isEmpty())
         return;
 
     ui->loginPassword->clear();
-    if (Profile::isEncrypted(name)) {
+    if (Profile::isEncrypted(name))
+    {
         ui->loginPasswordLabel->show();
         ui->loginPassword->show();
         // there is no way to do autologin if profile is encrypted, and
         // visible option confuses users into thinking that it is possible,
         // thus hide it
         ui->autoLoginCB->hide();
-    } else {
+    }
+    else
+    {
         ui->loginPasswordLabel->hide();
         ui->loginPassword->hide();
         ui->autoLoginCB->show();
-        ui->autoLoginCB->setToolTip(
-            tr("Password protected profiles can't be automatically loaded."));
+        ui->autoLoginCB->setToolTip(tr("Password protected profiles can't be automatically loaded."));
     }
 }
 
@@ -210,27 +214,34 @@ void LoginScreen::onLogin()
     QString pass = ui->loginPassword->text();
 
     // name can be empty when there are no profiles
-    if (name.isEmpty()) {
+    if (name.isEmpty())
+    {
         QMessageBox::critical(this, tr("Couldn't load profile"),
                               tr("There is no selected profile.\n\n"
                                  "You may want to create one."));
         return;
     }
 
-    if (!ProfileLocker::isLockable(name)) {
+    if (!ProfileLocker::isLockable(name))
+    {
         QMessageBox::critical(this, tr("Couldn't load this profile"),
                               tr("This profile is already in use."));
         return;
     }
 
     Profile* profile = Profile::loadProfile(name, pass);
-    if (!profile) {
-        if (!ProfileLocker::isLockable(name)) {
+    if (!profile)
+    {
+        if (!ProfileLocker::isLockable(name))
+        {
             QMessageBox::critical(this, tr("Couldn't load this profile"),
                                   tr("Profile already in use. Close other clients."));
             return;
-        } else {
-            QMessageBox::critical(this, tr("Couldn't load this profile"), tr("Wrong password."));
+        }
+        else
+        {
+            QMessageBox::critical(this, tr("Couldn't load this profile"),
+                                  tr("Wrong password."));
             ui->loginPassword->setFocus();
             ui->loginPassword->selectAll();
             return;
@@ -266,7 +277,7 @@ void LoginScreen::retranslateUi()
 
 void LoginScreen::onImportProfile()
 {
-    ProfileImporter* pi = new ProfileImporter(this);
+    ProfileImporter *pi = new ProfileImporter(this);
 
     if (pi->importProfile())
         reset();

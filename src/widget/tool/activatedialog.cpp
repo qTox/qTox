@@ -24,6 +24,7 @@
 ActivateDialog::ActivateDialog(QWidget* parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
+
 }
 
 bool ActivateDialog::event(QEvent* event)

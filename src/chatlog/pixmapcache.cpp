@@ -19,11 +19,12 @@
 
 #include "pixmapcache.h"
 
-QPixmap PixmapCache::get(const QString& filename, QSize size)
+QPixmap PixmapCache::get(const QString &filename, QSize size)
 {
     auto itr = cache.find(filename);
 
-    if (itr == cache.end()) {
+    if (itr == cache.end())
+    {
         QIcon icon;
         icon.addFile(filename);
 
@@ -37,8 +38,9 @@ QPixmap PixmapCache::get(const QString& filename, QSize size)
 /**
  * @brief Returns the singleton instance.
  */
-PixmapCache& PixmapCache::getInstance()
+PixmapCache &PixmapCache::getInstance()
 {
     static PixmapCache instance;
     return instance;
 }
+

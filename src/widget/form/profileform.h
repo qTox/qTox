@@ -20,12 +20,12 @@
 #ifndef IDENTITYFORM_H
 #define IDENTITYFORM_H
 
-#include "src/core/core.h"
-#include "src/widget/qrwidget.h"
-#include <QLabel>
 #include <QLineEdit>
+#include <QLabel>
 #include <QTimer>
 #include <QVBoxLayout>
+#include "src/core/core.h"
+#include "src/widget/qrwidget.h"
 
 class CroppingLabel;
 class Core;
@@ -40,6 +40,7 @@ class ClickableTE : public QLineEdit
 {
     Q_OBJECT
 public:
+
 signals:
     void clicked();
 
@@ -56,9 +57,7 @@ class ProfileForm : public QWidget
 public:
     explicit ProfileForm(QWidget* parent = nullptr);
     ~ProfileForm();
-    virtual void show() final
-    {
-    }
+    virtual void show() final{}
     void show(ContentLayout* contentLayout);
     bool isShown() const;
 
@@ -67,12 +66,12 @@ signals:
     void statusMessageChanged(QString);
 
 public slots:
-    void onSelfAvatarLoaded(const QPixmap& pic);
+    void onSelfAvatarLoaded(const QPixmap &pic);
     void onLogoutClicked();
 
 private slots:
     void setPasswordButtonsText();
-    void setToxId(const ToxId& id);
+    void setToxId(const ToxId &id);
     void copyIdClicked();
     void onUserNameEdited();
     void onStatusMessageEdited();
@@ -84,7 +83,7 @@ private slots:
     void onDeletePassClicked();
     void onChangePassClicked();
     void onAvatarClicked();
-    void showProfilePictureContextMenu(const QPoint& point);
+    void showProfilePictureContextMenu(const QPoint &point);
     void onRegisterButtonClicked();
 
 private:
@@ -93,14 +92,14 @@ private:
     void prFileLabelUpdate();
 
 private:
-    bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject *object, QEvent *event);
     void refreshProfiles();
     Ui::IdentitySettings* bodyUI;
     MaskablePixmapWidget* profilePicture;
     Core* core;
     QTimer timer;
     bool hasCheck = false;
-    QRWidget* qr;
+    QRWidget *qr;
     ClickableTE* toxId;
     void showRegisterToxme();
 };

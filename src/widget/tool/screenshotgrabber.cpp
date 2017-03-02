@@ -41,7 +41,7 @@ ScreenshotGrabber::ScreenshotGrabber()
     , scene(0)
     , mQToxVisible(true)
 {
-    window = new QGraphicsView(scene); // Top-level widget
+    window = new QGraphicsView (scene); // Top-level widget
     window->setWindowFlags(Qt::FramelessWindowHint | Qt::BypassWindowManagerHint);
     window->setContentsMargins(0, 0, 0, 0);
     window->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -115,7 +115,8 @@ bool ScreenshotGrabber::handleKeyPress(QKeyEvent* event)
 
         window->hide();
         QTimer::singleShot(350, this, SLOT(reInit()));
-    } else
+    }
+    else
         return false;
 
     return true;
@@ -128,8 +129,7 @@ void ScreenshotGrabber::acceptRegion()
         return;
 
     // Scale the accepted region from DIPs to actual pixels
-    rect.setRect(rect.x() * pixRatio, rect.y() * pixRatio, rect.width() * pixRatio,
-                 rect.height() * pixRatio);
+    rect.setRect(rect.x() * pixRatio, rect.y() * pixRatio, rect.width() * pixRatio, rect.height() * pixRatio);
 
     emit regionChosen(rect);
     qDebug() << "Screenshot accepted, chosen region" << rect;
@@ -160,34 +160,31 @@ void ScreenshotGrabber::setupScene()
     this->helperTooltip->setDefaultTextColor(Qt::black);
     useNothingSelectedTooltip();
 
-    connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this,
-            &ScreenshotGrabber::acceptRegion);
-    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this,
-            &ScreenshotGrabber::chooseHelperTooltipText);
-    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this->overlay,
-            &ScreenGrabberOverlayItem::setChosenRect);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::doubleClicked, this, &ScreenshotGrabber::acceptRegion);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this, &ScreenshotGrabber::chooseHelperTooltipText);
+    connect(this->chooserRect, &ScreenGrabberChooserRectItem::regionChosen, this->overlay, &ScreenGrabberOverlayItem::setChosenRect);
 }
 
 void ScreenshotGrabber::useNothingSelectedTooltip()
 {
-    helperTooltip->setHtml(
-        tr("Click and drag to select a region. Press %1 to "
-           "hide/show qTox window, or %2 to cancel.",
-           "Help text shown when no region has been selected yet")
-            .arg(QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
-                 QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
+    helperTooltip->setHtml(tr("Click and drag to select a region. Press %1 to "
+                              "hide/show qTox window, or %2 to cancel.",
+                              "Help text shown when no region has been selected yet")
+                           .arg(QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard")))
+                           );
     adjustTooltipPosition();
 }
 
 void ScreenshotGrabber::useRegionSelectedTooltip()
 {
-    helperTooltip->setHtml(
-        tr("Press %1 to send a screenshot of the selection, "
-           "%2 to hide/show qTox window, or %3 to cancel.",
-           "Help text shown when a region has been selected")
-            .arg(QString("<b>%1</b>").arg(tr("Enter", "[Enter] key on the keyboard")),
-                 QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
-                 QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard"))));
+    helperTooltip->setHtml(tr("Press %1 to send a screenshot of the selection, "
+                              "%2 to hide/show qTox window, or %3 to cancel.",
+                              "Help text shown when a region has been selected")
+                           .arg(QString("<b>%1</b>").arg(tr("Enter", "[Enter] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Space", "[Space] key on the keyboard")),
+                                QString("<b>%1</b>").arg(tr("Escape", "[Escape] key on the keyboard")))
+                           );
     adjustTooltipPosition();
 }
 
@@ -227,13 +224,16 @@ QPixmap ScreenshotGrabber::grabScreen()
     QRect rec = screen->virtualGeometry();
 
     // Multiply by devicePixelRatio to get actual desktop size
-    return screen->grabWindow(QApplication::desktop()->winId(), rec.x() * pixRatio,
-                              rec.y() * pixRatio, rec.width() * pixRatio, rec.height() * pixRatio);
+    return screen->grabWindow(QApplication::desktop()->winId(),
+                              rec.x() * pixRatio,
+                              rec.y() * pixRatio,
+                              rec.width() * pixRatio,
+                              rec.height() * pixRatio);
 }
 
 void ScreenshotGrabber::hideVisibleWindows()
 {
-    foreach (QWidget* w, qApp->topLevelWidgets()) {
+    foreach(QWidget* w, qApp->topLevelWidgets()) {
         if (w != window && w->isVisible()) {
             mHiddenWindows << w;
             w->setVisible(false);
@@ -245,7 +245,7 @@ void ScreenshotGrabber::hideVisibleWindows()
 
 void ScreenshotGrabber::restoreHiddenWindows()
 {
-    foreach (QWidget* w, mHiddenWindows) {
+    foreach(QWidget* w, mHiddenWindows) {
         if (w)
             w->setVisible(true);
     }

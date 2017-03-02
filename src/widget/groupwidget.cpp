@@ -19,17 +19,17 @@
 
 #include "groupwidget.h"
 
-#include <QApplication>
-#include <QContextMenuEvent>
-#include <QDrag>
-#include <QDragEnterEvent>
-#include <QMenu>
-#include <QMimeData>
 #include <QPalette>
+#include <QMenu>
+#include <QContextMenuEvent>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QApplication>
+#include <QDrag>
 
 #include "contentdialog.h"
-#include "maskablepixmapwidget.h"
 #include "form/groupchatform.h"
+#include "maskablepixmapwidget.h"
 #include "src/core/core.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
@@ -53,8 +53,10 @@ GroupWidget::GroupWidget(int GroupId, QString Name)
 
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString& newName) {
-        if (!newName.isEmpty()) {
+    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
+    {
+        if (!newName.isEmpty())
+        {
             Group* g = GroupList::findGroup(groupId);
             emit renameRequested(this, newName);
             emit g->getChatForm()->groupTitleChanged(groupId, newName.left(128));
@@ -101,23 +103,31 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     if (!active)
         setBackgroundRole(QPalette::Window);
 
-    if (selectedItem) {
-        if (selectedItem == quitGroup) {
+    if (selectedItem)
+    {
+        if (selectedItem == quitGroup)
+        {
             emit removeGroup(groupId);
-        } else if (selectedItem == openChatWindow) {
+        }
+        else if (selectedItem == openChatWindow)
+        {
             emit chatroomWidgetClicked(this, true);
             return;
-        } else if (selectedItem == removeChatWindow) {
+        }
+        else if (selectedItem == removeChatWindow)
+        {
             ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
             contentDialog->removeGroup(groupId);
             return;
-        } else if (selectedItem == setTitle) {
+        }
+        else if (selectedItem == setTitle)
+        {
             editName();
         }
     }
 }
 
-void GroupWidget::mousePressEvent(QMouseEvent* ev)
+void GroupWidget::mousePressEvent(QMouseEvent *ev)
 {
     if (ev->button() == Qt::LeftButton)
         dragStartPos = ev->pos();
@@ -125,12 +135,13 @@ void GroupWidget::mousePressEvent(QMouseEvent* ev)
     GenericChatroomWidget::mousePressEvent(ev);
 }
 
-void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
+void GroupWidget::mouseMoveEvent(QMouseEvent *ev)
 {
     if (!(ev->buttons() & Qt::LeftButton))
         return;
 
-    if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance()) {
+    if ((dragStartPos - ev->pos()).manhattanLength() > QApplication::startDragDistance())
+    {
         QMimeData* mdata = new QMimeData;
         mdata->setText(getGroup()->getName());
 
@@ -144,7 +155,8 @@ void GroupWidget::mouseMoveEvent(QMouseEvent* ev)
 void GroupWidget::onUserListChanged()
 {
     Group* g = GroupList::findGroup(groupId);
-    if (g) {
+    if (g)
+    {
         int peersCount = g->getPeersCount();
         if (peersCount == 1)
             statusMessageLabel->setText(tr("1 user in chat"));
@@ -167,12 +179,15 @@ void GroupWidget::setAsInactiveChatroom()
 
 void GroupWidget::updateStatusLight()
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group *g = GroupList::findGroup(groupId);
 
-    if (!g->getEventFlag()) {
+    if (!g->getEventFlag())
+    {
         statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
         statusPic.setMargin(3);
-    } else {
+    }
+    else
+    {
         statusPic.setPixmap(QPixmap(":img/status/dot_online_notification.svg"));
         statusPic.setMargin(0);
     }
@@ -180,7 +195,7 @@ void GroupWidget::updateStatusLight()
 
 QString GroupWidget::getStatusString() const
 {
-    Group* g = GroupList::findGroup(groupId);
+    Group *g = GroupList::findGroup(groupId);
 
     if (!g->getEventFlag())
         return "Online";
@@ -218,7 +233,7 @@ void GroupWidget::resetEventFlags()
     g->setMentionedFlag(false);
 }
 
-void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
+void GroupWidget::dragEnterEvent(QDragEnterEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
     Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
@@ -229,13 +244,13 @@ void GroupWidget::dragEnterEvent(QDragEnterEvent* ev)
         setBackgroundRole(QPalette::Highlight);
 }
 
-void GroupWidget::dragLeaveEvent(QDragLeaveEvent*)
+void GroupWidget::dragLeaveEvent(QDragLeaveEvent *)
 {
     if (!active)
         setBackgroundRole(QPalette::Window);
 }
 
-void GroupWidget::dropEvent(QDropEvent* ev)
+void GroupWidget::dropEvent(QDropEvent *ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
     Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
@@ -259,7 +274,8 @@ void GroupWidget::setName(const QString& name)
 void GroupWidget::retranslateUi()
 {
     Group* g = GroupList::findGroup(groupId);
-    if (g) {
+    if (g)
+    {
         int peersCount = g->getPeersCount();
         if (peersCount == 1)
             statusMessageLabel->setText(tr("1 user in chat"));

@@ -19,17 +19,17 @@
 
 #include "netcamview.h"
 #include "camerasource.h"
-#include "src/core/core.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
-#include "src/nexus.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
+#include "src/core/core.h"
 #include "src/video/videosurface.h"
 #include "src/widget/tool/movablewidget.h"
+#include "src/persistence/settings.h"
+#include "src/persistence/profile.h"
+#include "src/nexus.h"
+#include <QLabel>
 #include <QBoxLayout>
 #include <QFrame>
-#include <QLabel>
 
 NetCamView::NetCamView(int friendId, QWidget* parent)
     : GenericNetCamView(parent)
@@ -57,30 +57,33 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
     frameLayout->setMargin(0);
 
     updateRatio();
-    connections +=
-        connect(selfVideoSurface, &VideoSurface::ratioChanged, this, &NetCamView::updateRatio);
+    connections += connect(selfVideoSurface, &VideoSurface::ratioChanged, this, &NetCamView::updateRatio);
 
-    connections += connect(videoSurface, &VideoSurface::boundaryChanged, [this]() {
+    connections += connect(videoSurface, &VideoSurface::boundaryChanged, [this]()
+    {
         QRect boundingRect = videoSurface->getBoundingRect();
         updateFrameSize(boundingRect.size());
         selfFrame->setBoundary(boundingRect);
     });
 
-    connections += connect(videoSurface, &VideoSurface::ratioChanged, [this]() {
+    connections += connect(videoSurface, &VideoSurface::ratioChanged, [this]()
+    {
         selfFrame->setMinimumWidth(selfFrame->minimumHeight() * selfVideoSurface->getRatio());
         QRect boundingRect = videoSurface->getBoundingRect();
         updateFrameSize(boundingRect.size());
         selfFrame->resetBoundary(boundingRect);
     });
 
-    connections += connect(Core::getInstance(), &Core::selfAvatarChanged,
-                           [this](const QPixmap& pixmap) { selfVideoSurface->setAvatar(pixmap); });
+    connections += connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap)
+    {
+        selfVideoSurface->setAvatar(pixmap);
+    });
 
-    connections += connect(Core::getInstance(), &Core::friendAvatarChanged,
-                           [this](int FriendId, const QPixmap& pixmap) {
-                               if (this->friendId == FriendId)
-                                   videoSurface->setAvatar(pixmap);
-                           });
+    connections += connect(Core::getInstance(), &Core::friendAvatarChanged, [this](int FriendId, const QPixmap& pixmap)
+    {
+        if (this->friendId == FriendId)
+            videoSurface->setAvatar(pixmap);
+    });
 
     QRect videoSize = Settings::getInstance().getCamVideoRes();
     qDebug() << "SIZER" << videoSize;
@@ -92,7 +95,7 @@ NetCamView::~NetCamView()
         disconnect(conn);
 }
 
-void NetCamView::show(VideoSource* source, const QString& title)
+void NetCamView::show(VideoSource *source, const QString &title)
 {
     setSource(source);
     selfVideoSurface->setSource(&CameraSource::getInstance());
@@ -114,17 +117,17 @@ void NetCamView::hide()
     QWidget::hide();
 }
 
-void NetCamView::setSource(VideoSource* s)
+void NetCamView::setSource(VideoSource *s)
 {
     videoSurface->setSource(s);
 }
 
-void NetCamView::setTitle(const QString& title)
+void NetCamView::setTitle(const QString &title)
 {
     setWindowTitle(title);
 }
 
-void NetCamView::showEvent(QShowEvent* event)
+void NetCamView::showEvent(QShowEvent *event)
 {
     Q_UNUSED(event);
     selfFrame->resetBoundary(videoSurface->getBoundingRect());

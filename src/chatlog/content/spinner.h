@@ -22,9 +22,9 @@
 
 #include "../chatlinecontent.h"
 
+#include <QTimer>
 #include <QObject>
 #include <QPixmap>
-#include <QTimer>
 
 class QVariantAnimation;
 
@@ -35,8 +35,7 @@ public:
     Spinner(const QString& img, QSize size, qreal speed);
 
     virtual QRectF boundingRect() const override;
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-                       QWidget* widget) override;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
     virtual void setWidth(qreal width) override;
     virtual void visibilityChanged(bool visible) override;
     virtual qreal getAscent() const override;
@@ -51,6 +50,7 @@ private:
     QTimer timer;
     qreal alpha = 0.0;
     QVariantAnimation* blendAnimation;
+
 };
 
 #endif // SPINNER_H

@@ -1,10 +1,10 @@
 #include "src/core/corestructs.h"
 #include "src/core/core.h"
+#include <tox/tox.h>
 #include <QFile>
 #include <QRegularExpression>
-#include <tox/tox.h>
 
-#define TOX_HEX_ID_LENGTH 2 * TOX_ADDRESS_SIZE
+#define TOX_HEX_ID_LENGTH 2*TOX_ADDRESS_SIZE
 
 /**
  * @file corestructs.h
@@ -23,8 +23,9 @@
  */
 bool DhtServer::operator==(const DhtServer& other) const
 {
-    return this == &other || (port == other.port && address == other.address
-                              && userId == other.userId && name == other.name);
+    return this == &other ||
+            (port == other.port && address == other.address &&
+             userId == other.userId && name == other.name);
 }
 
 /**
@@ -40,35 +41,26 @@ bool DhtServer::operator!=(const DhtServer& other) const
 /**
  * @brief ToxFile constructor
  */
-ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath,
-                 FileDirection Direction)
-    : fileKind{TOX_FILE_KIND_DATA}
-    , fileNum(fileNum)
-    , friendId(friendId)
-    , fileName{filename}
-    , filePath{filePath}
-    , file{new QFile(filePath)}
-    , bytesSent{0}
-    , filesize{0}
-    , status{STOPPED}
-    , direction{Direction}
+ToxFile::ToxFile(uint32_t fileNum, uint32_t friendId, QByteArray filename, QString filePath, FileDirection Direction)
+    : fileKind{TOX_FILE_KIND_DATA}, fileNum(fileNum), friendId(friendId), fileName{filename},
+      filePath{filePath}, file{new QFile(filePath)}, bytesSent{0}, filesize{0},
+      status{STOPPED}, direction{Direction}
 {
 }
 
-bool ToxFile::operator==(const ToxFile& other) const
+bool ToxFile::operator==(const ToxFile &other) const
 {
-    return (fileNum == other.fileNum) && (friendId == other.friendId)
-           && (direction == other.direction);
+    return (fileNum == other.fileNum) && (friendId == other.friendId) && (direction == other.direction);
 }
 
-bool ToxFile::operator!=(const ToxFile& other) const
+bool ToxFile::operator!=(const ToxFile &other) const
 {
     return !(*this == other);
 }
 
 void ToxFile::setFilePath(QString path)
 {
-    filePath = path;
+    filePath=path;
     file->setFileName(path);
 }
 

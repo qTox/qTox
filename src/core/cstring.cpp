@@ -21,8 +21,8 @@
 #include "cstring.h"
 #include <QString>
 
-CString::CString(const QString& string)
-    : CString(string.toUtf8())
+CString::CString(const QString& string) :
+    CString(string.toUtf8())
 {
 }
 
@@ -33,7 +33,7 @@ CString::CString(const QByteArray& ba_string)
     memcpy(cString, reinterpret_cast<const uint8_t*>(ba_string.data()), cStringSize);
 }
 
-CString::CString(const CString& cstr)
+CString::CString(const CString &cstr)
 {
     cStringSize = cstr.cStringSize;
     cString = new uint8_t[cStringSize]();

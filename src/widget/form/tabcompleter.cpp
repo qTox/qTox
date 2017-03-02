@@ -22,8 +22,8 @@
 
 #include "tabcompleter.h"
 
-#include <QKeyEvent>
 #include <QRegExp>
+#include <QKeyEvent>
 
 #include "src/core/core.h"
 #include "src/group.h"
@@ -39,11 +39,8 @@
 const QString TabCompleter::nickSuffix = QString(": ");
 
 TabCompleter::TabCompleter(ChatTextEdit* msgEdit, Group* group)
-    : QObject{msgEdit}
-    , msgEdit{msgEdit}
-    , group{group}
-    , enabled{false}
-    , lastCompletionLength{0}
+    : QObject{msgEdit}, msgEdit{msgEdit}, group{group},
+      enabled{false}, lastCompletionLength{0}
 {
 }
 
@@ -53,8 +50,7 @@ TabCompleter::TabCompleter(ChatTextEdit* msgEdit, Group* group)
     inline QString html() const { return toHtml(); }
     inline int cursorPosition() const { return textCursor().position(); }
     inline void insert(const QString &newText) { insertPlainText(newText); }
-    inline void backspace() { keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace,
-   Qt::NoModifier)); }
+    inline void backspace() { keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Backspace, Qt::NoModifier)); }
 */
 
 void TabCompleter::buildCompletionList()
@@ -63,17 +59,16 @@ void TabCompleter::buildCompletionList()
     completionMap.clear();
     nextCompletion = completionMap.begin();
 
-    // split the string on the given RE (not chars, nums or braces/brackets) and take the last
-    // section
-    QString tabAbbrev = msgEdit->toPlainText()
-                            .left(msgEdit->textCursor().position())
-                            .section(QRegExp("[^\\w\\d\\$:@--_\\[\\]{}|`^.\\\\]"), -1, -1);
+    // split the string on the given RE (not chars, nums or braces/brackets) and take the last section
+    QString tabAbbrev = msgEdit->toPlainText().left(msgEdit->textCursor().position())
+        .section(QRegExp("[^\\w\\d\\$:@--_\\[\\]{}|`^.\\\\]"), -1, -1);
     // that section is then used as the completion regex
-    QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)),
-                  Qt::CaseInsensitive);
+    QRegExp regex(QString("^[-_\\[\\]{}|`^.\\\\]*").append(QRegExp::escape(tabAbbrev)), Qt::CaseInsensitive);
 
-    for (auto name : group->getPeerList()) {
-        if (regex.indexIn(name) > -1) {
+    for (auto name : group->getPeerList())
+    {
+        if (regex.indexIn(name) > -1)
+        {
             SortableString lower = SortableString(name.toLower());
             completionMap[lower] = name;
         }
@@ -86,12 +81,14 @@ void TabCompleter::buildCompletionList()
 
 void TabCompleter::complete()
 {
-    if (!enabled) {
+    if (!enabled)
+    {
         buildCompletionList();
         enabled = true;
     }
 
-    if (nextCompletion != completionMap.end()) {
+    if (nextCompletion != completionMap.end())
+    {
         // clear previous completion
         auto cur = msgEdit->textCursor();
         cur.setPosition(cur.selectionEnd());
@@ -107,12 +104,16 @@ void TabCompleter::complete()
         ++nextCompletion;
 
         // we're completing the first word of the line
-        if (msgEdit->textCursor().position() == lastCompletionLength) {
+        if (msgEdit->textCursor().position() == lastCompletionLength)
+        {
             msgEdit->insertPlainText(nickSuffix);
             lastCompletionLength += nickSuffix.length();
         }
-    } else { // we're at the end of the list -> start over again
-        if (!completionMap.isEmpty()) {
+    }
+    else
+    { // we're at the end of the list -> start over again
+        if (!completionMap.isEmpty())
+        {
             nextCompletion = completionMap.begin();
             complete();
         }
@@ -125,7 +126,7 @@ void TabCompleter::reset()
 }
 
 // this determines the sort order
-bool TabCompleter::SortableString::operator<(const SortableString& other) const
+bool TabCompleter::SortableString::operator<(const SortableString &other) const
 {
     QString name = Core::getInstance()->getUsername();
     if (this->contents == name)
@@ -133,15 +134,13 @@ bool TabCompleter::SortableString::operator<(const SortableString& other) const
     else if (other.contents == name)
         return true;
 
-    /*  QDateTime thisTime = thisUser->lastChannelActivity(_currentBufferId);
+/*  QDateTime thisTime = thisUser->lastChannelActivity(_currentBufferId);
     QDateTime thatTime = thatUser->lastChannelActivity(_currentBufferId);
 
 
     if (thisTime.isValid() || thatTime.isValid())
         return thisTime > thatTime;
-*/ // this could be a
-                                                                              // useful feature at
-                                                                              // some point
+*/ // this could be a useful feature at some point
 
     return QString::localeAwareCompare(this->contents, other.contents) < 0;
 }

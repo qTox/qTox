@@ -2,9 +2,9 @@
 #define DELETEFRIENDDIALOG_H
 
 
+#include <QDialog>
 #include "ui_removefrienddialog.h"
 #include "src/friend.h"
-#include <QDialog>
 
 
 class RemoveFriendDialog : public QDialog

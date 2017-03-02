@@ -17,18 +17,16 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "notificationscrollarea.h"
-#include "genericchatroomwidget.h"
 #include "notificationedgewidget.h"
+#include "genericchatroomwidget.h"
 #include <QScrollBar>
 #include <cassert>
 
 NotificationScrollArea::NotificationScrollArea(QWidget* parent)
     : AdjustingScrollArea(parent)
 {
-    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this,
-            &NotificationScrollArea::updateVisualTracking);
-    connect(verticalScrollBar(), &QAbstractSlider::rangeChanged, this,
-            &NotificationScrollArea::updateVisualTracking);
+    connect(verticalScrollBar(), &QAbstractSlider::valueChanged, this, &NotificationScrollArea::updateVisualTracking);
+    connect(verticalScrollBar(), &QAbstractSlider::rangeChanged, this, &NotificationScrollArea::updateVisualTracking);
 }
 
 void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
@@ -37,23 +35,27 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
         return;
 
     Visibility visibility = widgetVisible(widget);
-    if (visibility != Visible) {
-        if (visibility == Above) {
-            if (referencesAbove++ == 0) {
+    if (visibility != Visible)
+    {
+        if (visibility == Above)
+        {
+            if (referencesAbove++ == 0)
+            {
                 assert(topEdge == nullptr);
                 topEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Top, this);
-                connect(topEdge, &NotificationEdgeWidget::clicked, this,
-                        &NotificationScrollArea::findPreviousWidget);
+                connect(topEdge, &NotificationEdgeWidget::clicked, this, &NotificationScrollArea::findPreviousWidget);
                 recalculateTopEdge();
                 topEdge->show();
             }
             topEdge->updateNotificationCount(referencesAbove);
-        } else {
-            if (referencesBelow++ == 0) {
+        }
+        else
+        {
+            if (referencesBelow++ == 0)
+            {
                 assert(bottomEdge == nullptr);
                 bottomEdge = new NotificationEdgeWidget(NotificationEdgeWidget::Bottom, this);
-                connect(bottomEdge, &NotificationEdgeWidget::clicked, this,
-                        &NotificationScrollArea::findNextWidget);
+                connect(bottomEdge, &NotificationEdgeWidget::clicked, this, &NotificationScrollArea::findNextWidget);
                 recalculateBottomEdge();
                 bottomEdge->show();
             }
@@ -67,8 +69,7 @@ void NotificationScrollArea::trackWidget(GenericChatroomWidget* widget)
 /**
  * @brief Delete notification bar from visible elements on scroll area
  */
-void NotificationScrollArea::updateVisualTracking()
-{
+void NotificationScrollArea::updateVisualTracking() {
     updateTracking(nullptr);
 }
 
@@ -76,23 +77,34 @@ void NotificationScrollArea::updateVisualTracking()
  * @brief Delete notification bar from visible elements and widget on scroll area
  * @param widget Chatroom widget to remove from tracked widgets
  */
-void NotificationScrollArea::updateTracking(GenericChatroomWidget* widget)
+void NotificationScrollArea::updateTracking(GenericChatroomWidget *widget)
 {
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
-    while (i != trackedWidgets.end()) {
-        if (i.key() == widget || widgetVisible(i.key()) == Visible) {
-            if (i.value() == Above) {
-                if (--referencesAbove == 0) {
+    while (i != trackedWidgets.end())
+    {
+        if (i.key() == widget || widgetVisible(i.key()) == Visible)
+        {
+            if (i.value() == Above)
+            {
+                if (--referencesAbove == 0)
+                {
                     topEdge->deleteLater();
                     topEdge = nullptr;
-                } else {
+                }
+                else
+                {
                     topEdge->updateNotificationCount(referencesAbove);
                 }
-            } else {
-                if (--referencesBelow == 0) {
+            }
+            else
+            {
+                if (--referencesBelow == 0)
+                {
                     bottomEdge->deleteLater();
                     bottomEdge = nullptr;
-                } else {
+                }
+                else
+                {
                     bottomEdge->updateNotificationCount(referencesBelow);
                 }
             }
@@ -103,7 +115,7 @@ void NotificationScrollArea::updateTracking(GenericChatroomWidget* widget)
     }
 }
 
-void NotificationScrollArea::resizeEvent(QResizeEvent* event)
+void NotificationScrollArea::resizeEvent(QResizeEvent *event)
 {
     if (topEdge != nullptr)
         recalculateTopEdge();
@@ -120,8 +132,10 @@ void NotificationScrollArea::findNextWidget()
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
-    for (; i != trackedWidgets.end(); ++i) {
-        if (i.value() == Below) {
+    for (; i != trackedWidgets.end(); ++i)
+    {
+        if (i.value() == Below)
+        {
             next = i.key();
             value = next->mapTo(viewport(), QPoint()).y();
             break;
@@ -129,10 +143,13 @@ void NotificationScrollArea::findNextWidget()
     }
 
     // Try finding a closer one.
-    for (; i != trackedWidgets.end(); ++i) {
-        if (i.value() == Below) {
+    for (; i != trackedWidgets.end(); ++i)
+    {
+        if (i.value() == Below)
+        {
             int y = i.key()->mapTo(viewport(), QPoint()).y();
-            if (y < value) {
+            if (y < value)
+            {
                 next = i.key();
                 value = y;
             }
@@ -150,8 +167,10 @@ void NotificationScrollArea::findPreviousWidget()
     QHash<GenericChatroomWidget*, Visibility>::iterator i = trackedWidgets.begin();
 
     // Find the first next, to avoid nullptr.
-    for (; i != trackedWidgets.end(); ++i) {
-        if (i.value() == Above) {
+    for (; i != trackedWidgets.end(); ++i)
+    {
+        if (i.value() == Above)
+        {
             next = i.key();
             value = next->mapTo(viewport(), QPoint()).y();
             break;
@@ -159,10 +178,13 @@ void NotificationScrollArea::findPreviousWidget()
     }
 
     // Try finding a closer one.
-    for (; i != trackedWidgets.end(); ++i) {
-        if (i.value() == Above) {
+    for (; i != trackedWidgets.end(); ++i)
+    {
+        if (i.value() == Above)
+        {
             int y = i.key()->mapTo(viewport(), QPoint()).y();
-            if (y > value) {
+            if (y > value)
+            {
                 next = i.key();
                 value = y;
             }

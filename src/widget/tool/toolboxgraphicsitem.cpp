@@ -34,6 +34,7 @@ ToolBoxGraphicsItem::ToolBoxGraphicsItem()
 
 ToolBoxGraphicsItem::~ToolBoxGraphicsItem()
 {
+
 }
 
 void ToolBoxGraphicsItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
@@ -54,8 +55,7 @@ void ToolBoxGraphicsItem::startAnimation(QAbstractAnimation::Direction direction
     this->opacityAnimation->start();
 }
 
-void ToolBoxGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
-                                QWidget* widget)
+void ToolBoxGraphicsItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     painter->save();
     painter->setPen(Qt::NoPen);

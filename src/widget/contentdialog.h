@@ -26,10 +26,8 @@
 #include "src/widget/genericchatitemlayout.h"
 #include "src/widget/tool/activatedialog.h"
 
-template <typename K, typename V>
-class QHash;
-template <typename T>
-class QSet;
+template <typename K, typename V> class QHash;
+template <typename T> class QSet;
 
 class QSplitter;
 class QVBoxLayout;
@@ -66,7 +64,7 @@ public:
     static bool existsFriendWidget(int friendId, bool focus);
     static bool existsGroupWidget(int groupId, bool focus);
     static void updateFriendStatus(int friendId);
-    static void updateFriendStatusMessage(int friendId, const QString& message);
+    static void updateFriendStatusMessage(int friendId, const QString &message);
     static void updateGroupStatus(int groupId);
     static bool isFriendWidgetActive(int friendId);
     static bool isGroupWidgetActive(int groupId);
@@ -105,16 +103,11 @@ private:
     void saveSplitterState();
     QLayout* nextLayout(QLayout* layout, bool forward) const;
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget,
-                   const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static bool existsWidget(int id, bool focus,
-                             const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static void
-    updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static bool
-    isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
-    static ContentDialog*
-    getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static bool existsWidget(int id, bool focus, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static void updateStatus(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static bool isWidgetActive(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
+    static ContentDialog* getDialog(int id, const QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>>& list);
 
     QSplitter* splitter;
     FriendListLayout* friendLayout;

@@ -22,12 +22,12 @@
 
 #include "src/core/toxid.h"
 
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QPushButton>
 #include <QSet>
-#include <QTextEdit>
-#include <QVBoxLayout>
 
 class QTabWidget;
 
@@ -66,7 +66,7 @@ public slots:
 
 private slots:
     void onSendTriggered();
-    void onIdChanged(const QString& id);
+    void onIdChanged(const QString &id);
     void onFriendRequestAccepted();
     void onFriendRequestRejected();
     void onCurrentChanged(int index);
@@ -86,7 +86,7 @@ private:
     QLineEdit toxId;
     QTextEdit message;
     QVBoxLayout layout, headLayout;
-    QWidget *head, *main;
+    QWidget* head, *main;
     QString lastUsername;
     QTabWidget* tabWidget;
     QVBoxLayout* requestsLayout;

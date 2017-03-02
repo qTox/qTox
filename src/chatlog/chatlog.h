@@ -20,8 +20,8 @@
 #ifndef CHATLOG_H
 #define CHATLOG_H
 
-#include <QDateTime>
 #include <QGraphicsView>
+#include <QDateTime>
 #include <QMargins>
 
 #include "chatline.h"
@@ -63,7 +63,7 @@ public:
     QVector<ChatLine::Ptr> getLines();
     ChatLine::Ptr getLatestLine() const;
     ChatLineContent* getContentFromGlobalPos(QPoint pos) const;
-    const uint repNameAfter = 5 * 60;
+    const uint repNameAfter = 5*60;
 
 signals:
     void selectionChanged();
@@ -113,15 +113,13 @@ private:
     bool isActiveFileTransfer(ChatLine::Ptr l);
 
 private:
-    enum SelectionMode
-    {
+    enum SelectionMode {
         None,
         Precise,
         Multi,
     };
 
-    enum AutoScrollDirection
-    {
+    enum AutoScrollDirection {
         NoDirection,
         Up,
         Down,
@@ -137,7 +135,7 @@ private:
     ChatLine::Ptr busyNotification;
 
     // selection
-    int selClickedRow = -1; // These 4 are only valid while selectionMode != None
+    int selClickedRow = -1; //These 4 are only valid while selectionMode != None
     int selClickedCol = -1;
     int selFirstRow = -1;
     int selLastRow = -1;
@@ -149,13 +147,13 @@ private:
     QTimer* workerTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
 
-    // worker vars
+    //worker vars
     int workerLastIndex = 0;
     bool workerStb = false;
     ChatLine::Ptr workerAnchorLine;
 
     // layout
-    QMargins margins = QMargins(10, 10, 10, 10);
+    QMargins margins = QMargins(10,10,10,10);
     qreal lineSpacing = 5.0f;
 };
 

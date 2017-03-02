@@ -43,7 +43,7 @@ public:
 
     QString getName() const;
 
-    void searchName(const QString& searchString, bool hideAll);
+    void searchName(const QString &searchString, bool hideAll);
 
     Q_PROPERTY(bool compact READ isCompact WRITE setCompact)
 

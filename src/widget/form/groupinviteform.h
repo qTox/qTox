@@ -34,8 +34,9 @@ class QPushButton;
 class QScrollArea;
 class QSignalMapper;
 
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+    class MainWindow;
 }
 
 class GroupInviteForm : public QWidget

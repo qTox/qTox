@@ -21,17 +21,17 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
-#include "src/core/toxencrypt.h"
 #include "src/core/toxid.h"
+#include "src/core/toxencrypt.h"
 
 #include "src/persistence/history.h"
 
+#include <memory>
 #include <QByteArray>
 #include <QObject>
 #include <QPixmap>
 #include <QString>
 #include <QVector>
-#include <memory>
 
 class Core;
 class QThread;
@@ -86,7 +86,6 @@ public:
 
 private slots:
     void loadDatabase(const ToxId& id);
-
 private:
     Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);

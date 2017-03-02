@@ -1,8 +1,8 @@
 #ifndef ABOUTUSER_H
 #define ABOUTUSER_H
 
-#include "src/friend.h"
 #include <QDialog>
+#include "src/friend.h"
 
 
 namespace Ui {
@@ -14,12 +14,12 @@ class AboutUser : public QDialog
     Q_OBJECT
 
 public:
-    explicit AboutUser(ToxPk& toxID, QWidget* parent = 0);
+    explicit AboutUser(ToxPk &toxID, QWidget* parent = 0);
     ~AboutUser();
     void setFriend(Friend* f);
 
 private:
-    Ui::AboutUser* ui;
+    Ui::AboutUser *ui;
     ToxPk friendPk;
 
 private slots:

@@ -18,21 +18,21 @@
 */
 
 #include "emoticonswidget.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/smileypack.h"
 #include "src/widget/style.h"
+#include "src/persistence/smileypack.h"
+#include "src/persistence/settings.h"
 
-#include <QFile>
-#include <QGridLayout>
-#include <QLayout>
-#include <QMouseEvent>
 #include <QPushButton>
 #include <QRadioButton>
+#include <QFile>
+#include <QLayout>
+#include <QGridLayout>
+#include <QMouseEvent>
 
 #include <math.h>
 
-EmoticonsWidget::EmoticonsWidget(QWidget* parent)
-    : QMenu(parent)
+EmoticonsWidget::EmoticonsWidget(QWidget* parent) :
+    QMenu(parent)
 {
     setStyleSheet(Style::getStylesheet(":/ui/emoticonWidget/emoticonWidget.css"));
     setLayout(&layout);
@@ -62,19 +62,19 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
 
     // create pages
     buttonLayout->addStretch();
-    for (int i = 0; i < pageCount; ++i) {
+    for (int i = 0; i < pageCount; ++i)
+    {
         QGridLayout* pageLayout = new QGridLayout;
-        pageLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding),
-                            maxRows, 0);
-        pageLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0,
-                            maxCols);
+        pageLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), maxRows, 0);
+        pageLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Minimum), 0, maxCols);
 
         QWidget* page = new QWidget;
         page->setLayout(pageLayout);
         stack.addWidget(page);
 
         // page buttons are only needed if there is more than 1 page
-        if (pageCount > 1) {
+        if (pageCount > 1)
+        {
             QRadioButton* pageButton = new QRadioButton;
             pageButton->setProperty("pageIndex", i);
             pageButton->setCursor(Qt::PointingHandCursor);
@@ -86,7 +86,8 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
     }
     buttonLayout->addStretch();
 
-    for (const QStringList& set : emoticons) {
+    for (const QStringList& set : emoticons)
+    {
         QPushButton* button = new QPushButton;
         button->setIcon(SmileyPack::getInstance().getAsIcon(set[0]).pixmap(size));
         button->setToolTip(set.join(" "));
@@ -104,13 +105,15 @@ EmoticonsWidget::EmoticonsWidget(QWidget* parent)
         ++currItem;
 
         // next row
-        if (col >= maxCols) {
+        if (col >= maxCols)
+        {
             col = 0;
             ++row;
         }
 
         // next page
-        if (currItem >= itemsPerPage) {
+        if (currItem >= itemsPerPage)
+        {
             row = 0;
             currItem = 0;
             ++currPage;
@@ -125,9 +128,10 @@ void EmoticonsWidget::onSmileyClicked()
 {
     // emit insert emoticon
     QWidget* sender = qobject_cast<QWidget*>(QObject::sender());
-    if (sender) {
-        QString sequence =
-            sender->property("sequence").toString().replace("&lt;", "<").replace("&gt;", ">");
+    if (sender)
+    {
+        QString sequence = sender->property("sequence").toString()
+                .replace("&lt;","<").replace("&gt;",">");
         emit insertEmoticon(' ' + sequence + ' ');
     }
 }
@@ -135,7 +139,8 @@ void EmoticonsWidget::onSmileyClicked()
 void EmoticonsWidget::onPageButtonClicked()
 {
     QWidget* sender = qobject_cast<QRadioButton*>(QObject::sender());
-    if (sender) {
+    if (sender)
+    {
         int page = sender->property("pageIndex").toInt();
         stack.setCurrentIndex(page);
     }
@@ -146,7 +151,7 @@ QSize EmoticonsWidget::sizeHint() const
     return layout.sizeHint();
 }
 
-void EmoticonsWidget::mouseReleaseEvent(QMouseEvent* ev)
+void EmoticonsWidget::mouseReleaseEvent(QMouseEvent *ev)
 {
     if (!rect().contains(ev->pos()))
         hide();
@@ -156,32 +161,39 @@ void EmoticonsWidget::mousePressEvent(QMouseEvent*)
 {
 }
 
-void EmoticonsWidget::wheelEvent(QWheelEvent* e)
+void EmoticonsWidget::wheelEvent (QWheelEvent *e)
 {
-    if (e->orientation() == Qt::Vertical) {
-        if (e->delta() < 0) {
-            stack.setCurrentIndex(stack.currentIndex() + 1);
-        } else {
-            stack.setCurrentIndex(stack.currentIndex() - 1);
-        }
-        emit PageButtonsUpdate();
+    if (e->orientation() == Qt::Vertical)
+    {
+     if (e->delta() < 0 )
+     {
+        stack.setCurrentIndex(stack.currentIndex()+1);
+     }
+     else
+     {
+            stack.setCurrentIndex(stack.currentIndex()-1);
+     }
+    emit PageButtonsUpdate();
+
     }
 }
 
 void EmoticonsWidget::PageButtonsUpdate()
 {
     QList<QRadioButton*> pageButtons = this->findChildren<QRadioButton*>(QString());
-    QRadioButton* t_pageButton;
-    foreach (t_pageButton, pageButtons) {
-        if (t_pageButton->property("pageIndex").toInt() == stack.currentIndex())
-            t_pageButton->setChecked(true);
-        else
-            t_pageButton->setChecked(false);
+    QRadioButton *t_pageButton;
+    foreach (t_pageButton,pageButtons)
+    {
+       if ( t_pageButton->property("pageIndex").toInt()==stack.currentIndex())
+           t_pageButton->setChecked(true);
+       else
+           t_pageButton->setChecked(false);
     }
 }
 
-void EmoticonsWidget::keyPressEvent(QKeyEvent* e)
+void EmoticonsWidget::keyPressEvent(QKeyEvent *e)
 {
     Q_UNUSED(e)
     hide();
 }
+

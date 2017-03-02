@@ -38,6 +38,7 @@ class ScreenshotGrabber : public QObject
 {
     Q_OBJECT
 public:
+
     ScreenshotGrabber();
     ~ScreenshotGrabber() override;
 
@@ -50,7 +51,7 @@ public slots:
     void reInit();
 
 signals:
-    void screenshotTaken(const QPixmap& pixmap);
+    void screenshotTaken(const QPixmap &pixmap);
     void regionChosen(QRect region);
     void rejected();
 
@@ -88,8 +89,9 @@ private:
     qreal pixRatio = 1.0;
 
     bool mQToxVisible;
-    QVector<QPointer<QWidget>> mHiddenWindows;
+    QVector< QPointer<QWidget> >   mHiddenWindows;
 };
 
 
 #endif // SCREENSHOTGRABBER_H
+

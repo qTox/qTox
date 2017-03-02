@@ -65,7 +65,8 @@ QSize GenericNetCamView::getSurfaceMinSize()
 
 void GenericNetCamView::setShowMessages(bool show, bool notify)
 {
-    if (!show) {
+    if (!show)
+    {
         button->setText(tr("Hide Messages"));
         button->setIcon(QIcon());
         return;

@@ -17,21 +17,21 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QBoxLayout>
-#include <QDragEnterEvent>
-#include <QMenu>
-#include <QMimeData>
-#include <QMouseEvent>
 #include <QVariant>
+#include <QBoxLayout>
+#include <QMouseEvent>
+#include <QDragEnterEvent>
+#include <QMimeData>
+#include <QMenu>
 
 #include <cassert>
 
 #include "circlewidget.h"
 #include "contentdialog.h"
-#include "friendlistwidget.h"
 #include "friendwidget.h"
-#include "widget.h"
+#include "friendlistwidget.h"
 #include "tool/croppinglabel.h"
+#include "widget.h"
 
 #include "src/friend.h"
 #include "src/friendlist.h"
@@ -46,12 +46,14 @@ CircleWidget::CircleWidget(FriendListWidget* parent, int id)
     setName(Settings::getInstance().getCircleName(id), false);
     circleList[id] = this;
 
-    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString& newName) {
+    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString &newName)
+    {
         if (!newName.isEmpty())
             emit renameRequested(this, newName);
     });
 
-    connect(nameLabel, &CroppingLabel::editRemoved, [this]() {
+    connect(nameLabel, &CroppingLabel::editRemoved, [this]()
+    {
         if (isCompact())
             nameLabel->minimizeMaximumWidth();
     });
@@ -93,10 +95,14 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
 
     QAction* selectedItem = menu.exec(mapToGlobal(event->pos()));
 
-    if (selectedItem) {
-        if (selectedItem == renameAction) {
+    if (selectedItem)
+    {
+        if (selectedItem == renameAction)
+        {
             editName();
-        } else if (selectedItem == removeAction) {
+        }
+        else if (selectedItem == removeAction)
+        {
             FriendListWidget* friendList = static_cast<FriendListWidget*>(parentWidget());
             moveFriendWidgets(friendList);
 
@@ -111,23 +117,27 @@ void CircleWidget::contextMenuEvent(QContextMenuEvent* event)
                 assert(true); // This should never happen.
 
             circleList.remove(replacedCircle);
-        } else if (selectedItem == openAction) {
+        }
+        else if (selectedItem == openAction)
+        {
             ContentDialog* dialog = Widget::getInstance()->createContentDialog();
 
-            for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
-                FriendWidget* friendWidget =
-                    qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+            for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
-                if (friendWidget != nullptr) {
+                if (friendWidget != nullptr)
+                {
                     Friend* f = friendWidget->getFriend();
                     dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
                 }
             }
-            for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
-                FriendWidget* friendWidget =
-                    qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+            for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+            {
+                FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
-                if (friendWidget != nullptr) {
+                if (friendWidget != nullptr)
+                {
                     Friend* f = friendWidget->getFriend();
                     dialog->addFriend(friendWidget->friendId, f->getDisplayedName());
                 }
@@ -151,7 +161,7 @@ void CircleWidget::dragEnterEvent(QDragEnterEvent* event)
     setContainerAttribute(Qt::WA_UnderMouse, true); // Simulate hover.
 }
 
-void CircleWidget::dragLeaveEvent(QDragLeaveEvent*)
+void CircleWidget::dragLeaveEvent(QDragLeaveEvent* )
 {
     setContainerAttribute(Qt::WA_UnderMouse, false);
 }
@@ -161,8 +171,8 @@ void CircleWidget::dropEvent(QDropEvent* event)
     setExpanded(true, false);
 
     // Check, that the element is dropped from qTox
-    QObject* o = event->source();
-    FriendWidget* widget = qobject_cast<FriendWidget*>(o);
+    QObject *o = event->source();
+    FriendWidget *widget = qobject_cast<FriendWidget*>(o);
     if (!widget)
         return;
 
@@ -179,7 +189,8 @@ void CircleWidget::dropEvent(QDropEvent* event)
     addFriendWidget(widget, f->getStatus());
     Settings::getInstance().savePersonal();
 
-    if (circleWidget != nullptr) {
+    if (circleWidget != nullptr)
+    {
         circleWidget->updateStatus();
         Widget::getInstance()->searchCircle(circleWidget);
     }
@@ -216,20 +227,18 @@ void CircleWidget::updateID(int index)
     id = index;
     circleList[id] = this;
 
-    for (int i = 0; i < friendOnlineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
+    for (int i = 0; i < friendOnlineLayout()->count(); ++i)
+    {
+        FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOnlineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
     }
-    for (int i = 0; i < friendOfflineLayout()->count(); ++i) {
-        FriendWidget* friendWidget =
-            qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
+    for (int i = 0; i < friendOfflineLayout()->count(); ++i)
+    {
+        FriendWidget* friendWidget = qobject_cast<FriendWidget*>(friendOfflineLayout()->itemAt(i)->widget());
 
         if (friendWidget != nullptr)
-            Settings::getInstance()
-                .setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
+            Settings::getInstance().setFriendCircleID(FriendList::findFriend(friendWidget->friendId)->getPublicKey(), id);
     }
 }

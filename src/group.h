@@ -45,8 +45,8 @@ public:
     QStringList getPeerList() const;
     bool isSelfPeerNumber(int peernumber) const;
 
-    GroupChatForm* getChatForm();
-    GroupWidget* getGroupWidget();
+    GroupChatForm *getChatForm();
+    GroupWidget *getGroupWidget();
 
     void setEventFlag(int f);
     int getEventFlag() const;
@@ -74,6 +74,7 @@ private:
     int nPeers;
     int selfPeerNum = -1;
     bool avGroupchat;
+
 };
 
 #endif // GROUP_H

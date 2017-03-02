@@ -21,15 +21,15 @@
 #ifndef SETTINGS_HPP
 #define SETTINGS_HPP
 
-#include "src/core/corestructs.h"
-#include <QDate>
-#include <QFlags>
 #include <QFont>
 #include <QHash>
-#include <QMutex>
-#include <QNetworkProxy>
 #include <QObject>
 #include <QPixmap>
+#include <QMutex>
+#include <QDate>
+#include <QNetworkProxy>
+#include <QFlags>
+#include "src/core/corestructs.h"
 
 class ToxPk;
 class Profile;
@@ -46,88 +46,100 @@ class Settings : public QObject
     Q_ENUMS(StyleType)
 
     // general
-    Q_PROPERTY(bool compactLayout READ getCompactLayout WRITE setCompactLayout NOTIFY compactLayoutChanged FINAL)
-    Q_PROPERTY(bool autorun READ getAutorun WRITE setAutorun NOTIFY autorunChanged FINAL)
+    Q_PROPERTY(bool compactLayout READ getCompactLayout WRITE setCompactLayout
+               NOTIFY compactLayoutChanged FINAL)
+    Q_PROPERTY(bool autorun READ getAutorun WRITE setAutorun
+               NOTIFY autorunChanged FINAL)
 
     // GUI
-    Q_PROPERTY(bool separateWindow READ getSeparateWindow WRITE setSeparateWindow NOTIFY
-                   separateWindowChanged FINAL)
-    Q_PROPERTY(QString smileyPack READ getSmileyPack WRITE setSmileyPack NOTIFY smileyPackChanged FINAL)
-    Q_PROPERTY(int emojiFontPointSize READ getEmojiFontPointSize WRITE setEmojiFontPointSize NOTIFY
-                   emojiFontPointSizeChanged FINAL)
-    Q_PROPERTY(bool minimizeOnClose READ getMinimizeOnClose WRITE setMinimizeOnClose NOTIFY
-                   minimizeOnCloseChanged FINAL)
-    Q_PROPERTY(QByteArray windowGeometry READ getWindowGeometry WRITE setWindowGeometry NOTIFY
-                   windowGeometryChanged FINAL)
-    Q_PROPERTY(QByteArray windowState READ getWindowState WRITE setWindowState NOTIFY windowStateChanged FINAL)
-    Q_PROPERTY(QByteArray splitterState READ getSplitterState WRITE setSplitterState NOTIFY
-                   splitterStateChanged FINAL)
-    Q_PROPERTY(QByteArray dialogGeometry READ getDialogGeometry WRITE setDialogGeometry NOTIFY
-                   dialogGeometryChanged FINAL)
-    Q_PROPERTY(QByteArray dialogSplitterState READ getDialogSplitterState WRITE
-                   setDialogSplitterState NOTIFY dialogSplitterStateChanged FINAL)
-    Q_PROPERTY(QByteArray dialogSettingsGeometry READ getDialogSettingsGeometry WRITE
-                   setDialogSettingsGeometry NOTIFY dialogSettingsGeometryChanged FINAL)
-    Q_PROPERTY(QString style READ getStyle WRITE setStyle NOTIFY styleChanged FINAL)
-    Q_PROPERTY(bool showSystemTray READ getShowSystemTray WRITE setShowSystemTray NOTIFY
-                   showSystemTrayChanged FINAL)
+    Q_PROPERTY(bool separateWindow READ getSeparateWindow
+               WRITE setSeparateWindow NOTIFY separateWindowChanged FINAL)
+    Q_PROPERTY(QString smileyPack READ getSmileyPack WRITE setSmileyPack
+               NOTIFY smileyPackChanged FINAL)
+    Q_PROPERTY(int emojiFontPointSize READ getEmojiFontPointSize
+               WRITE setEmojiFontPointSize NOTIFY emojiFontPointSizeChanged
+               FINAL)
+    Q_PROPERTY(bool minimizeOnClose READ getMinimizeOnClose
+               WRITE setMinimizeOnClose NOTIFY minimizeOnCloseChanged FINAL)
+    Q_PROPERTY(QByteArray windowGeometry READ getWindowGeometry
+               WRITE setWindowGeometry NOTIFY windowGeometryChanged FINAL)
+    Q_PROPERTY(QByteArray windowState READ getWindowState WRITE setWindowState
+               NOTIFY windowStateChanged FINAL)
+    Q_PROPERTY(QByteArray splitterState READ getSplitterState
+               WRITE setSplitterState NOTIFY splitterStateChanged FINAL)
+    Q_PROPERTY(QByteArray dialogGeometry READ getDialogGeometry
+               WRITE setDialogGeometry NOTIFY dialogGeometryChanged FINAL)
+    Q_PROPERTY(QByteArray dialogSplitterState READ getDialogSplitterState
+               WRITE setDialogSplitterState NOTIFY dialogSplitterStateChanged
+               FINAL)
+    Q_PROPERTY(QByteArray dialogSettingsGeometry READ getDialogSettingsGeometry
+               WRITE setDialogSettingsGeometry
+               NOTIFY dialogSettingsGeometryChanged FINAL)
+    Q_PROPERTY(QString style READ getStyle WRITE setStyle NOTIFY styleChanged
+               FINAL)
+    Q_PROPERTY(bool showSystemTray READ getShowSystemTray
+               WRITE setShowSystemTray NOTIFY showSystemTrayChanged FINAL)
 
     // ChatView
-    Q_PROPERTY(bool groupchatPosition READ getGroupchatPosition WRITE setGroupchatPosition NOTIFY
-                   groupchatPositionChanged FINAL)
-    Q_PROPERTY(QFont chatMessageFont READ getChatMessageFont WRITE setChatMessageFont NOTIFY
-                   chatMessageFontChanged FINAL)
-    Q_PROPERTY(StyleType stylePreference READ getStylePreference WRITE setStylePreference NOTIFY
-                   stylePreferenceChanged FINAL)
-    Q_PROPERTY(QString timestampFormat READ getTimestampFormat WRITE setTimestampFormat NOTIFY
-                   timestampFormatChanged FINAL)
-    Q_PROPERTY(QString dateFormat READ getDateFormat WRITE setDateFormat NOTIFY dateFormatChanged FINAL)
-    Q_PROPERTY(bool statusChangeNotificationEnabled READ getStatusChangeNotificationEnabled WRITE
-                   setStatusChangeNotificationEnabled NOTIFY statusChangeNotificationEnabledChanged FINAL)
+    Q_PROPERTY(bool groupchatPosition READ getGroupchatPosition
+               WRITE setGroupchatPosition NOTIFY groupchatPositionChanged FINAL)
+    Q_PROPERTY(QFont chatMessageFont READ getChatMessageFont
+               WRITE setChatMessageFont NOTIFY chatMessageFontChanged FINAL)
+    Q_PROPERTY(StyleType stylePreference READ getStylePreference
+               WRITE setStylePreference NOTIFY stylePreferenceChanged FINAL)
+    Q_PROPERTY(QString timestampFormat READ getTimestampFormat
+               WRITE setTimestampFormat NOTIFY timestampFormatChanged FINAL)
+    Q_PROPERTY(QString dateFormat READ getDateFormat WRITE setDateFormat
+               NOTIFY dateFormatChanged FINAL)
+    Q_PROPERTY(bool statusChangeNotificationEnabled
+               READ getStatusChangeNotificationEnabled
+               WRITE setStatusChangeNotificationEnabled
+               NOTIFY statusChangeNotificationEnabledChanged FINAL)
 
     // Privacy
-    Q_PROPERTY(bool typingNotification READ getTypingNotification WRITE setTypingNotification NOTIFY
-                   typingNotificationChanged FINAL)
+    Q_PROPERTY(bool typingNotification READ getTypingNotification
+               WRITE setTypingNotification NOTIFY typingNotificationChanged
+               FINAL)
 
     // Audio
-    Q_PROPERTY(QString inDev READ getInDev WRITE setInDev NOTIFY inDevChanged FINAL)
-    Q_PROPERTY(bool audioInDevEnabled READ getAudioInDevEnabled WRITE setAudioInDevEnabled NOTIFY
-                   audioInDevEnabledChanged FINAL)
-    Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel WRITE setAudioInGainDecibel
-                   NOTIFY audioInGainDecibelChanged FINAL)
-    Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev NOTIFY outDevChanged FINAL)
-    Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled WRITE setAudioOutDevEnabled NOTIFY
-                   audioOutDevEnabledChanged FINAL)
-    Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume NOTIFY outVolumeChanged FINAL)
+    Q_PROPERTY(QString inDev READ getInDev WRITE setInDev
+               NOTIFY inDevChanged FINAL)
+    Q_PROPERTY(bool audioInDevEnabled READ getAudioInDevEnabled
+               WRITE setAudioInDevEnabled NOTIFY audioInDevEnabledChanged FINAL)
+    Q_PROPERTY(qreal audioInGainDecibel READ getAudioInGainDecibel
+               WRITE setAudioInGainDecibel NOTIFY audioInGainDecibelChanged
+               FINAL)
+    Q_PROPERTY(QString outDev READ getOutDev WRITE setOutDev
+               NOTIFY outDevChanged FINAL)
+    Q_PROPERTY(bool audioOutDevEnabled READ getAudioOutDevEnabled
+               WRITE setAudioOutDevEnabled NOTIFY audioOutDevEnabledChanged
+               FINAL)
+    Q_PROPERTY(int outVolume READ getOutVolume WRITE setOutVolume
+               NOTIFY outVolumeChanged FINAL)
 
     // Video
-    Q_PROPERTY(QString videoDev READ getVideoDev WRITE setVideoDev NOTIFY videoDevChanged FINAL)
-    Q_PROPERTY(QRect camVideoRes READ getCamVideoRes WRITE setCamVideoRes NOTIFY camVideoResChanged FINAL)
-    Q_PROPERTY(QRect screenRegion READ getScreenRegion WRITE setScreenRegion NOTIFY screenRegionChanged FINAL)
-    Q_PROPERTY(bool screenGrabbed READ getScreenGrabbed WRITE setScreenGrabbed NOTIFY screenGrabbedChanged FINAL)
-    Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
+    Q_PROPERTY(QString videoDev READ getVideoDev WRITE setVideoDev
+               NOTIFY videoDevChanged FINAL)
+    Q_PROPERTY(QRect camVideoRes READ getCamVideoRes WRITE setCamVideoRes
+               NOTIFY camVideoResChanged FINAL)
+    Q_PROPERTY(QRect screenRegion READ getScreenRegion WRITE setScreenRegion
+               NOTIFY screenRegionChanged FINAL)
+    Q_PROPERTY(bool screenGrabbed READ getScreenGrabbed WRITE setScreenGrabbed
+               NOTIFY screenGrabbedChanged FINAL)
+    Q_PROPERTY(quint16 camVideoFPS READ getCamVideoFPS
+               WRITE setCamVideoFPS NOTIFY camVideoFPSChanged FINAL)
 
 public:
-    enum class ProxyType
-    {
-        ptNone = 0,
-        ptSOCKS5 = 1,
-        ptHTTP = 2
-    };
-    enum class StyleType
-    {
-        NONE = 0,
-        WITH_CHARS = 1,
-        WITHOUT_CHARS = 2
-    };
+    enum class ProxyType {ptNone = 0, ptSOCKS5 = 1, ptHTTP = 2};
+    enum class StyleType {NONE = 0, WITH_CHARS = 1, WITHOUT_CHARS = 2};
     enum class AutoAcceptCall
-    {
-        None = 0x00,
-        Audio = 0x01,
-        Video = 0x02,
-        AV = Audio | Video
-    };
-    Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall)
+        {
+            None     = 0x00,
+            Audio    = 0x01,
+            Video    = 0x02,
+            AV       = Audio | Video
+        };
+        Q_DECLARE_FLAGS(AutoAcceptCallFlags, AutoAcceptCall)
 
 public:
     static Settings& getInstance();
@@ -456,7 +468,7 @@ public:
     void setFriendCircleID(const ToxPk& id, int circleID);
 
     QDate getFriendActivity(const ToxPk& id) const;
-    void setFriendActivity(const ToxPk& id, const QDate& date);
+    void setFriendActivity(const ToxPk& id, const QDate &date);
 
     void removeFriendSettings(const ToxPk& id);
 
@@ -517,7 +529,7 @@ public:
 private:
     Settings();
     ~Settings();
-    Settings(Settings& settings) = delete;
+    Settings(Settings &settings) = delete;
     Settings& operator=(const Settings&) = delete;
 
 private slots:

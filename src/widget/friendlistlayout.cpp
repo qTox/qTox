@@ -13,10 +13,10 @@
 */
 
 #include "friendlistlayout.h"
-#include "friendlistwidget.h"
-#include "friendwidget.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
+#include "friendwidget.h"
+#include "friendlistwidget.h"
 #include <cassert>
 
 FriendListLayout::FriendListLayout()
@@ -51,7 +51,8 @@ void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
     friendOfflineLayout.removeSortedWidget(w);
     friendOnlineLayout.removeSortedWidget(w);
 
-    if (s == Status::Offline) {
+    if (s == Status::Offline)
+    {
         friendOfflineLayout.addSortedWidget(w);
         return;
     }
@@ -59,7 +60,7 @@ void FriendListLayout::addFriendWidget(FriendWidget* w, Status s)
     friendOnlineLayout.addSortedWidget(w);
 }
 
-void FriendListLayout::removeFriendWidget(FriendWidget* widget, Status s)
+void FriendListLayout::removeFriendWidget(FriendWidget *widget, Status s)
 {
     if (s == Status::Offline)
         friendOfflineLayout.removeSortedWidget(widget);
@@ -76,14 +77,16 @@ int FriendListLayout::indexOfFriendWidget(GenericChatItemWidget* widget, bool on
 
 void FriendListLayout::moveFriendWidgets(FriendListWidget* listWidget)
 {
-    while (!friendOnlineLayout.getLayout()->isEmpty()) {
+    while (!friendOnlineLayout.getLayout()->isEmpty())
+    {
         QWidget* getWidget = friendOnlineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);
         Friend* f = FriendList::findFriend(friendWidget->friendId);
         listWidget->moveWidget(friendWidget, f->getStatus(), false);
     }
-    while (!friendOfflineLayout.getLayout()->isEmpty()) {
+    while (!friendOfflineLayout.getLayout()->isEmpty())
+    {
         QWidget* getWidget = friendOfflineLayout.getLayout()->takeAt(0)->widget();
 
         FriendWidget* friendWidget = qobject_cast<FriendWidget*>(getWidget);

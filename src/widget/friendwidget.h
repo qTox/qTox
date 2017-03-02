@@ -38,19 +38,19 @@ public:
     QString getStatusString() const override final;
     Friend* getFriend() const override final;
 
-    void search(const QString& searchString, bool hide = false);
+    void search(const QString &searchString, bool hide = false);
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
-    void contextMenuCalled(QContextMenuEvent* event);
+    void contextMenuCalled(QContextMenuEvent * event);
 
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
     void setAlias(const QString& alias);
-    void onContextMenuCalled(QContextMenuEvent* event);
+    void onContextMenuCalled(QContextMenuEvent * event);
 
 protected:
     virtual void mousePressEvent(QMouseEvent* ev) override;

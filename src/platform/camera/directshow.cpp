@@ -21,14 +21,14 @@
 
 #include "directshow.h"
 
-#include <QDebug>
-#include <amvideo.h>
-#include <cassert>
 #include <cstdint>
-#include <dvdmedia.h>
 #include <objbase.h>
 #include <strmif.h>
+#include <amvideo.h>
+#include <dvdmedia.h>
 #include <uuids.h>
+#include <cassert>
+#include <QDebug>
 
 /**
  * Most of this file is adapted from libavdevice's dshow.c,
@@ -36,38 +36,38 @@
  * stdout and is not part of the public API for some reason.
  */
 
-static char* wcharToUtf8(wchar_t* w)
+static char *wcharToUtf8(wchar_t *w)
 {
     int l = WideCharToMultiByte(CP_UTF8, 0, w, -1, 0, 0, 0, 0);
-    char* s = new char[l];
+    char *s = new char[l];
     if (s)
         WideCharToMultiByte(CP_UTF8, 0, w, -1, s, l, 0, 0);
     return s;
 }
 
-QVector<QPair<QString, QString>> DirectShow::getDeviceList()
+QVector<QPair<QString,QString>> DirectShow::getDeviceList()
 {
     IMoniker* m = nullptr;
-    QVector<QPair<QString, QString>> devices;
+    QVector<QPair<QString,QString>> devices;
 
     ICreateDevEnum* devenum = nullptr;
-    if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
-                         (void**)&devenum)
-        != S_OK)
+    if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER,
+                             IID_ICreateDevEnum, (void**) &devenum) != S_OK)
         return devices;
 
     IEnumMoniker* classenum = nullptr;
-    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, (IEnumMoniker**)&classenum, 0)
-        != S_OK)
+    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+                                (IEnumMoniker**)&classenum, 0) != S_OK)
         return devices;
 
-    while (classenum->Next(1, &m, nullptr) == S_OK) {
+    while (classenum->Next(1, &m, nullptr) == S_OK)
+    {
         VARIANT var;
         IPropertyBag* bag = nullptr;
         LPMALLOC coMalloc = nullptr;
         IBindCtx* bindCtx = nullptr;
         LPOLESTR olestr = nullptr;
-        char *devIdString = nullptr, *devHumanName = nullptr;
+        char *devIdString=nullptr, *devHumanName=nullptr;
 
         if (CoGetMalloc(1, &coMalloc) != S_OK)
             goto fail;
@@ -93,9 +93,9 @@ QVector<QPair<QString, QString>> DirectShow::getDeviceList()
             goto fail;
         devHumanName = wcharToUtf8(var.bstrVal);
 
-        devices += {QString("video=") + devIdString, devHumanName};
+        devices += {QString("video=")+devIdString, devHumanName};
 
-    fail:
+fail:
         if (olestr && coMalloc)
             coMalloc->Free(olestr);
         if (bindCtx)
@@ -120,17 +120,17 @@ static IBaseFilter* getDevFilter(QString devName)
     IMoniker* m = nullptr;
 
     ICreateDevEnum* devenum = nullptr;
-    if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER, IID_ICreateDevEnum,
-                         (void**)&devenum)
-        != S_OK)
+    if (CoCreateInstance(CLSID_SystemDeviceEnum, nullptr, CLSCTX_INPROC_SERVER,
+                             IID_ICreateDevEnum, (void**) &devenum) != S_OK)
         return devFilter;
 
     IEnumMoniker* classenum = nullptr;
-    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory, (IEnumMoniker**)&classenum, 0)
-        != S_OK)
+    if (devenum->CreateClassEnumerator(CLSID_VideoInputDeviceCategory,
+                                (IEnumMoniker**)&classenum, 0) != S_OK)
         return devFilter;
 
-    while (classenum->Next(1, &m, nullptr) == S_OK) {
+    while (classenum->Next(1, &m, nullptr) == S_OK)
+    {
         LPMALLOC coMalloc = nullptr;
         IBindCtx* bindCtx = nullptr;
         LPOLESTR olestr = nullptr;
@@ -156,7 +156,7 @@ static IBaseFilter* getDevFilter(QString devName)
         if (m->BindToObject(0, 0, IID_IBaseFilter, (void**)&devFilter) != S_OK)
             goto fail;
 
-    fail:
+fail:
         if (olestr && coMalloc)
             coMalloc->Free(olestr);
         if (bindCtx)
@@ -167,7 +167,7 @@ static IBaseFilter* getDevFilter(QString devName)
     classenum->Release();
 
     if (!devFilter)
-        qWarning() << "Could't find the device " << devName;
+        qWarning() << "Could't find the device "<<devName;
 
     return devFilter;
 }
@@ -183,13 +183,14 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
     // The outter loop tries to find a valid output pin
     GUID category;
     DWORD r2;
-    IEnumPins* pins = nullptr;
-    IPin* pin;
+    IEnumPins *pins = nullptr;
+    IPin *pin;
     if (devFilter->EnumPins(&pins) != S_OK)
         return modes;
 
-    while (pins->Next(1, &pin, nullptr) == S_OK) {
-        IKsPropertySet* p = nullptr;
+    while (pins->Next(1, &pin, nullptr) == S_OK)
+    {
+        IKsPropertySet *p = nullptr;
         PIN_INFO info;
 
         pin->QueryPinInfo(&info);
@@ -198,8 +199,8 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             goto next;
         if (pin->QueryInterface(IID_IKsPropertySet, (void**)&p) != S_OK)
             goto next;
-        if (p->Get(AMPROPSETID_Pin, AMPROPERTY_PIN_CATEGORY, nullptr, 0, &category, sizeof(GUID), &r2)
-            != S_OK)
+        if (p->Get(AMPROPSETID_Pin, AMPROPERTY_PIN_CATEGORY,
+                nullptr, 0, &category, sizeof(GUID), &r2) != S_OK)
             goto next;
         if (!IsEqualGUID(category, PIN_CATEGORY_CAPTURE))
             goto next;
@@ -207,8 +208,8 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
         // Now we can list the video modes for the current pin
         // Prepare for another wall of spaghetti DIRECT SHOW QUALITY code
         {
-            IAMStreamConfig* config = nullptr;
-            VIDEO_STREAM_CONFIG_CAPS* vcaps = nullptr;
+            IAMStreamConfig *config = nullptr;
+            VIDEO_STREAM_CONFIG_CAPS *vcaps = nullptr;
             int size, n;
             if (pin->QueryInterface(IID_IAMStreamConfig, (void**)&config) != S_OK)
                 goto next;
@@ -218,7 +219,8 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
             assert(size == sizeof(VIDEO_STREAM_CONFIG_CAPS));
             vcaps = new VIDEO_STREAM_CONFIG_CAPS;
 
-            for (int i = 0; i < n; ++i) {
+            for (int i = 0; i < n; ++i)
+            {
                 AM_MEDIA_TYPE* type = nullptr;
                 VideoMode mode;
                 if (config->GetStreamCaps(i, &type, (BYTE*)vcaps) != S_OK)
@@ -234,16 +236,16 @@ QVector<VideoMode> DirectShow::getDeviceModes(QString devName)
                 if (!modes.contains(mode))
                     modes.append(std::move(mode));
 
-            nextformat:
+nextformat:
                 if (type->pbFormat)
                     CoTaskMemFree(type->pbFormat);
                 CoTaskMemFree(type);
             }
-        pinend:
+pinend:
             config->Release();
             delete vcaps;
         }
-    next:
+next:
         if (p)
             p->Release();
         pin->Release();

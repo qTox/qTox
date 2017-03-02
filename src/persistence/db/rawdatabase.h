@@ -1,16 +1,16 @@
 #ifndef RAWDATABASE_H
 #define RAWDATABASE_H
 
-#include <QByteArray>
-#include <QMutex>
-#include <QPair>
-#include <QQueue>
 #include <QString>
+#include <QByteArray>
 #include <QThread>
-#include <QVariant>
+#include <QQueue>
 #include <QVector>
-#include <atomic>
+#include <QPair>
+#include <QMutex>
+#include <QVariant>
 #include <memory>
+#include <atomic>
 
 struct sqlite3;
 struct sqlite3_stmt;
@@ -23,25 +23,13 @@ public:
     class Query
     {
     public:
-        Query(QString query, QVector<QByteArray> blobs = {},
-              std::function<void(int64_t)> insertCallback = {})
-            : query{query.toUtf8()}
-            , blobs{blobs}
-            , insertCallback{insertCallback}
-        {
-        }
+        Query(QString query, QVector<QByteArray> blobs = {}, std::function<void(int64_t)> insertCallback={})
+            : query{query.toUtf8()}, blobs{blobs}, insertCallback{insertCallback} {}
         Query(QString query, std::function<void(int64_t)> insertCallback)
-            : query{query.toUtf8()}
-            , insertCallback{insertCallback}
-        {
-        }
+            : query{query.toUtf8()}, insertCallback{insertCallback} {}
         Query(QString query, std::function<void(const QVector<QVariant>&)> rowCallback)
-            : query{query.toUtf8()}
-            , rowCallback{rowCallback}
-        {
-        }
+            : query{query.toUtf8()}, rowCallback{rowCallback} {}
         Query() = default;
-
     private:
         QByteArray query;
         QVector<QByteArray> blobs;
@@ -76,7 +64,6 @@ protected slots:
     bool open(const QString& path, const QString& hexKey = {});
     void close();
     void process();
-
 private:
     QString anonymizeQuery(const QByteArray& query);
 
