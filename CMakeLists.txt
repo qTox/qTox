@@ -522,8 +522,5 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
-# test(s?) are broken on osx (just travis?)
-if (NOT APPLE)
-    include(Testing)
-endif()
+include(Testing)
 include(Installation)
