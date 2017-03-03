@@ -119,26 +119,26 @@ void Widget::init()
     connect(actionShow, &QAction::triggered, this, &Widget::forceShow);
 
     statusOnline = new QAction(this);
-    statusOnline->setIcon(QIcon(getStatusIconPath(Status::Online)));
+    statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
 
     statusAway = new QAction(this);
-    statusAway->setIcon(QIcon(getStatusIconPath(Status::Away)));
+    statusAway->setIcon(prepareIcon(getStatusIconPath(Status::Away), icon_size, icon_size));
     connect(statusAway, &QAction::triggered, this, &Widget::setStatusAway);
 
     statusBusy = new QAction(this);
-    statusBusy->setIcon(QIcon(getStatusIconPath(Status::Busy)));
+    statusBusy->setIcon(prepareIcon(getStatusIconPath(Status::Busy), icon_size, icon_size));
     connect(statusBusy, &QAction::triggered, this, &Widget::setStatusBusy);
 
     actionLogout = new QAction(this);
-    actionLogout->setIcon(QIcon(":/img/others/logout-icon.svg"));
+    actionLogout->setIcon(prepareIcon(":/img/others/logout-icon.svg", icon_size, icon_size));
 
     actionQuit = new QAction(this);
 #ifndef Q_OS_OSX
     actionQuit->setMenuRole(QAction::QuitRole);
 #endif
 
-    actionQuit->setIcon(QIcon(":/ui/rejectCall/rejectCall.svg"));
+    actionQuit->setIcon(prepareIcon(":/ui/rejectCall/rejectCall.svg", icon_size, icon_size));
     connect(actionQuit, &QAction::triggered, qApp, &QApplication::quit);
 
     layout()->setContentsMargins(0, 0, 0, 0);
@@ -631,7 +631,7 @@ void Widget::onBadProxyCore()
 void Widget::onStatusSet(Status status)
 {
     ui->statusButton->setProperty("status", getStatusTitle(status));
-    ui->statusButton->setIcon(QIcon(getStatusIconPath(status)));
+    ui->statusButton->setIcon(prepareIcon(getStatusIconPath(status), icon_size, icon_size));
     updateIcons();
 }
 
@@ -2062,6 +2062,35 @@ QString Widget::getStatusIconPath(Status status)
     case Status::Offline:
         return ":/img/status/dot_offline.svg";
     }
+}
+
+inline QIcon Widget::prepareIcon(QString path, int w, int h)
+{
+#ifdef Q_OS_LINUX
+
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    if (desktop.isEmpty())
+    {
+        desktop = getenv("DESKTOP_SESSION");
+    }
+
+    desktop = desktop.toLower();
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate" || desktop == "x-cinnamon")
+    {
+        if (w > 0 && h > 0)
+        {
+            QSvgRenderer renderer(path);
+
+            QPixmap pm(w, h);
+            pm.fill(Qt::transparent);
+            QPainter painter(&pm);
+            renderer.render(&painter, pm.rect());
+
+            return QIcon(pm);
+        }
+    }
+#endif
+    return QIcon(path);
 }
 
 QPixmap Widget::getStatusIconPixmap(QString path, uint32_t w, uint32_t h)
