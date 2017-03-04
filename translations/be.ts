@@ -70,7 +70,7 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Усталяваць распазнавальнасць вашай камеры.
-Чым больш высокія значэнні зададзены, тым лепшую якасць відэа вашыя сябры могуць атрымаць.
+Чым больш высокія значэнні зададзены, тым лепшую якасць відэа вашы сябры могуць атрымаць.
 Але звярніце ўвагу, што для лепшай якасці відэа патрабуецца лепшае падключэнне да Інтэрнэту.
 Часам вашага падключэння будзе недастаткова, каб справіцца з больш высокай якасцю відэа,
 што можа прывесці да праблем з відэавыклікам.</translation>
@@ -1237,6 +1237,21 @@ instead of system taskbar.</source>
     <message>
         <source>Group invites</source>
         <translation>Запрашэнні ў групу</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
