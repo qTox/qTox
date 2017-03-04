@@ -300,6 +300,13 @@ void ContentDialog::ensureSplitterVisible()
     update();
 }
 
+/**
+ * @brief Get current layout and index of current wiget in it.
+ * Current layout -- layout contains activated widget.
+ *
+ * @param[out] layout Current layout
+ * @return Index of current widget in current layout.
+ */
 int ContentDialog::getCurrentLayout(QLayout*& layout)
 {
     layout = friendLayout->getLayoutOnline();
@@ -324,6 +331,11 @@ int ContentDialog::getCurrentLayout(QLayout*& layout)
     return -1;
 }
 
+/**
+ * @brief Activate next/previous contact.
+ * @param forward If true, activate next contace, previous otherwise.
+ * @param inverse ??? TODO: Add docs.
+ */
 void ContentDialog::cycleContacts(bool forward, bool inverse)
 {
     QLayout* currentLayout;
@@ -434,6 +446,11 @@ void ContentDialog::updateFriendStatus(int friendId)
     }
 }
 
+/**
+ * @brief Update friend status message.
+ * @param friendId Id friend, whose status was changed.
+ * @param message Status message.
+ */
 void ContentDialog::updateFriendStatusMessage(int friendId, const QString& message)
 {
     auto iter = friendList.find(friendId);
@@ -470,6 +487,9 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
     return getDialog(groupId, groupList);
 }
 
+/**
+ * @brief Update window title and icon.
+ */
 void ContentDialog::updateTitleAndStatusIcon()
 {
     if (!activeChatroomWidget) {
@@ -514,6 +534,9 @@ void ContentDialog::previousContact()
     cycleContacts(false);
 }
 
+/**
+ * @brief Enable next contact.
+ */
 void ContentDialog::nextContact()
 {
     cycleContacts(true);
@@ -665,6 +688,11 @@ void ContentDialog::keyPressEvent(QKeyEvent* event)
     }
 }
 
+/**
+ * @brief Show ContentDialog, activate chatroom widget.
+ * @param widget Widget which was clicked.
+ * @param group Seems always `false`. TODO: Remove
+ */
 void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group)
 {
     if (group) {
@@ -706,6 +734,11 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget* widget, bool 
     updateTitleAndStatusIcon();
 }
 
+/**
+ * @brief Update friend widget name and position.
+ * @param friendId Friend Id.
+ * @param alias Alias to display on widget.
+ */
 void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
 {
     Friend* f = FriendList::findFriend(friendId);
@@ -717,6 +750,10 @@ void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
     friendLayout->addFriendWidget(friendWidget, status);
 }
 
+/**
+ * @brief Update group widget name and 'status'.
+ * @param w Group widget to update.
+ */
 void ContentDialog::updateGroupWidget(GroupWidget* w)
 {
     ContactInfo info = groupList.find(w->groupId).value();
@@ -727,27 +764,49 @@ void ContentDialog::updateGroupWidget(GroupWidget* w)
     widget->onUserListChanged();
 }
 
+/**
+ * @brief Handler of `groupchatPositionChanged` action.
+ * Move group layout on the top or on the buttom.
+ *
+ * @param top If true, move group layout on the top, false otherwise.
+ */
 void ContentDialog::onGroupchatPositionChanged(bool top)
 {
     friendLayout->removeItem(groupLayout.getLayout());
     friendLayout->insertLayout(top ? 0 : 1, groupLayout.getLayout());
 }
 
+/**
+ * @brief Retranslate all elements in the form.
+ */
 void ContentDialog::retranslateUi()
 {
     updateTitleAndStatusIcon();
 }
 
+/**
+ * @brief Save size of dialog window.
+ */
 void ContentDialog::saveDialogGeometry()
 {
     Settings::getInstance().setDialogGeometry(saveGeometry());
 }
 
+/**
+ * @brief Save state of splitter between dialog and dialog list.
+ */
 void ContentDialog::saveSplitterState()
 {
     Settings::getInstance().setDialogSplitterState(splitter->saveState());
 }
 
+/**
+ * @brief Check if current ContentDialog instance and chatroom widget associated with user.
+ * @param id User Id.
+ * @param chatroomWidget Widget which should be a pair for current dialog.
+ * @param list List with contact info.
+ * @return True, if chatroomWidget is pair for current instance.
+ */
 bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget,
                               const QHash<int, ContactInfo>& list)
 {
@@ -760,6 +819,11 @@ bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget,
         std::get<1>(*iter) == chatroomWidget;
 }
 
+/**
+ * @brief Focus the dialog if it exists.
+ * @param id User Id.
+ * @param list List with contact info.
+ */
 void ContentDialog::focusDialog(int id, const QHash<int, ContactInfo>& list)
 {
     auto iter = list.find(id);
@@ -777,12 +841,23 @@ void ContentDialog::focusDialog(int id, const QHash<int, ContactInfo>& list)
     dialog->onChatroomWidgetClicked(std::get<1>(iter.value()), false);
 }
 
+/**
+ * @brief Check, if widget is exists.
+ * @param id User Id.
+ * @param list List with contact info.
+ * @return True is widget exists, false otherwise.
+ */
 bool ContentDialog::existsWidget(int id, const QHash<int, ContactInfo>& list)
 {
     auto iter = list.find(id);
     return iter != list.end();
 }
 
+/**
+ * @brief Update widget status and dialog title for current user.
+ * @param id User Id.
+ * @param list List with contact info.
+ */
 void ContentDialog::updateStatus(int id, const QHash<int, ContactInfo>& list)
 {
     auto iter = list.find(id);
@@ -799,6 +874,12 @@ void ContentDialog::updateStatus(int id, const QHash<int, ContactInfo>& list)
     }
 }
 
+/**
+ * @brief Check, if user dialog is active.
+ * @param id User Id.
+ * @param list List with contact info.
+ * @return True if user dialog is active, false otherwise.
+ */
 bool ContentDialog::isWidgetActive(int id, const QHash<int, ContactInfo>& list)
 {
     auto iter = list.find(id);
@@ -809,6 +890,12 @@ bool ContentDialog::isWidgetActive(int id, const QHash<int, ContactInfo>& list)
     return std::get<0>(iter.value())->activeChatroomWidget == std::get<1>(iter.value());
 }
 
+/**
+ * @brief Select ContentDialog by id from the list.
+ * @param id User Id.
+ * @param list List with contact info.
+ * @return ContentDialog for user and nullptr if not found.
+ */
 ContentDialog* ContentDialog::getDialog(int id, const QHash<int, ContactInfo>& list)
 {
     auto iter = list.find(id);
@@ -819,6 +906,12 @@ ContentDialog* ContentDialog::getDialog(int id, const QHash<int, ContactInfo>& l
     return std::get<0>(iter.value());
 }
 
+/**
+ * @brief Find the next or previous layout in layout list.
+ * @param layout Current layout.
+ * @param forward If true, move forward, backward othwerwise.
+ * @return Next/previous layout.
+ */
 QLayout* ContentDialog::nextLayout(QLayout* layout, bool forward) const
 {
     int index = layouts.indexOf(layout);
