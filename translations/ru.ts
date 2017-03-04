@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Проигрывать тестовый звук во время настройки громкости.</translation>
+        <translation>Проигрывать тестовый звук во время изменения громкости.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -1242,6 +1242,21 @@ instead of system taskbar.</source>
     </message>
 </context>
 <context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupWidget</name>
     <message>
         <source>Open chat in new window</source>
@@ -1845,7 +1860,7 @@ You may want to create one.</source>
     <message>
         <source>Your friends will be able to see when you are typing.</source>
         <comment>tooltip for typing notifications setting</comment>
-        <translation>Ваши друзья будут видеть, когда вы печатаете.</translation>
+        <translation>Ваши друзья будут видеть, что вы набираете сообщение.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
@@ -2500,7 +2515,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Открывать окно qTox, при получении нового сообщения если оно еще не было открыто.</translation>
+        <translation>Открывать окно qTox при получении нового сообщения, если оно еще не было открыто.</translation>
     </message>
     <message>
         <source>Open window</source>
