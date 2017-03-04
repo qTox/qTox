@@ -435,7 +435,6 @@ HEADERS  += \
     src/chatlog/textformatter.h \
     src/core/core.h \
     src/core/coreav.h \
-    src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
     src/core/cstring.h \

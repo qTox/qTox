@@ -28,7 +28,6 @@
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 
-#include "coredefines.h"
 #include "corestructs.h"
 #include "toxid.h"
 
