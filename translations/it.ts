@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Riprodurre un suono di prova mentre si cambia il volume di uscita.</translation>
+        <translation>Riprodurre un suono di prova mentre si varia il volume di uscita.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Usa lo slider per impostare il volume degli altoparlanti.</translation>
+        <translation>Usa il cursore per impostare il volume degli altoparlanti.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Livello audio</translation>
     </message>
     <message>
         <source>Video Settings</source>
@@ -69,11 +69,11 @@ The higher values, the better video quality your friends may get.
 Note though that with better video quality there is needed better internet connection.
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
-        <translation>Imposta la risoluzione della webcam.
-Più alto il valore, migliore sarà la qualità del video che i tuoi contatti riceveranno.
-NOTA: più alta è la qualità video, più veloce deve essere la connessione ad internet.
-Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire
-qualità video elevate, questo può causare problemi con le chiamate video.</translation>
+        <translation>Imposta la risoluzione della tua webcam.
+Più alto è il valore, migliore sarà la qualità del video che vedranno i tuoi amici.
+Nota tuttavia,che per una qualità video migliore è richiesta una connessione ad internet più veloce.
+Può capitare che la tua connessione ad internet non sia abbastanza veloce per gestire qualità video elevate,
+questo può causare problemi con le chiamate video.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -81,11 +81,11 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation>Scansiona dispositivi</translation>
+        <translation>Controlla nuovamente i dispositivi</translation>
     </message>
     <message>
         <source>Test Sound</source>
-        <translation>Prova Suono</translation>
+        <translation>Suono di prova</translation>
     </message>
 </context>
 <context>
@@ -127,31 +127,31 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation type="unfinished"></translation>
+        <translation>Una lista di tutti i problemi può essere trovata alla nostra %1 su Github.Se scopri un bug o una vulnerabilità di sicurezza in qTox, ti preghiamo di segnalarcelo in accordo con le nostre linee guida nel nostro %2 articolo del wiki.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
         <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">bug-tracker</translation>
+        <translation>gestore dei bug</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
         <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation type="unfinished">Come riportare un bug correttamente</translation>
+        <translation>Redigere degli utili segnalatori di bug</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca qui per segnalare un bug.</translation>
     </message>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Consulta l&apos;elenco completo di %1 su Github</translation>
+        <translation>Consulta l&apos;elenco completo dei %1 su Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">contributori</translation>
+        <translation>collaboratori</translation>
     </message>
 </context>
 <context>
@@ -242,7 +242,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Auto accept call:</source>
-        <translation>Acetta automaticamente le chiamate</translation>
+        <translation>Accetta automaticamente le chiamate:</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -258,11 +258,11 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Accetta automaticamente files dal contatto se impostato</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo per le note sul contatto</translation>
     </message>
 </context>
 <context>
@@ -274,7 +274,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <message>
         <source>Tox ID</source>
         <comment>Tox ID of the person you&apos;re sending a friend request to</comment>
-        <translation>Tox ID</translation>
+        <translation>ID Tox</translation>
     </message>
     <message>
         <source>Message</source>
@@ -326,24 +326,24 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID, o 76 caratteri esadecimali o nome@esempio.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation type="unfinished"></translation>
+        <translation>Digita l&apos;ID Tox del tuo amico</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggio di richiesta dell&apos;amico</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Digita il messaggio per mandare la richiesta d&apos;amicizia o lascia vuoto per mandare un messaggio normale</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Questo ID di Tox non è valido oppure non esiste</translation>
     </message>
 </context>
 <context>
@@ -400,7 +400,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Logs (*.log)</source>
-        <translation>Logs (*.log)</translation>
+        <translation>I Log (*.log)</translation>
     </message>
 </context>
 <context>
@@ -586,48 +586,48 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>You&apos;re trying to send a sequential file, which is not going to work!</source>
-        <translation type="unfinished"></translation>
+        <translation>Stai cercando di mandare un file sequenziale,che non funzionerà!</translation>
     </message>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">assente</translation>
+        <translation>non al computer</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">occupato</translation>
+        <translation>non libero</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">offline</translation>
+        <translation>non in linea</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">online</translation>
+        <translation>in linea</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 è ora %2</translation>
+        <translation>%1 è %2 adesso</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare una video chiamata</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare una chiamata audio</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Il microfono può essere silenziato solo durante la chiamata</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Il suono può essere disabilitato solo durante una chiamata</translation>
     </message>
 </context>
 <context>
@@ -673,7 +673,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     <name>Core</name>
     <message>
         <source>Toxing on qTox</source>
-        <translation>Toxing on qTox</translation>
+        <translation>Discutendo su qTox</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -697,7 +697,7 @@ qualità video elevate, questo può causare problemi con le chiamate video.</tra
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID di Tox non valido</translation>
     </message>
 </context>
 <context>
@@ -1156,7 +1156,7 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia il link dell&apos;indirizzo</translation>
     </message>
 </context>
 <context>
@@ -1231,7 +1231,22 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Group invites</source>
-        <translation>Inviti ad un gruppo</translation>
+        <translation>Inviti di gruppo</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1285,7 @@ nella barra di sistema invece che nella barra delle applicazioni.</translation>
     </message>
     <message>
         <source>Tox ID</source>
-        <translation>Tox ID</translation>
+        <translation>ID Tox</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -1391,7 +1406,7 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation>Servizio ToxMe a cui registrarsi</translation>
+        <translation>Servizio ToxMe a cui registrarsi.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1405,95 +1420,95 @@ I profili non contengono la cronologia messaggi.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Immissione Nome</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome visibile ai contatti</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Immissione stato messaggio</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Stato del messaggio visibile ai contatti</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo ID Tox</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva immagine QR come file</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia immagine QR negli appunti</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente ToxMe da mostrare su ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Biografia opzionale ToxMe da mostrare su ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Servizio indirizzo ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Visibilità sul servizio ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna accesso ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Rinomina profilo.</translation>
+        <translation>Cambio nome profilo.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Elimina profilo.</translation>
+        <translation>Cancella profilo.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Esporta profilo</translation>
+        <translation>Salva profilo</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi password dal profilo</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambio password profilo</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Il mio nome:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Il mio stato:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Il mio username</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>La mia biografia</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Il mio profilo</translation>
     </message>
 </context>
 <context>
@@ -1698,19 +1713,19 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri profilo</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri pagina profilo quando selezionata</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Immissione messaggio di stato</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta il tuo messaggio di stato che sarà mostrato agli altri</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1718,43 +1733,43 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta lo stato di disponibilità</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricerca Contatto</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Immissione ricerca contatto per amici conosciuti</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordinamento e visibilità</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta ordinamento e visibilità degli amici</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri pagina aggiungi amici</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat di Gruppo</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri pagina di gestione chat di gruppo</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Storia dei trasferimenti file</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri la cronologia dei trasferimenti del file</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1762,7 +1777,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Open Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Apri Impostazioni</translation>
     </message>
 </context>
 <context>
@@ -1850,7 +1865,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>NoSpam</translation>
+        <translation>Niente Spam</translation>
     </message>
     <message>
         <source>NoSpam is part of your Tox ID.
@@ -1935,7 +1950,7 @@ Per favore scegli un&apos;immagine più piccola.</translation>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation>Tox save file (*.tox)</translation>
+        <translation>Tox file di salvataggio (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
@@ -2154,7 +2169,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Impossibile aggiungere il contatto</translation>
+        <translation>Impossibile aggiungere l&apos;amico</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
@@ -2167,7 +2182,7 @@ Condividilo con chi vuoi comunicare.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Non puoi aggiungere te stesso come contatto!</translation>
+        <translation>Non puoi aggiungere te stesso come amico!</translation>
     </message>
 </context>
 <context>
@@ -2319,7 +2334,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuove tutta la cronologia della chat con l&apos;amico se impostata</translation>
     </message>
 </context>
 <context>
@@ -2378,19 +2393,19 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Conferma password</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Conferma immissione password</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished">Inserimento password</translation>
+        <translation>Immissione password</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Campo immissione password,minimo 6 caratteri lungo</translation>
     </message>
 </context>
 <context>
@@ -2503,7 +2518,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Dai il focus alla finestra</translation>
+        <translation>Focus sulla finestra</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2546,7 +2561,7 @@ Verrà installata al riavvio del programma.</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Emoticons</translation>
+        <translation>Faccine</translation>
     </message>
     <message>
         <source>Use emoticons</source>
@@ -2767,17 +2782,17 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Aggiungi contatto</translation>
+        <translation>Aggiungi amico</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Inviti ad un gruppo</translation>
+        <translation>Inviti di gruppo</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">File trasferiti</translation>
+        <translation>Trasferimenti file</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2787,7 +2802,7 @@ Verrà installata al riavvio del programma.</translation>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Il mio profilo</translation>
     </message>
 </context>
 </TS>
