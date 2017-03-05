@@ -1010,11 +1010,10 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QList<QString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
-    for (CString& c_msg : splittedMsg) {
-        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
+    for (QString& qt_msg : splittedMsg) {
         QString qt_msg_hist = qt_msg;
         if (isAction) {
             qt_msg_hist = ACTION_PREFIX + qt_msg;
