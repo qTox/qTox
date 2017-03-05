@@ -229,6 +229,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxid.h
   src/core/toxpk.cpp
   src/core/toxpk.h
+  src/core/toxstring.cpp
+  src/core/toxstring.h
   src/friend.cpp
   src/friend.h
   src/friendlist.cpp
