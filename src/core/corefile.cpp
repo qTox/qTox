@@ -21,7 +21,6 @@
 #include "core.h"
 #include "corefile.h"
 #include "corestructs.h"
-#include "src/core/cstring.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
 #include <QDebug>

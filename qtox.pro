@@ -437,7 +437,6 @@ HEADERS  += \
     src/core/coreav.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/core/cstring.h \
     src/core/indexedlist.h \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
@@ -559,7 +558,6 @@ SOURCES += \
     src/core/coreav.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
-    src/core/cstring.cpp \
     src/core/recursivesignalblocker.cpp \
     src/core/toxcall.cpp \
     src/core/toxencrypt.cpp \

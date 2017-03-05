@@ -216,8 +216,6 @@ set(${PROJECT_NAME}_SOURCES
   src/core/core.h
   src/core/corestructs.cpp
   src/core/corestructs.h
-  src/core/cstring.cpp
-  src/core/cstring.h
   src/core/indexedlist.h
   src/core/recursivesignalblocker.cpp
   src/core/recursivesignalblocker.h

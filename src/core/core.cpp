@@ -21,7 +21,6 @@
 #include "core.h"
 #include "corefile.h"
 #include "src/core/coreav.h"
-#include "src/core/cstring.h"
 #include "src/core/toxstring.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
