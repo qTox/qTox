@@ -444,6 +444,7 @@ HEADERS  += \
     src/core/toxencrypt.h \
     src/core/toxid.h \
     src/core/toxpk.h \
+    src/core/toxstring.h \
     src/friend.h \
     src/friendlist.h \
     src/group.h \
@@ -564,6 +565,7 @@ SOURCES += \
     src/core/toxencrypt.cpp \
     src/core/toxid.cpp \
     src/core/toxpk.cpp \
+    src/core/toxstring.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
