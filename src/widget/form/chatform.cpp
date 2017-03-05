@@ -1010,23 +1010,22 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QList<CString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QList<QString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
-    for (CString& c_msg : splittedMsg) {
-        QString qt_msg = CString::toString(c_msg.data(), c_msg.size());
-        QString qt_msg_hist = qt_msg;
+    for (QString& part : splittedMsg) {
+        QString historyPart = part;
         if (isAction) {
-            qt_msg_hist = ACTION_PREFIX + qt_msg;
+            historyPart = ACTION_PREFIX + part;
         }
 
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
 
-        ChatMessage::Ptr ma = addSelfMessage(qt_msg, isAction, timestamp, false);
+        ChatMessage::Ptr ma = addSelfMessage(part, isAction, timestamp, false);
 
         Core* core = Core::getInstance();
         uint32_t friendId = f->getFriendId();
-        int rec = isAction ? core->sendAction(friendId, qt_msg) : core->sendMessage(friendId, qt_msg);
+        int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
 
         Profile* profile = Nexus::getProfile();
         if (profile->isHistoryEnabled()) {
@@ -1034,7 +1033,7 @@ void ChatForm::SendMessageStr(QString msg)
             QString selfPk = Core::getInstance()->getSelfId().toString();
             QString pk = f->getPublicKey().toString();
             QString name = Core::getInstance()->getUsername();
-            profile->getHistory()->addNewMessage(pk, qt_msg_hist, selfPk, timestamp, status, name,
+            profile->getHistory()->addNewMessage(pk, historyPart, selfPk, timestamp, status, name,
                                                  [offMsgEngine, rec, ma](int64_t id) {
                                                      offMsgEngine->registerReceipt(rec, id, ma);
                                                  });
