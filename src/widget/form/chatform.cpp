@@ -27,7 +27,6 @@
 #include "src/chatlog/content/text.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/core/cstring.h"
 #include "src/friend.h"
 #include "src/nexus.h"
 #include "src/persistence/offlinemsgengine.h"
