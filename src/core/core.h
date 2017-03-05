@@ -36,7 +36,6 @@ template <typename T>
 class QList;
 class QTimer;
 class QString;
-class CString;
 struct ToxAV;
 class CoreAV;
 struct vpx_image;
@@ -54,7 +53,7 @@ public:
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
-    static QList<CString> splitMessage(const QString& message, int maxLen);
+    static QList<QString> splitMessage(const QString& message, int maxLen);
 
     static QByteArray getSaltFromFile(QString filename);
 
