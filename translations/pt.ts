@@ -620,6 +620,14 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -687,41 +695,6 @@ Eventualmente sua conexão pode não ser suficiente para uma qualidade de vídeo
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me oferece contato, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>A senha anterior está incorreta. Por favor tente novamente:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Histórico de conversas criptografado</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Não foi encontrado o histórico de conversas criptografado, ou este está corrompido. O histórico será desabilitado!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Por favor insira a senha para o histórico de conversas do perfil &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Desabilitando o histórico de conversas agora deixará seu histórico criptografado intacto (mas não usável). Caso você lembre a senha posteriormente, poderá reabilitar a criptografia na aba de Privacidade com a senha correta para o histórico.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>A senha do histórico de conversas falhou. Deseja tentar outra?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Desabilitar o histórico de conversas</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1259,18 +1232,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Convites à grupos</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Unir-se</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Recusar</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Convidado por %1 a %2 às %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1524,6 +1485,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2059,10 +2024,6 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation type="unfinished">Perfil de Usuário</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2180,6 +2141,26 @@ Compartilhe com seus contatos para se comunicar.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Não foi possível adicionar amigo</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Você não pode adicionar a si mesmo como contato!</translation>
     </message>
 </context>
 <context>
@@ -2441,10 +2422,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Cancelar</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2661,10 +2638,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation>O Toxcore falhou ao inicializar suas configurações de proxy. O qTox não pode ser executado, por favor modifique suas configurações e reinicialize o aplicativo.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Adicionar contato</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Arquivo</translation>
     </message>
@@ -2705,10 +2678,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <translation>Conversa Anterior</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transferências de arquivo</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Arquivo executável</translation>
@@ -2717,14 +2686,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Você pediu ao qTox para abrir um arquivo executável. Executáveis podem potencialmente danificar seu computador. Tem certeza de que deseja abrir este arquivo?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Configurações</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Perfil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2753,10 +2714,6 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Seu status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished">Convites à grupos</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2798,6 +2755,31 @@ Ela será instalada quando o qTox for reiniciado.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Adicionar contato</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Convites à grupos</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transferências de arquivo</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Configurações</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

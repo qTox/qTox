@@ -1,9 +1,9 @@
 #ifndef TOXPK_H
 #define TOXPK_H
 
-#include <cstdint>
 #include <QByteArray>
 #include <QString>
+#include <cstdint>
 
 class ToxPk
 {
@@ -19,6 +19,8 @@ public:
     QByteArray getKey() const;
     const uint8_t* getBytes() const;
     bool isEmpty() const;
+
+    static int getPkSize();
 
 private:
     QByteArray key;

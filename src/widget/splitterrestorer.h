@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,8 +17,21 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "genericddinterface.h"
+#ifndef SPLITTERRESTORER_H
+#define SPLITTERRESTORER_H
 
-GenericDdInterface::~GenericDdInterface()
+class QSize;
+class QSplitter;
+class QByteArray;
+
+class SplitterRestorer
 {
-}
+public:
+    explicit SplitterRestorer(QSplitter* splitter);
+    void restore(const QByteArray& state, const QSize& windowSize);
+
+private:
+    QSplitter* splitter;
+};
+
+#endif // SPLITTERRESTORER_H

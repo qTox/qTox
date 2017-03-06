@@ -39,7 +39,7 @@ while running on all major platforms.
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
 **[64 bit installer]**, [signature][sig-64] | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]**
-[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | |
+[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | [Experimental download] |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
 
 _**Bold** options are recommended._
@@ -136,15 +136,16 @@ Linux OBS repositories, managed by `abbat`:
 ```
 
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
-[32 bit installer]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
-[32portable]: https://build.tox.chat/job/qTox_build_windows_x86_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86_release.zip
-[64 bit installer]: https://build.tox.chat/view/qtox/job/qTox_pkg_windows_x86-64_stable_release/lastSuccessfulBuild/artifact/setup-qtox.exe
-[64portable]: https://build.tox.chat/job/qTox_build_windows_x86-64_release/lastSuccessfulBuild/artifact/qTox_build_windows_x86-64_release.zip
+[32 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win32/download
+[32portable]: https://qtox-win.pkg.tox.chat/qtox/win32/download-portable
+[64 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win64/download
+[64portable]: https://qtox-win.pkg.tox.chat/qtox/win64/download-portable
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
 [CentOS, Debian, Fedora, openSUSE, Ubuntu]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
+[Experimental download]: https://github.com/qTox/qTox/releases/latest
 [Gentoo]: /INSTALL.md#gentoo
 [Install/Build]: /INSTALL.md
 [IRC logs]: https://github.com/qTox/qtox-irc-logs
@@ -158,8 +159,8 @@ Linux OBS repositories, managed by `abbat`:
 [reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
 [Reviewing and testing pull requests]: /CONTRIBUTING.md#reviews
 [Roadmap]: https://github.com/qTox/qTox/milestones
-[sig-32]: https://qtox-win.pkg.tox.chat/qtox/win32/setup-qtox.exe.asc
-[sig-64]: https://qtox-win.pkg.tox.chat/qtox/win64/setup-qtox.exe.asc
+[sig-32]: https://qtox-win.pkg.tox.chat/qtox/win32/download-sig
+[sig-64]: https://qtox-win.pkg.tox.chat/qtox/win64/download-sig
 [Testing]: https://github.com/qTox/qTox/wiki/Testing
 [Translating, it's easy]: /translations/README.md
 [User Manual]: /doc/user_manual_en.md

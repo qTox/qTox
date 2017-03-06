@@ -20,8 +20,8 @@
 #ifndef FILETRANSFERWIDGET_H
 #define FILETRANSFERWIDGET_H
 
-#include <QWidget>
 #include <QTime>
+#include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
 #include "src/core/corestructs.h"
@@ -69,15 +69,15 @@ protected:
     virtual void paintEvent(QPaintEvent*) final override;
 
 private slots:
-    void onTopButtonClicked();
-    void onBottomButtonClicked();
+    void onLeftButtonClicked();
+    void onRightButtonClicked();
     void onPreviewButtonClicked();
 
 private:
-    static QPixmap scaleCropIntoSquare(const QPixmap &source, int targetSize);
+    static QPixmap scaleCropIntoSquare(const QPixmap& source, int targetSize);
 
 private:
-    Ui::FileTransferWidget *ui;
+    Ui::FileTransferWidget* ui;
     ToxFile fileInfo;
     QTime lastTick;
     quint64 lastBytesSent = 0;
@@ -85,6 +85,7 @@ private:
     QVariantAnimation* buttonColorAnimation = nullptr;
     QColor backgroundColor;
     QColor buttonColor;
+    QColor buttonBackgroundColor;
 
     static const uint8_t TRANSFER_ROLLING_AVG_COUNT = 4;
     uint8_t meanIndex = 0;

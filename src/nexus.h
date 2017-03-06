@@ -43,6 +43,8 @@ class Nexus : public QObject
 public:
     void start();
     void showMainGUI();
+    void quit();
+    bool isRunning();
 
     static Nexus& getInstance();
     static void destroyInstance();
@@ -78,20 +80,25 @@ public slots:
     void bringAllToFront();
 
 private:
-    void updateWindowsArg(QWindow *closedWindow);
+    void updateWindowsArg(QWindow* closedWindow);
 
     QSignalMapper* windowMapper;
     QActionGroup* windowActions = nullptr;
 #endif
 
+private slots:
+    void onLastWindowClosed();
+
 private:
-    explicit Nexus(QObject *parent = 0);
+    explicit Nexus(QObject* parent = 0);
     ~Nexus();
 
 private:
     Profile* profile;
     Widget* widget;
     LoginScreen* loginScreen;
+    bool running;
+    bool quitOnLastWindowClosed;
 };
 
 #endif // NEXUS_H

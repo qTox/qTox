@@ -28,28 +28,29 @@ class FriendWidget : public GenericChatroomWidget
     Q_OBJECT
 public:
     FriendWidget(int FriendId, QString id);
-    virtual void contextMenuEvent(QContextMenuEvent* event) override;
-    virtual void setAsActiveChatroom() override;
-    virtual void setAsInactiveChatroom() override;
-    virtual void updateStatusLight() override;
-    virtual bool chatFormIsSet(bool focus) const override;
-    virtual void setChatForm(ContentLayout* contentLayout) override;
-    virtual void resetEventFlags() override;
-    virtual QString getStatusString() const override;
-    virtual Friend* getFriend() const override;
-    void search(const QString &searchString, bool hide = false);
+    void contextMenuEvent(QContextMenuEvent* event) override final;
+    void setAsActiveChatroom() override final;
+    void setAsInactiveChatroom() override final;
+    void updateStatusLight() override final;
+    bool chatFormIsSet(bool focus) const override final;
+    void setChatForm(ContentLayout* contentLayout) override final;
+    void resetEventFlags() override final;
+    QString getStatusString() const override final;
+    Friend* getFriend() const override final;
+
+    void search(const QString& searchString, bool hide = false);
 
 signals:
     void friendWidgetClicked(FriendWidget* widget);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
-    void contextMenuCalled(QContextMenuEvent * event);
+    void contextMenuCalled(QContextMenuEvent* event);
 
 public slots:
     void onAvatarChange(int FriendId, const QPixmap& pic);
     void onAvatarRemoved(int FriendId);
     void setAlias(const QString& alias);
-    void onContextMenuCalled(QContextMenuEvent * event);
+    void onContextMenuCalled(QContextMenuEvent* event);
 
 protected:
     virtual void mousePressEvent(QMouseEvent* ev) override;

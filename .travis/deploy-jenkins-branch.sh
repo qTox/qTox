@@ -24,7 +24,12 @@
 set -eu -o pipefail
 
 main() {
-    git clone https://github.com/qTox/qTox.git qTox
+    # can already be cloned by the `build-gitstats` job
+    if [[ ! -e qTox ]]
+    then
+        git clone https://github.com/qTox/qTox.git qTox
+    fi
+
     cd qTox
     git checkout $(git describe --abbrev=0) -b for-jenkins-release
     git push --force "https://${GH_DEPLOY_JENKINS}@github.com/qTox/qTox.git"

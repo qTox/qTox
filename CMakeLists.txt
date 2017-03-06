@@ -33,7 +33,6 @@ set(CMAKE_OSX_SYSROOT
   ${CMAKE_OSX_SYSROOT}/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
 
 project(qtox)
-include(CTest)
 
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
@@ -42,6 +41,23 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
+
+# Hardening flags (ASLR, warnings, etc)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIE")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-overflow")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstrict-aliasing")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
+
+if (NOT WIN32)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-protector-all")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wstack-protector")
+endif()
+
+if (UNIX AND NOT APPLE)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,now")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro")
+endif()
+
 
 # Use ccache when available to speed up builds.
 find_program(CCACHE_FOUND ccache)
@@ -113,6 +129,7 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/ug.ts
   translations/uk.ts
   translations/zh_CN.ts
+  translations/zh_TW.ts
 )
 
 qt5_add_resources(
@@ -189,11 +206,11 @@ set(${PROJECT_NAME}_SOURCES
   src/chatlog/documentcache.h
   src/chatlog/pixmapcache.cpp
   src/chatlog/pixmapcache.h
+  src/chatlog/textformatter.cpp
+  src/chatlog/textformatter.h
   src/core/coreav.cpp
   src/core/coreav.h
   src/core/core.cpp
-  src/core/coredefines.h
-  src/core/coreencryption.cpp
   src/core/corefile.cpp
   src/core/corefile.h
   src/core/core.h
@@ -218,6 +235,8 @@ set(${PROJECT_NAME}_SOURCES
   src/friendlist.h
   src/group.cpp
   src/group.h
+  src/groupinvite.cpp
+  src/groupinvite.h
   src/grouplist.cpp
   src/grouplist.h
   src/ipc.cpp
@@ -232,18 +251,10 @@ set(${PROJECT_NAME}_SOURCES
   src/net/toxuri.h
   src/nexus.cpp
   src/nexus.h
-  src/persistence/db/encrypteddb.cpp
-  src/persistence/db/encrypteddb.h
-  src/persistence/db/genericddinterface.cpp
-  src/persistence/db/genericddinterface.h
-  src/persistence/db/plaindb.cpp
-  src/persistence/db/plaindb.h
   src/persistence/db/rawdatabase.cpp
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
   src/persistence/history.h
-  src/persistence/historykeeper.cpp
-  src/persistence/historykeeper.h
   src/persistence/offlinemsgengine.cpp
   src/persistence/offlinemsgengine.h
   src/persistence/profile.cpp
@@ -318,6 +329,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/form/groupchatform.h
   src/widget/form/groupinviteform.cpp
   src/widget/form/groupinviteform.h
+  src/widget/form/groupinvitewidget.cpp
+  src/widget/form/groupinvitewidget.h
   src/widget/form/loadhistorydialog.cpp
   src/widget/form/loadhistorydialog.h
   src/widget/form/profileform.cpp
@@ -372,6 +385,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/passwordedit.h
   src/widget/qrwidget.cpp
   src/widget/qrwidget.h
+  src/widget/splitterrestorer.cpp
+  src/widget/splitterrestorer.h
   src/widget/style.cpp
   src/widget/style.h
   src/widget/systemtrayicon.cpp
@@ -432,20 +447,26 @@ endif()
 
 add_definitions(-DQT_MESSAGELOGCONTEXT=1)
 
-if (NOT ENABLE_STATUSNOTIFIER)
+if (NOT DEFINED ENABLE_STATUSNOTIFIER)
   set(ENABLE_STATUSNOTIFIER True)
 endif()
 
-if(${ENABLE_STATUSNOTIFIER} AND GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
-  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-    src/platform/statusnotifier/closures.c
-    src/platform/statusnotifier/closures.h
-    src/platform/statusnotifier/enums.c
-    src/platform/statusnotifier/enums.h
-    src/platform/statusnotifier/interfaces.h
-    src/platform/statusnotifier/statusnotifier.c
-    src/platform/statusnotifier/statusnotifier.h)
-  add_definitions(-DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=1)
+if(${ENABLE_STATUSNOTIFIER})
+  search_dependency(GDK_PIXBUF  PACKAGE gdk-pixbuf-2.0   OPTIONAL)
+  search_dependency(GLIB        PACKAGE glib-2.0         OPTIONAL)
+  search_dependency(GTK         PACKAGE gtk+-2.0         OPTIONAL)
+
+  if(GDK_PIXBUF_FOUND AND GLIB_FOUND AND GTK_FOUND)
+      set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+        src/platform/statusnotifier/closures.c
+        src/platform/statusnotifier/closures.h
+        src/platform/statusnotifier/enums.c
+        src/platform/statusnotifier/enums.h
+        src/platform/statusnotifier/interfaces.h
+        src/platform/statusnotifier/statusnotifier.c
+        src/platform/statusnotifier/statusnotifier.h)
+      add_definitions(-DENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND=1)
+  endif()
 endif()
 
 if(AVFOUNDATION_FOUND)
@@ -454,19 +475,33 @@ if(AVFOUNDATION_FOUND)
     src/platform/camera/avfoundation.h)
 endif()
 
-if (NOT ENABLE_APPINDICATOR)
+if (NOT DEFINED ENABLE_APPINDICATOR)
   set(ENABLE_APPINDICATOR False)
 endif()
-if(${ENABLE_APPINDICATOR} AND APPINDICATOR_FOUND)
-  add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
+
+if(${ENABLE_APPINDICATOR})
+  search_dependency(APPINDICATOR PACKAGE appindicator-0.1)
+  search_dependency(GDK_PIXBUF   PACKAGE gdk-pixbuf-2.0)
+  search_dependency(GLIB         PACKAGE glib-2.0)
+  search_dependency(GTK          PACKAGE gtk+-2.0)
+
+  if(APPINDICATOR_FOUND)
+    add_definitions(-DENABLE_SYSTRAY_UNITY_BACKEND=1)
+  endif()
 endif()
 
-if (NOT ENABLE_GTK_SYSTRAY)
+if (NOT DEFINED ENABLE_GTK_SYSTRAY)
   set(ENABLE_GTK_SYSTRAY True)
 endif()
 
-if(${ENABLE_GTK_SYSTRAY} AND GTK_FOUND)
-  add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
+if(${ENABLE_GTK_SYSTRAY})
+  if(NOT GTK_FOUND)
+    search_dependency(GTK       PACKAGE gtk+-2.0         OPTIONAL)
+  endif()
+
+  if(GTK_FOUND)
+    add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
+  endif()
 endif()
 
 add_library(${PROJECT_NAME}_static
@@ -486,22 +521,8 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
-################################################################################
-#
-# :: Tests
-#
-################################################################################
-
-function(auto_test subsystem module)
-  add_executable(${module}_test
-    test/${subsystem}/${module}_test.cpp)
-  target_link_libraries(${module}_test
-    ${PROJECT_NAME}_static
-    ${ALL_LIBRARIES}
-    Qt5::Test)
-  add_test(
-    NAME test_${module}
-    COMMAND ${module}_test)
-endfunction()
-
+# test(s?) are broken on osx (just travis?)
+if (NOT APPLE)
+    include(Testing)
+endif()
 include(Installation)

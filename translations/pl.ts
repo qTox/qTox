@@ -626,10 +626,18 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można rozpocząć połączenia wideo</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation>Nie można rozpocząć połączenia audio</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -701,45 +709,8 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>/me oferuje znajomość, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Poprzednie hasło jest niepoprawne; proszę spróbuj ponownie:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Zaszyfruj historię rozmów</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nie znaleziono pliku historii, lub był on uszkodzony. Historia zostanie wyłączona!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Proszę, wprowadź hasło dla historii rozmów dla profilu &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Wyłącz historię rozmów</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Wyłączenie teraz historii rozmów pozostawi zaszyfrowaną historię nietkniętą (nie używaną); jeśli później przypomnisz sobie hasło, możesz ponownie włączyć szyfrowanie w karcie Prywatność poprzez użycie poprawnego hasła.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Hasło do historii rozmów zawiodło. Proszę, spróbuj inne?</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Niepoprawne Tox ID</translation>
     </message>
 </context>
 <context>
@@ -1286,18 +1257,6 @@ zamiast do paska zadań.</translation>
         <source>Group invites</source>
         <translation>Zaproszenia do grup</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Dołącz</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Odrzuć</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Zaproszony przez %1 na %2 o %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1485,7 +1444,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Status widoczna tylko dla listy kontaktów</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1546,18 +1505,22 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Moje imię:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mój status:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Moja nazwa użytkownika</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished">Moja biografia</translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1778,7 +1741,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ustaw swój status, który będzie pokazany innym</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1798,19 +1761,19 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortowanie i widoczność</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ustaw sortowanie znajomych i widoczność</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otwórz Dodaj znajomych</translation>
     </message>
     <message>
         <source>Groupchat</source>
-        <translation type="unfinished"></translation>
+        <translation>Czat grupowy</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
@@ -1818,11 +1781,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Historia transferów</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Otwórz historię transferów</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2108,10 +2071,6 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <translation>Pliki nie zostały usunięte!</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Profil użytkownika</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation>Rejestracja (przetwarzanie)</translation>
     </message>
@@ -2229,6 +2188,26 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>LTR</translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Nie udało się dodać znajomego</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 nie jest prawidłowym adresem Toxme.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Nie możesz dodać siebie jako znajomego!</translation>
     </message>
 </context>
 <context>
@@ -2494,10 +2473,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Anuluj</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 nie jest prawidłowym adresem Toxme.</translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2682,10 +2657,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Nie udało się uruchomić toxcore z twoimi ustawieniami proxy. qTox nie może działać, proszę zmodyfikuj ustawienia i zrestartuj.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Dodaj znajomych</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Dodaj nowy krąg...</translation>
     </message>
@@ -2721,10 +2692,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Szukaj znajomych</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transfery plików</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translatorcomment>better translation?</translatorcomment>
@@ -2734,14 +2701,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Zażądano od qToxa aby otworzyć plik wykonywalny. Wykonywalne pliki mogą potencjalnie uszkodzić twój komputer. Czy na pewno chcesz otworzyć ten plik?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Ustawienia</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2813,10 +2772,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <translation>Nie udało się wysłać wiadmości</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation>Zaproszenia do grup</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Brak&gt;</translation>
@@ -2859,6 +2814,31 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Pokaż</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dodaj znajomych</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Zaproszenia do grup</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transfery plików</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Ustawienia</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

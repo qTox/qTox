@@ -37,7 +37,7 @@ public:
 
     bool isExpanded() const;
     void setExpanded(bool isExpanded, bool save = true);
-    void setName(const QString &name, bool save = true);
+    void setName(const QString& name, bool save = true);
 
     void addFriendWidget(FriendWidget* w, Status s);
     void removeFriendWidget(FriendWidget* w, Status s);
@@ -46,8 +46,8 @@ public:
     bool hasChatrooms() const;
     bool cycleContacts(bool forward);
     bool cycleContacts(FriendWidget* activeChatroomWidget, bool forward);
-    void search(const QString &searchString, bool updateAll = false,
-                bool hideOnline = false, bool hideOffline = false);
+    void search(const QString& searchString, bool updateAll = false, bool hideOnline = false,
+                bool hideOffline = false);
 
 public slots:
     void onCompactChanged(bool compact);
@@ -64,9 +64,15 @@ protected:
     void emitChatroomWidget(QLayout* layout, int index);
 
 private:
-    virtual void onSetName() {}
-    virtual void onExpand() {}
-    virtual void onAddFriendWidget(FriendWidget*) {}
+    virtual void onSetName()
+    {
+    }
+    virtual void onExpand()
+    {
+    }
+    virtual void onAddFriendWidget(FriendWidget*)
+    {
+    }
 
     QWidget* listWidget;
     FriendListLayout* listLayout;

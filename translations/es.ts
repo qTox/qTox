@@ -622,6 +622,14 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -687,42 +695,6 @@ se pueden producir problemas con las videollamadas.</translation>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me ofrece amistad, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Contraseña incorrecta, por favor inténtalo de nuevo:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Historial de chat cifrado</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Archivo de historial de chat cifrado no encontrado o corrupto.
-¡El historial será desactivado!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Ingresa la contraseña para el historial de chat del perfil &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Desactivar el cifrado del historial ahora va a dejar el historial cifrado intacto (pero inutilizable). En el futuro, si recuerdas la contraseña, puedes usarla para rehabilitar el cifrado del historial en la pestaña Privacidad.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>La contraseña del historial ha fallado. ¿Deseas intentar con otra?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Desactivar historial de chat</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1262,18 +1234,6 @@ en lugar de la barra de tareas del sistema.</translation>
         <source>Group invites</source>
         <translation>Invitaciones a grupos</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Unirse</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Declinar</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invitado por %1 el %2 a las %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1529,6 +1489,10 @@ El perfil no contiene tu historial.</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2052,10 +2016,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Perfil de Usuario</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation>Los siguientes archivos no pudieron ser eliminados:</translation>
@@ -2188,6 +2148,26 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>LTR</translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">No se pudo agregar el amigo</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 no es una dirección Toxme válida.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">¡No puedes agregarte a ti mismo como amigo!</translation>
     </message>
 </context>
 <context>
@@ -2449,10 +2429,6 @@ Será instalada cuando reinicies qTox.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Cancelar</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 no es una dirección Toxme válida.</translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2637,14 +2613,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Se produjo un error al iniciar toxcore con la configuración actual de proxy. Por favor modifica la configuración y reinicia qTox.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Agregar amigo</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Invitaciones a grupos</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Vacío&gt;</translation>
@@ -2700,10 +2668,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Buscar amigos</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transferencias</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Archivo</translation>
     </message>
@@ -2754,14 +2718,6 @@ Será instalada cuando reinicies qTox.</translation>
         <translation>Has seleccionado que qTox abra un archivo ejecutable. Los archivos ejecutables pueden ser dañinos para tu computador. ¿Estás seguro de que quieres abrirlo?</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>Opciones</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Perfil</translation>
-    </message>
-    <message>
         <source>Couldn&apos;t request friendship</source>
         <translation>No se pudo solicitar amistad</translation>
     </message>
@@ -2807,6 +2763,31 @@ Será instalada cuando reinicies qTox.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Mostrar</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Agregar amigo</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Invitaciones a grupos</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transferencias</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Opciones</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

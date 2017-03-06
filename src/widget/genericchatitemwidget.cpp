@@ -18,13 +18,14 @@
 */
 
 #include "genericchatitemwidget.h"
-#include "src/widget/style.h"
 #include "src/persistence/settings.h"
+#include "src/widget/style.h"
 #include "src/widget/tool/croppinglabel.h"
 #include <QVariant>
 
 GenericChatItemWidget::GenericChatItemWidget(QWidget* parent)
-    : QFrame(parent), compact(false)
+    : QFrame(parent)
+    , compact(false)
 {
     setProperty("compact", Settings::getInstance().getCompactLayout());
 
@@ -48,7 +49,7 @@ QString GenericChatItemWidget::getName() const
     return nameLabel->fullText();
 }
 
-void GenericChatItemWidget::searchName(const QString &searchString, bool hide)
+void GenericChatItemWidget::searchName(const QString& searchString, bool hide)
 {
     setVisible(!hide && getName().contains(searchString, Qt::CaseInsensitive));
 }

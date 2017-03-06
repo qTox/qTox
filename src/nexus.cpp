@@ -19,28 +19,28 @@
 
 
 #include "nexus.h"
-#include "src/persistence/profile.h"
+#include "persistence/settings.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
+#include "src/persistence/profile.h"
 #include "src/widget/widget.h"
-#include "persistence/settings.h"
 #include "video/camerasource.h"
 #include "widget/gui.h"
 #include "widget/loginscreen.h"
-#include <QThread>
-#include <QDebug>
-#include <QImageReader>
-#include <QFile>
 #include <QApplication>
+#include <QDebug>
+#include <QDesktopWidget>
+#include <QFile>
+#include <QImageReader>
+#include <QThread>
 #include <cassert>
 #include <vpx/vpx_image.h>
-#include <QDesktopWidget>
 
 #ifdef Q_OS_MAC
-#include <QWindow>
-#include <QMenuBar>
 #include <QActionGroup>
+#include <QMenuBar>
 #include <QSignalMapper>
+#include <QWindow>
 #endif
 
 /**
@@ -55,19 +55,24 @@ Q_DECLARE_OPAQUE_POINTER(ToxAV*)
 
 static Nexus* nexus{nullptr};
 
-Nexus::Nexus(QObject *parent) :
-    QObject(parent),
-    profile{nullptr},
-    widget{nullptr},
-    loginScreen{nullptr}
+Nexus::Nexus(QObject* parent)
+    : QObject(parent)
+    , profile{nullptr}
+    , widget{nullptr}
+    , loginScreen{nullptr}
+    , running{true}
+    , quitOnLastWindowClosed{true}
 {
 }
 
 Nexus::~Nexus()
 {
     delete widget;
+    widget = nullptr;
     delete loginScreen;
+    loginScreen = nullptr;
     delete profile;
+    profile = nullptr;
     Settings::getInstance().saveGlobal();
 #ifdef Q_OS_MAC
     delete globalMenuBar;
@@ -104,6 +109,14 @@ void Nexus::start()
 
     loginScreen = new LoginScreen();
 
+    // We need this LastWindowClosed dance because the LoginScreen may be shown
+    // and closed in a processEvents() loop before the start of the real
+    // exec() event loop, meaning we wouldn't receive the onLastWindowClosed,
+    // and so we wouldn't have a chance to tell the processEvents() loop to quit.
+    qApp->setQuitOnLastWindowClosed(false);
+    connect(qApp, &QApplication::lastWindowClosed, this, &Nexus::onLastWindowClosed);
+    connect(loginScreen, &LoginScreen::closed, this, &Nexus::onLastWindowClosed);
+
 #ifdef Q_OS_MAC
     globalMenuBar = new QMenuBar(0);
     dockMenu = new QMenu(globalMenuBar);
@@ -119,8 +132,7 @@ void Nexus::start()
 
     minimizeAction = windowMenu->addAction(QString());
     minimizeAction->setShortcut(Qt::CTRL + Qt::Key_M);
-    connect(minimizeAction, &QAction::triggered, [this]()
-    {
+    connect(minimizeAction, &QAction::triggered, [this]() {
         minimizeAction->setEnabled(false);
         QApplication::focusWindow()->showMinimized();
     });
@@ -159,16 +171,17 @@ void Nexus::showLogin()
     profile = nullptr;
 
     loginScreen->reset();
-    loginScreen->move(QApplication::desktop()->screen()->rect().center() - loginScreen->rect().center());
+    loginScreen->move(QApplication::desktop()->screen()->rect().center()
+                      - loginScreen->rect().center());
     loginScreen->show();
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(true);
+    quitOnLastWindowClosed = true;
 }
 
 void Nexus::showMainGUI()
 {
     assert(profile);
 
-    ((QApplication*)qApp)->setQuitOnLastWindowClosed(false);
+    quitOnLastWindowClosed = false;
     loginScreen->close();
 
     // Create GUI
@@ -186,38 +199,59 @@ void Nexus::showMainGUI()
 
     // Connections
     Core* core = profile->getCore();
-    connect(core, &Core::connected,                  widget, &Widget::onConnected);
-    connect(core, &Core::disconnected,               widget, &Widget::onDisconnected);
-    connect(core, &Core::failedToStart,              widget, &Widget::onFailedToStartCore, Qt::BlockingQueuedConnection);
-    connect(core, &Core::badProxy,                   widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
-    connect(core, &Core::statusSet,                  widget, &Widget::onStatusSet);
-    connect(core, &Core::usernameSet,                widget, &Widget::setUsername);
-    connect(core, &Core::statusMessageSet,           widget, &Widget::setStatusMessage);
-    connect(core, &Core::selfAvatarChanged,          widget, &Widget::onSelfAvatarLoaded);
-    connect(core, &Core::friendAdded,                widget, &Widget::addFriend);
-    connect(core, &Core::friendshipChanged,          widget, &Widget::onFriendshipChanged);
-    connect(core, &Core::failedToAddFriend,          widget, &Widget::addFriendFailed);
-    connect(core, &Core::friendUsernameChanged,      widget, &Widget::onFriendUsernameChanged);
-    connect(core, &Core::friendStatusChanged,        widget, &Widget::onFriendStatusChanged);
+    connect(core, &Core::connected, widget, &Widget::onConnected);
+    connect(core, &Core::disconnected, widget, &Widget::onDisconnected);
+    connect(core, &Core::failedToStart, widget, &Widget::onFailedToStartCore,
+            Qt::BlockingQueuedConnection);
+    connect(core, &Core::badProxy, widget, &Widget::onBadProxyCore, Qt::BlockingQueuedConnection);
+    connect(core, &Core::statusSet, widget, &Widget::onStatusSet);
+    connect(core, &Core::usernameSet, widget, &Widget::setUsername);
+    connect(core, &Core::statusMessageSet, widget, &Widget::setStatusMessage);
+    connect(core, &Core::selfAvatarChanged, widget, &Widget::onSelfAvatarLoaded);
+    connect(core, &Core::friendAdded, widget, &Widget::addFriend);
+    connect(core, &Core::friendshipChanged, widget, &Widget::onFriendshipChanged);
+    connect(core, &Core::failedToAddFriend, widget, &Widget::addFriendFailed);
+    connect(core, &Core::friendUsernameChanged, widget, &Widget::onFriendUsernameChanged);
+    connect(core, &Core::friendStatusChanged, widget, &Widget::onFriendStatusChanged);
     connect(core, &Core::friendStatusMessageChanged, widget, &Widget::onFriendStatusMessageChanged);
-    connect(core, &Core::friendRequestReceived,      widget, &Widget::onFriendRequestReceived);
-    connect(core, &Core::friendMessageReceived,      widget, &Widget::onFriendMessageReceived);
-    connect(core, &Core::receiptRecieved,            widget, &Widget::onReceiptRecieved);
-    connect(core, &Core::groupInviteReceived,        widget, &Widget::onGroupInviteReceived);
-    connect(core, &Core::groupMessageReceived,       widget, &Widget::onGroupMessageReceived);
-    connect(core, &Core::groupNamelistChanged,       widget, &Widget::onGroupNamelistChanged);
-    connect(core, &Core::groupTitleChanged,          widget, &Widget::onGroupTitleChanged);
-    connect(core, &Core::groupPeerAudioPlaying,      widget, &Widget::onGroupPeerAudioPlaying);
-    connect(core, &Core::emptyGroupCreated,          widget, &Widget::onEmptyGroupCreated);
-    connect(core, &Core::friendTypingChanged,        widget, &Widget::onFriendTypingChanged);
-    connect(core, &Core::messageSentResult,          widget, &Widget::onMessageSendResult);
-    connect(core, &Core::groupSentResult,            widget, &Widget::onGroupSendResult);
+    connect(core, &Core::friendRequestReceived, widget, &Widget::onFriendRequestReceived);
+    connect(core, &Core::friendMessageReceived, widget, &Widget::onFriendMessageReceived);
+    connect(core, &Core::receiptRecieved, widget, &Widget::onReceiptRecieved);
+    connect(core, &Core::groupInviteReceived, widget, &Widget::onGroupInviteReceived);
+    connect(core, &Core::groupMessageReceived, widget, &Widget::onGroupMessageReceived);
+    connect(core, &Core::groupNamelistChanged, widget, &Widget::onGroupNamelistChanged);
+    connect(core, &Core::groupTitleChanged, widget, &Widget::onGroupTitleChanged);
+    connect(core, &Core::groupPeerAudioPlaying, widget, &Widget::onGroupPeerAudioPlaying);
+    connect(core, &Core::emptyGroupCreated, widget, &Widget::onEmptyGroupCreated);
+    connect(core, &Core::friendTypingChanged, widget, &Widget::onFriendTypingChanged);
+    connect(core, &Core::messageSentResult, widget, &Widget::onMessageSendResult);
+    connect(core, &Core::groupSentResult, widget, &Widget::onGroupSendResult);
 
-    connect(widget, &Widget::statusSet,             core, &Core::setStatus);
-    connect(widget, &Widget::friendRequested,       core, &Core::requestFriendship);
+    connect(widget, &Widget::statusSet, core, &Core::setStatus);
+    connect(widget, &Widget::friendRequested, core, &Core::requestFriendship);
     connect(widget, &Widget::friendRequestAccepted, core, &Core::acceptFriendRequest);
 
     profile->startCore();
+}
+
+/**
+ * @brief Calls QApplication::quit(), and causes Nexus::isRunning() to return false
+ */
+void Nexus::quit()
+{
+    running = false;
+    qApp->quit();
+}
+
+/**
+ * @brief Returns true until Nexus::quit is called.
+ *
+ * Any blocking processEvents() loop should check this as a return condition,
+ * since the application can not quit until control is returned to the event loop.
+ */
+bool Nexus::isRunning()
+{
+    return running;
 }
 
 /**
@@ -281,11 +315,11 @@ Widget* Nexus::getDesktopGUI()
 
 QString Nexus::getSupportedImageFilter()
 {
-  QString res;
-  for (auto type : QImageReader::supportedImageFormats())
-    res += QString("*.%1 ").arg(QString(type));
+    QString res;
+    for (auto type : QImageReader::supportedImageFormats())
+        res += QString("*.%1 ").arg(QString(type));
 
-  return tr("Images (%1)", "filetype filter").arg(res.left(res.size()-1));
+    return tr("Images (%1)", "filetype filter").arg(res.left(res.size() - 1));
 }
 
 /**
@@ -310,6 +344,12 @@ void Nexus::showLoginLater()
     QMetaObject::invokeMethod(&getInstance(), "showLogin", Qt::QueuedConnection);
 }
 
+void Nexus::onLastWindowClosed()
+{
+    if (quitOnLastWindowClosed)
+        quit();
+}
+
 #ifdef Q_OS_MAC
 void Nexus::retranslateUi()
 {
@@ -323,8 +363,7 @@ void Nexus::onWindowStateChanged(Qt::WindowStates state)
 {
     minimizeAction->setEnabled(QApplication::activeWindow() != nullptr);
 
-    if (QApplication::activeWindow() != nullptr && sender() == QApplication::activeWindow())
-    {
+    if (QApplication::activeWindow() != nullptr && sender() == QApplication::activeWindow()) {
         if (state & Qt::WindowFullScreen)
             minimizeAction->setEnabled(false);
 
@@ -365,8 +404,7 @@ void Nexus::updateWindowsArg(QWindow* closedWindow)
     else
         activeWindow = nullptr;
 
-    for (int i = 0; i < windowList.size(); ++i)
-    {
+    for (int i = 0; i < windowList.size(); ++i) {
         if (closedWindow == windowList[i])
             continue;
 
@@ -393,10 +431,8 @@ void Nexus::updateWindowsStates()
     bool exists = false;
     QWindowList windowList = QApplication::topLevelWindows();
 
-    for (QWindow* window : windowList)
-    {
-        if (!(window->windowState() & Qt::WindowMinimized))
-        {
+    for (QWindow* window : windowList) {
+        if (!(window->windowState() & Qt::WindowMinimized)) {
             exists = true;
             break;
         }

@@ -22,19 +22,19 @@
 
 #include "verticalonlyscroller.h"
 
-VerticalOnlyScroller::VerticalOnlyScroller(QWidget* parent) :
-    QScrollArea(parent)
+VerticalOnlyScroller::VerticalOnlyScroller(QWidget* parent)
+    : QScrollArea(parent)
 {
 }
 
-void VerticalOnlyScroller::resizeEvent(QResizeEvent *event)
+void VerticalOnlyScroller::resizeEvent(QResizeEvent* event)
 {
     QScrollArea::resizeEvent(event);
     if (widget())
         widget()->setMaximumWidth(event->size().width());
 }
 
-void VerticalOnlyScroller::showEvent(QShowEvent *event)
+void VerticalOnlyScroller::showEvent(QShowEvent* event)
 {
     QScrollArea::showEvent(event);
     if (widget())

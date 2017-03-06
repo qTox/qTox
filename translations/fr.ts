@@ -258,7 +258,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished">Si activé, accepte automatiquement les fichiers du contact</translation>
+        <translation>Si activé, accepte automatiquement les fichiers du contact</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
@@ -343,7 +343,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cet identifiant Tox n&apos;existe pas ou est invalide</translation>
     </message>
 </context>
 <context>
@@ -615,10 +615,18 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de démarrer l&apos;appel vidéo</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
+        <translation>Impossible de démarrer l&apos;appel audio</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -688,44 +696,8 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
         <translation>/me souhaiterait vous ajouter dans sa liste d&apos;amis, « %1 »</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Le mot de passe est incorrect, merci de réessayer :</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Historique de discussions chiffré</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Aucun fichier chiffré contenant un historique de chat n&apos;a été trouvé, ou il est endommagé.
-L&apos;historique ne sera pas disponible !</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Merci d&apos;entrer le mot de passe pour l&apos;historique du chat du profil %1.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-La désactivation de l&apos;historique de discussion laissera l&apos;historique actuel chiffré intact (mais non utilisable); Si vous vous rappelez du mot de passe par la suite, vous aurez la possibilité de réactiver le chiffrement depuis l&apos;onglet « vie privée » pour utiliser l&apos;historique.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Le mot de passe est incorrect. Merci de réessayer ?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Désactiver l&apos;historique des communications</translation>
-    </message>
-    <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifiant Tox invalide</translation>
     </message>
 </context>
 <context>
@@ -1172,7 +1144,7 @@ au lieu de se fermer.</translation>
     </message>
     <message>
         <source>Not sent</source>
-        <translation type="unfinished">L&apos;envoi a échoué</translation>
+        <translation>L&apos;envoi a échoué</translation>
     </message>
     <message>
         <source>Cleared</source>
@@ -1260,18 +1232,6 @@ au lieu de se fermer.</translation>
     <message>
         <source>Group invites</source>
         <translation>Invitations à un groupe</translation>
-    </message>
-    <message>
-        <source>Join</source>
-        <translation>Joindre</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Décliner</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Invité par %1 le %2 à %3.</translation>
     </message>
 </context>
 <context>
@@ -1453,7 +1413,7 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished">Entrez votre message de statut</translation>
+        <translation>Entrez un statut</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
@@ -1530,6 +1490,10 @@ Ce fichier ne contient pas l&apos;historique de vos messages.</translation>
     <message>
         <source>My biography</source>
         <translation>Ma biographie</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1742,7 +1706,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished">Entrez votre message de statut</translation>
+        <translation>Entrez un statut</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
@@ -1754,7 +1718,7 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Statut disponible</translation>
     </message>
     <message>
         <source>Contact search</source>
@@ -1762,15 +1726,15 @@ Vous souhaiteriez en créer un.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Champ de recherche de contact pour les amis connus</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordre et visibilité</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Régler l&apos;ordre et la visibilité des amis</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
@@ -2046,10 +2010,6 @@ Veuillez utiliser une autre image.</translation>
         <translation>Veuillez entrer un nouveau mot de passe.</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Profil utilisateur</translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation>Cette suite de caractères permet à vos amis de vous contacter.
@@ -2188,6 +2148,26 @@ Partagez la avec vos amis pour pouvoir communiquer avec eux.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>LTR</translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Impossible d&apos;ajouter le contact</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 n&apos;est pas une adresse Toxme valide.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Vous ne pouvez pas vous ajouter vous-même !</translation>
     </message>
 </context>
 <context>
@@ -2339,7 +2319,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Si activé, supprime tout l&apos;historique de conversation avec cet ami</translation>
     </message>
 </context>
 <context>
@@ -2402,7 +2382,7 @@ Elle sera installée au prochain démarrage de qTox.</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Confirmer le mot de passe</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -2448,10 +2428,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 n&apos;est pas une adresse Toxme valide.</translation>
     </message>
 </context>
 <context>
@@ -2637,10 +2613,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>ToxCore n&apos;as pas pu démarrer avec ces paramètres proxy. Merci de modifier ou désactiver vos paramètres et redémarrer l&apos;application.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Ajouter un contact</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Fichier</translation>
     </message>
@@ -2681,10 +2653,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>Discussion précédente</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Transfers de fichiers</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Fichier exécutable</translation>
@@ -2693,14 +2661,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Vous avez demandé à qTox d&apos;ouvrir un fichier exécutable. Les fichiers exécutables peuvent potentiellement endommager votre ordinateur. Êtes-vous certain de vouloir ouvrir ce fichier ?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Options</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2773,10 +2733,6 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <translation>Quitter</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation>Invitation de groupes</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation>&lt;Vide&gt;</translation>
@@ -2807,6 +2763,31 @@ Elle sera installée au prochain démarrage de qTox.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Afficher</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Ajouter un contact</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Invitations à un groupe</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Transfers de fichiers</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Options</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

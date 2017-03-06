@@ -20,8 +20,8 @@
 #ifndef CHATLINECONTENTPROXY_H
 #define CHATLINECONTENTPROXY_H
 
-#include <QGraphicsProxyWidget>
 #include "chatlinecontent.h"
+#include <QGraphicsProxyWidget>
 
 class FileTransferWidget;
 
@@ -33,7 +33,7 @@ public:
     enum ChatLineContentProxyType
     {
         GenericType,
-        FileTransferWidgetType=0,
+        FileTransferWidgetType = 0,
     };
 
 public:
@@ -49,7 +49,8 @@ public:
     ChatLineContentProxyType getWidgetType() const;
 
 protected:
-    ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth, float widthInPercent);
+    ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth,
+                         float widthInPercent);
 
 private:
     QGraphicsProxyWidget* proxy;

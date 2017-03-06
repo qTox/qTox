@@ -21,18 +21,17 @@
 #ifndef PROFILE_H
 #define PROFILE_H
 
+#include "src/core/toxencrypt.h"
 #include "src/core/toxid.h"
-
-#include <tox/toxencryptsave.h>
 
 #include "src/persistence/history.h"
 
-#include <memory>
 #include <QByteArray>
 #include <QObject>
 #include <QPixmap>
 #include <QString>
 #include <QVector>
+#include <memory>
 
 class Core;
 class QThread;
@@ -56,7 +55,7 @@ public:
     bool checkPassword();
     QString getPassword() const;
     void setPassword(const QString& newPassword);
-    const Tox_Pass_Key& getPasskey() const;
+    const ToxEncrypt& getPasskey() const;
 
     QByteArray loadToxSave();
     void saveToxSave();
@@ -87,6 +86,7 @@ public:
 
 private slots:
     void loadDatabase(const ToxId& id);
+
 private:
     Profile(QString name, const QString& password, bool newProfile);
     static QVector<QString> getFilesByExt(QString extension);
@@ -96,7 +96,7 @@ private:
     Core* core;
     QThread* coreThread;
     QString name, password;
-    std::shared_ptr<Tox_Pass_Key> passkey;
+    std::unique_ptr<ToxEncrypt> passkey;
     std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;

@@ -7,7 +7,13 @@
 class QFile;
 class QTimer;
 
-enum class Status : int {Online = 0, Away, Busy, Offline};
+enum class Status : int
+{
+    Online = 0,
+    Away,
+    Busy,
+    Offline
+};
 
 struct DhtServer
 {
@@ -37,8 +43,11 @@ struct ToxFile
     };
 
     ToxFile() = default;
-    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath, FileDirection Direction);
-    ~ToxFile(){}
+    ToxFile(uint32_t FileNum, uint32_t FriendId, QByteArray FileName, QString filePath,
+            FileDirection Direction);
+    ~ToxFile()
+    {
+    }
 
     bool operator==(const ToxFile& other) const;
     bool operator!=(const ToxFile& other) const;

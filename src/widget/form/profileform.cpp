@@ -17,39 +17,40 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "src/core/core.h"
-#include "src/nexus.h"
-#include "ui_profileform.h"
 #include "profileform.h"
-#include "src/widget/form/settingswidget.h"
-#include "src/widget/maskablepixmapwidget.h"
-#include "src/widget/form/setpassworddialog.h"
-#include "src/widget/contentlayout.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/widget.h"
-#include "src/widget/gui.h"
-#include "src/widget/style.h"
-#include "src/widget/translator.h"
-#include "src/persistence/profilelocker.h"
-#include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
+#include "ui_profileform.h"
+#include "src/core/core.h"
 #include "src/net/toxme.h"
+#include "src/nexus.h"
+#include "src/persistence/profile.h"
+#include "src/persistence/profilelocker.h"
+#include "src/persistence/settings.h"
+#include "src/widget/contentlayout.h"
+#include "src/widget/form/setpassworddialog.h"
+#include "src/widget/form/settingswidget.h"
+#include "src/widget/gui.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/translator.h"
+#include "src/widget/widget.h"
+#include <QApplication>
+#include <QBuffer>
+#include <QClipboard>
+#include <QComboBox>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QInputDialog>
 #include <QLabel>
 #include <QLineEdit>
-#include <QGroupBox>
-#include <QApplication>
-#include <QClipboard>
-#include <QInputDialog>
-#include <QFileDialog>
-#include <QBuffer>
-#include <QMessageBox>
-#include <QComboBox>
-#include <QWindow>
 #include <QMenu>
+#include <QMessageBox>
 #include <QMouseEvent>
+#include <QWindow>
 
-ProfileForm::ProfileForm(QWidget* parent) :
-    QWidget{parent}, qr{nullptr}
+ProfileForm::ProfileForm(QWidget* parent)
+    : QWidget{parent}
+    , qr{nullptr}
 {
     bodyUI = new Ui::IdentitySettings;
     bodyUI->setupUi(this);
@@ -62,8 +63,8 @@ ProfileForm::ProfileForm(QWidget* parent) :
     toxId->setFont(Style::getFont(Style::Small));
     toxId->setToolTip(bodyUI->toxId->toolTip());
 
-    QVBoxLayout *toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
-    delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId);     // Original toxId is in heap, delete it
+    QVBoxLayout* toxIdGroup = qobject_cast<QVBoxLayout*>(bodyUI->toxGroup->layout());
+    delete toxIdGroup->replaceWidget(bodyUI->toxId, toxId); // Original toxId is in heap, delete it
     bodyUI->toxId->hide();
 
     /* Toxme section init */
@@ -72,9 +73,7 @@ ProfileForm::ProfileForm(QWidget* parent) :
     if (toxmeInfo.isEmpty()) // User not registered
     {
         showRegisterToxme();
-    }
-    else
-    {
+    } else {
         showExistingToxme();
     }
 
@@ -92,14 +91,18 @@ ProfileForm::ProfileForm(QWidget* parent) :
     profilePicture->setAccessibleName("Profile avatar");
     profilePicture->setAccessibleDescription("Set a profile avatar shown to all contacts");
     connect(profilePicture, SIGNAL(clicked()), this, SLOT(onAvatarClicked()));
-    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this, SLOT(showProfilePictureContextMenu(const QPoint&)));
-    QHBoxLayout *publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
+    connect(profilePicture, SIGNAL(customContextMenuRequested(const QPoint&)), this,
+            SLOT(showProfilePictureContextMenu(const QPoint&)));
+    QHBoxLayout* publicGrouplayout = qobject_cast<QHBoxLayout*>(bodyUI->publicGroup->layout());
     publicGrouplayout->insertWidget(0, profilePicture);
     publicGrouplayout->insertSpacing(1, 7);
 
     timer.setInterval(750);
     timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, this, [=]() {bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", "")); hasCheck = false;});
+    connect(&timer, &QTimer::timeout, this, [=]() {
+        bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text().replace(" ✔", ""));
+        hasCheck = false;
+    });
 
     connect(bodyUI->toxIdLabel, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
     connect(toxId, SIGNAL(clicked()), this, SLOT(copyIdClicked()));
@@ -112,20 +115,25 @@ ProfileForm::ProfileForm(QWidget* parent) :
     connect(bodyUI->logoutButton, &QPushButton::clicked, this, &ProfileForm::onLogoutClicked);
     connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::onDeletePassClicked);
     connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::onChangePassClicked);
-    connect(bodyUI->deletePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
-    connect(bodyUI->changePassButton, &QPushButton::clicked, this, &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->deletePassButton, &QPushButton::clicked, this,
+            &ProfileForm::setPasswordButtonsText);
+    connect(bodyUI->changePassButton, &QPushButton::clicked, this,
+            &ProfileForm::setPasswordButtonsText);
     connect(bodyUI->saveQr, &QPushButton::clicked, this, &ProfileForm::onSaveQrClicked);
     connect(bodyUI->copyQr, &QPushButton::clicked, this, &ProfileForm::onCopyQrClicked);
-    connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
-    connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked, this, &ProfileForm::onRegisterButtonClicked);
+    connect(bodyUI->toxmeRegisterButton, &QPushButton::clicked, this,
+            &ProfileForm::onRegisterButtonClicked);
+    connect(bodyUI->toxmeUpdateButton, &QPushButton::clicked, this,
+            &ProfileForm::onRegisterButtonClicked);
 
-    connect(core, &Core::usernameSet, this, [=](const QString& val) { bodyUI->userName->setText(val); });
-    connect(core, &Core::statusMessageSet, this, [=](const QString& val) { bodyUI->statusMessage->setText(val); });
+    connect(core, &Core::usernameSet, this,
+            [=](const QString& val) { bodyUI->userName->setText(val); });
+    connect(core, &Core::statusMessageSet, this,
+            [=](const QString& val) { bodyUI->statusMessage->setText(val); });
 
-    for (QComboBox* cb : findChildren<QComboBox*>())
-    {
-            cb->installEventFilter(this);
-            cb->setFocusPolicy(Qt::StrongFocus);
+    for (QComboBox* cb : findChildren<QComboBox*>()) {
+        cb->installEventFilter(this);
+        cb->setFocusPolicy(Qt::StrongFocus);
     }
 
     retranslateUi();
@@ -147,8 +155,7 @@ ProfileForm::~ProfileForm()
 
 bool ProfileForm::isShown() const
 {
-    if (profilePicture->isVisible())
-    {
+    if (profilePicture->isVisible()) {
         window()->windowHandle()->alert(0);
         return true;
     }
@@ -166,8 +173,8 @@ void ProfileForm::show(ContentLayout* contentLayout)
     QString appPath = QApplication::applicationDirPath();
     QString dirPath = portable ? appPath : defaultPath;
 
-    QString dirPrLink = tr("Current profile location: %1")
-            .arg(QString("<a href=\"file://%1\">%1</a>").arg(dirPath));
+    QString dirPrLink =
+        tr("Current profile location: %1").arg(QString("<a href=\"file://%1\">%1</a>").arg(dirPath));
 
     bodyUI->dirPrLink->setText(dirPrLink);
     bodyUI->dirPrLink->setOpenExternalLinks(true);
@@ -177,24 +184,24 @@ void ProfileForm::show(ContentLayout* contentLayout)
     bodyUI->userName->selectAll();
 }
 
-bool ProfileForm::eventFilter(QObject *object, QEvent *event)
+bool ProfileForm::eventFilter(QObject* object, QEvent* event)
 {
-    if (object == static_cast<QObject*>(profilePicture) && event->type() == QEvent::MouseButtonPress)
-    {
-        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+    if (object == static_cast<QObject*>(profilePicture) && event->type() == QEvent::MouseButtonPress) {
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
         if (mouseEvent->button() == Qt::RightButton)
             return true;
     }
     return false;
 }
 
-void ProfileForm::showProfilePictureContextMenu(const QPoint &point)
+void ProfileForm::showProfilePictureContextMenu(const QPoint& point)
 {
     QPoint pos = profilePicture->mapToGlobal(point);
 
     QMenu contextMenu;
-    QAction *removeAction = contextMenu.addAction(style()->standardIcon(QStyle::SP_DialogCancelButton), tr("Remove"));
-    QAction *selectedItem = contextMenu.exec(pos);
+    QAction* removeAction =
+        contextMenu.addAction(style()->standardIcon(QStyle::SP_DialogCancelButton), tr("Remove"));
+    QAction* selectedItem = contextMenu.exec(pos);
 
     if (selectedItem == removeAction)
         Nexus::getProfile()->removeAvatar();
@@ -204,14 +211,13 @@ void ProfileForm::copyIdClicked()
 {
     toxId->selectAll();
     QString txt = toxId->text();
-    txt.replace('\n',"");
+    txt.replace('\n', "");
     QApplication::clipboard()->setText(txt, QClipboard::Clipboard);
     if (QApplication::clipboard()->supportsSelection())
-      QApplication::clipboard()->setText(txt, QClipboard::Selection);
+        QApplication::clipboard()->setText(txt, QClipboard::Selection);
     toxId->setCursorPosition(0);
 
-    if (!hasCheck)
-    {
+    if (!hasCheck) {
         bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text() + " ✔");
         hasCheck = true;
     }
@@ -240,14 +246,13 @@ void ProfileForm::setToxId(const ToxId& id)
 
     delete qr;
     qr = new QRWidget();
-    qr->setQRData("tox:"+id.toString());
+    qr->setQRData("tox:" + id.toString());
     bodyUI->qrCode->setPixmap(QPixmap::fromImage(qr->getImage()->scaledToWidth(150)));
 }
 
 void ProfileForm::onAvatarClicked()
 {
-    auto picToPng = [](QPixmap pic)
-    {
+    auto picToPng = [](QPixmap pic) {
         QByteArray bytes;
         QBuffer buffer(&bytes);
         buffer.open(QIODevice::WriteOnly);
@@ -256,26 +261,21 @@ void ProfileForm::onAvatarClicked()
         return bytes;
     };
 
-    QString filename = QFileDialog::getOpenFileName(this,
-                                                    tr("Choose a profile picture"),
-                                                    QDir::homePath(),
-                                                    Nexus::getSupportedImageFilter(),
-                                                    0,
-                                                    QFileDialog::DontUseNativeDialog);
+    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"),
+                                                    QDir::homePath(), Nexus::getSupportedImageFilter(),
+                                                    0, QFileDialog::DontUseNativeDialog);
     if (filename.isEmpty())
         return;
 
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
-    if (!file.isOpen())
-    {
+    if (!file.isOpen()) {
         GUI::showError(tr("Error"), tr("Unable to open this file."));
         return;
     }
 
     QPixmap pic;
-    if (!pic.loadFromData(file.readAll()))
-    {
+    if (!pic.loadFromData(file.readAll())) {
         GUI::showError(tr("Error"), tr("Unable to read this image."));
         return;
     }
@@ -283,23 +283,20 @@ void ProfileForm::onAvatarClicked()
     // Limit the avatar size to 64kB
     // We do a first rescale to 256x256 in case the image was huge, then keep tryng from here
     QByteArray bytes{picToPng(pic)};
-    if (bytes.size() > 65535)
-    {
-        pic = pic.scaled(256,256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if (bytes.size() > 65535) {
+        pic = pic.scaled(256, 256, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         bytes = picToPng(pic);
     }
     if (bytes.size() > 65535)
-        bytes = picToPng(pic.scaled(128,128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        bytes = picToPng(pic.scaled(128, 128, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     if (bytes.size() > 65535)
-        bytes = picToPng(pic.scaled(64,64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        bytes = picToPng(pic.scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     if (bytes.size() > 65535)
-        bytes = picToPng(pic.scaled(32,32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        bytes = picToPng(pic.scaled(32, 32, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     // If this happens, you're really doing it on purpose.
-    if (bytes.size() > 65535)
-    {
-        QMessageBox::critical(this,
-                              tr("Error"),
+    if (bytes.size() > 65535) {
+        QMessageBox::critical(this, tr("Error"),
                               tr("The supplied image is too large.\nPlease use another image."));
         return;
     }
@@ -312,10 +309,10 @@ void ProfileForm::onRenameClicked()
     Nexus& nexus = Nexus::getInstance();
     QString cur = nexus.getProfile()->getName();
     QString title = tr("Rename \"%1\"", "renaming a profile").arg(cur);
-    do
-    {
-        QString name = QInputDialog::getText(this, title, title+":");
-        if (name.isEmpty()) break;
+    do {
+        QString name = QInputDialog::getText(this, title, title + ":");
+        if (name.isEmpty())
+            break;
         name = Core::sanitize(name);
 
         if (Profile::exists(name))
@@ -323,9 +320,8 @@ void ProfileForm::onRenameClicked()
                            tr("A profile named \"%1\" already exists.", "rename confirm text").arg(name));
         else if (!nexus.getProfile()->rename(name))
             GUI::showError(tr("Failed to rename", "rename failed title"),
-                             tr("Couldn't rename the profile to \"%1\"").arg(cur));
-        else
-        {
+                           tr("Couldn't rename the profile to \"%1\"").arg(cur));
+        else {
             prFileLabelUpdate();
             break;
         }
@@ -335,44 +331,43 @@ void ProfileForm::onRenameClicked()
 void ProfileForm::onExportClicked()
 {
     QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
-    QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Export profile", "save dialog title"),
+    QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
                                                 QDir::home().filePath(current),
                                                 tr("Tox save file (*.tox)", "save dialog filter"),
-                                                0,
-                                                QFileDialog::DontUseNativeDialog);
-    if (!path.isEmpty())
-    {
-        if (!Nexus::tryRemoveFile(path))
-        {
-            GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+                                                0, QFileDialog::DontUseNativeDialog);
+    if (!path.isEmpty()) {
+        if (!Nexus::tryRemoveFile(path)) {
+            GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
+                             tr("You do not have permission to write that location. Choose "
+                                "another, or cancel the save dialog.",
+                                "text of permissions popup"));
             return;
         }
-        if (!QFile::copy(Settings::getInstance().getSettingsDirPath()+current, path))
-            GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
+        if (!QFile::copy(Settings::getInstance().getSettingsDirPath() + current, path))
+            GUI::showWarning(tr("Failed to copy file"),
+                             tr("The file you chose could not be written to."));
     }
 }
 
 void ProfileForm::onDeleteClicked()
 {
-    if (GUI::askQuestion(
-                tr("Really delete profile?", "deletion confirmation title"),
-                tr("Are you sure you want to delete this profile?", "deletion confirmation text")))
-    {
+    if (GUI::askQuestion(tr("Really delete profile?", "deletion confirmation title"),
+                         tr("Are you sure you want to delete this profile?",
+                            "deletion confirmation text"))) {
         Nexus& nexus = Nexus::getInstance();
 
         QVector<QString> manualDeleteFiles = nexus.getProfile()->remove();
 
-        if (!manualDeleteFiles.empty())
-        {
-            QString message = tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
+        if (!manualDeleteFiles.empty()) {
+            QString message =
+                tr("The following files could not be deleted:", "deletion failed text part 1") + "\n\n";
 
-            for (auto& file : manualDeleteFiles)
-            {
+            for (auto& file : manualDeleteFiles) {
                 message = message + file + "\n";
             }
 
-            message = message + "\n" + tr("Please manually remove them.", "deletion failed text part 2");
+            message =
+                message + "\n" + tr("Please manually remove them.", "deletion failed text part 2");
 
             GUI::showError(tr("Files could not be deleted!", "deletion failed title"), message);
         }
@@ -390,13 +385,10 @@ void ProfileForm::onLogoutClicked()
 
 void ProfileForm::setPasswordButtonsText()
 {
-    if (Nexus::getProfile()->isEncrypted())
-    {
+    if (Nexus::getProfile()->isEncrypted()) {
         bodyUI->changePassButton->setText(tr("Change password", "button text"));
         bodyUI->deletePassButton->setVisible(true);
-    }
-    else
-    {
+    } else {
         bodyUI->changePassButton->setText(tr("Set profile password", "button text"));
         bodyUI->deletePassButton->setVisible(false);
     }
@@ -410,35 +402,35 @@ void ProfileForm::onCopyQrClicked()
 void ProfileForm::onSaveQrClicked()
 {
     QString current = Nexus::getProfile()->getName() + ".png";
-    QString path = QFileDialog::getSaveFileName(this,
-                                                tr("Save", "save qr image"),
+    QString path = QFileDialog::getSaveFileName(this, tr("Save", "save qr image"),
                                                 QDir::home().filePath(current),
-                                                tr("Save QrCode (*.png)", "save dialog filter"),
-                                                0,
+                                                tr("Save QrCode (*.png)", "save dialog filter"), 0,
                                                 QFileDialog::DontUseNativeDialog);
-    if (!path.isEmpty())
-    {
-        if (!Nexus::tryRemoveFile(path))
-        {
-            GUI::showWarning(tr("Location not writable","Title of permissions popup"), tr("You do not have permission to write that location. Choose another, or cancel the save dialog.", "text of permissions popup"));
+    if (!path.isEmpty()) {
+        if (!Nexus::tryRemoveFile(path)) {
+            GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
+                             tr("You do not have permission to write that location. Choose "
+                                "another, or cancel the save dialog.",
+                                "text of permissions popup"));
             return;
         }
         if (!qr->saveImage(path))
-            GUI::showWarning(tr("Failed to copy file"), tr("The file you chose could not be written to."));
+            GUI::showWarning(tr("Failed to copy file"),
+                             tr("The file you chose could not be written to."));
     }
 }
 
 void ProfileForm::onDeletePassClicked()
 {
     Profile* pro = Nexus::getProfile();
-    if (!pro->isEncrypted())
-    {
+    if (!pro->isEncrypted()) {
         GUI::showInfo(tr("Nothing to remove"), tr("Your profile does not have a password!"));
         return;
     }
 
-    if (!GUI::askQuestion(tr("Really delete password?","deletion confirmation title"),
-                      tr("Are you sure you want to delete your password?","deletion confirmation text")))
+    if (!GUI::askQuestion(tr("Really delete password?", "deletion confirmation title"),
+                          tr("Are you sure you want to delete your password?",
+                             "deletion confirmation text")))
         return;
 
     Nexus::getProfile()->setPassword(QString());
@@ -446,7 +438,8 @@ void ProfileForm::onDeletePassClicked()
 
 void ProfileForm::onChangePassClicked()
 {
-    SetPasswordDialog* dialog = new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
+    SetPasswordDialog* dialog =
+        new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
     int r = dialog->exec();
     if (r == QDialog::Rejected)
         return;
@@ -459,8 +452,10 @@ void ProfileForm::retranslateUi()
 {
     bodyUI->retranslateUi(this);
     setPasswordButtonsText();
-    // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it dynamically
-    toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact you.\nShare it with your friends to communicate."));
+    // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it
+    // dynamically
+    toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact "
+                         "you.\nShare it with your friends to communicate."));
 }
 
 void ProfileForm::showRegisterToxme()
@@ -498,7 +493,7 @@ void ProfileForm::showExistingToxme()
 
 void ProfileForm::onRegisterButtonClicked()
 {
-    QString name =  bodyUI->toxmeUsername->text();
+    QString name = bodyUI->toxmeUsername->text();
     if (name.isEmpty())
         return;
 
@@ -520,8 +515,7 @@ void ProfileForm::onRegisterButtonClicked()
     Core* newCore = Core::getInstance();
     // Make sure the user didn't logout (or logout and login)
     // before the request is finished, else qTox will crash.
-    if (oldCore == newCore)
-    {
+    if (oldCore == newCore) {
         switch (code) {
         case Toxme::Updated:
             GUI::showInfo(tr("Done!"), tr("Account %1@%2 updated successfully").arg(name, server));
@@ -529,7 +523,9 @@ void ProfileForm::onRegisterButtonClicked()
             showExistingToxme();
             break;
         case Toxme::Ok:
-            GUI::showInfo(tr("Done!"), tr("Successfully added %1@%2 to the database. Save your password").arg(name, server));
+            GUI::showInfo(tr("Done!"),
+                          tr("Successfully added %1@%2 to the database. Save your password")
+                              .arg(name, server));
             Settings::getInstance().setToxme(name, server, bio, privacy, response);
             showExistingToxme();
             break;
@@ -537,7 +533,7 @@ void ProfileForm::onRegisterButtonClicked()
             QString errorMessage = Toxme::getErrorMessage(code);
             qWarning() << errorMessage;
             QString translated = Toxme::translateErrorMessage(code);
-            GUI::showWarning(tr("Toxme error"),  translated);
+            GUI::showWarning(tr("Toxme error"), translated);
         }
 
         bodyUI->toxmeRegisterButton->setEnabled(true);

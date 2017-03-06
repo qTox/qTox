@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 The qTox Project Contributors
+#    Copyright © 2016-2017 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,36 +16,48 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# script to append correct qTox version to `.plist` file from
-# `git describe`
+# script to change qTox version in `info.plist` file to the supplied one
 #
 # NOTE: it checkouts the files before appending a version to them!
 #
 # requires:
-#  * correctly formatted `*.plist file(s) in working dir
-#  * git – tags in format `v0.0.0`
+#  * correctly formatted `info.plist file in working dir
 #  * GNU sed
 
 # usage:
 #
-#   ./$script
+#   ./$script $version
+#
+# $version has to be composed of at least one number/dot
 
 set -eu -o pipefail
 
-# uses `get_version()`
-source "../tools/lib/git.source"
+# update version in `info.plist` file to supplied one after the right lines
+update_version() {
+    local vars=(
+        '	<key>CFBundleShortVersionString</key>'
+        '	<key>CFBundleVersion</key>'
+    )
 
-
-# append version to .plist file(s) after the right line
-append_version() {
-    local after_line='		<key>CFBundleVersion'
-    local append="		<string>$(get_version)<\/string>"
-
-    for plist in *.plist
+    for v in "${vars[@]}"
     do
-        git checkout "$plist"
-        sed -i"" -e "/$after_line/a\\
-$append" "$plist"
+        sed -i -r "\\R$v\$R,+1 s,(<string>)[0-9\\.]+(</string>)$,\\1$@\\2," \
+            "./info.plist"
     done
 }
-append_version
+
+# exit if supplied arg is not a version
+is_version() {
+    if [[ ! $@ =~ [0-9\\.]+ ]]
+    then
+        echo "Not a version: $@"
+        exit 1
+    fi
+}
+
+main() {
+    is_version "$@"
+
+    update_version "$@"
+}
+main "$@"

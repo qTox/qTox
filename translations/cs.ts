@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Přehrát testovací zvuk při změne hlasitosti výstupu.</translation>
+        <translation>Při změně výstupní hlasitosti přehrát testovací zvuk .</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -621,6 +621,14 @@ může způsobovat problémy během videohovorů.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -686,42 +694,6 @@ může způsobovat problémy během videohovorů.</translation>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>nabídnout přátelství, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Zašifrovaná historie zpráv</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nenalezen zašifrovaný soubor s historií zpráv, nebo byl porušen.
-Historie nebude povolena!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Prosím zadejte heslo pro historii zpráv pro profil &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Zadané heslo není správné, zkuste to prosím znovu:</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Zakázání historie zpráv zachová historii zpráv nedotčenou, ale nepoužitelnou; pokud si později vzpomenete na heslo můžete ji opět v nastavení povolit.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Heslo pro historii zpráv selhalo. Zkusíte prosím jiné?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Zakázat historii zpráv</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1261,18 +1233,6 @@ místo panelu úloh.</translation>
         <source>Group invites</source>
         <translation type="unfinished">Pozvánky do skupin</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Připojit se</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Odmítnout</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Pozvaný uživatelem %1 dne %2 o %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1528,6 +1488,10 @@ Při exportu nebude nahrána vaše historie.</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2065,10 +2029,6 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
         <translation>Soubory nemohou být odstraněny!</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Profil uživatele</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation>Registrace (zpracování)</translation>
     </message>
@@ -2186,6 +2146,26 @@ Sdílejte je se svými přáteli, aby vás mohli kontaktovat.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Nepodařilo se přidat přítele</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">%1 není platnou adresou Toxme.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Nelze přidat sám sebe jako přítele!</translation>
     </message>
 </context>
 <context>
@@ -2360,7 +2340,7 @@ Bude nainstalována po restartu qTox.</translation>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Ztlačte %1 pro odeslání vybrané oblasti, %2 pro skrytí/zobrazení okna qTox, nebo %2 pro zrušení.</translation>
+        <translation>Ztlačte %1 pro odeslání vybrané oblasti, %2 pro skrytí/zobrazení okna qTox, nebo %3 pro zrušení.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2446,10 +2426,6 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Zrušit</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 není platnou adresou Toxme.</translation>
     </message>
 </context>
 <context>
@@ -2651,17 +2627,9 @@ Bude nainstalována po restartu qTox.</translation>
         <translation>Předchozí konverzace</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Přidat přítele</translation>
-    </message>
-    <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
         <translation>toxcore nelze spustit s vaším nastavením proxy. qTox nelze spustit prosím změňte nastavení a restartujte.</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Přenosy souborů</translation>
     </message>
     <message>
         <source>Executable file</source>
@@ -2672,14 +2640,6 @@ Bude nainstalována po restartu qTox.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Požadujete aby qTox spustil soubor Spustitelné soubory mohou být rizikem pro váš počítač. Jste si jistý, že chcete tento soubor spustit?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Nastavení</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2761,10 +2721,6 @@ Bude nainstalována po restartu qTox.</translation>
         <translation>Váš status</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished">&lt;Prázdné&gt;</translation>
@@ -2807,6 +2763,31 @@ Bude nainstalována po restartu qTox.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Zobrazit</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Přidat přítele</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Pozvánky do skupin</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Přenosy souborů</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Nastavení</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

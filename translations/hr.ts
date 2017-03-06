@@ -624,6 +624,14 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -683,47 +691,11 @@ Ponekad vaša internetska veza nije dovoljno dobra da podnese visoku video kvali
         <translation>/meni nudi prijateljstvo, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Prethodna lozinka nije ispravna, pokušajte ponovo:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Enkriptirana povijest razgovora</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nije pronađena enkriptirana datoteka povijesti, ili je oštećena.
-Povijest će biti onemogućena!</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Onemogućavanje povijesti razgovora će ostaviti enkriptiranu povijest netaknutu (ali beskorisnu); ako se kasnije sjetite lozinke, možete ponovo omogućiti enkripciju u kartici &quot;Privatnost&quot; sa ispravnom lozinkom.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Lozinka za povijest razgovora nije ispravna. Pokušati ponovo?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Onemogući povijest razgovora</translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1264,18 +1236,6 @@ umjesto u programsku traku.</translation>
         <source>Group invites</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1531,6 +1491,10 @@ Profil ne sadrži vašu povijest.</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1918,10 +1882,6 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
 <context>
     <name>ProfileForm</name>
     <message>
-        <source>User Profile</source>
-        <translation>Korisnički profil</translation>
-    </message>
-    <message>
         <source>Choose a profile picture</source>
         <translation>Odaberi sliku profila</translation>
     </message>
@@ -2186,6 +2146,26 @@ Dijelite ih sa svojim prijateljima kako biste komunicirali.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Ne mogah dodati prijatelja</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Ne možete sami sebe dodati kao prijatelja!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Update</source>
@@ -2444,10 +2424,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Otkaži</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2628,14 +2604,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <translation>toxcore se nije uspio pokrenuti s vašim proxy postavkama. qTox ne može biti pokrenut; promjenite svoje proxy postavke i pokrenite Tox ponovo.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Dodaj prijatelja</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Prijenosi datoteka</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Izvršna datoteka</translation>
@@ -2644,14 +2612,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Pitali ste qTox da otvori izvršnu datoteku. Izvršne datoteke mogu oštetiti vaše računalo. Sigurno želite otvoriti ovu datoteku?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Postavke</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2680,10 +2640,6 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Your status</source>
         <translation type="unfinished">Vaš status</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2803,6 +2759,31 @@ Bit će instalirano prilikom ponovnog pokretanja.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Dodaj prijatelja</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Prijenosi datoteka</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Postavke</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

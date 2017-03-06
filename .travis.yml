@@ -33,22 +33,22 @@ script: "./.travis/$JOB.sh"
 
 deploy:
   # osx binary
-  provider: releases
-  api_key:
-    secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
-  file: "./qTox.dmg"
-  on:
-    condition: $TRAVIS_OS_NAME == osx
-    repo: qTox/qTox
-    tags: true
-  skip_cleanup: true
+  - provider: releases
+    api_key:
+      secure: "BRbzTWRvadALRQSTihMKruOj64ydxusMUS9FQR//qFlS345ZYfYta43W//4LcWWDKtj6IvA6DRqNdabgWnpbpxpnm9gVftGUdOKlU3niPZhwsMkB2M12QHUnAP6DVOfGPvdciBV+6mu73SSxniEcrYjZ1CrRX7mknmehPpVKxNk="
+    file: "./qTox.dmg"
+    on:
+      condition: $TRAVIS_OS_NAME == osx
+      repo: qTox/qTox
+      tags: true
+    skip_cleanup: true
 
   # branch for windows jenkins build
-  provider: script
-  script: .travis/deploy-jenkins-branch.sh
-  on:
-    tags: true
-  skip_cleanup: true
+  - provider: script
+    script: .travis/deploy-jenkins-branch.sh
+    on:
+      tags: true
+    skip_cleanup: true
 
 
 after_success:

@@ -19,21 +19,20 @@
 #ifndef AVFOUNDATION_H
 #define AVFOUNDATION_H
 
+#include "src/video/videomode.h"
+#include <QPair>
 #include <QString>
 #include <QVector>
-#include <QPair>
-#include "src/video/videomode.h"
 
 #ifndef Q_OS_MACX
 #error "This file is only meant to be compiled for Mac OS X targets"
 #endif
 
-namespace avfoundation
-{
-    const QString CAPTURE_SCREEN{"Capture screen"};
+namespace avfoundation {
+const QString CAPTURE_SCREEN{"Capture screen"};
 
-    QVector<VideoMode> getDeviceModes(QString devName);
-    QVector<QPair<QString, QString>> getDeviceList();
+QVector<VideoMode> getDeviceModes(QString devName);
+QVector<QPair<QString, QString>> getDeviceList();
 }
 
 #endif // AVFOUNDATION_H

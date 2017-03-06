@@ -46,18 +46,14 @@ CONFIG   += silent
 
 # Hardening flags (ASLR, warnings, etc)
 # TODO: add `-Werror` to hardening flags once all warnings are fixed
-win32 {
-    QMAKE_CXXFLAGS += -pie \
-                      -fPIE \
-                      -Wstrict-overflow \
-                      -Wstrict-aliasing
-} else {
+QMAKE_CXXFLAGS += -fPIE \
+                  -Wstrict-overflow \
+                  -Wstrict-aliasing
+QMAKE_LFLAGS   += -pie
+
+!win32 {
     QMAKE_CXXFLAGS += -fstack-protector-all \
-                      -pie \
-                      -fPIE \
-                      -Wstack-protector \
-                      -Wstrict-overflow \
-                      -Wstrict-aliasing
+                      -Wstack-protector
 }
 
 # osx & windows cannot into security (build on it fails with those enabled)
@@ -436,9 +432,9 @@ HEADERS  += \
     src/chatlog/customtextdocument.h \
     src/chatlog/documentcache.h \
     src/chatlog/pixmapcache.h \
+    src/chatlog/textformatter.h \
     src/core/core.h \
     src/core/coreav.h \
-    src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
     src/core/cstring.h \
@@ -451,6 +447,7 @@ HEADERS  += \
     src/friend.h \
     src/friendlist.h \
     src/group.h \
+    src/groupinvite.h \
     src/grouplist.h \
     src/ipc.h \
     src/net/autoupdate.h \
@@ -458,12 +455,8 @@ HEADERS  += \
     src/net/toxme.h \
     src/net/toxuri.h \
     src/nexus.h \
-    src/persistence/db/encrypteddb.h \
-    src/persistence/db/genericddinterface.h \
-    src/persistence/db/plaindb.h \
     src/persistence/db/rawdatabase.h \
     src/persistence/history.h \
-    src/persistence/historykeeper.h \
     src/persistence/offlinemsgengine.h \
     src/persistence/profile.h \
     src/persistence/profilelocker.h \
@@ -494,6 +487,7 @@ HEADERS  += \
     src/widget/form/genericchatform.h \
     src/widget/form/groupchatform.h \
     src/widget/form/groupinviteform.h \
+    src/widget/form/groupinvitewidget.h \
     src/widget/form/loadhistorydialog.h \
     src/widget/form/profileform.h \
     src/widget/form/setpassworddialog.h \
@@ -521,6 +515,7 @@ HEADERS  += \
     src/widget/notificationscrollarea.h \
     src/widget/passwordedit.h \
     src/widget/qrwidget.h \
+    src/widget/splitterrestorer.h \
     src/widget/style.h \
     src/widget/systemtrayicon.h \
     src/widget/systemtrayicon_private.h \
@@ -558,9 +553,9 @@ SOURCES += \
     src/chatlog/customtextdocument.cpp\
     src/chatlog/documentcache.cpp \
     src/chatlog/pixmapcache.cpp \
+    src/chatlog/textformatter.cpp \
     src/core/core.cpp \
     src/core/coreav.cpp \
-    src/core/coreencryption.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
     src/core/cstring.cpp \
@@ -572,6 +567,7 @@ SOURCES += \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \
+    src/groupinvite.cpp \
     src/grouplist.cpp \
     src/ipc.cpp \
     src/main.cpp \
@@ -580,12 +576,8 @@ SOURCES += \
     src/net/toxme.cpp \
     src/net/toxuri.cpp \
     src/nexus.cpp \
-    src/persistence/db/encrypteddb.cpp \
-    src/persistence/db/genericddinterface.cpp \
-    src/persistence/db/plaindb.cpp \
     src/persistence/db/rawdatabase.cpp \
     src/persistence/history.cpp \
-    src/persistence/historykeeper.cpp \
     src/persistence/offlinemsgengine.cpp \
     src/persistence/profile.cpp \
     src/persistence/profilelocker.cpp \
@@ -617,6 +609,7 @@ SOURCES += \
     src/widget/form/genericchatform.cpp \
     src/widget/form/groupchatform.cpp \
     src/widget/form/groupinviteform.cpp \
+    src/widget/form/groupinvitewidget.cpp \
     src/widget/form/loadhistorydialog.cpp \
     src/widget/form/profileform.cpp \
     src/widget/form/setpassworddialog.cpp \
@@ -644,6 +637,7 @@ SOURCES += \
     src/widget/notificationscrollarea.cpp \
     src/widget/passwordedit.cpp \
     src/widget/qrwidget.cpp \
+    src/widget/splitterrestorer.cpp \
     src/widget/style.cpp \
     src/widget/systemtrayicon.cpp \
     src/widget/tool/activatedialog.cpp \

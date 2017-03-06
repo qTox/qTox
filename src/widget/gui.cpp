@@ -21,7 +21,6 @@
 #include "gui.h"
 #include "widget.h"
 #include "src/nexus.h"
-#include <assert.h>
 #include <QApplication>
 #include <QCoreApplication>
 #include <QDebug>
@@ -31,6 +30,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QThread>
+#include <assert.h>
 
 /**
  * @class GUI
@@ -43,8 +43,8 @@
  * @brief Emitted when the GUI is resized on supported platforms.
  */
 
-GUI::GUI(QObject *parent) :
-    QObject(parent)
+GUI::GUI(QObject* parent)
+    : QObject(parent)
 {
     assert(QThread::currentThread() == qApp->thread());
     assert(Nexus::getDesktopGUI());
@@ -80,12 +80,9 @@ void GUI::clearContacts()
  */
 void GUI::setEnabled(bool state)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._setEnabled(state);
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_setEnabled", Qt::BlockingQueuedConnection,
                                   Q_ARG(bool, state));
     }
@@ -99,12 +96,9 @@ void GUI::setEnabled(bool state)
  */
 void GUI::setWindowTitle(const QString& title)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._setWindowTitle(title);
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_setWindowTitle", Qt::BlockingQueuedConnection,
                                   Q_ARG(const QString&, title));
     }
@@ -115,12 +109,9 @@ void GUI::setWindowTitle(const QString& title)
  */
 void GUI::reloadTheme()
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._reloadTheme();
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_reloadTheme", Qt::BlockingQueuedConnection);
     }
 }
@@ -130,13 +121,11 @@ void GUI::reloadTheme()
  */
 void GUI::showUpdateDownloadProgress()
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._showUpdateDownloadProgress();
-    }
-    else
-    {
-        QMetaObject::invokeMethod(&getInstance(), "_showUpdateDownloadProgress", Qt::BlockingQueuedConnection);
+    } else {
+        QMetaObject::invokeMethod(&getInstance(), "_showUpdateDownloadProgress",
+                                  Qt::BlockingQueuedConnection);
     }
 }
 
@@ -147,14 +136,11 @@ void GUI::showUpdateDownloadProgress()
  */
 void GUI::showInfo(const QString& title, const QString& msg)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._showInfo(title, msg);
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_showInfo", Qt::BlockingQueuedConnection,
-                        Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
 
@@ -165,14 +151,11 @@ void GUI::showInfo(const QString& title, const QString& msg)
  */
 void GUI::showWarning(const QString& title, const QString& msg)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         getInstance()._showWarning(title, msg);
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_showWarning", Qt::BlockingQueuedConnection,
-                        Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
 
@@ -183,19 +166,16 @@ void GUI::showWarning(const QString& title, const QString& msg)
  */
 void GUI::showError(const QString& title, const QString& msg)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         // If the GUI hasn't started yet and we're on the main thread,
         // we still want to be able to show error messages
         if (!Nexus::getDesktopGUI())
             QMessageBox::critical(nullptr, title, msg);
         else
             getInstance()._showError(title, msg);
-    }
-    else
-    {
+    } else {
         QMetaObject::invokeMethod(&getInstance(), "_showError", Qt::BlockingQueuedConnection,
-                        Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg));
     }
 }
 
@@ -208,22 +188,16 @@ void GUI::showError(const QString& title, const QString& msg)
  * @param yesno Show "Yes" and "No" buttons.
  * @return True if the answer is positive, false otherwise.
  */
-bool GUI::askQuestion(const QString& title, const QString& msg,
-                      bool defaultAns, bool warning,
-                      bool yesno)
+bool GUI::askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning, bool yesno)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         return getInstance()._askQuestion(title, msg, defaultAns, warning, yesno);
-    }
-    else
-    {
+    } else {
         bool ret;
         QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning),
-                                  Q_ARG(bool, yesno));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(const QString&, title),
+                                  Q_ARG(const QString&, msg), Q_ARG(bool, defaultAns),
+                                  Q_ARG(bool, warning), Q_ARG(bool, yesno));
         return ret;
     }
 }
@@ -240,21 +214,17 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
  * @param warning If is true, we will use a special warning style.
  * @return True if the answer is positive, false otherwise.
  */
-bool GUI::askQuestion(const QString& title, const QString& msg,
-                      const QString& button1, const QString& button2,
-                      bool defaultAns, bool warning)
+bool GUI::askQuestion(const QString& title, const QString& msg, const QString& button1,
+                      const QString& button2, bool defaultAns, bool warning)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         return getInstance()._askQuestion(title, msg, button1, button2, defaultAns, warning);
-    }
-    else
-    {
+    } else {
         bool ret;
         QMetaObject::invokeMethod(&getInstance(), "_askQuestion", Qt::BlockingQueuedConnection,
-                                  Q_RETURN_ARG(bool, ret),
-                                  Q_ARG(const QString&, title), Q_ARG(const QString&, msg),
-                                  Q_ARG(bool, defaultAns), Q_ARG(bool, warning));
+                                  Q_RETURN_ARG(bool, ret), Q_ARG(const QString&, title),
+                                  Q_ARG(const QString&, msg), Q_ARG(bool, defaultAns),
+                                  Q_ARG(bool, warning));
         return ret;
     }
 }
@@ -268,30 +238,31 @@ bool GUI::askQuestion(const QString& title, const QString& msg,
  * @param label Is the text which is shown to the user (it should say what should be entered).
  * @param items Is the string list which is inserted into the combobox.
  * @param current Is the number of the item which should be the current item.
- * @param editable If is true the user can enter their own text, otherwise the user may only select one of the existing items.
- * @param ok If is nonnull will be set to true if the user pressed OK and to false if the user pressed Cancel.
+ * @param editable If is true the user can enter their own text, otherwise the user may only select
+ * one of the existing items.
+ * @param ok If is nonnull will be set to true if the user pressed OK and to false if the user
+ * pressed Cancel.
  * @param flags The dialog will uses to widget flags.
- * @param hints Is the input method hints that will be used if the combobox is editable and an input method is active.
- * @return This function returns the text of the current item, or if editable is true, the current text of the combobox.
+ * @param hints Is the input method hints that will be used if the combobox is editable and an input
+ * method is active.
+ * @return This function returns the text of the current item, or if editable is true, the current
+ * text of the combobox.
  */
-QString GUI::itemInputDialog(QWidget*  parent, const QString& title,
-                             const QString& label, const QStringList& items,
-                             int current, bool editable, bool* ok,
+QString GUI::itemInputDialog(QWidget* parent, const QString& title, const QString& label,
+                             const QStringList& items, int current, bool editable, bool* ok,
                              Qt::WindowFlags flags, Qt::InputMethodHints hints)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
-        return getInstance()._itemInputDialog(parent, title, label, items, current, editable, ok, flags, hints);
-    }
-    else
-    {
+    if (QThread::currentThread() == qApp->thread()) {
+        return getInstance()._itemInputDialog(parent, title, label, items, current, editable, ok,
+                                              flags, hints);
+    } else {
         QString r;
         QMetaObject::invokeMethod(&getInstance(), "_itemInputDialog", Qt::BlockingQueuedConnection,
-                    Q_RETURN_ARG(QString, r),
-                    Q_ARG(QWidget*, parent), Q_ARG(const QString&, title),
-                    Q_ARG(const QString&,label), Q_ARG(const QStringList&, items),
-                    Q_ARG(int, current), Q_ARG(bool, editable), Q_ARG(bool*, ok),
-                    Q_ARG(Qt::WindowFlags, flags), Q_ARG(Qt::InputMethodHints, hints));
+                                  Q_RETURN_ARG(QString, r), Q_ARG(QWidget*, parent),
+                                  Q_ARG(const QString&, title), Q_ARG(const QString&, label),
+                                  Q_ARG(const QStringList&, items), Q_ARG(int, current),
+                                  Q_ARG(bool, editable), Q_ARG(bool*, ok),
+                                  Q_ARG(Qt::WindowFlags, flags), Q_ARG(Qt::InputMethodHints, hints));
         return r;
     }
 }
@@ -304,16 +275,13 @@ QString GUI::itemInputDialog(QWidget*  parent, const QString& title,
  */
 QString GUI::passwordDialog(const QString& cancel, const QString& body)
 {
-    if (QThread::currentThread() == qApp->thread())
-    {
+    if (QThread::currentThread() == qApp->thread()) {
         return getInstance()._passwordDialog(cancel, body);
-    }
-    else
-    {
+    } else {
         QString r;
         QMetaObject::invokeMethod(&getInstance(), "_passwordDialog", Qt::BlockingQueuedConnection,
-                        Q_RETURN_ARG(QString, r),
-                        Q_ARG(const QString&, cancel), Q_ARG(const QString&, body));
+                                  Q_RETURN_ARG(QString, r), Q_ARG(const QString&, cancel),
+                                  Q_ARG(const QString&, body));
         return r;
     }
 }
@@ -322,25 +290,34 @@ QString GUI::passwordDialog(const QString& cancel, const QString& body)
 
 void GUI::_clearContacts()
 {
-    Nexus::getDesktopGUI()->clearContactsList();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->clearContactsList();
 }
 
 void GUI::_setEnabled(bool state)
 {
-    Nexus::getDesktopGUI()->setEnabled(state);
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->setEnabled(state);
 }
 
 void GUI::_setWindowTitle(const QString& title)
 {
+    QWidget* w = getMainWidget();
+    if (!w)
+        return;
     if (title.isEmpty())
-        getMainWidget()->setWindowTitle("qTox");
+        w->setWindowTitle("qTox");
     else
-        getMainWidget()->setWindowTitle("qTox - " + title);
+        w->setWindowTitle("qTox - " + title);
 }
 
 void GUI::_reloadTheme()
 {
-    Nexus::getDesktopGUI()->reloadTheme();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->reloadTheme();
 }
 
 void GUI::_showInfo(const QString& title, const QString& msg)
@@ -366,11 +343,12 @@ void GUI::_showError(const QString& title, const QString& msg)
 
 void GUI::_showUpdateDownloadProgress()
 {
-    Nexus::getDesktopGUI()->showUpdateDownloadProgress();
+    Widget* w = Nexus::getDesktopGUI();
+    if (w)
+        w->showUpdateDownloadProgress();
 }
 
-bool GUI::_askQuestion(const QString& title, const QString& msg,
-                       bool defaultAns, bool warning,
+bool GUI::_askQuestion(const QString& title, const QString& msg, bool defaultAns, bool warning,
                        bool yesno)
 {
     QString positiveButton = yesno ? QApplication::tr("Yes") : QApplication::tr("Ok");
@@ -379,9 +357,8 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
     return _askQuestion(title, msg, positiveButton, negativeButton, defaultAns, warning);
 }
 
-bool GUI::_askQuestion(const QString& title, const QString& msg,
-                       const QString& button1, const QString& button2,
-                       bool defaultAns, bool warning)
+bool GUI::_askQuestion(const QString& title, const QString& msg, const QString& button1,
+                       const QString& button2, bool defaultAns, bool warning)
 {
     QMessageBox::Icon icon = warning ? QMessageBox::Warning : QMessageBox::Question;
     QMessageBox box(icon, title, msg, QMessageBox::NoButton, getMainWidget());
@@ -394,9 +371,8 @@ bool GUI::_askQuestion(const QString& title, const QString& msg,
     return box.clickedButton() == pushButton1;
 }
 
-QString GUI::_itemInputDialog(QWidget*  parent, const QString& title,
-                              const QString& label, const QStringList& items,
-                              int current, bool editable, bool* ok,
+QString GUI::_itemInputDialog(QWidget* parent, const QString& title, const QString& label,
+                              const QStringList& items, int current, bool editable, bool* ok,
                               Qt::WindowFlags flags, Qt::InputMethodHints hints)
 {
     return QInputDialog::getItem(parent, title, label, items, current, editable, ok, flags, hints);
@@ -421,26 +397,20 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
     // use another hack to reverse the default buttons.
     // http://www.qtcentre.org/threads/49924-Change-property-of-QInputDialog-button
     QList<QDialogButtonBox*> l = dialog.findChildren<QDialogButtonBox*>();
-    if (!l.isEmpty())
-    {
-        QPushButton* ok     = l.first()->button(QDialogButtonBox::Ok);
+    if (!l.isEmpty()) {
+        QPushButton* ok = l.first()->button(QDialogButtonBox::Ok);
         QPushButton* cancel = l.first()->button(QDialogButtonBox::Cancel);
-        if (ok && cancel)
-        {
+        if (ok && cancel) {
             ok->setAutoDefault(false);
             ok->setDefault(false);
             ok->setText(QApplication::tr("Ok"));
             cancel->setAutoDefault(true);
             cancel->setDefault(true);
             cancel->setText(QApplication::tr("Cancel"));
-        }
-        else
-        {
+        } else {
             qWarning() << "PasswordDialog: Missing button!";
         }
-    }
-    else
-    {
+    } else {
         qWarning() << "PasswordDialog: No QDialogButtonBox!";
     }
 
@@ -448,8 +418,7 @@ QString GUI::_passwordDialog(const QString& cancel, const QString& body)
     for (auto* label : dialog.findChildren<QLabel*>())
         label->setWordWrap(true);
 
-    while (true)
-    {
+    while (true) {
         int val = dialog.exec();
         if (val == QDialog::Accepted)
             return QString();

@@ -43,10 +43,16 @@ public:
     virtual void setChatForm(ContentLayout* contentLayout) = 0;
     virtual void resetEventFlags() = 0;
     virtual QString getStatusString() const = 0;
-    virtual Friend* getFriend() const{return nullptr;}
-    virtual Group* getGroup() const{return nullptr;}
+    virtual Friend* getFriend() const
+    {
+        return nullptr;
+    }
+    virtual Group* getGroup() const
+    {
+        return nullptr;
+    }
 
-    virtual bool eventFilter(QObject *, QEvent *) final override;
+    virtual bool eventFilter(QObject*, QEvent*) final override;
 
     bool isActive();
     void setActive(bool active);
@@ -56,10 +62,10 @@ public:
     QString getStatusMsg() const;
     QString getTitle() const;
 
-	void reloadTheme();
+    void reloadTheme();
 
 public slots:
-	void compactChange(bool compact);
+    void compactChange(bool compact);
 
 signals:
     void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
@@ -77,7 +83,7 @@ protected:
     QVBoxLayout* textLayout = nullptr;
     MaskablePixmapWidget* avatar;
     CroppingLabel* statusMessageLabel;
-	bool active;
+    bool active;
 };
 
 #endif // GENERICCHATROOMWIDGET_H

@@ -31,7 +31,8 @@ class Text : public ChatLineContent
     Q_OBJECT
 
 public:
-    Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false, const QString& rawText = QString(), const QColor c = Qt::black);
+    Text(const QString& txt = "", const QFont& font = QFont(), bool enableElide = false,
+         const QString& rawText = QString(), const QColor c = Qt::black);
     virtual ~Text();
 
     void setText(const QString& txt);
@@ -45,6 +46,7 @@ public:
     virtual void selectionFocusChanged(bool focusIn) final;
     virtual bool isOverSelection(QPointF scenePos) const final;
     virtual QString getSelectedText() const final;
+    virtual void fontChanged(const QFont& font) final;
 
     virtual QRectF boundingRect() const final;
     virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final;
@@ -52,8 +54,8 @@ public:
     virtual void visibilityChanged(bool keepInMemory) final;
 
     virtual qreal getAscent() const final;
-    virtual void mousePressEvent(QGraphicsSceneMouseEvent *event) final override;
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) final override;
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent* event) final override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) final override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) final override;
 
     virtual QString getText() const final;
@@ -89,7 +91,6 @@ private:
     QFont defFont;
     QString defStyleSheet;
     QColor color;
-
 };
 
 #endif // TEXT_H

@@ -1,9 +1,10 @@
 #ifndef TOXCALL_H
 #define TOXCALL_H
 
-#include <cstdint>
-#include <QtGlobal>
+#include <QMap>
 #include <QMetaObject>
+#include <QtGlobal>
+#include <cstdint>
 
 #include "src/core/indexedlist.h"
 
@@ -17,19 +18,23 @@ class CoreAV;
 struct ToxCall
 {
 protected:
-     ToxCall() = default;
-     explicit ToxCall(uint32_t CallId);
-     ~ToxCall();
-public:
-     ToxCall(const ToxCall& other) = delete;
-     ToxCall(ToxCall&& other) noexcept;
+    ToxCall() = default;
+    explicit ToxCall(uint32_t CallId);
+    ~ToxCall();
 
-     inline operator int() {return callId;}
-     ToxCall& operator=(const ToxCall& other) = delete;
-     ToxCall& operator=(ToxCall&& other) noexcept;
+public:
+    ToxCall(const ToxCall& other) = delete;
+    ToxCall(ToxCall&& other) noexcept;
+
+    inline operator int()
+    {
+        return callId;
+    }
+    ToxCall& operator=(const ToxCall& other) = delete;
+    ToxCall& operator=(ToxCall&& other) noexcept;
 
 protected:
-     QMetaObject::Connection audioInConn;
+    QMetaObject::Connection audioInConn;
 
 public:
     uint32_t callId;
@@ -69,11 +74,13 @@ struct ToxGroupCall : public ToxCall
     ToxGroupCall() = default;
     ToxGroupCall(int GroupNum, CoreAV& av);
     ToxGroupCall(ToxGroupCall&& other) noexcept;
+    ~ToxGroupCall();
 
     ToxGroupCall& operator=(ToxGroupCall&& other) noexcept;
+
+    QMap<int, quint32> peers;
 
     // If you add something here, don't forget to override the ctors and move operators!
 };
 
 #endif // TOXCALL_H
-

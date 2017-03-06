@@ -621,6 +621,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -686,41 +694,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation type="unfinished">/me 友達にならないか、&quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation type="unfinished">暗号化されたチャット履歴</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation type="unfinished">暗号化されたチャット履歴が見つからないか、破損しています。
-履歴は無効になります！</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation type="unfinished">プロファイルのチャット履歴に使うパスワードを入力してください</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation type="unfinished">前のパスワードが間違っています。再度お試しください：</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation type="unfinished">チャット履歴を無効にすると、暗号化されたチャット履歴はそのままです（使い物になりません）。もし、後でパスワードを思い出したら、プライバシータブから正しいパスワードで暗号化を有効にすることで、履歴が使えるようになるでしょう。</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation type="unfinished">チャット履歴のパスワードが違います。他のを試しましょう。</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation type="unfinished">チャット履歴を無効にする</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1258,18 +1231,6 @@ instead of closing itself.</source>
         <source>Group invites</source>
         <translation>グループ招待</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation type="unfinished">参加</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation type="unfinished">拒否</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1524,6 +1485,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2039,10 +2004,6 @@ Please use another image.</source>
         <translation type="unfinished">新しいパスワードを入力してください。</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation type="unfinished">ユーザープロファイル</translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation type="unfinished">このIDには、他のToxクライアントに、どのように連絡するかが記載されています。
@@ -2181,6 +2142,26 @@ Share it with your friends to communicate.</source>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">友達を登録できない</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">自分を友達として登録することはできません</translation>
     </message>
 </context>
 <context>
@@ -2442,10 +2423,6 @@ It will be installed when qTox restarts.</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation type="unfinished">キャンセル</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2641,26 +2618,6 @@ It will be installed when qTox restarts.</source>
         <translation type="unfinished">友達リクエストできません</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation type="unfinished">友達を追加</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished">グループ招待</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation type="unfinished">ファイル転送</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="unfinished">設定</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation type="unfinished">プロファイル</translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished">&lt; 空 &gt;</translation>
@@ -2797,6 +2754,31 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">友達を追加</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">グループ招待</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">ファイル転送</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">設定</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

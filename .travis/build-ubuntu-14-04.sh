@@ -146,15 +146,13 @@ $CXX --version
 # needed, otherwise ffmpeg doesn't get detected
 export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 
-
 build_qtox() {
     bdir() {
-        pushd .
         cd $BUILDDIR
         make -j$(nproc)
         # check if `qtox` file has been made, is non-empty and is an executable
         [[ -s qtox ]] && [[ -x qtox ]]
-        popd
+        cd -
     }
 
     local BUILDDIR=_build
@@ -175,4 +173,27 @@ build_qtox() {
     cmake -H. -B"$BUILDDIR"
     bdir
 }
-build_qtox
+
+test_qtox() {
+    local BUILDDIR=_build
+
+    cd $BUILDDIR
+    make test
+    cd -
+}
+
+# CMake is supposed to process files, e.g. ones with versions.
+# Check whether those changes have been committed.
+check_if_differs() {
+    echo "Checking whether files processed by CMake have been committed..."
+    echo ""
+    # ↓ `0` exit status only if there are no changes
+    git diff --exit-code
+}
+
+main() {
+    build_qtox
+    test_qtox
+    check_if_differs
+}
+main

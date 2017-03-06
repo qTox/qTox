@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,27 +17,36 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PLAINDB_H
-#define PLAINDB_H
+#ifndef GROUPINVITEWIDGET_H
+#define GROUPINVITEWIDGET_H
 
-#include "genericddinterface.h"
+#include "src/groupinvite.h"
 
-#include <QSqlDatabase>
+#include <QWidget>
 
-namespace Db {
-    enum class syncType {stOff = 0, stNormal = 1, stFull = 2};
-}
+class CroppingLabel;
 
-class PlainDb : public GenericDdInterface
+class QHBoxLayout;
+class QPushButton;
+
+class GroupInviteWidget : public QWidget
 {
+    Q_OBJECT
 public:
-    PlainDb(const QString &db_name, QList<QString> initList);
-    virtual ~PlainDb();
+    GroupInviteWidget(QWidget* parent, const GroupInvite& invite);
+    void retranslateUi();
+    const GroupInvite getInviteInfo() const;
 
-    virtual QSqlQuery exec(const QString &query);
+signals:
+    void accepted(const GroupInvite& invite);
+    void rejected(const GroupInvite& invite);
 
 private:
-    QSqlDatabase *db;
+    QPushButton* acceptButton;
+    QPushButton* rejectButton;
+    CroppingLabel* inviteMessageLabel;
+    QHBoxLayout* widgetLayout;
+    GroupInvite inviteInfo;
 };
 
-#endif // PLAINDB_H
+#endif // GROUPINVITEWIDGET_H

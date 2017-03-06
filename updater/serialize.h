@@ -21,9 +21,9 @@
 #ifndef SERIALIZE_H
 #define SERIALIZE_H
 
-#include <cstdint>
 #include <QByteArray>
 #include <QString>
+#include <cstdint>
 
 /// Most of those functions are unsafe unless otherwise specified
 /// Do not use them on untrusted data (e.g. check a signature first)

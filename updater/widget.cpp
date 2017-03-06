@@ -21,12 +21,12 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QFile>
-#include <QProcess>
 #include <QMessageBox>
 #include <QMetaObject>
-#include <QDebug>
+#include <QProcess>
 #include <QSettings>
 #include <QStandardPaths>
 
@@ -37,10 +37,10 @@
 #undef _WIN32_WINNT
 #endif
 #define _WIN32_WINNT 0x0600 // Vista for SHGetKnownFolderPath
-#include <windows.h>
+#include <exdisp.h>
 #include <shldisp.h>
 #include <shlobj.h>
-#include <exdisp.h>
+#include <windows.h>
 
 const bool supported = true;
 const QString QTOX_PATH = "qtox.exe";
@@ -50,10 +50,10 @@ const QString QTOX_PATH;
 #endif
 const QString SETTINGS_FILE = "settings.ini";
 
-Widget::Widget(const Settings &s) :
-    QWidget(nullptr),
-    ui(new Ui::Widget),
-    settings{s}
+Widget::Widget(const Settings& s)
+    : QWidget(nullptr)
+    , ui(new Ui::Widget)
+    , settings{s}
 {
     ui->setupUi(this);
 
@@ -78,8 +78,8 @@ void Widget::setProgress(int value)
 
 void Widget::fatalError(QString message)
 {
-    qCritical() << "Update aborted with error:"<<message;
-    QMessageBox::critical(this,tr("Error"), message+'\n'+tr("qTox will restart now."));
+    qCritical() << "Update aborted with error:" << message;
+    QMessageBox::critical(this, tr("Error"), message + '\n' + tr("qTox will restart now."));
     deleteUpdate();
     restoreBackups();
     startQToxAndExit();
@@ -87,7 +87,7 @@ void Widget::fatalError(QString message)
 
 void Widget::deleteUpdate()
 {
-    QDir updateDir(settings.getSettingsDirPath()+"/update/");
+    QDir updateDir(settings.getSettingsDirPath() + "/update/");
     updateDir.removeRecursively();
 }
 
@@ -104,15 +104,15 @@ void Widget::startQToxAndExit()
     bool unelevateOk = true;
 
     auto advapi32H = LoadLibrary(TEXT("advapi32.dll"));
-    if ((unelevateOk = (advapi32H != nullptr)))
-    {
-        auto CreateProcessWithTokenWH = (decltype(&CreateProcessWithTokenW))
-                                        GetProcAddress(advapi32H, "CreateProcessWithTokenW");
-        if ((unelevateOk = (CreateProcessWithTokenWH != nullptr)))
-        {
+    if ((unelevateOk = (advapi32H != nullptr))) {
+        auto CreateProcessWithTokenWH =
+            (decltype(&CreateProcessWithTokenW))GetProcAddress(advapi32H,
+                                                               "CreateProcessWithTokenW");
+        if ((unelevateOk = (CreateProcessWithTokenWH != nullptr))) {
             if (!CreateProcessWithTokenWH(settings.getPrimaryToken(), 0,
                                           QTOX_PATH.toStdWString().c_str(), 0, 0, 0,
-                                          QApplication::applicationDirPath().toStdWString().c_str(), &si, &pi))
+                                          QApplication::applicationDirPath().toStdWString().c_str(),
+                                          &si, &pi))
                 unelevateOk = false;
         }
     }
@@ -120,8 +120,7 @@ void Widget::startQToxAndExit()
     CloseHandle(pi.hProcess);
     CloseHandle(pi.hThread);
 
-    if (!unelevateOk)
-    {
+    if (!unelevateOk) {
         qWarning() << "Failed to start unelevated qTox";
         QProcess::startDetached(QTOX_PATH);
     }
@@ -135,20 +134,20 @@ void Widget::startQToxAndExit()
 void Widget::deleteBackups()
 {
     for (QString file : backups)
-        QFile(file+".bak").remove();
+        QFile(file + ".bak").remove();
 }
 
 void Widget::restoreBackups()
 {
     for (QString file : backups)
-        QFile(file+".bak").rename(file);
+        QFile(file + ".bak").rename(file);
 }
 
 void Widget::update()
 {
     /// 1. Find and parse the update (0-5%)
     // Check that the dir exists
-    QString updateDirStr = settings.getSettingsDirPath()+"/update/";
+    QString updateDirStr = settings.getSettingsDirPath() + "/update/";
     QDir updateDir(updateDirStr);
     if (!updateDir.exists())
         fatalError(tr("No update found."));
@@ -156,7 +155,7 @@ void Widget::update()
     setProgress(2);
 
     // Check that we have a flist and that every file on the diff exists
-    QFile updateFlistFile(updateDirStr+"flist");
+    QFile updateFlistFile(updateDirStr + "flist");
     if (!updateFlistFile.open(QIODevice::ReadOnly))
         fatalError(tr("The update is incomplete!"));
 
@@ -169,23 +168,22 @@ void Widget::update()
     /// 2. Generate a diff (5-50%)
     QList<UpdateFileMeta> diff = genUpdateDiff(updateFlist, this);
     for (UpdateFileMeta fileMeta : diff)
-        if (!QFile::exists(updateDirStr+fileMeta.installpath))
+        if (!QFile::exists(updateDirStr + fileMeta.installpath))
             fatalError(tr("The update is incomplete."));
 
     if (diff.size() == 0)
-       fatalError(tr("The update is empty!"));
+        fatalError(tr("The update is empty!"));
     setProgress(50);
-    qDebug() << "Diff generated,"<<diff.size()<<"files to update";
+    qDebug() << "Diff generated," << diff.size() << "files to update";
 
     /// 2. Check the update (50-75%)
-    float checkProgressStep = 25.0/(float)diff.size();
+    float checkProgressStep = 25.0 / (float)diff.size();
     float checkProgress = 50;
-    for (UpdateFileMeta fileMeta : diff)
-    {
+    for (UpdateFileMeta fileMeta : diff) {
         UpdateFile file;
         file.metadata = fileMeta;
 
-        QFile fileFile(updateDirStr+fileMeta.installpath);
+        QFile fileFile(updateDirStr + fileMeta.installpath);
         if (!fileFile.open(QIODevice::ReadOnly))
             fatalError(tr("Update files are unreadable."));
 
@@ -196,7 +194,8 @@ void Widget::update()
             fatalError(tr("Update files are corrupted."));
 
         if (crypto_sign_verify_detached(file.metadata.sig, (unsigned char*)file.data.data(),
-                                        file.data.size(), key) != 0)
+                                        file.data.size(), key)
+            != 0)
             fatalError(tr("Update files are corrupted."));
 
         checkProgress += checkProgressStep;
@@ -206,23 +205,22 @@ void Widget::update()
     qDebug() << "Update files signature verified, installing";
 
     /// 3. Install the update (75-95%)
-    float installProgressStep = 20.0/(float)diff.size();
+    float installProgressStep = 20.0 / (float)diff.size();
     float installProgress = 75;
-    for (UpdateFileMeta fileMeta : diff)
-    {
+    for (UpdateFileMeta fileMeta : diff) {
         // Backup old files
-        if (QFile(fileMeta.installpath).exists())
-        {
-            QFile(fileMeta.installpath+".bak").remove();
-            QFile(fileMeta.installpath).rename(fileMeta.installpath+".bak");
+        if (QFile(fileMeta.installpath).exists()) {
+            QFile(fileMeta.installpath + ".bak").remove();
+            QFile(fileMeta.installpath).rename(fileMeta.installpath + ".bak");
             backups.append(fileMeta.installpath);
         }
 
         // Install new ones
         QDir().mkpath(QFileInfo(fileMeta.installpath).absolutePath());
-        QFile fileFile(updateDirStr+fileMeta.installpath);
+        QFile fileFile(updateDirStr + fileMeta.installpath);
         if (!fileFile.copy(fileMeta.installpath))
-            fatalError(tr("Unable to copy the update's files from ")+(updateDirStr+fileMeta.installpath)+" to "+fileMeta.installpath);
+            fatalError(tr("Unable to copy the update's files from ")
+                       + (updateDirStr + fileMeta.installpath) + " to " + fileMeta.installpath);
         installProgress += installProgressStep;
         setProgress(installProgress);
     }

@@ -25,8 +25,8 @@
 #include <QPoint>
 #include <QWidget>
 
-#include "src/core/corestructs.h"
 #include "src/chatlog/chatmessage.h"
+#include "src/core/corestructs.h"
 #include "src/core/toxid.h"
 
 /**
@@ -51,7 +51,7 @@ class GenericNetCamView;
 class QToolButton;
 
 namespace Ui {
-    class MainWindow;
+class MainWindow;
 }
 
 class GenericChatForm : public QWidget
@@ -61,14 +61,19 @@ public:
     explicit GenericChatForm(QWidget* parent = 0);
     ~GenericChatForm();
 
-    void setName(const QString &newName);
-    virtual void show() final{}
+    void setName(const QString& newName);
+    virtual void show() final
+    {
+    }
     virtual void show(ContentLayout* contentLayout);
 
-    ChatMessage::Ptr addMessage(const ToxPk& author, const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
-    ChatMessage::Ptr addSelfMessage(const QString &message, bool isAction, const QDateTime &datetime, bool isSent);
+    ChatMessage::Ptr addMessage(const ToxPk& author, const QString& message, bool isAction,
+                                const QDateTime& datetime, bool isSent);
+    ChatMessage::Ptr addSelfMessage(const QString& message, bool isAction,
+                                    const QDateTime& datetime, bool isSent);
 
-    void addSystemInfoMessage(const QString &message, ChatMessage::SystemMessageType type, const QDateTime &datetime);
+    void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
+                              const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, QString message, QDateTime datetime);
     bool isEmpty();
 
@@ -83,6 +88,7 @@ signals:
 
 public slots:
     void focusInput();
+    void onChatMessageFontChanged(const QFont& font);
 
 protected slots:
     void onChatContextMenuRequested(QPoint pos);
@@ -102,38 +108,39 @@ protected slots:
 
 private:
     void retranslateUi();
+    static QString fontToCss(const QFont& font, const char* name);
 
 protected:
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
-    QString resolveToxId(const ToxPk &id);
+    QString resolveToxId(const ToxPk& id);
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;
-    virtual void showEvent(QShowEvent *) override;
-    virtual bool event(QEvent *) final override;
+    virtual void showEvent(QShowEvent*) override;
+    virtual bool event(QEvent*) final override;
     virtual void resizeEvent(QResizeEvent* event) final override;
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction* saveChatAction, *clearAction, *quoteAction, *copyLinkAction;
+    QAction *saveChatAction, *clearAction, *quoteAction, *copyLinkAction;
     ToxPk previousId;
     QDateTime prevMsgDateTime;
-    Widget *parent;
+    Widget* parent;
     QMenu menu;
     int curRow;
-    CroppingLabel *nameLabel;
-    MaskablePixmapWidget *avatar;
-    QWidget *headWidget;
-    QPushButton* fileButton, *screenshotButton, *emoteButton, *callButton;
+    CroppingLabel* nameLabel;
+    MaskablePixmapWidget* avatar;
+    QWidget* headWidget;
+    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton;
     QPushButton* videoButton;
     QToolButton *volButton, *micButton;
-    FlyoutOverlayWidget *fileFlyout;
-    QVBoxLayout *headTextLayout;
-    ChatTextEdit *msgEdit;
-    QPushButton *sendButton;
-    ChatLog *chatWidget;
+    FlyoutOverlayWidget* fileFlyout;
+    QVBoxLayout* headTextLayout;
+    ChatTextEdit* msgEdit;
+    QPushButton* sendButton;
+    ChatLog* chatWidget;
     QDateTime earliestMessage;
 
     QDateTime historyBaselineDate = QDateTime::currentDateTime();

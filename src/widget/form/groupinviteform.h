@@ -20,22 +20,23 @@
 #ifndef GROUPINVITEFORM_H
 #define GROUPINVITEFORM_H
 
-#include <QWidget>
-#include <QDateTime>
-#include <QSet>
-#include "src/widget/tool/croppinglabel.h"
+#include "src/groupinvite.h"
 #include "src/widget/gui.h"
-#include <QScrollArea>
 
-class QLabel;
-class QVBoxLayout;
-class QPushButton;
-class QGroupBox;
-class QSignalMapper;
+#include <QWidget>
 
 class ContentLayout;
+class GroupInviteWidget;
 
-namespace Ui {class MainWindow;}
+class QGroupBox;
+class QLabel;
+class QPushButton;
+class QScrollArea;
+class QSignalMapper;
+
+namespace Ui {
+class MainWindow;
+}
 
 class GroupInviteForm : public QWidget
 {
@@ -56,35 +57,16 @@ signals:
 protected:
     void showEvent(QShowEvent* event) final override;
 
-private slots:
-    void onGroupInviteAccepted();
-    void onGroupInviteRejected();
-
 private:
     void retranslateUi();
-    void retranslateAcceptButton(QPushButton* acceptButton);
-    void retranslateRejectButton(QPushButton* rejectButton);
-    void retranslateGroupLabel(CroppingLabel* label);
-    void deleteInviteButtons(QWidget* widget);
+    void deleteInviteWidget(const GroupInvite& inviteInfo);
 
 private:
-    struct GroupInvite
-    {
-        int32_t friendId;
-        uint8_t type;
-        QByteArray invite;
-        QDateTime time;
-    };
-
     QWidget* headWidget;
     QLabel* headLabel;
     QPushButton* createButton;
     QGroupBox* inviteBox;
-    QVBoxLayout* inviteLayout;
-    QSet<QPushButton*> acceptButtons;
-    QSet<QPushButton*> rejectButtons;
-    QSet<CroppingLabel*> groupLabels;
-    QList<GroupInvite> groupInvites;
+    QList<GroupInviteWidget*> invites;
     QScrollArea* scroll;
 };
 

@@ -21,19 +21,19 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include <cstdint>
-#include <QObject>
 #include <QMutex>
+#include <QObject>
+#include <cstdint>
 
 #include <tox/tox.h>
 #include <tox/toxencryptsave.h>
 
 #include "corestructs.h"
-#include "coredefines.h"
 #include "toxid.h"
 
 class Profile;
-template <typename T> class QList;
+template <typename T>
+class QList;
 class QTimer;
 class QString;
 class CString;
@@ -54,7 +54,7 @@ public:
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
-    static QList<CString> splitMessage(const QString &message, int maxLen);
+    static QList<CString> splitMessage(const QString& message, int maxLen);
 
     static QByteArray getSaltFromFile(QString filename);
 
@@ -69,8 +69,8 @@ public:
     QString getFriendUsername(uint32_t friendNumber) const;
 
     bool isFriendOnline(uint32_t friendId) const;
-    bool hasFriendWithPublicKey(const ToxPk &publicKey) const;
-    uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey,uint16_t length) const;
+    bool hasFriendWithPublicKey(const ToxPk& publicKey) const;
+    uint32_t joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* pubkey, uint16_t length) const;
     void quitGroupChat(int groupId) const;
 
     QString getUsername() const;
@@ -78,12 +78,6 @@ public:
     QString getStatusMessage() const;
     ToxId getSelfId() const;
     QPair<QByteArray, QByteArray> getKeypair() const;
-
-    static std::shared_ptr<Tox_Pass_Key> createPasskey(const QString &password, uint8_t* salt = nullptr);
-    static QByteArray encryptData(const QByteArray& data, const Tox_Pass_Key& encryptionKey);
-    static QByteArray encryptData(const QByteArray& data);
-    static QByteArray decryptData(const QByteArray& data, const Tox_Pass_Key &encryptionKey);
-    static QByteArray decryptData(const QByteArray& data);
 
     bool isReady() const;
 
@@ -97,8 +91,8 @@ public slots:
 
     QByteArray getToxSaveData();
 
-    void acceptFriendRequest(const ToxPk &friendPk);
-    void requestFriendship(const ToxId &friendAddress, const QString& message);
+    void acceptFriendRequest(const ToxPk& friendPk);
+    void requestFriendship(const ToxId& friendAddress, const QString& message);
     void groupInviteFriend(uint32_t friendId, int groupId);
     int createGroup(uint8_t type = TOX_CONFERENCE_TYPE_AV);
 
@@ -192,35 +186,28 @@ signals:
     void fileSendFailed(uint32_t friendId, const QString& fname);
 
 private:
-    static void onFriendRequest(Tox* tox, const uint8_t* cUserId,
-                                const uint8_t* cMessage, size_t cMessageSize,
-                                void* core);
-    static void onFriendMessage(Tox* tox, uint32_t friendId,
-                                TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
+    static void onFriendRequest(Tox* tox, const uint8_t* cUserId, const uint8_t* cMessage,
                                 size_t cMessageSize, void* core);
-    static void onFriendNameChange(Tox* tox, uint32_t friendId,
-                                   const uint8_t* cName, size_t cNameSize,
-                                   void* core);
-    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping,
-                                     void* core);
-    static void onStatusMessageChanged(Tox* tox, uint32_t friendId,
-                                       const uint8_t* cMessage,
+    static void onFriendMessage(Tox* tox, uint32_t friendId, TOX_MESSAGE_TYPE type,
+                                const uint8_t* cMessage, size_t cMessageSize, void* core);
+    static void onFriendNameChange(Tox* tox, uint32_t friendId, const uint8_t* cName,
+                                   size_t cNameSize, void* core);
+    static void onFriendTypingChange(Tox* tox, uint32_t friendId, bool isTyping, void* core);
+    static void onStatusMessageChanged(Tox* tox, uint32_t friendId, const uint8_t* cMessage,
                                        size_t cMessageSize, void* core);
-    static void onUserStatusChanged(Tox* tox, uint32_t friendId,
-                                    TOX_USER_STATUS userstatus, void* core);
-    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId,
-                                          TOX_CONNECTION status, void* core);
+    static void onUserStatusChanged(Tox* tox, uint32_t friendId, TOX_USER_STATUS userstatus,
+                                    void* core);
+    static void onConnectionStatusChanged(Tox* tox, uint32_t friendId, TOX_CONNECTION status,
+                                          void* core);
     static void onGroupInvite(Tox* tox, uint32_t friendId, TOX_CONFERENCE_TYPE type,
                               const uint8_t* data, size_t length, void* vCore);
-    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId,
-                               TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
-                               size_t length, void* vCore);
+    static void onGroupMessage(Tox* tox, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
+                               const uint8_t* cMessage, size_t length, void* vCore);
     static void onGroupNamelistChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                       TOX_CONFERENCE_STATE_CHANGE change, void* core);
     static void onGroupTitleChange(Tox* tox, uint32_t groupId, uint32_t peerId,
                                    const uint8_t* cTitle, size_t length, void* vCore);
-    static void onReadReceiptCallback(Tox* tox, uint32_t friendId,
-                                      uint32_t receipt, void* core);
+    static void onReadReceiptCallback(Tox* tox, uint32_t friendId, uint32_t receipt, void* core);
 
     void sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type);
     bool parsePeerQueryError(TOX_ERR_CONFERENCE_PEER_QUERY error) const;
@@ -241,17 +228,16 @@ private slots:
 private:
     Tox* tox;
     CoreAV* av;
-    QTimer *toxTimer;
+    QTimer* toxTimer;
     Profile& profile;
     QMutex messageSendMutex;
     bool ready;
 
-    static QThread *coreThread;
+    static QThread* coreThread;
 
-    friend class Audio; ///< Audio can access our calls directly to reduce latency
+    friend class Audio;    ///< Audio can access our calls directly to reduce latency
     friend class CoreFile; ///< CoreFile can access tox* and emit our signals
-    friend class CoreAV; ///< CoreAV accesses our toxav* for now
+    friend class CoreAV;   ///< CoreAV accesses our toxav* for now
 };
 
 #endif // CORE_HPP
-

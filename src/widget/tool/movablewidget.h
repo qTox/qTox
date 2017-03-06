@@ -39,18 +39,18 @@ protected:
 
 private:
     void checkBoundary(QPoint& point) const;
-    void checkBoundaryLeft(int &x) const;
+    void checkBoundaryLeft(int& x) const;
 
     typedef uint8_t Modes;
 
     enum Mode : Modes
     {
-        Moving      = 0x01,
-        ResizeLeft  = 0x02,
+        Moving = 0x01,
+        ResizeLeft = 0x02,
         ResizeRight = 0x04,
-        ResizeUp    = 0x08,
-        ResizeDown  = 0x10,
-        Resize      = ResizeLeft | ResizeRight | ResizeUp | ResizeDown
+        ResizeUp = 0x08,
+        ResizeDown = 0x10,
+        Resize = ResizeLeft | ResizeRight | ResizeUp | ResizeDown
     };
 
     Modes mode = 0;

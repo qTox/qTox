@@ -621,6 +621,14 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -680,48 +688,12 @@ ami a videóhívások problémáihoz vezethet.</translation>
         <translation>/me partnerséget ajánl, &quot;%1&quot;</translation>
     </message>
     <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Az előző jelszó hibás; kérem, próbálja újra:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Titkosított chat előzmény</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Nem található titkosított chat előzmény, vagy hibás lett.
-Az előzmény le lett tiltva!</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-A chat előzmény letiltása sértetlenül hagyja a titkosított előzményeket (de nem lesz használható). Ha később emlékszik a jelszóra, újraengedélyezheti a titkosítást az Adatvédelem fülön a helyes jelszó használatával.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>A chat előzmény jelszava hibás. Megpróbál egy másikat?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Chat előzmény letiltás</translation>
-    </message>
-    <message>
         <source>You need to write a message with your request</source>
         <translation>Írjon egy üzenetet a kérelméhez</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <translation>Az üzenet túl hosszú!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Kérem adja meg a &quot;%1&quot; profil csevegési előzményeinek jelszavát.</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1261,18 +1233,6 @@ a rendszertálca helyett.</translation>
         <source>Group invites</source>
         <translation>Csoport meghívások</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Csatlakozás</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Elutasít</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Meghívta %1. Meghívás dátuma: %2, ideje: %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1529,6 +1489,10 @@ A profil nem tartalmazza az Ön előzményeit.</translation>
     <message>
         <source>My biography</source>
         <translation type="unfinished">Rólam</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2059,10 +2023,6 @@ Válasszon egy másik képet.</translation>
         <translation>Adjon meg egy új jelszót.</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Felhasználói profil</translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation>Ez a csomó karakter megmondja más Tox kliensnek, hogyan találják meg.
@@ -2186,6 +2146,26 @@ Ossza ezt meg a partnerével a kommunikációhoz.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation>Balról jobbra</translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Partner hozzáadása sikertelen</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished">Helytelen Toxme cím: %1.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Nem tudja hozzáadni önmagát partnerként!</translation>
     </message>
 </context>
 <context>
@@ -2447,10 +2427,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Mégsem</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>Helytelen Toxme cím: %1.</translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2631,14 +2607,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <translation>A Tox nem indult el ezekkel a proxy beállításokkal. A qTox nem fut; módosítsa a beállításait, és indítsa újra.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Partner hozzáadása</translation>
-    </message>
-    <message>
-        <source>File transfers</source>
-        <translation>Fájl átvitelek</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Futtatható fájl</translation>
@@ -2647,10 +2615,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Meg akart nyitni egy futtatható fájlt. Ezek a fájlok potenciálisan veszélyeztethetik a számítógépét. Valóban meg szeretné nyitni ezt a fájlt?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Beállítások</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2679,14 +2643,6 @@ A frissítés a qTox újraindítása után fog települni.</translation>
     <message>
         <source>Your status</source>
         <translation>Állapotüzenet</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation>Csoport meghívások</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profil</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2803,6 +2759,31 @@ A frissítés a qTox újraindítása után fog települni.</translation>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation>Mutat</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Partner hozzáadása</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Csoport meghívások</translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Fájl átvitelek</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Beállítások</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

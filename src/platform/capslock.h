@@ -23,9 +23,8 @@
 #define PLATFORM_CAPSLOCK_H
 
 
-namespace Platform
-{
-    bool capsLockEnabled();
+namespace Platform {
+bool capsLockEnabled();
 }
 
 #endif // PLATFORM_CAPSLOCK_H

@@ -28,12 +28,12 @@
 #undef signals
 #endif
 extern "C" {
-    #include <gtk/gtk.h>
-    #include <glib.h>
-    #include <glib-object.h>
-    #include <gio/gio.h>
-    #include <gdk-pixbuf/gdk-pixbuf.h>
-    #include "src/platform/statusnotifier/statusnotifier.h"
+#include "src/platform/statusnotifier/statusnotifier.h"
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <gio/gio.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 }
 #define signals public
 #endif
@@ -43,9 +43,9 @@ extern "C" {
 #undef signals
 #endif
 extern "C" {
-    #include <libappindicator/app-indicator.h>
-    #include <gtk/gtk.h>
-    #include <libdbusmenu-glib/server.h>
+#include <gtk/gtk.h>
+#include <libappindicator/app-indicator.h>
+#include <libdbusmenu-glib/server.h>
 }
 #define signals public
 #endif
@@ -55,7 +55,7 @@ extern "C" {
 #undef signals
 #endif
 extern "C" {
-    #include <gtk/gtk.h>
+#include <gtk/gtk.h>
 }
 #define signals public
 #endif

@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,18 +17,29 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GENERICDDINTERFACE_H
-#define GENERICDDINTERFACE_H
+#ifndef GROUPINVITE_H
+#define GROUPINVITE_H
 
-class QSqlQuery;
-class QString;
+#include <QByteArray>
+#include <QDateTime>
+#include <cstdint>
 
-class GenericDdInterface
+class GroupInvite
 {
 public:
-    virtual ~GenericDdInterface();
+    GroupInvite(int32_t friendID, uint8_t inviteType, const QByteArray& data);
+    bool operator==(const GroupInvite& other) const;
 
-    virtual QSqlQuery exec(const QString &query) = 0;
+    int32_t getFriendId() const;
+    uint8_t getType() const;
+    QByteArray getInvite() const;
+    QDateTime getInviteDate() const;
+
+private:
+    int32_t friendId;
+    uint8_t type;
+    QByteArray invite;
+    QDateTime date;
 };
 
-#endif // GENERICDDINTERFACE_H
+#endif // GROUPINVITE_H

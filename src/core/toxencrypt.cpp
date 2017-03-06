@@ -20,10 +20,10 @@
 #include "toxencrypt.h"
 #include <tox/toxencryptsave.h>
 
-#include <memory>
 #include <QByteArray>
 #include <QDebug>
 #include <QString>
+#include <memory>
 
 // functions for nice debug output
 static QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error);
@@ -51,9 +51,20 @@ ToxEncrypt::~ToxEncrypt()
  * @brief Constructs a ToxEncrypt object from a Tox_Pass_Key.
  * @param key Derived key to use for encryption and decryption.
  */
-ToxEncrypt::ToxEncrypt(Tox_Pass_Key* key) :
-passKey{key}
-{}
+ToxEncrypt::ToxEncrypt(Tox_Pass_Key* key)
+    : passKey{key}
+{
+}
+
+/**
+ * @brief  Gets the minimum number of bytes needed for isEncrypted()
+ * @return Minimum number of bytes needed to check if data was encrypted
+ *         using this module.
+ */
+int ToxEncrypt::getMinBytes()
+{
+    return TOX_PASS_ENCRYPTION_EXTRA_LENGTH;
+}
 
 /**
  * @brief Checks if the data was encrypted by this module.
@@ -62,8 +73,7 @@ passKey{key}
  */
 bool ToxEncrypt::isEncrypted(const QByteArray& ciphertext)
 {
-    if (ciphertext.length() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH)
-    {
+    if (ciphertext.length() < TOX_PASS_ENCRYPTION_EXTRA_LENGTH) {
         return false;
     }
 
@@ -79,8 +89,7 @@ bool ToxEncrypt::isEncrypted(const QByteArray& ciphertext)
  */
 QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& plaintext)
 {
-    if (password.length() == 0)
-    {
+    if (password.length() == 0) {
         qWarning() << "Empty password supplied, probably not what you intended.";
     }
 
@@ -93,8 +102,7 @@ QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& pl
                      static_cast<size_t>(pass.size()),
                      reinterpret_cast<uint8_t*>(ciphertext.data()), &error);
 
-    if (error != TOX_ERR_ENCRYPTION_OK)
-    {
+    if (error != TOX_ERR_ENCRYPTION_OK) {
         qCritical() << getEncryptionError(error);
         return QByteArray{};
     }
@@ -111,14 +119,12 @@ QByteArray ToxEncrypt::encryptPass(const QString& password, const QByteArray& pl
  */
 QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ciphertext)
 {
-    if (!isEncrypted(ciphertext))
-    {
+    if (!isEncrypted(ciphertext)) {
         qWarning() << "The data was not encrypted using this module or it's corrupted.";
         return QByteArray{};
     }
 
-    if (password.length() == 0)
-    {
+    if (password.length() == 0) {
         qDebug() << "Empty password supplied, probably not what you intended.";
     }
 
@@ -128,16 +134,15 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
     tox_pass_decrypt(reinterpret_cast<const uint8_t*>(ciphertext.constData()),
                      static_cast<size_t>(ciphertext.size()),
                      reinterpret_cast<const uint8_t*>(pass.constData()),
-                     static_cast<size_t>(pass.size()),
-                     reinterpret_cast<uint8_t*>(plaintext.data()), &error);
+                     static_cast<size_t>(pass.size()), reinterpret_cast<uint8_t*>(plaintext.data()),
+                     &error);
 
-    if (error != TOX_ERR_DECRYPTION_OK)
-    {
+    if (error != TOX_ERR_DECRYPTION_OK) {
         qWarning() << getDecryptionError(error);
         return QByteArray{};
     }
 
-    return ciphertext;
+    return plaintext;
 }
 
 /**
@@ -145,6 +150,8 @@ QByteArray ToxEncrypt::decryptPass(const QString& password, const QByteArray& ci
  * @param  password Password to use for encryption.
  * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
  *         or an empty std::unique_ptr on failure.
+ *
+ *  Derives a key from the password and a new random salt.
  */
 std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
 {
@@ -154,8 +161,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
     tox_pass_key_derive(passKey, reinterpret_cast<const uint8_t*>(pass.constData()),
                         static_cast<size_t>(pass.length()), &error);
 
-    if (error != TOX_ERR_KEY_DERIVATION_OK)
-    { 
+    if (error != TOX_ERR_KEY_DERIVATION_OK) {
         tox_pass_key_free(passKey);
         qCritical() << getKeyDerivationError(error);
         return std::unique_ptr<ToxEncrypt>{};
@@ -170,11 +176,12 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password)
  * @param  toxSave The data to read the salt for decryption from.
  * @return A std::unique_ptr containing a ToxEncrypt object on success, or an
  *         or an empty std::unique_ptr on failure.
+ *
+ *  Derives a key from the password and the salt read from toxSave.
  */
 std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, const QByteArray& toxSave)
 {
-    if (!isEncrypted(toxSave))
-    {
+    if (!isEncrypted(toxSave)) {
         qWarning() << "The data was not encrypted using this module or it's corrupted.";
         return std::unique_ptr<ToxEncrypt>{};
     }
@@ -183,8 +190,7 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
     uint8_t salt[TOX_PASS_SALT_LENGTH];
     tox_get_salt(reinterpret_cast<const uint8_t*>(toxSave.constData()), salt, &saltError);
 
-    if (saltError != TOX_ERR_GET_SALT_OK)
-    {
+    if (saltError != TOX_ERR_GET_SALT_OK) {
         qWarning() << getSaltError(saltError);
         return std::unique_ptr<ToxEncrypt>{};
     }
@@ -193,10 +199,9 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
     QByteArray pass = password.toUtf8();
     TOX_ERR_KEY_DERIVATION keyError;
     tox_pass_key_derive_with_salt(passKey, reinterpret_cast<const uint8_t*>(pass.constData()),
-                        static_cast<size_t>(pass.length()), salt, &keyError);
+                                  static_cast<size_t>(pass.length()), salt, &keyError);
 
-    if (keyError != TOX_ERR_KEY_DERIVATION_OK)
-    {
+    if (keyError != TOX_ERR_KEY_DERIVATION_OK) {
         tox_pass_key_free(passKey);
         qWarning() << getKeyDerivationError(keyError);
         return std::unique_ptr<ToxEncrypt>{};
@@ -212,21 +217,18 @@ std::unique_ptr<ToxEncrypt> ToxEncrypt::makeToxEncrypt(const QString& password, 
  */
 QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
 {
-    if (!passKey)
-    {
+    if (!passKey) {
         qCritical() << "The passKey is invalid.";
         return QByteArray{};
     }
 
     QByteArray ciphertext(plaintext.length() + TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
     TOX_ERR_ENCRYPTION error;
-    tox_pass_key_encrypt(passKey,
-                         reinterpret_cast<const uint8_t*>(plaintext.constData()),
+    tox_pass_key_encrypt(passKey, reinterpret_cast<const uint8_t*>(plaintext.constData()),
                          static_cast<size_t>(plaintext.size()),
                          reinterpret_cast<uint8_t*>(ciphertext.data()), &error);
 
-    if (error != TOX_ERR_ENCRYPTION_OK)
-    {
+    if (error != TOX_ERR_ENCRYPTION_OK) {
         qCritical() << getEncryptionError(error);
         return QByteArray{};
     }
@@ -242,26 +244,23 @@ QByteArray ToxEncrypt::encrypt(const QByteArray& plaintext) const
  */
 QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
 {
-    if (!isEncrypted(ciphertext))
-    {
+    if (!isEncrypted(ciphertext)) {
         qWarning() << "The data was not encrypted using this module or it's corrupted.";
         return QByteArray{};
     }
 
     QByteArray plaintext(ciphertext.length() - TOX_PASS_ENCRYPTION_EXTRA_LENGTH, 0x00);
     TOX_ERR_DECRYPTION error;
-    tox_pass_key_decrypt(passKey,
-                         reinterpret_cast<const uint8_t*>(ciphertext.constData()),
+    tox_pass_key_decrypt(passKey, reinterpret_cast<const uint8_t*>(ciphertext.constData()),
                          static_cast<size_t>(ciphertext.size()),
                          reinterpret_cast<uint8_t*>(plaintext.data()), &error);
 
-    if (error != TOX_ERR_DECRYPTION_OK)
-    {
+    if (error != TOX_ERR_DECRYPTION_OK) {
         qWarning() << getDecryptionError(error);
         return QByteArray{};
     }
 
-    return ciphertext;
+    return plaintext;
 }
 
 /**
@@ -271,14 +270,15 @@ QByteArray ToxEncrypt::decrypt(const QByteArray& ciphertext) const
  */
 QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error)
 {
-    switch(error)
-    {
+    switch (error) {
     case TOX_ERR_KEY_DERIVATION_OK:
         return QStringLiteral("The function returned successfully.");
     case TOX_ERR_KEY_DERIVATION_NULL:
-        return QStringLiteral("One of the arguments to the function was NULL when it was not expected.");
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
     case TOX_ERR_KEY_DERIVATION_FAILED:
-        return QStringLiteral("The crypto lib was unable to derive a key from the given passphrase.");
+        return QStringLiteral(
+            "The crypto lib was unable to derive a key from the given passphrase.");
     default:
         return QStringLiteral("Unknown key derivation error.");
     }
@@ -291,14 +291,15 @@ QString getKeyDerivationError(TOX_ERR_KEY_DERIVATION error)
  */
 QString getEncryptionError(TOX_ERR_ENCRYPTION error)
 {
-    switch(error)
-    {
+    switch (error) {
     case TOX_ERR_ENCRYPTION_OK:
         return QStringLiteral("The function returned successfully.");
     case TOX_ERR_ENCRYPTION_NULL:
-        return QStringLiteral("One of the arguments to the function was NULL when it was not expected.");
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
     case TOX_ERR_ENCRYPTION_KEY_DERIVATION_FAILED:
-        return QStringLiteral("The crypto lib was unable to derive a key from the given passphrase.");
+        return QStringLiteral(
+            "The crypto lib was unable to derive a key from the given passphrase.");
     case TOX_ERR_ENCRYPTION_FAILED:
         return QStringLiteral("The encryption itself failed.");
     default:
@@ -313,14 +314,15 @@ QString getEncryptionError(TOX_ERR_ENCRYPTION error)
  */
 QString getDecryptionError(TOX_ERR_DECRYPTION error)
 {
-    switch(error)
-    {
+    switch (error) {
     case TOX_ERR_DECRYPTION_OK:
         return QStringLiteral("The function returned successfully.");
     case TOX_ERR_DECRYPTION_NULL:
-        return QStringLiteral("One of the arguments to the function was NULL when it was not expected.");
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
     case TOX_ERR_DECRYPTION_INVALID_LENGTH:
-        return QStringLiteral("The input data was shorter than TOX_PASS_ENCRYPTION_EXTRA_LENGTH bytes.");
+        return QStringLiteral(
+            "The input data was shorter than TOX_PASS_ENCRYPTION_EXTRA_LENGTH bytes.");
     case TOX_ERR_DECRYPTION_BAD_FORMAT:
         return QStringLiteral("The input data is missing the magic number or is corrupted.");
     default:
@@ -335,12 +337,12 @@ QString getDecryptionError(TOX_ERR_DECRYPTION error)
  */
 QString getSaltError(TOX_ERR_GET_SALT error)
 {
-    switch(error)
-    {
+    switch (error) {
     case TOX_ERR_GET_SALT_OK:
         return QStringLiteral("The function returned successfully.");
     case TOX_ERR_GET_SALT_NULL:
-        return QStringLiteral("One of the arguments to the function was NULL when it was not expected.");
+        return QStringLiteral(
+            "One of the arguments to the function was NULL when it was not expected.");
     case TOX_ERR_GET_SALT_BAD_FORMAT:
         return QStringLiteral("The input data is missing the magic number or is corrupted.");
     default:

@@ -306,7 +306,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation>Negalite naudoti savo Tox ID!</translation>
+        <translation>Negalite pridėti savęs kaip kontakto!</translation>
     </message>
     <message>
         <source>Add a friend</source>
@@ -330,15 +330,15 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
-        <translation>Įrašykite savo draugo Tox ID</translation>
+        <translation>Įrašykite kontakto Tox ID</translation>
     </message>
     <message>
         <source>Friend request message</source>
-        <translation>Draugo užklausos žinutė</translation>
+        <translation>Kontakto užklausos žinutė</translation>
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Parašykite žinutę, kurią siųsti kartu su kontakto užklausa arba palikite tuščią, kad būtų išsiųsta numatytoji žinutė</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
@@ -591,27 +591,27 @@ vaizdo skambučiais.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">pasišalinęs (-usi)</translation>
+        <translation>pasišalinęs (-usi)</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">užsiėmęs (-usi)</translation>
+        <translation>užsiėmęs (-usi)</translation>
     </message>
     <message>
         <source>offline</source>
         <comment>contact status</comment>
-        <translation type="unfinished">neprisijungęs (-usi)</translation>
+        <translation>neprisijungęs (-usi)</translation>
     </message>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">prisijungęs (-usi)</translation>
+        <translation>prisijungęs (-usi)</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 dabar %2</translation>
+        <translation>%1 dabar %2</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -620,6 +620,14 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Can&apos;t start audio call</source>
         <translation>Nepavyksta pradėti garso skambutį</translation>
+    </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation>Mikrofonas gali būti nutildytas tik skambučio metu</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation>Garsas gali būti išjungtas tik skambučio metu</translation>
     </message>
 </context>
 <context>
@@ -686,42 +694,6 @@ vaizdo skambučiais.</translation>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me siūlo bendrauti: „%1“</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Įvestas slaptažodis netinka. Bandykite dar kartą:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Užšifruotas pokalbių žurnalas</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Užšifruoto pokalbių žurnalo rasti nepavyko, arba failas yra sugadintas.
-Žurnalas bus išjungtas!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Įveskite „%1“ profilio pokalbių žurnalo slaptažodį.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (bet jų nematysite). Šifravimą bet kada galite įjungti vėl, nuėję į privatumo nuostatų kortelę ir įvedę teisingą slaptažodį.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Pokalbių žurnalo slaptažodis netinka. Bandyti kitą?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Išjungti pokalbių žurnalą</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -933,7 +905,7 @@ Jei išjungsite pokalbių žurnalą, jau esantys užšifruoti duomenys išliks (
     <message>
         <source>Remove friend</source>
         <comment>Menu to remove the friend from our friendlist</comment>
-        <translation>Pašalinti kontaktą</translation>
+        <translation>Šalinti kontaktą</translation>
     </message>
     <message>
         <source>Show details</source>
@@ -1261,18 +1233,6 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <source>Group invites</source>
         <translation>Pakvietimai į grupes</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Prisijungti</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Atmesti</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Esate pakviesti naudotojo %1, %2 ties %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1316,7 +1276,7 @@ sistemos juostelėje, o ne programų juostoje.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
+        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams jus surasti.
 Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
@@ -1357,7 +1317,7 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation>Šiame kode išsaugotas Jūsų Tox ID. Pasidalykite juo su savo kontaktais.</translation>
+        <translation>Šiame kode yra jūsų Tox ID. Pasidalykite juo su savo kontaktais.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1411,12 +1371,12 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis ToxMe paslaugoje</translation>
     </message>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vardas, skirtas ToxMe paslaugai.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
@@ -1430,7 +1390,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe paslauga, kurioje registruotis.</translation>
     </message>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
@@ -1444,7 +1404,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished"></translation>
+        <translation>Vardo įvestis</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
@@ -1452,7 +1412,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Būsenos žinutės įvestis</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
@@ -1472,19 +1432,19 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe naudotojo vardas, kuris bus rodomas ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Nebūtina ToxMe biografija, kuri bus rodoma ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>ToxMe paslaugos adresas</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Matomumas ToxMe paslaugoje</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1492,7 +1452,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Atnaujinti ToxMe įrašą</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1532,7 +1492,7 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano profilis</translation>
     </message>
 </context>
 <context>
@@ -1654,11 +1614,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation type="unfinished"></translation>
+        <translation>Naudotojo vardo įvesties laukas</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvesties laukas, jūs galite palikti jį tuščią (jokio slaptažodžio) arba parašyti bent 6 simbolius</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
@@ -1666,11 +1626,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Mygtukas sukurti naują profilį</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Profilių sąrašas</translation>
     </message>
     <message>
         <source>List of profiles</source>
@@ -1678,11 +1638,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvestis</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai įkelti žymimasis langelis</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1690,15 +1650,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Mygtukas įkelti pasirinktą profilį</translation>
     </message>
     <message>
         <source>New profile creation page</source>
-        <translation type="unfinished"></translation>
+        <translation>Naujo profilio kūrimo puslapis</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished"></translation>
+        <translation>Esamo profilio įkėlimo puslapis</translation>
     </message>
 </context>
 <context>
@@ -1741,11 +1701,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
-        <translation type="unfinished"></translation>
+        <translation>Spustelėjus, atverti profilio puslapį</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished"></translation>
+        <translation>Būsenos žinutės įvestis</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
@@ -1757,15 +1717,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti prieinamumo būseną</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų paieška</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktų paieškos įvestis, skirta žinomiems kontaktams</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1773,11 +1733,11 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustatyti kontaktų rikiavimą ir matomumą</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti kontaktų pridėjimo puslapį</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1785,15 +1745,15 @@ Galite sukurti naują.</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti grupės pokalbio tvarkymo puslapį</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Failų persiuntimų istorija</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>Atverti failų persiuntimų istoriją</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1895,10 +1855,10 @@ Plural:10–20,30,40,..</translatorcomment>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>„Nospam“ yra Jūsų Tox ID dalis.
+        <translation>„Nospam“ yra jūsų Tox ID dalis.
 Jį pakeitus nebegausite nepageidaujamų kontaktinių užklausų.
-Priimti kontaktai vis dar galės su Jumis bendrauti, bet nauji kontaktai,
-nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</translation>
+Priimti kontaktai vis dar galės su jumis bendrauti, bet nauji kontaktai,
+nežinantys jūsų naujojo Tox ID, nebegalės atsiųsti jums užklausų.</translation>
     </message>
     <message>
         <source>NoSpam</source>
@@ -1907,7 +1867,7 @@ nežinantys Jūsų naujojo Tox ID, nebegalės atsiųsti Jums užklausų.</transl
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>„NoSpam“ – Jūsų Tox ID dalis, kurią galima bet kada pakeisti.
+        <translation>„NoSpam“ – jūsų Tox ID dalis, kurią galima bet kada pakeisti.
 Jei gaunate nepageidaujamų kontaktinių užklausų, pakeiskite „NoSpam“.</translation>
     </message>
     <message>
@@ -2050,7 +2010,7 @@ Pasirinkite kitą.</translation>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams Jus surasti.
+        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams jus surasti.
 Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
@@ -2194,6 +2154,26 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation>Nepavyko pridėti kontakto</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation>%1 nėra taisyklingas Toxme adresas.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Gerai</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation>Negalite pridėti savęs kaip kontakto!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2326,7 +2306,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation>Pašalinti kontaktą</translation>
+        <translation>Šalinti kontaktą</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2342,7 +2322,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Jei nustatyta, šalinti visą pokalbių su kontaktu istoriją</translation>
     </message>
 </context>
 <context>
@@ -2401,19 +2381,19 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished"></translation>
+        <translation>Patvirtinkite slaptažodį</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio patvirtinimo įvestis</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvestis</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished"></translation>
+        <translation>Slaptažodžio įvesties laukas, mažiausiai 6 simbolių ilgio</translation>
     </message>
 </context>
 <context>
@@ -2451,10 +2431,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Atšaukti</translation>
-    </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 nėra taisyklingas Toxme adresas.</translation>
     </message>
 </context>
 <context>
@@ -2796,27 +2772,27 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Pridėti kontaktą</translation>
+        <translation>Pridėti kontaktą</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Pakvietimai į grupes</translation>
+        <translation>Pakvietimai į grupes</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Failų siuntimai</translation>
+        <translation>Failų persiuntimai</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mano profilis</translation>
     </message>
 </context>
 </TS>

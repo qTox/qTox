@@ -18,17 +18,17 @@
 */
 
 #include "videosurface.h"
-#include "src/video/videoframe.h"
+#include "src/core/core.h"
 #include "src/friend.h"
 #include "src/friendlist.h"
-#include "src/widget/friendwidget.h"
 #include "src/persistence/settings.h"
-#include "src/core/core.h"
+#include "src/video/videoframe.h"
+#include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
 
-#include <QPainter>
-#include <QLabel>
 #include <QDebug>
+#include <QLabel>
+#include <QPainter>
 
 /**
  * @var std::atomic_bool VideoSurface::frameLock
@@ -52,7 +52,7 @@ VideoSurface::VideoSurface(const QPixmap& avatar, QWidget* parent, bool expandin
     recalulateBounds();
 }
 
-VideoSurface::VideoSurface(const QPixmap& avatar, VideoSource *source, QWidget* parent)
+VideoSurface::VideoSurface(const QPixmap& avatar, VideoSource* source, QWidget* parent)
     : VideoSurface(avatar, parent)
 {
     setSource(source);
@@ -75,7 +75,7 @@ bool VideoSurface::isExpanding() const
  *
  * Unsubscribe from old source and subscribe to new.
  */
-void VideoSurface::setSource(VideoSource *src)
+void VideoSurface::setSource(VideoSource* src)
 {
     if (source == src)
         return;
@@ -97,7 +97,7 @@ float VideoSurface::getRatio() const
     return ratio;
 }
 
-void VideoSurface::setAvatar(const QPixmap &pixmap)
+void VideoSurface::setAvatar(const QPixmap& pixmap)
 {
     avatar = pixmap;
     update();
@@ -110,8 +110,7 @@ QPixmap VideoSurface::getAvatar() const
 
 void VideoSurface::subscribe()
 {
-    if (source && hasSubscribed++ == 0)
-    {
+    if (source && hasSubscribed++ == 0) {
         source->subscribe();
         connect(source, &VideoSource::frameAvailable, this, &VideoSurface::onNewFrameAvailable);
         connect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
@@ -151,8 +150,7 @@ void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
 
     float newRatio = getSizeRatio(newSize);
 
-    if (newRatio != ratio && isVisible())
-    {
+    if (newRatio != ratio && isVisible()) {
         ratio = newRatio;
         recalulateBounds();
         emit ratioChanged();
@@ -175,20 +173,18 @@ void VideoSurface::paintEvent(QPaintEvent*)
 
     QPainter painter(this);
     painter.fillRect(painter.viewport(), Qt::black);
-    if (lastFrame)
-    {
+    if (lastFrame) {
         QImage frame = lastFrame->toQImage(rect().size());
         if (frame.isNull())
             lastFrame.reset();
         painter.drawImage(boundingRect, frame, frame.rect(), Qt::NoFormatConversion);
-    }
-    else
-    {
+    } else {
         painter.fillRect(boundingRect, Qt::white);
         QPixmap drawnAvatar = avatar;
 
         if (drawnAvatar.isNull())
-            drawnAvatar = Style::scaleSvgImage(":/img/contact_dark.svg", boundingRect.width(), boundingRect.height());
+            drawnAvatar = Style::scaleSvgImage(":/img/contact_dark.svg", boundingRect.width(),
+                                               boundingRect.height());
 
         painter.drawPixmap(boundingRect, drawnAvatar, drawnAvatar.rect());
     }
@@ -206,17 +202,14 @@ void VideoSurface::resizeEvent(QResizeEvent* event)
 void VideoSurface::showEvent(QShowEvent* e)
 {
     Q_UNUSED(e);
-    //emit ratioChanged();
+    // emit ratioChanged();
 }
 
 void VideoSurface::recalulateBounds()
 {
-    if (expanding)
-    {
+    if (expanding) {
         boundingRect = contentsRect();
-    }
-    else
-    {
+    } else {
         QPoint pos;
         QSize size;
         QSize usableSize = contentsRect().size();

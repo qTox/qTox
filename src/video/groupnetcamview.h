@@ -31,24 +31,23 @@ class GroupNetCamView : public GenericNetCamView
 public:
     GroupNetCamView(int group, QWidget* parent = 0);
     void clearPeers();
-    void addPeer(int peer, const QString &name);
+    void addPeer(int peer, const QString& name);
     void removePeer(int peer);
 
 public slots:
     void groupAudioPlayed(int group, int peer, unsigned short volume);
 
 private slots:
-    void findActivePeer();
+    void onUpdateActivePeer();
     void friendAvatarChanged(int FriendId, const QPixmap& pixmap);
 
 private:
     struct PeerVideo
     {
         LabeledVideo* video;
-        unsigned short volume = 0;
     };
 
-    void setActive(int peer);
+    void setActive(int peer = -1);
 
     QHBoxLayout* horLayout;
     QMap<int, PeerVideo> videoList;

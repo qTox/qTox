@@ -1,0 +1,80 @@
+---
+# Language
+Language: Cpp
+Standard: Cpp11
+
+# Indentation
+IndentWidth: 4
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+IndentCaseLabels: false
+NamespaceIndentation: None
+
+# Spacing
+UseTab: Never
+SpaceBeforeParens: ControlStatements
+SpacesBeforeTrailingComments: 1
+SpaceInEmptyParentheses: false
+SpacesInAngles: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+SpacesInCStyleCastParentheses: false
+SpaceBeforeAssignmentOperators: true
+MaxEmptyLinesToKeep: 2
+
+# Alignment
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlinesLeft: true
+AlignOperands: true
+AlignTrailingComments: true
+
+# Argument Packing
+BinPackArguments: true
+BinPackParameters: true
+
+# Break handling
+ColumnLimit: 100
+BreakBeforeBraces: Mozilla
+BreakBeforeBinaryOperators: NonAssignment
+BreakConstructorInitializersBeforeComma: true
+AlwaysBreakTemplateDeclarations: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+Cpp11BracedListStyle: true
+
+# Break penalities
+PenaltyBreakBeforeFirstCallParameter: 200
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakString: 1000
+PenaltyExcessCharacter: 5
+PenaltyReturnTypeOnItsOwnLine: 60
+
+# Includes
+SortIncludes: true
+IncludeCategories:
+  # Match local headers
+  - Regex: '^"[[:alnum:]_]+\.h"$'
+    Priority: 1
+  # Match project headers
+  - Regex: '^"[[:alnum:]_]+/.+\.h"$'
+    Priority: 2
+ # Match Qt headers
+  - Regex: '^<Q[[:alnum:]_/]+>$'
+    Priority: 3
+  # Match other headers
+  - Regex: '.*'
+    Priority: 4
+
+# Short blocks
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
+
+# Set pointer format
+DerivePointerAlignment: false
+PointerAlignment: Left
+...

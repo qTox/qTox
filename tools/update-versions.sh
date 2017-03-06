@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 The qTox Project Contributors
+#    Copyright © 2016-2017 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -16,40 +16,57 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# script to add versions to the files for osx and windows "packages"
+# script to change versions in the files for osx and windows "packages"
 # 
-# it should be run by the `qTox-Mac-Deployer-ULTIMATE.sh`
+# it should be run before releasing a new version
 #
 # NOTE: it checkouts the files before appending a version to them!
 #
 # requires:
-#  * git – tags in format `v0.0.0`
 #  * GNU sed
 
 # usage:
 #
-#   ./$script
+#   ./$script $version
+#
+# $version has to be composed of at least one number/dot
 
 
 set -eu -o pipefail
 
+readonly SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly BASE_DIR="$SCRIPT_DIR/../"
 
 update_windows() {
-    ( cd windows
-        ./qtox-nsi-version.sh )
+    ( cd "$BASE_DIR/windows"
+        ./qtox-nsi-version.sh "$@" )
 }
 
 update_osx() {
-    ( cd osx
-        ./update-plist-version.sh )
+    ( cd "$BASE_DIR/osx"
+        ./update-plist-version.sh "$@" )
+}
+
+# exit if supplied arg is not a version
+is_version() {
+    if [[ ! $@ =~ [0-9\\.]+ ]]
+    then
+        echo "Not a version: $@"
+        exit 1
+    fi
 }
 
 main() {
-    update_osx
+    is_version "$@"
+
     # osx cannot into proper sed
     if [[ ! "$OSTYPE" == "darwin"* ]]
     then
-        update_windows
+        update_osx "$@"
+        update_windows "$@"
+    else
+        # TODO: actually check whether there is a GNU sed on osx
+        echo "OSX's sed not supported. Get a proper one."
     fi
 }
-main
+main "$@"

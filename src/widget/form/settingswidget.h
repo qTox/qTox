@@ -54,7 +54,7 @@ private:
     void retranslateUi();
 
 private:
-    QTabWidget *settingsWidgets;
+    QTabWidget* settingsWidgets;
     std::array<GenericForm*, 6> cfgForms;
     int currentIndex;
 };

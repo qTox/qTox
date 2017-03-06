@@ -14,16 +14,18 @@
  * @brief The default constructor. Creates an empty Tox key.
  */
 ToxPk::ToxPk()
-: key()
-{}
+    : key()
+{
+}
 
 /**
  * @brief The copy constructor.
  * @param other ToxPk to copy
  */
 ToxPk::ToxPk(const ToxPk& other)
-: key(other.key)
-{}
+    : key(other.key)
+{
+}
 
 /**
  * @brief Constructs a ToxPk from bytes.
@@ -32,12 +34,9 @@ ToxPk::ToxPk(const ToxPk& other)
  */
 ToxPk::ToxPk(const QByteArray& rawId)
 {
-    if(rawId.length() == TOX_PUBLIC_KEY_SIZE)
-    {
+    if (rawId.length() == TOX_PUBLIC_KEY_SIZE) {
         key = QByteArray(rawId);
-    }
-    else
-    {
+    } else {
         key = QByteArray();
     }
 }
@@ -83,13 +82,12 @@ QString ToxPk::toString() const
 
 /**
  * @brief Returns a pointer to the raw key data.
- * @return Pointer to the raw key data, which is exactly TOX_PUBLIC_KEY_SIZE bytes
- *         long. Returns a nullptr if the ToxPk is empty.
+ * @return Pointer to the raw key data, which is exactly `ToxPk::getPkSize()`
+ *         bytes long. Returns a nullptr if the ToxPk is empty.
  */
 const uint8_t* ToxPk::getBytes() const
 {
-    if(key.isEmpty())
-    {
+    if (key.isEmpty()) {
         return nullptr;
     }
 
@@ -112,4 +110,13 @@ QByteArray ToxPk::getKey() const
 bool ToxPk::isEmpty() const
 {
     return key.isEmpty();
+}
+
+/**
+ * @brief Get size of public key in bytes.
+ * @return Size of public key in bytes.
+ */
+int ToxPk::getPkSize()
+{
+    return TOX_PUBLIC_KEY_SIZE;
 }

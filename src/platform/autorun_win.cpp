@@ -19,10 +19,10 @@
 
 #include <QApplication>
 #ifdef Q_OS_WIN32
-#include "src/platform/autorun.h"
 #include "src/persistence/settings.h"
-#include <windows.h>
+#include "src/platform/autorun.h"
 #include <string>
+#include <windows.h>
 
 #ifdef UNICODE
 /**
@@ -31,43 +31,48 @@
  * easier to reuse and compatible with both setups.
  */
 using tstring = std::wstring;
-static inline tstring toTString(QString s) { return s.toStdWString(); }
+static inline tstring toTString(QString s)
+{
+    return s.toStdWString();
+}
 #else
 using tstring = std::string;
-static inline tstring toTString(QString s) { return s.toStdString(); }
+static inline tstring toTString(QString s)
+{
+    return s.toStdString();
+}
 #endif
 
-namespace Platform
+namespace Platform {
+inline tstring currentCommandLine()
 {
-    inline tstring currentCommandLine()
-    {
-        return toTString("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -p \"" +
-                         Settings::getInstance().getCurrentProfile() + "\"");
-    }
+    return toTString("\"" + QApplication::applicationFilePath().replace('/', '\\') + "\" -p \""
+                     + Settings::getInstance().getCurrentProfile() + "\"");
+}
 
-    inline tstring currentRegistryKeyName()
-    {
-        return toTString("qTox - " + Settings::getInstance().getCurrentProfile());
-    }
+inline tstring currentRegistryKeyName()
+{
+    return toTString("qTox - " + Settings::getInstance().getCurrentProfile());
+}
 }
 
 bool Platform::setAutorun(bool on)
 {
     HKEY key = 0;
     if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
-                     0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
+                     0, KEY_ALL_ACCESS, &key)
+        != ERROR_SUCCESS)
         return false;
 
     bool result = false;
     tstring keyName = currentRegistryKeyName();
 
-    if (on)
-    {
+    if (on) {
         tstring path = currentCommandLine();
         result = RegSetValueEx(key, keyName.c_str(), 0, REG_SZ, (PBYTE)path.c_str(),
-                               path.length() * sizeof(TCHAR)) == ERROR_SUCCESS;
-    }
-    else
+                               path.length() * sizeof(TCHAR))
+                 == ERROR_SUCCESS;
+    } else
         result = RegDeleteValue(key, keyName.c_str()) == ERROR_SUCCESS;
 
     RegCloseKey(key);
@@ -78,21 +83,23 @@ bool Platform::getAutorun()
 {
     HKEY key = 0;
     if (RegOpenKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Microsoft\\Windows\\CurrentVersion\\Run"),
-                     0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
+                     0, KEY_ALL_ACCESS, &key)
+        != ERROR_SUCCESS)
         return false;
 
     tstring keyName = currentRegistryKeyName();
 
-    TCHAR path[MAX_PATH] = { 0 };
+    TCHAR path[MAX_PATH] = {0};
     DWORD length = sizeof(path);
     DWORD type = REG_SZ;
     bool result = false;
 
-    if (RegQueryValueEx(key, keyName.c_str(), 0, &type, (PBYTE)path, &length) == ERROR_SUCCESS && type == REG_SZ)
+    if (RegQueryValueEx(key, keyName.c_str(), 0, &type, (PBYTE)path, &length) == ERROR_SUCCESS
+        && type == REG_SZ)
         result = true;
 
     RegCloseKey(key);
     return result;
 }
 
-#endif  // Q_OS_WIN32
+#endif // Q_OS_WIN32

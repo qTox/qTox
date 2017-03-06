@@ -630,6 +630,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -695,43 +703,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me пропонує дружбу, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translatorcomment>можливо, не &quot;попередній&quot;, а &quot;перший&quot;</translatorcomment>
-        <translation>Попередній пароль неправильний; спробуйте ще раз:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Зашифрована історія</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Не знайдено зашифрованої історії чату або вона була пошкоджена.
-Історія чату буде вимкнена!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Будь ласка, введіть пароль для історії переписки для профілю &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation type="unfinished">
-Вимкнення історії переписки залишить Вашу зашифровану історію неушкодженою (але невикористовуємою); якщо пізніше Ви пам&apos;ятатимете пароль, Ви зможете знову увімкнути шифрування з вкладки &quot;Приватність&quot;.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Щось не так з паролем для історії чату. Спробуйте інший?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Вимкнути історію чату</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1269,18 +1240,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Приєднатись</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Відхилити</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1534,6 +1493,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2042,10 +2005,6 @@ Please use another image.</source>
         <translation>Введіть новий пароль, будь ласка.</translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Профіль користувача</translation>
-    </message>
-    <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <translation>Цей набір символів дозволяє клієнтам Tox зв&apos;язатись з Вами. Для комунікації поділіться ним з своїм друзями.</translation>
@@ -2198,6 +2157,26 @@ Share it with your friends to communicate.</source>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Не можемо додати друга</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ок</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Ви не можете додати самого себе до друзів!</translation>
     </message>
 </context>
 <context>
@@ -2462,10 +2441,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <comment>Don&apos;t send a friend request</comment>
         <translation>Скасувати</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2650,10 +2625,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>Помилка запуску ядра tox із поточними параметрами проксі. qTox не працює; змініть параметри і перезапустіть.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Додати друга</translation>
-    </message>
-    <message>
         <source>Add new circle...</source>
         <translation>Додати нове коло...</translation>
     </message>
@@ -2736,10 +2707,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <translation>Попередня бесіда</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Передачі файлів</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Виконуваний файл</translation>
@@ -2748,14 +2715,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Ви намагаєтеся відкрити виконуваний файл. Виконувані файли можуть нанести шкоди вашому комп’ютеру. Ви все ще хочете відкрити цей файл?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Параметри</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Профіль</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2784,10 +2743,6 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>Message failed to send</source>
         <translation>Не вдалось відправити повідомлення</translation>
-    </message>
-    <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2822,6 +2777,31 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
         <translation type="unfinished">Відкрити</translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Додати друга</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Передачі файлів</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Параметри</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

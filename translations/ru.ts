@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Используйте ползунок для установки уровня звука динамиков.</translation>
+        <translation>Используйте ползунок для установки громкости динамиков.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Видеоустройство</translation>
+        <translation>Видео устройство</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -72,8 +72,8 @@ which may lead to problems with video calls.</source>
         <translation>Установите разрешение своей камеры.
 Чем больше значение, тем выше качество видео, которое увидят ваши друзья.
 Заметьте, что чем выше качество видео, тем лучшее подключение к интернету потребуется.
-Иногда подключение слишком слабое, что бы передать видео высокого качества,
-что может привести к проблемам при видеозвонке.</translation>
+Иногда подключение может быть недостаточно хорошим, что бы передать видео высокого качества,
+что может привести к проблемам при видео звонке.</translation>
     </message>
     <message>
         <source>Resolution</source>
@@ -625,6 +625,14 @@ which may lead to problems with video calls.</source>
         <source>Can&apos;t start audio call</source>
         <translation>Невозможно начать аудиозвонок</translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation>Микрофон может быть выключен только во время звонка</translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation>Звук может быть выключен только во время звонка</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -691,42 +699,6 @@ which may lead to problems with video calls.</source>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me предлагает дружбу, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Предыдущий пароль неправильный. Повторите ввод:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Зашифрованная история чата</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Зашифрованная история чата не найдена или повреждена.
-История будет отключена!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Пожалуйста, введите пароль для истории чата профиля «%1».</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Выключение истории чата сейчас оставит зашифрованную историю нетронутой (но она не будет использоваться). Если позже вы вспомните пароль, то сможете включить шифрование на вкладке Конфиденциальность с правильным паролем, что бы использовать историю.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Пароль к истории чата не верен. Попробуете другой?</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Выключить историю чата</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1268,18 +1240,6 @@ instead of system taskbar.</source>
         <source>Group invites</source>
         <translation>Групповые приглашения</translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation>Присоединиться</translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation>Отклонить</translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation>Приглашение от %1 в %2 %3.</translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1539,7 +1499,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Мой профиль</translation>
     </message>
 </context>
 <context>
@@ -2198,6 +2158,26 @@ Share it with your friends to communicate.</source>
     </message>
 </context>
 <context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation>Не удалось добавить друга</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation>%1 - не корректный адрес Toxme.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ок</translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation>Вы не можете добавить себя в друзья!</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Version %1, %2</source>
@@ -2459,10 +2439,6 @@ It will be installed when qTox restarts.</source>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Отмена</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation>%1 не является корректным адресом Toxme.</translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2495,15 +2471,15 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New text styling preference may not load until qTox restarts.</source>
-        <translation>Для применения нового формата текстовых сообщений может потребоваться перезагрузка qTox.</translation>
+        <translation>Для применения нового стиля текстовых сообщений может потребоваться перезагрузка qTox.</translation>
     </message>
     <message>
         <source>Text Style format:</source>
-        <translation>Формат текстовых сообщений:</translation>
+        <translation>Стиль текстовых сообщений:</translation>
     </message>
     <message>
         <source>Select text styling preference.</source>
-        <translation>Выберите формат текстовых сообщений.</translation>
+        <translation>Выберите стиль текстовых сообщений.</translation>
     </message>
     <message>
         <source>Plaintext</source>
@@ -2533,11 +2509,11 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Focus qTox when you receive message.</source>
         <comment>toolTip for Focus window setting</comment>
-        <translation>Передать фокус окну, при получении сообщения.</translation>
+        <translation>Сменить фокус на окно при получении сообщения.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Активизировать окно</translation>
+        <translation>Сменить фокус на окно</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2804,27 +2780,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Добавить друга</translation>
+        <translation>Добавить друга</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Приглашения в группы</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Передачи файлов</translation>
+        <translation>Передача файлов</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Мой профиль</translation>
     </message>
 </context>
 </TS>

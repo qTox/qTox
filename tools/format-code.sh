@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#    Copyright © 2016 The qTox Project Contributors
+#    Copyright © 2017 The qTox Project Contributors
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -15,14 +15,28 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Format all C++ codebase tracked by git using `clang-format`.
 
-# source for scripts using git-based functionality
+# Requires:
+#   * git
+#   * clang-format
 
-set -e -o pipefail
+# usage:
+#   ./$script
 
-# Get numerical version from git tag, parts of version separated by dots
-# from e.g. `v123.456.789` get `123.456.789` part
-get_version() {
-    git describe --abbrev=0 \
-    | sed -e 's/^v//'
+
+# Fail as soon as error appears
+set -eu -o pipefail
+
+
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly BASE_DIR="$SCRIPT_DIR/../"
+
+format() {
+    cd "$BASE_DIR"
+    [[ -f .clang-format ]] # make sure that it exists
+    # NOTE: some earlier than 3.8 versions of clang-format are broken
+    # and will not work correctly
+    clang-format -i -style=file $(git ls-files *.cpp *.h)
 }
+format

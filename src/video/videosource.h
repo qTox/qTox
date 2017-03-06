@@ -37,11 +37,15 @@ public:
     using AtomicIDType = std::atomic_uint_fast64_t;
 
 public:
-    VideoSource() : id(sourceIDs++){}
+    VideoSource()
+        : id(sourceIDs++)
+    {
+    }
 
     virtual ~VideoSource() = default;
     /**
-     * @brief If subscribe sucessfully opens the source, it will start emitting frameAvailable signals.
+     * @brief If subscribe sucessfully opens the source, it will start emitting frameAvailable
+     * signals.
      */
     virtual bool subscribe() = 0;
     /**
@@ -62,6 +66,7 @@ signals:
      * sending frames again later
      */
     void sourceStopped();
+
 private:
     // Used to manage a global ID for all VideoSources
     static AtomicIDType sourceIDs;

@@ -19,12 +19,13 @@
 
 #include "screengrabberchooserrectitem.h"
 
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsScene>
-#include <QPainter>
 #include <QCursor>
+#include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
+#include <QPainter>
 
-enum {
+enum
+{
     HandleSize = 10,
     MinRectSize = 2,
 };
@@ -55,18 +56,16 @@ ScreenGrabberChooserRectItem::ScreenGrabberChooserRectItem(QGraphicsScene* scene
 
     this->mainRect->setRect(QRect());
     hideHandles();
-
 }
 
 ScreenGrabberChooserRectItem::~ScreenGrabberChooserRectItem()
 {
-
 }
 
 QRectF ScreenGrabberChooserRectItem::boundingRect() const
 {
-    return QRectF(-HandleSize - 1, -HandleSize - 1,
-                  rectWidth + HandleSize + 1, rectHeight + HandleSize + 1);
+    return QRectF(-HandleSize - 1, -HandleSize - 1, rectWidth + HandleSize + 1,
+                  rectHeight + HandleSize + 1);
 }
 
 void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
@@ -83,15 +82,13 @@ void ScreenGrabberChooserRectItem::beginResize(QPointF mousePos)
 
 QRect ScreenGrabberChooserRectItem::chosenRect() const
 {
-    QRect rect (x(), y(), rectWidth, rectHeight);
-    if (rectWidth < 0)
-    {
+    QRect rect(x(), y(), rectWidth, rectHeight);
+    if (rectWidth < 0) {
         rect.setX(rect.x() + rectWidth);
         rect.setWidth(-rectWidth);
     }
 
-    if (rectHeight < 0)
-    {
+    if (rectHeight < 0) {
         rect.setY(rect.y() + rectHeight);
         rect.setHeight(-rectHeight);
     }
@@ -125,33 +122,26 @@ void ScreenGrabberChooserRectItem::hideHandles()
 
 void ScreenGrabberChooserRectItem::mousePress(QGraphicsSceneMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
-    {
+    if (event->button() == Qt::LeftButton) {
         this->state = Moving;
         setCursor(QCursor(Qt::ClosedHandCursor));
     }
-
 }
 
 void ScreenGrabberChooserRectItem::mouseMove(QGraphicsSceneMouseEvent* event)
 {
-    if (this->state == Moving)
-    {
+    if (this->state == Moving) {
         QPointF delta = event->scenePos() - event->lastScenePos();
-        moveBy (delta.x(), delta.y());
-    }
-    else if (this->state == Resizing)
-    {
+        moveBy(delta.x(), delta.y());
+    } else if (this->state == Resizing) {
         prepareGeometryChange();
         QPointF size = event->scenePos() - scenePos();
-        mainRect->setRect (0, 0, size.x(), size.y());
+        mainRect->setRect(0, 0, size.x(), size.y());
         rectWidth = size.x();
         rectHeight = size.y();
 
         updateHandlePositions();
-    }
-    else
-    {
+    } else {
         return;
     }
 
@@ -160,18 +150,14 @@ void ScreenGrabberChooserRectItem::mouseMove(QGraphicsSceneMouseEvent* event)
 
 void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton)
-    {
+    if (event->button() == Qt::LeftButton) {
         setCursor(QCursor(Qt::OpenHandCursor));
 
         QPointF delta = (event->scenePos() - startPos);
-        if (qAbs(delta.x()) < MinRectSize || qAbs(delta.y()) < MinRectSize)
-        {
+        if (qAbs(delta.x()) < MinRectSize || qAbs(delta.y()) < MinRectSize) {
             rectWidth = rectHeight = 0;
             mainRect->setRect(QRect());
-        }
-        else
-        {
+        } else {
             QRect normalized = chosenRect();
 
             rectWidth = normalized.width();
@@ -187,7 +173,6 @@ void ScreenGrabberChooserRectItem::mouseRelease(QGraphicsSceneMouseEvent* event)
         state = None;
         mainRect->ungrabMouse();
     }
-
 }
 
 void ScreenGrabberChooserRectItem::mouseDoubleClick(QGraphicsSceneMouseEvent* event)
@@ -218,14 +203,12 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
     bool increaseX = ((x < 0) == (delta.x() < 0));
     bool increaseY = ((y < 0) == (delta.y() < 0));
 
-    if ((delta.x() < 0 && increaseX) || (delta.x() >= 0 && !increaseX))
-    {
+    if ((delta.x() < 0 && increaseX) || (delta.x() >= 0 && !increaseX)) {
         moveBy(delta.x(), 0);
         delta.rx() *= -1;
     }
 
-    if ((delta.y() < 0 && increaseY) || (delta.y() >= 0 && !increaseY))
-    {
+    if ((delta.y() < 0 && increaseY) || (delta.y() >= 0 && !increaseY)) {
         moveBy(0, delta.y());
         delta.ry() *= -1;
     }
@@ -233,7 +216,7 @@ void ScreenGrabberChooserRectItem::mouseMoveHandle(int x, int y, QGraphicsSceneM
     //
     this->rectWidth += delta.x();
     this->rectHeight += delta.y();
-    this->mainRect->setRect (0, 0, this->rectWidth, this->rectHeight);
+    this->mainRect->setRect(0, 0, this->rectWidth, this->rectHeight);
     updateHandlePositions();
     emit regionChosen(chosenRect());
 }
@@ -245,7 +228,6 @@ void ScreenGrabberChooserRectItem::mouseReleaseHandle(int x, int y, QGraphicsSce
 
     if (event->button() == Qt::LeftButton)
         this->state = None;
-
 }
 
 QPoint ScreenGrabberChooserRectItem::getHandleMultiplier(QGraphicsItem* handle)
@@ -316,8 +298,7 @@ void ScreenGrabberChooserRectItem::forwardMainRectEvent(QEvent* event)
 {
     QGraphicsSceneMouseEvent* mouseEvent = static_cast<QGraphicsSceneMouseEvent*>(event);
 
-    switch(event->type())
-    {
+    switch (event->type()) {
     case QEvent::GraphicsSceneMousePress:
         return mousePress(mouseEvent);
     case QEvent::GraphicsSceneMouseMove:
@@ -329,7 +310,6 @@ void ScreenGrabberChooserRectItem::forwardMainRectEvent(QEvent* event)
     default:
         return;
     }
-
 }
 
 void ScreenGrabberChooserRectItem::forwardHandleEvent(QGraphicsItem* watched, QEvent* event)
@@ -340,8 +320,7 @@ void ScreenGrabberChooserRectItem::forwardHandleEvent(QGraphicsItem* watched, QE
     if (multiplier.isNull())
         return;
 
-    switch(event->type())
-    {
+    switch (event->type()) {
     case QEvent::GraphicsSceneMousePress:
         return mousePressHandle(multiplier.x(), multiplier.y(), mouseEvent);
     case QEvent::GraphicsSceneMouseMove:
@@ -351,5 +330,4 @@ void ScreenGrabberChooserRectItem::forwardHandleEvent(QGraphicsItem* watched, QE
     default:
         return;
     }
-
 }

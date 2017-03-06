@@ -21,19 +21,18 @@
 #include "ui_advancedsettings.h"
 
 #include <QApplication>
+#include <QClipboard>
 #include <QDir>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QProcess>
-#include <QClipboard>
-#include <QFileDialog>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/core/recursivesignalblocker.h"
 #include "src/nexus.h"
-#include "src/persistence/settings.h"
-#include "src/persistence/db/plaindb.h"
 #include "src/persistence/profile.h"
+#include "src/persistence/settings.h"
 #include "src/widget/gui.h"
 #include "src/widget/translator.h"
 
@@ -45,15 +44,15 @@
  */
 
 AdvancedForm::AdvancedForm()
-  : GenericForm(QPixmap(":/img/settings/general.png"))
-  , bodyUI (new Ui::AdvancedSettings)
+    : GenericForm(QPixmap(":/img/settings/general.png"))
+    , bodyUI(new Ui::AdvancedSettings)
 {
     bodyUI->setupUi(this);
 
     // block all child signals during initialization
     const RecursiveSignalBlocker signalBlocker(this);
 
-    Settings &s = Settings::getInstance();
+    Settings& s = Settings::getInstance();
     bodyUI->cbEnableIPv6->setChecked(s.getEnableIPv6());
     bodyUI->cbMakeToxPortable->setChecked(Settings::getInstance().getMakeToxPortable());
     bodyUI->cbEnableUDP->setChecked(!s.getForceTCP());
@@ -70,12 +69,13 @@ AdvancedForm::AdvancedForm()
                              "please do %2 change anything here. Changes "
                              "made here may lead to problems with qTox, and even "
                              "to loss of your data, e.g. history.")
-            .arg(QString("<b>%1</b>").arg(tr("really")))
-            .arg(QString("<b>%1</b>").arg(tr("not")));
+                              .arg(QString("<b>%1</b>").arg(tr("really")))
+                              .arg(QString("<b>%1</b>").arg(tr("not")));
 
     QString warning = QString("<div style=\"color:#ff0000;\">"
                               "<p><b>%1</b></p><p>%2</p></div>")
-            .arg(tr("IMPORTANT NOTE")).arg(warningBody);
+                          .arg(tr("IMPORTANT NOTE"))
+                          .arg(warningBody);
 
     bodyUI->warningLabel->setText(warning);
 
@@ -95,10 +95,11 @@ void AdvancedForm::on_cbMakeToxPortable_stateChanged()
 }
 void AdvancedForm::on_btnExportLog_clicked()
 {
-    QString savefile = QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(), tr("Logs (*.log)"), 0, QFileDialog::DontUseNativeDialog);
+    QString savefile =
+        QFileDialog::getSaveFileName(this, tr("Save File"), QDir::homePath(), tr("Logs (*.log)"), 0,
+                                     QFileDialog::DontUseNativeDialog);
 
-    if (savefile.isNull() || savefile.isEmpty())
-    {
+    if (savefile.isNull() || savefile.isEmpty()) {
         qDebug() << "Debug log save file was not properly chosen";
         return;
     }
@@ -107,12 +108,9 @@ void AdvancedForm::on_btnExportLog_clicked()
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);
-    if (file.exists())
-    {
+    if (file.exists()) {
         qDebug() << "Found debug log for copying";
-    }
-    else
-    {
+    } else {
         qDebug() << "No debug file found";
         return;
     }
@@ -129,44 +127,36 @@ void AdvancedForm::on_btnCopyDebug_clicked()
     QString logfile = logFileDir + "qtox.log";
 
     QFile file(logfile);
-    if (!file.exists())
-    {
+    if (!file.exists()) {
         qDebug() << "No debug file found";
         return;
     }
 
     QClipboard* clipboard = QApplication::clipboard();
-    if (clipboard)
-    {
+    if (clipboard) {
         QString debugtext;
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             QTextStream in(&file);
             debugtext = in.readAll();
             file.close();
-        }
-        else
-        {
+        } else {
             qDebug() << "Unable to open file for copying to clipboard";
             return;
         }
 
         clipboard->setText(debugtext, QClipboard::Clipboard);
         qDebug() << "Debug log copied to clipboard";
-    }
-    else
-    {
+    } else {
         qDebug() << "Unable to access clipboard";
     }
-
 }
 
 void AdvancedForm::on_resetButton_clicked()
 {
     const QString titile = tr("Reset settings");
-    bool result = GUI::askQuestion(titile,
-                                   tr("All settings will be reset to default. Are you sure?"),
-                                   tr("Yes"), tr("No"));
+    bool result =
+        GUI::askQuestion(titile, tr("All settings will be reset to default. Are you sure?"),
+                         tr("Yes"), tr("No"));
 
     if (!result)
         return;
@@ -209,10 +199,9 @@ void AdvancedForm::on_proxyType_currentIndexChanged(int index)
 
 void AdvancedForm::on_reconnectButton_clicked()
 {
-    if (Core::getInstance()->getAv()->anyActiveCalls())
-    {
+    if (Core::getInstance()->getAv()->anyActiveCalls()) {
         QMessageBox::warning(this, tr("Call active", "popup title"),
-                        tr("You can't disconnect while a call is active!", "popup text"));
+                             tr("You can't disconnect while a call is active!", "popup text"));
         return;
     }
 

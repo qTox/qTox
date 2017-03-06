@@ -1,9 +1,9 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
-    This program is free software: you can redistribute it and/or modify
+    qTox is libre software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -17,14 +17,22 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TEXTFORMATTER_H
+#define TEXTFORMATTER_H
 
-#ifndef COREDEFINES_H
-#define COREDEFINES_H
+#include <QString>
 
-#define TOXAV_RINGING_TIME 45
+class TextFormatter
+{
+private:
+    QString sourceString;
 
-// TODO: Put that in the settings
-#define TOXAV_MAX_VIDEO_WIDTH 1280
-#define TOXAV_MAX_VIDEO_HEIGHT 720
+    QString applyHtmlFontStyling(bool showFormattingSymbols);
 
-#endif // COREDEFINES_H
+public:
+    explicit TextFormatter(const QString& str);
+
+    QString applyStyling(bool showFormattingSymbols);
+};
+
+#endif // TEXTFORMATTER_H

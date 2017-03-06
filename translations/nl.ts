@@ -621,6 +621,14 @@ wat tot problemen kan leiden met videogesprekken.</translation>
         <source>Can&apos;t start audio call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Microphone can be muted only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sound can be disabled only during a call</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -686,42 +694,6 @@ wat tot problemen kan leiden met videogesprekken.</translation>
     <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me biedt vriendschap aan, &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>The previous password is incorrect; please try again:</source>
-        <comment>used on retries in load()</comment>
-        <translation>Het vorige wachtwoord was incorrect; probeer het alsjeblieft opnieuw:</translation>
-    </message>
-    <message>
-        <source>Encrypted chat history</source>
-        <translation>Versleutelde gespreksgeschiedenis</translation>
-    </message>
-    <message>
-        <source>No encrypted chat history file found, or it was corrupted.
-History will be disabled!</source>
-        <translation>Er kon geen versleutelde gespreksgeschiedenis gevonden worden, of deze is corrupt geraakt.
-Gespreksgeschiedenis zal uitgeschakeld worden!</translation>
-    </message>
-    <message>
-        <source>Please enter the password for the chat history for the profile &quot;%1&quot;.</source>
-        <comment>used in load() when no hist pw set</comment>
-        <translation>Vul het wachtwoord in voor de gespreksgeschiedenis van het profiel &quot;%1&quot;.</translation>
-    </message>
-    <message>
-        <source>
-Disabling chat history now will leave the encrypted history intact (but not usable); if you later remember the password, you may re-enable encryption from the Privacy tab with the correct password to use the history.</source>
-        <comment>part of history password dialog</comment>
-        <translation>
-Het uitschakelen van de gespreksgeschiedenis zal de versleutelde geschiedenis bewaren maar onbruikbaar maken. Indien je je het wachtwoord later weer herinnert, kun je versleuteling opnieuw aanzetten in het Privacy-tabblad met het correcte wachtwoord om deze geschiedenis te herstellen.</translation>
-    </message>
-    <message>
-        <source>The chat history password failed. Please try another?</source>
-        <comment>used only when pw set before load() doesn&apos;t work</comment>
-        <translation>Het wachtwoord voor de versleuteling van gespreksgeschiedenis was verkeerd. Probeer een ander wachtwoord.</translation>
-    </message>
-    <message>
-        <source>Disable chat history</source>
-        <translation>Gespreksgeschiedenis uitschakelen</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
@@ -1262,18 +1234,6 @@ in plaats van naar de taakbalk.</translation>
         <source>Group invites</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Join</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Decline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>GroupWidget</name>
@@ -1529,6 +1489,10 @@ Dit bestand bevat geen chatgeschiedenis.</translation>
     </message>
     <message>
         <source>My biography</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2065,10 +2029,6 @@ Deel dit met je vrienden om te communiceren.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User Profile</source>
-        <translation>Gebruikersprofiel</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2186,6 +2146,26 @@ Deel dit met je vrienden om te communiceren.</translation>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Couldn&apos;t add friend</source>
+        <translation type="unfinished">Kon vriend niet toevoegen</translation>
+    </message>
+    <message>
+        <source>%1 is not a valid Toxme address.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can&apos;t add yourself as a friend!</source>
+        <comment>When trying to add your own Tox ID as friend</comment>
+        <translation type="unfinished">Je kunt jezelf niet als vriend toevoegen!</translation>
     </message>
 </context>
 <context>
@@ -2447,10 +2427,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <comment>Don&apos;t send a friend request</comment>
         <translation>Annuleer</translation>
     </message>
-    <message>
-        <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>UserInterfaceForm</name>
@@ -2631,10 +2607,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Toxcore kon niet opstarten met deze proxyinstellingen. Hierdoor kan qTox niet starten. Verander je instellingen en herstart.</translation>
     </message>
     <message>
-        <source>Add friend</source>
-        <translation>Voeg vriend toe</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>Bestand</translation>
     </message>
@@ -2679,10 +2651,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>toxcore kon niet opstarten, de applicatie zal afsluiten na het sluiten van dit bericht.</translation>
     </message>
     <message>
-        <source>File transfers</source>
-        <translation>Bestandsoverdrachten</translation>
-    </message>
-    <message>
         <source>Executable file</source>
         <comment>popup title</comment>
         <translation>Uitvoerbaar bestand</translation>
@@ -2691,14 +2659,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <source>You have asked qTox to open an executable file. Executable files can potentially damage your computer. Are you sure want to open this file?</source>
         <comment>popup text</comment>
         <translation>Je hebt qTox gevraagd een uitvoerbaar bestand te openen. Uitvoerbare bestanden kunnen schade toebrengen aan je computer. Weet je zeker dat je dit bestand wilt openen?</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Instellingen</translation>
-    </message>
-    <message>
-        <source>Profile</source>
-        <translation>Profiel</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2761,10 +2721,6 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
         <translation>Je status</translation>
     </message>
     <message>
-        <source>Group invites</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
         <translation type="unfinished"></translation>
@@ -2804,6 +2760,31 @@ Deze zal geïnstalleerd worden wanneer qTox herstart.</translation>
     <message>
         <source>Show</source>
         <comment>Tray action menu to show qTox window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add friend</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Voeg vriend toe</translation>
+    </message>
+    <message>
+        <source>Group invites</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File transfers</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Bestandsoverdrachten</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <comment>title of the window</comment>
+        <translation type="unfinished">Instellingen</translation>
+    </message>
+    <message>
+        <source>My profile</source>
+        <comment>title of the window</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
