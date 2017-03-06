@@ -30,7 +30,7 @@ namespace Ui {
 class AboutSettings;
 }
 
-class AboutForm  : public GenericForm
+class AboutForm : public GenericForm
 {
     Q_OBJECT
 public:
@@ -42,7 +42,6 @@ public:
     }
 
 protected:
-
 private slots:
     void showUpdateProgress();
     virtual void hideEvent(QHideEvent*) final override;

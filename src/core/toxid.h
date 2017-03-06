@@ -23,9 +23,9 @@
 
 #include "toxpk.h"
 
-#include <cstdint>
 #include <QByteArray>
 #include <QString>
+#include <cstdint>
 
 class ToxId
 {
@@ -43,7 +43,7 @@ public:
     bool isValid() const;
 
     static bool isValidToxId(const QString& id);
-    static bool isToxId(const QString &id);
+    static bool isToxId(const QString& id);
     const uint8_t* getBytes() const;
     QByteArray getToxId() const;
     ToxPk getPublicKey() const;

@@ -30,14 +30,14 @@ class Widget;
 struct UpdateFileMeta
 {
     unsigned char sig[crypto_sign_BYTES]; ///< Signature of the file (ed25519)
-    QString id; ///< Unique id of the file
-    QString installpath; ///< Local path including the file name. May be relative to qtox-updater or absolute
-    uint64_t size; ///< Size in bytes of the file
+    QString id;                           ///< Unique id of the file
+    QString installpath; ///< Local path including the file name. May be relative to qtox-updater or
+                         ///absolute
+    uint64_t size;       ///< Size in bytes of the file
 
     bool operator==(const UpdateFileMeta& other)
     {
-        return (size == other.size
-                && id == other.id && installpath == other.installpath
+        return (size == other.size && id == other.id && installpath == other.installpath
                 && memcmp(sig, other.sig, crypto_sign_BYTES) == 0);
     }
 };
@@ -53,7 +53,7 @@ QByteArray getLocalFlist();
 /// Parses and validates a flist file. Returns an empty list on error
 QList<UpdateFileMeta> parseFlist(QByteArray flistData);
 /// Generates a list of files we need to update
-QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist, Widget *w);
+QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist, Widget* w);
 
 extern unsigned char key[crypto_sign_PUBLICKEYBYTES];
 

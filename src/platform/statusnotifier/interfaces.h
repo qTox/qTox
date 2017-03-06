@@ -25,13 +25,13 @@
 
 G_BEGIN_DECLS
 
-#define WATCHER_NAME        "org.kde.StatusNotifierWatcher"
-#define WATCHER_OBJECT      "/StatusNotifierWatcher"
-#define WATCHER_INTERFACE   "org.kde.StatusNotifierWatcher"
+#define WATCHER_NAME "org.kde.StatusNotifierWatcher"
+#define WATCHER_OBJECT "/StatusNotifierWatcher"
+#define WATCHER_INTERFACE "org.kde.StatusNotifierWatcher"
 
-#define ITEM_NAME           "org.kde.StatusNotifierItem"
-#define ITEM_OBJECT         "/StatusNotifierItem"
-#define ITEM_INTERFACE      "org.kde.StatusNotifierItem"
+#define ITEM_NAME "org.kde.StatusNotifierItem"
+#define ITEM_OBJECT "/StatusNotifierItem"
+#define ITEM_INTERFACE "org.kde.StatusNotifierItem"
 
 static const gchar watcher_xml[] =
     "<node>"

@@ -32,7 +32,7 @@ class GeneralForm : public GenericForm
 {
     Q_OBJECT
 public:
-    explicit GeneralForm(SettingsWidget *parent);
+    explicit GeneralForm(SettingsWidget* parent);
     ~GeneralForm();
     virtual QString getFormName() final override
     {
@@ -61,8 +61,8 @@ private:
     void retranslateUi();
 
 private:
-    Ui::GeneralSettings *bodyUI;
-    SettingsWidget *parent;
+    Ui::GeneralSettings* bodyUI;
+    SettingsWidget* parent;
 };
 
 #endif

@@ -26,19 +26,17 @@
  */
 
 GroupInvite::GroupInvite(int32_t friendID, uint8_t inviteType, const QByteArray& data)
-    : friendId { friendID }
-    , type { inviteType }
-    , invite { data }
-    , date { QDateTime::currentDateTime() }
+    : friendId{friendID}
+    , type{inviteType}
+    , invite{data}
+    , date{QDateTime::currentDateTime()}
 {
 }
 
-bool GroupInvite::operator ==(const GroupInvite& other) const
+bool GroupInvite::operator==(const GroupInvite& other) const
 {
-    return  friendId == other.friendId &&
-            type == other.type &&
-            invite == other.invite &&
-            date == other.date;
+    return friendId == other.friendId && type == other.type && invite == other.invite
+           && date == other.date;
 }
 
 int32_t GroupInvite::getFriendId() const

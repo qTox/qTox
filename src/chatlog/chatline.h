@@ -20,10 +20,10 @@
 #ifndef CHATLINE_H
 #define CHATLINE_H
 
-#include <memory>
 #include <QPointF>
 #include <QRectF>
 #include <QVector>
+#include <memory>
 
 class ChatLog;
 class ChatLineContent;
@@ -33,23 +33,28 @@ class QFont;
 
 struct ColumnFormat
 {
-    enum Policy {
+    enum Policy
+    {
         FixedSize,
         VariableSize,
     };
 
-    enum Align {
+    enum Align
+    {
         Left,
         Center,
         Right,
     };
 
-    ColumnFormat() {}
+    ColumnFormat()
+    {
+    }
     ColumnFormat(qreal s, Policy p, Align halign = Left)
         : size(s)
         , policy(p)
         , hAlign(halign)
-    {}
+    {
+    }
 
     qreal size = 1.0;
     Policy policy = VariableSize;
@@ -86,7 +91,7 @@ public:
 
     bool isOverSelection(QPointF scenePos);
 
-    //comparators
+    // comparators
     static bool lessThanBSRectTop(const ChatLine::Ptr& lhs, const qreal& rhs);
     static bool lessThanBSRectBottom(const ChatLine::Ptr& lhs, const qreal& rhs);
     static bool lessThanRowIndex(const ChatLine::Ptr& lhs, const ChatLine::Ptr& rhs);
@@ -109,7 +114,6 @@ private:
     qreal columnSpacing = 15.0;
     QRectF bbox;
     bool isVisible = false;
-
 };
 
 #endif // CHATLINE_H

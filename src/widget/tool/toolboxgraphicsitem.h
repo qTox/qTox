@@ -21,8 +21,8 @@
 #define TOOLBOXGRAPHICSITEM_HPP
 
 #include <QGraphicsItemGroup>
-#include <QPropertyAnimation>
 #include <QObject>
+#include <QPropertyAnimation>
 
 class ToolBoxGraphicsItem final : public QObject, public QGraphicsItemGroup
 {
@@ -32,14 +32,14 @@ public:
     ToolBoxGraphicsItem();
     ~ToolBoxGraphicsItem();
 
-    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) final override;
+    virtual void paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+                       QWidget* widget) final override;
 
 protected:
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent* event) final override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) final override;
 
 private:
-
     void startAnimation(QAbstractAnimation::Direction direction);
 
     QPropertyAnimation* opacityAnimation;

@@ -19,8 +19,8 @@
 
 #include "grouplist.h"
 #include "group.h"
-#include <QHash>
 #include <QDebug>
+#include <QHash>
 
 QHash<int, Group*> GroupList::groupList;
 
@@ -48,13 +48,12 @@ Group* GroupList::findGroup(int groupId)
 void GroupList::removeGroup(int groupId, bool /*fake*/)
 {
     auto g_it = groupList.find(groupId);
-    if (g_it != groupList.end())
-    {
+    if (g_it != groupList.end()) {
         groupList.erase(g_it);
     }
 }
 
-QList<Group *> GroupList::getAllGroups()
+QList<Group*> GroupList::getAllGroups()
 {
     QList<Group*> res;
 

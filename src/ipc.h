@@ -21,15 +21,15 @@
 #ifndef IPC_H
 #define IPC_H
 
-#include <ctime>
-#include <functional>
 #include <QMap>
 #include <QObject>
 #include <QSharedMemory>
 #include <QTimer>
 #include <QVector>
+#include <ctime>
+#include <functional>
 
-using IPCEventHandler = std::function<bool (const QByteArray&)>;
+using IPCEventHandler = std::function<bool(const QByteArray&)>;
 
 #define IPC_PROTOCOL_VERSION "2"
 
@@ -37,6 +37,7 @@ class IPC : public QObject
 {
     Q_OBJECT
     IPC();
+
 protected:
     static const int EVENT_TIMER_MS = 1000;
     static const int EVENT_GC_TIMEOUT = 5;
@@ -69,11 +70,11 @@ public:
         IPCEvent events[IPC::EVENT_QUEUE_SIZE];
     };
 
-    time_t postEvent(const QString& name, const QByteArray &data=QByteArray(), uint32_t dest=0);
+    time_t postEvent(const QString& name, const QByteArray& data = QByteArray(), uint32_t dest = 0);
     bool isCurrentOwner();
     void registerEventHandler(const QString& name, IPCEventHandler handler);
     bool isEventAccepted(time_t time);
-    bool waitUntilAccepted(time_t time, int32_t timeout=-1);
+    bool waitUntilAccepted(time_t time, int32_t timeout = -1);
 
 protected slots:
     void processEvents();

@@ -21,25 +21,23 @@
 #include "update.h"
 #include "serialize.h"
 #include "widget.h"
-#include <QFile>
-#include <QDebug>
-#include <QMessageBox>
-#include <QDir>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QMessageBox>
 
-unsigned char key[crypto_sign_PUBLICKEYBYTES] =
-{
-    0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8, 0xb5, 0x21, 0x0e, 0xac, 0x02, 0xa9, 0xc4, 0x92, 0xd9, 0xa2,
-    0x17, 0x83, 0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd, 0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed, 0x00, 0x13
-};
+unsigned char key[crypto_sign_PUBLICKEYBYTES] = {0x20, 0x89, 0x39, 0xaa, 0x9a, 0xe8, 0xb5, 0x21,
+                                                 0x0e, 0xac, 0x02, 0xa9, 0xc4, 0x92, 0xd9, 0xa2,
+                                                 0x17, 0x83, 0xbd, 0x78, 0x0a, 0xda, 0x33, 0xcd,
+                                                 0xa5, 0xc6, 0x44, 0xc7, 0xfc, 0xed, 0x00, 0x13};
 
 QByteArray getLocalFlist()
 {
     QByteArray flist;
 
     QFile flistFile("flist");
-    if (!flistFile.open(QIODevice::ReadOnly))
-    {
+    if (!flistFile.open(QIODevice::ReadOnly)) {
         qWarning() << "getLocalFlist: Can't open local flist";
         return flist;
     }
@@ -53,7 +51,7 @@ QByteArray getLocalFlist()
 bool isUpToDate(UpdateFileMeta fileMeta)
 {
     QString appDir = qApp->applicationDirPath();
-    QFile file(appDir+QDir::separator()+fileMeta.installpath);
+    QFile file(appDir + QDir::separator() + fileMeta.installpath);
     if (!file.open(QIODevice::ReadOnly))
         return false;
 
@@ -72,8 +70,7 @@ QList<UpdateFileMeta> genUpdateDiff(QList<UpdateFileMeta> updateFlist, Widget* w
     float progressDiff = 45;
     float progress = 5;
 
-    for (UpdateFileMeta file : updateFlist)
-    {
+    for (UpdateFileMeta file : updateFlist) {
         if (!isUpToDate(file))
             diff += file;
         progress += progressDiff / updateFlist.size();
@@ -87,32 +84,27 @@ QList<UpdateFileMeta> parseFlist(QByteArray flistData)
 {
     QList<UpdateFileMeta> flist;
 
-    if (flistData.isEmpty())
-    {
+    if (flistData.isEmpty()) {
         qWarning() << "AutoUpdater::parseflist: Empty data";
         return flist;
     }
 
     // Check version
-    if (flistData[0] != '1')
-    {
-        qWarning() << "AutoUpdater: parseflist: Bad version "<<(uint8_t)flistData[0];
+    if (flistData[0] != '1') {
+        qWarning() << "AutoUpdater: parseflist: Bad version " << (uint8_t)flistData[0];
         return flist;
     }
     flistData = flistData.mid(1);
 
     // Check signature
-    if (flistData.size() < (int)(crypto_sign_BYTES))
-    {
+    if (flistData.size() < (int)(crypto_sign_BYTES)) {
         qWarning() << "AutoUpdater::parseflist: Truncated data";
         return flist;
-    }
-    else
-    {
+    } else {
         QByteArray msgData = flistData.mid(crypto_sign_BYTES);
         unsigned char* msg = (unsigned char*)msgData.data();
-        if (crypto_sign_verify_detached((unsigned char*)flistData.data(), msg, msgData.size(), key) != 0)
-        {
+        if (crypto_sign_verify_detached((unsigned char*)flistData.data(), msg, msgData.size(), key)
+            != 0) {
             qCritical() << "AutoUpdater: parseflist: FORGED FLIST FILE";
             return flist;
         }
@@ -120,8 +112,7 @@ QList<UpdateFileMeta> parseFlist(QByteArray flistData)
     }
 
     // Parse. We assume no errors handling needed since the signature is valid.
-    while (!flistData.isEmpty())
-    {
+    while (!flistData.isEmpty()) {
         UpdateFileMeta newFile;
 
         memcpy(newFile.sig, flistData.data(), crypto_sign_BYTES);

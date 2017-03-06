@@ -80,7 +80,7 @@ public slots:
     void bringAllToFront();
 
 private:
-    void updateWindowsArg(QWindow *closedWindow);
+    void updateWindowsArg(QWindow* closedWindow);
 
     QSignalMapper* windowMapper;
     QActionGroup* windowActions = nullptr;
@@ -90,7 +90,7 @@ private slots:
     void onLastWindowClosed();
 
 private:
-    explicit Nexus(QObject *parent = 0);
+    explicit Nexus(QObject* parent = 0);
     ~Nexus();
 
 private:

@@ -25,19 +25,19 @@
 #include <QToolButton>
 
 #include "tabcompleter.h"
-#include "src/group.h"
-#include "src/friend.h"
-#include "src/friendlist.h"
-#include "src/widget/groupwidget.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/maskablepixmapwidget.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
-#include "src/widget/style.h"
-#include "src/widget/flowlayout.h"
-#include "src/widget/translator.h"
-#include "src/widget/form/chatform.h"
+#include "src/friend.h"
+#include "src/friendlist.h"
+#include "src/group.h"
 #include "src/video/groupnetcamview.h"
+#include "src/widget/flowlayout.h"
+#include "src/widget/form/chatform.h"
+#include "src/widget/groupwidget.h"
+#include "src/widget/maskablepixmapwidget.h"
+#include "src/widget/style.h"
+#include "src/widget/tool/croppinglabel.h"
+#include "src/widget/translator.h"
 
 /**
  * @var QList<QLabel*> GroupChatForm::peerLabels
@@ -58,13 +58,10 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     tabber = new TabCompleter(msgEdit, group);
 
     fileButton->setEnabled(false);
-    if (group->isAvGroupchat())
-    {
+    if (group->isAvGroupchat()) {
         videoButton->setEnabled(false);
         videoButton->setObjectName("grey");
-    }
-    else
-    {
+    } else {
         videoButton->setVisible(false);
         callButton->setVisible(false);
         volButton->setVisible(false);
@@ -81,15 +78,13 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
 
     msgEdit->setObjectName("group");
 
-    namesListLayout = new FlowLayout(0,5,0);
+    namesListLayout = new FlowLayout(0, 5, 0);
     QStringList names(group->getPeerList());
 
-    for (QString& name : names)
-    {
-        QLabel *l = new QLabel();
+    for (QString& name : names) {
+        QLabel* l = new QLabel();
         QString tooltip = correctNames(name);
-        if (tooltip.isNull())
-        {
+        if (tooltip.isNull()) {
             l->setToolTip(tooltip);
         }
         l->setText(name);
@@ -111,10 +106,8 @@ GroupChatForm::GroupChatForm(Group* chatGroup)
     connect(callButton, &QPushButton::clicked, this, &GroupChatForm::onCallClicked);
     connect(micButton, SIGNAL(clicked()), this, SLOT(onMicMuteToggle()));
     connect(volButton, SIGNAL(clicked()), this, SLOT(onVolMuteToggle()));
-    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName)
-    {
-        if (!newName.isEmpty())
-        {
+    connect(nameLabel, &CroppingLabel::editFinished, this, [=](const QString& newName) {
+        if (!newName.isEmpty()) {
             nameLabel->setText(newName);
             emit groupTitleChanged(group->getGroupId(), newName.left(128));
         }
@@ -129,15 +122,12 @@ QString GroupChatForm::correctNames(QString& name)
 {
     int pos = name.indexOf(QRegExp("\n|\r\n|\r"));
     int len = name.length();
-    if ( (pos < len) && (pos !=-1) )
-    {
+    if ((pos < len) && (pos != -1)) {
         QString tooltip = name;
-        name.remove( pos, len-pos );
+        name.remove(pos, len - pos);
         name.append("...");
         return tooltip;
-    }
-    else
-    {
+    } else {
         return QString();
     }
 }
@@ -156,22 +146,17 @@ void GroupChatForm::onSendTriggered()
     msgEdit->setLastMessage(msg);
     msgEdit->clear();
 
-    if (group->getPeersCount() != 1)
-    {
-        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
-        {
+    if (group->getPeersCount() != 1) {
+        if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive)) {
             msg.remove(0, ChatForm::ACTION_PREFIX.length());
             emit sendAction(group->getGroupId(), msg);
-        }
-        else
-        {
+        } else {
             emit sendMessage(group->getGroupId(), msg);
         }
-    }
-    else
-    {
+    } else {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
-            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), true, QDateTime::currentDateTime(), true);
+            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), true,
+                           QDateTime::currentDateTime(), true);
         else
             addSelfMessage(msg, false, QDateTime::currentDateTime(), true);
     }
@@ -185,9 +170,8 @@ void GroupChatForm::onUserListChanged()
     else
         nusersLabel->setText(tr("%1 users in chat", "Number of users in chat").arg(peersCount));
 
-    QLayoutItem *child;
-    while ((child = namesListLayout->takeAt(0)))
-    {
+    QLayoutItem* child;
+    while ((child = namesListLayout->takeAt(0))) {
         child->widget()->hide();
         delete child->widget();
         delete child;
@@ -200,8 +184,7 @@ void GroupChatForm::onUserListChanged()
     // first traverse in peer number order, storing the QLabels as necessary
     QStringList names = group->getPeerList();
     unsigned nNames = names.size();
-    for (unsigned i=0; i<nNames; ++i)
-    {
+    for (unsigned i = 0; i < nNames; ++i) {
         QString tooltip = correctNames(names[i]);
         peerLabels.append(new QLabel(names[i]));
         if (!tooltip.isEmpty())
@@ -219,10 +202,10 @@ void GroupChatForm::onUserListChanged()
         static_cast<GroupNetCamView*>(netcam)->clearPeers();
 
     // now alphabetize and add to layout
-    qSort(nickLabelList.begin(), nickLabelList.end(), [](QLabel *a, QLabel *b){return a->text().toLower() < b->text().toLower();});
-    for (unsigned i=0; i<nNames; ++i)
-    {
-        QLabel *label = nickLabelList.at(i);
+    qSort(nickLabelList.begin(), nickLabelList.end(),
+          [](QLabel* a, QLabel* b) { return a->text().toLower() < b->text().toLower(); });
+    for (unsigned i = 0; i < nNames; ++i) {
+        QLabel* label = nickLabelList.at(i);
         if (i != nNames - 1)
             label->setText(label->text() + ", ");
 
@@ -230,19 +213,15 @@ void GroupChatForm::onUserListChanged()
     }
 
     // Enable or disable call button
-    if (peersCount > 1 && group->isAvGroupchat())
-    {
+    if (peersCount > 1 && group->isAvGroupchat()) {
         // don't set button to green if call running
-        if (!inCall)
-        {
+        if (!inCall) {
             callButton->setEnabled(true);
             callButton->setObjectName("green");
             callButton->style()->polish(callButton);
             callButton->setToolTip(tr("Start audio call"));
         }
-    }
-    else
-    {
+    } else {
         callButton->setEnabled(false);
         callButton->setObjectName("grey");
         callButton->style()->polish(callButton);
@@ -255,12 +234,10 @@ void GroupChatForm::onUserListChanged()
 void GroupChatForm::peerAudioPlaying(int peer)
 {
     peerLabels[peer]->setStyleSheet("QLabel {color : red;}");
-    if (!peerAudioTimers[peer])
-    {
+    if (!peerAudioTimers[peer]) {
         peerAudioTimers[peer] = new QTimer(this);
         peerAudioTimers[peer]->setSingleShot(true);
-        connect(peerAudioTimers[peer], &QTimer::timeout, [this, peer]
-        {
+        connect(peerAudioTimers[peer], &QTimer::timeout, [this, peer] {
             if (netcam)
                 static_cast<GroupNetCamView*>(netcam)->removePeer(peer);
 
@@ -272,8 +249,7 @@ void GroupChatForm::peerAudioPlaying(int peer)
             peerAudioTimers[peer] = nullptr;
         });
 
-        if (netcam)
-        {
+        if (netcam) {
             static_cast<GroupNetCamView*>(netcam)->removePeer(peer);
             static_cast<GroupNetCamView*>(netcam)->addPeer(peer, group->getPeerList()[peer]);
         }
@@ -281,7 +257,7 @@ void GroupChatForm::peerAudioPlaying(int peer)
     peerAudioTimers[peer]->start(500);
 }
 
-void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
+void GroupChatForm::dragEnterEvent(QDragEnterEvent* ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
     Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
@@ -289,7 +265,7 @@ void GroupChatForm::dragEnterEvent(QDragEnterEvent *ev)
         ev->acceptProposedAction();
 }
 
-void GroupChatForm::dropEvent(QDropEvent *ev)
+void GroupChatForm::dropEvent(QDropEvent* ev)
 {
     ToxId toxId = ToxId(ev->mimeData()->text());
     Friend* frnd = FriendList::findFriend(toxId.getPublicKey());
@@ -305,17 +281,13 @@ void GroupChatForm::dropEvent(QDropEvent *ev)
 
 void GroupChatForm::onMicMuteToggle()
 {
-    if (audioInputFlag)
-    {
+    if (audioInputFlag) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (micButton->objectName() == "red")
-        {
+        if (micButton->objectName() == "red") {
             av->muteCallInput(group, false);
             micButton->setObjectName("green");
             micButton->setToolTip(tr("Mute microphone"));
-        }
-        else
-        {
+        } else {
             av->muteCallInput(group, true);
             micButton->setObjectName("red");
             micButton->setToolTip(tr("Unmute microphone"));
@@ -327,17 +299,13 @@ void GroupChatForm::onMicMuteToggle()
 
 void GroupChatForm::onVolMuteToggle()
 {
-    if (audioOutputFlag)
-    {
+    if (audioOutputFlag) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (volButton->objectName() == "red")
-        {
+        if (volButton->objectName() == "red") {
             av->muteCallOutput(group, false);
             volButton->setObjectName("green");
             volButton->setToolTip(tr("Mute call"));
-        }
-        else
-        {
+        } else {
             av->muteCallOutput(group, true);
             volButton->setObjectName("red");
             volButton->setToolTip(tr("Unmute call"));
@@ -349,8 +317,7 @@ void GroupChatForm::onVolMuteToggle()
 
 void GroupChatForm::onCallClicked()
 {
-    if (!inCall)
-    {
+    if (!inCall) {
         Core::getInstance()->getAv()->joinGroupCall(group->getGroupId());
         audioInputFlag = true;
         audioOutputFlag = true;
@@ -365,9 +332,7 @@ void GroupChatForm::onCallClicked()
         volButton->setToolTip(tr("Mute call"));
         inCall = true;
         showNetcam();
-    }
-    else
-    {
+    } else {
         Core::getInstance()->getAv()->leaveGroupCall(group->getGroupId());
         audioInputFlag = false;
         audioOutputFlag = false;
@@ -385,13 +350,12 @@ void GroupChatForm::onCallClicked()
     }
 }
 
-GenericNetCamView *GroupChatForm::createNetcam()
+GenericNetCamView* GroupChatForm::createNetcam()
 {
     GroupNetCamView* view = new GroupNetCamView(group->getGroupId(), this);
 
     QStringList names = group->getPeerList();
-    for (int i = 0; i<names.size(); ++i)
-    {
+    for (int i = 0; i < names.size(); ++i) {
         if (!group->isSelfPeerNumber(i))
             static_cast<GroupNetCamView*>(view)->addPeer(i, names[i]);
     }
@@ -402,11 +366,9 @@ GenericNetCamView *GroupChatForm::createNetcam()
 void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
-    {
+    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (!av->isGroupCallInputMuted(group))
-        {
+        if (!av->isGroupCallInputMuted(group)) {
             av->muteCallInput(group, false);
             micButton->setObjectName("green");
             micButton->style()->polish(micButton);
@@ -421,11 +383,9 @@ void GroupChatForm::keyPressEvent(QKeyEvent* ev)
 void GroupChatForm::keyReleaseEvent(QKeyEvent* ev)
 {
     // Push to talk (CTRL+P)
-    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall)
-    {
+    if (ev->key() == Qt::Key_P && (ev->modifiers() & Qt::ControlModifier) && inCall) {
         CoreAV* av = Core::getInstance()->getAv();
-        if (av->isGroupCallInputMuted(group))
-        {
+        if (av->isGroupCallInputMuted(group)) {
             av->muteCallInput(group, true);
             micButton->setObjectName("red");
             micButton->style()->polish(micButton);

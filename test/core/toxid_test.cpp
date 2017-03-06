@@ -24,10 +24,14 @@
 #include <QString>
 #include <check.h>
 
-const QString corrupted = QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEBA");
-const QString testToxId = QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEB9");
-const QString publicKey = QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30");
-const QString echoToxId = QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39218F515C39A6");
+const QString corrupted =
+    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEBA");
+const QString testToxId =
+    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30C8BA3AB9BEB9");
+const QString publicKey =
+    QStringLiteral("C7719C6808C14B77348004956D1D98046CE09A34370E7608150EAD74C3815D30");
+const QString echoToxId =
+    QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39218F515C39A6");
 
 START_TEST(toStringTest)
 {
@@ -81,9 +85,9 @@ START_TEST(validationTest)
 }
 END_TEST
 
-static Suite *toxIdSuite(void)
+static Suite* toxIdSuite(void)
 {
-    Suite *s = suite_create("ToxId");
+    Suite* s = suite_create("ToxId");
 
     DEFTESTCASE(toString);
     DEFTESTCASE(equal);
@@ -95,12 +99,12 @@ static Suite *toxIdSuite(void)
     return s;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
-    srand((unsigned int) time(NULL));
+    srand((unsigned int)time(NULL));
 
-    Suite *toxId = toxIdSuite();
-    SRunner *runner = srunner_create(toxId);
+    Suite* toxId = toxIdSuite();
+    SRunner* runner = srunner_create(toxId);
     srunner_run_all(runner, CK_NORMAL);
 
     int res = srunner_ntests_failed(runner);

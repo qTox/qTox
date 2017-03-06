@@ -26,7 +26,7 @@
 #include <QRect>
 #include <QSize>
 
-extern "C"{
+extern "C" {
 #include <libavcodec/avcodec.h>
 }
 
@@ -58,12 +58,14 @@ public:
     using AtomicIDType = std::atomic_uint_fast64_t;
 
 public:
-    VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt, bool freeSourceFrame = false);
+    VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
+               bool freeSourceFrame = false);
     VideoFrame(IDType sourceID, AVFrame* sourceFrame, bool freeSourceFrame = false);
 
     ~VideoFrame();
 
-    // Copy/Move operations are disabled for the VideoFrame, encapsulate with a std::shared_ptr to manage.
+    // Copy/Move operations are disabled for the VideoFrame, encapsulate with a std::shared_ptr to
+    // manage.
 
     VideoFrame(const VideoFrame& other) = delete;
     VideoFrame(VideoFrame&& other) = delete;
@@ -90,7 +92,8 @@ public:
     static constexpr int dataAlignment = 32;
 
 private:
-    class FrameBufferKey{
+    class FrameBufferKey
+    {
     public:
         FrameBufferKey(const int width, const int height, const int pixFmt, const bool lineAligned);
 
@@ -119,7 +122,8 @@ private:
 
 private:
     static FrameBufferKey getFrameKey(const QSize& frameSize, const int pixFmt, const int linesize);
-    static FrameBufferKey getFrameKey(const QSize& frameSize, const int pixFmt, const bool frameAligned);
+    static FrameBufferKey getFrameKey(const QSize& frameSize, const int pixFmt,
+                                      const bool frameAligned);
 
     AVFrame* retrieveAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
     AVFrame* generateAVFrame(const QSize& dimensions, const int pixelFormat, const bool requireAligned);
@@ -137,7 +141,8 @@ private:
     const IDType sourceID;
 
     // Main framebuffer store
-    std::unordered_map<FrameBufferKey, AVFrame*, std::function<decltype(FrameBufferKey::hash)>> frameBuffer {3, FrameBufferKey::hash};
+    std::unordered_map<FrameBufferKey, AVFrame*, std::function<decltype(FrameBufferKey::hash)>>
+        frameBuffer{3, FrameBufferKey::hash};
 
     // Source frame
     const QRect sourceDimensions;
@@ -152,7 +157,7 @@ private:
     static std::unordered_map<IDType, std::unordered_map<IDType, std::weak_ptr<VideoFrame>>> refsMap;
 
     // Concurrency
-    QReadWriteLock frameLock {};
+    QReadWriteLock frameLock{};
     static QReadWriteLock refsLock;
 };
 

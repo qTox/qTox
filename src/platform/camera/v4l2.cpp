@@ -22,14 +22,14 @@
 
 #include "v4l2.h"
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <sys/ioctl.h>
-#include <linux/videodev2.h>
-#include <dirent.h>
-#include <map>
 #include <QDebug>
+#include <dirent.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <linux/videodev2.h>
+#include <map>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 /**
  * Most of this file is adapted from libavdevice's v4l2.c,
@@ -37,25 +37,25 @@
  * stdout and is not part of the public API for some reason.
  */
 
-static std::map<uint32_t,uint8_t> createPixFmtToQuality()
+static std::map<uint32_t, uint8_t> createPixFmtToQuality()
 {
-    std::map<uint32_t,uint8_t> m;
+    std::map<uint32_t, uint8_t> m;
     m[V4L2_PIX_FMT_H264] = 3;
     m[V4L2_PIX_FMT_MJPEG] = 2;
     m[V4L2_PIX_FMT_YUYV] = 1;
     return m;
 }
-const std::map<uint32_t,uint8_t> pixFmtToQuality = createPixFmtToQuality();
+const std::map<uint32_t, uint8_t> pixFmtToQuality = createPixFmtToQuality();
 
-static std::map<uint32_t,QString> createPixFmtToName()
+static std::map<uint32_t, QString> createPixFmtToName()
 {
-    std::map<uint32_t,QString> m;
+    std::map<uint32_t, QString> m;
     m[V4L2_PIX_FMT_H264] = QString("h264");
     m[V4L2_PIX_FMT_MJPEG] = QString("mjpeg");
     m[V4L2_PIX_FMT_YUYV] = QString("yuyv422");
     return m;
 }
-const std::map<uint32_t,QString> pixFmtToName = createPixFmtToName();
+const std::map<uint32_t, QString> pixFmtToName = createPixFmtToName();
 
 static int deviceOpen(QString devName, int* error)
 {
@@ -90,7 +90,8 @@ fail:
     return -1;
 }
 
-static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsigned h, uint32_t pixelFormat)
+static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsigned h,
+                                                       uint32_t pixelFormat)
 {
     QVector<unsigned short> rates;
     v4l2_frmivalenum vfve{};
@@ -105,7 +106,7 @@ static QVector<unsigned short> getDeviceModeFramerates(int fd, unsigned w, unsig
             rate = vfve.discrete.denominator / vfve.discrete.numerator;
             if (!rates.contains(rate))
                 rates.append(rate);
-        break;
+            break;
         case V4L2_FRMSIZE_TYPE_CONTINUOUS:
         case V4L2_FRMSIZE_TYPE_STEPWISE:
             rate = vfve.stepwise.min.denominator / vfve.stepwise.min.numerator;
@@ -129,34 +130,32 @@ QVector<VideoMode> v4l2::getDeviceModes(QString devName)
     v4l2_fmtdesc vfd{};
     vfd.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-    while (!ioctl(fd, VIDIOC_ENUM_FMT, &vfd))
-    {
+    while (!ioctl(fd, VIDIOC_ENUM_FMT, &vfd)) {
         vfd.index++;
 
         v4l2_frmsizeenum vfse{};
         vfse.pixel_format = vfd.pixelformat;
 
-        while (!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse))
-        {
+        while (!ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &vfse)) {
             VideoMode mode;
             mode.pixel_format = vfse.pixel_format;
             switch (vfse.type) {
             case V4L2_FRMSIZE_TYPE_DISCRETE:
                 mode.width = vfse.discrete.width;
                 mode.height = vfse.discrete.height;
-            break;
+                break;
             case V4L2_FRMSIZE_TYPE_CONTINUOUS:
             case V4L2_FRMSIZE_TYPE_STEPWISE:
                 mode.width = vfse.stepwise.max_width;
                 mode.height = vfse.stepwise.max_height;
-            break;
+                break;
             default:
                 continue;
             }
 
-            QVector<unsigned short> rates = getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
-            for (unsigned short rate : rates)
-            {
+            QVector<unsigned short> rates =
+                getDeviceModeFramerates(fd, mode.width, mode.height, vfd.pixelformat);
+            for (unsigned short rate : rates) {
                 mode.FPS = rate;
                 if (!modes.contains(mode))
                     modes.append(std::move(mode));
@@ -173,7 +172,7 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
     QVector<QPair<QString, QString>> devices;
     QVector<QString> deviceFiles;
 
-    DIR *dir = opendir("/dev");
+    DIR* dir = opendir("/dev");
     if (!dir)
         return devices;
 
@@ -183,8 +182,7 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
             deviceFiles += QString("/dev/") + e->d_name;
     closedir(dir);
 
-    for (QString file : deviceFiles)
-    {
+    for (QString file : deviceFiles) {
         int fd = open(file.toStdString().c_str(), O_RDWR);
         if (fd < 0)
             continue;
@@ -200,8 +198,7 @@ QVector<QPair<QString, QString>> v4l2::getDeviceList()
 
 QString v4l2::getPixelFormatString(uint32_t pixel_format)
 {
-    if (pixFmtToName.find(pixel_format) == pixFmtToName.end())
-    {
+    if (pixFmtToName.find(pixel_format) == pixFmtToName.end()) {
         qWarning() << "Pixel format not found";
         return QString("unknown");
     }
@@ -210,14 +207,10 @@ QString v4l2::getPixelFormatString(uint32_t pixel_format)
 
 bool v4l2::betterPixelFormat(uint32_t a, uint32_t b)
 {
-    if (pixFmtToQuality.find(a) == pixFmtToQuality.end())
-    {
+    if (pixFmtToQuality.find(a) == pixFmtToQuality.end()) {
         return false;
-    }
-    else if (pixFmtToQuality.find(b) == pixFmtToQuality.end())
-    {
+    } else if (pixFmtToQuality.find(b) == pixFmtToQuality.end()) {
         return true;
     }
-	return pixFmtToQuality.at(a) > pixFmtToQuality.at(b);
+    return pixFmtToQuality.at(a) > pixFmtToQuality.at(b);
 }
-

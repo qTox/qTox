@@ -20,8 +20,8 @@
 #ifndef FILETRANSFERWIDGET_H
 #define FILETRANSFERWIDGET_H
 
-#include <QWidget>
 #include <QTime>
+#include <QWidget>
 
 #include "src/chatlog/chatlinecontent.h"
 #include "src/core/corestructs.h"
@@ -74,10 +74,10 @@ private slots:
     void onPreviewButtonClicked();
 
 private:
-    static QPixmap scaleCropIntoSquare(const QPixmap &source, int targetSize);
+    static QPixmap scaleCropIntoSquare(const QPixmap& source, int targetSize);
 
 private:
-    Ui::FileTransferWidget *ui;
+    Ui::FileTransferWidget* ui;
     ToxFile fileInfo;
     QTime lastTick;
     quint64 lastBytesSent = 0;

@@ -19,10 +19,10 @@
 
 #include "chatlinecontentproxy.h"
 #include "src/chatlog/content/filetransferwidget.h"
-#include <QLayout>
-#include <QWidget>
-#include <QPainter>
 #include <QDebug>
+#include <QLayout>
+#include <QPainter>
+#include <QWidget>
 
 /**
  * @enum ChatLineContentProxy::ChatLineContentProxyType
@@ -32,7 +32,8 @@
  * @value FileTransferWidgetType = 0
  */
 
-ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type, int minWidth, float widthInPercent)
+ChatLineContentProxy::ChatLineContentProxy(QWidget* widget, ChatLineContentProxyType type,
+                                           int minWidth, float widthInPercent)
     : widthPercent(widthInPercent)
     , widthMin(minWidth)
     , widgetType{type}
@@ -58,7 +59,8 @@ QRectF ChatLineContentProxy::boundingRect() const
     return result;
 }
 
-void ChatLineContentProxy::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void ChatLineContentProxy::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
+                                 QWidget* widget)
 {
     painter->setClipRect(boundingRect());
     proxy->paint(painter, option, widget);
@@ -76,7 +78,7 @@ QWidget* ChatLineContentProxy::getWidget() const
 
 void ChatLineContentProxy::setWidth(qreal width)
 {
-    proxy->widget()->setFixedWidth(qMax(static_cast<int>(width*widthPercent), widthMin));
+    proxy->widget()->setFixedWidth(qMax(static_cast<int>(width * widthPercent), widthMin));
 }
 
 ChatLineContentProxy::ChatLineContentProxyType ChatLineContentProxy::getWidgetType() const

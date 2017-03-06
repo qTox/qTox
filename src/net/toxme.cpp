@@ -19,16 +19,16 @@
 
 #include "toxme.h"
 #include "src/core/core.h"
-#include <src/persistence/settings.h>
-#include <QtDebug>
+#include <QCoreApplication>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QCoreApplication>
 #include <QThread>
+#include <QtDebug>
+#include <ctime>
 #include <sodium/crypto_box.h>
 #include <sodium/randombytes.h>
+#include <src/persistence/settings.h>
 #include <string>
-#include <ctime>
 
 /**
  * @class Toxme
@@ -38,7 +38,7 @@
  * @note May process events while waiting for blocking calls
  */
 
-QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError &error)
+QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::NetworkError& error)
 {
     if (error)
         return QByteArray();
@@ -49,8 +49,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.post(request, json.toUtf8());
 
-    while (!reply->isFinished())
-    {
+    while (!reply->isFinished()) {
         QThread::msleep(1);
         qApp->processEvents();
     }
@@ -60,7 +59,7 @@ QByteArray Toxme::makeJsonRequest(QString url, QString json, QNetworkReply::Netw
     return result;
 }
 
-QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &error)
+QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError& error)
 {
     if (error)
         return QByteArray();
@@ -72,15 +71,13 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     QNetworkReply* reply = netman.get(request);
 
-    while (!reply->isFinished())
-    {
+    while (!reply->isFinished()) {
         QThread::msleep(1);
         qApp->processEvents();
     }
 
     error = reply->error();
-    if (error)
-    {
+    if (error) {
         qWarning() << "getServerPubkey: A network error occured:" << reply->errorString();
         return QByteArray();
     }
@@ -94,12 +91,12 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
     int start = json.indexOf(pattern) + pattern.length();
     int end = json.indexOf("\"", start);
     int pubkeySize = (end - start) / 2;
-    QString rawKey = json.mid(start, pubkeySize*2);
+    QString rawKey = json.mid(start, pubkeySize * 2);
 
     QByteArray key;
     // I think, exist more easy way to convert key to ByteArray
     for (int i = 0; i < pubkeySize; ++i) {
-        QString byte = rawKey.mid(i*2, 2);
+        QString byte = rawKey.mid(i * 2, 2);
         key[i] = byte.toInt(nullptr, 16);
     }
 
@@ -109,8 +106,7 @@ QByteArray Toxme::getServerPubkey(QString url, QNetworkReply::NetworkError &erro
 QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
 {
     QPair<QByteArray, QByteArray> keypair = Core::getInstance()->getKeypair();
-    if (keypair.first.isEmpty() || keypair.second.isEmpty())
-    {
+    if (keypair.first.isEmpty() || keypair.second.isEmpty()) {
         qWarning() << "prepareEncryptedJson: Couldn't get our keypair, aborting";
         return QByteArray();
     }
@@ -124,12 +120,12 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
     randombytes((uint8_t*)nonce.data(), crypto_box_NONCEBYTES);
 
     QByteArray payloadData = payload.toUtf8();
-    const size_t cypherlen = crypto_box_MACBYTES+payloadData.size();
+    const size_t cypherlen = crypto_box_MACBYTES + payloadData.size();
     unsigned char* payloadEnc = new unsigned char[cypherlen];
 
-    int cryptResult = crypto_box_easy(payloadEnc,(uint8_t*)payloadData.data(),payloadData.size(),
-                    (uint8_t*)nonce.data(),(unsigned char*)key.constData(),
-                    (uint8_t*)keypair.second.data());
+    int cryptResult = crypto_box_easy(payloadEnc, (uint8_t*)payloadData.data(), payloadData.size(),
+                                      (uint8_t*)nonce.data(), (unsigned char*)key.constData(),
+                                      (uint8_t*)keypair.second.data());
 
     if (cryptResult != 0) // error
         return QByteArray();
@@ -137,10 +133,13 @@ QByteArray Toxme::prepareEncryptedJson(QString url, int action, QString payload)
     QByteArray payloadEncData(reinterpret_cast<char*>(payloadEnc), cypherlen);
     delete[] payloadEnc;
 
-    const QString json{"{\"action\":"+QString().setNum(action)+","
-                       "\"public_key\":\""+keypair.first.toHex()+"\","
-                       "\"encrypted\":\""+payloadEncData.toBase64()+"\","
-                       "\"nonce\":\""+nonce.toBase64()+"\"}"};
+    const QString json{"{\"action\":" + QString().setNum(action) + ","
+                                                                   "\"public_key\":\""
+                       + keypair.first.toHex() + "\","
+                                                 "\"encrypted\":\""
+                       + payloadEncData.toBase64() + "\","
+                                                     "\"nonce\":\""
+                       + nonce.toBase64() + "\"}"};
     return json.toUtf8();
 }
 
@@ -153,10 +152,10 @@ ToxId Toxme::lookup(QString address)
 {
     // JSON injection ?
     address = address.trimmed();
-    address.replace('\\',"\\\\");
-    address.replace('"',"\"");
+    address.replace('\\', "\\\\");
+    address.replace('"', "\"");
 
-    const QString json{"{\"action\":3,\"name\":\""+address+"\"}"};
+    const QString json{"{\"action\":3,\"name\":\"" + address + "\"}"};
 
     QString apiUrl = "https://" + address.split(QLatin1Char('@')).last() + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
@@ -170,13 +169,13 @@ ToxId Toxme::lookup(QString address)
     if (index == -1)
         return ToxId();
 
-    response = response.mid(index+pattern.size());
+    response = response.mid(index + pattern.size());
 
     const int idStart = response.indexOf('"');
     if (idStart == -1)
         return ToxId();
 
-    response = response.mid(idStart+1);
+    response = response.mid(idStart + 1);
 
     const int idEnd = response.indexOf('"');
     if (idEnd == -1)
@@ -199,10 +198,9 @@ Toxme::ExecCode Toxme::extractError(QString json)
     if (start == -1)
         return ServerError;
 
-    json = json.mid(start+pattern.size());
+    json = json.mid(start + pattern.size());
     int end = json.indexOf(",");
-    if (end == -1)
-    {
+    if (end == -1) {
         end = json.indexOf("}");
         if (end == -1)
             return IncorrectResponse;
@@ -227,16 +225,16 @@ Toxme::ExecCode Toxme::extractError(QString json)
  * @param[in] bio A short optional description of yourself if you want to publish your address.
  * @return password on success, else sets code parameter and returns an empty QString.
  */
-QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString address,
+QString Toxme::createAddress(ExecCode& code, QString server, ToxId id, QString address,
                              bool keepPrivate, QString bio)
 {
     int privacy = keepPrivate ? 0 : 2;
     // JSON injection ?
-    bio.replace('\\',"\\\\");
-    bio.replace('"',"\"");
+    bio.replace('\\', "\\\\");
+    bio.replace('"', "\"");
 
-    address.replace('\\',"\\\\");
-    address.replace('"',"\"");
+    address.replace('\\', "\\\\");
+    address.replace('"', "\"");
 
     bio = bio.trimmed();
     address = address.trimmed();
@@ -244,14 +242,18 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
     if (!server.contains("://"))
         server = "https://" + server;
 
-    const QString payload{"{\"tox_id\":\""+id.toString()+"\","
-                          "\"name\":\""+address+"\","
-                          "\"privacy\":"+QString().setNum(privacy)+","
-                          "\"bio\":\""+bio+"\","
-                          "\"timestamp\":"+QString().setNum(time(0))+"}"};
+    const QString payload{"{\"tox_id\":\"" + id.toString() + "\","
+                                                             "\"name\":\""
+                          + address + "\","
+                                      "\"privacy\":"
+                          + QString().setNum(privacy) + ","
+                                                        "\"bio\":\""
+                          + bio + "\","
+                                  "\"timestamp\":"
+                          + QString().setNum(time(0)) + "}"};
 
     QString pubkeyUrl = server + "/pk";
-    QString apiUrl =  server + "/api";
+    QString apiUrl = server + "/api";
     QNetworkReply::NetworkError error = QNetworkReply::NoError;
     QByteArray encrypted = prepareEncryptedJson(pubkeyUrl, 1, payload);
     QByteArray response = makeJsonRequest(apiUrl, encrypted, error);
@@ -263,28 +265,26 @@ QString Toxme::createAddress(ExecCode &code, QString server, ToxId id, QString a
     return getPass(response, code);
 }
 
-QString Toxme::getPass(QString json, ExecCode &code) {
+QString Toxme::getPass(QString json, ExecCode& code)
+{
     static const QByteArray pattern{"password\":"};
 
     json = json.remove(' ');
     const int start = json.indexOf(pattern);
-    if (start == -1)
-    {
+    if (start == -1) {
         code = NoPassword;
         return QString();
     }
 
-    json = json.mid(start+pattern.size());
-    if (json.startsWith("null"))
-    {
+    json = json.mid(start + pattern.size());
+    if (json.startsWith("null")) {
         code = Updated;
         return QString();
     }
 
     json = json.mid(1, json.length());
     int end = json.indexOf("\"");
-    if (end == -1)
-    {
+    if (end == -1) {
         code = IncorrectResponse;
         return QString();
     }
@@ -302,8 +302,9 @@ QString Toxme::getPass(QString json, ExecCode &code) {
  */
 Toxme::ExecCode Toxme::deleteAddress(QString server, ToxPk id)
 {
-    const QString payload{"{\"public_key\":\""+id.toString()+"\","
-                          "\"timestamp\":"+QString().setNum(time(0))+"}"};
+    const QString payload{"{\"public_key\":\"" + id.toString() + "\","
+                                                                 "\"timestamp\":"
+                          + QString().setNum(time(0)) + "}"};
 
     server = server.trimmed();
     if (!server.contains("://"))

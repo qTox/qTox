@@ -30,8 +30,7 @@ struct VideoMode
     float FPS;
     uint32_t pixel_format;
 
-    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0,
-              int FPS = 0, int format = 0);
+    VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, int FPS = 0, int format = 0);
 
     VideoMode(QRect rect);
 
@@ -43,4 +42,3 @@ struct VideoMode
 };
 
 #endif // VIDEOMODE_H
-

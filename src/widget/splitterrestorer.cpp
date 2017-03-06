@@ -54,9 +54,8 @@ SplitterRestorer::SplitterRestorer(QSplitter* splitter)
  */
 void SplitterRestorer::restore(const QByteArray& state, const QSize& windowSize)
 {
-    bool brokenSplitter = !splitter->restoreState(state) ||
-                           splitter->orientation() != Qt::Horizontal ||
-                           splitter->handleWidth() > defaultWidth;
+    bool brokenSplitter = !splitter->restoreState(state) || splitter->orientation() != Qt::Horizontal
+                          || splitter->handleWidth() > defaultWidth;
 
     if (splitter->count() == 2 && brokenSplitter) {
         splitter->setOrientation(Qt::Horizontal);

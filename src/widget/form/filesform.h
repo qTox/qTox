@@ -20,10 +20,10 @@
 #ifndef FILESFORM_H
 #define FILESFORM_H
 
-#include <QListWidgetItem>
-#include <QTabWidget>
-#include <QString>
 #include <QLabel>
+#include <QListWidgetItem>
+#include <QString>
+#include <QTabWidget>
 #include <QVBoxLayout>
 
 class ContentLayout;
@@ -56,7 +56,7 @@ private:
     QLabel headLabel;
     QVBoxLayout headLayout;
     QTabWidget main;
-    QListWidget* sent, * recvd;
+    QListWidget *sent, *recvd;
 };
 
 #endif // FILESFORM_H

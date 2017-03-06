@@ -34,10 +34,9 @@ QTextDocument* DocumentCache::pop()
     return documents.pop();
 }
 
-void DocumentCache::push(QTextDocument *doc)
+void DocumentCache::push(QTextDocument* doc)
 {
-    if (doc)
-    {
+    if (doc) {
         doc->clear();
         documents.push(doc);
     }
@@ -46,7 +45,7 @@ void DocumentCache::push(QTextDocument *doc)
 /**
  * @brief Returns the singleton instance.
  */
-DocumentCache &DocumentCache::getInstance()
+DocumentCache& DocumentCache::getInstance()
 {
     static DocumentCache instance;
     return instance;

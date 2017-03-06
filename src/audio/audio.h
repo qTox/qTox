@@ -24,18 +24,18 @@
 #include <atomic>
 #include <cmath>
 
-#include <QObject>
 #include <QMutex>
+#include <QObject>
 #include <QTimer>
 
 #include <cassert>
 
 #if defined(__APPLE__) && defined(__MACH__)
- #include <OpenAL/al.h>
- #include <OpenAL/alc.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 #else
- #include <AL/al.h>
- #include <AL/alc.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 #endif
 
 
@@ -51,12 +51,16 @@ class Audio : public QObject
     class Private;
 
 public:
+    enum class Sound
+    {
+        NewMessage,
+        Test,
+        IncomingCall
+    };
 
-    enum class Sound { NewMessage, Test, IncomingCall };
-
-    inline static QString getSound(Sound s) {
-        switch (s)
-        {
+    inline static QString getSound(Sound s)
+    {
+        switch (s) {
         case Sound::Test:
             return QStringLiteral(":/audio/notification.pcm");
         case Sound::NewMessage:
@@ -106,25 +110,26 @@ public:
     void playMono16Sound(const QByteArray& data);
     void playMono16Sound(const QString& path);
 
-    void playAudioBuffer(ALuint alSource, const int16_t *data, int samples,
-                         unsigned channels, int sampleRate);
+    void playAudioBuffer(ALuint alSource, const int16_t* data, int samples, unsigned channels,
+                         int sampleRate);
 
 public:
     // Public default audio settings
     static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
     static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
-    static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE/1000;
+    static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     static constexpr uint32_t AUDIO_CHANNELS = 2;
 
 signals:
-    void frameAvailable(const int16_t *pcm, size_t sample_count, uint8_t channels, uint32_t sampling_rate);
+    void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
+                        uint32_t sampling_rate);
 
 private:
     Audio();
     ~Audio();
 
     static void checkAlError() noexcept;
-    static void checkAlcError(ALCdevice *device) noexcept;
+    static void checkAlcError(ALCdevice* device) noexcept;
 
     bool autoInitInput();
     bool autoInitOutput();
@@ -139,20 +144,20 @@ private:
     Private* d;
 
 private:
-    QThread*            audioThread;
-    mutable QMutex      audioLock;
+    QThread* audioThread;
+    mutable QMutex audioLock;
 
-    ALCdevice*          alInDev;
-    quint32             inSubscriptions;
-    QTimer              captureTimer, playMono16Timer;
+    ALCdevice* alInDev;
+    quint32 inSubscriptions;
+    QTimer captureTimer, playMono16Timer;
 
-    ALCdevice*          alOutDev;
-    ALCcontext*         alOutContext;
-    ALuint              alMainSource;
-    ALuint              alMainBuffer;
-    bool                outputInitialized;
+    ALCdevice* alOutDev;
+    ALCcontext* alOutContext;
+    ALuint alMainSource;
+    ALuint alMainBuffer;
+    bool outputInitialized;
 
-    QList<ALuint>       outSources;
+    QList<ALuint> outSources;
 };
 
 #endif // AUDIO_H

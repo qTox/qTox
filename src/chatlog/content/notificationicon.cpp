@@ -20,9 +20,9 @@
 #include "notificationicon.h"
 #include "../pixmapcache.h"
 
+#include <QGraphicsScene>
 #include <QPainter>
 #include <QTimer>
-#include <QGraphicsScene>
 
 NotificationIcon::NotificationIcon(QSize Size)
     : size(Size)
@@ -30,7 +30,7 @@ NotificationIcon::NotificationIcon(QSize Size)
     pmap = PixmapCache::getInstance().get(":/ui/chatArea/typing.svg", size);
 
     updateTimer = new QTimer(this);
-    updateTimer->setInterval(1000/30);
+    updateTimer->setInterval(1000 / 30);
     updateTimer->setSingleShot(false);
 
     updateTimer->start();
@@ -74,7 +74,7 @@ void NotificationIcon::updateGradient()
     if (alpha + dotWidth >= 1.0)
         alpha = 0.0;
 
-    grad = QLinearGradient(QPointF(-0.5*size.width(),0), QPointF(3.0/2.0*size.width(),0));
+    grad = QLinearGradient(QPointF(-0.5 * size.width(), 0), QPointF(3.0 / 2.0 * size.width(), 0));
     grad.setColorAt(0, Qt::lightGray);
     grad.setColorAt(qMax(0.0, alpha - dotWidth), Qt::lightGray);
     grad.setColorAt(alpha, Qt::black);

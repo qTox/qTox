@@ -18,10 +18,10 @@
 */
 
 #include "contentlayout.h"
-#include "src/persistence/settings.h"
 #include "style.h"
-#include <QStyleFactory>
+#include "src/persistence/settings.h"
 #include <QFrame>
+#include <QStyleFactory>
 
 ContentLayout::ContentLayout()
     : QVBoxLayout()
@@ -69,15 +69,13 @@ ContentLayout::~ContentLayout()
 void ContentLayout::clear()
 {
     QLayoutItem* item;
-    while ((item = mainHead->layout()->takeAt(0)) != 0)
-    {
+    while ((item = mainHead->layout()->takeAt(0)) != 0) {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
         delete item;
     }
 
-    while ((item = mainContent->layout()->takeAt(0)) != 0)
-    {
+    while ((item = mainContent->layout()->takeAt(0)) != 0) {
         item->widget()->hide();
         item->widget()->setParent(nullptr);
         delete item;
@@ -108,8 +106,7 @@ void ContentLayout::init()
     mainContent->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     if (QStyleFactory::keys().contains(Settings::getInstance().getStyle())
-            && Settings::getInstance().getStyle() != "None")
-    {
+        && Settings::getInstance().getStyle() != "None") {
         mainHead->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
         mainContent->setStyle(QStyleFactory::create(Settings::getInstance().getStyle()));
     }

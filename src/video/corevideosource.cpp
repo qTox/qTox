@@ -44,8 +44,9 @@ extern "C" {
  * only CoreAV can push images to it.
  */
 CoreVideoSource::CoreVideoSource()
-    : subscribers{0}, deleteOnClose{false},
-    stopped{false}
+    : subscribers{0}
+    , deleteOnClose{false}
+    , stopped{false}
 {
 }
 
@@ -75,24 +76,22 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     avframe->height = height;
     avframe->format = AV_PIX_FMT_YUV420P;
 
-    int bufSize = av_image_alloc(avframe->data, avframe->linesize,
-                                 width, height,
-                                 static_cast<AVPixelFormat>(AV_PIX_FMT_YUV420P), VideoFrame::dataAlignment);
+    int bufSize =
+        av_image_alloc(avframe->data, avframe->linesize, width, height,
+                       static_cast<AVPixelFormat>(AV_PIX_FMT_YUV420P), VideoFrame::dataAlignment);
 
-    if(bufSize < 0){
+    if (bufSize < 0) {
         av_frame_free(&avframe);
         return;
     }
 
-    for (int i = 0; i < 3; ++i)
-    {
+    for (int i = 0; i < 3; ++i) {
         int dstStride = avframe->linesize[i];
         int srcStride = vpxframe->stride[i];
         int minStride = std::min(dstStride, srcStride);
         int size = (i == 0) ? height : height / 2;
 
-        for (int j = 0; j < size; ++j)
-        {
+        for (int j = 0; j < size; ++j) {
             uint8_t* dst = avframe->data[i] + dstStride * j;
             uint8_t* src = vpxframe->planes[i] + srcStride * j;
             memcpy(dst, src, minStride);
@@ -113,10 +112,8 @@ bool CoreVideoSource::subscribe()
 void CoreVideoSource::unsubscribe()
 {
     biglock.lock();
-    if (--subscribers == 0)
-    {
-        if (deleteOnClose)
-        {
+    if (--subscribers == 0) {
+        if (deleteOnClose) {
             biglock.unlock();
             // DANGEROUS: No member access after this point, that's why we manually unlock
             delete this;

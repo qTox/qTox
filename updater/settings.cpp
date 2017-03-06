@@ -1,8 +1,8 @@
 #include "settings.h"
+#include <QDebug>
+#include <QDir>
 #include <QFile>
 #include <QSettings>
-#include <QDir>
-#include <QDebug>
 #include <QStandardPaths>
 
 #ifdef Q_OS_WIN
@@ -10,23 +10,22 @@
 #undef _WIN32_WINNT
 #endif
 #define _WIN32_WINNT 0x0600 // Vista for SHGetKnownFolderPath
-#include <windows.h>
+#include <exdisp.h>
 #include <shldisp.h>
 #include <shlobj.h>
-#include <exdisp.h>
+#include <windows.h>
 #endif
 
 Settings::Settings()
 {
     portable = false;
     QFile portableSettings(SETTINGS_FILE);
-    if (portableSettings.exists())
-    {
+    if (portableSettings.exists()) {
         QSettings ps(SETTINGS_FILE, QSettings::IniFormat);
         ps.beginGroup("General");
         portable = ps.value("makeToxPortable", false).toBool();
     }
-    qDebug() << "Portable: "<<portable;
+    qDebug() << "Portable: " << portable;
 
 #ifdef Q_OS_WIN
     // Get a primary unelevated token of the actual user
@@ -67,8 +66,10 @@ Settings::Settings()
         goto unelevateFail;
 
     // Duplicate the shell's process token to get a primary token.
-    // Based on experimentation, this is the minimal set of rights required for CreateProcessWithTokenW (contrary to current documentation).
-    if (!DuplicateTokenEx(hShellProcessToken, dwTokenRights, NULL, SecurityImpersonation, TokenPrimary, &hPrimaryToken))
+    // Based on experimentation, this is the minimal set of rights required for
+    // CreateProcessWithTokenW (contrary to current documentation).
+    if (!DuplicateTokenEx(hShellProcessToken, dwTokenRights, NULL, SecurityImpersonation,
+                          TokenPrimary, &hPrimaryToken))
         goto unelevateFail;
 
     qDebug() << "Unelevated primary access token acquired";
@@ -91,39 +92,39 @@ Settings::~Settings()
 QString Settings::getSettingsDirPath() const
 {
     if (portable)
-        return QString(".")+QDir::separator();
+        return QString(".") + QDir::separator();
 
-    // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
+// workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
 #ifdef Q_OS_WIN
     wchar_t* path;
     bool isOld = false; // If true, we can't unelevate and just return the path for our current home
 
     auto shell32H = LoadLibrary(TEXT("shell32.dll"));
-    if (!(isOld = (shell32H == nullptr)))
-    {
-        auto SHGetKnownFolderPathH = (decltype(&SHGetKnownFolderPath))
-                                        GetProcAddress(shell32H, "SHGetKnownFolderPath");
+    if (!(isOld = (shell32H == nullptr))) {
+        auto SHGetKnownFolderPathH =
+            (decltype(&SHGetKnownFolderPath))GetProcAddress(shell32H, "SHGetKnownFolderPath");
         if (!(isOld = (SHGetKnownFolderPathH == nullptr)))
             SHGetKnownFolderPathH(FOLDERID_RoamingAppData, 0, hPrimaryToken, &path);
     }
 
-    if (isOld)
-    {
-        return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
-                                      + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "tox" + QDir::separator());
-    }
-    else
-    {
+    if (isOld) {
+        return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
+                               + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
+                               + QDir::separator() + "tox" + QDir::separator());
+    } else {
         QString pathStr = QString::fromStdWString(path);
         pathStr.replace("\\", "/");
         return pathStr + "/tox";
     }
 #elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + QDir::separator()
-                           + "Library" + QDir::separator() + "Application Support" + QDir::separator() + "Tox")+QDir::separator();
+    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
+                           + QDir::separator() + "Library" + QDir::separator()
+                           + "Application Support" + QDir::separator() + "Tox")
+           + QDir::separator();
 #else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox")+QDir::separator();
+                           + QDir::separator() + "tox")
+           + QDir::separator();
 #endif
 }
 

@@ -46,7 +46,7 @@ signals:
     void removeGroup(int groupId);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent * event) final override;
+    void contextMenuEvent(QContextMenuEvent* event) final override;
     void mousePressEvent(QMouseEvent* event) final override;
     void mouseMoveEvent(QMouseEvent* event) final override;
     void dragEnterEvent(QDragEnterEvent* ev) override;

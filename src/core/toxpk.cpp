@@ -14,16 +14,18 @@
  * @brief The default constructor. Creates an empty Tox key.
  */
 ToxPk::ToxPk()
-: key()
-{}
+    : key()
+{
+}
 
 /**
  * @brief The copy constructor.
  * @param other ToxPk to copy
  */
 ToxPk::ToxPk(const ToxPk& other)
-: key(other.key)
-{}
+    : key(other.key)
+{
+}
 
 /**
  * @brief Constructs a ToxPk from bytes.
@@ -32,12 +34,9 @@ ToxPk::ToxPk(const ToxPk& other)
  */
 ToxPk::ToxPk(const QByteArray& rawId)
 {
-    if(rawId.length() == TOX_PUBLIC_KEY_SIZE)
-    {
+    if (rawId.length() == TOX_PUBLIC_KEY_SIZE) {
         key = QByteArray(rawId);
-    }
-    else
-    {
+    } else {
         key = QByteArray();
     }
 }
@@ -88,8 +87,7 @@ QString ToxPk::toString() const
  */
 const uint8_t* ToxPk::getBytes() const
 {
-    if(key.isEmpty())
-    {
+    if (key.isEmpty()) {
         return nullptr;
     }
 
