@@ -77,8 +77,9 @@ public:
 
     static void groupCallCallback(void* tox, int group, int peer,
                                   const int16_t* data, unsigned samples,
-                                  uint8_t channels, unsigned sample_rate, void* core);
-
+                                  uint8_t channels, unsigned sample_rate,
+                                  void* core);
+    static void invalidateGroupCallPeerSource(int group, int peer);
 
 public slots:
     bool startCall(uint32_t friendNum, bool video=false);
