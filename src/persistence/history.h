@@ -25,7 +25,7 @@
 #include <QVector>
 
 #include <cstdint>
-#include <tox/toxencryptsave.h>
+#include "src/core/toxencryptsave_api.h"
 
 #include "src/persistence/db/rawdatabase.h"
 

@@ -35,6 +35,8 @@
 #include "src/nexus.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
+#include "src/core/toxcore_api.h"
+#include "src/core/toxencryptsave_api.h"
 
 /**
  * @class Profile
@@ -534,7 +536,7 @@ QByteArray Profile::getAvatarHash(const QString& ownerId)
 {
     QByteArray pic = loadAvatarData(ownerId);
     QByteArray avatarHash(TOX_HASH_LENGTH, 0);
-    tox_hash((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
+    TOX(hash)((uint8_t*)avatarHash.data(), (uint8_t*)pic.data(), pic.size());
     return avatarHash;
 }
 
@@ -610,7 +612,7 @@ bool Profile::isEncrypted(QString name)
     saveFile.read((char*)data, TOX_PASS_ENCRYPTION_EXTRA_LENGTH);
     saveFile.close();
 
-    return tox_is_data_encrypted(data);
+    return TOXENCSAVE(is_data_encrypted)(data);
 }
 
 /**

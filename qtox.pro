@@ -417,6 +417,9 @@ RESOURCES += res.qrc \
 }
 
 HEADERS  += \
+    src/core/toxcore_api.h \
+    src/core/toxav_api.h \
+    src/core/toxencryptsave_api.h \
     src/audio/audio.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \

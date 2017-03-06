@@ -26,6 +26,8 @@
 #include "src/persistence/settings.h"
 #include "src/video/corevideosource.h"
 #include "src/video/videoframe.h"
+#include "toxcore_api.h"
+#include "toxav_api.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
@@ -93,13 +95,13 @@ CoreAV::CoreAV(Tox* tox)
     iterateTimer->setSingleShot(true);
     connect(iterateTimer.get(), &QTimer::timeout, this, &CoreAV::process);
 
-    toxav = toxav_new(tox, nullptr);
+    toxav = TOXAV(new)(tox, nullptr);
 
-    toxav_callback_call(toxav, CoreAV::callCallback, this);
-    toxav_callback_call_state(toxav, CoreAV::stateCallback, this);
-    toxav_callback_bit_rate_status(toxav, CoreAV::bitrateCallback, this);
-    toxav_callback_audio_receive_frame(toxav, CoreAV::audioFrameCallback, this);
-    toxav_callback_video_receive_frame(toxav, CoreAV::videoFrameCallback, this);
+    TOXAV(callback_call)(toxav, CoreAV::callCallback, this);
+    TOXAV(callback_call_state)(toxav, CoreAV::stateCallback, this);
+    TOXAV(callback_bit_rate_status)(toxav, CoreAV::bitrateCallback, this);
+    TOXAV(callback_audio_receive_frame)(toxav, CoreAV::audioFrameCallback, this);
+    TOXAV(callback_video_receive_frame)(toxav, CoreAV::videoFrameCallback, this);
 
     coreavThread->start();
 }
@@ -109,7 +111,7 @@ CoreAV::~CoreAV()
     for (const ToxFriendCall& call : calls)
         cancelCall(call.callId);
     killTimerFromThread();
-    toxav_kill(toxav);
+    TOXAV(kill)(toxav);
     coreavThread->exit(0);
     while (coreavThread->isRunning()) {
         qApp->processEvents();
@@ -158,8 +160,8 @@ void CoreAV::killTimerFromThread()
 
 void CoreAV::process()
 {
-    toxav_iterate(toxav);
-    iterateTimer->start(toxav_iteration_interval(toxav));
+    TOXAV(iterate)(toxav);
+    iterateTimer->start(TOXAV(iteration_interval)(toxav));
 }
 
 /**
@@ -236,12 +238,12 @@ bool CoreAV::answerCall(uint32_t friendNum)
     qDebug() << QString("answering call %1").arg(friendNum);
     assert(calls.contains(friendNum));
     TOXAV_ERR_ANSWER err;
-    if (toxav_answer(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err)) {
+    if (TOXAV(answer)(toxav, friendNum, AUDIO_DEFAULT_BITRATE, VIDEO_DEFAULT_BITRATE, &err)) {
         calls[friendNum].inactive = false;
         return true;
     } else {
         qWarning() << "Failed to answer call with error" << err;
-        toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
+        TOXAV(call_control)(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         calls.remove(friendNum);
         return false;
     }
@@ -271,7 +273,7 @@ bool CoreAV::startCall(uint32_t friendNum, bool video)
     }
 
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
-    if (!toxav_call(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
+    if (!TOXAV(call)(toxav, friendNum, AUDIO_DEFAULT_BITRATE, videoBitrate, nullptr))
         return false;
 
     auto call = calls.insert({friendNum, video, *this});
@@ -296,7 +298,7 @@ bool CoreAV::cancelCall(uint32_t friendNum)
     }
 
     qDebug() << QString("Cancelling call with %1").arg(friendNum);
-    if (!toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr)) {
+    if (!TOXAV(call_control)(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr)) {
         qWarning() << QString("Failed to cancel call with %1").arg(friendNum);
         return false;
     }
@@ -348,7 +350,7 @@ bool CoreAV::sendCallAudio(uint32_t callId, const int16_t* pcm, size_t samples, 
     TOXAV_ERR_SEND_FRAME err;
     int retries = 0;
     do {
-        if (!toxav_audio_send_frame(toxav, callId, pcm, samples, chans, rate, &err)) {
+        if (!TOXAV(audio_send_frame)(toxav, callId, pcm, samples, chans, rate, &err)) {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
                 ++retries;
                 QThread::usleep(500);
@@ -377,7 +379,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
 
     if (call.nullVideoBitrate) {
         qDebug() << "Restarting video stream to friend" << callId;
-        toxav_bit_rate_set(toxav, call.callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
+        TOXAV(bit_rate_set)(toxav, call.callId, -1, VIDEO_DEFAULT_BITRATE, nullptr);
         call.nullVideoBitrate = false;
     }
 
@@ -392,7 +394,7 @@ void CoreAV::sendCallVideo(uint32_t callId, std::shared_ptr<VideoFrame> vframe)
     TOXAV_ERR_SEND_FRAME err;
     int retries = 0;
     do {
-        if (!toxav_video_send_frame(toxav, callId, frame.width, frame.height, frame.y, frame.u,
+        if (!TOXAV(video_send_frame)(toxav, callId, frame.width, frame.height, frame.y, frame.u,
                                     frame.v, &err)) {
             if (err == TOXAV_ERR_SEND_FRAME_SYNC) {
                 ++retries;
@@ -532,7 +534,7 @@ bool CoreAV::sendGroupCallAudio(int groupId, const int16_t* pcm, size_t samples,
     if (call.inactive || call.muteMic)
         return true;
 
-    if (toxav_group_send_audio(toxav_get_tox(toxav), groupId, pcm, samples, chans, rate) != 0)
+    if (TOXAV(group_send_audio)(TOXAV(get_tox)(toxav), groupId, pcm, samples, chans, rate) != 0)
         qDebug() << "toxav_group_send_audio error";
 
     return true;
@@ -589,7 +591,7 @@ bool CoreAV::isGroupAvEnabled(int groupId) const
 {
     Tox* tox = Core::getInstance()->tox;
     TOX_ERR_CONFERENCE_GET_TYPE error;
-    TOX_CONFERENCE_TYPE type = tox_conference_get_type(tox, groupId, &error);
+    TOX_CONFERENCE_TYPE type = TOX(conference_get_type)(tox, groupId, &error);
     switch (error) {
     case TOX_ERR_CONFERENCE_GET_TYPE_OK:
         break;
@@ -646,7 +648,7 @@ void CoreAV::sendNoVideo()
     // We don't change the audio bitrate, but we signal that we're not sending video anymore
     qDebug() << "CoreAV: Signaling end of video sending";
     for (ToxFriendCall& call : calls) {
-        toxav_bit_rate_set(toxav, call.callId, -1, 0, nullptr);
+        TOXAV(bit_rate_set)(toxav, call.callId, -1, 0, nullptr);
         call.nullVideoBitrate = true;
     }
 }
@@ -678,7 +680,7 @@ void CoreAV::callCallback(ToxAV* toxav, uint32_t friendNum, bool audio, bool vid
         /// we'll always reach this point through a non-blocking queud connection, so not in the
         /// callback.
         qWarning() << QString("Rejecting call invite from %1, we're already in that call!").arg(friendNum);
-        toxav_call_control(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
+        TOXAV(call_control)(toxav, friendNum, TOXAV_CALL_CONTROL_CANCEL, nullptr);
         return;
     }
     qDebug() << QString("Received call invite from %1").arg(friendNum);

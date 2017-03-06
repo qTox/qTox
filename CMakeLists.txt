@@ -176,6 +176,9 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 
 set(${PROJECT_NAME}_SOURCES
+  src/core/toxcore_api.h
+  src/core/toxav_api.h
+  src/core/toxencryptsave_api.h
   src/audio/audio.cpp
   src/audio/audio.h
   src/chatlog/chatlinecontent.cpp

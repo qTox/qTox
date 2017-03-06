@@ -8,7 +8,7 @@
 
 #include "src/core/indexedlist.h"
 
-#include <tox/toxav.h>
+#include "toxav_api.h"
 
 class QTimer;
 class AudioFilterer;

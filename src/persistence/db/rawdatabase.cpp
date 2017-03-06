@@ -20,7 +20,7 @@
 #include "rawdatabase.h"
 
 #include <cassert>
-#include <tox/toxencryptsave.h>
+#include "src/core/toxencryptsave_api.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -462,7 +462,7 @@ struct PassKeyDeleter
 {
     void operator()(Tox_Pass_Key* pass_key)
     {
-        tox_pass_key_free(pass_key);
+        TOXENCSAVE(pass_key_free)(pass_key);
     }
 };
 
@@ -483,8 +483,8 @@ QString RawDatabase::deriveKey(const QString& password)
 
     static const uint8_t expandConstant[TOX_PASS_SALT_LENGTH + 1] =
         "L'ignorance est le pire des maux";
-    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(tox_pass_key_new());
-    tox_pass_key_derive_with_salt(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
+    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(TOXENCSAVE(pass_key_new)());
+    TOXENCSAVE(pass_key_derive_with_salt)(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
                                   static_cast<std::size_t>(passData.size()), expandConstant, nullptr);
     return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();
     ;
@@ -511,10 +511,10 @@ QString RawDatabase::deriveKey(const QString& password, const QByteArray& salt)
 
     static_assert(TOX_PASS_KEY_LENGTH >= 32, "toxcore must provide 256bit or longer keys");
 
-    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(tox_pass_key_new());
-    tox_pass_key_derive_with_salt(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
-                                  static_cast<std::size_t>(passData.size()),
-                                  reinterpret_cast<const uint8_t*>(salt.constData()), nullptr);
+    std::unique_ptr<Tox_Pass_Key, PassKeyDeleter> key(TOXENCSAVE(pass_key_new)());
+    TOXENCSAVE(pass_key_derive_with_salt)(key.get(), reinterpret_cast<uint8_t*>(passData.data()),
+                                          static_cast<std::size_t>(passData.size()),
+                                          reinterpret_cast<const uint8_t*>(salt.constData()), nullptr);
     return QByteArray(reinterpret_cast<char*>(key.get()) + 32, 32).toHex();
     ;
 }

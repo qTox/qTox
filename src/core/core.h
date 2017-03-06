@@ -25,8 +25,8 @@
 #include <QObject>
 #include <cstdint>
 
-#include <tox/tox.h>
-#include <tox/toxencryptsave.h>
+#include "toxcore_api.h"
+#include "toxencryptsave_api.h"
 
 #include "coredefines.h"
 #include "corestructs.h"

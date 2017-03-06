@@ -24,7 +24,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <memory>
-#include <tox/tox.h>
+#include "toxcore_api.h"
 
 #include "corestructs.h"
 

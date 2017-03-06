@@ -22,7 +22,7 @@
 #include "core.h"
 #include "toxpk.h"
 
-#include <tox/tox.h>
+#include "toxcore_api.h"
 
 #include <QRegularExpression>
 #include <cstdint>

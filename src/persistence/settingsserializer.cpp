@@ -19,6 +19,7 @@
 
 #include "settingsserializer.h"
 #include "serialize.h"
+#include "src/core/toxcore_api.h"
 
 #include "src/core/toxencrypt.h"
 #include "src/persistence/profile.h"
@@ -233,7 +234,7 @@ bool SettingsSerializer::isSerializedFormat(QString filePath)
     char fmagic[8];
     if (f.read(fmagic, sizeof(fmagic)) != sizeof(fmagic))
         return false;
-    return !memcmp(fmagic, magic, 4) || tox_is_data_encrypted(reinterpret_cast<uint8_t*>(fmagic));
+    return !memcmp(fmagic, magic, 4) || TOXENCSAVE(is_data_encrypted)(reinterpret_cast<uint8_t*>(fmagic));
 }
 
 /**
@@ -327,7 +328,7 @@ void SettingsSerializer::readSerialized()
     f.close();
 
     // Decrypt
-    if (tox_is_data_encrypted(reinterpret_cast<uint8_t*>(data.data()))) {
+    if (TOXENCSAVE(is_data_encrypted)(reinterpret_cast<uint8_t*>(data.data()))) {
         if (password.isEmpty()) {
             qCritical() << "The settings file is encrypted, but we don't have a password!";
             return;
