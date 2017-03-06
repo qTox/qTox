@@ -87,8 +87,8 @@ public:
     }
 
 public:
-    qreal minInputGain;
-    qreal maxInputGain;
+    qreal   minInputGain;
+    qreal   maxInputGain;
 
 private:
     qreal gain;

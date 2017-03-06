@@ -477,6 +477,7 @@ void CoreAV::groupCallCallback(void* tox, int group, int peer, const int16_t* da
     audio.playAudioBuffer(call.peers[peer], data, samples, channels, sample_rate);
 }
 
+>>>>>>> 126b52d99047a42907cab322fca439304124e093
 /**
  * @brief Called from core to make sure the source for that peer is invalidated when they leave.
  * @param group Group Index
