@@ -74,6 +74,18 @@ static const StringToString multilineCode{
     {QStringLiteral("```int main()\n{\n    return 0;\n}```"),
      QStringLiteral("<font color=#595959><code>int main()\n{\n    return 0;\n}</code></font>")}};
 
+static const StringToString urlCases {
+    {QStringLiteral("https://github.com/qTox/qTox/issues/4233"),
+     QStringLiteral("<a href=\"https://github.com/qTox/qTox/issues/4233\">"
+                    "https://github.com/qTox/qTox/issues/4233</a>")},
+    {QStringLiteral("No conflicts with /italic https://github.com/qTox/qTox/issues/4233 font/"),
+     QStringLiteral("No conflicts with <i>italic "
+                    "<a href=\"https://github.com/qTox/qTox/issues/4233\">"
+                    "https://github.com/qTox/qTox/issues/4233</a> font</i>")},
+    {QStringLiteral("www.youtube.com"), QStringLiteral("<a href=\"http://www.youtube.com\">"
+                                                       "www.youtube.com</a>")}
+};
+
 /**
  * @brief Testing cases which are common for all types of formatting except multiline code
  * @param noSymbols True if it's not allowed to show formatting symbols
@@ -192,6 +204,12 @@ START_TEST(multilineCodeTest)
 }
 END_TEST
 
+START_TEST(urlTest)
+{
+    specialTest(urlCases);
+}
+END_TEST
+
 static Suite* textFormatterSuite(void)
 {
     Suite* s = suite_create("TextFormatter");
@@ -209,6 +227,7 @@ static Suite* textFormatterSuite(void)
     DEFTESTCASE(doubleSignSpecial);
     DEFTESTCASE(mixedFormatting);
     DEFTESTCASE(multilineCode);
+    DEFTESTCASE(url);
 
     return s;
 }
