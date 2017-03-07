@@ -337,30 +337,36 @@ QString Text::extractSanitizedText(int from, int to) const
         return "";
 
     QString txt;
-    QTextBlock block = doc->firstBlock();
 
-    for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
-        int pos =
-            itr.fragment()
-                .position(); // fragment position -> position of the first character in the fragment
+    for (QTextBlock block = doc->findBlock(from); block.isValid(); block = block.next()) {
+        for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
+            int pos =
+                itr.fragment()
+                    .position(); // fragment position -> position of the first character in the fragment
 
-        if (itr.fragment().charFormat().isImageFormat()) {
-            QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
-            QString key = imgFmt.name(); // img key (eg. key::D for :D)
-            QString rune = key.mid(4);
+            if (itr.fragment().charFormat().isImageFormat()) {
+                QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
+                QString key = imgFmt.name(); // img key (eg. key::D for :D)
+                QString rune = key.mid(4);
 
-            if (pos >= from && pos < to) {
-                txt += rune;
-                ++pos;
-            }
-        } else {
-            for (QChar c : itr.fragment().text()) {
-                if (pos >= from && pos < to)
-                    txt += c;
+                if (pos >= from && pos < to) {
+                    txt += rune;
+                    ++pos;
+                }
+            } else {
+                for (QChar c : itr.fragment().text()) {
+                    if (pos >= from && pos < to)
+                        txt += c;
 
-                ++pos;
+                    ++pos;
+                }
             }
         }
+
+        if (block == doc->findBlock(to))
+            break;
+
+        txt += '\n';
     }
 
     return txt;
