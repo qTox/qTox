@@ -131,7 +131,7 @@ static bool isTagIntersection(const QString& str)
 /**
  * @brief Applies a function for URL's which can be extracted from passed string
  * @param str String in which we are looking for URL's
- * @param func Function which is applying to URL
+ * @param func Function which is applied to URL
  */
 static void processUrl(QString& str, std::function<QString(QString&)> func)
 {
