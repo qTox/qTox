@@ -466,20 +466,20 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
 
 void ContentDialog::updateTitleAndStatusIcon(const QString& username)
 {
-    if (!displayWidget) {
+    if (!activeChatroomWidget) {
         setWindowTitle(username);
         return;
     }
 
-    setWindowTitle(displayWidget->getTitle() + QStringLiteral(" - ") + username);
+    setWindowTitle(activeChatroomWidget->getTitle() + QStringLiteral(" - ") + username);
 
-    // it's null when it's a groupchat
-    if (!displayWidget->getFriend()) {
+    bool isGroupchat = activeChatroomWidget->getGroup() != nullptr;
+    if (isGroupchat) {
         setWindowIcon(QIcon(":/img/group.svg"));
         return;
     }
 
-    Status currentStatus = displayWidget->getFriend()->getStatus();
+    Status currentStatus = activeChatroomWidget->getFriend()->getStatus();
 
     QMap<Status, QIcon> icons {
         {Status::Online,  QIcon(":/img/status/dot_online.svg")},
@@ -491,12 +491,9 @@ void ContentDialog::updateTitleAndStatusIcon(const QString& username)
     setWindowIcon(icons[currentStatus]);
 }
 
-void ContentDialog::updateTitle(GenericChatroomWidget* chatroomWidget)
-{
-    displayWidget = chatroomWidget;
-    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
-}
-
+/**
+ * @brief Enable previous contact.
+ */
 void ContentDialog::previousContact()
 {
     cycleContacts(false);
@@ -514,7 +511,8 @@ bool ContentDialog::event(QEvent* event)
         if (activeChatroomWidget) {
             activeChatroomWidget->resetEventFlags();
             activeChatroomWidget->updateStatusLight();
-            updateTitle(activeChatroomWidget);
+
+            updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 
             Friend* frnd = activeChatroomWidget->getFriend();
             Group* group = activeChatroomWidget->getGroup();
@@ -683,7 +681,8 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget* widget, bool 
     widget->setAsActiveChatroom();
     widget->resetEventFlags();
     widget->updateStatusLight();
-    updateTitle(widget);
+
+    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
 }
 
 void ContentDialog::updateFriendWidget(uint32_t friendId, QString alias)
@@ -770,11 +769,12 @@ void ContentDialog::updateStatus(int id, const QHash<int, ContactInfo>& list)
         return;
     }
 
-    GenericChatroomWidget* chatroomWidget = std::get<1>(iter.value());
+    GenericChatroomWidget* chatroomWidget = std::get<1>(*iter);
     chatroomWidget->updateStatusLight();
 
     if (chatroomWidget->isActive()) {
-        std::get<0>(iter.value())->updateTitle(chatroomWidget);
+        ContentDialog* dialog = std::get<0>(*iter);
+        dialog->updateTitleAndStatusIcon(Core::getInstance()->getUsername());
     }
 }
 
