@@ -44,6 +44,7 @@
 #include "src/widget/translator.h"
 #include "tool/adjustingscrollarea.h"
 
+QString ContentDialog::username = "";
 ContentDialog* ContentDialog::currentDialog = nullptr;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::friendList;
 QHash<int, std::tuple<ContentDialog*, GenericChatroomWidget*>> ContentDialog::groupList;
@@ -126,7 +127,6 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
 
     connect(&s, &Settings::groupchatPositionChanged, this, &ContentDialog::onGroupchatPositionChanged);
     connect(splitter, &QSplitter::splitterMoved, this, &ContentDialog::saveSplitterState);
-    connect(Core::getInstance(), &Core::usernameSet, this, &ContentDialog::updateTitleAndStatusIcon);
 
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
 }
@@ -164,10 +164,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
             &ContentDialog::onChatroomWidgetClicked);
     connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)),
             frnd->getChatForm(), SLOT(focusInput()));
-    connect(Core::getInstance(), &Core::friendAvatarChanged, friendWidget,
-            &FriendWidget::onAvatarChange);
-    connect(Core::getInstance(), &Core::friendAvatarRemoved, friendWidget,
-            &FriendWidget::onAvatarRemoved);
 
     ContentDialog* lastDialog = getFriendDialog(friendId);
     if (lastDialog) {
@@ -485,7 +481,7 @@ ContentDialog* ContentDialog::getGroupDialog(int groupId)
  * @brief Update window title and icon.
  * @param username Username to display in the title.
  */
-void ContentDialog::updateTitleAndStatusIcon(const QString& username)
+void ContentDialog::updateTitleAndStatusIcon()
 {
     if (!activeChatroomWidget) {
         setWindowTitle(username);
@@ -528,6 +524,12 @@ void ContentDialog::nextContact()
     cycleContacts(true);
 }
 
+void ContentDialog::setUsername(const QString& newName)
+{
+    username = newName;
+    updateTitleAndStatusIcon();
+}
+
 bool ContentDialog::event(QEvent* event)
 {
     switch (event->type()) {
@@ -536,7 +538,7 @@ bool ContentDialog::event(QEvent* event)
             activeChatroomWidget->resetEventFlags();
             activeChatroomWidget->updateStatusLight();
 
-            updateTitleAndStatusIcon(Core::getInstance()->getUsername());
+            updateTitleAndStatusIcon();
 
             Friend* frnd = activeChatroomWidget->getFriend();
             Group* group = activeChatroomWidget->getGroup();
@@ -711,7 +713,7 @@ void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget* widget, bool 
     widget->resetEventFlags();
     widget->updateStatusLight();
 
-    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon();
 }
 
 /**
@@ -761,7 +763,7 @@ void ContentDialog::onGroupchatPositionChanged(bool top)
  */
 void ContentDialog::retranslateUi()
 {
-    updateTitleAndStatusIcon(Core::getInstance()->getUsername());
+    updateTitleAndStatusIcon();
 }
 
 /**
@@ -850,7 +852,7 @@ void ContentDialog::updateStatus(int id, const QHash<int, ContactInfo>& list)
 
     if (chatroomWidget->isActive()) {
         ContentDialog* dialog = std::get<0>(*iter);
-        dialog->updateTitleAndStatusIcon(Core::getInstance()->getUsername());
+        dialog->updateTitleAndStatusIcon();
     }
 }
 

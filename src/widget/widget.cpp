@@ -1457,6 +1457,7 @@ ContentDialog* Widget::createContentDialog() const
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
     connect(contentDialog, &ContentDialog::friendDialogShown, this, &Widget::onFriendDialogShown);
     connect(contentDialog, &ContentDialog::groupDialogShown, this, &Widget::onGroupDialogShown);
+    connect(Core::getInstance(), &Core::usernameSet, contentDialog, &ContentDialog::setUsername);
 
 #ifdef Q_OS_MAC
     connect(contentDialog, &ContentDialog::destroyed, &Nexus::getInstance(),
