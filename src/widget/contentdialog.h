@@ -60,6 +60,7 @@ public:
     bool hasGroupWidget(int groupId, GenericChatroomWidget* chatroomWidget);
     int chatroomWidgetCount() const;
     void ensureSplitterVisible();
+    void updateTitleAndStatusIcon();
 
     void cycleContacts(bool forward, bool loop = true);
     void onVideoShow(QSize size);
@@ -84,10 +85,10 @@ signals:
     void activated();
 
 public slots:
-    void updateTitleAndStatusIcon(const QString& username);
     void reorderLayouts(bool newGroupOnTop);
     void previousContact();
     void nextContact();
+    void setUsername(const QString& newName);
 
 protected:
     bool event(QEvent* event) final override;
@@ -130,6 +131,7 @@ private:
     QSize videoSurfaceSize;
     int videoCount;
 
+    static QString username;
     static ContentDialog* currentDialog;
     static QHash<int, ContactInfo> friendList;
     static QHash<int, ContactInfo> groupList;
