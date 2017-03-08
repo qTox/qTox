@@ -85,7 +85,6 @@ signals:
 
 public slots:
     void updateTitleAndStatusIcon(const QString& username);
-    void updateTitle(GenericChatroomWidget* chatroomWidget);
     void reorderLayouts(bool newGroupOnTop);
     void previousContact();
     void nextContact();
@@ -127,7 +126,6 @@ private:
     GenericChatItemLayout groupLayout;
     ContentLayout* contentLayout;
     GenericChatroomWidget* activeChatroomWidget;
-    GenericChatroomWidget* displayWidget = nullptr;
     SettingsWidget* settingsWidget;
     QSize videoSurfaceSize;
     int videoCount;
