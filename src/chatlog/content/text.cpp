@@ -338,7 +338,9 @@ QString Text::extractSanitizedText(int from, int to) const
 
     QString txt;
 
-    for (QTextBlock block = doc->findBlock(from); block.isValid(); block = block.next()) {
+    QTextBlock begin = doc->findBlock(from);
+    QTextBlock end = doc->findBlock(to);
+    for (QTextBlock block = begin; block != end.next() && block.isValid(); block = block.next()) {
         for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
             int pos =
                 itr.fragment()
@@ -363,10 +365,8 @@ QString Text::extractSanitizedText(int from, int to) const
             }
         }
 
-        if (block == doc->findBlock(to))
-            break;
-
-        txt += '\n';
+        if(block != end)
+            txt += '\n';
     }
 
     return txt;
