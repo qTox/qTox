@@ -36,6 +36,14 @@ enum TextStyle
     HREF
 };
 
+static const QVector<QPair<QString, QString>> MARKDOWN_SYMBOLS_HTML_CODES {
+    {"*", "&#42"},
+    {"/", "&#47"},
+    {"_", "&#95"},
+    {"~", "&#126"},
+    {"`", "&#96"}
+};
+
 static const QString COMMON_PATTERN = QStringLiteral("(?<=^|[^%1<])"
                                                      "[%1]{%2}"
                                                      "(?![%1 \\n])"
@@ -155,7 +163,10 @@ static void processUrl(QString& str, std::function<QString(QString&)> func)
 void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
     processUrl(message, [] (QString& str) {
-        return str.replace("/", "&#47");
+        for (auto p : MARKDOWN_SYMBOLS_HTML_CODES) {
+            str.replace(p.first, p.second);
+        }
+        return str;
     });
     for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
         QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(message);
@@ -182,7 +193,9 @@ void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
             insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
         }
     }
-    message.replace("&#47", "/");
+    for (auto p : MARKDOWN_SYMBOLS_HTML_CODES) {
+        message.replace(p.second, p.first);
+    }
 }
 
 /**
