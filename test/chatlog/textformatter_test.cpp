@@ -82,8 +82,20 @@ static const StringToString urlCases {
      QStringLiteral("No conflicts with <i>italic "
                     "<a href=\"https://github.com/qTox/qTox/issues/4233\">"
                     "https://github.com/qTox/qTox/issues/4233</a> font</i>")},
-    {QStringLiteral("www.youtube.com"), QStringLiteral("<a href=\"http://www.youtube.com\">"
-                                                       "www.youtube.com</a>")}
+    {QStringLiteral("www.youtube.com"),
+     QStringLiteral("<a href=\"http://www.youtube.com\">www.youtube.com</a>")},
+    {QStringLiteral("https://url.com/some*url/some*more*url/"),
+     QStringLiteral("<a href=\"https://url.com/some*url/some*more*url/\">"
+                    "https://url.com/some*url/some*more*url/</a>")},
+    {QStringLiteral("https://url.com/some_url/some_more_url/"),
+     QStringLiteral("<a href=\"https://url.com/some_url/some_more_url/\">"
+                    "https://url.com/some_url/some_more_url/</a>")},
+    {QStringLiteral("https://url.com/some~url/some~more~url/"),
+     QStringLiteral("<a href=\"https://url.com/some~url/some~more~url/\">"
+                    "https://url.com/some~url/some~more~url/</a>")},
+    {QStringLiteral("https://url.com/some`url/some`more`url/"),
+     QStringLiteral("<a href=\"https://url.com/some`url/some`more`url/\">"
+                    "https://url.com/some`url/some`more`url/</a>")},
 };
 
 /**
