@@ -369,6 +369,7 @@ void Settings::loadPersonal(Profile* profile)
 
             fp.autoAcceptCall =
                 Settings::AutoAcceptCallFlags(QFlag(ps.value("autoAcceptCall", 0).toInt()));
+            fp.autoGroupInvite = ps.value("autoGroupInvite").toBool();
             fp.circleID = ps.value("circle", -1).toInt();
 
             if (getEnableLogging())
@@ -646,6 +647,7 @@ void Settings::savePersonal(QString profileName, const QString& password)
             ps.setValue("note", frnd.note);
             ps.setValue("autoAcceptDir", frnd.autoAcceptDir);
             ps.setValue("autoAcceptCall", static_cast<int>(frnd.autoAcceptCall));
+            ps.setValue("autoGroupInvite", frnd.autoGroupInvite);
             ps.setValue("circle", frnd.circleID);
 
             if (getEnableLogging())
@@ -1413,6 +1415,29 @@ void Settings::setAutoAcceptCall(const ToxPk& id, AutoAcceptCallFlags accept)
     if (it != friendLst.end()) {
         it->autoAcceptCall = accept;
         emit autoAcceptCallChanged(id, accept);
+    }
+}
+
+bool Settings::getAutoGroupInvite(const ToxPk& id) const
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.getKey());
+    if (it != friendLst.end()) {
+        return it->autoGroupInvite;
+    }
+
+    return false;
+}
+
+void Settings::setAutoGroupInvite(const ToxPk& id, bool accept)
+{
+    QMutexLocker locker{&bigLock};
+
+    auto it = friendLst.find(id.getKey());
+    if (it != friendLst.end()) {
+        it->autoGroupInvite = accept;
+        emit autoGroupInviteChanged(id, accept);
     }
 }
 

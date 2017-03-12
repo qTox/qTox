@@ -19,19 +19,23 @@ AboutUser::AboutUser(ToxPk& toxId, QWidget* parent)
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptDirClicked);
     connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
+    connect(ui->autoGroupInvite, &QCheckBox::clicked, this, &AboutUser::onAutoGroupInvite);
     connect(ui->selectSaveDir, &QPushButton::clicked, this, &AboutUser::onSelectDirClicked);
     connect(ui->removeHistory, &QPushButton::clicked, this, &AboutUser::onRemoveHistoryClicked);
 
     this->friendPk = toxId;
-    QString dir = Settings::getInstance().getAutoAcceptDir(this->friendPk);
+    Settings& s = Settings::getInstance();
+    QString dir = s.getAutoAcceptDir(this->friendPk);
     ui->autoacceptfile->setChecked(!dir.isEmpty());
 
-    ui->autoacceptcall->setCurrentIndex(Settings::getInstance().getAutoAcceptCall(this->friendPk));
+    ui->autoacceptcall->setCurrentIndex(s.getAutoAcceptCall(this->friendPk));
 
     ui->selectSaveDir->setEnabled(ui->autoacceptfile->isChecked());
+    ui->autoGroupInvite->setChecked(s.getAutoGroupInvite(this->friendPk));
 
-    if (ui->autoacceptfile->isChecked())
-        ui->selectSaveDir->setText(Settings::getInstance().getAutoAcceptDir(this->friendPk));
+    if (ui->autoacceptfile->isChecked()) {
+        ui->selectSaveDir->setText(s.getAutoAcceptDir(this->friendPk));
+    }
 }
 
 void AboutUser::setFriend(Friend* f)
@@ -79,6 +83,16 @@ void AboutUser::onAutoAcceptCallClicked()
     Settings::getInstance().setAutoAcceptCall(this->friendPk,
                                               Settings::AutoAcceptCallFlags(
                                                   QFlag(ui->autoacceptcall->currentIndex())));
+    Settings::getInstance().savePersonal();
+}
+
+/**
+ * @brief Sets the AutoGroupinvite status and saves the settings.
+ */
+void AboutUser::onAutoGroupInvite()
+{
+    bool autoinvite = ui->autoGroupInvite->isChecked();
+    Settings::getInstance().setAutoGroupInvite(this->friendPk, autoinvite);
     Settings::getInstance().savePersonal();
 }
 
