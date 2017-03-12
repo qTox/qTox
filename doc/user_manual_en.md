@@ -69,6 +69,8 @@ right-clicking on a contact a menu appears that has the following options:
 * __Move to circle:__ offers an option to move friend to a new
   [circle](#circles), or to an existing one.
 * __Set alias:__ set alias that will be displayed instead of contact's name.
+* __Auto accept group invites:__ if enabled, all group chat invites from this
+  friend are automatically accepted.
 * __Auto accept files from this friend:__ option to automatically save files
   from the selected contact in a chosen directory.
 * __Remove friend:__ option to remove the contact. Confirmation is needed to

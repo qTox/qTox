@@ -192,6 +192,7 @@ signals:
     void checkUpdatesChanged(bool enabled);
     void widgetDataChanged(const QString& key);
     void autoAcceptCallChanged(const ToxPk& id, AutoAcceptCallFlags accept);
+    void autoGroupInviteChanged(const ToxPk& id, bool accept);
 
     // GUI
     void autoLoginChanged(bool enabled);
@@ -406,6 +407,9 @@ public:
 
     QString getGlobalAutoAcceptDir() const;
     void setGlobalAutoAcceptDir(const QString& dir);
+
+    bool getAutoGroupInvite(const ToxPk& id) const;
+    void setAutoGroupInvite(const ToxPk& id, bool accept);
 
     // ChatView
     const QFont& getChatMessageFont() const;
@@ -629,6 +633,7 @@ private:
         int circleID = -1;
         QDate activity = QDate();
         AutoAcceptCallFlags autoAcceptCall;
+        bool autoGroupInvite = false;
     };
 
     struct circleProp

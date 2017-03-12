@@ -218,6 +218,16 @@
        </item>
       </layout>
      </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="QCheckBox" name="autogroupinvite">
+       <property name="accessibleDescription">
+        <string>Automatically accept group chat invitations from this contact if set.</string>
+       </property>
+       <property name="text">
+        <string>Auto accept group invites</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
