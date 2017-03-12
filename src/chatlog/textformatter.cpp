@@ -36,6 +36,16 @@ enum TextStyle
     HREF
 };
 
+static const QString HTML_CHARACTER_CODE = QStringLiteral("&#%1");
+
+static const QVector<char> MARKDOWN_SYMBOLS {
+    '*',
+    '/',
+    '_',
+    '~',
+    '`'
+};
+
 static const QString COMMON_PATTERN = QStringLiteral("(?<=^|[^%1<])"
                                                      "[%1]{%2}"
                                                      "(?![%1 \\n])"
@@ -61,16 +71,21 @@ static const QVector<QString> htmlPatterns{QStringLiteral("<b>%1</b>"),
                                                     "<font color=#595959><code>%1</code></font>"),
                                                 QStringLiteral("<a href=\"%1%2\">%2</a>")};
 
+#define STRING_FROM_TYPE(type) QString(MARKDOWN_SYMBOLS[type])
+
+#define REGEX_MARKDOWN_PAIR(type, count) \
+{QRegularExpression(COMMON_PATTERN.arg(STRING_FROM_TYPE(type), #count)), htmlPatterns[type]}
+
 static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
-    {QRegularExpression(COMMON_PATTERN.arg("*", "1")), htmlPatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "1")), htmlPatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "1")), htmlPatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "1")), htmlPatterns[STRIKE]},
-    {QRegularExpression(COMMON_PATTERN.arg("`", "1")), htmlPatterns[CODE]},
-    {QRegularExpression(COMMON_PATTERN.arg("*", "2")), htmlPatterns[BOLD]},
-    {QRegularExpression(COMMON_PATTERN.arg("/", "2")), htmlPatterns[ITALIC]},
-    {QRegularExpression(COMMON_PATTERN.arg("_", "2")), htmlPatterns[UNDERLINE]},
-    {QRegularExpression(COMMON_PATTERN.arg("~", "2")), htmlPatterns[STRIKE]},
+    REGEX_MARKDOWN_PAIR(BOLD, 1),
+    REGEX_MARKDOWN_PAIR(ITALIC, 1),
+    REGEX_MARKDOWN_PAIR(UNDERLINE, 1),
+    REGEX_MARKDOWN_PAIR(STRIKE, 1),
+    REGEX_MARKDOWN_PAIR(CODE, 1),
+    REGEX_MARKDOWN_PAIR(BOLD, 2),
+    REGEX_MARKDOWN_PAIR(ITALIC, 2),
+    REGEX_MARKDOWN_PAIR(UNDERLINE, 2),
+    REGEX_MARKDOWN_PAIR(STRIKE, 2),
     {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
 
 static const QVector<QRegularExpression> urlPatterns {
@@ -155,7 +170,11 @@ static void processUrl(QString& str, std::function<QString(QString&)> func)
 void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
     processUrl(message, [] (QString& str) {
-        return str.replace("/", "&#47");
+        for (char c : MARKDOWN_SYMBOLS) {
+            QString charCode = QString::number(static_cast<int>(c));
+            str.replace(c, HTML_CHARACTER_CODE.arg(charCode));
+        }
+        return str;
     });
     for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
         QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(message);
@@ -182,7 +201,10 @@ void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
             insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
         }
     }
-    message.replace("&#47", "/");
+    for (char c : MARKDOWN_SYMBOLS) {
+        QString charCode = QString::number(static_cast<int>(c));
+        message.replace(HTML_CHARACTER_CODE.arg(charCode), QString(c));
+    }
 }
 
 /**
