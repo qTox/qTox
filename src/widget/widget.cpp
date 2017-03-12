@@ -118,7 +118,7 @@ void Widget::init()
     actionShow = new QAction(this);
     connect(actionShow, &QAction::triggered, this, &Widget::forceShow);
 
-    //Preparing icons and set their size
+    // Preparing icons and set their size
     statusOnline = new QAction(this);
     statusOnline->setIcon(prepareIcon(getStatusIconPath(Status::Online), icon_size, icon_size));
     connect(statusOnline, &QAction::triggered, this, &Widget::setStatusOnline);
@@ -1556,13 +1556,18 @@ void Widget::copyFriendIdToClipboard(int friendId)
 
 void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray invite)
 {
-    updateFriendActivity(FriendList::findFriend(friendId));
+    Friend* f = FriendList::findFriend(friendId);
+    updateFriendActivity(f);
 
     if (type == TOX_CONFERENCE_TYPE_TEXT || type == TOX_CONFERENCE_TYPE_AV) {
-        ++unreadGroupInvites;
-        groupInvitesUpdate();
-        newMessageAlert(window(), isActiveWindow(), true, true);
-        groupInviteForm->addGroupInvite(friendId, type, invite);
+        if (Settings::getInstance().getAutoGroupInvite(f->getPublicKey())) {
+            onGroupInviteAccepted(friendId, type, invite);
+        } else {
+            ++unreadGroupInvites;
+            groupInvitesUpdate();
+            newMessageAlert(window(), isActiveWindow(), true, true);
+            groupInviteForm->addGroupInvite(friendId, type, invite);
+        }
     } else {
         qWarning() << "onGroupInviteReceived: Unknown groupchat type:" << type;
         return;
@@ -2070,22 +2075,20 @@ QString Widget::getStatusIconPath(Status status)
     assert(false);
 }
 
-//Preparing needed to set correct size of icons for GTK tray backend
+// Preparing needed to set correct size of icons for GTK tray backend
 inline QIcon Widget::prepareIcon(QString path, int w, int h)
 {
 #ifdef Q_OS_LINUX
 
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
-    if (desktop.isEmpty())
-    {
+    if (desktop.isEmpty()) {
         desktop = getenv("DESKTOP_SESSION");
     }
 
     desktop = desktop.toLower();
-    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate" || desktop == "x-cinnamon")
-    {
-        if (w > 0 && h > 0)
-        {
+    if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate"
+        || desktop == "x-cinnamon") {
+        if (w > 0 && h > 0) {
             QSvgRenderer renderer(path);
 
             QPixmap pm(w, h);
