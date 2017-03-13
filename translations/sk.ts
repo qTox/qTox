@@ -338,7 +338,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Type message to send with the friend request or leave empty to send a default message</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadajte správu k žiadosti o priateľstvo, alebo nechajte prázdne, pre odoslanie predvolenej správy</translation>
     </message>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
@@ -392,7 +392,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>You can&apos;t disconnect while a call is active!</source>
         <comment>popup text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Počas hovoru sa nemôžete odpojiť!</translation>
     </message>
     <message>
         <source>Save File</source>
@@ -408,7 +408,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Save settings to the working directory instead of the usual conf dir</source>
         <extracomment>describes makeToxPortable checkbox</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Uloží nastavenia do pracovného adresára namiesto obvyklého konfiguračného adresára</translation>
     </message>
     <message>
         <source>Make Tox portable</source>
@@ -474,15 +474,15 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Ladenie</translation>
     </message>
     <message>
         <source>Export Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať denník ladenia</translation>
     </message>
     <message>
         <source>Copy Debug Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať denník ladenia</translation>
     </message>
 </context>
 <context>
@@ -529,7 +529,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Calling %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Volanie %1</translation>
     </message>
     <message>
         <source>Cancel video call</source>
@@ -616,11 +616,11 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno začať videohovor</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemožno začať audio hovor</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
@@ -698,7 +698,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatné Tox ID</translation>
     </message>
 </context>
 <context>
@@ -711,76 +711,76 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>10Mb</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>10Mb</translation>
     </message>
     <message>
         <source>0kb/s</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>0kb/s</translation>
     </message>
     <message>
         <source>ETA:10:10</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ETA:10:10</translation>
     </message>
     <message>
         <source>Filename</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Názov súboru</translation>
     </message>
     <message>
         <source>Waiting to send...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Čaká sa na odoslanie...</translation>
     </message>
     <message>
         <source>Accept to receive this file</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Prijať tento súbor</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation>Miesto nie je zapisovateľné</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nemáte povolenie na zápis na určené miesto. Vyberte si iné, alebo zrušte uloženie.</translation>
     </message>
     <message>
         <source>Resuming...</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Obnovenie...</translation>
     </message>
     <message>
         <source>Cancel transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušiť prenos</translation>
     </message>
     <message>
         <source>Pause transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozastaviť prenos</translation>
     </message>
     <message>
         <source>Paused</source>
         <comment>file transfer widget</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pozastavený</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť súbor</translation>
     </message>
     <message>
         <source>Open file directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť umiestnenie súboru</translation>
     </message>
     <message>
         <source>Resume transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Obnoviť prenos</translation>
     </message>
     <message>
         <source>Accept transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Prijať prenos</translation>
     </message>
     <message>
         <source>Save a file</source>
@@ -809,32 +809,32 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Today</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Dnes</translation>
     </message>
     <message>
         <source>Yesterday</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Včera</translation>
     </message>
     <message>
         <source>Last 7 days</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Posledných 7 dní</translation>
     </message>
     <message>
         <source>This month</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tento mesiac</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Staršie ako 6 mesiacov</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Category for sorting friends by activity</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neznáma</translation>
     </message>
 </context>
 <context>
@@ -842,7 +842,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Friend request</source>
         <comment>Title of the window to aceept/deny a friend request</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žiadosť o priateľstvo</translation>
     </message>
     <message>
         <source>Someone wants to make friends with you</source>
@@ -897,7 +897,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť chat z tohto okna</translation>
     </message>
     <message>
         <source>To new group</source>
@@ -905,7 +905,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvať do skupiny &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Set alias...</source>
@@ -956,15 +956,15 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <name>GUI</name>
     <message>
         <source>Enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadajte vaše heslo</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dešifrovať</translation>
     </message>
     <message>
         <source>You must enter a non-empty password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadajte neprázdne heslo:</translation>
     </message>
 </context>
 <context>
@@ -987,7 +987,7 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>The translation may not load until qTox restarts.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preklad sa nemusí načítať do reštartu qToxu.</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -1043,7 +1043,7 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Check for updates on startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Skontrolovať aktualizácie pri štarte</translation>
     </message>
     <message>
         <source>Set where files will be saved.</source>
@@ -1103,19 +1103,19 @@ namiesto panelu úloh.</translation>
     <name>GenericChatForm</name>
     <message>
         <source>Send message</source>
-        <translation type="unfinished"></translation>
+        <translation>Odoslať správu</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation type="unfinished"></translation>
+        <translation>Emotikony</translation>
     </message>
     <message>
         <source>Send file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poslať súbor(y)</translation>
     </message>
     <message>
         <source>Send a screenshot</source>
-        <translation type="unfinished"></translation>
+        <translation>Poslať snímku obrazovky</translation>
     </message>
     <message>
         <source>Save chat log</source>
@@ -1147,7 +1147,7 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vyčistiť zobrazené správy</translation>
     </message>
     <message>
         <source>Not sent</source>
@@ -1155,30 +1155,30 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyčistené</translation>
     </message>
     <message>
         <source>Quote selected text</source>
-        <translation type="unfinished"></translation>
+        <translation>Citovať označený text</translation>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať adresu odkazu</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox video</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobraziť správy</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Skryť Správy</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1199,7 @@ namiesto panelu úloh.</translation>
     <message>
         <source>%1 users in chat</source>
         <comment>Number of users in chat</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1 užívateľov v chatu</translation>
     </message>
     <message>
         <source>Start audio call</source>
@@ -1242,10 +1242,25 @@ namiesto panelu úloh.</translation>
     </message>
 </context>
 <context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 užívateľov v chatu</translation>
     </message>
     <message>
         <source>Set title...</source>
@@ -1257,7 +1272,7 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť chat z tohto okna</translation>
     </message>
     <message>
         <source>Quit group</source>
@@ -1283,7 +1298,8 @@ namiesto panelu úloh.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation type="unfinished"></translation>
+        <translation>Táto séria znakov vás umožní kontaktovať pomocou ostatných Tox klientov.
+Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Your Tox ID (click to copy)</source>
@@ -1301,7 +1317,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Go back to the login screen</source>
         <comment>tooltip for logout button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Späť na prihlasovaciu obrazovku</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1310,15 +1326,15 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Remove password</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť heslo</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeniť heslo</translation>
     </message>
     <message>
         <source>This QR code contains your Tox ID. You may share this with your friends as well.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento QR kód obsahuje vaše Tox ID. Aj toto môžete zdieľať s priateľmi.</translation>
     </message>
     <message>
         <source>Save image</source>
@@ -1342,12 +1358,13 @@ Share it with your friends to communicate.</source>
         <source>Allows you to export your Tox profile to a file.
 Profile does not contain your history.</source>
         <comment>tooltip for profile exporting button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Umožňuje vám exportovať váš Tox profil do súboru.
+Profil neobsahuje históriu.</translation>
     </message>
     <message>
         <source>Export</source>
         <comment>export profile button</comment>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1356,19 +1373,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>Hide my name from the public list</source>
-        <translation type="unfinished"></translation>
+        <translation>Nezobrazovať moje meno vo verejnom zozname</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrovať</translation>
     </message>
     <message>
         <source>Your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše heslo</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1381,17 +1398,17 @@ Profile does not contain your history.</source>
     <message>
         <source>Name for the ToxMe service.</source>
         <comment>Tooltip for the `Username` ToxMe field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Meno pre službu ToxMe.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voliteľné. Niečo o vás. Alebo o vašej mačke.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Voliteľné. Niečo o vás. Alebo o vašej mačke.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1405,7 +1422,7 @@ Profile does not contain your history.</source>
     <message>
         <source>Remove your password and encryption from your profile.</source>
         <comment>Tooltip for the `Remove password` button.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Odstráni vaše heslo a šifrovanie vašeho profilu.</translation>
     </message>
     <message>
         <source>Name input</source>
@@ -1413,7 +1430,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Meno viditeľné pre kontakty</translation>
     </message>
     <message>
         <source>Status message input</source>
@@ -1425,15 +1442,15 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Your Tox ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaše Tox ID</translation>
     </message>
     <message>
         <source>Save QR image as file</source>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť QR kód ako obrázok</translation>
     </message>
     <message>
         <source>Copy QR image to clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopírovať QR kód do schránky</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
@@ -1445,19 +1462,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>ToxMe service address</source>
-        <translation type="unfinished"></translation>
+        <translation>Adresa služby ToxMe</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished"></translation>
+        <translation>Viditeľnosť v rámci služby ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizovať záznam v ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1469,19 +1486,19 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportovať profil</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrániť heslo z profilu</translation>
     </message>
     <message>
         <source>Change profile password</source>
-        <translation type="unfinished"></translation>
+        <translation>Zmeniť heslo profilu</translation>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Moje meno:</translation>
     </message>
     <message>
         <source>My status:</source>
@@ -1489,11 +1506,11 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Moje užívateľské meno</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>O mne</translation>
     </message>
     <message>
         <source>My profile</source>
@@ -1515,7 +1532,7 @@ Profile does not contain your history.</source>
     <name>LoginScreen</name>
     <message>
         <source>Username:</source>
-        <translation type="unfinished"></translation>
+        <translation>Užívateľské meno:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1531,61 +1548,63 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Create Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Vytvoriť Profil</translation>
     </message>
     <message>
         <source>If the profile does not have a password, qTox can skip the login screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Keď profil nie je chránený heslom, qTox môže preskočiť prihlasovacie okno</translation>
     </message>
     <message>
         <source>Load automatically</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky načítať</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished"></translation>
+        <translation>Načítať</translation>
     </message>
     <message>
         <source>Load Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Načítať profil</translation>
     </message>
     <message>
         <source>New Profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nový profil</translation>
     </message>
     <message>
         <source>Couldn&apos;t create a new profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa vytvoriť nový profil</translation>
     </message>
     <message>
         <source>The username must not be empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Užívateľské meno nesmie byť prázdne.</translation>
     </message>
     <message>
         <source>The password must be at least 6 characters long.</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo musí mať aspoň 6 znakov.</translation>
     </message>
     <message>
         <source>The passwords you&apos;ve entered are different.
 Please make sure to enter same password twice.</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslá ktoré ste zadali sú rôzne.
+Uistite sa,  že zadávate rovnaké heslo dvakrát.</translation>
     </message>
     <message>
         <source>A profile with this name already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil s týmto menom už existuje.</translation>
     </message>
     <message>
         <source>Unknown error: Couldn&apos;t create a new profile.
 If you encountered this error, please report it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznáma chyba: nepodarilo sa vytvoriť nový profil.
+Ak sa táto chyba zobrazí, prosím nahláste to.</translation>
     </message>
     <message>
         <source>Password protected profiles can&apos;t be automatically loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profily chránené heslom nie je možné automaticky načítať.</translation>
     </message>
     <message>
         <source>Couldn&apos;t load profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa načítať profil</translation>
     </message>
     <message>
         <source>There is no selected profile.
@@ -1595,23 +1614,23 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Couldn&apos;t load this profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa načítať tento profil</translation>
     </message>
     <message>
         <source>This profile is already in use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento profil sa už používa.</translation>
     </message>
     <message>
         <source>Profile already in use. Close other clients.</source>
-        <translation type="unfinished"></translation>
+        <translation>Profil sa už používa. Zatvorte ostatných klientov.</translation>
     </message>
     <message>
         <source>Wrong password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesprávne heslo.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importovať</translation>
     </message>
     <message>
         <source>Username input field</source>
@@ -1943,7 +1962,7 @@ Please use another image.</source>
     <message>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Export profilu</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
@@ -1953,12 +1972,12 @@ Please use another image.</source>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Miesto nie je zapisovateľné</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
         <comment>text of permissions popup</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nemáte povolenie na zápis na určené miesto. Vyberte si iné, alebo zrušte uloženie.</translation>
     </message>
     <message>
         <source>Failed to copy file</source>
@@ -1998,7 +2017,8 @@ Please use another image.</source>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Táto séria znakov vás umožní kontaktovať pomocou ostatných Tox klientov.
+Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -2056,7 +2076,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Registrovať</translation>
     </message>
     <message>
         <source>Update</source>
@@ -2065,7 +2085,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zmeniť heslo</translation>
     </message>
     <message>
         <source>Set profile password</source>
