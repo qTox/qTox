@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Spiele während dem Ändern der Ausgabelautstärke einen Testton ab.</translation>
+        <translation>Spiele beim Ändern der Ausgabelautstärke einen Testton ab.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Video device</source>
-        <translation>Videogerät</translation>
+        <translation>Kamera</translation>
     </message>
     <message>
         <source>Set resolution of your camera.
@@ -179,7 +179,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished">Dialog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>username</source>
@@ -199,7 +199,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation type="unfinished">HISTORIE DER NAMEN</translation>
+        <translation>VERLAUF DER NUTZERNAMEN</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -341,7 +341,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished">Diese Tox ID ist ungültig oder existiert nicht</translation>
+        <translation>Diese Tox ID ist ungültig oder existiert nicht</translation>
     </message>
 </context>
 <context>
@@ -418,7 +418,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished">Portabel</translation>
+        <translation>Portabel</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -614,19 +614,19 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Videoanruf konnte nicht gestartet werden</translation>
+        <translation>Videoanruf konnte nicht gestartet werden</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Anruf konnte nicht gestartet werden</translation>
+        <translation>Sprachanruf konnte nicht gestartet werden</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished">Das Mikrofon kann nur im Gespräch stumm geschaltet werden</translation>
+        <translation>Das Mikrofon kann nur während eines Gesprächs stumm geschaltet werden</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished">Die Ausgabe kann nur im Gespräch stumm geschaltet werden</translation>
+        <translation>Die Soundausgabe kann nur während eines Gesprächs deaktiviert werden</translation>
     </message>
 </context>
 <context>
@@ -1424,7 +1424,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Name input</source>
-        <translation type="unfinished">Namenseingabe</translation>
+        <translation>Namenseingabe</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
@@ -1432,7 +1432,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation type="unfinished">Eingabefeld für deine Statusnachricht</translation>
+        <translation>Eingabefeld für deine Statusnachricht</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
@@ -1464,7 +1464,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Visibility on the ToxMe service</source>
-        <translation type="unfinished">Sichtbarkeit auf ToxMe</translation>
+        <translation>Sichtbarkeit auf ToxMe</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1476,7 +1476,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Profil umbenennen.</translation>
+        <translation>Profil umbenennen.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
