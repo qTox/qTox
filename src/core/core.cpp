@@ -21,7 +21,7 @@
 #include "core.h"
 #include "corefile.h"
 #include "src/core/coreav.h"
-#include "src/core/cstring.h"
+#include "src/core/toxstring.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
@@ -421,7 +421,7 @@ void Core::onFriendRequest(Tox* /* tox*/, const uint8_t* cFriendPk, const uint8_
 {
     ToxPk friendPk(cFriendPk);
     emit static_cast<Core*>(core)->friendRequestReceived(friendPk,
-                                                         CString::toString(cMessage, cMessageSize));
+                                                         ToxString(cMessage, cMessageSize).getQString());
 }
 
 void Core::onFriendMessage(Tox* /* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE type,
@@ -429,14 +429,14 @@ void Core::onFriendMessage(Tox* /* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE ty
 {
     bool isAction = (type == TOX_MESSAGE_TYPE_ACTION);
     emit static_cast<Core*>(core)->friendMessageReceived(friendId,
-                                                         CString::toString(cMessage, cMessageSize),
+                                                         ToxString(cMessage, cMessageSize).getQString(),
                                                          isAction);
 }
 
 void Core::onFriendNameChange(Tox* /* tox*/, uint32_t friendId, const uint8_t* cName,
                               size_t cNameSize, void* core)
 {
-    emit static_cast<Core*>(core)->friendUsernameChanged(friendId, CString::toString(cName, cNameSize));
+    emit static_cast<Core*>(core)->friendUsernameChanged(friendId, ToxString(cName, cNameSize).getQString());
 }
 
 void Core::onFriendTypingChange(Tox* /* tox*/, uint32_t friendId, bool isTyping, void* core)
@@ -448,7 +448,7 @@ void Core::onStatusMessageChanged(Tox* /* tox*/, uint32_t friendId, const uint8_
                                   size_t cMessageSize, void* core)
 {
     emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId,
-                                                              CString::toString(cMessage, cMessageSize));
+                                                              ToxString(cMessage, cMessageSize).getQString());
 }
 
 void Core::onUserStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_USER_STATUS userstatus, void* core)
@@ -475,11 +475,13 @@ void Core::onUserStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_USER_STATUS
 void Core::onConnectionStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_CONNECTION status, void* core)
 {
     Status friendStatus = status != TOX_CONNECTION_NONE ? Status::Online : Status::Offline;
-    emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
-    if (friendStatus == Status::Offline)
+    // Ignore Online because it will be emited from onUserStatusChanged
+    if (friendStatus == Status::Offline) {
+        emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
         static_cast<Core*>(core)->checkLastOnline(friendId);
-    CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId,
-                                        friendStatus != Status::Offline);
+        CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, 
+                friendStatus != Status::Offline);
+    }
 }
 
 void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* data,
@@ -502,9 +504,8 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_T
                           const uint8_t* cMessage, size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
-    QString message = CString::toString(cMessage, length);
     bool isAction = type == TOX_MESSAGE_TYPE_ACTION;
-    emit core->groupMessageReceived(groupId, peerId, message, isAction);
+    emit core->groupMessageReceived(groupId, peerId, ToxString(cMessage, length).getQString(), isAction);
 }
 
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
@@ -523,8 +524,7 @@ void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uin
 {
     Core* core = static_cast<Core*>(vCore);
     QString author = core->getGroupPeerName(groupId, peerId);
-    QString title = CString::toString(cTitle, length);
-    emit core->groupTitleChanged(groupId, author, title);
+    emit core->groupTitleChanged(groupId, author, ToxString(cTitle, length).getQString());
 }
 
 void Core::onReadReceiptCallback(Tox*, uint32_t friendId, uint32_t receipt, void* core)
@@ -558,7 +558,7 @@ void Core::requestFriendship(const ToxId& friendAddress, const QString& message)
     } else if (hasFriendWithPublicKey(friendPk)) {
         emit failedToAddFriend(friendPk, tr("Friend is already added"));
     } else {
-        CString cMessage(message);
+        ToxString cMessage(message);
 
         uint32_t friendId =
             TOX(friend_add)(tox, friendAddress.getBytes(), cMessage.data(), cMessage.size(), nullptr);
@@ -593,7 +593,7 @@ void Core::requestFriendship(const ToxId& friendAddress, const QString& message)
 int Core::sendMessage(uint32_t friendId, const QString& message)
 {
     QMutexLocker ml(&messageSendMutex);
-    CString cMessage(message);
+    ToxString cMessage(message);
     int receipt = TOX(friend_send_message)(tox, friendId, TOX_MESSAGE_TYPE_NORMAL, cMessage.data(),
                                            cMessage.size(), nullptr);
     emit messageSentResult(friendId, message, receipt);
@@ -603,7 +603,7 @@ int Core::sendMessage(uint32_t friendId, const QString& message)
 int Core::sendAction(uint32_t friendId, const QString& action)
 {
     QMutexLocker ml(&messageSendMutex);
-    CString cMessage(action);
+    ToxString cMessage(action);
     int receipt = TOX(friend_send_message)(tox, friendId, TOX_MESSAGE_TYPE_ACTION, cMessage.data(),
                                            cMessage.size(), nullptr);
     emit messageSentResult(friendId, action, receipt);
@@ -619,9 +619,10 @@ void Core::sendTyping(uint32_t friendId, bool typing)
 
 void Core::sendGroupMessageWithType(int groupId, const QString& message, TOX_MESSAGE_TYPE type)
 {
-    QList<CString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
+    QList<QString> cMessages = splitMessage(message, MAX_GROUP_MESSAGE_LEN);
 
-    for (auto& cMsg : cMessages) {
+    for (auto& part : cMessages) {
+        ToxString cMsg(part);
         TOX_ERR_CONFERENCE_SEND_MESSAGE error;
         bool success =
             TOX(conference_send_message)(tox, groupId, type, cMsg.data(), cMsg.size(), &error);
@@ -663,7 +664,7 @@ void Core::sendGroupAction(int groupId, const QString& message)
 
 void Core::changeGroupTitle(int groupId, const QString& title)
 {
-    CString cTitle(title);
+    ToxString cTitle(title);
     TOX_ERR_CONFERENCE_TITLE error;
     bool success = TOX(conference_set_title)(tox, groupId, cTitle.data(), cTitle.size(), &error);
 
@@ -776,7 +777,7 @@ QString Core::getUsername() const
     int size = TOX(self_get_name_size)(tox);
     uint8_t* name = new uint8_t[size];
     TOX(self_get_name)(tox, name);
-    sname = CString::toString(name, size);
+    sname = ToxString(name, size).getQString();
     delete[] name;
     return sname;
 }
@@ -786,7 +787,7 @@ void Core::setUsername(const QString& username)
     if (username == getUsername())
         return;
 
-    CString cUsername(username);
+    ToxString cUsername(username);
 
     if (!TOX(self_set_name)(tox, cUsername.data(), cUsername.size(), nullptr)) {
         emit failedToSetUsername(username);
@@ -854,7 +855,7 @@ QString Core::getStatusMessage() const
     size_t size = TOX(self_get_status_message_size)(tox);
     uint8_t* name = new uint8_t[size];
     TOX(self_get_status_message)(tox, name);
-    sname = CString::toString(name, size);
+    sname = ToxString(name, size).getQString();
     delete[] name;
     return sname;
 }
@@ -872,7 +873,7 @@ void Core::setStatusMessage(const QString& message)
     if (message == getStatusMessage())
         return;
 
-    CString cMessage(message);
+    ToxString cMessage(message);
 
     if (!TOX(self_set_status_message)(tox, cMessage.data(), cMessage.size(), nullptr)) {
         emit failedToSetStatusMessage(message);
@@ -952,7 +953,7 @@ void Core::loadFriends()
                 if (nameSize && nameSize != SIZE_MAX) {
                     uint8_t* name = new uint8_t[nameSize];
                     if (TOX(friend_get_name)(tox, ids[i], name, nullptr))
-                        emit friendUsernameChanged(ids[i], CString::toString(name, nameSize));
+                        emit friendUsernameChanged(ids[i], ToxString(name, nameSize).getQString());
                     delete[] name;
                 }
 
@@ -961,8 +962,8 @@ void Core::loadFriends()
                 if (statusMessageSize != SIZE_MAX) {
                     uint8_t* statusMessage = new uint8_t[statusMessageSize];
                     if (TOX(friend_get_status_message)(tox, ids[i], statusMessage, nullptr)) {
-                        emit friendStatusMessageChanged(ids[i], CString::toString(statusMessage,
-                                                                                  statusMessageSize));
+                        emit friendStatusMessageChanged(ids[i], ToxString(statusMessage,
+                                                                          statusMessageSize).getQString());
                     }
                     delete[] statusMessage;
                 }
@@ -1048,7 +1049,7 @@ QString Core::getGroupPeerName(int groupId, int peerId) const
         return QString{};
     }
 
-    return CString::toString(nameArray, length);
+    return ToxString(nameArray, length).getQString();
 }
 
 /**
@@ -1104,7 +1105,7 @@ QList<QString> Core::getGroupPeerNames(int groupId) const
         lengths[i] = TOX(conference_peer_get_name_size)(tox, groupId, i, &error);
         bool ok = TOX(conference_peer_get_name)(tox, groupId, i, namesArray[i], &error);
         if (parsePeerQueryError(error) && ok) {
-            names.push_back(CString::toString(namesArray[i], lengths[i]));
+            names.push_back(ToxString(namesArray[i], lengths[i]).getQString());
         }
     }
 
@@ -1290,14 +1291,14 @@ QString Core::getFriendUsername(uint32_t friendnumber) const
     }
     uint8_t* name = new uint8_t[namesize];
     TOX(friend_get_name)(tox, friendnumber, name, nullptr);
-    QString sname = CString::toString(name, namesize);
+    ToxString sname(name, namesize);
     delete[] name;
-    return sname;
+    return sname.getQString();
 }
 
-QList<CString> Core::splitMessage(const QString& message, int maxLen)
+QList<QString> Core::splitMessage(const QString& message, int maxLen)
 {
-    QList<CString> splittedMsgs;
+    QList<QString> splittedMsgs;
     QByteArray ba_message(message.toUtf8());
 
     while (ba_message.size() > maxLen) {
@@ -1312,11 +1313,11 @@ QList<CString> Core::splitMessage(const QString& message, int maxLen)
             splitPos--;
         }
 
-        splittedMsgs.push_back(CString(ba_message.left(splitPos + 1)));
+        splittedMsgs.push_back(QString(ba_message.left(splitPos + 1)));
         ba_message = ba_message.mid(splitPos + 1);
     }
 
-    splittedMsgs.push_back(CString(ba_message));
+    splittedMsgs.push_back(QString(ba_message));
 
     return splittedMsgs;
 }
@@ -1341,7 +1342,7 @@ QString Core::getPeerName(const ToxPk& id) const
         return name;
     }
 
-    name = CString::toString(cname, nameSize);
+    name = ToxString(cname, nameSize).getQString();
     delete[] cname;
     return name;
 }

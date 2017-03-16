@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -17,14 +17,27 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TOXSTRING_H
+#define TOXSTRING_H
 
-#ifndef COREDEFINES_H
-#define COREDEFINES_H
+#include <QByteArray>
+#include <QString>
 
-#define TOXAV_RINGING_TIME 45
+#include <cstdint>
 
-// TODO: Put that in the settings
-#define TOXAV_MAX_VIDEO_WIDTH 1280
-#define TOXAV_MAX_VIDEO_HEIGHT 720
+class ToxString
+{
+public:
+    explicit ToxString(const QString& text);
+    explicit ToxString(const QByteArray& text);
+    ToxString(const uint8_t* text, size_t length);
 
-#endif // COREDEFINES_H
+    const uint8_t* data() const;
+    size_t size() const;
+    QString getQString() const;
+    QByteArray getBytes() const;
+
+private:
+    QByteArray string;
+};
+#endif // TOXSTRING_H

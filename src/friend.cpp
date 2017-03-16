@@ -39,8 +39,6 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
         userName = friendPk.toString();
     }
 
-    userAlias = Settings::getInstance().getFriendAlias(friendPk);
-
     chatForm = new ChatForm(this);
 }
 

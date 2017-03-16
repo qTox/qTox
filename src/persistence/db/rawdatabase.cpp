@@ -294,7 +294,7 @@ void RawDatabase::execLater(const QVector<RawDatabase::Query>& statements)
         pendingTransactions.enqueue(trans);
     }
 
-    QMetaObject::invokeMethod(this, "process");
+    QMetaObject::invokeMethod(this, "process", Qt::QueuedConnection);
 }
 
 /**

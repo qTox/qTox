@@ -7,6 +7,9 @@ Most stylistic features described below are described as clang-format rules
 present in the root of the repository, as such most code formatting rules can
 be applied by simply running clang-format over the source code in question.
 
+You can run [`tools/format-code.sh`] to format all C++ files tracked by
+git.
+
 ## Coding Standard
 
 qTox is written under **[ISO/IEC 14882:2011 (C++11)][ISO/IEC/C++11]** without
@@ -468,3 +471,4 @@ someWidget->setTooltip(QStringLiteral("<html><!-- some HTML text -->") + tr("Tra
 [ISO/IEC/C++11]: http://www.iso.org/iso/catalogue_detail.htm?csnumber=50372
 [Exceptions]: https://en.wikipedia.org/wiki/C%2B%2B#Exception_handling
 [RTTI]: https://en.wikipedia.org/wiki/Run-time_type_information
+[`tools/format-code.sh`]: /tools/format-code.sh

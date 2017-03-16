@@ -77,7 +77,6 @@ private:
     bool hasNewEvents;
     Status friendStatus;
 
-    FriendWidget* widget;
     ChatForm* chatForm;
 };
 

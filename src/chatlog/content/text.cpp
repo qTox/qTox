@@ -337,31 +337,38 @@ QString Text::extractSanitizedText(int from, int to) const
         return "";
 
     QString txt;
-    QTextBlock block = doc->firstBlock();
 
-    for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
-        int pos =
-            itr.fragment()
-                .position(); // fragment position -> position of the first character in the fragment
+    QTextBlock begin = doc->findBlock(from);
+    QTextBlock end = doc->findBlock(to);
+    for (QTextBlock block = begin; block != end.next() && block.isValid(); block = block.next()) {
+        for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
+            int pos =
+                itr.fragment()
+                    .position(); // fragment position -> position of the first character in the fragment
 
-        if (itr.fragment().charFormat().isImageFormat()) {
-            QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
-            QString key = imgFmt.name(); // img key (eg. key::D for :D)
-            QString rune = key.mid(4);
+            if (itr.fragment().charFormat().isImageFormat()) {
+                QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
+                QString key = imgFmt.name(); // img key (eg. key::D for :D)
+                QString rune = key.mid(4);
 
-            if (pos >= from && pos < to) {
-                txt += rune;
-                ++pos;
-            }
-        } else {
-            for (QChar c : itr.fragment().text()) {
-                if (pos >= from && pos < to)
-                    txt += c;
+                if (pos >= from && pos < to) {
+                    txt += rune;
+                    ++pos;
+                }
+            } else {
+                for (QChar c : itr.fragment().text()) {
+                    if (pos >= from && pos < to)
+                        txt += c;
 
-                ++pos;
+                    ++pos;
+                }
             }
         }
+
+        txt += '\n';
     }
+
+    txt.chop(1);
 
     return txt;
 }

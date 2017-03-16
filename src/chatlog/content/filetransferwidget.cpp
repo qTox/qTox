@@ -214,12 +214,10 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
     const int buttonFieldWidth = 32;
     const int lineWidth = 1;
 
-    // draw background
-    if (drawButtonAreaNeeded())
-        // Draw the widget background:
-        painter.setClipRect(QRect(0, 0, width(), height()));
-        painter.setBrush(QBrush(backgroundColor));
-        painter.drawRoundRect(geometry(), r * ratio, r);
+    // Draw the widget background:
+    painter.setClipRect(QRect(0, 0, width(), height()));
+    painter.setBrush(QBrush(backgroundColor));
+    painter.drawRoundRect(geometry(), r * ratio, r);
 
     if (drawButtonAreaNeeded()) {
         // Draw the button background:

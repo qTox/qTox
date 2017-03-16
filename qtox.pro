@@ -438,16 +438,15 @@ HEADERS  += \
     src/chatlog/textformatter.h \
     src/core/core.h \
     src/core/coreav.h \
-    src/core/coredefines.h \
     src/core/corefile.h \
     src/core/corestructs.h \
-    src/core/cstring.h \
     src/core/indexedlist.h \
     src/core/recursivesignalblocker.h \
     src/core/toxcall.h \
     src/core/toxencrypt.h \
     src/core/toxid.h \
     src/core/toxpk.h \
+    src/core/toxstring.h \
     src/friend.h \
     src/friendlist.h \
     src/group.h \
@@ -562,12 +561,12 @@ SOURCES += \
     src/core/coreav.cpp \
     src/core/corefile.cpp \
     src/core/corestructs.cpp \
-    src/core/cstring.cpp \
     src/core/recursivesignalblocker.cpp \
     src/core/toxcall.cpp \
     src/core/toxencrypt.cpp \
     src/core/toxid.cpp \
     src/core/toxpk.cpp \
+    src/core/toxstring.cpp \
     src/friend.cpp \
     src/friendlist.cpp \
     src/group.cpp \

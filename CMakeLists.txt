@@ -214,14 +214,11 @@ set(${PROJECT_NAME}_SOURCES
   src/core/coreav.cpp
   src/core/coreav.h
   src/core/core.cpp
-  src/core/coredefines.h
   src/core/corefile.cpp
   src/core/corefile.h
   src/core/core.h
   src/core/corestructs.cpp
   src/core/corestructs.h
-  src/core/cstring.cpp
-  src/core/cstring.h
   src/core/indexedlist.h
   src/core/recursivesignalblocker.cpp
   src/core/recursivesignalblocker.h
@@ -233,6 +230,8 @@ set(${PROJECT_NAME}_SOURCES
   src/core/toxid.h
   src/core/toxpk.cpp
   src/core/toxpk.h
+  src/core/toxstring.cpp
+  src/core/toxstring.h
   src/friend.cpp
   src/friend.h
   src/friendlist.cpp
