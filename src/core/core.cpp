@@ -553,7 +553,7 @@ void Core::requestFriendship(const ToxId& friendAddress, const QString& message)
         emit failedToAddFriend(friendPk, tr("Invalid Tox ID"));
     } else if (message.isEmpty()) {
         emit failedToAddFriend(friendPk, tr("You need to write a message with your request"));
-    } else if (message.size() > TOX_MAX_FRIEND_REQUEST_LENGTH) {
+    } else if (message.size() > (int)tox_max_friend_request_length()) {
         emit failedToAddFriend(friendPk, tr("Your message is too long!"));
     } else if (hasFriendWithPublicKey(friendPk)) {
         emit failedToAddFriend(friendPk, tr("Friend is already added"));
