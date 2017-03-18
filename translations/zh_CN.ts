@@ -1216,7 +1216,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation>结束视频通话</translation>
+        <translation>开始音频通话</translation>
     </message>
 </context>
 <context>
@@ -1232,6 +1232,21 @@ instead of system taskbar.</source>
     <message>
         <source>Group invites</source>
         <translation>群组邀请</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
