@@ -21,14 +21,17 @@
 
 #include "directshow.h"
 
-#include <QDebug>
-#include <amvideo.h>
-#include <cassert>
+// Because of replacing to incorrect order, which leads to building failing, this region is ignored for clang-format
+// clang-format off
 #include <cstdint>
-#include <dvdmedia.h>
 #include <objbase.h>
 #include <strmif.h>
+#include <amvideo.h>
+#include <dvdmedia.h>
 #include <uuids.h>
+#include <cassert>
+#include <QDebug>
+// clang-format on
 
 /**
  * Most of this file is adapted from libavdevice's dshow.c,
