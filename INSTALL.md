@@ -255,6 +255,7 @@ sudo apt-get install \
     qrencode \
     qt5-default \
     qt5-qmake \
+    qttools5-dev \
     qttools5-dev-tools \
     yasm
 ```

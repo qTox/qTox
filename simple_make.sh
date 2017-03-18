@@ -6,10 +6,11 @@ apt_install() {
     local apt_packages=(
         automake
         autotools-dev
+        build-essential
         check
         checkinstall
         cmake
-        git build-essential
+        git
         libavdevice-dev
         libgdk-pixbuf2.0-dev
         libglib2.0-dev
@@ -27,6 +28,7 @@ apt_install() {
         qrencode
         qt5-default
         qt5-qmake
+        qttools5-dev
         qttools5-dev-tools
     )
 
