@@ -119,10 +119,6 @@ if(APPLE)
   search_dependency(IOKIT             FRAMEWORK IOKit       OPTIONAL)
 endif()
 
-if(WIN32)
-  search_dependency(STRMIIDS          LIBRARY strmiids)
-endif()
-
 if (NOT GIT_DESCRIBE)
   execute_process(
     COMMAND git describe --tags
