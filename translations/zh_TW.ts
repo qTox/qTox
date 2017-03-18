@@ -509,7 +509,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">結束視訊通話</translation>
     </message>
     <message>
         <source>End audio call</source>
@@ -537,11 +537,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開始音訊通話</translation>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開始視訊通話</translation>
     </message>
     <message>
         <source>Unmute microphone</source>
@@ -1117,7 +1117,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">開始音訊通話</translation>
     </message>
     <message>
         <source>Accept audio call</source>
@@ -1129,7 +1129,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>開始視訊通話</translation>
     </message>
     <message>
         <source>Accept video call</source>
@@ -1137,19 +1137,19 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>End video call</source>
-        <translation type="unfinished"></translation>
+        <translation>結束視訊通話</translation>
     </message>
     <message>
         <source>Clear displayed messages</source>
-        <translation type="unfinished"></translation>
+        <translation>清除顯示的訊息</translation>
     </message>
     <message>
         <source>Not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>未傳送</translation>
     </message>
     <message>
         <source>Cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>已清除</translation>
     </message>
     <message>
         <source>Quote selected text</source>
@@ -1157,22 +1157,22 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Copy link address</source>
-        <translation type="unfinished"></translation>
+        <translation>複製連結位址</translation>
     </message>
 </context>
 <context>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox 視訊</translation>
     </message>
     <message>
         <source>Show Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示訊息</translation>
     </message>
     <message>
         <source>Hide Messages</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏訊息</translation>
     </message>
 </context>
 <context>
@@ -1197,7 +1197,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>開始音訊通話</translation>
     </message>
     <message>
         <source>Mute microphone</source>
@@ -1233,6 +1233,21 @@ instead of system taskbar.</source>
     <message>
         <source>Group invites</source>
         <translation type="unfinished">群組邀請</translation>
+    </message>
+</context>
+<context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1881,16 +1896,16 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>錯誤</translation>
     </message>
     <message>
         <source>Rename &quot;%1&quot;</source>
         <comment>renaming a profile</comment>
-        <translation type="unfinished"></translation>
+        <translation>重新命名 &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟此檔案。</translation>
     </message>
     <message>
         <source>Current profile: </source>
@@ -1898,7 +1913,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
@@ -2271,7 +2286,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">錯誤</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
@@ -2298,7 +2313,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">移除</translation>
     </message>
     <message>
         <source>Are you sure you want to remove %1 from your contacts list?</source>
