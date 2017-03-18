@@ -35,8 +35,12 @@
 #include <iostream>
 
 #ifdef Q_OS_WIN
-#include <shellapi.h>
+// Because of replacing to incorrect order, which leads to building failing,
+// this region is ignored for clang-format
+// clang-format off
 #include <windows.h>
+#include <shellapi.h>
+// clang-format on
 #endif
 
 /**
