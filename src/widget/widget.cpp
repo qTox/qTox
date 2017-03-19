@@ -2063,6 +2063,7 @@ QString Widget::getStatusIconPath(Status status)
     case Status::Offline:
         return ":/img/status/dot_offline.svg";
     }
+    assert(false);
 }
 
 //Preparing needed to set correct size of icons for GTK tray backend

@@ -37,10 +37,10 @@
 
 GroupInviteWidget::GroupInviteWidget(QWidget* parent, const GroupInvite& invite)
     : QWidget(parent)
-    , widgetLayout(new QHBoxLayout(this))
     , acceptButton(new QPushButton(this))
     , rejectButton(new QPushButton(this))
     , inviteMessageLabel(new CroppingLabel(this))
+    , widgetLayout(new QHBoxLayout(this))
     , inviteInfo(invite)
 {
     connect(acceptButton, &QPushButton::clicked, [=]() { emit accepted(inviteInfo); });
