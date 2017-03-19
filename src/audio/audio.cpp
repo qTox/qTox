@@ -487,10 +487,11 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t* data, int samples, u
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
     if (processed) {
-        ALuint bufids[processed];
+        ALuint* bufids = new ALuint[processed];
         alSourceUnqueueBuffers(alSource, processed, bufids);
         alDeleteBuffers(processed - 1, bufids + 1);
         bufid = bufids[0];
+        delete[] bufids;
     } else if (queued < 16) {
         alGenBuffers(1, &bufid);
     } else {
