@@ -1235,6 +1235,21 @@ au lieu de se fermer.</translation>
     </message>
 </context>
 <context>
+    <name>GroupInviteWidget</name>
+    <message>
+        <source>Invited by %1 on %2 at %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GroupWidget</name>
     <message>
         <source>%1 users in chat</source>
