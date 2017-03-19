@@ -264,6 +264,14 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Input field for notes about the contact</source>
         <translation>Väli, kuhu saab antud kontakti kohta märkusi kirjutada</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -625,11 +633,11 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrofoni saab vaigistada vaid kõne ajal</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Heli saab välja lülitada vaid kõne ajal</translation>
     </message>
 </context>
 <context>
@@ -678,30 +686,29 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <translation>Toxi kasutatakse läbi rakenduse nimega qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Pead oma kutsele ka teate lisama</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Sinu teade on liialt pikk!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Sõber on juba lisatud</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translatorcomment>peaks tõlkima?</translatorcomment>
-        <translation>/me pakub sõprust.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translatorcomment>peaks tõlkima?</translatorcomment>
         <translation>/me pakub sõprust, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Vale Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Vale Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Pead oma kutsele ka teate lisama</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Sinu teade on liialt pikk!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Sõber on juba lisatud</translation>
     </message>
 </context>
 <context>
@@ -806,33 +813,27 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Täna</translation>
+        <translation type="unfinished">Täna</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Eile</translation>
+        <translation type="unfinished">Eile</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Viimase 7 päeva jooksul</translation>
+        <translation type="unfinished">Viimase 7 päeva jooksul</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Sel kuul</translation>
+        <translation type="unfinished">Sel kuul</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Enam kui 6 kuu eest</translation>
+        <translation type="unfinished">Enam kui 6 kuu eest</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Teadmata</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1241,15 +1242,15 @@ instead of closing itself.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kutse edastas %1 kuupäeval %2 kl %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Ühine</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Keeldu</translation>
     </message>
 </context>
 <context>
@@ -1510,7 +1511,7 @@ Profiil ei sisalda vestluste ajalugu.</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Minu profiil</translation>
     </message>
 </context>
 <context>
@@ -1902,6 +1903,17 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2094,6 +2106,10 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
         <source>Current profile location: %1</source>
         <translation>Praeguse profiili asukoht: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2172,28 +2188,24 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">Sõbra lisamine ebaõnnestus</translation>
+        <translation>Sõbra lisamine ebaõnnestus</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 pole õige Toxme aadress.</translation>
+        <translation>%1 pole õige Toxme aadress.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Olgu</translation>
+        <translation>Olgu</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Ennast pole võimalik sõbraks lisada!</translation>
+        <translation>Ennast pole võimalik sõbraks lisada!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation>Suuruse muutmine</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation>Toxi URI, mida kasutada</translation>
@@ -2316,6 +2328,10 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Sisemine Toxme viga</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2786,27 +2802,27 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Lisa sõber</translation>
+        <translation>Lisa sõber</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Grupikutsed</translation>
+        <translation>Grupikutsed</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Failiülekanded</translation>
+        <translation>Failiülekanded</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Seaded</translation>
+        <translation>Seaded</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Minu profiil</translation>
     </message>
 </context>
 </TS>
