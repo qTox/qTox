@@ -46,11 +46,13 @@
  */
 
 GroupInviteForm::GroupInviteForm()
-    : createButton(new QPushButton(this))
+    : headWidget(new QWidget(this))
+    , headLabel(new QLabel(this))
+    , createButton(new QPushButton(this))
     , inviteBox(new QGroupBox(this))
     , scroll(new QScrollArea(this))
-    , headLabel(new QLabel(this))
-    , headWidget(new QWidget(this))
+
+
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
     connect(createButton, &QPushButton::clicked,
