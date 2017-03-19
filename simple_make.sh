@@ -149,7 +149,10 @@ zypper_install() {
 }
 
 main() {
-    if command -v apt-get
+    if command -v zypper && [ -f /etc/products.d/openSUSE.prod ]
+    then
+        zypper_install
+    elif command -v apt-get
     then
         apt_install
     elif command -v pacman
@@ -159,9 +162,6 @@ main() {
     then
         dnf_install
         fedora_locallib
-    elif command -v zypper
-    then
-        zypper_install
     else
         echo "Unknown package manager, attempting to compile anyways"
     fi
