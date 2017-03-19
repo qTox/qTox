@@ -265,6 +265,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>Поле ввода для заметок о контакте</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -423,7 +431,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation>Портативный</translation>
+        <translation>Портативность</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -681,28 +689,28 @@ which may lead to problems with video calls.</source>
         <translation>Всем привет из qTox&apos;а</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Вам нужно написать сообщение с текстом запроса</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Ваше сообщение слишком длинное!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Друг уже добавлен</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me предлагает дружбу.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me предлагает дружбу, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Некорректный Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Некорректный Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Вам нужно написать сообщение с текстом запроса</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Ваше сообщение слишком длинное!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Друг уже добавлен</translation>
     </message>
 </context>
 <context>
@@ -807,33 +815,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Сегодня</translation>
+        <translation type="unfinished">Сегодня</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Вчера</translation>
+        <translation type="unfinished">Вчера</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>За последние 7 дней</translation>
+        <translation type="unfinished">За последние 7 дней</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>За этот месяц</translation>
+        <translation type="unfinished">За этот месяц</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>За полгода</translation>
+        <translation type="unfinished">За полгода</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Неизвестно</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1245,15 +1247,15 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Приглашен %1 в %2 на %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Присоединиться</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Отказаться</translation>
     </message>
 </context>
 <context>
@@ -1906,6 +1908,17 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2098,6 +2111,10 @@ Share it with your friends to communicate.</source>
         <source>Current profile location: %1</source>
         <translation>Путь к текущему профилю: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2254,10 +2271,6 @@ It will be installed when qTox restarts.</source>
         <translation>Привет, это %1! Добавите меня в друзья?</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>Изменение размера</translation>
-    </message>
-    <message>
         <source>None</source>
         <comment>No camera device set</comment>
         <translation>Отсутствует</translation>
@@ -2322,6 +2335,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Внутренняя ошибка ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
