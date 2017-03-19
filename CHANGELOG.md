@@ -1,4 +1,68 @@
 <a name=""></a>
+## v1.9.0 (2017-03-19)
+
+The most noticeable change to UI are moved buttons in file transfer widget,
+lessening chance of an accidental cancellation of a file transfer.
+
+#### Bug Fixes
+
+*   Fix incorrect headers order ([0fc39113](https://github.com/qTox/qTox/commit/0fc39113183afcf1bc0750b8727a48634d8a623a), closes [#4220](https://github.com/qTox/qTox/issues/4220))
+*   emoji packs path in user manual ([a3e64618](https://github.com/qTox/qTox/commit/a3e646182a719edd135bcf7308e7b37a27ab09f9))
+*   URL's are not affected by markdown ([18c3f3a2](https://github.com/qTox/qTox/commit/18c3f3a2170f32f1045a92290456a86737eb5254))
+*   iterate all blocks ([7a5c5a86](https://github.com/qTox/qTox/commit/7a5c5a86fd82ab9812db019db2e98d700e08a900))
+*   fixed documentation mistake ([e8ed7e1f](https://github.com/qTox/qTox/commit/e8ed7e1f530b380d0b676933e6298327aeeb4398))
+*   Add splitter restorer ([a231532b](https://github.com/qTox/qTox/commit/a231532bd06a4a47432b5bc20d6d34028ca66941))
+*   changed incorrect videocall button offline tooltip ([0effac2b](https://github.com/qTox/qTox/commit/0effac2bdd8834bd3b1edcc91f3c8ffed03abfe6))
+*   Autoupdater trying to open files twice could fail ([20ff68c3](https://github.com/qTox/qTox/commit/20ff68c3a69ec8c92d06b8e36b8e8443d76e094f))
+*   msleep in toxuri processEvents loops, to avoid 100% CPU ([2d0698af](https://github.com/qTox/qTox/commit/2d0698af95959a895e1cb86721d288d8ef5f3bae), closes [#1926](https://github.com/qTox/qTox/issues/1926))
+*   Don't even try to add ourselves as a friend in the Tox URI handler ([bfda028a](https://github.com/qTox/qTox/commit/bfda028a2a3ef63181dbc8ffa42817e08e616f20))
+*   Various IPC event handling and related bugs on startup ([c75ee8a6](https://github.com/qTox/qTox/commit/c75ee8a6619e6c546121462d28e221bb8df11f19), closes [#1926](https://github.com/qTox/qTox/issues/1926))
+*   Friend list avatars not updating ([055c41bc](https://github.com/qTox/qTox/commit/055c41bc30de6901b63d14dbc50e384de5779d16))
+*   Accept IDs as tox URIs, not just ToxDNS addresses ([1d307bcc](https://github.com/qTox/qTox/commit/1d307bcc0e3bde3282615f5f2db08578e7cf4984), closes [#1925](https://github.com/qTox/qTox/issues/1925))
+* **UI:**  actually load bundled Unicode font as soon as possible ([bfd47733](https://github.com/qTox/qTox/commit/bfd47733c241677163e38b0bc28a9de87f4dc535))
+* **audio:**  alternate audio fix implementation from #4139 ([62ac4801](https://github.com/qTox/qTox/commit/62ac480171e6b073689344ee8eb65430485166de))
+* **cmake:**  Add ability to real disable optional dependency ([fb43e306](https://github.com/qTox/qTox/commit/fb43e306774db7b040fde550c9d4c479793d1bad))
+* **core:**  Ignore online connection status ([ea50eaae](https://github.com/qTox/qTox/commit/ea50eaaef742141ec2023050d5d1ee8719583333))
+* **db:**  Made RawDatabase::execLater executes statements asynchronously. ([54fb9f73](https://github.com/qTox/qTox/commit/54fb9f73ccb70735f0b551faaa2e713004a3864d))
+* **font:**
+  *  Made the font combobox not editable. ([ba28f163](https://github.com/qTox/qTox/commit/ba28f163fdd243998f0962cf4ad2ca5e5134d9f5))
+  *  Made font changes in settings apply on screen instantly. ([742583bb](https://github.com/qTox/qTox/commit/742583bb9ed11eebea2686f985b7dd254f5a6d89))
+* **icons:**  Removed unnecessary icon preparation. ([fac0021a](https://github.com/qTox/qTox/commit/fac0021a4752bca7d5a72fc2c1c464d59ba81754))
+* **qmake:**  add forgotten files to qTox.pro ([db2e2d7a](https://github.com/qTox/qTox/commit/db2e2d7ab77836d65c27a57ece69220eeb17e0e9))
+* **toxencrypt:**  return the plaintext after decryption ([14ee8af3](https://github.com/qTox/qTox/commit/14ee8af3cd156437b37ada4d06b07ccfbd2d3d4a))
+
+#### Features
+
+*   Switch windows portable links to stable versions ([b771f87e](https://github.com/qTox/qTox/commit/b771f87e0becbc649a5a3f0823efe153b6ffe2cb))
+*   Add version numbers in windows installer download links ([b73770d7](https://github.com/qTox/qTox/commit/b73770d703e98d47e9635918ad635eadcbbe2852), closes [#4112](https://github.com/qTox/qTox/issues/4112))
+* **UI:**  Move filetransferwidget buttons side-by-side. ([9322f29e](https://github.com/qTox/qTox/commit/9322f29ef4d6b45fb66623ef0655a496a3064b78), closes [#2597](https://github.com/qTox/qTox/issues/2597))
+* **l10n:**
+  *  add Chinese (Taiwan) translation to UI ([43d16d91](https://github.com/qTox/qTox/commit/43d16d91817f1224702b55aa2d6d53fb2aabd242))
+  *  add Chinese (Taiwan) translation using Weblate ([b80e964d](https://github.com/qTox/qTox/commit/b80e964d18763fcb5b3f2699789d17e95607bd9c))
+  *  update Belarusian translation from Weblate ([6fe20861](https://github.com/qTox/qTox/commit/6fe20861485e1261a4da67b15212825cd5fd5126), [a335e32a](https://github.com/qTox/qTox/commit/a335e32af50788e2e94cd4a1db65344f62e7323f), [f92bbbb9](https://github.com/qTox/qTox/commit/f92bbbb9dd4b37535e80e7687935958d43592299))
+  *  update Bulgarian translation from Weblate ([6df92b73](https://github.com/qTox/qTox/commit/6df92b73629933f1d0a82da1b6ff4e7f8193670b))
+  *  update Chinese (China) translation from Weblate ([95881c97](https://github.com/qTox/qTox/commit/95881c975dee764f1c545da99ddfcd9013ed54ac), [bb3ee7d0](https://github.com/qTox/qTox/commit/bb3ee7d040edfe0389461f677cff0d691f5e7071), [e0cb8e5f](https://github.com/qTox/qTox/commit/e0cb8e5f530cfaeb640ab3754b36f8e8a45f789a), [fbe0de9b](https://github.com/qTox/qTox/commit/fbe0de9bbbce117f81c6ce2f52ac29fcd9854543))
+  *  update Chinese (Simplified) translation from Weblate ([ae676246](https://github.com/qTox/qTox/commit/ae676246106f4890f34099840a92536d4831b92d))
+  *  update Chinese (Taiwan) translation from Weblate ([423fb83c](https://github.com/qTox/qTox/commit/423fb83c9f80a6b01f00ea980fc67e7fd1c0fbdb))
+  *  update Chinese (Traditional) translation from Weblate ([9fadde67](https://github.com/qTox/qTox/commit/9fadde67a14fc4d125bab9e5f285ee42206f2bcc))
+  *  update Czech translation from Weblate ([99d34b04](https://github.com/qTox/qTox/commit/99d34b049db7709c42cb0bf074aff9db1ab7d11e))
+  *  update German translation from Weblate ([015c8b00](https://github.com/qTox/qTox/commit/015c8b009264cd978b2d50ddab2460ec5697d6e6), [036ea14b](https://github.com/qTox/qTox/commit/036ea14b2689d39d89e9cd35782536048227b806))
+  *  update Greek translation from Weblate ([2551baab](https://github.com/qTox/qTox/commit/2551baab46415cea6f0f9bca48f65189cb201cc3), [cebfe4a6](https://github.com/qTox/qTox/commit/cebfe4a63bfcda211b366a9fe61f500fee898760))
+  *  update Italian translation from Weblate ([c6ca1518](https://github.com/qTox/qTox/commit/c6ca15188384993863dce217e3de815407be7084))
+  *  update Korean translation from Weblate ([9fca7365](https://github.com/qTox/qTox/commit/9fca736506454779892b447eeaee8fdaf2e42f5e))
+  *  update Lithuanian translation from Weblate ([77ee1787](https://github.com/qTox/qTox/commit/77ee1787b11687bfc467880c720768c472c3a9f1))
+  *  update Pirate translation from Weblate ([6d2cf522](https://github.com/qTox/qTox/commit/6d2cf5222b83ed58562a766fafd0dac546c2ead8))
+  *  update Russian translation from Weblate ([17413c08](https://github.com/qTox/qTox/commit/17413c08641fddbc872176bc03f16807d6307531), [4d22b7cc](https://github.com/qTox/qTox/commit/4d22b7cc97401e447947e1150de8414e89e951eb), [c2b7d7a5](https://github.com/qTox/qTox/commit/c2b7d7a533838ae8382bc42f953e15470149f3e2))
+  *  update Slovak translation from Weblate ([a6665fe0](https://github.com/qTox/qTox/commit/a6665fe028cabb1269f0143bc2ebfda189b63427), [cf5e7f3a](https://github.com/qTox/qTox/commit/cf5e7f3ad194f171ffbd835a01ac20861fffba65))
+  *  update Swedish translation from Weblate ([8eeee452](https://github.com/qTox/qTox/commit/8eeee4526c83b1b043bd517c0e5152e6fcd3b480), [c5067f65](https://github.com/qTox/qTox/commit/c5067f65d1845cbc89b4b4910283183807c45c5b))
+* **settings:**  create ui when needed instead of show/hide ([12bcc261](https://github.com/qTox/qTox/commit/12bcc26154722a1f5028ae55709830c89a3d3b69))
+* **shortcut:**  Implemented F11 shortcut for toggling fullscreen. ([3a20a4ba](https://github.com/qTox/qTox/commit/3a20a4ba43e609c96385f25c1a9a20e55cbfa4fa))
+* **toxencrypt:**  add function to get min length for isEncrypted() to succeed ([a5955c67](https://github.com/qTox/qTox/commit/a5955c67ede3de72d4b9b76730216bdcc8f62334))
+* **toxpk:**  Add 'ToxPk::getPkSize()' method ([f5c0d61a](https://github.com/qTox/qTox/commit/f5c0d61ae6cda2106c9d88ef7050b4003e725489))
+
+
+
+<a name=""></a>
 ## v1.8.0 (2017-02-05)
 
 With this version build system has been migrated to `cmake` and `qmake`
