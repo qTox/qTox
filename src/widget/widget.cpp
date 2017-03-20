@@ -1394,6 +1394,7 @@ void Widget::removeFriend(Friend* f, bool fake)
     FriendList::removeFriend(f->getFriendId(), fake);
     Nexus::getCore()->removeFriend(f->getFriendId(), fake);
 
+    delete widget;
     delete f;
     if (contentLayout && contentLayout->mainHead->layout()->isEmpty()) {
         onAddClicked();
