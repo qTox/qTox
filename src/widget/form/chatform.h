@@ -45,7 +45,7 @@ public:
     explicit ChatForm(Friend* chatFriend);
     ~ChatForm();
     void setStatusMessage(const QString& newMessage);
-    void loadHistory(QDateTime since, bool processUndelivered = false);
+    void loadHistory(const QDateTime& since, bool processUndelivered = false);
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
@@ -103,7 +103,6 @@ private:
     void showOutgoingCall(bool video);
     void startCounter();
     void stopCounter();
-    QString secondsToDHMS(quint32 duration);
     void updateCallButtons();
     void SendMessageStr(QString msg);
 
