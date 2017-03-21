@@ -126,7 +126,7 @@ zypper_install() {
         libQt5Sql5-sqlite
         libQt5Xml-devel
         libXScrnSaver-devel
-        libffmpeg-devel
+        ffmpeg-devel
         libopus-devel
         libqt5-linguist
         libqt5-qtbase-common-devel
@@ -161,7 +161,9 @@ main() {
     fi
 
     ./bootstrap.sh
-    cmake -H. -B_build
+    mkdir -p build
+    cd build
+    cmake ../
     make -j$(nproc)
 }
 main
