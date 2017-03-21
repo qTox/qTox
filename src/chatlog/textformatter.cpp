@@ -228,7 +228,6 @@ void TextFormatter::wrapUrl()
  */
 QString TextFormatter::applyStyling(bool showFormattingSymbols)
 {
-    message.toHtmlEscaped();
     applyHtmlFontStyling(showFormattingSymbols);
     wrapUrl();
     return message;
