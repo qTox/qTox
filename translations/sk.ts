@@ -264,6 +264,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -677,28 +685,28 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <translation>Toxujem na qToxu</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Musíte napísať správu ku žiadosti</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Vaša správa je príliš dlhá!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Priateľ je už pridaný</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/ Me žiada o priateľstvo.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me žiada o priateľstvo, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Neplatné Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Neplatné Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Musíte napísať správu ku žiadosti</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Vaša správa je príliš dlhá!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Priateľ je už pridaný</translation>
     </message>
 </context>
 <context>
@@ -808,33 +816,27 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Dnes</translation>
+        <translation type="unfinished">Dnes</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Včera</translation>
+        <translation type="unfinished">Včera</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Posledných 7 dní</translation>
+        <translation type="unfinished">Posledných 7 dní</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Tento mesiac</translation>
+        <translation type="unfinished">Tento mesiac</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Staršie ako 6 mesiacov</translation>
+        <translation type="unfinished">Staršie ako 6 mesiacov</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Neznáma</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1249,11 +1251,11 @@ namiesto panelu úloh.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Pripojiť sa</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Odmietnuť</translation>
     </message>
 </context>
 <context>
@@ -1521,11 +1523,11 @@ Profil neobsahuje históriu.</translation>
     <name>LoadHistoryDialog</name>
     <message>
         <source>Load History Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Načítanie histórie</translation>
     </message>
     <message>
         <source>Load history from:</source>
-        <translation type="unfinished"></translation>
+        <translation>Načítať históriu od:</translation>
     </message>
 </context>
 <context>
@@ -1638,23 +1640,23 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole pre heslo môžete nechať prázdne (bez hesla), alebo zadajte aspoň 6 znakov</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole pre potvrdenie hesla</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Tlačidlo Vytvoriť nový profil</translation>
     </message>
     <message>
         <source>Profile list</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam profilov</translation>
     </message>
     <message>
         <source>List of profiles</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoznam profilov</translation>
     </message>
     <message>
         <source>Password input</source>
@@ -1662,7 +1664,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Load automatically checkbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Políčko Načítať automaticky</translation>
     </message>
     <message>
         <source>Import profile</source>
@@ -1670,7 +1672,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished"></translation>
+        <translation>Tlačidlo Načítať zvolený profil</translation>
     </message>
     <message>
         <source>New profile creation page</source>
@@ -1694,7 +1696,7 @@ You may want to create one.</source>
     <message>
         <source>...</source>
         <translatorcomment>Ausgelassen</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Add friends</source>
@@ -1714,11 +1716,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvoriť</translation>
     </message>
     <message>
         <source>Open profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvoriť profil</translation>
     </message>
     <message>
         <source>Open profile page when clicked</source>
@@ -1742,7 +1744,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhľadávanie kontaktov</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
@@ -1770,7 +1772,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation type="unfinished"></translation>
+        <translation>História prenosov súborov</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
@@ -1795,22 +1797,22 @@ You may want to create one.</source>
     <message>
         <source>View</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazenie</translation>
     </message>
     <message>
         <source>Window</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Okno</translation>
     </message>
     <message>
         <source>Minimize</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Minimalizovať</translation>
     </message>
     <message>
         <source>Bring All to Front</source>
         <comment>OS X Menu bar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Presunúť všetko dopredu</translation>
     </message>
     <message>
         <source>Exit Fullscreen</source>
@@ -1825,10 +1827,10 @@ You may want to create one.</source>
     <name>NotificationEdgeWidget</name>
     <message numerus="yes">
         <source>Unread message(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Neprečítaná správa</numerusform>
+            <numerusform>Neprečítané správy</numerusform>
+            <numerusform>Neprečítaných správ</numerusform>
         </translation>
     </message>
 </context>
@@ -1836,7 +1838,7 @@ You may want to create one.</source>
     <name>PasswordEdit</name>
     <message>
         <source>CAPS-LOCK ENABLED</source>
-        <translation type="unfinished"></translation>
+        <translation>ZAPNUTÝ CAPS-LOCK</translation>
     </message>
 </context>
 <context>
@@ -1847,11 +1849,11 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdenie</translation>
     </message>
     <message>
         <source>Do you want to permanently delete all chat history?</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete natrvalo odstrániť celú históriu chatu?</translation>
     </message>
 </context>
 <context>
@@ -1905,6 +1907,17 @@ Sú možné zmeny formátu, ktoré môžu spôsobiť stratu dát.</translation>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -1921,11 +1934,11 @@ Sú možné zmeny formátu, ktoré môžu spôsobiť stratu dát.</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa otvoriť tento súbor.</translation>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuálny profil: </translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1933,12 +1946,13 @@ Sú možné zmeny formátu, ktoré môžu spôsobiť stratu dát.</translation>
     </message>
     <message>
         <source>Unable to read this image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa prečítať tento obrázok.</translation>
     </message>
     <message>
         <source>The supplied image is too large.
 Please use another image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaný obrázok je príliš veľký.
+Prosím, použite iný.</translation>
     </message>
     <message>
         <source>Profile already exists</source>
@@ -1948,12 +1962,12 @@ Please use another image.</source>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
         <comment>rename confirm text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profil s názvom &quot;%1&quot; už existuje.</translation>
     </message>
     <message>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa premenovať</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
@@ -1981,11 +1995,11 @@ Please use another image.</source>
     </message>
     <message>
         <source>Failed to copy file</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepodarilo sa skopírovať súbor</translation>
     </message>
     <message>
         <source>The file you chose could not be written to.</source>
-        <translation type="unfinished"></translation>
+        <translation>Do súboru, ktorý ste zvolili, sa nedá písať.</translation>
     </message>
     <message>
         <source>Really delete profile?</source>
@@ -1994,11 +2008,11 @@ Please use another image.</source>
     </message>
     <message>
         <source>Nothing to remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Nič na odstránenie</translation>
     </message>
     <message>
         <source>Your profile does not have a password!</source>
-        <translation type="unfinished"></translation>
+        <translation>Váš profil neobsahuje heslo!</translation>
     </message>
     <message>
         <source>Really delete password?</source>
@@ -2012,7 +2026,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Please enter a new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím zadajte nové heslo.</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2028,12 +2042,12 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     <message>
         <source>Save</source>
         <comment>save qr image</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť</translation>
     </message>
     <message>
         <source>Save QrCode (*.png)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uložiť Qr Kód (*.png)</translation>
     </message>
     <message>
         <source>The following files could not be deleted:</source>
@@ -2052,19 +2066,19 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Register (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrácia (spracovanie)</translation>
     </message>
     <message>
         <source>Update (processing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualizácia (spracovanie)</translation>
     </message>
     <message>
         <source>Done!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hotovo!</translation>
     </message>
     <message>
         <source>Account %1@%2 updated successfully</source>
-        <translation type="unfinished"></translation>
+        <translation>Účet %1@%2 bol úspešne aktualizovaný</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
@@ -2072,7 +2086,7 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation type="unfinished"></translation>
+        <translation>Toxme chyba</translation>
     </message>
     <message>
         <source>Register</source>
@@ -2094,6 +2108,10 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Current profile location: %1</source>
+        <translation>Aktuálne umiestnenie profilu: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2208,10 +2226,6 @@ It will be installed when qTox restarts.</source>
 Nainštaluje sa po reštarte qToxu.</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>Zmena veľkosti</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2272,15 +2286,15 @@ Nainštaluje sa po reštarte qToxu.</translation>
     </message>
     <message>
         <source>This name is already in use</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto meno sa už používa</translation>
     </message>
     <message>
         <source>This Tox ID is already registered under another name</source>
-        <translation type="unfinished"></translation>
+        <translation>Toto Tox ID je už zaregistrované pod iným menom</translation>
     </message>
     <message>
         <source>Please don&apos;t use a space in your name</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosím, nepoužívajte medzery vo vašom mene</translation>
     </message>
     <message>
         <source>Password incorrect</source>
@@ -2288,15 +2302,15 @@ Nainštaluje sa po reštarte qToxu.</translation>
     </message>
     <message>
         <source>You can&apos;t use this name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nemôžete použiť toto meno</translation>
     </message>
     <message>
         <source>Name not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Meno nebolo nájdené</translation>
     </message>
     <message>
         <source>Tox ID not sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tox ID nebolo odoslané</translation>
     </message>
     <message>
         <source>That user does not exist</source>
@@ -2317,6 +2331,10 @@ Nainštaluje sa po reštarte qToxu.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Vnútorná chyba ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
