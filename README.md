@@ -1,8 +1,11 @@
-<a name="qtox" \>
+<a name="qtpx" />
+
 <p align="center">
 <img src="https://qtox.github.io/assets/imgs/logo_head.png" alt="qTox" />
 </p>
+
 ---
+
 <p align="center">
 <a href="https://github.com/qTox/qTox/blob/master/LICENSE">
 <img src="https://img.shields.io/badge/license-GPLv3%2B-blue.svg" alt="GPLv3+" />
@@ -20,7 +23,11 @@ title="Week of Merges: population of Merges increases!
 
 Week of Testing: Your mana regenerates!" />
 </a></p>
+<!-- Empty paragraph used to avoid github bug with removing next block -->
+<p align="center" />
+
 ---
+
 <p align="center"><b>
 qTox is a powerful Tox client that follows the Tox design guidelines
 while running on all major platforms.
@@ -34,7 +41,7 @@ while running on all major platforms.
  **[Mailing list] |**
  **IRC:** [#qtox@freenode]
 
-====
+---
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
