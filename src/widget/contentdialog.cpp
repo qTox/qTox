@@ -345,7 +345,7 @@ void ContentDialog::cycleContacts(bool forward, bool inverse)
         bool isCurGroup = currentLayout == groupLayout.getLayout();
         bool nextIsEmpty = (isCurOnline && offlineEmpty && (groupsEmpty || groupsOnTop))
                            || (isCurGroup && offlineEmpty && (onlineEmpty || !groupsOnTop))
-                           || isCurOffline;
+                           || (isCurOffline);
 
         if (nextIsEmpty) {
             forward = !forward;
