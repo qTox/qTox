@@ -117,51 +117,60 @@ fedora_locallib() {
 
 zypper_install() {
     local zypper_packages=(
+        automake
         cmake
         git
+        libavcodec-devel
+        libavdevice-devel
+        libopus-devel
         libQt5Concurrent-devel
+        libqt5-linguist
+        libqt5-linguist-devel
         libQt5Network-devel
         libQt5OpenGL-devel
-        libQt5Sql-devel
-        libQt5Sql5-sqlite
-        libQt5Xml-devel
-        libXScrnSaver-devel
-        libffmpeg-devel
-        libopus-devel
-        libqt5-linguist
         libqt5-qtbase-common-devel
         libqt5-qtsvg-devel
+        libQt5Sql5-sqlite
+        libQt5Sql-devel
+        libQt5Test-devel
+        libQt5Xml-devel
         libsodium-devel
         libvpx-devel
+        libXScrnSaver-devel
         openal-soft-devel
-        patterns-openSUSE-devel_basis
         patterns-openSUSE-devel_basis
         qrencode-devel
         sqlcipher-devel
     )
+
+    # if not sudo is installed, e.g. in docker image, install it
+    command -v sudo || zypper in sudo
+
     sudo zypper in "${zypper_packages[@]}"
 }
 
 main() {
-    if which apt-get
+    if command -v zypper && [ -f /etc/products.d/openSUSE.prod ]
+    then
+        zypper_install
+    elif command -v apt-get
     then
         apt_install
-    elif which pacman
+    elif command -v pacman
     then
         pacman_install
-    elif which dnf
+    elif command -v dnf
     then
         dnf_install
         fedora_locallib
-    elif which zypper
-    then
-        zypper_install
     else
         echo "Unknown package manager, attempting to compile anyways"
     fi
 
     ./bootstrap.sh
-    cmake -H. -B_build
+    mkdir -p _build
+    cd _build
+    cmake ../
     make -j$(nproc)
 }
 main
