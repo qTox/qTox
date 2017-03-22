@@ -119,8 +119,9 @@ zypper_install() {
     local zypper_packages=(
         automake
         cmake
-        ffmpeg2-devel
         git
+        libavcodec-devel
+        libavdevice-devel
         libopus-devel
         libQt5Concurrent-devel
         libqt5-linguist
