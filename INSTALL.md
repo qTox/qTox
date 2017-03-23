@@ -36,7 +36,6 @@
 - [Windows](#windows)
 - [Compile-time switches](#compile-time-switches)
 
-<a name="dependencies" />
 ## Dependencies
 
 | Name          | Version     | Modules                                           |
@@ -100,9 +99,9 @@ Disabled by default.
 To enable: `-DENABLE_APPINDICATOR=True`
 
 
-<a name="linux" />
 ## Linux
 ### Simple install
+
 Easy qTox install is provided for variety of distributions:
 
 * [Arch](#arch)
@@ -121,34 +120,40 @@ Link | Distros | Architecture
 For release version, install `qtox`. To get latest changes, install
 `qtox-alpha`.
 
-====
+---
 
 <a name="arch-easy" />
+
 #### Arch
 
 PKGBUILD is available in the `community` repo, to install:
+
 ```bash
 pacman -S qtox
 ```
 
 <a name="gentoo-easy" />
+
 #### Gentoo
 
 qTox is available in Gentoo.
 
 To install:
+
 ```bash
 emerge qtox
 ```
 
 
 <a name="slackware-easy" />
+
 #### Slackware
 
 qTox SlackBuild and all of its dependencies can be found here:
 http://slackbuilds.org/repository/14.1/network/qTox/
 
 <a name="freebsd-easy" />
+
 #### FreeBSD
 
 A qTox port is available at ``net-im/qTox``. To build and install qTox:
@@ -176,39 +181,51 @@ In order to clone the qTox repository you need Git.
 
 
 <a name="arch-git" />
+
 #### Arch Linux
+
 ```bash
 sudo pacman -S --needed git
 ```
 
 <a name="debian-git" />
+
 #### Debian
+
 ```bash
 sudo apt-get install git
 ```
 
 <a name="fedora-git" />
+
 #### Fedora
+
 ```bash
 sudo dnf install git
 ```
 
 <a name="opensuse-git" />
+
 #### openSUSE
+
 ```bash
 sudo zypper install git
 ```
 
 <a name="ubuntu-git" />
+
 #### Ubuntu
+
 ```bash
 sudo apt-get install git
 ```
 
 
 ### Clone qTox
+
 Afterwards open a new terminal, change to a directory of your choice and clone
 the repository:
+
 ```bash
 cd /home/$USER/qTox
 git clone https://github.com/qTox/qTox.git qTox
@@ -220,17 +237,22 @@ corresponding parts.
 
 
 <a name="other-deps" />
+
 ### GCC, Qt, FFmpeg, OpanAL Soft and qrencode
 
 <a name="arch-other-deps" />
+
 #### Arch Linux
+
 ```bash
 sudo pacman -S --needed base-devel qt5 openal libxss qrencode ffmpeg
 ```
 
 
 <a name="debian-other-deps" />
+
 #### Debian
+
 **Note that only Debian >=8 stable (jessie) is supported.**
 
 If you use Debian 8, you have to compile FFmpeg manually and add backports to
@@ -264,37 +286,64 @@ sudo apt-get install \
 
 
 <a name="fedora-other-deps" />
+
 #### Fedora
+
 **Note that sqlcipher is not included in all versions of Fedora yet.**
 As of writing this section (November 2016), Fedora 25 ships sqlcipher, but
 Fedora 24 and older don't ship it yet.
 **This means that if you can't install sqlcipher from repositories, you'll
 have to compile it yourself, otherwise compiling qTox will fail.**
+
 ```bash
 sudo dnf groupinstall "Development Tools" "C Development Tools and Libraries"
 # (can also use sudo dnf install @"Development Tools")
-sudo dnf install qt-devel qt-doc qt-creator qt5-qtsvg qt5-qtsvg-devel \
-openal-soft-devel libXScrnSaver-devel qrencode-devel ffmpeg-devel \
-qtsingleapplication qt5-linguist gtk2-devel libtool openssl-devel
-```
-```bash
-sudo dnf install sqlcipher sqlcipher-devel
+sudo dnf install \
+    ffmpeg-devel \
+    gtk2-devel \
+    libXScrnSaver-devel \
+    libtool \
+    openal-soft-devel \
+    openssl-devel \
+    qrencode-devel \
+    qt-creator \
+    qt-devel \
+    qt-doc \
+    qt5-linguist \
+    qt5-qtsvg \
+    qt5-qtsvg-devel \
+    qtsingleapplication \
+    sqlcipher \
+    sqlcipher-devel
 ```
 
 **Go to [sqlcipher](#sqlcipher) section to compile it if necessary.**
 
 <a name="opensuse-other-deps" />
+
 #### openSUSE
 
 ```bash
-sudo zypper install patterns-openSUSE-devel_basis libqt5-qtbase-common-devel \
-libqt5-qtsvg-devel libqt5-linguist libQt5Network-devel libQt5OpenGL-devel \
-libQt5Concurrent-devel libQt5Xml-devel libQt5Sql-devel openal-soft-devel \
-qrencode-devel libXScrnSaver-devel libQt5Sql5-sqlite libffmpeg-devel \
-sqlcipher-devel
+sudo zypper install \
+    libQt5Concurrent-devel \
+    libQt5Network-devel \
+    libQt5OpenGL-devel \
+    libQt5Sql-devel \
+    libQt5Sql5-sqlite \
+    libQt5Xml-devel \
+    libXScrnSaver-devel \
+    libffmpeg-devel \
+    libqt5-linguist \
+    libqt5-qtbase-common-devel \
+    libqt5-qtsvg-devel \
+    openal-soft-devel \
+    patterns-openSUSE-devel_basis \
+    qrencode-devel \
+    sqlcipher-devel
 ```
 
 <a name="slackware-other-deps" />
+
 #### Slackware
 
 List of all the qTox dependencies and their SlackBuilds can be found here:
@@ -302,7 +351,9 @@ http://slackbuilds.org/repository/14.1/network/qTox/
 
 
 <a name="ubuntu-other-deps" />
+
 #### Ubuntu >=15.04
+
 ```bash
 sudo apt-get install \
     build-essential cmake \
@@ -328,7 +379,9 @@ sudo apt-get install \
 ```
 
 <a name="ubuntu-other-1604-deps" />
+
 #### Ubuntu >=16.04:
+
 ```bash
 sudo apt-get install \
     build-essential \
@@ -422,33 +475,42 @@ export PKG_CONFIG_PATH="$PWD/libs/lib/pkgconfig"
 Install all of the toxcore dependencies.
 
 <a name="arch-toxcore" />
+
 #### Arch Linux
+
 ```bash
 sudo pacman -S --needed opus libvpx libsodium
 ```
 
 <a name="debian-toxcore" />
+
 #### Debian
+
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check \
 libopus-dev libvpx-dev libsodium-dev libavdevice-dev
 ```
 
 <a name="fedora-toxcore" />
+
 #### Fedora
+
 ```bash
 sudo dnf install libtool autoconf automake check check-devel libsodium-devel \
 opus-devel libvpx-devel
 ```
 
 <a name="opensuse-toxcore" />
+
 #### openSUSE
+
 ```bash
 sudo zypper install libsodium-devel libvpx-devel libopus-devel \
 patterns-openSUSE-devel_basis
 ```
 
 <a name="slackware-toxcore" />
+
 #### Slackware
 
 List of all the toxcore dependencies and their SlackBuilds can be found
@@ -456,7 +518,9 @@ here: http://slackbuilds.org/repository/14.1/network/toxcore/
 
 
 <a name="ubuntu-toxcore" />
+
 #### Ubuntu >=15.04
+
 ```bash
 sudo apt-get install libtool autotools-dev automake checkinstall check \
 libopus-dev libvpx-dev libsodium-dev
@@ -497,11 +561,13 @@ sudo ldconfig
 
 
 ### Compile qTox
+
 **Make sure that all the dependencies are installed.**  If you experience
 problems with compiling, it's most likely due to missing dependencies, so please
 make sure that you did install *all of them*.
 
 Run in qTox directory to compile:
+
 ```bash
 cmake .
 make
@@ -522,18 +588,21 @@ Congratulations, you've compiled qTox `:)`
 
 
 #### Debian / Ubuntu / Mint
+
 If the compiling process stops with a missing dependency like:
 `... libswscale/swscale.h missing` try:
+
 ```bash
 apt-file search libswscale/swscale.h
 ```
+
 And install the package that provides the missing file.
 Start make again. Repeat if necessary until all dependencies are installed. If
 you can, please note down all additional dependencies you had to install that
 aren't listed here, and let us know what is missing `;)`
 
 
-====
+---
 
 ### Building packages
 
@@ -548,6 +617,7 @@ password for sudo.
 
 
 <a name="osx" />
+
 ## OS X
 
 Supported OS X versions: >=10.8.
@@ -557,6 +627,7 @@ Compiling qTox on OS X for development requires 3 tools:
 [Qt 5.4+](https://www.qt.io/qt5-4/) and [homebrew](https://brew.sh).
 
 ### Automated Script
+
 You can now set up your OS X system to compile qTox automatically thanks to the
 script in: `./osx/qTox-Mac-Deployer-ULTIMATE.sh`
 
@@ -572,6 +643,7 @@ Note that the script will revert any non-committed changes to qTox repository
 during the `update` phase.
 
 #### First Run / Install
+
 If you are running the script for the first time you will want to make sure your
 system is ready. To do this simply run `./qTox-Mac-Deployer-ULTIMATE.sh -i` to
 run you through the automated install set up.
@@ -583,6 +655,7 @@ If there aren't any errors then you'll find a locally working qTox application
 in your home folder under `~/qTox-Mac_Build`
 
 #### Updating
+
 If you want to update your application for testing purposes or you want to run a
 nightly build setup then run: `./qTox-Mac-Deployer-ULTIMATE.sh -u` and follow
 the prompts. (NOTE: If you know you updated the repos before running this hit Y)
@@ -590,6 +663,7 @@ followed by `./qTox-Mac-Deployer-ULTIMATE.sh -b` to build the application once
 more. (NOTE: This will delete your previous build.)
 
 #### Deploying
+
 OS X requires an extra step to make the `qTox.app` file shareable on a system
 that doesn't have the required libraries installed already.
 
@@ -598,12 +672,15 @@ then simply run: `./qTox-Mac-Deployer-ULTIMATE.sh -d`
 
 ### Manual Compiling
 #### Required Libraries
+
 Install homebrew if you don't have it:
+
 ```bash
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 First, let's install the dependencies available via `brew`.
+
 ```bash
 brew install git ffmpeg qrencode libtool automake autoconf check qt5 libvpx \
 opus sqlcipher libsodium
@@ -613,29 +690,34 @@ Next, install
 [toxcore](https://github.com/toktok/c-toxcore/blob/master/INSTALL.md#osx)
 
 Then, clone qTox:
+
 ```bash
 git clone https://github.com/qTox/qTox
 ```
 
 Finally, copy all required files. Whenever you update your brew packages, you
 may skip all of the above steps and simply run the following commands:
+
 ```bash
 cd ./git/qTox
 sudo bash bootstrap-osx.sh
 ```
 
 #### Compiling
+
 You can build qTox with Qt Creator
 [seperate download](http://www.qt.io/download-open-source/#section-6) or
 manually with cmake
 
 With that; in your terminal you can compile qTox in the git dir:
+
 ```bash
 cmake .
 make
 ```
 
 Or a cleaner method would be to:
+
 ```bash
 cd ./git/dir/qTox
 mkdir ./build
@@ -644,24 +726,30 @@ cmake ..
 ```
 
 #### Deploying
+
 If you compiled qTox properly you can now deploy the `qTox.app` that's created
 where you built qTox so you can distribute the package.
 
 Using your qt5 homebrew installation from the build directory:
+
 ```bash
 /usr/local/Cellar/qt5/5.5.1_2/bin/macdeployqt ./qTox.app
 ```
 
 #### Running qTox
+
 You've got 2 choices, either click on the qTox app that suddenly exists, or do
 the following:
+
 ```bash
 qtox.app/Contents/MacOS/qtox
 ```
+
 Enjoy the snazzy CLI output as your friends and family congratulate you on
 becoming a hacker
 
 <a name="windows" />
+
 ## Windows
 
 ### Qt
@@ -724,6 +812,7 @@ following steps assume that you cloned the repository at `C:\qTox`. If you
 decided to choose another location, replace corresponding parts.
 
 ### Getting dependencies
+
 Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
 dependencies compile them and put to appropriate directories.
 
