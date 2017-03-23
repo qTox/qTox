@@ -96,6 +96,24 @@ static const StringToString urlCases {
     {QStringLiteral("https://url.com/some`url/some`more`url/"),
      QStringLiteral("<a href=\"https://url.com/some`url/some`more`url/\">"
                     "https://url.com/some`url/some`more`url/</a>")},
+    // Test case from issue #4275
+    {QStringLiteral("http://www.metacritic.com/game/pc/mass-effect-andromeda\n"
+                    "http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\n"
+                    "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda"),
+     QStringLiteral("<a href=\"http://www.metacritic.com/game/pc/mass-effect-andromeda\">"
+                    "http://www.metacritic.com/game/pc/mass-effect-andromeda</a>\n"
+                    "<a href=\"http://www.metacritic.com/game/playstation-4/mass-effect-andromeda\""
+                    ">http://www.metacritic.com/game/playstation-4/mass-effect-andromeda</a>\n"
+                    "<a href=\"http://www.metacritic.com/game/xbox-one/mass-effect-andromeda\">"
+                    "http://www.metacritic.com/game/xbox-one/mass-effect-andromeda</a>")},
+    {QStringLiteral("http://site.com/part1/part2 "
+                    "http://site.com/part3 "
+                    "and one more time "
+                    "www.site.com/part1/part2"),
+     QStringLiteral("<a href=\"http://site.com/part1/part2\">http://site.com/part1/part2</a> "
+                    "<a href=\"http://site.com/part3\">http://site.com/part3</a> "
+                    "and one more time "
+                    "<a href=\"http://www.site.com/part1/part2\">www.site.com/part1/part2</a>")},
 };
 
 /**

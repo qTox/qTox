@@ -150,14 +150,17 @@ static bool isTagIntersection(const QString& str)
  */
 static void processUrl(QString& str, std::function<QString(QString&)> func)
 {
+    int startLength = str.length();
+    int offset = 0;
     for (QRegularExpression exp : urlPatterns) {
         QRegularExpressionMatchIterator iter = exp.globalMatch(str);
         while (iter.hasNext()) {
             QRegularExpressionMatch match = iter.next();
-            int startPos = match.capturedStart();
+            int startPos = match.capturedStart() + offset;
             int length = match.capturedLength();
             QString url = str.mid(startPos, length);
             str.replace(startPos, length, func(url));
+            offset = str.length() - startLength;
         }
     }
 }
