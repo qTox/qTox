@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>Поле ўводы для нататак аб кантакце</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -677,28 +685,28 @@ which may lead to problems with video calls.</source>
         <translation>Карыстаю qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Вам трэба напісаць паведамленне да вашага запыта</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Ваша паведамленне занадта вялікае!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Сябра ўжо даданы</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me прапаноўвае сяброўства.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me прапаноўвае сяброўства, «%1»</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Некарэктны Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Некарэктны Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Вам трэба напісаць паведамленне да вашага запыта</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Ваша паведамленне занадта вялікае!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Сябра ўжо даданы</translation>
     </message>
 </context>
 <context>
@@ -808,33 +816,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Сёння</translation>
+        <translation type="unfinished">Сёння</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Учора</translation>
+        <translation type="unfinished">Учора</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Апошнія 7 дзён</translation>
+        <translation type="unfinished">Апошнія 7 дзён</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Апошні месяц</translation>
+        <translation type="unfinished">Апошні месяц</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Старэй 6 месяцаў</translation>
+        <translation type="unfinished">Старэй 6 месяцаў</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Невядома</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1086,7 +1088,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Запуск qTox пры запуску аперацыйнай сістэмы (бягучы профіль).</translation>
+        <translation>Запуск qTox падчас запуску аперацыйнай сістэмы (дзейны профіль).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
@@ -1243,15 +1245,15 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запрошыны %1 у %2 %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Далучыцца</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Адмовіцца</translation>
     </message>
 </context>
 <context>
@@ -1678,7 +1680,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation>Старонка загрузкі існуючага профілю</translation>
+        <translation>Старонка загрузкі наяўнага профілю</translation>
     </message>
 </context>
 <context>
@@ -1874,23 +1876,23 @@ You may want to create one.</source>
 If you are being spammed with friend requests, you should change your NoSpam.
 People will be unable to add you with your old ID, but you will keep your current friends.</source>
         <comment>toolTip for nospam</comment>
-        <translation>«СпамуНе» — гэта частка вашага ідэнтыфікатара Tox.
-Калі вы пачалі атрымліваць спам з запытамі сяброўства, вы павінны змяніць значэнне «СпамуНе».
-Людзі не змогуць дадаць вас з вашым старым ідэнтыфікатарам, але вы захаваеце існуючых сяброў.</translation>
+        <translation>NoSpam — гэта частка вашага ідэнтыфікатара Tox.
+Калі вы пачалі атрымліваць спам з запытамі сяброўства, вы павінны змяніць значэнне NoSpam.
+Людзі не змогуць дадаць вас з вашым старым ідэнтыфікатарам, але вы захаваеце наяўных сяброў.</translation>
     </message>
     <message>
         <source>NoSpam</source>
-        <translation>СпамуНе</translation>
+        <translation>NoSpam</translation>
     </message>
     <message>
         <source>NoSpam is a part of your ID that can be changed at will.
 If you are getting spammed with friend requests, change the NoSpam.</source>
-        <translation>«СпамуНе» — гэта частка вашага ідэнтыфікатара, якая можа быць зменена.
-Калі вы пачалі атрымліваць спам з запытамі сяброўства, змяніце значэнне «СпамуНе».</translation>
+        <translation>NoSpam — гэта частка вашага ідэнтыфікатара, якая можа быць зменена.
+Калі вы пачалі атрымліваць спам з запытамі сяброўства, змяніце значэнне NoSpam.</translation>
     </message>
     <message>
         <source>Generate random NoSpam</source>
-        <translation>Генераваць выпадковае значэнне «СпамуНе»</translation>
+        <translation>Генераваць выпадковае значэнне NoSpam</translation>
     </message>
     <message>
         <source>Chat history keeping is still in development.
@@ -1902,6 +1904,17 @@ Save format changes are possible, which may result in data loss.</source>
     <message>
         <source>Privacy</source>
         <translation>Прыватнасць</translation>
+    </message>
+</context>
+<context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1925,7 +1938,7 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
     <message>
         <source>Current profile: </source>
-        <translation>Бягучы профіль: </translation>
+        <translation>Дзейны профіль: </translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2095,7 +2108,11 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Current profile location: %1</source>
-        <translation>Размяшчэнне бягучага профілю: %1</translation>
+        <translation>Размяшчэнне дзейнага профілю: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2209,10 +2226,6 @@ It will be installed when qTox restarts.</source>
 Яно будзе ўсталявана пасля перазапуску qTox.</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>Змена памеру</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translation>Tox URI для разбору</translation>
     </message>
@@ -2318,6 +2331,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Унутраная памылка ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
