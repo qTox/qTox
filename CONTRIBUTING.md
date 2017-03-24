@@ -1,3 +1,26 @@
+- [Filing an issue](#filing-an-issue)
+  - [Must read](#must-read)
+  - [Good to know](#good-to-know)
+- [How to start contributing](#how-to-start-contributing)
+  - [Before you start…](#before-you-start)
+  - [Must read](#must-read)
+  - [Pull request](#pull-request)
+  - [How to open a pull request](#how-to-open-a-pull-reqeust)
+  - [How to deal with large amounts of merge conflicts](#merge-conflicts)
+  - [Git Commit Guidelines](#commit)
+    - [Commit Message Format](#commit-message-format)
+      - [Header](#header)
+      - [Type](#type)
+      - [Scope](#scope)
+      - [Subject](#subject)
+      - [Body](#body)
+  - [Reviewing](#reviewing)
+    - [Testing PRs](#testing-prs)
+  - [Git config](#git-config)
+- [Coding guidelines](#coding-guidelines)
+
+
+
 Note that you don't need to know all of the `CONTRIBUTING.md` – it is there to
 help you with things as you go, and make things easier, not harder.
 
@@ -130,6 +153,8 @@ git push
 
 That's it! Happy contributing!
 
+<a name="merge-conflicts" />
+
 ## How to deal with large amounts of merge conflicts
 
 Usually you want to avoid conflicts and they should be rare. If conflicts
@@ -173,8 +198,9 @@ git push -f
   do `git pull`. Then you can start fixing the conflicts.  [Here is a good
   explanation](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
 
+<a name="commit" />
 
-## <a name="commit"></a> Git Commit Guidelines
+## Git Commit Guidelines
 
 We have very precise rules over how our git commit messages can be formatted.
 This leads to **more readable messages** that are easy to follow when looking
@@ -196,7 +222,7 @@ special format that includes a **type**, a **scope** and a **subject**:
 The **header** is mandatory and the **body** is optional. The **scope** of the
 header is also optional.
 
-### Header
+#### Header
 
 The header must be a short (72 characters or less) summary of the changes made.
 
@@ -280,7 +306,7 @@ Include every section of the body that is relevant for your commit.
 space or two newlines. The rest of the commit message is then used for this.
 
 
-## Reviews
+## Reviewing
 
 Currently `reviewable.io` is being used to review changes that land in qTox.
 
