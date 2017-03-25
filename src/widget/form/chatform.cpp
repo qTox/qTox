@@ -222,25 +222,14 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onTextEditChanged()
 {
-    Core* core = Core::getInstance();
-    if (!Settings::getInstance().getTypingNotification()) {
-        if (isTyping) {
-            core->sendTyping(f->getFriendId(), false);
+    bool isTypingNow = !msgEdit->toPlainText().isEmpty();
+    if (isTyping != isTypingNow) {
+        Core::getInstance()->sendTyping(f->getFriendId(), isTypingNow);
+        if (isTypingNow) {
+            typingTimer.start(TYPING_NOTIFICATION_DURATION);
         }
 
-        isTyping = false;
-        return;
-    }
-
-    if (msgEdit->toPlainText().length() > 0) {
-        typingTimer.start(TYPING_NOTIFICATION_DURATION);
-        if (!isTyping) {
-            isTyping = true;
-            core->sendTyping(f->getFriendId(), isTyping);
-        }
-    } else {
-        isTyping = false;
-        core->sendTyping(f->getFriendId(), isTyping);
+        isTyping = isTypingNow;
     }
 }
 
@@ -364,7 +353,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         onAvStart(friendId, video);
     } else {
         callConfirm->show();
-        auto* confirmData = callConfirm.data();
+        CallConfirmWidget* confirmData = callConfirm.data();
         connect(confirmData, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(confirmData, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
