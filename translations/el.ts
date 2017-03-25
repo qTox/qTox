@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>Πεδίο εισαγωγής για σημειώσεις σχετικά με την επαφή</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -678,28 +686,28 @@ which may lead to problems with video calls.</source>
         <translation>Παρουσία στο qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Θα πρέπει να γράψετε ένα μήνυμα με το αίτημα σας</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Το μήνυμα σας είναι πολύ μεγάλο!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Ο/η φίλος/η έχει ήδη προστεθεί</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me προσφέρει φιλία.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me προσφέρει φιλία, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Μη έγκυρη Tox Ταυτότητα (ID)</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Μη έγκυρη Tox Ταυτότητα (ID)</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Θα πρέπει να γράψετε ένα μήνυμα με το αίτημα σας</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Το μήνυμα σας είναι πολύ μεγάλο!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Ο/η φίλος/η έχει ήδη προστεθεί</translation>
     </message>
 </context>
 <context>
@@ -804,33 +812,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Σήμερα</translation>
+        <translation type="unfinished">Σήμερα</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Εχθές</translation>
+        <translation type="unfinished">Εχθές</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Τελευταίες 7 ημέρες</translation>
+        <translation type="unfinished">Τελευταίες 7 ημέρες</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Αυτό το μήνα</translation>
+        <translation type="unfinished">Αυτό το μήνα</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Παλαιότερα από 6 μήνες</translation>
+        <translation type="unfinished">Παλαιότερα από 6 μήνες</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Άγνωστο</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1238,15 +1240,15 @@ instead of closing itself.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Προσκεκλημένος από% 1% 2 σε% 3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Συμμετοχή</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Απόρριψη</translation>
     </message>
 </context>
 <context>
@@ -1898,6 +1900,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2090,6 +2103,10 @@ Share it with your friends to communicate.</source>
         <source>Current profile location: %1</source>
         <translation>Τρέχουσα τοποθεσία προφίλ: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2186,10 +2203,6 @@ Share it with your friends to communicate.</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation>Αλλαγή μεγέθους σε εξέλιξη</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation>Tox URI για ανάλυση</translation>
@@ -2311,6 +2324,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Εσωτερικό σφάλμα ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
