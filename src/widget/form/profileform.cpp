@@ -433,11 +433,15 @@ void ProfileForm::onDeletePassClicked()
                              "deletion confirmation text")))
         return;
 
-    Nexus::getProfile()->setPassword(QString());
+    QString errorMsg = pro->setPassword(QString());
+    if (!errorMsg.isEmpty()) {
+        GUI::showInfo(tr("Couldn't change password"), errorMsg);
+    }
 }
 
 void ProfileForm::onChangePassClicked()
 {
+    Profile* p = Nexus::getProfile();
     SetPasswordDialog* dialog =
         new SetPasswordDialog(tr("Please enter a new password."), QString(), 0);
     int r = dialog->exec();
@@ -445,7 +449,10 @@ void ProfileForm::onChangePassClicked()
         return;
 
     QString newPass = dialog->getPassword();
-    Nexus::getProfile()->setPassword(newPass);
+    QString errorMsg = p->setPassword(newPass);
+    if (!errorMsg.isEmpty()) {
+        GUI::showInfo(tr("Couldn't change password"), errorMsg);
+    }
 }
 
 void ProfileForm::retranslateUi()

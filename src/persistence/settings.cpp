@@ -341,7 +341,7 @@ void Settings::loadPersonal(Profile* profile)
 
     qDebug() << "Loading personal settings from" << filePath;
 
-    SettingsSerializer ps(filePath, profile->getPassword());
+    SettingsSerializer ps(filePath, profile->getPasskey());
     ps.load();
     friendLst.clear();
 
@@ -618,15 +618,14 @@ void Settings::savePersonal(Profile* profile)
         qDebug() << "Could not save personal settings because there is no active profile";
         return;
     }
-    savePersonal(profile->getName(), profile->getPassword());
-}
-
-void Settings::savePersonal(QString profileName, const QString& password)
-{
     if (QThread::currentThread() != settingsThread)
         return (void)QMetaObject::invokeMethod(&getInstance(), "savePersonal",
-                                               Q_ARG(QString, profileName), Q_ARG(QString, password));
+                                               Q_ARG(Profile*, profile));
+    savePersonal(profile->getName(), profile->getPasskey());
+}
 
+void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
+{
     QMutexLocker locker{&bigLock};
     if (!loaded)
         return;
@@ -635,7 +634,7 @@ void Settings::savePersonal(QString profileName, const QString& password)
 
     qDebug() << "Saving personal settings at " << path;
 
-    SettingsSerializer ps(path, password);
+    SettingsSerializer ps(path, passkey);
     ps.beginGroup("Friends");
     {
         ps.beginWriteArray("Friend", friendLst.size());

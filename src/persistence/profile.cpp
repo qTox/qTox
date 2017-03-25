@@ -51,7 +51,6 @@ QVector<QString> Profile::profiles;
 
 Profile::Profile(QString name, const QString& password, bool isNewProfile, const QByteArray& toxsave)
     : name{name}
-    , password{password}
     , newProfile{isNewProfile}
     , isRemoved{false}
 {
@@ -62,7 +61,9 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
     coreThread = new QThread();
     coreThread->setObjectName("qTox Core");
     core = new Core(coreThread, *this);
-    QObject::connect(core, &Core::idSet, this, &Profile::loadDatabase, Qt::QueuedConnection);
+    QObject::connect(core, &Core::idSet, this,
+                     [this, password](const ToxId& id) { loadDatabase(id, password); },
+                     Qt::QueuedConnection);
     core->moveToThread(coreThread);
     QObject::connect(coreThread, &QThread::started, core, [=]() { core->start(toxsave); });
 }
@@ -88,7 +89,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
         return nullptr;
     }
 
-    std::unique_ptr<ToxEncrypt> tmpKey;
+    std::unique_ptr<ToxEncrypt> tmpKey = nullptr;
     QByteArray data = QByteArray();
     Profile* p = nullptr;
     qint64 fileSize = 0;
@@ -140,6 +141,9 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     saveFile.close();
     p = new Profile(name, password, false, data);
     p->passkey = std::move(tmpKey);
+    if (tmpKey) {
+        p->encrypted = true;
+    }
 
     return p;
 
@@ -188,6 +192,9 @@ Profile* Profile::createProfile(QString name, QString password)
     Settings::getInstance().createPersonal(name);
     Profile* p = new Profile(name, password, true, QByteArray());
     p->passkey = std::move(tmpKey);
+    if (tmpKey) {
+        p->encrypted = true;
+    }
 
     return p;
 }
@@ -308,7 +315,7 @@ void Profile::saveToxSave(QByteArray data)
         return;
     }
 
-    if (!password.isEmpty()) {
+    if (encrypted) {
         data = passkey->encrypt(data);
         if (data.isEmpty()) {
             qCritical() << "Failed to encrypt, can't save!";
@@ -339,7 +346,7 @@ void Profile::saveToxSave(QByteArray data)
  */
 QString Profile::avatarPath(const QString& ownerId, bool forceUnencrypted)
 {
-    if (password.isEmpty() || forceUnencrypted)
+    if (!encrypted || forceUnencrypted)
         return Settings::getInstance().getSettingsDirPath() + "avatars/" + ownerId + ".png";
 
     QByteArray idData = ownerId.toUtf8();
@@ -379,28 +386,16 @@ QPixmap Profile::loadAvatar(const QString& ownerId)
 }
 
 /**
- * @brief Get a contact's avatar from cache
+ * @brief Get a contact's avatar from cache.
  * @param ownerId Friend ID to load avatar.
  * @return Avatar as QByteArray.
  */
 QByteArray Profile::loadAvatarData(const QString& ownerId)
 {
-    return loadAvatarData(ownerId, password);
-}
-
-/**
- * @brief Get a contact's avatar from cache, with a specified profile password.
- * @param ownerId Friend ID to load avatar.
- * @param password Profile password to decrypt data.
- * @return Avatar as QByteArray.
- */
-QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& password)
-{
     QString path = avatarPath(ownerId);
-    bool encrypted = !password.isEmpty();
 
     // If the encrypted avatar isn't found, try loading the unencrypted one for the same ID
-    if (!password.isEmpty() && !QFile::exists(path)) {
+    if (encrypted && !QFile::exists(path)) {
         encrypted = false;
         path = avatarPath(ownerId, true);
     }
@@ -412,14 +407,13 @@ QByteArray Profile::loadAvatarData(const QString& ownerId, const QString& passwo
 
     QByteArray pic = file.readAll();
     if (encrypted && !pic.isEmpty()) {
-        // TODO: check if we can use passkey-decrypt(pic) here
-        pic = ToxEncrypt::decryptPass(password, pic);
+        pic = passkey->decrypt(pic);
     }
 
     return pic;
 }
 
-void Profile::loadDatabase(const ToxId& id)
+void Profile::loadDatabase(const ToxId& id, QString password)
 {
     if (isRemoved) {
         qDebug() << "Can't load database of removed profile";
@@ -452,7 +446,7 @@ void Profile::loadDatabase(const ToxId& id)
  */
 void Profile::saveAvatar(QByteArray pic, const QString& ownerId)
 {
-    if (!password.isEmpty() && !pic.isEmpty()) {
+    if (encrypted && !pic.isEmpty()) {
         pic = passkey->encrypt(pic);
     }
 
@@ -534,7 +528,7 @@ bool Profile::exists(QString name)
  */
 bool Profile::isEncrypted() const
 {
-    return !password.isEmpty();
+    return encrypted;
 }
 
 /**
@@ -640,14 +634,9 @@ bool Profile::rename(QString newName)
     return true;
 }
 
-QString Profile::getPassword() const
+const ToxEncrypt* Profile::getPasskey() const
 {
-    return password;
-}
-
-const ToxEncrypt& Profile::getPasskey() const
-{
-    return *passkey;
+    return passkey.get();
 }
 
 /**
@@ -665,37 +654,57 @@ void Profile::restartCore()
 
 /**
  * @brief Changes the encryption password and re-saves everything with it
- * @param newPassword Password for encryption.
+ * @param newPassword Password for encryption, if empty profile will be decrypted.
+ * @param oldPassword Supply previous password if already encrypted or empty QString if not yet
+ * encrypted.
+ * @return Empty QString on success or error message on failure.
  */
-void Profile::setPassword(const QString& newPassword)
+QString Profile::setPassword(const QString& newPassword)
 {
-    QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKey().toString());
-    QString oldPassword = password;
-    std::unique_ptr<ToxEncrypt> oldpasskey = std::move(passkey);
-    password = newPassword;
-    passkey = ToxEncrypt::makeToxEncrypt(password);
-    if (!passkey) {
-        qCritical() << "Failed to derive key from password, the profile won't use the new password";
-        password = oldPassword;
-        passkey = std::move(oldpasskey);
-        return;
+    if (newPassword.isEmpty()) {
+        // remove password
+        encrypted = false;
+    } else {
+        std::unique_ptr<ToxEncrypt> newpasskey = ToxEncrypt::makeToxEncrypt(newPassword);
+        if (!newpasskey) {
+            qCritical()
+                << "Failed to derive key from password, the profile won't use the new password";
+            return tr(
+                "Failed to derive key from password, the profile won't use the new password.");
+        }
+        // apply change
+        passkey = std::move(newpasskey);
+        encrypted = true;
     }
+
+    // apply new encryption
     saveToxSave();
+
+    bool dbSuccess = false;
 
     // TODO: ensure the database and the tox save file use the same password
     if (database) {
-        database->setPassword(newPassword);
+        dbSuccess = database->setPassword(newPassword);
+    }
+
+    QString error{};
+    if (!dbSuccess) {
+        error = tr("Couldn't change password on the database, it might be corrupted or use the old "
+                   "password.");
     }
 
     Nexus::getDesktopGUI()->reloadHistory();
+
+    QByteArray avatar = loadAvatarData(core->getSelfId().getPublicKey().toString());
     saveAvatar(avatar, core->getSelfId().getPublicKey().toString());
 
     QVector<uint32_t> friendList = core->getFriendList();
     QVectorIterator<uint32_t> i(friendList);
     while (i.hasNext()) {
         QString friendPublicKey = core->getFriendPublicKey(i.next()).toString();
-        saveAvatar(loadAvatarData(friendPublicKey, oldPassword), friendPublicKey);
+        saveAvatar(loadAvatarData(friendPublicKey), friendPublicKey);
     }
+    return error;
 }
 
 /**

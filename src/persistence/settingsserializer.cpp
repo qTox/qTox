@@ -99,9 +99,9 @@ QDataStream& readStream(QDataStream& dataStream, QByteArray& data)
     return dataStream;
 }
 
-SettingsSerializer::SettingsSerializer(QString filePath, const QString& password)
+SettingsSerializer::SettingsSerializer(QString filePath, const ToxEncrypt* passKey)
     : path{filePath}
-    , password{password}
+    , passKey{passKey}
     , group{-1}
     , array{-1}
     , arrayIndex{-1}
@@ -300,9 +300,8 @@ void SettingsSerializer::save()
     }
 
     // Encrypt
-    if (!password.isEmpty()) {
-        // TODO: use passkey
-        data = ToxEncrypt::encryptPass(password, data);
+    if (passKey) {
+        data = passKey->encrypt(data);
     }
 
     f.write(data);
@@ -327,19 +326,19 @@ void SettingsSerializer::readSerialized()
     f.close();
 
     // Decrypt
-    if (tox_is_data_encrypted(reinterpret_cast<uint8_t*>(data.data()))) {
-        if (password.isEmpty()) {
-            qCritical() << "The settings file is encrypted, but we don't have a password!";
+    if (ToxEncrypt::isEncrypted(data)) {
+        if (!passKey) {
+            qCritical() << "The settings file is encrypted, but we don't have a passkey!";
             return;
         }
 
-        data = ToxEncrypt::decryptPass(password, data);
+        data = passKey->decrypt(data);
         if (data.isEmpty()) {
             qCritical() << "Failed to decrypt the settings file";
             return;
         }
     } else {
-        if (!password.isEmpty())
+        if (passKey)
             qWarning() << "We have a password, but the settings file is not encrypted";
     }
 
