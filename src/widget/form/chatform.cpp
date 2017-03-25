@@ -76,15 +76,23 @@ static const QString MIC_BTN_STYLESHEET = QStringLiteral(":/ui/micButton/micButt
 static const QString VIDEO_BTN_STYLESHEET = QStringLiteral(":/ui/videoButton/videoButton.css");
 static const QString VOL_BTN_STYLESHEET = QStringLiteral(":/ui/volButton/volButton.css");
 
-// Associated with "Status" enum, don't change items's order
-static const QVector<QString> STATUS_TO_STRING {
-    ChatForm::tr("online", "contact status"),
-    ChatForm::tr("away", "contact status"),
-    ChatForm::tr("busy", "contact status"),
-    ChatForm::tr("offline", "contact status")
-};
-
 const QString ChatForm::ACTION_PREFIX = QStringLiteral("/me ");
+
+QString statusToString(const Status status)
+{
+    QString result;
+    switch (status) {
+    case Status::Online: result = ChatForm::tr("online", "contact status");
+        break;
+    case Status::Away: result = ChatForm::tr("away", "contact status");
+        break;
+    case Status::Busy: result = ChatForm::tr("busy", "contact status");
+        break;
+    case Status::Offline: result = ChatForm::tr("offline", "contact status");
+        break;
+    }
+    return result;
+}
 
 QString secondsToDHMS(quint32 duration)
 {
@@ -222,25 +230,14 @@ void ChatForm::onSendTriggered()
 
 void ChatForm::onTextEditChanged()
 {
-    Core* core = Core::getInstance();
-    if (!Settings::getInstance().getTypingNotification()) {
-        if (isTyping) {
-            core->sendTyping(f->getFriendId(), false);
+    bool isTypingNow = !msgEdit->toPlainText().isEmpty();
+    if (isTyping != isTypingNow) {
+        Core::getInstance()->sendTyping(f->getFriendId(), isTypingNow);
+        if (isTypingNow) {
+            typingTimer.start(TYPING_NOTIFICATION_DURATION);
         }
 
-        isTyping = false;
-        return;
-    }
-
-    if (msgEdit->toPlainText().length() > 0) {
-        typingTimer.start(TYPING_NOTIFICATION_DURATION);
-        if (!isTyping) {
-            isTyping = true;
-            core->sendTyping(f->getFriendId(), isTyping);
-        }
-    } else {
-        isTyping = false;
-        core->sendTyping(f->getFriendId(), isTyping);
+        isTyping = isTypingNow;
     }
 }
 
@@ -364,7 +361,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         onAvStart(friendId, video);
     } else {
         callConfirm->show();
-        auto* confirmData = callConfirm.data();
+        CallConfirmWidget* confirmData = callConfirm.data();
         connect(confirmData, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(confirmData, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
@@ -550,7 +547,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
     updateCallButtons();
 
     if (Settings::getInstance().getStatusChangeNotificationEnabled()) {
-        QString fStatus = STATUS_TO_STRING[static_cast<int>(status)];
+        QString fStatus = statusToString(status);
         addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
                                  .arg(f->getDisplayedName())
                                  .arg(fStatus),
@@ -897,7 +894,7 @@ void ChatForm::updateMuteVolButton()
 
 void ChatForm::startCounter()
 {
-    if (callDurationTimer != nullptr) {
+    if (callDurationTimer) {
         return;
     }
     callDurationTimer = new QTimer();
@@ -909,7 +906,7 @@ void ChatForm::startCounter()
 
 void ChatForm::stopCounter()
 {
-    if (callDurationTimer == nullptr) {
+    if (!callDurationTimer) {
         return;
     }
     QString dhms = secondsToDHMS(timeElapsed.elapsed() / 1000);
