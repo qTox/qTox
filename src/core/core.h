@@ -83,7 +83,7 @@ public:
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
 public slots:
-    void start();
+    void start(const QByteArray& savedata);
     void reset();
     void process();
     void bootstrapDht();
