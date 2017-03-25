@@ -52,9 +52,8 @@ public:
     void restartCore();
     bool isNewProfile();
     bool isEncrypted() const;
-    QString getPassword() const;
-    void setPassword(const QString& newPassword);
-    const ToxEncrypt& getPasskey() const;
+    QString setPassword(const QString& newPassword);
+    const ToxEncrypt* getPasskey() const;
 
     void saveToxSave();
     void saveToxSave(QByteArray data);
@@ -62,7 +61,6 @@ public:
     QPixmap loadAvatar();
     QPixmap loadAvatar(const QString& ownerId);
     QByteArray loadAvatarData(const QString& ownerId);
-    QByteArray loadAvatarData(const QString& ownerId, const QString& password);
     void saveAvatar(QByteArray pic, const QString& ownerId);
     QByteArray getAvatarHash(const QString& ownerId);
     void removeAvatar(const QString& ownerId);
@@ -83,7 +81,7 @@ public:
     static QString getDbPath(const QString& profileName);
 
 private slots:
-    void loadDatabase(const ToxId& id);
+    void loadDatabase(const ToxId& id, QString password);
 
 private:
     Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
@@ -93,12 +91,13 @@ private:
 private:
     Core* core;
     QThread* coreThread;
-    QString name, password;
-    std::unique_ptr<ToxEncrypt> passkey;
+    QString name;
+    std::unique_ptr<ToxEncrypt> passkey = nullptr;
     std::shared_ptr<RawDatabase> database;
     std::unique_ptr<History> history;
     bool newProfile;
     bool isRemoved;
+    bool encrypted = false;
     static QVector<QString> profiles;
 };
 

@@ -22,6 +22,7 @@
 #define SETTINGS_HPP
 
 #include "src/core/corestructs.h"
+#include "src/core/toxencrypt.h"
 #include <QDate>
 #include <QFlags>
 #include <QFont>
@@ -140,7 +141,6 @@ public:
     void createPersonal(QString basename);
 
     void savePersonal();
-    void savePersonal(Profile* profile);
 
     void loadGlobal();
     void loadPersonal();
@@ -523,9 +523,10 @@ private:
     ~Settings();
     Settings(Settings& settings) = delete;
     Settings& operator=(const Settings&) = delete;
+    void savePersonal(QString profileName, const ToxEncrypt* passkey);
 
-private slots:
-    void savePersonal(QString profileName, const QString& password);
+public slots:
+    void savePersonal(Profile* profile);
 
 private:
     bool loaded;

@@ -20,6 +20,8 @@
 #ifndef SETTINGSSERIALIZER_H
 #define SETTINGSSERIALIZER_H
 
+#include "src/core/toxencrypt.h"
+
 #include <QDataStream>
 #include <QSettings>
 #include <QString>
@@ -28,7 +30,7 @@
 class SettingsSerializer
 {
 public:
-    SettingsSerializer(QString filePath, const QString& password = QString());
+    SettingsSerializer(QString filePath, const ToxEncrypt* passKey = nullptr);
 
     static bool isSerializedFormat(QString filePath);
 
@@ -102,7 +104,7 @@ private:
 
 private:
     QString path;
-    QString password;
+    const ToxEncrypt* passKey;
     int group, array, arrayIndex;
     QVector<QString> groups;
     QVector<Array> arrays;
