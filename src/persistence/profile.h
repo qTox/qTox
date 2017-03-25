@@ -1,5 +1,5 @@
 /*
-    Copyright © 2015-2016 by The qTox Project Contributors
+    Copyright © 2015-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -52,12 +52,10 @@ public:
     void restartCore();
     bool isNewProfile();
     bool isEncrypted() const;
-    bool checkPassword();
     QString getPassword() const;
     void setPassword(const QString& newPassword);
     const ToxEncrypt& getPasskey() const;
 
-    QByteArray loadToxSave();
     void saveToxSave();
     void saveToxSave(QByteArray data);
 
@@ -88,7 +86,7 @@ private slots:
     void loadDatabase(const ToxId& id);
 
 private:
-    Profile(QString name, const QString& password, bool newProfile);
+    Profile(QString name, const QString& password, bool newProfile, const QByteArray& toxsave);
     static QVector<QString> getFilesByExt(QString extension);
     QString avatarPath(const QString& ownerId, bool forceUnencrypted = false);
 
