@@ -447,8 +447,8 @@ void Core::onFriendTypingChange(Tox* /* tox*/, uint32_t friendId, bool isTyping,
 void Core::onStatusMessageChanged(Tox* /* tox*/, uint32_t friendId, const uint8_t* cMessage,
                                   size_t cMessageSize, void* core)
 {
-    emit static_cast<Core*>(core)
-        ->friendStatusMessageChanged(friendId, ToxString(cMessage, cMessageSize).getQString());
+    QString message = ToxString(cMessage, cMessageSize).getQString();
+    emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, message);
 }
 
 void Core::onUserStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_USER_STATUS userstatus, void* core)
@@ -505,8 +505,8 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_T
 {
     Core* core = static_cast<Core*>(vCore);
     bool isAction = type == TOX_MESSAGE_TYPE_ACTION;
-    emit core->groupMessageReceived(groupId, peerId, ToxString(cMessage, length).getQString(),
-                                    isAction);
+    QString message = ToxString(cMessage, length).getQString();
+    emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
@@ -953,8 +953,10 @@ void Core::loadFriends()
                 const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
                 if (nameSize && nameSize != SIZE_MAX) {
                     uint8_t* name = new uint8_t[nameSize];
-                    if (tox_friend_get_name(tox, ids[i], name, nullptr))
-                        emit friendUsernameChanged(ids[i], ToxString(name, nameSize).getQString());
+                    if (tox_friend_get_name(tox, ids[i], name, nullptr)) {
+                        QString username = ToxString(name, nameSize).getQString();
+                        emit friendUsernameChanged(ids[i], username);
+                    }
                     delete[] name;
                 }
 
