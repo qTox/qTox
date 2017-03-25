@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -83,7 +83,7 @@ public:
     void sendFile(uint32_t friendId, QString filename, QString filePath, long long filesize);
 
 public slots:
-    void start();
+    void start(const QByteArray& savedata);
     void reset();
     void process();
     void bootstrapDht();
