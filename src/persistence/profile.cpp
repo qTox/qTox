@@ -90,61 +90,59 @@ Profile* Profile::loadProfile(QString name, const QString& password)
 
     std::unique_ptr<ToxEncrypt> tmpKey;
 
-    // Check password
-    {
-        QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
-        QFile saveFile(path);
-        qDebug() << "Loading tox save " << path;
+    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
+    QFile saveFile(path);
+    qDebug() << "Loading tox save " << path;
 
-        if (!saveFile.exists()) {
-            qWarning() << "The tox save file " << path << " was not found";
+    if (!saveFile.exists()) {
+        qWarning() << "The tox save file " << path << " was not found";
+        ProfileLocker::unlock();
+        return nullptr;
+    }
+
+    if (!saveFile.open(QIODevice::ReadOnly)) {
+        qCritical() << "The tox save file " << path << " couldn't' be opened";
+        ProfileLocker::unlock();
+        return nullptr;
+    }
+
+    qint64 fileSize = saveFile.size();
+    if (fileSize <= 0) {
+        qWarning() << "The tox save file" << path << " is empty!";
+        ProfileLocker::unlock();
+        return nullptr;
+    }
+
+    QByteArray data = saveFile.readAll();
+    if (ToxEncrypt::isEncrypted(data)) {
+        if (password.isEmpty()) {
+            qCritical() << "The tox save file is encrypted, but we don't have a password!";
             ProfileLocker::unlock();
             return nullptr;
         }
 
-        if (!saveFile.open(QIODevice::ReadOnly)) {
-            qCritical() << "The tox save file " << path << " couldn't' be opened";
+        tmpKey = ToxEncrypt::makeToxEncrypt(password, data);
+        if (!tmpKey) {
+            qCritical() << "Failed to derive key of the tox save file";
             ProfileLocker::unlock();
             return nullptr;
         }
 
-        qint64 fileSize = saveFile.size();
-        if (fileSize <= 0) {
-            qWarning() << "The tox save file" << path << " is empty!";
+        data = tmpKey->decrypt(data);
+        if (data.isEmpty()) {
+            qCritical() << "Failed to decrypt the tox save file";
             ProfileLocker::unlock();
             return nullptr;
         }
-
-        QByteArray data = saveFile.readAll();
-        if (ToxEncrypt::isEncrypted(data)) {
-            if (password.isEmpty()) {
-                qCritical() << "The tox save file is encrypted, but we don't have a password!";
-                ProfileLocker::unlock();
-                return nullptr;
-            }
-
-            tmpKey = ToxEncrypt::makeToxEncrypt(password, data);
-            if (!tmpKey) {
-                qCritical() << "Failed to derive key of the tox save file";
-                ProfileLocker::unlock();
-                return nullptr;
-            }
-
-            data = tmpKey->decrypt(data);
-            if (data.isEmpty()) {
-                qCritical() << "Failed to decrypt the tox save file";
-                ProfileLocker::unlock();
-                return nullptr;
-            }
-        } else {
-            if (!password.isEmpty()) {
-                qWarning() << "We have a password, but the tox save file is not encrypted";
-            }
+    } else {
+        if (!password.isEmpty()) {
+            qWarning() << "We have a password, but the tox save file is not encrypted";
         }
     }
 
     Profile* p = new Profile(name, password, false);
     p->passkey = std::move(tmpKey);
+    p->toxSave = data;
 
     return p;
 }
@@ -280,55 +278,10 @@ bool Profile::isNewProfile()
  * @brief Loads the profile's .tox save from file, unencrypted
  * @return Byte array of loaded profile save.
  */
-QByteArray Profile::loadToxSave()
+QByteArray Profile::getToxSave()
 {
     assert(!isRemoved);
-    QByteArray data;
-
-    QString path = Settings::getInstance().getSettingsDirPath() + name + ".tox";
-    QFile saveFile(path);
-    qint64 fileSize;
-    qDebug() << "Loading tox save " << path;
-
-    if (!saveFile.exists()) {
-        qWarning() << "The tox save file " << path << " was not found";
-        goto fail;
-    }
-
-    if (!saveFile.open(QIODevice::ReadOnly)) {
-        qCritical() << "The tox save file " << path << " couldn't' be opened";
-        goto fail;
-    }
-
-    fileSize = saveFile.size();
-    if (fileSize <= 0) {
-        qWarning() << "The tox save file" << path << " is empty!";
-        goto fail;
-    }
-
-    data = saveFile.readAll();
-    if (ToxEncrypt::isEncrypted(data)) {
-        if (password.isEmpty()) {
-            qCritical() << "The tox save file is encrypted, but we don't have a password!";
-            data.clear();
-            goto fail;
-        }
-
-        data = passkey->decrypt(data);
-        if (data.isEmpty()) {
-            qCritical() << "Failed to decrypt the tox save file";
-            data.clear();
-            goto fail;
-        }
-    } else {
-        if (!password.isEmpty()) {
-            qWarning() << "We have a password, but the tox save file is not encrypted";
-        }
-    }
-
-fail:
-    saveFile.close();
-    return data;
+    return toxSave;
 }
 
 /**
@@ -692,19 +645,6 @@ bool Profile::rename(QString newName)
 
     name = newName;
     return true;
-}
-
-/**
- * @brief Checks whether the password is valid.
- * @return True, if password is valid, false otherwise.
- */
-bool Profile::checkPassword()
-{
-    if (isRemoved) {
-        return false;
-    }
-
-    return !loadToxSave().isEmpty();
 }
 
 QString Profile::getPassword() const

@@ -241,7 +241,7 @@ void Core::start()
         setUsername(profile.getName());
     } else {
         qDebug() << "Loading user profile";
-        QByteArray savedata = profile.loadToxSave();
+        QByteArray savedata = profile.getToxSave();
         if (savedata.isEmpty()) {
             emit failedToStart();
             return;

@@ -52,12 +52,11 @@ public:
     void restartCore();
     bool isNewProfile();
     bool isEncrypted() const;
-    bool checkPassword();
     QString getPassword() const;
     void setPassword(const QString& newPassword);
     const ToxEncrypt& getPasskey() const;
 
-    QByteArray loadToxSave();
+    QByteArray getToxSave();
     void saveToxSave();
     void saveToxSave(QByteArray data);
 
@@ -102,6 +101,7 @@ private:
     bool newProfile;
     bool isRemoved;
     static QVector<QString> profiles;
+    QByteArray toxSave;
 };
 
 #endif // PROFILE_H
