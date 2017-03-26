@@ -752,76 +752,119 @@ becoming a hacker
 
 ## Windows
 
-### Qt
+The following instructions will allow you to compile qTox on Windows using the MSYS2 shell.
 
-Download the Qt online installer for Windows from
-[qt.io](https://www.qt.io/download-open-source/). While installation you have
-to assemble your Qt toolchain. Take the most recent version of Qt compiled with
-MinGW. Although the installer provides its own bundled MinGW compiler toolchain
-its recommend installing it separately because Qt is missing MSYS which is
-needed to compile and install OpenAL. Thus you can - if needed - deselect the
-tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
-decided to choose another location, replace corresponding parts.
+**WARNING NOTES**
 
-### MinGW
+ 1. You need to have at least **6 GB** of HDD space because of the large
+ size of of Qt5 (~800 MB to download and ~5 GB to extract).
+ 2. The resulting executable isn't a static build and **will run from MSYS2 shell only**!
+ Static build is in progress.
+ ⇒ TODO: Those instructions need to be added before this is merged
 
-Download the MinGW installer for Windows from
-[sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
-sure to install MSYS (a set of Unix tools for Windows). The following steps
-assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
-version of MinGW, corresponds to the version of the QT component!
+### MSYS2
 
-### Wget
+First things first: You need to [download MSYS2](http://www.msys2.org/) for your architecture
+and install it on your computer. The default location directly on C:\ works just fine.
 
-Download the Wget installer for Windows from
-http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
-steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
+After installing open the `MSYS2 MinGW 32-bit` shell for 32 bit building or the `64-bit` one,
+if you want to build qTox as an x64 executable.
 
-### UnZip
+In the opened console run this command to update MSYS2:
 
-Download the UnZip installer for Windows from
-http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
-steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
+```bash
+pacman -Syu
+```
 
-### Setting up Path
+If it says something along the lines of `Terminate shell after update`, you should restart
+the console after updating and run the update command above again to make sure it is fully
+updated.
 
-Add MinGW/MSYS/CMake binaries to the system path to make them globally
-accessible. Open `Control Panel` -> `System and Security` -> `System` ->
-`Advanced system settings` -> `Environment Variables...` (or run `sysdm.cpl`
-select tab `Advanced system settings` -> button `Environment Variables`). In the
-second box search for the `PATH` variable and press `Edit...`. The input box
-`Variable value:` should already contain some directories. Each directory is
-separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
-The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`, 
-`bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
-`PATH` or build may fail.
+### Dependencies
 
-### Cloning the Repository
+In order to install the necessary dependencies, run the following command in your
+`MSYS2 MinGW 32-bit` shell:
 
-Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
-client. [SmartGit](http://www.syntevo.com/smartgit/) or
-[TorteiseGit](https://tortoisegit.org) are both very nice for this task
-(you may need to add `git.exe` to your `PATH` system variable). The
-following steps assume that you cloned the repository at `C:\qTox`. If you
-decided to choose another location, replace corresponding parts.
+```bash
+pacman -S \
+    git \
+    make \
+    autoconf \
+    automake-wrapper \
+    mingw-w64-i686-toolchain \
+    mingw-w64-i686-qt5 \
+    mingw-w64-i686-cmake \
+    mingw-w64-i686-libtool \
+    mingw-w64-i686-ffmpeg \
+    mingw-w64-i686-libvpx \
+    mingw-w64-i686-opus \
+    mingw-w64-i686-openal \
+    mingw-w64-i686-qrencode \
+    mingw-w64-i686-libsodium \
+    mingw-w64-i686-sqlcipher
+```
 
-### Getting dependencies
+Or, if you want to build for x64, open the `MSYS2 MinGW 64-bit` shell and use this command:
 
-Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
-download the other necessary dependencies, compile them and put them into their
-appropriate directories.
+```bash
+pacman -S \
+    git \
+    make \
+    autoconf \
+    automake-wrapper \
+    mingw-w64-x86_64-toolchain \
+    mingw-w64-x86_64-qt5 \
+    mingw-w64-x86_64-cmake \
+    mingw-w64-x86_64-libtool \
+    mingw-w64-x86_64-ffmpeg \
+    mingw-w64-x86_64-libvpx \
+    mingw-w64-x86_64-opus \
+    mingw-w64-x86_64-openal \
+    mingw-w64-x86_64-qrencode \
+    mingw-w64-x86_64-libsodium \
+    mingw-w64-x86_64-sqlcipher
+```
 
-Note that there have been detections of false positives by some anti virus software
-in the past within some of the libraries used. Please refer to the wiki page
-[problematic antiviruses](https://github.com/qTox/qTox/wiki/Problematic-antiviruses)
-for more information if you run into troubles on that front.
+### Cloning needed repos
+
+Clone the qTox and c-toxcore repositories:
+
+```bash
+git clone https://github.com/qTox/qTox
+cd qTox
+git clone https://github.com/toktok/c-toxcore
+```
+
+### Compiling toxcore
+
+The compilation process is similar to [compilation on Linux](#compile-toxcore),
+but it's even simpler:
+
+Checkout your repositories to the desired tag and start compiling:
+
+```bash
+cd c-toxcore
+git checkout v0.1.6
+./autogen.sh
+./configure
+make -j$(nproc)
+make install
+```
+
+### Compiling qTox
+
+```bash
+mkdir build
+cd build
+cmake .. -G "MSYS Makefiles"
+make -j$(nproc)
+```
+
+Now you can test your newly built executable! Run `qtox.exe`:
+
+```bash
+./qtox.exe
+```
 
 ## Compile-time switches
 
