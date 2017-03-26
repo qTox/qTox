@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -32,37 +32,23 @@
 #include "src/persistence/offlinemsgengine.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
-#include "src/video/camerasource.h"
 #include "src/video/netcamview.h"
-#include "src/video/videosource.h"
 #include "src/widget/form/loadhistorydialog.h"
-#include "src/widget/friendwidget.h"
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/callconfirmwidget.h"
 #include "src/widget/tool/chattextedit.h"
-#include "src/widget/tool/croppinglabel.h"
-#include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/tool/screenshotgrabber.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
 
-#include <QApplication>
-#include <QBitmap>
-#include <QBoxLayout>
 #include <QClipboard>
-#include <QDebug>
-#include <QDragEnterEvent>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QMimeData>
 #include <QPushButton>
-#include <QScreen>
 #include <QScrollBar>
-#include <QSplitter>
-#include <QStyle>
-#include <QTemporaryFile>
 
 #include <cassert>
 
