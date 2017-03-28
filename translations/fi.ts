@@ -193,7 +193,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation type="unfinished"></translation>
+        <translation>Julkinen avain:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -221,7 +221,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>You can save comment about this contact here.</source>
@@ -262,6 +262,14 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -378,11 +386,11 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Kyllä</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei</translation>
     </message>
     <message>
         <source>Call active</source>
@@ -396,7 +404,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna tiedosto</translation>
     </message>
     <message>
         <source>Logs (*.log)</source>
@@ -676,28 +684,28 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <translation>Toxaa qToxilla</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Viestisi on liian pitkä!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Kontakti on jo lisätty</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me tarjoaa kaveruutta.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me tarjoaa kaveruutta, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Sinun täytyy kirjoittaa pyynnön mukaan viesti</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Viestisi on liian pitkä!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Kontakti on jo lisätty</translation>
     </message>
 </context>
 <context>
@@ -708,7 +716,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     </message>
     <message>
         <source>10Mb</source>
-        <translation type="unfinished"></translation>
+        <translation>10Mt</translation>
     </message>
     <message>
         <source>0kb/s</source>
@@ -802,33 +810,27 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Tänään</translation>
+        <translation type="unfinished">Tänään</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Eilen</translation>
+        <translation type="unfinished">Eilen</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Edelliset 7 päivää</translation>
+        <translation type="unfinished">Edelliset 7 päivää</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Tässä kuussa</translation>
+        <translation type="unfinished">Tässä kuussa</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Yli 6 kuukautta vanhat</translation>
+        <translation type="unfinished">Yli 6 kuukautta vanhat</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ei tietoa</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1177,7 +1179,7 @@ instead of system taskbar.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Tyhjä&gt;</translation>
     </message>
 </context>
 <context>
@@ -1888,6 +1890,17 @@ Save format changes are possible, which may result in data loss.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2062,12 +2075,12 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Päivitys</translation>
+        <translation>Päivitys</translation>
     </message>
     <message>
         <source>Change password</source>
         <comment>button text</comment>
-        <translation type="unfinished">Vaihda salasana</translation>
+        <translation>Vaihda salasanaa</translation>
     </message>
     <message>
         <source>Set profile password</source>
@@ -2077,6 +2090,10 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Current profile location: %1</source>
         <translation type="unfinished">Nykyisen profiilin sijainti: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2106,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox-tiedosto (*.tox)</translation>
+        <translation>Tox-tiedosto (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
@@ -2140,11 +2157,11 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kyllä</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ei</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2169,7 +2186,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Et voi lisätä itseäsi kaveriksesi!</translation>
+        <translation>Et voi lisätä itseäsi kaveriksesi!</translation>
     </message>
 </context>
 <context>
@@ -2218,10 +2235,6 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resizing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2285,7 +2298,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Virhe</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
@@ -2297,6 +2310,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Internal ToxMe error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2414,7 +2431,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished">Käyttäjän ID:</translation>
+        <translation>Käyttäjän ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -2435,7 +2452,7 @@ It will be installed when qTox restarts.</source>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ei mitään</translation>
+        <translation>Ei mitään</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2446,7 +2463,7 @@ It will be installed when qTox restarts.</source>
     <name>UserInterfaceSettings</name>
     <message>
         <source>Chat</source>
-        <translation type="unfinished">Keskustelu</translation>
+        <translation>Keskustelu</translation>
     </message>
     <message>
         <source>Base font:</source>
@@ -2486,7 +2503,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>New message</source>
-        <translation type="unfinished">Uusi viesti</translation>
+        <translation>Uusi viesti</translation>
     </message>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
@@ -2495,7 +2512,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Open window</source>
-        <translation type="unfinished">Avaa ikkuna</translation>
+        <translation>Avaa ikkuna</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
@@ -2551,16 +2568,16 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Käytä hymiöitä</translation>
+        <translation>Käytä hymiöitä</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation type="unfinished">Hymiöpaketti:</translation>
+        <translation>Hymiöpaketti:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation type="unfinished">Hymiöiden koko:</translation>
+        <translation>Hymiöiden koko:</translation>
     </message>
     <message>
         <source> px</source>
@@ -2568,30 +2585,30 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Teema</translation>
+        <translation>Teema</translation>
     </message>
     <message>
         <source>Style:</source>
-        <translation type="unfinished">Tyyli:</translation>
+        <translation>Tyyli:</translation>
     </message>
     <message>
         <source>Theme color:</source>
-        <translation type="unfinished">Teeman väri:</translation>
+        <translation>Teeman väri:</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation type="unfinished">Aikaleiman muoto:</translation>
+        <translation>Aikaleiman muoto:</translation>
     </message>
     <message>
         <source>Date format:</source>
-        <translation type="unfinished">Päivämäärän muoto:</translation>
+        <translation>Päivämäärän muoto:</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <source>Your name</source>
-        <translation type="unfinished">Dein Name</translation>
+        <translation>Nimesi</translation>
     </message>
     <message>
         <source>Your status</source>
@@ -2736,7 +2753,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Tyhjä&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
