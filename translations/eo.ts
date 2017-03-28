@@ -73,11 +73,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Resolution</source>
-        <translation type="unfinished"></translation>
+        <translation>Distingivo</translation>
     </message>
     <message>
         <source>Rescan devices</source>
-        <translation type="unfinished">Reskani aparatojn</translation>
+        <translation>Reskani aparatojn</translation>
     </message>
     <message>
         <source>Test Sound</source>
@@ -113,11 +113,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>toxcore version: %1</source>
-        <translation type="unfinished">Versio de toxcore: %1</translation>
+        <translation>Versio de toxcore: %1</translation>
     </message>
     <message>
         <source>Qt version: %1</source>
-        <translation type="unfinished">Versio de Qt: %1</translation>
+        <translation>Versio de Qt: %1</translation>
     </message>
     <message>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
@@ -142,19 +142,19 @@ which may lead to problems with video calls.</source>
     <message>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
-        <translation type="unfinished">Vidu plenan liston de %1 ĉe Github</translation>
+        <translation>Vidu plenan liston de %1 ĉe Github</translation>
     </message>
     <message>
         <source>contributors</source>
         <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation type="unfinished">kontribuintoj</translation>
+        <translation>kontribuintoj</translation>
     </message>
 </context>
 <context>
     <name>AboutSettings</name>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Versio</translation>
+        <translation>Versio</translation>
     </message>
     <message>
         <source>Downloading update: %p%</source>
@@ -177,7 +177,7 @@ which may lead to problems with video calls.</source>
     <name>AboutUser</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Dialogo</translation>
     </message>
     <message>
         <source>username</source>
@@ -260,6 +260,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -293,7 +301,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Message</source>
         <comment>The message you send in friend requests</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mesaĝo</translation>
     </message>
     <message>
         <source>Send friend request</source>
@@ -346,7 +354,7 @@ which may lead to problems with video calls.</source>
     <name>AdvancedForm</name>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Speciala</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
@@ -416,7 +424,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Portable</source>
-        <translation type="unfinished"></translation>
+        <translation>Portebla</translation>
     </message>
     <message>
         <source>Connection Settings</source>
@@ -444,12 +452,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Address:</source>
         <extracomment>Text on proxy addr label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adreso:</translation>
     </message>
     <message>
         <source>Port:</source>
         <extracomment>Text on proxy port label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pordo:</translation>
     </message>
     <message>
         <source>None</source>
@@ -592,7 +600,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">okupite</translation>
+        <translation>okupite</translation>
     </message>
     <message>
         <source>offline</source>
@@ -602,12 +610,12 @@ which may lead to problems with video calls.</source>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">enrete</translation>
+        <translation>enrete</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 nun estas %2</translation>
+        <translation>%1 nun estas %2</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -672,28 +680,28 @@ which may lead to problems with video calls.</source>
         <translation>Toksante ĉe qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Vi bezonas skribi mesaĝon en via peto</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Via mesaĝo tro longas!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Tiu amiko jam estis aldonita</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me ofertas amikecon.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me ofertas amikecon, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Vi bezonas skribi mesaĝon en via peto</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Via mesaĝo tro longas!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Tiu amiko jam estis aldonita</translation>
     </message>
 </context>
 <context>
@@ -798,33 +806,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Hodiaŭ</translation>
+        <translation type="unfinished">Hodiaŭ</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Hieraŭ</translation>
+        <translation type="unfinished">Hieraŭ</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Pasintaj 7 tagoj</translation>
+        <translation type="unfinished">Pasintaj 7 tagoj</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ĉi-monate</translation>
+        <translation type="unfinished">Ĉi-monate</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Antaŭ 6 monatoj</translation>
+        <translation type="unfinished">Antaŭ 6 monatoj</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Nekonate</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1217,7 +1219,7 @@ instead of closing itself.</source>
     <name>GroupInviteForm</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupoj</translation>
+        <translation>Grupoj</translation>
     </message>
     <message>
         <source>Create new group</source>
@@ -1247,7 +1249,7 @@ instead of closing itself.</source>
     <name>GroupWidget</name>
     <message>
         <source>Open chat in new window</source>
-        <translation type="unfinished">Malfermi babilejon en nova fenestro</translation>
+        <translation>Malfermi babilejon en nova fenestro</translation>
     </message>
     <message>
         <source>Remove chat from this window</source>
@@ -1374,7 +1376,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Ŝanĝi pasvorton</translation>
+        <translation>Ŝanĝi pasvorton</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
@@ -1463,11 +1465,11 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Rename profile.</source>
-        <translation type="unfinished">Alinomi profilon.</translation>
+        <translation>Alinomi profilon.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Forigi profilon.</translation>
+        <translation>Forigi profilon.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1760,7 +1762,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Agordoj</translation>
+        <translation>Agordoj</translation>
     </message>
     <message>
         <source>Open Settings</source>
@@ -1878,6 +1880,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     <message>
         <source>Privacy</source>
         <translation>Privateco</translation>
+    </message>
+</context>
+<context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2071,6 +2084,10 @@ Share it with your friends to communicate.</source>
         <source>Current profile location: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2097,7 +2114,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">La profilo jam ekzistas</translation>
+        <translation>La profilo jam ekzistas</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
@@ -2157,7 +2174,7 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Bone</translation>
+        <translation>Bone</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2167,10 +2184,6 @@ Share it with your friends to communicate.</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation>Regrandigi</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation type="unfinished"></translation>
@@ -2248,7 +2261,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
-        <translation type="unfinished">Jen %1! Toksu min, eble?</translation>
+        <translation>Jen %1! Toksu min, eble?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2290,6 +2303,10 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Incoming call...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2411,7 +2428,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Friend request message:</source>
-        <translation type="unfinished">Amikiĝpeta mesaĝo:</translation>
+        <translation>Amikiĝpeta mesaĝo:</translation>
     </message>
     <message>
         <source>Send</source>
@@ -2759,7 +2776,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Aldoni amikon</translation>
+        <translation>Aldoni amikon</translation>
     </message>
     <message>
         <source>Group invites</source>
@@ -2769,12 +2786,12 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Dosieraj transigoj</translation>
+        <translation>Dosiertransigoj</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">Agordoj</translation>
+        <translation>Agordoj</translation>
     </message>
     <message>
         <source>My profile</source>
