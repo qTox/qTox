@@ -37,7 +37,7 @@
 #include <QSignalMapper>
 #include <QTabWidget>
 #include <QWindow>
-#include <tox/tox.h>
+#include "src/core/toxcore_api.h"
 
 /**
  * @var QString AddFriendForm::lastUsername

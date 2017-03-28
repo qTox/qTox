@@ -22,7 +22,7 @@
 
 #include <QDebug>
 #include <QTimer>
-#include <tox/tox.h>
+#include "src/core/toxcore_api.h"
 
 #include "src/core/recursivesignalblocker.h"
 #include "src/net/autoupdate.h"
