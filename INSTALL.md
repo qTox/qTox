@@ -778,14 +778,14 @@ version of MinGW, corresponds to the version of the QT component!
 
 Download the Wget installer for Windows from
 http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
-steps assume that Wget is installed at `C:\Program Files\GnuWin32\`. If you
+steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
 ### UnZip
 
 Download the UnZip installer for Windows from
 http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
-steps assume that UnZip is installed at `C:\Program Files\GnuWin32\`. If you
+steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
 decided to choose another location, replace corresponding parts.
 
 ### Setting up Path
@@ -797,7 +797,7 @@ select tab `Advanced system settings` -> button `Environment Variables`). In the
 second box search for the `PATH` variable and press `Edit...`. The input box
 `Variable value:` should already contain some directories. Each directory is
 separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files\GnuWin32\bin;C:\Program Files (x86)\GnuWin32\bin`.
+`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
 The very first semicolon must only be added if it is missing. CMake may be added
 by installer automatically. Make sure that paths containing alternative `sh`, 
 `bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
@@ -805,8 +805,9 @@ by installer automatically. Make sure that paths containing alternative `sh`,
 
 ### Cloning the Repository
 
-Clone the repository (https://github.com/qTox/qTox.git) with your preferred  Git
-client. [SmartGit](http://www.syntevo.com/smartgit/) is very nice for this task
+Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
+client. [SmartGit](http://www.syntevo.com/smartgit/) or
+[TorteiseGit](https://tortoisegit.org) are both very nice for this task
 (you may need to add the path to the `git.exe` system variable Path). The
 following steps assume that you cloned the repository at `C:\qTox`. If you
 decided to choose another location, replace corresponding parts.
