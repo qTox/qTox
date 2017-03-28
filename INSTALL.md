@@ -808,15 +808,20 @@ by installer automatically. Make sure that paths containing alternative `sh`,
 Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) or
 [TorteiseGit](https://tortoisegit.org) are both very nice for this task
-(you may need to add the path to the `git.exe` system variable Path). The
+(you may need to add `git.exe` to your `PATH` system variable). The
 following steps assume that you cloned the repository at `C:\qTox`. If you
 decided to choose another location, replace corresponding parts.
 
 ### Getting dependencies
 
-Run `bootstrap.bat` in cloned `C:\qTox` directory. Script will download rest of
-dependencies compile them and put to appropriate directories.
+Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
+download the other necessary dependencies, compile them and put them into their
+appropriate directories.
 
+Note that there have been detections of false positives by some anti virus software
+in the past within some of the libraries used. Please refer to the wiki page
+[problematic antiviruses](https://github.com/qTox/qTox/wiki/Problematic-antiviruses)
+for more information if you run into troubles on that front.
 
 ## Compile-time switches
 
