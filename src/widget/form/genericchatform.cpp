@@ -673,14 +673,13 @@ void GenericChatForm::retranslateUi()
 
 QString GenericChatForm::fontToCss(const QFont& font, const char* name)
 {
-    return QString("%1{font-family: \"%2\"; font-size: %3px; font-style: \"%4\"; font-weight: %5;}")
+    return QString("%1{font-family: \"%2\"; font-size: %3px; font-style: \"%4\"; font-weight: normal;}")
         .arg(name)
         .arg(font.family())
         .arg(font.pixelSize())
         .arg(font.style() == QFont::StyleNormal ? "normal" : font.style() == QFont::StyleItalic
                                                                  ? "italic"
-                                                                 : "bold")
-        .arg(font.weight() * 10); // QFont weight is 0..100, but CSS font-weight is 0..1000
+                                                                 : "oblique");
 }
 
 void GenericChatForm::showNetcam()
