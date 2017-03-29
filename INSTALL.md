@@ -752,34 +752,38 @@ becoming a hacker
 
 ## Windows
 
-This guide will show you modern way to compile qTox on Windows using MSYS2 shell.
+The following instructions will allow you to compile qTox on Windows using the MSYS2 shell.
 
 **WARNING NOTES**
 
- 1. You need to have at least **6 gigabytes** of HDD space, because of
-    large size of Qt5 package (~800 MB to download and ~5 GB to
-    extract).
- 2. The resulting executable isn't static and **will run from MSYS2 shell only**!
+ 1. You need to have at least **6 GB** of HDD space because of the large
+ size of of Qt5 (~800 MB to download and ~5 GB to extract).
+ 2. The resulting executable isn't a static build and **will run from MSYS2 shell only**!
  Static build is in progress.
+ ⇒ TODO: Those instructions need to be added before this is merged
 
 ### MSYS2
 
-First things first - you need to [download MSYS2](http://www.msys2.org/) for your architecture.
-Install it, for example, in root directory on C: drive.
+First things first: You need to [download MSYS2](http://www.msys2.org/) for your architecture
+and install it on your computer. The default location directly on C:\ works just fine.
 
-After installing, open `MinGW-w64 Win32 Shell` (or `Win64`, if you want to build x64 client).
-In opened console run this command to update MSYS2:
+After installing open the `MSYS2 MinGW 32-bit` shell for 32 bit building or the `64-bit` one,
+if you want to build qTox as an x64 executable.
+
+In the opened console run this command to update MSYS2:
 
 ```bash
 pacman -Syu
 ```
 
-If it says `Terminate shell after update`, you should close console after
-updating, and run update command again to fully update shell.
+If it says something along the lines of `Terminate shell after update`, you should restart
+the console after updating and run the update command above again to make sure it is fully
+updated.
 
 ### Dependencies
 
-In `MinGW-w64 Win32 Shell` shell, run:
+In order to install the necessary dependencies, run the following command in your
+`MSYS2 MinGW 32-bit` shell:
 
 ```bash
 pacman -S git make autoconf automake-wrapper mingw-w64-i686-toolchain mingw-w64-i686-qt5 \
@@ -788,7 +792,7 @@ mingw-w64-i686-opus mingw-w64-i686-openal mingw-w64-i686-qrencode mingw-w64-i686
 mingw-w64-i686-sqlcipher
 ```
 
-Or, if you want to build for x64, open `MinGW-w64 Win64 Shell` and use this command:
+Or, if you want to build for x64, open the `MSYS2 MinGW 64-bit` shell and use this command:
 
 ```bash
 pacman -S git make autoconf automake-wrapper mingw-w64-x86_64-toolchain mingw-w64-x86_64-qt5 \
@@ -799,7 +803,7 @@ mingw-w64-x86_64-sqlcipher
 
 ### Cloning needed repos
 
-Clone qTox and c-toxcore repositories:
+Clone the qTox and c-toxcore repositories:
 
 ```bash
 git clone https://github.com/qTox/qTox
@@ -809,9 +813,10 @@ git clone https://github.com/toktok/c-toxcore
 
 ### Compiling toxcore
 
-Compilation process is similar to [compilation on Linux](#compile-toxcore),
-but it's more simple.
-Checkout fresh tag and start compiling:
+The compilation process is similar to [compilation on Linux](#compile-toxcore),
+but it's even simpler:
+
+Checkout your repositories to the desired tag and start compiling:
 
 ```bash
 cd c-toxcore
@@ -831,7 +836,7 @@ cmake .. -G "MSYS Makefiles"
 make -j$(nproc)
 ```
 
-Now you can test executable! Run `qtox.exe`:
+Now you can test your newly built executable! Run `qtox.exe`:
 
 ```bash
 ./qtox.exe
@@ -840,8 +845,8 @@ Now you can test executable! Run `qtox.exe`:
 
 ## Compile-time switches
 
-They are passed as an argument to `cmake` command. E.g. with a switch `SWITCH`
-that has value `YES` it would be passed to `cmake` in a following manner:
+They are passed as an argument to the `cmake` command. E.g. a switch `SWITCH`
+with the value `YES` would be passed to `cmake` in the following manner:
 
 ```bash
 cmake -DSWITCH=yes
