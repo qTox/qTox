@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2013 by Maxim Biro <nurupo.contributions@gmail.com>
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -231,7 +231,7 @@ void Core::makeTox(QByteArray savedata)
 /**
  * @brief Initializes the core, must be called before anything else
  */
-void Core::start()
+void Core::start(const QByteArray& savedata)
 {
     bool isNewProfile = profile.isNewProfile();
     if (isNewProfile) {
@@ -241,7 +241,6 @@ void Core::start()
         setUsername(profile.getName());
     } else {
         qDebug() << "Loading user profile";
-        QByteArray savedata = profile.loadToxSave();
         if (savedata.isEmpty()) {
             emit failedToStart();
             return;
@@ -436,7 +435,8 @@ void Core::onFriendMessage(Tox* /* tox*/, uint32_t friendId, TOX_MESSAGE_TYPE ty
 void Core::onFriendNameChange(Tox* /* tox*/, uint32_t friendId, const uint8_t* cName,
                               size_t cNameSize, void* core)
 {
-    emit static_cast<Core*>(core)->friendUsernameChanged(friendId, ToxString(cName, cNameSize).getQString());
+    emit static_cast<Core*>(core)->friendUsernameChanged(friendId,
+                                                         ToxString(cName, cNameSize).getQString());
 }
 
 void Core::onFriendTypingChange(Tox* /* tox*/, uint32_t friendId, bool isTyping, void* core)
@@ -447,8 +447,8 @@ void Core::onFriendTypingChange(Tox* /* tox*/, uint32_t friendId, bool isTyping,
 void Core::onStatusMessageChanged(Tox* /* tox*/, uint32_t friendId, const uint8_t* cMessage,
                                   size_t cMessageSize, void* core)
 {
-    emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId,
-                                                              ToxString(cMessage, cMessageSize).getQString());
+    QString message = ToxString(cMessage, cMessageSize).getQString();
+    emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, message);
 }
 
 void Core::onUserStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_USER_STATUS userstatus, void* core)
@@ -479,8 +479,8 @@ void Core::onConnectionStatusChanged(Tox* /* tox*/, uint32_t friendId, TOX_CONNE
     if (friendStatus == Status::Offline) {
         emit static_cast<Core*>(core)->friendStatusChanged(friendId, friendStatus);
         static_cast<Core*>(core)->checkLastOnline(friendId);
-        CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId, 
-                friendStatus != Status::Offline);
+        CoreFile::onConnectionStatusChanged(static_cast<Core*>(core), friendId,
+                                            friendStatus != Status::Offline);
     }
 }
 
@@ -505,7 +505,8 @@ void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_T
 {
     Core* core = static_cast<Core*>(vCore);
     bool isAction = type == TOX_MESSAGE_TYPE_ACTION;
-    emit core->groupMessageReceived(groupId, peerId, ToxString(cMessage, length).getQString(), isAction);
+    QString message = ToxString(cMessage, length).getQString();
+    emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
 void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
@@ -952,8 +953,10 @@ void Core::loadFriends()
                 const size_t nameSize = tox_friend_get_name_size(tox, ids[i], nullptr);
                 if (nameSize && nameSize != SIZE_MAX) {
                     uint8_t* name = new uint8_t[nameSize];
-                    if (tox_friend_get_name(tox, ids[i], name, nullptr))
-                        emit friendUsernameChanged(ids[i], ToxString(name, nameSize).getQString());
+                    if (tox_friend_get_name(tox, ids[i], name, nullptr)) {
+                        QString username = ToxString(name, nameSize).getQString();
+                        emit friendUsernameChanged(ids[i], username);
+                    }
                     delete[] name;
                 }
 
@@ -962,8 +965,8 @@ void Core::loadFriends()
                 if (statusMessageSize != SIZE_MAX) {
                     uint8_t* statusMessage = new uint8_t[statusMessageSize];
                     if (tox_friend_get_status_message(tox, ids[i], statusMessage, nullptr)) {
-                        emit friendStatusMessageChanged(ids[i], ToxString(statusMessage,
-                                                                          statusMessageSize).getQString());
+                        emit friendStatusMessageChanged(
+                            ids[i], ToxString(statusMessage, statusMessageSize).getQString());
                     }
                     delete[] statusMessage;
                 }
@@ -1388,6 +1391,7 @@ void Core::killTimers(bool onlyStop)
 void Core::reset()
 {
     assert(QThread::currentThread() == coreThread);
+    QByteArray toxsave = getToxSaveData();
 
     ready = false;
     killTimers(true);
@@ -1396,5 +1400,5 @@ void Core::reset()
     emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
     GUI::clearContacts();
 
-    start();
+    start(toxsave);
 }

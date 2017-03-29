@@ -49,9 +49,9 @@ CONFIG   += silent
 QMAKE_CXXFLAGS += -fPIE \
                   -Wstrict-overflow \
                   -Wstrict-aliasing
-QMAKE_LFLAGS   += -pie
 
 !win32 {
+    QMAKE_LFLAGS   += -pie
     QMAKE_CXXFLAGS += -fstack-protector-all \
                       -Wstack-protector
 }
