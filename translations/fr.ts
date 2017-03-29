@@ -631,7 +631,7 @@ ce qui peut conduire à des problèmes avec les appels vidéo.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation>Le micro ne peut  être éteint que durant un appel</translation>
+        <translation>Le micro ne peut être éteint que durant un appel</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
