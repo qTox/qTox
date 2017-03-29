@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>关于该联系人信息的输入框</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -676,28 +684,28 @@ which may lead to problems with video calls.</source>
         <translation>使用 qTox 与他人交流</translation>
     </message>
     <message>
-        <source>Friend is already added</source>
-        <translation>此人已被添加为好友</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me 提议成为好友。</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me 提供了好友关系,“%1”</translation>
     </message>
     <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">无效的 Tox ID</translation>
+    </message>
+    <message>
         <source>You need to write a message with your request</source>
-        <translation>你需要写一封邮件说明你的请求</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">你需要写一封邮件说明你的请求</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation>你的消息太长了！</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">你的消息太长了！</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <translation>无效的 Tox ID</translation>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">此人已被添加为好友</translation>
     </message>
 </context>
 <context>
@@ -802,33 +810,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>今天</translation>
+        <translation type="unfinished">今天</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>昨天</translation>
+        <translation type="unfinished">昨天</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>近七天</translation>
+        <translation type="unfinished">近七天</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>本月</translation>
+        <translation type="unfinished">本月</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>6 个月以上</translation>
+        <translation type="unfinished">6 个月以上</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>未知</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1238,15 +1240,15 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 于 %2 在 %3 邀请。</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>加入</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>拒绝</translation>
     </message>
 </context>
 <context>
@@ -1897,6 +1899,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2089,6 +2102,10 @@ Share it with your friends to communicate.</source>
         <source>Current profile location: %1</source>
         <translation>当前账户的位置: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2233,10 +2250,6 @@ It will be installed when qTox restarts.</source>
         <translation>来电…</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>缩放</translation>
-    </message>
-    <message>
         <source>Server doesn&apos;t support Toxme</source>
         <translation>服务器不支持 Toxme</translation>
     </message>
@@ -2310,6 +2323,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>ToxMe 内部错误</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
