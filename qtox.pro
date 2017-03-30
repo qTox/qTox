@@ -17,6 +17,12 @@
 #    See the COPYING file for more details.
 
 
+message()
+message("Warning: This project file is deprecated and should not be used anymore except on FreeBSD.")
+message("Use the CMakeLists.txt file instead to open this as a CMake project.")
+message()
+
+
 QT       += core gui network xml opengl sql svg widgets
 
 TARGET    = qtox
