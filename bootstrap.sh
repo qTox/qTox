@@ -19,9 +19,13 @@
 
 set -eu -o pipefail
 
-# windows check
+# windows check: If on Windows use the windows specific script.
 if cmd.exe /c ver 2>/dev/null
 then
+    echo
+    echo " Note: Script running on M$ Windows detected."
+    echo " Switching to Windows specific setup instructions."
+    echo
     cd windows
     ./bootstrap.sh
     exit $?
