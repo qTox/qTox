@@ -1,10 +1,11 @@
-################################################################################
+﻿################################################################################
 #
 # :: Dependencies
 #
 ################################################################################
 
 # This should go into subdirectories later.
+message(STATUS "# Reading external packages.")
 find_package(PkgConfig        REQUIRED)
 find_package(Qt5Core          REQUIRED)
 find_package(Qt5Gui           REQUIRED)
@@ -32,8 +33,22 @@ add_dependency(
   Qt5::Widgets
   Qt5::Xml)
 
+message(STATUS "# Starting to parse CMakeParseArguments.cmake")
 include(CMakeParseArguments)
+
+message(STATUS "# Starting to parse Qt5CorePatches.cmake")
 include(Qt5CorePatches)
+
+if (DEFINED PKG_CONFIG_EXECUTABLE)
+  message(STATUS "Path to pkg-config: ${PKG_CONFIG_EXECUTABLE}")
+  if(EXISTS "${PKG_CONFIG_EXECUTABLE}")
+    message(STATUS "OK – pkg-config found at specified location.")
+  else()
+    message(FATAL_ERROR " ! ! !   Error: pkg-config could not be found at the specified location.\n ! ! !   Please check whether it is properly installed.")
+  endif()
+else()
+   message(FATAL_ERROR "Error: pkg-config could not be found on your system but is required by this project.")
+endif()
 
 function(search_dependency pkg)
   set(options OPTIONAL)
@@ -81,6 +96,7 @@ function(search_dependency pkg)
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
 endfunction()
 
+message(STATUS "# Starting to look for internal dependencies.")
 search_dependency(LIBAVCODEC          PACKAGE libavcodec)
 search_dependency(LIBAVDEVICE         PACKAGE libavdevice)
 search_dependency(LIBAVFORMAT         PACKAGE libavformat)

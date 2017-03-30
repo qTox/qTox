@@ -30,17 +30,20 @@ if [ -d $QTOX_DIR/libs ]; then
     read_input=$(echo $read_input | tr "[:upper:]" "[:lower:]")
     if [ "$read_input" == "a" ]; then
         debug_out "Parameter is a: Deleting existing libraries in ./libs ..."
-        #rm -rf $QTOX_DIR/libs
+        rm -rf $QTOX_DIR/libs
     elif [ "$read_input" == "n" ]; then
         debug_out "Parameter is n: Exiting with -1."
-        #exit -1
+        exit -1
     elif [ "$read_input" == "m" ]; then
         debug_out "Parameter is m: Continuing without removing ./libs ..."
     else
         debug_out "Input invalid. Exiting with -1."
-        #exit -1
+        exit -1
     fi
 fi
+
+echo
+echo
 
 debug_out "Creating DIR: $QTOX_DIR/libs"
 mkdir -p $QTOX_DIR/libs
@@ -159,4 +162,9 @@ if [ ! -f "bin/avcodec-56.dll" ]; then
 fi
 
 echo
-echo *** Done Bootstrapping ***
+echo "Setting Environment Variable: PKG_CONFIG_PATH"
+setx PKG_CONFIG_PATH $QTOX_DIR/libs/lib/pkgconfig
+
+echo 
+echo Library setup finised!
+echo

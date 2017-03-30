@@ -1,4 +1,4 @@
-################################################################################
+﻿################################################################################
 #
 # :: CMake configuration
 #
@@ -70,6 +70,7 @@ endif()
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
+message(STATUS "# Starting to parse Dependencies.cmake")
 include(Dependencies)
 
 ################################################################################
