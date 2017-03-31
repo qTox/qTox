@@ -25,6 +25,7 @@ echo
 
 # ask how to proceed
 if [ -d $QTOX_DIR/libs ]; then
+    echo "The ./libs directory is already present in your qTox repository."
     echo "Remove ./libs and redownload/recompile dependencies?"
     read -p "m/a/N (missing/all/no): " read_input
     read_input=$(echo $read_input | tr "[:upper:]" "[:lower:]")
@@ -40,6 +41,9 @@ if [ -d $QTOX_DIR/libs ]; then
         debug_out "Input invalid. Exiting with -1."
         exit -1
     fi
+else
+    echo "You seem not to have the library directory present in your qTox repository."
+    echo "Proceeding with adding that directory and filling it with useful content..."
 fi
 
 echo
@@ -166,5 +170,5 @@ echo "Setting Environment Variable: PKG_CONFIG_PATH"
 setx PKG_CONFIG_PATH $QTOX_DIR/libs/lib/pkgconfig
 
 echo 
-echo Library setup finised!
+echo Library setup finised.
 echo
