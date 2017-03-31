@@ -972,7 +972,7 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QList<QString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QStringList splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {
