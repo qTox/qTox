@@ -180,8 +180,9 @@ void Core::makeTox(QByteArray savedata)
         break;
 
     case TOX_ERR_NEW_LOAD_BAD_FORMAT:
-        qWarning() << "failed to parse Tox save data";
-        break;
+        qCritical() << "failed to parse Tox save data";
+        emit failedToStart();
+        return;
 
     case TOX_ERR_NEW_PORT_ALLOC:
         if (Settings::getInstance().getEnableIPv6()) {
