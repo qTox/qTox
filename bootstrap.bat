@@ -17,7 +17,15 @@ echo   *************************************************************************
 echo   ***  Making sure the necessary MinGW packages are installed...           ***
 echo   ****************************************************************************
 echo.
+echo This will try to install the necessary MinGW packages. Don't worry about package
+echo already installed error messages, as they're expected if you have (some of) the
+echo packages already present on your system.
+echo.
+mingw-get update
+mingw-get install mingw-get
 mingw-get install mingw-developer-toolkit mingw32-base mingw32-gcc-g++ msys-base mingw32-pthreads-w32
+echo.
+echo Done configuring MinGW.
 
 REM We need the shell to run the shell script but we don’t want it in our path permanently because we’re going to use CMAKE later.
 REM This assumes that MYSYS has been installed in its default location via mingw-get.
