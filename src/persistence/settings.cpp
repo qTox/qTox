@@ -254,6 +254,10 @@ void Settings::loadGlobal()
             else
                 style = "None";
         }
+        useProfileColor = s.value("useProfileColor", false).toBool();
+        profileColor = s.value("profileColor").value<QColor>();
+        if (!profileColor.isValid())
+            profileColor = Qt::lightGray;
     }
     s.endGroup();
 
@@ -558,6 +562,8 @@ void Settings::saveGlobal()
         s.setValue("themeColor", themeColor);
         s.setValue("style", style);
         s.setValue("statusChangeNotificationEnabled", statusChangeNotificationEnabled);
+        s.setValue("useProfileColor", useProfileColor);
+        s.setValue("profileColor", profileColor);
     }
     s.endGroup();
 
@@ -2056,6 +2062,23 @@ void Settings::setFauxOfflineMessaging(bool value)
     if (value != fauxOfflineMessaging) {
         fauxOfflineMessaging = value;
         emit fauxOfflineMessagingChanged(fauxOfflineMessaging);
+    }
+}
+
+QPair<bool, QColor> Settings::getProfileColor() const
+{
+    QMutexLocker locker{&bigLock};
+    return {useProfileColor, profileColor};
+}
+
+void Settings::setProfileColor(bool enabled, const QColor& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (enabled != useProfileColor || color != profileColor) {
+        useProfileColor = enabled;
+        profileColor = color;
+        emit profileColorChanged(useProfileColor, profileColor);
     }
 }
 

@@ -515,6 +515,7 @@ HEADERS  += \
     src/widget/genericchatroomwidget.h \
     src/widget/groupwidget.h \
     src/widget/gui.h \
+    src/widget/icon.h \
     src/widget/loginscreen.h \
     src/widget/maskablepixmapwidget.h \
     src/widget/notificationedgewidget.h \
@@ -637,6 +638,7 @@ SOURCES += \
     src/widget/genericchatroomwidget.cpp \
     src/widget/groupwidget.cpp \
     src/widget/gui.cpp \
+    src/widget/icon.cpp \
     src/widget/loginscreen.cpp \
     src/widget/maskablepixmapwidget.cpp \
     src/widget/notificationedgewidget.cpp \

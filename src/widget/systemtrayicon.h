@@ -26,10 +26,13 @@
 
 class QSystemTrayIcon;
 class QMenu;
+class QIcon;
+class QColor;
 
 class SystemTrayIcon : public QObject
 {
     Q_OBJECT
+    QIcon suppliedIcon;
 public:
     SystemTrayIcon();
     ~SystemTrayIcon();
@@ -39,6 +42,9 @@ public:
     void setVisible(bool);
     void setIcon(QIcon& icon);
     SystrayBackendType backend() const;
+
+public slots:
+    void onProfileColorChanged(bool enabled, const QColor& color);
 
 signals:
     void activated(QSystemTrayIcon::ActivationReason);
