@@ -47,6 +47,7 @@
 #include "maskablepixmapwidget.h"
 #include "splitterrestorer.h"
 #include "systemtrayicon.h"
+#include "icon.h"
 #include "form/groupchatform.h"
 #include "src/audio/audio.h"
 #include "src/core/core.h"
@@ -1452,6 +1453,11 @@ void Widget::toggleFullscreen()
     }
 }
 
+void Widget::onProfileColorChanged(bool enabled, const QColor& color)
+{
+    setWindowIcon(currentIcon);
+}
+
 ContentDialog* Widget::createContentDialog() const
 {
     ContentDialog* contentDialog = new ContentDialog(settingsWidget);
@@ -1858,6 +1864,9 @@ void Widget::onTryCreateTrayIcon()
             trayMenu->addAction(actionLogout);
             trayMenu->addAction(actionQuit);
             icon->setContextMenu(trayMenu);
+
+            connect(&Settings::getInstance(), &Settings::profileColorChanged, icon, &SystemTrayIcon::onProfileColorChanged);
+            connect(&Settings::getInstance(), &Settings::profileColorChanged, this, &Widget::onProfileColorChanged);
 
             // don't activate qTox widget on tray icon click in Unity backend (see #3419)
             if (icon->backend() != SystrayBackendType::Unity)
@@ -2351,4 +2360,11 @@ void Widget::focusChatInput()
             g->getChatForm()->focusInput();
         }
     }
+}
+
+void Widget::setWindowIcon(const QIcon& icon)
+{
+    auto profileColor = Settings::getInstance().getProfileColor();
+    QMainWindow::setWindowIcon(profileColor.first ? Icon::drawProfileColor(icon, profileColor.second) : icon);
+    currentIcon = icon;
 }
