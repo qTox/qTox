@@ -173,6 +173,7 @@ public slots:
     void onFriendDialogShown(Friend* f);
     void onGroupDialogShown(Group* g);
     void toggleFullscreen();
+    void onProfileColorChanged(bool enabled, const QColor& color);
 
 signals:
     void friendRequestAccepted(const ToxPk& friendPk);
@@ -220,6 +221,7 @@ private slots:
 
 private:
     int icon_size;
+    QIcon currentIcon;
 
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
@@ -240,6 +242,7 @@ private:
     static bool filterOffline(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
+    void setWindowIcon(const QIcon& icon);
 
 private:
     SystemTrayIcon* icon = nullptr;

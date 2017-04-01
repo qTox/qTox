@@ -30,6 +30,8 @@
 #include <QStyleFactory>
 #include <QTime>
 #include <QVector>
+#include <QColor>
+#include <QColorDialog>
 
 #include "src/core/core.h"
 #include "src/core/coreav.h"
@@ -101,6 +103,11 @@ UserInterfaceForm::UserInterfaceForm(SettingsWidget* myParent)
 
     bodyUI->styleBrowser->addItem(tr("None"));
     bodyUI->styleBrowser->addItems(QStyleFactory::keys());
+
+    auto profileColor = s.getProfileColor();
+    bodyUI->useProfileColor->setChecked(profileColor.first);
+    bodyUI->profileColor->setEnabled(profileColor.first);
+    setButtonBgColor(profileColor.second, bodyUI->profileColor);
 
     QString style;
     if (QStyleFactory::keys().contains(s.getStyle()))
@@ -256,6 +263,11 @@ void UserInterfaceForm::reloadSmileys()
     bodyUI->emoticonSize->setMaximum(actualSize.width());
 }
 
+void UserInterfaceForm::setButtonBgColor(const QColor& color, QPushButton* button)
+{
+    button->setStyleSheet(QString("QPushButton{background-color:%1;}").arg(color.name()));
+}
+
 void UserInterfaceForm::on_showWindow_stateChanged()
 {
     bool isChecked = bodyUI->showWindow->isChecked();
@@ -301,6 +313,22 @@ void UserInterfaceForm::on_themeColorCBox_currentIndexChanged(int)
     Settings::getInstance().setThemeColor(index);
     Style::setThemeColor(index);
     Style::applyTheme();
+}
+
+void UserInterfaceForm::on_useProfileColor_stateChanged()
+{
+    bodyUI->profileColor->setEnabled(bodyUI->useProfileColor->isChecked());
+    Settings::getInstance().setProfileColor(bodyUI->useProfileColor->isChecked(), Settings::getInstance().getProfileColor().second);
+}
+
+void UserInterfaceForm::on_profileColor_pressed()
+{
+    QColor clr = QColorDialog::getColor(Settings::getInstance().getProfileColor().second);
+    if (clr.isValid())
+    {
+        setButtonBgColor(clr, bodyUI->profileColor);
+        Settings::getInstance().setProfileColor(bodyUI->useProfileColor->isChecked(), clr);
+    }
 }
 
 /**

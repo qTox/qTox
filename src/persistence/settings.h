@@ -30,6 +30,7 @@
 #include <QNetworkProxy>
 #include <QObject>
 #include <QPixmap>
+#include <QColor>
 
 class ToxPk;
 class Profile;
@@ -221,6 +222,7 @@ signals:
     void dateFormatChanged(const QString& format);
     void statusChangeNotificationEnabledChanged(bool enabled);
     void fauxOfflineMessagingChanged(bool enabled);
+    void profileColorChanged(bool enabled, const QColor& color);
 
     // Privacy
     void typingNotificationChanged(bool enabled);
@@ -467,6 +469,9 @@ public:
     bool getFauxOfflineMessaging() const;
     void setFauxOfflineMessaging(bool value);
 
+    QPair<bool, QColor> getProfileColor() const;
+    void setProfileColor(bool enabled, const QColor& color);
+
     bool getCompactLayout() const;
     void setCompactLayout(bool compact);
 
@@ -555,6 +560,8 @@ private:
     bool notifySound;
     bool busySound;
     bool groupAlwaysNotify;
+    bool useProfileColor;
+    QColor profileColor;
 
     bool forceTCP;
 
