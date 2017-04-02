@@ -69,6 +69,7 @@ public:
     Status getStatus() const;
     QString getStatusMessage() const;
     ToxId getSelfId() const;
+    ToxPk getSelfPublicKey() const;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     bool isReady() const;
@@ -208,6 +209,7 @@ private:
 
     void checkEncryptedHistory();
     void makeTox(QByteArray savedata);
+    void makeAv();
     void loadFriends();
 
     void checkLastOnline(uint32_t friendId);
