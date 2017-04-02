@@ -73,9 +73,7 @@ Core::~Core()
         if (QThread::currentThread() == coreThread) {
             killTimers(false);
         } else {
-            QMetaObject::invokeMethod(this,
-                                      "killTimers",
-                                      Qt::BlockingQueuedConnection,
+            QMetaObject::invokeMethod(this, "killTimers", Qt::BlockingQueuedConnection,
                                       Q_ARG(bool, false));
         }
     }
@@ -378,7 +376,7 @@ bool Core::checkConnection()
     if (toxConnected && !isConnected) {
         qDebug() << "Connected to the DHT";
         emit connected();
-    } else if (!toxConnected && isConnected){
+    } else if (!toxConnected && isConnected) {
         qDebug() << "Disconnected from the DHT";
         emit disconnected();
     }
@@ -403,12 +401,11 @@ void Core::bootstrapDht()
     int i = 0;
     static int j = qrand() % listSize;
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
-    while (i < 2)
-    {
+    while (i < 2) {
         const DhtServer& dhtServer = dhtServerList[j % listSize];
-        qDebug() << QString("Connecting to %1:%2 (%3)").arg(QString(dhtServer.address.toLatin1()),
-                                                            QString::number(dhtServer.port),
-                                                            dhtServer.name);
+        qDebug() << QString("Connecting to %1:%2 (%3)")
+                        .arg(QString(dhtServer.address.toLatin1()), QString::number(dhtServer.port),
+                             dhtServer.name);
         QByteArray address = dhtServer.address.toLatin1();
         ToxPk pk{dhtServer.userId.toLatin1()};
 
@@ -427,23 +424,16 @@ void Core::bootstrapDht()
     }
 }
 
-void Core::onFriendRequest(Tox*,
-                           const uint8_t* cFriendPk,
-                           const uint8_t* cMessage,
-                           size_t cMessageSize,
-                           void* core)
+void Core::onFriendRequest(Tox*, const uint8_t* cFriendPk, const uint8_t* cMessage,
+                           size_t cMessageSize, void* core)
 {
     ToxPk friendPk(cFriendPk);
     QString requestMessage = ToxString(cMessage, cMessageSize).getQString();
     emit static_cast<Core*>(core)->friendRequestReceived(friendPk, requestMessage);
 }
 
-void Core::onFriendMessage(Tox*,
-                           uint32_t friendId,
-                           TOX_MESSAGE_TYPE type,
-                           const uint8_t* cMessage,
-                           size_t cMessageSize,
-                           void* core)
+void Core::onFriendMessage(Tox*, uint32_t friendId, TOX_MESSAGE_TYPE type, const uint8_t* cMessage,
+                           size_t cMessageSize, void* core)
 {
     bool isAction = (type == TOX_MESSAGE_TYPE_ACTION);
     QString msg = ToxString(cMessage, cMessageSize).getQString();
@@ -465,11 +455,8 @@ void Core::onFriendTypingChange(Tox*, uint32_t friendId, bool isTyping, void* co
     emit static_cast<Core*>(core)->friendTypingChanged(friendId, isTyping);
 }
 
-void Core::onStatusMessageChanged(Tox*,
-                                  uint32_t friendId,
-                                  const uint8_t* cMessage,
-                                  size_t cMessageSize,
-                                  void* core)
+void Core::onStatusMessageChanged(Tox*, uint32_t friendId, const uint8_t* cMessage,
+                                  size_t cMessageSize, void* core)
 {
     QString message = ToxString(cMessage, cMessageSize).getQString();
     emit static_cast<Core*>(core)->friendStatusMessageChanged(friendId, message);
@@ -507,16 +494,12 @@ void Core::onConnectionStatusChanged(Tox*, uint32_t friendId, TOX_CONNECTION sta
     }
 }
 
-void Core::onGroupInvite(Tox*,
-                         uint32_t friendId,
-                         TOX_CONFERENCE_TYPE type,
-                         const uint8_t* data,
-                         size_t length,
-                         void* vCore)
+void Core::onGroupInvite(Tox*, uint32_t friendId, TOX_CONFERENCE_TYPE type, const uint8_t* data,
+                         size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
     QByteArray pk((char*)data, length);
-    switch(type) {
+    switch (type) {
     case TOX_CONFERENCE_TYPE_TEXT:
         qDebug() << QString("Text group invite by %1").arg(friendId);
         emit core->groupInviteReceived(friendId, type, pk);
@@ -532,13 +515,8 @@ void Core::onGroupInvite(Tox*,
     }
 }
 
-void Core::onGroupMessage(Tox*,
-                          uint32_t groupId,
-                          uint32_t peerId,
-                          TOX_MESSAGE_TYPE type,
-                          const uint8_t* cMessage,
-                          size_t length,
-                          void* vCore)
+void Core::onGroupMessage(Tox*, uint32_t groupId, uint32_t peerId, TOX_MESSAGE_TYPE type,
+                          const uint8_t* cMessage, size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
     bool isAction = type == TOX_MESSAGE_TYPE_ACTION;
@@ -546,11 +524,8 @@ void Core::onGroupMessage(Tox*,
     emit core->groupMessageReceived(groupId, peerId, message, isAction);
 }
 
-void Core::onGroupNamelistChange(Tox*,
-                                 uint32_t groupId,
-                                 uint32_t peerId,
-                                 TOX_CONFERENCE_STATE_CHANGE change,
-                                 void* core)
+void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
+                                 TOX_CONFERENCE_STATE_CHANGE change, void* core)
 {
     CoreAV* coreAv = static_cast<Core*>(core)->getAv();
     if (change == TOX_CONFERENCE_STATE_CHANGE_PEER_EXIT && coreAv->isGroupAvEnabled(groupId)) {
@@ -561,12 +536,8 @@ void Core::onGroupNamelistChange(Tox*,
     emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }
 
-void Core::onGroupTitleChange(Tox*,
-                              uint32_t groupId,
-                              uint32_t peerId,
-                              const uint8_t* cTitle,
-                              size_t length,
-                              void* vCore)
+void Core::onGroupTitleChange(Tox*, uint32_t groupId, uint32_t peerId, const uint8_t* cTitle,
+                              size_t length, void* vCore)
 {
     Core* core = static_cast<Core*>(vCore);
     QString author = core->getGroupPeerName(groupId, peerId);
@@ -645,11 +616,8 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         emit failedToAddFriend(friendPk, errorMessage);
     } else {
         ToxString cMessage(message);
-        uint32_t friendNumber = tox_friend_add(tox,
-                                               friendId.getBytes(),
-                                               cMessage.data(),
-                                               cMessage.size(),
-                                               nullptr);
+        uint32_t friendNumber =
+            tox_friend_add(tox, friendId.getBytes(), cMessage.data(), cMessage.size(), nullptr);
         if (friendNumber == std::numeric_limits<uint32_t>::max()) {
             qDebug() << "Failed to request friendship";
             emit failedToAddFriend(friendPk);
@@ -673,12 +641,8 @@ int Core::sendMessage(uint32_t friendId, const QString& message)
 {
     QMutexLocker ml(&messageSendMutex);
     ToxString cMessage(message);
-    int receipt = tox_friend_send_message(tox,
-                                          friendId,
-                                          TOX_MESSAGE_TYPE_NORMAL,
-                                          cMessage.data(),
-                                          cMessage.size(),
-                                          nullptr);
+    int receipt = tox_friend_send_message(tox, friendId, TOX_MESSAGE_TYPE_NORMAL, cMessage.data(),
+                                          cMessage.size(), nullptr);
     emit messageSentResult(friendId, message, receipt);
     return receipt;
 }
@@ -687,12 +651,8 @@ int Core::sendAction(uint32_t friendId, const QString& action)
 {
     QMutexLocker ml(&messageSendMutex);
     ToxString cMessage(action);
-    int receipt = tox_friend_send_message(tox,
-                                          friendId,
-                                          TOX_MESSAGE_TYPE_ACTION,
-                                          cMessage.data(),
-                                          cMessage.size(),
-                                          nullptr);
+    int receipt = tox_friend_send_message(tox, friendId, TOX_MESSAGE_TYPE_ACTION, cMessage.data(),
+                                          cMessage.size(), nullptr);
     emit messageSentResult(friendId, action, receipt);
     return receipt;
 }
@@ -1025,7 +985,7 @@ void Core::setStatus(Status status)
 QString Core::sanitize(QString name)
 {
     // these are pretty much Windows banned filename characters
-    QList<QChar> banned {'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
+    QList<QChar> banned{'/', '\\', ':', '<', '>', '"', '|', '?', '*'};
     for (QChar c : banned) {
         name.replace(c, '_');
     }
@@ -1291,9 +1251,7 @@ bool Core::parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const
  *
  * @return Conference number on success, UINT32_MAX on failure.
  */
-uint32_t Core::joinGroupchat(int32_t friendId,
-                             uint8_t type,
-                             const uint8_t* friendGroupPK,
+uint32_t Core::joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* friendGroupPK,
                              uint16_t length) const
 {
     if (type == TOX_CONFERENCE_TYPE_TEXT) {
@@ -1303,12 +1261,8 @@ uint32_t Core::joinGroupchat(int32_t friendId,
         return parseConferenceJoinError(error) ? groupId : std::numeric_limits<uint32_t>::max();
     } else if (type == TOX_CONFERENCE_TYPE_AV) {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
-        return toxav_join_av_groupchat(tox,
-                                       friendId,
-                                       friendGroupPK,
-                                       length,
-                                       CoreAV::groupCallCallback,
-                                       const_cast<Core*>(this));
+        return toxav_join_av_groupchat(tox, friendId, friendGroupPK, length,
+                                       CoreAV::groupCallCallback, const_cast<Core*>(this));
     } else {
         qWarning() << "joinGroupchat: Unknown groupchat type " << type;
         return std::numeric_limits<uint32_t>::max();
