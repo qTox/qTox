@@ -403,9 +403,10 @@ void Core::bootstrapDht()
     // i think the more we bootstrap, the more we jitter because the more we overwrite nodes
     while (i < 2) {
         const DhtServer& dhtServer = dhtServerList[j % listSize];
-        qDebug() << QString("Connecting to %1:%2 (%3)")
-                        .arg(QString(dhtServer.address.toLatin1()), QString::number(dhtServer.port),
-                             dhtServer.name);
+        QString dhtServerAddress = dhtServer.address.toLatin1();
+        QString port = QString::number(dhtServer.port);
+        QString name = dhtServer.name;
+        qDebug() << QString("Connecting to %1:%2 (%3)").arg(dhtServerAddress, port, name);
         QByteArray address = dhtServer.address.toLatin1();
         ToxPk pk{dhtServer.userId.toLatin1()};
 
@@ -599,13 +600,15 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
 void tryAddFriendRequestToHistory(const ToxId& friendId, const ToxPk& selfPk, const QString& msg)
 {
     Profile* profile = Nexus::getProfile();
-    if (profile->isHistoryEnabled()) {
-        QString idStr = friendId.toString();
-        QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(msg);
-        QString pkStr = selfPk.toString();
-        QDateTime datetime = QDateTime::currentDateTime();
-        profile->getHistory()->addNewMessage(idStr, inviteStr, pkStr, datetime, true, QString());
+    if (!profile->isHistoryEnabled()) {
+        return;
     }
+
+    QString idStr = friendId.toString();
+    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(msg);
+    QString pkStr = selfPk.toString();
+    QDateTime datetime = QDateTime::currentDateTime();
+    profile->getHistory()->addNewMessage(idStr, inviteStr, pkStr, datetime, true, QString());
 }
 
 void Core::requestFriendship(const ToxId& friendId, const QString& message)
@@ -1254,19 +1257,25 @@ bool Core::parseConferenceJoinError(TOX_ERR_CONFERENCE_JOIN error) const
 uint32_t Core::joinGroupchat(int32_t friendId, uint8_t type, const uint8_t* friendGroupPK,
                              uint16_t length) const
 {
-    if (type == TOX_CONFERENCE_TYPE_TEXT) {
+    switch (type) {
+    case TOX_CONFERENCE_TYPE_TEXT: {
         qDebug() << QString("Trying to join text groupchat invite sent by friend %1").arg(friendId);
         TOX_ERR_CONFERENCE_JOIN error;
         uint32_t groupId = tox_conference_join(tox, friendId, friendGroupPK, length, &error);
         return parseConferenceJoinError(error) ? groupId : std::numeric_limits<uint32_t>::max();
-    } else if (type == TOX_CONFERENCE_TYPE_AV) {
+    }
+
+    case TOX_CONFERENCE_TYPE_AV: {
         qDebug() << QString("Trying to join AV groupchat invite sent by friend %1").arg(friendId);
         return toxav_join_av_groupchat(tox, friendId, friendGroupPK, length,
                                        CoreAV::groupCallCallback, const_cast<Core*>(this));
-    } else {
-        qWarning() << "joinGroupchat: Unknown groupchat type " << type;
-        return std::numeric_limits<uint32_t>::max();
     }
+
+    default:
+        qWarning() << "joinGroupchat: Unknown groupchat type " << type;
+    }
+
+    return std::numeric_limits<uint32_t>::max();
 }
 
 /**
@@ -1406,7 +1415,7 @@ QStringList Core::splitMessage(const QString& message, int maxLen)
             splitPos = maxLen;
             if (ba_message[splitPos] & 0x80) {
                 do {
-                    splitPos--;
+                    --splitPos;
                 } while (!(ba_message[splitPos] & 0x40));
             }
             --splitPos;
