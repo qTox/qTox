@@ -148,6 +148,26 @@ get_ffmpeg() {
 	fi
 }
 
+get_libsodium() {
+	debug_out "libsodium: Getting version 1.0.12."
+	if [ ! -f "libsodium-1.0.12-mingw.tar.gz" ]; then
+		wget https://download.libsodium.org/libsodium/releases/libsodium-1.0.12-mingw.tar.gz -O "libsodium-1.0.12-mingw.tar.gz"
+		rm -rf libsodium-1.0.12-mingw
+	fi
+
+	debug_out "libsodium: Unpacking."
+	if [ ! -d "libsodium-1.0.12-mingw" ]; then
+		tar -xvf libsodium-1.0.12-mingw.tar.gz
+	fi
+
+	debug_out "libsodium: Copying binaries to target location."
+	if [ ! -f "bin/libsodium-18.dll" ]; then
+		cp -R libsodium-win32/bin ./
+		cp -R libsodium-win32/include ./
+		cp -R libsodium-win32/lib ./
+	fi
+}
+
 get_pkg_config() {
 	# get the files
 	if [ ! -f "pkg-config_0.26-1_win32.zip" ]; then
@@ -254,6 +274,7 @@ main() {
 	get_libqrencode
 	get_openal
 	get_ffmpeg
+	get_libsodium
 	
 	echo
 	echo " Library setup finised."
