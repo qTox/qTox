@@ -68,13 +68,17 @@ QString statusToString(const Status status)
 {
     QString result;
     switch (status) {
-    case Status::Online: result = ChatForm::tr("online", "contact status");
+    case Status::Online:
+        result = ChatForm::tr("online", "contact status");
         break;
-    case Status::Away: result = ChatForm::tr("away", "contact status");
+    case Status::Away:
+        result = ChatForm::tr("away", "contact status");
         break;
-    case Status::Busy: result = ChatForm::tr("busy", "contact status");
+    case Status::Busy:
+        result = ChatForm::tr("busy", "contact status");
         break;
-    case Status::Offline: result = ChatForm::tr("offline", "contact status");
+    case Status::Offline:
+        result = ChatForm::tr("offline", "contact status");
         break;
     }
     return result;
@@ -171,12 +175,12 @@ ChatForm::ChatForm(Friend* chatFriend)
     connect(msgEdit, &ChatTextEdit::enterPressed, this, &ChatForm::onSendTriggered);
     connect(msgEdit, &ChatTextEdit::textChanged, this, &ChatForm::onTextEditChanged);
     connect(statusMessageLabel, &CroppingLabel::customContextMenuRequested, this,
-                                [&](const QPoint& pos) {
-        if (!statusMessageLabel->text().isEmpty()) {
-            QWidget* sender = static_cast<QWidget*>(this->sender());
-            statusMessageMenu.exec(sender->mapToGlobal(pos));
-        }
-    });
+            [&](const QPoint& pos) {
+                if (!statusMessageLabel->text().isEmpty()) {
+                    QWidget* sender = static_cast<QWidget*>(this->sender());
+                    statusMessageMenu.exec(sender->mapToGlobal(pos));
+                }
+            });
 
     connect(&typingTimer, &QTimer::timeout, this, [=] {
         Core::getInstance()->sendTyping(f->getFriendId(), false);
@@ -237,12 +241,8 @@ void ChatForm::onTextEditChanged()
 
 void ChatForm::onAttachClicked()
 {
-    QStringList paths = QFileDialog::getOpenFileNames(this,
-                                                      tr("Send a file"),
-                                                      QDir::homePath(),
-                                                      0,
-                                                      0,
-                                                      QFileDialog::DontUseNativeDialog);
+    QStringList paths = QFileDialog::getOpenFileNames(this, tr("Send a file"), QDir::homePath(), 0,
+                                                      0, QFileDialog::DontUseNativeDialog);
     if (paths.isEmpty()) {
         return;
     }
@@ -252,16 +252,14 @@ void ChatForm::onAttachClicked()
         QFile file(path);
         QString fileName = QFileInfo(path).fileName();
         if (!file.exists() || !file.open(QIODevice::ReadOnly)) {
-            QMessageBox::warning(this,
-                                 tr("Unable to open"),
+            QMessageBox::warning(this, tr("Unable to open"),
                                  tr("qTox wasn't able to open %1").arg(fileName));
             continue;
         }
 
         file.close();
         if (file.isSequential()) {
-            QMessageBox::critical(this,
-                                  tr("Bad idea"),
+            QMessageBox::critical(this, tr("Bad idea"),
                                   tr("You're trying to send a sequential file, "
                                      "which is not going to work!"));
             continue;
@@ -286,10 +284,8 @@ void ChatForm::startFileSend(ToxFile file)
         previousId = self;
     }
 
-    insertChatMessage(ChatMessage::createFileTransferMessage(name,
-                                                             file,
-                                                             true,
-                                                             QDateTime::currentDateTime()));
+    insertChatMessage(
+        ChatMessage::createFileTransferMessage(name, file, true, QDateTime::currentDateTime()));
     Widget::getInstance()->updateFriendActivity(f);
 }
 
@@ -307,10 +303,8 @@ void ChatForm::onFileRecvRequest(ToxFile file)
         previousId = friendId;
     }
 
-    ChatMessage::Ptr msg = ChatMessage::createFileTransferMessage(name,
-                                                                  file,
-                                                                  false,
-                                                                  QDateTime::currentDateTime());
+    ChatMessage::Ptr msg =
+        ChatMessage::createFileTransferMessage(name, file, false, QDateTime::currentDateTime());
     insertChatMessage(msg);
 
     ChatLineContentProxy* proxy = static_cast<ChatLineContentProxy*>(msg->getContent(1));
@@ -322,7 +316,7 @@ void ChatForm::onFileRecvRequest(ToxFile file)
     // there is auto-accept for that contact
     if (!autoAcceptDir.isEmpty()) {
         tfWidget->autoAcceptTransfer(autoAcceptDir);
-    // global autosave to global directory
+        // global autosave to global directory
     } else if (settings.getAutoSaveEnabled()) {
         tfWidget->autoAcceptTransfer(settings.getGlobalAutoAcceptDir());
     }
@@ -348,9 +342,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         uint32_t friendId = f->getFriendId();
         qDebug() << "automatic call answer";
         CoreAV* coreav = Core::getInstance()->getAv();
-        QMetaObject::invokeMethod(coreav,
-                                  "answerCall",
-                                  Qt::QueuedConnection,
+        QMetaObject::invokeMethod(coreav, "answerCall", Qt::QueuedConnection,
                                   Q_ARG(uint32_t, friendId));
         onAvStart(friendId, video);
     } else {
@@ -359,8 +351,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         connect(confirmData, &CallConfirmWidget::accepted, this, &ChatForm::onAnswerCallTriggered);
         connect(confirmData, &CallConfirmWidget::rejected, this, &ChatForm::onRejectCallTriggered);
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
-                                                      ChatMessage::INFO,
-                                                      QDateTime::currentDateTime());
+                                                      ChatMessage::INFO, QDateTime::currentDateTime());
         insertChatMessage(msg);
         Widget::getInstance()->newFriendMessageAlert(friendId, false);
         Audio& audio = Audio::getInstance();
@@ -410,8 +401,7 @@ void ChatForm::showOutgoingCall(bool video)
     btn->setObjectName("yellow");
     btn->setStyleSheet(Style::getStylesheet(video ? VIDEO_BTN_STYLESHEET : CALL_BTN_STYLESHEET));
     btn->setToolTip(video ? tr("Cancel video call") : tr("Cancel audio call"));
-    addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()),
-                         ChatMessage::INFO,
+    addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()), ChatMessage::INFO,
                          QDateTime::currentDateTime());
     Widget::getInstance()->updateFriendActivity(f);
 }
@@ -519,8 +509,7 @@ void ChatForm::onFileSendFailed(uint32_t friendId, const QString& fname)
         return;
     }
 
-    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname),
-                         ChatMessage::ERROR,
+    addSystemInfoMessage(tr("Failed to send file \"%1\"").arg(fname), ChatMessage::ERROR,
                          QDateTime::currentDateTime());
 }
 
@@ -545,8 +534,7 @@ void ChatForm::onFriendStatusChanged(uint32_t friendId, Status status)
         addSystemInfoMessage(tr("%1 is now %2", "e.g. \"Dubslow is now online\"")
                                  .arg(f->getDisplayedName())
                                  .arg(fStatus),
-                             ChatMessage::INFO,
-                             QDateTime::currentDateTime());
+                             ChatMessage::INFO, QDateTime::currentDateTime());
     }
 }
 
@@ -637,8 +625,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
             info.setFile(url.toLocalFile());
             file.setFileName(info.absoluteFilePath());
             if (!file.exists() || !file.open(QIODevice::ReadOnly)) {
-                QMessageBox::warning(this,
-                                     tr("Unable to open"),
+                QMessageBox::warning(this, tr("Unable to open"),
                                      tr("qTox wasn't able to open %1").arg(fileName));
                 continue;
             }
@@ -646,10 +633,8 @@ void ChatForm::dropEvent(QDropEvent* ev)
 
         file.close();
         if (file.isSequential()) {
-            QMessageBox::critical(0,
-                                  tr("Bad idea"),
-                                  tr("You're trying to send a sequential file, "
-                                     "which is not going to work!"));
+            QMessageBox::critical(0, tr("Bad idea"), tr("You're trying to send a sequential file, "
+                                                        "which is not going to work!"));
             continue;
         }
 
@@ -905,8 +890,7 @@ void ChatForm::stopCounter()
     }
     QString dhms = secondsToDHMS(timeElapsed.elapsed() / 1000);
     QString name = f->getDisplayedName();
-    addSystemInfoMessage(tr("Call with %1 ended. %2").arg(name, dhms),
-                         ChatMessage::INFO,
+    addSystemInfoMessage(tr("Call with %1 ended. %2").arg(name, dhms), ChatMessage::INFO,
                          QDateTime::currentDateTime());
     callDurationTimer->stop();
     callDuration->setText("");
@@ -972,7 +956,7 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QList<QString> splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QStringList splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {
