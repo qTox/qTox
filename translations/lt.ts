@@ -264,6 +264,14 @@ vaizdo skambučiais.</translation>
         <source>Input field for notes about the contact</source>
         <translation>Įvesties laukas, skirtas pastaboms apie kontaktą</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -676,28 +684,28 @@ vaizdo skambučiais.</translation>
         <translation>Naudoju qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Turite parašyti adresatui žinutę su savo užklausa</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Žinutė per ilga!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Toks kontaktas jau pridėtas</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me siūlo bendrauti.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me siūlo bendrauti: „%1“</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Neteisingas Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Neteisingas Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Turite parašyti adresatui žinutę su savo užklausa</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Žinutė per ilga!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Toks kontaktas jau pridėtas</translation>
     </message>
 </context>
 <context>
@@ -802,33 +810,27 @@ vaizdo skambučiais.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Šiandien</translation>
+        <translation type="unfinished">Šiandien</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Vakar</translation>
+        <translation type="unfinished">Vakar</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Per paskutinias 7 dienas</translation>
+        <translation type="unfinished">Per paskutinias 7 dienas</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Šį mėnesį</translation>
+        <translation type="unfinished">Šį mėnesį</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Seniau nei prieš 6 mėnesius</translation>
+        <translation type="unfinished">Seniau nei prieš 6 mėnesius</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Nežinoma</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1238,15 +1240,15 @@ sistemos juostelėje, o ne programų juostoje.</translation>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakvietė %1, %2, %3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijungti</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmesti</translation>
     </message>
 </context>
 <context>
@@ -1902,6 +1904,17 @@ Failo formatas dar gali pasikeisti, todėl galite prarasti sukauptus duomenis.</
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2094,6 +2107,10 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
         <source>Current profile location: %1</source>
         <translation>Aktyvaus profilio saugojimo vieta: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2247,10 +2264,6 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
         <translation>Čia %1! Gal susirašinėjam per Tox?</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>Keičiamas dydis</translation>
-    </message>
-    <message>
         <source>None</source>
         <comment>No camera device set</comment>
         <translation>Joks</translation>
@@ -2315,6 +2328,10 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Vidinė „ToxMe“ klaida</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
