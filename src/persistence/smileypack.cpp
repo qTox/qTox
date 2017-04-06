@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,33 +19,16 @@
 
 #include "smileypack.h"
 #include "src/persistence/settings.h"
-#include "src/widget/style.h"
 
-#include <QBuffer>
-#include <QBuffer>
-#include <QCoreApplication>
-#include <QCoreApplication>
 #include <QDir>
-#include <QDir>
-#include <QDomDocument>
-#include <QDomDocument>
 #include <QDomElement>
-#include <QDomElement>
-#include <QFile>
-#include <QFileInfo>
-#include <QFont>
-#include <QFontInfo>
-#include <QIcon>
-#include <QPixmap>
+#include <QRegularExpression>
 #include <QStandardPaths>
-#include <QStringBuilder>
 #include <QtConcurrent/QtConcurrentRun>
 
 #if defined(Q_OS_FREEBSD)
 #include <locale.h>
 #endif
-
-#define EMOTICONS_SUB_DIR QStringLiteral("emoticons")
 
 /**
  * @class SmileyPack
@@ -67,7 +50,60 @@
  * @brief Contains all directories where smileys could be found
  */
 
-QStringList SmileyPack::defaultPaths = loadDefaultPaths();
+QStringList loadDefaultPaths();
+
+static const QStringList DEFAULT_PATHS = loadDefaultPaths();
+
+static const QString RICH_TEXT_PATTERN = QStringLiteral("<img title=\"%1\" src=\"key:%1\"\\>");
+
+/**
+ * @brief Construct list of standard directories with "emoticons" sub dir, whether these directories
+ * exist or not
+ * @return Constructed list of default emoticons directories
+ */
+QStringList loadDefaultPaths()
+{
+#if defined(Q_OS_FREEBSD)
+    // TODO: Remove when will be fixed.
+    // Workaround to fix https://bugreports.qt.io/browse/QTBUG-57522
+    setlocale(LC_ALL, "");
+#endif
+    const QString EMOTICONS_SUB_PATH = QDir::separator() + QStringLiteral("emoticons");
+    QStringList paths
+            {":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons", EMOTICONS_SUB_PATH};
+
+    // qTox exclusive emoticons
+    QStandardPaths::StandardLocation location;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
+    location = QStandardPaths::AppDataLocation;
+#else
+#warning "Qt < 5.4.0 has a trouble with unicode symbols in path on few systems"
+    location = QStandardPaths::DataLocation;
+#endif
+
+    QStringList locations = QStandardPaths::standardLocations(location);
+    // system wide emoticons
+    locations.append(QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation));
+    for (QString qtoxPath : locations) {
+        qtoxPath.append(EMOTICONS_SUB_PATH);
+        if (!paths.contains(qtoxPath)) {
+            paths.append(qtoxPath);
+        }
+    }
+
+    return paths;
+}
+
+/**
+ * @brief Wraps passed string into smiley HTML image reference
+ * @param key Describes which smiley is needed
+ * @return Key that wrapped into image ref
+ */
+QString getAsRichText(const QString& key)
+{
+    return RICH_TEXT_PATTERN.arg(key);
+}
+
 
 SmileyPack::SmileyPack()
 {
@@ -86,56 +122,19 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
-QStringList SmileyPack::loadDefaultPaths()
+QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks()
 {
-#if defined(Q_OS_FREEBSD)
-    // TODO: Remove when will be fixed.
-    // Workaround to fix https://bugreports.qt.io/browse/QTBUG-57522
-    setlocale(LC_ALL, "");
-#endif
-    QStringList paths =
-        QStringList{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons"};
-    // qTox should find emoticons next to the binary
-    paths.append('.' + QDir::separator() + EMOTICONS_SUB_DIR);
-
-    // qTox exclusive emoticons
-    QStandardPaths::StandardLocation location;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
-    location = QStandardPaths::AppDataLocation;
-#else
-#warning "Qt < 5.4.0 has a trouble with unicode symbols in path on few systems"
-    location = QStandardPaths::DataLocation;
-#endif
-    for (auto qtoxPath : QStandardPaths::standardLocations(location)) {
-        qtoxPath += QDir::separator() + EMOTICONS_SUB_DIR;
-        if (!paths.contains(qtoxPath)) {
-            paths << qtoxPath;
-        }
-    }
-
-    // system wide emoticons
-    for (auto genericPath : QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation)) {
-        genericPath += QDir::separator() + EMOTICONS_SUB_DIR;
-        if (!paths.contains(genericPath)) {
-            paths << genericPath;
-        }
-    }
-
-    return paths;
+    return listSmileyPacks(DEFAULT_PATHS);
 }
 
-QList<QPair<QString, QString>> SmileyPack::listSmileyPacks()
+QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
 {
-    return listSmileyPacks(defaultPaths);
-}
-
-QList<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
-{
-    QList<QPair<QString, QString>> smileyPacks;
-
+    QVector<QPair<QString, QString>> smileyPacks;
+    const QString fileName = QStringLiteral("emoticons.xml");
+    const QString homePath = QDir::homePath();
     for (QString path : paths) {
-        if (path.leftRef(1) == "~") {
-            path.replace(0, 1, QDir::homePath());
+        if (path.startsWith('~')) {
+            path.replace(0, 1, homePath);
         }
 
         QDir dir(path);
@@ -145,14 +144,11 @@ QList<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& pa
 
         for (const QString& subdirectory : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
             dir.cd(subdirectory);
-
-            QFileInfoList entries = dir.entryInfoList(QStringList() << "emoticons.xml", QDir::Files);
-            // Does it contain a file called emoticons.xml?
-            if (entries.size() > 0) {
-                QString packageName = dir.dirName();
-                QString absPath = entries[0].absoluteFilePath();
-                if (!smileyPacks.contains(QPair<QString, QString>(packageName, absPath))) {
-                    smileyPacks << QPair<QString, QString>(packageName, absPath);
+            if (dir.exists(fileName)) {
+                QString absPath = dir.absolutePath() + QDir::separator() + fileName;
+                QPair<QString, QString> p{dir.dirName(), absPath};
+                if (!smileyPacks.contains(p)) {
+                    smileyPacks.append(p);
                 }
             }
 
@@ -176,18 +172,15 @@ bool SmileyPack::isValid(const QString& filename)
  */
 bool SmileyPack::load(const QString& filename)
 {
-    // discard old data
-    filenameTable.clear();
-    iconCache.clear();
-    emoticons.clear();
-    path.clear();
-
-    // open emoticons.xml
     QFile xmlFile(filename);
-    if (!xmlFile.open(QIODevice::ReadOnly)) {
+    if (!xmlFile.exists() || !xmlFile.open(QIODevice::ReadOnly)) {
         loadingMutex.unlock();
-        return false; // cannot open file
+        return false;
     }
+
+    QDomDocument doc;
+    doc.setContent(xmlFile.readAll());
+    xmlFile.close();
 
     /* parse the cfg file
      * sample:
@@ -205,61 +198,54 @@ bool SmileyPack::load(const QString& filename)
      */
 
     path = QFileInfo(filename).absolutePath();
-
-    QDomDocument doc;
-    doc.setContent(xmlFile.readAll());
-
     QDomNodeList emoticonElements = doc.elementsByTagName("emoticon");
-    for (int i = 0; i < emoticonElements.size(); ++i) {
-        QString file = emoticonElements.at(i).attributes().namedItem("file").nodeValue();
-        QDomElement stringElement = emoticonElements.at(i).firstChildElement("string");
-
-        QStringList emoticonSet; // { ":)", ":-)" } etc.
-
+    const QString itemName = QStringLiteral("file");
+    const QString childName = QStringLiteral("string");
+    emoticons.clear();
+    emoticonToIcon.clear();
+    icons.clear();
+    const int iconsCount = emoticonElements.size();
+    icons.reserve(iconsCount);
+    for (int i = 0; i < iconsCount; ++i) {
+        QString iconName = emoticonElements.at(i).attributes().namedItem(itemName).nodeValue();
+        QString iconPath = QDir{path}.filePath(iconName);
+        icons.append(QIcon{iconPath});
+        QDomElement stringElement = emoticonElements.at(i).firstChildElement(childName);
+        QStringList emoticonList;
         while (!stringElement.isNull()) {
             QString emoticon = stringElement.text().replace("<", "&lt;").replace(">", "&gt;");
-            filenameTable.insert(emoticon, file);
-
-            cacheSmiley(file); // preload all smileys
-
-            if (!getCachedSmiley(emoticon).isNull()) {
-                emoticonSet.push_back(emoticon);
-            }
-
+            emoticonToIcon.insert(emoticon, &icons[i]);
+            emoticonList.append(emoticon);
             stringElement = stringElement.nextSibling().toElement();
         }
 
-        if (emoticonSet.size() > 0) {
-            emoticons.push_back(emoticonSet);
-        }
+        emoticons.append(emoticonList);
     }
 
-    // success!
     loadingMutex.unlock();
     return true;
 }
 
-QString SmileyPack::smileyfied(QString msg)
+QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
-
-    QRegExp exp("\\S+"); // matches words
-
-    int index = msg.indexOf(exp);
-
-    // if a word is key of a smiley, replace it by its corresponding image in Rich Text
-    while (index >= 0) {
-        QString key = exp.cap();
-        if (filenameTable.contains(key)) {
+    QString result(msg);
+    QRegularExpression exp("\\S+");
+    QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+    int replaceDiff = 0;
+    while (iter.hasNext()) {
+        QRegularExpressionMatch match = iter.next();
+        QString key = match.captured();
+        int startPos = match.capturedStart();
+        int keyLength = key.length();
+        if (emoticonToIcon.contains(key)) {
             QString imgRichText = getAsRichText(key);
-
-            msg.replace(index, key.length(), imgRichText);
-            index += imgRichText.length() - key.length();
+            result.replace(startPos + replaceDiff, keyLength, imgRichText);
+            replaceDiff += imgRichText.length() - keyLength;
         }
-        index = msg.indexOf(exp, index + key.length());
     }
 
-    return msg;
+    return result;
 }
 
 QList<QStringList> SmileyPack::getEmoticons() const
@@ -268,40 +254,10 @@ QList<QStringList> SmileyPack::getEmoticons() const
     return emoticons;
 }
 
-QString SmileyPack::getAsRichText(const QString& key)
-{
-    return QString("<img title=\"%1\" src=\"key:%1\"\\>").arg(key);
-}
-
-QIcon SmileyPack::getAsIcon(const QString& key)
+QIcon SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
-    return getCachedSmiley(key);
-}
-
-void SmileyPack::cacheSmiley(const QString& name)
-{
-    QString filename = QDir(path).filePath(name);
-
-    QIcon icon;
-    icon.addFile(filename);
-    iconCache.insert(name, icon);
-}
-
-QIcon SmileyPack::getCachedSmiley(const QString& key)
-{
-    // valid key?
-    if (!filenameTable.contains(key)) {
-        return QPixmap();
-    }
-
-    // cache it if needed
-    QString file = filenameTable.value(key);
-    if (!iconCache.contains(file)) {
-        cacheSmiley(file);
-    }
-
-    return iconCache.value(file);
+    return emoticonToIcon.contains(emoticon) ? *(emoticonToIcon[emoticon]) : QIcon();
 }
 
 void SmileyPack::onSmileyPackChanged()
