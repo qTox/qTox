@@ -21,24 +21,17 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include <QMutex>
-#include <QObject>
-#include <cstdint>
-
-#include <tox/tox.h>
-#include <tox/toxencryptsave.h>
-
 #include "corestructs.h"
 #include "toxid.h"
 
-class Profile;
-template <typename T>
-class QList;
-class QTimer;
-class QString;
-struct ToxAV;
+#include <tox/tox.h>
+
+#include <QMutex>
+#include <QObject>
+
 class CoreAV;
-struct vpx_image;
+class Profile;
+class QTimer;
 
 class Core : public QObject
 {
@@ -53,7 +46,7 @@ public:
     static const QString TOX_EXT;
     static const QString CONFIG_FILE_NAME;
     static QString sanitize(QString name);
-    static QList<QString> splitMessage(const QString& message, int maxLen);
+    static QStringList splitMessage(const QString& message, int maxLen);
 
     static QByteArray getSaltFromFile(QString filename);
 
@@ -63,7 +56,7 @@ public:
     uint32_t getGroupNumberPeers(int groupId) const;
     QString getGroupPeerName(int groupId, int peerId) const;
     ToxPk getGroupPeerPk(int groupId, int peerId) const;
-    QList<QString> getGroupPeerNames(int groupId) const;
+    QStringList getGroupPeerNames(int groupId) const;
     ToxPk getFriendPublicKey(uint32_t friendNumber) const;
     QString getFriendUsername(uint32_t friendNumber) const;
 
@@ -76,6 +69,7 @@ public:
     Status getStatus() const;
     QString getStatusMessage() const;
     ToxId getSelfId() const;
+    ToxPk getSelfPublicKey() const;
     QPair<QByteArray, QByteArray> getKeypair() const;
 
     bool isReady() const;
@@ -215,11 +209,13 @@ private:
 
     void checkEncryptedHistory();
     void makeTox(QByteArray savedata);
+    void makeAv();
     void loadFriends();
 
     void checkLastOnline(uint32_t friendId);
 
     void deadifyTox();
+    QString getFriendRequestErrorMessage(const ToxId& friendId, const QString& message) const;
 
 private slots:
     void killTimers(bool onlyStop);

@@ -57,6 +57,15 @@ building qTox.
 
 If they are missing, qTox is built without support for the functionality.
 
+### Development dependencies
+
+Dependencies needed to run tests / code formatting, etc. Disabled if
+dependencies are missing.
+
+| Name    | Version |
+|---------|---------|
+| [Check] | >= 0.9  |
+
 ### Linux
 
 #### Auto-away support
@@ -844,6 +853,7 @@ Switches:
 
 [Atk]: https://wiki.gnome.org/Accessibility
 [Cairo]: https://www.cairographics.org/
+[Check]: https://libcheck.github.io/check/
 [CMake]: https://cmake.org/
 [DBus Menu]: https://launchpad.net/libdbusmenu
 [FFmpeg]: https://www.ffmpeg.org/
