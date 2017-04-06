@@ -48,62 +48,30 @@ enum Time : int
     Never = 10
 };
 
-bool last7DaysWasLastMonth()
-{
-    return QDate::currentDate().addDays(-7).month() == QDate::currentDate().month();
-}
-
 Time getTime(const QDate& date)
 {
-    if (date == QDate())
+    if (date == QDate()) {
         return Never;
-
-    QDate today = QDate::currentDate();
-
-    if (date == today)
-        return Today;
-
-    today = today.addDays(-1);
-
-    if (date == today)
-        return Yesterday;
-
-    today = today.addDays(-6);
-
-    if (date >= today)
-        return ThisWeek;
-
-    today = today.addDays(-today.day() + 1); // Go to the beginning of the month.
-
-    if (last7DaysWasLastMonth()) {
-        if (date >= today)
-            return ThisMonth;
-
-        today = today.addMonths(-1);
     }
 
-    if (date >= today)
-        return Month1Ago;
+    QDate today = QDate::currentDate();
+    const QMap<Time, QDate> dates {
+        { Time::Today,     today.addDays(0)    },
+        { Time::Yesterday, today.addDays(-1)   },
+        { Time::ThisWeek,  today.addDays(-6)   },
+        { Time::ThisMonth, today.addMonths(-1) },
+        { Time::Month1Ago, today.addMonths(-2) },
+        { Time::Month2Ago, today.addMonths(-3) },
+        { Time::Month3Ago, today.addMonths(-4) },
+        { Time::Month4Ago, today.addMonths(-5) },
+        { Time::Month5Ago, today.addMonths(-6) },
+    };
 
-    today = today.addMonths(-1);
-
-    if (date >= today)
-        return Month2Ago;
-
-    today = today.addMonths(-1);
-
-    if (date >= today)
-        return Month3Ago;
-
-    today = today.addMonths(-1);
-
-    if (date >= today)
-        return Month4Ago;
-
-    today = today.addMonths(-1);
-
-    if (date >= today)
-        return Month5Ago;
+    for (Time time : dates.keys()) {
+        if (dates[time] <= date) {
+            return time;
+        }
+    }
 
     return LongAgo;
 }
@@ -220,79 +188,38 @@ void FriendListWidget::setMode(Mode mode)
 
         reDraw();
     } else if (mode == Activity) {
+        QLocale ql(Settings::getInstance().getTranslation());
+        QDate today = QDate::currentDate();
+#define COMMENT "Category for sorting friends by activity"
+        const QMap<Time, QString> names {
+            { Time::Today,     tr("Today",                      COMMENT) },
+            { Time::Yesterday, tr("Yesterday",                  COMMENT) },
+            { Time::ThisWeek,  tr("Last 7 days",                COMMENT) },
+            { Time::ThisMonth, tr("This month",                 COMMENT) },
+            { Time::LongAgo,   tr("Older than 6 Months",        COMMENT) },
+            { Time::Never,     tr("Never",                      COMMENT) },
+            { Time::Month1Ago, ql.monthName(today.addMonths(-1).month()) },
+            { Time::Month2Ago, ql.monthName(today.addMonths(-2).month()) },
+            { Time::Month3Ago, ql.monthName(today.addMonths(-3).month()) },
+            { Time::Month4Ago, ql.monthName(today.addMonths(-4).month()) },
+            { Time::Month5Ago, ql.monthName(today.addMonths(-5).month()) },
+        };
+#undef COMMENT
+
         activityLayout = new QVBoxLayout();
-
-        CategoryWidget* categoryToday = new CategoryWidget(this);
-        categoryToday->setObjectName("Todddd");
-        categoryToday->setName(tr("Today", "Category for sorting friends by activity"));
-        activityLayout->addWidget(categoryToday);
-
-        CategoryWidget* categoryYesterday = new CategoryWidget(this);
-        categoryYesterday->setName(tr("Yesterday", "Category for sorting friends by activity"));
-        activityLayout->addWidget(categoryYesterday);
-
-        CategoryWidget* categoryLastWeek = new CategoryWidget(this);
-        categoryLastWeek->setName(tr("Last 7 days", "Category for sorting friends by activity"));
-        activityLayout->addWidget(categoryLastWeek);
-
-        QDate currentDate = QDate::currentDate();
-        // if (last7DaysWasLastMonth())
-        {
-            CategoryWidget* categoryThisMonth = new CategoryWidget(this);
-            categoryThisMonth->setName(
-                tr("This month", "Category for sorting friends by activity"));
-            activityLayout->addWidget(categoryThisMonth);
-            categoryThisMonth->setVisible(last7DaysWasLastMonth());
-
-            if (categoryThisMonth->isVisible())
-                currentDate = currentDate.addMonths(-1);
+        for (int t = Today; t <= Never; ++t) {
+            CategoryWidget* category = new CategoryWidget(this);
+            category->setName(names[t]);
+            activityLayout->addWidget(category);
         }
-
-        QLocale* ql = new QLocale(Settings::getInstance().getTranslation());
-
-        CategoryWidget* categoryLast1Month = new CategoryWidget(this);
-        categoryLast1Month->setName(ql->monthName(currentDate.month()));
-        activityLayout->addWidget(categoryLast1Month);
-
-        currentDate = currentDate.addMonths(-1);
-        CategoryWidget* categoryLast2Month = new CategoryWidget(this);
-        categoryLast2Month->setName(ql->monthName(currentDate.month()));
-        activityLayout->addWidget(categoryLast2Month);
-
-        currentDate = currentDate.addMonths(-1);
-        CategoryWidget* categoryLast3Month = new CategoryWidget(this);
-        categoryLast3Month->setName(ql->monthName(currentDate.month()));
-        activityLayout->addWidget(categoryLast3Month);
-
-        currentDate = currentDate.addMonths(-1);
-        CategoryWidget* categoryLast4Month = new CategoryWidget(this);
-        categoryLast4Month->setName(ql->monthName(currentDate.month()));
-        activityLayout->addWidget(categoryLast4Month);
-
-        currentDate = currentDate.addMonths(-1);
-        CategoryWidget* categoryLast5Month = new CategoryWidget(this);
-        categoryLast5Month->setName(ql->monthName(currentDate.month()));
-        activityLayout->addWidget(categoryLast5Month);
-
-        CategoryWidget* categoryOlder = new CategoryWidget(this);
-        categoryOlder->setName(
-            tr("Older than 6 Months", "Category for sorting friends by activity"));
-        activityLayout->addWidget(categoryOlder);
-
-        CategoryWidget* categoryNever = new CategoryWidget(this);
-        categoryNever->setName(tr("Unknown", "Category for sorting friends by activity"));
-        activityLayout->addWidget(categoryNever);
-
-        delete ql;
-        ql = nullptr;
 
         moveFriends(listLayout->getLayoutOffline());
         moveFriends(listLayout->getLayoutOnline());
         moveFriends(circleLayout->getLayout());
 
         for (int i = 0; i < activityLayout->count(); ++i) {
-            CategoryWidget* categoryWidget =
-                qobject_cast<CategoryWidget*>(activityLayout->itemAt(i)->widget());
+            QWidget* widget = activityLayout->itemAt(i)->widget();
+            CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
             categoryWidget->setVisible(categoryWidget->hasChatrooms());
         }
 
