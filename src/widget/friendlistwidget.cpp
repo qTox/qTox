@@ -33,25 +33,27 @@
 #include <QTimer>
 #include <cassert>
 
-enum Time : int
+enum class Time
 {
-    Today = 0,
-    Yesterday = 1,
-    ThisWeek = 2,
-    ThisMonth = 3,
-    Month1Ago = 4,
-    Month2Ago = 5,
-    Month3Ago = 6,
-    Month4Ago = 7,
-    Month5Ago = 8,
-    LongAgo = 9,
-    Never = 10
+    Today,
+    Yesterday,
+    ThisWeek,
+    ThisMonth,
+    Month1Ago,
+    Month2Ago,
+    Month3Ago,
+    Month4Ago,
+    Month5Ago,
+    LongAgo,
+    Never
 };
+
+static const int LAST_TIME = static_cast<int>(Time::Never);
 
 Time getTime(const QDate& date)
 {
     if (date == QDate()) {
-        return Never;
+        return Time::Never;
     }
 
     QDate today = QDate::currentDate();
@@ -73,7 +75,7 @@ Time getTime(const QDate& date)
         }
     }
 
-    return LongAgo;
+    return Time::LongAgo;
 }
 
 QDate getDateFriend(Friend* contact)
@@ -207,7 +209,7 @@ void FriendListWidget::setMode(Mode mode)
 #undef COMMENT
 
         activityLayout = new QVBoxLayout();
-        for (int t = Today; t <= Never; ++t) {
+        for (Time t : names.keys()) {
             CategoryWidget* category = new CategoryWidget(this);
             category->setName(names[t]);
             activityLayout->addWidget(category);
@@ -256,7 +258,7 @@ void FriendListWidget::moveFriends(QLayout* layout)
             int friendId = friendWidget->friendId;
             Friend* contact = FriendList::findFriend(friendId);
             QDate activityDate = getDateFriend(contact);
-            Time time = getTime(activityDate);
+            int time = static_cast<int>(getTime(activityDate));
 
             QWidget* w = activityLayout->itemAt(time)->widget();
             CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(w);
@@ -290,9 +292,9 @@ void FriendListWidget::removeFriendWidget(FriendWidget* w)
     Friend* contact = FriendList::findFriend(w->friendId);
     if (mode == Activity) {
         QDate activityDate = getDateFriend(contact);
-        Time time = getTime(activityDate);
-        CategoryWidget* categoryWidget =
-            qobject_cast<CategoryWidget*>(activityLayout->itemAt(time)->widget());
+        int time = static_cast<int>(getTime(activityDate));
+        QWidget* widget = activityLayout->itemAt(time)->widget();
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
         categoryWidget->removeFriendWidget(w, contact->getStatus());
         categoryWidget->setVisible(categoryWidget->hasChatrooms());
     } else {
@@ -407,9 +409,9 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
             return;
 
         QDate activityDate = getDateFriend(FriendList::findFriend(friendWidget->friendId));
-        index = getTime(activityDate);
-        CategoryWidget* categoryWidget =
-            qobject_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+        index = static_cast<int>(getTime(activityDate));
+        QWidget* widget = activityLayout->itemAt(index)->widget();
+        CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(widget);
 
         if (categoryWidget == nullptr || categoryWidget->cycleContacts(friendWidget, forward))
             return;
@@ -418,16 +420,16 @@ void FriendListWidget::cycleContacts(GenericChatroomWidget* activeChatroomWidget
 
         for (;;) {
             // Bounds checking.
-            if (index < Today) {
-                index = Never;
+            if (index < 0) {
+                index = LAST_TIME;
                 continue;
-            } else if (index > Never) {
-                index = Today;
+            } else if (index > LAST_TIME) {
+                index = 0;
                 continue;
             }
 
-            CategoryWidget* categoryWidget =
-                qobject_cast<CategoryWidget*>(activityLayout->itemAt(index)->widget());
+            widget = activityLayout->itemAt(index)->widget();
+            categoryWidget = qobject_cast<CategoryWidget*>(widget);
 
             if (categoryWidget != nullptr) {
                 if (!categoryWidget->cycleContacts(forward)) {
@@ -575,7 +577,7 @@ void FriendListWidget::moveWidget(FriendWidget* widget, Status s, bool add)
     } else {
         Friend* contact = FriendList::findFriend(widget->friendId);
         QDate activityDate = getDateFriend(contact);
-        Time time = getTime(activityDate);
+        int time = static_cast<int>(getTime(activityDate));
         QWidget* w = activityLayout->itemAt(time)->widget();
         CategoryWidget* categoryWidget = qobject_cast<CategoryWidget*>(w);
         categoryWidget->addFriendWidget(widget, contact->getStatus());
@@ -588,8 +590,9 @@ void FriendListWidget::updateActivityDate(const QDate& date)
     if (mode != Activity)
         return;
 
-    CategoryWidget* categoryWidget =
-        static_cast<CategoryWidget*>(activityLayout->itemAt(getTime(date))->widget());
+    int time = static_cast<int>(getTime(date));
+    QWidget* widget = activityLayout->itemAt(time)->widget();
+    CategoryWidget* categoryWidget = static_cast<CategoryWidget*>(widget);
     categoryWidget->updateStatus();
 
     categoryWidget->setVisible(categoryWidget->hasChatrooms());
