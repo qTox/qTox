@@ -56,6 +56,10 @@ void ChatLineContent::selectionDoubleClick(QPointF)
 {
 }
 
+void ChatLineContent::selectionTripleClick(QPointF)
+{
+}
+
 void ChatLineContent::selectionFocusChanged(bool)
 {
 }

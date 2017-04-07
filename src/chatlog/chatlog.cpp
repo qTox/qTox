@@ -105,6 +105,12 @@ ChatLog::ChatLog(QWidget* parent)
     workerTimer->setInterval(5);
     connect(workerTimer, &QTimer::timeout, this, &ChatLog::onWorkerTimeout);
 
+    // This timer is used to detect multiple clicks
+    multiClickTimer = new QTimer(this);
+    multiClickTimer->setSingleShot(true);
+    multiClickTimer->setInterval(QApplication::doubleClickInterval());
+    connect(multiClickTimer, &QTimer::timeout, this, &ChatLog::onMultiClickTimeout);
+
     // selection
     connect(this, &ChatLog::selectionChanged, this, [this]() {
         copyAction->setEnabled(hasTextToBeCopied());
@@ -190,6 +196,13 @@ void ChatLog::mousePressEvent(QMouseEvent* ev)
         clickPos = ev->pos();
         clearSelection();
     }
+
+    // Counts only single clicks and first click of doule click
+    clickCount++;
+    lastClickPos = ev->pos();
+
+    // Triggers on odd click counts
+    handleMultiClickEvent();
 }
 
 void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
@@ -197,6 +210,8 @@ void ChatLog::mouseReleaseEvent(QMouseEvent* ev)
     QGraphicsView::mouseReleaseEvent(ev);
 
     selectionScrollDir = NoDirection;
+
+    multiClickTimer->start();
 }
 
 void ChatLog::mouseMoveEvent(QMouseEvent* ev)
@@ -461,6 +476,13 @@ void ChatLog::mouseDoubleClickEvent(QMouseEvent* ev)
 
         emit selectionChanged();
     }
+
+    // Counts the second click of double click
+    clickCount++;
+    lastClickPos = ev->pos();
+
+    // Triggers on even click counts
+    handleMultiClickEvent();
 }
 
 QString ChatLog::getSelectedText() const
@@ -793,6 +815,36 @@ void ChatLog::onWorkerTimeout()
 
         // hidden during busy screen
         verticalScrollBar()->show();
+    }
+}
+
+void ChatLog::onMultiClickTimeout()
+{
+    clickCount = 0;
+}
+
+void ChatLog::handleMultiClickEvent()
+{
+    // Ignore single or double clicks
+    if (clickCount < 2)
+        return;
+
+    switch (clickCount) {
+        case 3:
+            QPointF scenePos = mapToScene(lastClickPos);
+            ChatLineContent* content = getContentFromPos(scenePos);
+
+            if (content) {
+                content->selectionTripleClick(scenePos);
+                selClickedCol = content->getColumn();
+                selClickedRow = content->getRow();
+                selFirstRow = content->getRow();
+                selLastRow = content->getRow();
+                selectionMode = Precise;
+
+                emit selectionChanged();
+            }
+            break;
     }
 }
 

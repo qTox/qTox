@@ -74,6 +74,7 @@ public slots:
 private slots:
     void onSelectionTimerTimeout();
     void onWorkerTimeout();
+    void onMultiClickTimeout();
 
 protected:
     QRectF calculateSceneRect() const;
@@ -111,6 +112,7 @@ protected:
 private:
     void retranslateUi();
     bool isActiveFileTransfer(ChatLine::Ptr l);
+    void handleMultiClickEvent();
 
 private:
     enum SelectionMode
@@ -147,7 +149,10 @@ private:
     QGraphicsRectItem* selGraphItem = nullptr;
     QTimer* selectionTimer = nullptr;
     QTimer* workerTimer = nullptr;
+    QTimer* multiClickTimer = nullptr;
     AutoScrollDirection selectionScrollDir = NoDirection;
+    int clickCount = 0;
+    QPoint lastClickPos;
 
     // worker vars
     int workerLastIndex = 0;

@@ -121,6 +121,30 @@ void Text::selectionDoubleClick(QPointF scenePos)
     update();
 }
 
+void Text::selectionTripleClick(QPointF scenePos)
+{
+    if (!doc)
+        return;
+
+    int cur = cursorFromPos(scenePos);
+
+    if (cur >= 0) {
+        QTextCursor cursor(doc);
+        cursor.setPosition(cur);
+        cursor.select(QTextCursor::BlockUnderCursor);
+
+        selectionAnchor = cursor.selectionStart();
+        selectionEnd = cursor.selectionEnd();
+
+        if (cursor.block().isValid() && cursor.block().blockNumber() != 0)
+            selectionAnchor++;
+
+        selectedText = extractSanitizedText(getSelectionStart(), getSelectionEnd());
+    }
+
+    update();
+}
+
 void Text::selectionFocusChanged(bool focusIn)
 {
     selectionHasFocus = focusIn;
