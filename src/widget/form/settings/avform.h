@@ -81,6 +81,14 @@ private:
     void showEvent(QShowEvent* event) final override;
     void open(const QString& devName, const VideoMode& mode);
 
+    void on_HueSlider_valueChanged(int value);
+
+    void on_BrightnessSlider_valueChanged(int value);
+
+    void on_SaturationSlider_valueChanged(int value);
+
+    void on_ContrastSlider_valueChanged(int value);
+
 private:
     bool subscribedToAudioIn;
     VideoSurface* camVideoSurface;
