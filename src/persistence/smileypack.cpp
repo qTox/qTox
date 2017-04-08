@@ -122,11 +122,19 @@ SmileyPack& SmileyPack::getInstance()
     return smileyPack;
 }
 
+/**
+ * @brief Does the same as listSmileyPaths, but with default paths
+ */
 QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks()
 {
     return listSmileyPacks(DEFAULT_PATHS);
 }
 
+/**
+ * @brief Searches all files called "emoticons.xml" within the every passed path in the depth of 2
+ * @param paths Paths where to search for file
+ * @return Vector of pairs: {directoryName, absolutePathToFile}
+ */
 QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
 {
     QVector<QPair<QString, QString>> smileyPacks;
@@ -221,6 +229,11 @@ bool SmileyPack::load(const QString& filename)
     return true;
 }
 
+/**
+ * @brief Replaces all found text emoticons to HTML reference with its according icon filename
+ * @param msg Message where to search for emoticons
+ * @return Formatted copy of message
+ */
 QString SmileyPack::smileyfied(const QString& msg)
 {
     QMutexLocker locker(&loadingMutex);
@@ -243,12 +256,20 @@ QString SmileyPack::smileyfied(const QString& msg)
     return result;
 }
 
+/**
+ * @brief Returns all emoticons that was extracted from files, grouped by according icon file
+ */
 QList<QStringList> SmileyPack::getEmoticons() const
 {
     QMutexLocker locker(&loadingMutex);
     return emoticons;
 }
 
+/**
+ * @brief Gets icon accoring to passed emoticon
+ * @param emoticon Passed emoticon
+ * @return Returns cached icon according to passed emoticon, null if no icon mapped to this emoticon
+ */
 QIcon SmileyPack::getAsIcon(const QString& emoticon)
 {
     QMutexLocker locker(&loadingMutex);
