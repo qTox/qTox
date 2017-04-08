@@ -56,6 +56,8 @@ static const QStringList DEFAULT_PATHS = loadDefaultPaths();
 
 static const QString RICH_TEXT_PATTERN = QStringLiteral("<img title=\"%1\" src=\"key:%1\"\\>");
 
+static const QString EMOTICONS_FILE_NAME = QStringLiteral("emoticons.xml");
+
 /**
  * @brief Construct list of standard directories with "emoticons" sub dir, whether these directories
  * exist or not
@@ -69,8 +71,8 @@ QStringList loadDefaultPaths()
     setlocale(LC_ALL, "");
 #endif
     const QString EMOTICONS_SUB_PATH = QDir::separator() + QStringLiteral("emoticons");
-    QStringList paths
-            {":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons", EMOTICONS_SUB_PATH};
+    QStringList paths{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons",
+                      EMOTICONS_SUB_PATH};
 
     // qTox exclusive emoticons
     QStandardPaths::StandardLocation location;
@@ -125,7 +127,7 @@ SmileyPack& SmileyPack::getInstance()
 /**
  * @brief Does the same as listSmileyPaths, but with default paths
  */
-QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks()
+QList<QPair<QString, QString>> SmileyPack::listSmileyPacks()
 {
     return listSmileyPacks(DEFAULT_PATHS);
 }
@@ -135,10 +137,9 @@ QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks()
  * @param paths Paths where to search for file
  * @return Vector of pairs: {directoryName, absolutePathToFile}
  */
-QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
+QList<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& paths)
 {
-    QVector<QPair<QString, QString>> smileyPacks;
-    const QString fileName = QStringLiteral("emoticons.xml");
+    QList<QPair<QString, QString>> smileyPacks;
     const QString homePath = QDir::homePath();
     for (QString path : paths) {
         if (path.startsWith('~')) {
@@ -152,8 +153,8 @@ QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& 
 
         for (const QString& subdirectory : dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {
             dir.cd(subdirectory);
-            if (dir.exists(fileName)) {
-                QString absPath = dir.absolutePath() + QDir::separator() + fileName;
+            if (dir.exists(EMOTICONS_FILE_NAME)) {
+                QString absPath = dir.absolutePath() + QDir::separator() + EMOTICONS_FILE_NAME;
                 QPair<QString, QString> p{dir.dirName(), absPath};
                 if (!smileyPacks.contains(p)) {
                     smileyPacks.append(p);
@@ -204,16 +205,17 @@ bool SmileyPack::load(const QString& filename)
     QDomNodeList emoticonElements = doc.elementsByTagName("emoticon");
     const QString itemName = QStringLiteral("file");
     const QString childName = QStringLiteral("string");
+    const int iconsCount = emoticonElements.size();
     emoticons.clear();
     emoticonToIcon.clear();
     icons.clear();
-    const int iconsCount = emoticonElements.size();
     icons.reserve(iconsCount);
     for (int i = 0; i < iconsCount; ++i) {
-        QString iconName = emoticonElements.at(i).attributes().namedItem(itemName).nodeValue();
+        QDomNode node = emoticonElements.at(i);
+        QString iconName = node.attributes().namedItem(itemName).nodeValue();
         QString iconPath = QDir{path}.filePath(iconName);
         icons.append(QIcon{iconPath});
-        QDomElement stringElement = emoticonElements.at(i).firstChildElement(childName);
+        QDomElement stringElement = node.firstChildElement(childName);
         QStringList emoticonList;
         while (!stringElement.isNull()) {
             QString emoticon = stringElement.text().replace("<", "&lt;").replace(">", "&gt;");
