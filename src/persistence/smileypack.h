@@ -32,7 +32,6 @@ public:
     static SmileyPack& getInstance();
     static QVector<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
     static QVector<QPair<QString, QString>> listSmileyPacks();
-    static bool isValid(const QString& filename);
 
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
