@@ -159,11 +159,6 @@ QVector<QPair<QString, QString>> SmileyPack::listSmileyPacks(const QStringList& 
     return smileyPacks;
 }
 
-bool SmileyPack::isValid(const QString& filename)
-{
-    return QFile(filename).exists();
-}
-
 /**
  * @brief Load smile pack
  * @note The caller must lock loadingMutex and should run it in a thread
