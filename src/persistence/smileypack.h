@@ -30,8 +30,8 @@ class SmileyPack : public QObject
 
 public:
     static SmileyPack& getInstance();
-    static QVector<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
-    static QVector<QPair<QString, QString>> listSmileyPacks();
+    static QList<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
+    static QList<QPair<QString, QString>> listSmileyPacks();
 
     QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
@@ -48,7 +48,7 @@ private:
     bool load(const QString& filename);
 
     QVector<QIcon> icons;
-    QMap<QString, QIcon const*> emoticonToIcon;
+    QMap<QString, const QIcon*> emoticonToIcon;
     QList<QStringList> emoticons;
     QString path;
     mutable QMutex loadingMutex;
