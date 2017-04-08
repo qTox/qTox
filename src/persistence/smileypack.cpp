@@ -69,8 +69,8 @@ QStringList loadDefaultPaths()
     setlocale(LC_ALL, "");
 #endif
     const QString EMOTICONS_SUB_PATH = QDir::separator() + QStringLiteral("emoticons");
-    QStringList paths
-            {":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons", EMOTICONS_SUB_PATH};
+    QStringList paths{":/smileys", "~/.kde4/share/emoticons", "~/.kde/share/emoticons",
+                      EMOTICONS_SUB_PATH};
 
     // qTox exclusive emoticons
     QStandardPaths::StandardLocation location;
