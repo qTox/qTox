@@ -39,7 +39,7 @@ if(APPLE)
 else()
   install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin")
   install(FILES "res/qTox.appdata.xml" DESTINATION "share/appdata")
-  install(FILES "qTox.desktop" DESTINATION "share/applications")
+  install(FILES "qtox.desktop" DESTINATION "share/applications")
 
   # Install application icons according to the XDG spec
   set(ICON_SIZES 14 16 22 24 32 36 48 64 72 96 128 192 256 512)
