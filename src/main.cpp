@@ -40,6 +40,7 @@
 
 #include <sodium.h>
 #include <stdio.h>
+#include <ctime>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"

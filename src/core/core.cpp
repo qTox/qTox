@@ -32,6 +32,7 @@
 #include <QTimer>
 
 #include <cassert>
+#include <ctime>
 
 const QString Core::CONFIG_FILE_NAME = "data";
 const QString Core::TOX_EXT = ".tox";
