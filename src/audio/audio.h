@@ -138,6 +138,7 @@ private:
     Private* d;
 
 private:
+    static const unsigned int BUFFER_COUNT = 16;
     QThread* audioThread;
     mutable QMutex audioLock;
 

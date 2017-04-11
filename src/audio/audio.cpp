@@ -119,6 +119,9 @@ private:
  *
  * @var Audio::AUDIO_CHANNELS
  * @brief Ideally, we'd auto-detect, but that's a sane default
+ *
+ * @var Audio::BUFFER_COUNT
+ * @brief Number of buffers to use per audio source
  */
 
 /**
@@ -481,21 +484,30 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t* data, int samples, u
         return;
 
     ALuint bufid;
-    ALint processed = 0, queued = 16;
+    ALint processed = 0, queued = 0;
     alGetSourcei(alSource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(alSource, AL_BUFFERS_QUEUED, &queued);
     alSourcei(alSource, AL_LOOPING, AL_FALSE);
 
-    if (processed) {
-        ALuint* bufids = new ALuint[processed];
-        alSourceUnqueueBuffers(alSource, processed, bufids);
-        alDeleteBuffers(processed - 1, bufids + 1);
-        bufid = bufids[0];
-        delete[] bufids;
-    } else if (queued < 16) {
-        alGenBuffers(1, &bufid);
+    if(processed == 0) {
+        if(queued < BUFFER_COUNT) {
+            // create new buffer if none got free and we're below the limit
+            alGenBuffers(1, &bufid);
+        }
+        else
+        {
+            // reached limit, drop audio
+            return;
+        }
     } else {
-        return;
+        while(processed > 0) {
+            alSourceUnqueueBuffers(alSource, 1, &bufid);
+            --processed;
+            // delete unused buffer
+            if(processed > 0) {
+                alDeleteBuffers(1, &bufid);
+            }
+        }
     }
 
     alBufferData(bufid, (channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, data,
@@ -504,8 +516,9 @@ void Audio::playAudioBuffer(ALuint alSource, const int16_t* data, int samples, u
 
     ALint state;
     alGetSourcei(alSource, AL_SOURCE_STATE, &state);
-    if (state != AL_PLAYING)
+    if (state != AL_PLAYING) {
         alSourcePlay(alSource);
+    }
 }
 
 /**
@@ -671,6 +684,16 @@ void Audio::unsubscribeOutput(ALuint& sid)
 
     if (sid) {
         if (alIsSource(sid)) {
+            // stop playing, marks all buffers as processed
+            alSourceStop(sid);
+            // unque all buffers from the source
+            ALint processed = 0;
+            alGetSourcei(sid, AL_BUFFERS_PROCESSED, &processed);
+            ALuint* bufids = new ALuint[processed];
+            alSourceUnqueueBuffers(sid, processed, bufids);
+            // delete all buffers
+            alDeleteBuffers(processed, bufids);
+            delete[] bufids;
             alDeleteSources(1, &sid);
             qDebug() << "Audio source" << sid << "deleted. Sources active:" << outSources.size();
         } else {
