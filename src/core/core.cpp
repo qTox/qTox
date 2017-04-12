@@ -535,7 +535,7 @@ void Core::onGroupNamelistChange(Tox*, uint32_t groupId, uint32_t peerId,
         CoreAV::invalidateGroupCallPeerSource(groupId, peerId);
     }
 
-    qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId, peerId, change);
+    qDebug() << QString("Group namelist change %1:%2 %3").arg(groupId).arg(peerId).arg(change);
     emit static_cast<Core*>(core)->groupNamelistChanged(groupId, peerId, change);
 }
 
@@ -1020,17 +1020,17 @@ QByteArray Core::getToxSaveData()
 }
 
 // Declared to avoid code duplication
-#define GET_FRIEND_PROPERTY(property, function, checkSize)\
-        const size_t property##Size = function##_size(tox, ids[i], nullptr);\
-        if ((!checkSize || property##Size) && property##Size != SIZE_MAX) {\
-            uint8_t* prop = new uint8_t[property##Size];\
-            if (function(tox, ids[i], prop, nullptr)) {\
-                QString propStr = ToxString(prop, property##Size).getQString();\
-                emit friend##property##Changed(ids[i], propStr);\
-            }\
-    \
-            delete[] prop;\
-        }\
+#define GET_FRIEND_PROPERTY(property, function, checkSize)                  \
+    const size_t property##Size = function##_size(tox, ids[i], nullptr);    \
+    if ((!checkSize || property##Size) && property##Size != SIZE_MAX) {     \
+        uint8_t* prop = new uint8_t[property##Size];                        \
+        if (function(tox, ids[i], prop, nullptr)) {                         \
+            QString propStr = ToxString(prop, property##Size).getQString(); \
+            emit friend##property##Changed(ids[i], propStr);                \
+        }                                                                   \
+                                                                            \
+        delete[] prop;                                                      \
+    }
 
 void Core::loadFriends()
 {
@@ -1171,10 +1171,7 @@ QStringList Core::getGroupPeerNames(int groupId) const
         return {};
     }
 
-    std::vector<uint8_t*> namesArray(nPeers, new uint8_t[TOX_MAX_NAME_LENGTH]);
-    std::vector<size_t> lengths(nPeers);
     TOX_ERR_CONFERENCE_PEER_QUERY error;
-
     uint32_t count = tox_conference_peer_count(tox, groupId, &error);
     if (!parsePeerQueryError(error)) {
         return {};
@@ -1187,15 +1184,12 @@ QStringList Core::getGroupPeerNames(int groupId) const
 
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
-        lengths[i] = tox_conference_peer_get_name_size(tox, groupId, i, &error);
-        bool ok = tox_conference_peer_get_name(tox, groupId, i, namesArray[i], &error);
-        if (parsePeerQueryError(error) && ok) {
-            names.append(ToxString(namesArray[i], lengths[i]).getQString());
+        uint8_t name[TOX_MAX_NAME_LENGTH] = {0};
+        size_t length = tox_conference_peer_get_name_size(tox, groupId, i, &error);
+        bool ok = tox_conference_peer_get_name(tox, groupId, i, name, &error);
+        if (ok && parsePeerQueryError(error)) {
+            names.append(ToxString(name, length).getQString());
         }
-    }
-
-    for (uint8_t* name : namesArray) {
-        delete[] name;
     }
 
     return names;
