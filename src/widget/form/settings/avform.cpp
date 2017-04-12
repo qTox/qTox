@@ -424,7 +424,7 @@ int AVForm::getModeSize(VideoMode mode)
 void AVForm::getAudioInDevices()
 {
     QStringList deviceNames;
-    deviceNames << tr("Disabled") << Audio::inDeviceNames();
+    deviceNames << tr("Disabled") << Audio::getInstance().inDeviceNames();
 
     inDevCombobox->blockSignals(true);
     inDevCombobox->clear();
@@ -443,7 +443,7 @@ void AVForm::getAudioInDevices()
 void AVForm::getAudioOutDevices()
 {
     QStringList deviceNames;
-    deviceNames << tr("Disabled") << Audio::outDeviceNames();
+    deviceNames << tr("Disabled") << Audio::getInstance().outDeviceNames();
 
     outDevCombobox->blockSignals(true);
     outDevCombobox->clear();
