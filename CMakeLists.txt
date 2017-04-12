@@ -178,6 +178,8 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
 set(${PROJECT_NAME}_SOURCES
   src/audio/audio.cpp
   src/audio/audio.h
+  src/audio/backend/openal.cpp
+  src/audio/backend/openal.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
