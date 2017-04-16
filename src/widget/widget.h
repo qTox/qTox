@@ -38,29 +38,29 @@ namespace Ui {
 class MainWindow;
 }
 
-class GenericChatroomWidget;
-class FriendWidget;
-class Group;
-class Friend;
-class QSplitter;
-class VideoSurface;
-class QMenu;
-class Core;
-class Camera;
-class FriendListWidget;
-class MaskablePixmapWidget;
-class QTimer;
-class SystemTrayIcon;
-class FilesForm;
-class ProfileForm;
-class SettingsWidget;
 class AddFriendForm;
-class GroupInviteForm;
-class CircleWidget;
-class QActionGroup;
-class ContentLayout;
+class Camera;
 class ContentDialog;
+class ContentLayout;
+class CircleWidget;
+class FilesForm;
+class Friend;
+class FriendListWidget;
+class FriendWidget;
+class GenericChatroomWidget;
+class Group;
+class GroupInviteForm;
+class MaskablePixmapWidget;
+class ProfileForm;
+class QActionGroup;
+class QMenu;
 class QPushButton;
+class QSplitter;
+class QTimer;
+class SettingsWidget;
+class SystemTrayIcon;
+class ToxId;
+class VideoSurface;
 
 class Widget final : public QMainWindow
 {
@@ -242,6 +242,8 @@ private:
     void focusChatInput();
 
 private:
+    static Widget *instance;
+
     SystemTrayIcon* icon = nullptr;
     QMenu* trayMenu;
     QAction* statusOnline;
@@ -267,17 +269,18 @@ private:
     Ui::MainWindow* ui;
     QSplitter* centralLayout;
     QPoint dragPosition;
-    ContentLayout* contentLayout;
-    AddFriendForm* addFriendForm;
-    GroupInviteForm* groupInviteForm;
-    ProfileForm* profileForm;
+    QPointer<ContentLayout> contentLayout;
+    QPointer<AddFriendForm> addFriendForm;
+    QPointer<GroupInviteForm> groupInviteForm;
+    QPointer<ProfileForm> profileForm;
     QPointer<SettingsWidget> settingsWidget;
-    FilesForm* filesForm;
-    static Widget* instance;
+    QPointer<FilesForm> filesForm;
+
     GenericChatroomWidget* activeChatroomWidget;
     FriendListWidget* contactListWidget;
     MaskablePixmapWidget* profilePicture;
     bool notify(QObject* receiver, QEvent* event);
+
     bool autoAwayActive = false;
     QTimer *timer, *offlineMsgTimer;
     QRegExp nameMention, sanitizedNameMention;
