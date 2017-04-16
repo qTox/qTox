@@ -125,6 +125,9 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
                                                     uint8_t chans, uint32_t rate) {
                                        av.sendCallAudio(FriendNum, pcm, samples, chans, rate);
                                    });
+    if(!audioInConn) {
+        qDebug() << "Audio connection not working";
+    }
 
     if (videoEnabled) {
         videoSource = new CoreVideoSource;
