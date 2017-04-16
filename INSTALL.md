@@ -13,7 +13,7 @@
     - [openSUSE](#opensuse-git)
     - [Ubuntu](#ubuntu-git)
   - [Clone qTox](#clone-qtox)
-  - [GCC, Qt, FFmpeg, OpanAL Soft and qrencode](#other-deps)
+  - [GCC, Qt, FFmpeg, OpenAL Soft and qrencode](#other-deps)
     - [Arch](#arch-other-deps)
     - [Debian](#debian-other-deps)
     - [Fedora](#fedora-other-deps)
@@ -247,7 +247,7 @@ corresponding parts.
 
 <a name="other-deps" />
 
-### GCC, Qt, FFmpeg, OpanAL Soft and qrencode
+### GCC, Qt, FFmpeg, OpenAL Soft and qrencode
 
 <a name="arch-other-deps" />
 
