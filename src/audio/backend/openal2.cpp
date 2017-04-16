@@ -17,7 +17,7 @@
     along with qTox.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "openal.h"
+#include "openal2.h"
 #include "src/core/core.h"
 #include "src/core/coreav.h"
 #include "src/persistence/settings.h"
@@ -41,18 +41,21 @@
  */
 
 static const unsigned int BUFFER_COUNT = 16;
+static const unsigned int PROXY_BUFFER_COUNT = 16;
 
-OpenAL::OpenAL()
-    : audioThread{new QThread}
+OpenAL2::OpenAL2() :
+      audioThread{new QThread}
     , alInDev{nullptr}
     , inSubscriptions{0}
     , alOutDev{nullptr}
     , alOutContext{nullptr}
+    , alProxyDev{nullptr}
+    , alProxyContext{nullptr}
     , alMainSource{0}
     , alMainBuffer{0}
+    , alProxySource{0}
+    , alProxyBuffer{0}
     , outputInitialized{false}
-    , minInGain{-30}
-    , maxInGain{30}
 {
     // initialize OpenAL error stack
     alGetError();
@@ -63,17 +66,17 @@ OpenAL::OpenAL()
 
     moveToThread(audioThread);
 
-    connect(&captureTimer, &QTimer::timeout, this, &OpenAL::doCapture);
+    connect(&captureTimer, &QTimer::timeout, this, &OpenAL2::doAudio);
     captureTimer.setInterval(AUDIO_FRAME_DURATION / 2);
     captureTimer.setSingleShot(false);
     captureTimer.start();
-    connect(&playMono16Timer, &QTimer::timeout, this, &OpenAL::playMono16SoundCleanup);
+    connect(&playMono16Timer, &QTimer::timeout, this, &OpenAL2::playMono16SoundCleanup);
     playMono16Timer.setSingleShot(true);
 
     audioThread->start();
 }
 
-OpenAL::~OpenAL()
+OpenAL2::~OpenAL2()
 {
     audioThread->exit();
     audioThread->wait();
@@ -81,14 +84,14 @@ OpenAL::~OpenAL()
     cleanupOutput();
 }
 
-void OpenAL::checkAlError() noexcept
+void OpenAL2::checkAlError() noexcept
 {
     const ALenum al_err = alGetError();
     if (al_err != AL_NO_ERROR)
         qWarning("OpenAL error: %d", al_err);
 }
 
-void OpenAL::checkAlcError(ALCdevice* device) noexcept
+void OpenAL2::checkAlcError(ALCdevice* device) noexcept
 {
     const ALCenum alc_err = alcGetError(device);
     if (alc_err)
@@ -98,7 +101,7 @@ void OpenAL::checkAlcError(ALCdevice* device) noexcept
 /**
  * @brief Returns the current output volume (between 0 and 1)
  */
-qreal OpenAL::outputVolume() const
+qreal OpenAL2::outputVolume() const
 {
     QMutexLocker locker(&audioLock);
 
@@ -117,7 +120,7 @@ qreal OpenAL::outputVolume() const
  *
  * @param[in] volume   the master volume (between 0 and 1)
  */
-void OpenAL::setOutputVolume(qreal volume)
+void OpenAL2::setOutputVolume(qreal volume)
 {
     QMutexLocker locker(&audioLock);
 
@@ -132,7 +135,7 @@ void OpenAL::setOutputVolume(qreal volume)
  *
  * @return minimum gain value in dB
  */
-qreal OpenAL::minInputGain() const
+qreal OpenAL2::minInputGain() const
 {
     QMutexLocker locker(&audioLock);
     return minInGain;
@@ -143,7 +146,7 @@ qreal OpenAL::minInputGain() const
  *
  * @note Default is -30dB; usually you don't need to alter this value;
  */
-void OpenAL::setMinInputGain(qreal dB)
+void OpenAL2::setMinInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
     minInGain = dB;
@@ -154,7 +157,7 @@ void OpenAL::setMinInputGain(qreal dB)
  *
  * @return maximum gain value in dB
  */
-qreal OpenAL::maxInputGain() const
+qreal OpenAL2::maxInputGain() const
 {
     QMutexLocker locker(&audioLock);
     return maxInGain;
@@ -165,20 +168,20 @@ qreal OpenAL::maxInputGain() const
  *
  * @note Default is 30dB; usually you don't need to alter this value.
  */
-void OpenAL::setMaxInputGain(qreal dB)
+void OpenAL2::setMaxInputGain(qreal dB)
 {
     QMutexLocker locker(&audioLock);
     maxInGain = dB;
 }
 
-void OpenAL::reinitInput(const QString& inDevDesc)
+void OpenAL2::reinitInput(const QString& inDevDesc)
 {
     QMutexLocker locker(&audioLock);
     cleanupInput();
     initInput(inDevDesc);
 }
 
-bool OpenAL::reinitOutput(const QString& outDevDesc)
+bool OpenAL2::reinitOutput(const QString& outDevDesc)
 {
     QMutexLocker locker(&audioLock);
     cleanupOutput();
@@ -190,7 +193,7 @@ bool OpenAL::reinitOutput(const QString& outDevDesc)
  *
  * If the input device is not open, it will be opened before capturing.
  */
-void OpenAL::subscribeInput()
+void OpenAL2::subscribeInput()
 {
     QMutexLocker locker(&audioLock);
 
@@ -208,7 +211,7 @@ void OpenAL::subscribeInput()
  *
  * If the input device has no more subscriptions, it will be closed.
  */
-void OpenAL::unsubscribeInput()
+void OpenAL2::unsubscribeInput()
 {
     QMutexLocker locker(&audioLock);
 
@@ -228,7 +231,7 @@ void OpenAL::unsubscribeInput()
  *
  * @return true, if device was initialized; false otherwise
  */
-bool OpenAL::autoInitInput()
+bool OpenAL2::autoInitInput()
 {
     return alInDev ? true : initInput(Settings::getInstance().getInDev());
 }
@@ -238,12 +241,12 @@ bool OpenAL::autoInitInput()
  *
  * @return true, if device was initialized; false otherwise
  */
-bool OpenAL::autoInitOutput()
+bool OpenAL2::autoInitOutput()
 {
     return alOutDev ? true : initOutput(Settings::getInstance().getOutDev());
 }
 
-bool OpenAL::initInput(const QString& deviceName)
+bool OpenAL2::initInput(const QString& deviceName)
 {
     if (!Settings::getInstance().getAudioInDevEnabled())
         return false;
@@ -279,9 +282,9 @@ bool OpenAL::initInput(const QString& deviceName)
 /**
  * @brief Open an audio output device
  */
-bool OpenAL::initOutput(const QString& deviceName)
+bool OpenAL2::initOutput(const QString& deviceName)
 {
-    outSources.clear();
+    peerSources.clear();
 
     outputInitialized = false;
     if (!Settings::getInstance().getAudioOutDevEnabled())
@@ -308,6 +311,50 @@ bool OpenAL::initOutput(const QString& deviceName)
         return false;
     }
 
+    // check for the needed extensions for echo cancelation
+    if (echoCancelSupported = (alcIsExtensionPresent(NULL, "ALC_SOFT_loopback") == AL_TRUE)) {
+        qDebug() << "Device supports loopback";
+    }
+    if (alIsExtensionPresent("AL_SOFT_source_latency") == AL_TRUE) {
+        qDebug() << "Device supports source latency";
+    }
+    else
+    {
+        echoCancelSupported = false;
+    }
+
+    if(echoCancelSupported) {
+        // source for proxy output
+        alGenSources(1, &alProxySource);
+
+        qDebug() << "Echo cancelation supported with this device";
+
+        LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT =
+                reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT> (alcGetProcAddress(alOutDev, "alcLoopbackOpenDeviceSOFT"));
+        LPALCISRENDERFORMATSUPPORTEDSOFT alcIsRenderFormatSupportedSOFT =
+                reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT> (alcGetProcAddress(alOutDev, "alcIsRenderFormatSupportedSOFT"));
+
+        ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, AUDIO_CHANNELS == 1 ? ALC_MONO_SOFT : ALC_STEREO_SOFT,
+                         ALC_FORMAT_TYPE_SOFT, ALC_SHORT_SOFT,
+                         ALC_FREQUENCY, Audio::AUDIO_SAMPLE_RATE,
+                         0 }; // End of List
+
+        alProxyDev = alcLoopbackOpenDeviceSOFT(NULL);
+        checkAlcError(alProxyDev);
+        if(!alcIsRenderFormatSupportedSOFT(alProxyDev, attrs[5], attrs[1], attrs[3])) {
+            qDebug() << "Unsupported format for loopback";
+        }
+
+        alProxyContext = alcCreateContext(alProxyDev, attrs);
+        checkAlcError(alProxyDev);
+        alcMakeContextCurrent(alProxyContext);
+    }
+    else {
+        // no proxy device needed
+        alProxyDev = alOutDev;
+        alProxyContext = alOutContext;
+    }
+
     alGenSources(1, &alMainSource);
     checkAlError();
 
@@ -330,7 +377,7 @@ bool OpenAL::initOutput(const QString& deviceName)
  *
  * @param[in] path the path to the sound file
  */
-void OpenAL::playMono16Sound(const QString& path)
+void OpenAL2::playMono16Sound(const QString& path)
 {
     QFile sndFile(path);
     sndFile.open(QIODevice::ReadOnly);
@@ -340,13 +387,14 @@ void OpenAL::playMono16Sound(const QString& path)
 /**
  * @brief Play a 44100Hz mono 16bit PCM sound
  */
-void OpenAL::playMono16Sound(const QByteArray& data)
+void OpenAL2::playMono16Sound(const QByteArray& data)
 {
     QMutexLocker locker(&audioLock);
 
     if (!autoInitOutput())
         return;
 
+    alcMakeContextCurrent(alProxyContext);
     if (!alMainBuffer)
         alGenBuffers(1, &alMainBuffer);
 
@@ -365,14 +413,16 @@ void OpenAL::playMono16Sound(const QByteArray& data)
     playMono16Timer.start(durationMs + 50);
 }
 
-void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                             int sampleRate)
+void OpenAL2::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
+                            int sampleRate)
 {
     assert(channels == 1 || channels == 2);
     QMutexLocker locker(&audioLock);
 
     if (!(alOutDev && outputInitialized))
         return;
+
+    alcMakeContextCurrent(alProxyContext);
 
     ALuint bufids[BUFFER_COUNT];
     ALint processed = 0, queued = 0;
@@ -408,7 +458,7 @@ void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, un
 /**
  * @brief Close active audio input device.
  */
-void OpenAL::cleanupInput()
+void OpenAL2::cleanupInput()
 {
     if (!alInDev)
         return;
@@ -424,11 +474,11 @@ void OpenAL::cleanupInput()
 /**
  * @brief Close active audio output device
  */
-void OpenAL::cleanupOutput()
+void OpenAL2::cleanupOutput()
 {
     outputInitialized = false;
 
-    if (alOutDev) {
+    if (alProxyDev) {
         alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
         alSourceStop(alMainSource);
         alDeleteSources(1, &alMainSource);
@@ -442,20 +492,33 @@ void OpenAL::cleanupOutput()
             qWarning("Failed to clear audio context.");
 
         alcDestroyContext(alOutContext);
-        alOutContext = nullptr;
+        alProxyContext = nullptr;
 
         qDebug() << "Closing audio output";
-        if (alcCloseDevice(alOutDev))
-            alOutDev = nullptr;
+        if (alcCloseDevice(alProxyDev))
+            alProxyDev = nullptr;
         else
             qWarning("Failed to close output.");
+    }
+
+    if (echoCancelSupported) {
+        alcMakeContextCurrent(alOutContext);
+        alSourceStop(alProxySource);
+        //TODO: delete buffers
+        alcDestroyContext(alOutContext);
+        alOutContext = nullptr;
+        alcCloseDevice(alOutDev);
+        alOutDev = nullptr;
+    } else {
+        alOutContext = nullptr;
+        alOutDev = nullptr;
     }
 }
 
 /**
  * @brief Called after a mono16 sound stopped playing
  */
-void OpenAL::playMono16SoundCleanup()
+void OpenAL2::playMono16SoundCleanup()
 {
     QMutexLocker locker(&audioLock);
 
@@ -465,7 +528,9 @@ void OpenAL::playMono16SoundCleanup()
         alSourcei(alMainSource, AL_BUFFER, AL_NONE);
         alDeleteBuffers(1, &alMainBuffer);
         alMainBuffer = 0;
-    } else {
+    }
+    else
+    {
         // the audio didn't finish, try again later
         playMono16Timer.start(10);
     }
@@ -474,9 +539,53 @@ void OpenAL::playMono16SoundCleanup()
 /**
  * @brief Called on the captureTimer events to capture audio
  */
-void OpenAL::doCapture()
+void OpenAL2::doAudio()
 {
     QMutexLocker lock(&audioLock);
+
+    // output section
+    if(echoCancelSupported && outputInitialized) {
+        alcMakeContextCurrent(alProxyContext);
+        LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
+                reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
+        uint sampleCount = AUDIO_FRAME_SAMPLE_COUNT / 2;
+        ALshort outBuf[sampleCount * AUDIO_CHANNELS];
+        alcRenderSamplesSOFT(alProxyDev, outBuf, sampleCount);
+        alcMakeContextCurrent(alOutContext);
+
+        ALuint bufids[PROXY_BUFFER_COUNT];
+        ALint processed = 0, queued = 0;
+        alGetSourcei(alProxySource, AL_BUFFERS_PROCESSED, &processed);
+        alGetSourcei(alProxySource, AL_BUFFERS_QUEUED, &queued);
+
+        if (processed == 0) {
+            if (queued >= PROXY_BUFFER_COUNT) {
+                // reached limit, drop audio
+                qDebug() << "Proxy source overflow detected";
+                return;
+            }
+            // create new buffer if none got free and we're below the limit
+            alGenBuffers(1, bufids);
+        } else {
+            // unqueue all processed buffers
+            alSourceUnqueueBuffers(alProxySource, processed, bufids);
+            // delete all but the first buffer, reuse first for new data
+            alDeleteBuffers(processed - 1, bufids + 1);
+        }
+
+        alBufferData(bufids[0], (AUDIO_CHANNELS == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, outBuf,
+                     sampleCount * 2 * AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+        alSourceQueueBuffers(alProxySource, 1, bufids);
+
+        ALint state;
+        alGetSourcei(alProxySource, AL_SOURCE_STATE, &state);
+        if (state != AL_PLAYING) {
+            qDebug() << "Proxy source underflow detected";
+            alSourcePlay(alProxySource);
+        }
+    }
+
+    // input section
 
     if (!alInDev || !inSubscriptions)
         return;
@@ -498,24 +607,24 @@ void OpenAL::doCapture()
         buf[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+    emit frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
 }
 
 /**
  * @brief Returns true if the output device is open
  */
-bool OpenAL::isOutputReady() const
+bool OpenAL2::isOutputReady() const
 {
     QMutexLocker locker(&audioLock);
     return alOutDev && outputInitialized;
 }
 
-QStringList OpenAL::outDeviceNames()
+QStringList OpenAL2::outDeviceNames()
 {
     QStringList list;
     const ALchar* pDeviceList = (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-                                    ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
-                                    : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+                                ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
+                                : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 
     if (pDeviceList) {
         while (*pDeviceList) {
@@ -528,7 +637,7 @@ QStringList OpenAL::outDeviceNames()
     return list;
 }
 
-QStringList OpenAL::inDeviceNames()
+QStringList OpenAL2::inDeviceNames()
 {
     QStringList list;
     const ALchar* pDeviceList = alcGetString(NULL, ALC_CAPTURE_DEVICE_SPECIFIER);
@@ -544,7 +653,7 @@ QStringList OpenAL::inDeviceNames()
     return list;
 }
 
-void OpenAL::subscribeOutput(uint& sid)
+void OpenAL2::subscribeOutput(uint& sid)
 {
     QMutexLocker locker(&audioLock);
 
@@ -553,23 +662,23 @@ void OpenAL::subscribeOutput(uint& sid)
         return;
     }
 
-    if (!alcMakeContextCurrent(alOutContext)) {
+    if (!alcMakeContextCurrent(alProxyContext)) {
         qWarning("Failed to activate output context.");
         return;
     }
 
     alGenSources(1, &sid);
     assert(sid);
-    outSources << sid;
+    peerSources << sid;
 
-    qDebug() << "Audio source" << sid << "created. Sources active:" << outSources.size();
+    qDebug() << "Audio source" << sid << "created. Sources active:" << peerSources.size();
 }
 
-void OpenAL::unsubscribeOutput(uint& sid)
+void OpenAL2::unsubscribeOutput(uint& sid)
 {
     QMutexLocker locker(&audioLock);
 
-    outSources.removeAll(sid);
+    peerSources.removeAll(sid);
 
     if (sid) {
         if (alIsSource(sid)) {
@@ -584,7 +693,7 @@ void OpenAL::unsubscribeOutput(uint& sid)
             alDeleteBuffers(processed, bufids);
             delete[] bufids;
             alDeleteSources(1, &sid);
-            qDebug() << "Audio source" << sid << "deleted. Sources active:" << outSources.size();
+            qDebug() << "Audio source" << sid << "deleted. Sources active:" << peerSources.size();
         } else {
             qWarning() << "Trying to delete invalid audio source" << sid;
         }
@@ -592,17 +701,17 @@ void OpenAL::unsubscribeOutput(uint& sid)
         sid = 0;
     }
 
-    if (outSources.isEmpty())
+    if (peerSources.isEmpty())
         cleanupOutput();
 }
 
-void OpenAL::startLoop()
+void OpenAL2::startLoop()
 {
     QMutexLocker locker(&audioLock);
     alSourcei(alMainSource, AL_LOOPING, AL_TRUE);
 }
 
-void OpenAL::stopLoop()
+void OpenAL2::stopLoop()
 {
     QMutexLocker locker(&audioLock);
     alSourcei(alMainSource, AL_LOOPING, AL_FALSE);
@@ -617,17 +726,17 @@ void OpenAL::stopLoop()
     }
 }
 
-qreal OpenAL::inputGain() const
+qreal OpenAL2::inputGain() const
 {
     return gain;
 }
 
-qreal OpenAL::inputGainFactor() const
+qreal OpenAL2::inputGainFactor() const
 {
     return gainFactor;
 }
 
-void OpenAL::setInputGain(qreal dB)
+void OpenAL2::setInputGain(qreal dB)
 {
     gain = qBound(minInGain, dB, maxInGain);
     gainFactor = qPow(10.0, (gain / 20.0));

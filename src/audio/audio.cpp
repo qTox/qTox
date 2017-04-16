@@ -19,6 +19,7 @@
 
 #include "audio.h"
 #include "src/audio/backend/openal.h"
+#include "src/audio/backend/openal2.h"
 
 #include <QDebug>
 
@@ -167,6 +168,6 @@
  */
 Audio& Audio::getInstance()
 {
-    static OpenAL instance;
+    static OpenAL2 instance;
     return instance;
 }
