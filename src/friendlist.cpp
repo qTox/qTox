@@ -33,7 +33,8 @@ Friend* FriendList::addFriend(int friendId, const ToxPk& friendPk)
     if (friendChecker != friendList.end())
         qWarning() << "addFriend: friendId already taken";
 
-    Friend* newfriend = new Friend(friendId, friendPk);
+    QString alias = Settings::getInstance().getFriendAlias(friendPk);
+    Friend* newfriend = new Friend(friendId, friendPk, alias);
     friendList[friendId] = newfriend;
     key2id[friendPk.getKey()] = friendId;
 

@@ -24,16 +24,15 @@
 #include "src/grouplist.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
-#include "src/persistence/settings.h"
 #include "src/widget/form/chatform.h"
 
-Friend::Friend(uint32_t friendId, const ToxPk& friendPk)
+Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlias)
     : userName{Core::getInstance()->getPeerName(friendPk)}
-    , userAlias(Settings::getInstance().getFriendAlias(friendPk))
-    , friendPk(friendPk)
-    , friendId(friendId)
-    , hasNewEvents(false)
-    , friendStatus(Status::Offline)
+    , userAlias{userAlias}
+    , friendPk{friendPk}
+    , friendId{friendId}
+    , hasNewEvents{false}
+    , friendStatus{Status::Offline}
 {
     if (userName.isEmpty()) {
         userName = friendPk.toString();
