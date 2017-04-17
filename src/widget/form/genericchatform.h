@@ -34,7 +34,8 @@
  * @note Why the hell is this a thing? surely the different font is enough?
  *        - Even a different font is not enough – TODO #1307 ~~zetok
  */
-#define AUTHOR_CHANGE_SPACING 5
+
+QString resolveToxId(const ToxPk& id);
 
 class QLabel;
 class QVBoxLayout;
@@ -75,9 +76,6 @@ public:
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, QString message, QDateTime datetime);
-    bool isEmpty();
-
-    ChatLog* getChatLog() const;
     QDate getLatestDate() const;
 
 signals:
@@ -108,13 +106,11 @@ protected slots:
 
 private:
     void retranslateUi();
-    static QString fontToCss(const QFont& font, const char* name);
 
 protected:
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
-    QString resolveToxId(const ToxPk& id);
     virtual void insertChatMessage(ChatMessage::Ptr msg);
     void adjustFileMenuPosition();
     virtual void hideEvent(QHideEvent* event) override;

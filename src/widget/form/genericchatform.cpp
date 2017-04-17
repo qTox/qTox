@@ -71,6 +71,34 @@ static const short MAIN_FOOT_LAYOUT_SPACING = 5;
 static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short HEAD_LAYOUT_SPACING = 5;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
+static const QString styleType[]{"normal", "italic", "oblique"};
+
+QString fontToCss(const QFont& font, const QString& name)
+{
+    QString result{"%1{"
+                   "font-family: \"%2\"; "
+                   "font-size: %3px; "
+                   "font-style: \"%4\"; "
+                   "font-weight: normal;}"};
+    return result.arg(name).arg(font.family()).arg(font.pixelSize()).arg(styleType[font.style()]);
+}
+
+QString resolveToxId(const ToxPk& id)
+{
+    Friend* f = FriendList::findFriend(id);
+    if (f) {
+        return f->getDisplayedName();
+    }
+
+    for (Group* it : GroupList::getAllGroups()) {
+        QString res = it->resolveToxId(id);
+        if (!res.isEmpty()) {
+            return res;
+        }
+    }
+
+    return QString{};
+}
 
 GenericChatForm::GenericChatForm(QWidget* parent)
     : QWidget(parent, Qt::Window)
@@ -275,16 +303,6 @@ void GenericChatForm::hideFileMenu()
         fileFlyout->animateHide();
 }
 
-bool GenericChatForm::isEmpty()
-{
-    return chatWidget->isEmpty();
-}
-
-ChatLog* GenericChatForm::getChatLog() const
-{
-    return chatWidget;
-}
-
 QDate GenericChatForm::getLatestDate() const
 {
     ChatLine::Ptr chatLine = chatWidget->getLatestLine();
@@ -377,7 +395,7 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxPk& author, const QString&
         msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL,
                                              authorIsActiveProfile);
         if ((author == previousId)
-            && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter))
+            && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < chatWidget->repNameAfter))
             msg->hideSender();
 
         previousId = author;
@@ -408,7 +426,7 @@ void GenericChatForm::addAlertMessage(const ToxPk& author, QString message, QDat
     insertChatMessage(msg);
 
     if ((author == previousId)
-        && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < getChatLog()->repNameAfter))
+        && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < chatWidget->repNameAfter))
         msg->hideSender();
 
     previousId = author;
@@ -524,21 +542,6 @@ void GenericChatForm::clearChatArea(bool notinform)
 void GenericChatForm::onSelectAllClicked()
 {
     chatWidget->selectAll();
-}
-
-QString GenericChatForm::resolveToxId(const ToxPk& id)
-{
-    Friend* f = FriendList::findFriend(id);
-    if (f)
-        return f->getDisplayedName();
-
-    for (Group* it : GroupList::getAllGroups()) {
-        QString res = it->resolveToxId(id);
-        if (res.size())
-            return res;
-    }
-
-    return QString();
 }
 
 void GenericChatForm::insertChatMessage(ChatMessage::Ptr msg)
@@ -680,17 +683,6 @@ void GenericChatForm::retranslateUi()
     clearAction->setText(tr("Clear displayed messages"));
     quoteAction->setText(tr("Quote selected text"));
     copyLinkAction->setText(tr("Copy link address"));
-}
-
-QString GenericChatForm::fontToCss(const QFont& font, const char* name)
-{
-    return QString("%1{font-family: \"%2\"; font-size: %3px; font-style: \"%4\"; font-weight: normal;}")
-        .arg(name)
-        .arg(font.family())
-        .arg(font.pixelSize())
-        .arg(font.style() == QFont::StyleNormal ? "normal" : font.style() == QFont::StyleItalic
-                                                                 ? "italic"
-                                                                 : "oblique");
 }
 
 void GenericChatForm::showNetcam()

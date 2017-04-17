@@ -735,7 +735,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
 
         uint prev = prevMsgDateTime.secsTo(msgDateTime);
-        if (!isAction && prevId == authorPk && prev < getChatLog()->repNameAfter) {
+        if (!isAction && prevId == authorPk && prev < chatWidget->repNameAfter) {
             msg->hideSender();
         }
 
