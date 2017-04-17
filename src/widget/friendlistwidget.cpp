@@ -209,8 +209,9 @@ void FriendListWidget::setMode(Mode mode)
 #undef COMMENT
 
         activityLayout = new QVBoxLayout();
+        bool compact = Settings::getInstance().getCompactLayout();
         for (Time t : names.keys()) {
-            CategoryWidget* category = new CategoryWidget(this);
+            CategoryWidget* category = new CategoryWidget(compact, this);
             category->setName(names[t]);
             activityLayout->addWidget(category);
         }

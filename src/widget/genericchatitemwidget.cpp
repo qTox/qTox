@@ -23,11 +23,11 @@
 #include "src/widget/tool/croppinglabel.h"
 #include <QVariant>
 
-GenericChatItemWidget::GenericChatItemWidget(QWidget* parent)
+GenericChatItemWidget::GenericChatItemWidget(bool compact, QWidget* parent)
     : QFrame(parent)
     , compact(false)
 {
-    setProperty("compact", Settings::getInstance().getCompactLayout());
+    setProperty("compact", compact);
 
     nameLabel = new CroppingLabel(this);
     nameLabel->setObjectName("name");
