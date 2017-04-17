@@ -352,8 +352,8 @@ void ContentDialog::cycleContacts(bool forward, bool inverse)
         bool isCurOffline = currentLayout == friendLayout->getLayoutOffline();
         bool isCurOnline = currentLayout == friendLayout->getLayoutOnline();
         bool isCurGroup = currentLayout == groupLayout.getLayout();
-        bool nextIsEmpty = isCurOnline && offlineEmpty && (groupsEmpty || groupsOnTop) ||
-                           isCurGroup  && offlineEmpty && (onlineEmpty || !groupsOnTop) ||
+        bool nextIsEmpty = (isCurOnline && offlineEmpty && (groupsEmpty || groupsOnTop)) ||
+                           (isCurGroup  && offlineEmpty && (onlineEmpty || !groupsOnTop)) ||
                            isCurOffline;
 
         if (nextIsEmpty) {
