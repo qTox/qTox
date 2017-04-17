@@ -31,7 +31,7 @@ class QTranslator;
 class Translator
 {
 public:
-    static void translate();
+    static void translate(const QString& localeName);
     static void registerHandler(std::function<void()>, void* owner);
     static void unregister(void* owner);
 

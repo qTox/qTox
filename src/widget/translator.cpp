@@ -19,7 +19,6 @@
 
 
 #include "translator.h"
-#include "src/persistence/settings.h"
 #include <QApplication>
 #include <QDebug>
 #include <QLibraryInfo>
@@ -36,7 +35,7 @@ QMutex Translator::lock;
 /**
  * @brief Loads the translations according to the settings or locale.
  */
-void Translator::translate()
+void Translator::translate(const QString& localeName)
 {
     QMutexLocker locker{&lock};
 
@@ -45,9 +44,8 @@ void Translator::translate()
 
     // Load translations
     QCoreApplication::removeTranslator(translator);
-    QString locale;
-    if ((locale = Settings::getInstance().getTranslation()).isEmpty())
-        locale = QLocale::system().name().section('_', 0, 0);
+    QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0)
+                                          : localeName;
 
     if (locale != "en") {
         if (translator->load(locale, ":translations/")) {
