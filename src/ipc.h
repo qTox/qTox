@@ -36,7 +36,7 @@ using IPCEventHandler = std::function<bool(const QByteArray&)>;
 class IPC : public QObject
 {
     Q_OBJECT
-    IPC();
+    IPC(uint32_t profileId);
 
 protected:
     static const int EVENT_TIMER_MS = 1000;
@@ -77,12 +77,12 @@ public:
     bool waitUntilAccepted(time_t time, int32_t timeout = -1);
 
 protected slots:
-    void processEvents();
+    void processEvents(uint32_t profileId);
 
 protected:
     IPCMemory* global();
     bool runEventHandler(IPCEventHandler handler, const QByteArray& arg);
-    IPCEvent* fetchEvent();
+    IPCEvent* fetchEvent(uint32_t profileId);
 
     QTimer timer;
     uint64_t globalId;
