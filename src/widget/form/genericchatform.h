@@ -68,14 +68,13 @@ public:
     }
     virtual void show(ContentLayout* contentLayout);
 
-    ChatMessage::Ptr addMessage(const ToxPk& author, const QString& message, bool isAction,
-                                const QDateTime& datetime, bool isSent);
-    ChatMessage::Ptr addSelfMessage(const QString& message, bool isAction,
-                                    const QDateTime& datetime, bool isSent);
-
+    void addMessage(const ToxPk& author, const QString& message, const QDateTime& datetime,
+                    bool isAction, bool isSent);
+    void addSelfMessage(const QString& message, const QDateTime& datetime,
+                        bool isAction, bool isSent);
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
-    void addAlertMessage(const ToxPk& author, QString message, QDateTime datetime);
+    void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
     QDate getLatestDate() const;
 
 signals:
@@ -108,6 +107,10 @@ private:
     void retranslateUi();
 
 protected:
+    ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
+                                   const QDateTime& datetime, bool isAction, bool isSent);
+    ChatMessage::Ptr createSelfMessage(const QString& message, const QDateTime& datetime,
+                                       bool isAction, bool isSent);
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;

@@ -71,7 +71,7 @@ static const short MAIN_FOOT_LAYOUT_SPACING = 5;
 static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
 static const short HEAD_LAYOUT_SPACING = 5;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
-static const QString styleType[]{"normal", "italic", "oblique"};
+static const QString FONT_STYLE[]{"normal", "italic", "oblique"};
 
 QString fontToCss(const QFont& font, const QString& name)
 {
@@ -80,7 +80,7 @@ QString fontToCss(const QFont& font, const QString& name)
                    "font-size: %3px; "
                    "font-style: \"%4\"; "
                    "font-weight: normal;}"};
-    return result.arg(name).arg(font.family()).arg(font.pixelSize()).arg(styleType[font.style()]);
+    return result.arg(name).arg(font.family()).arg(font.pixelSize()).arg(FONT_STYLE[font.style()]);
 }
 
 QString resolveToxId(const ToxPk& id)
@@ -372,14 +372,12 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     menu.exec(pos);
 }
 
-ChatMessage::Ptr GenericChatForm::addMessage(const ToxPk& author, const QString& message,
-                                             bool isAction, const QDateTime& datetime, bool isSent)
+ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QString& message,
+                                                const QDateTime& dt, bool isAction, bool isSent)
 {
     const Core* core = Core::getInstance();
-    bool authorIsActiveProfile = author == core->getSelfId().getPublicKey();
-    QString authorStr = authorIsActiveProfile ? core->getUsername() : resolveToxId(author);
-
-
+    bool isSelf = author == core->getSelfId().getPublicKey();
+    QString authorStr = isSelf ? core->getUsername() : resolveToxId(author);
     if (getLatestDate() != QDate::currentDate()) {
         const Settings& s = Settings::getInstance();
         QString dateText = QDate::currentDate().toString(s.getDateFormat());
@@ -388,47 +386,56 @@ ChatMessage::Ptr GenericChatForm::addMessage(const ToxPk& author, const QString&
 
     ChatMessage::Ptr msg;
     if (isAction) {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION,
-                                             authorIsActiveProfile);
-        previousId = ToxPk();
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::ACTION, isSelf);
+        previousId = ToxPk{};
     } else {
-        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL,
-                                             authorIsActiveProfile);
-        if ((author == previousId)
-            && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < chatWidget->repNameAfter))
+        msg = ChatMessage::createChatMessage(authorStr, message, ChatMessage::NORMAL, isSelf);
+        qint64 messagesTimeDiff = prevMsgDateTime.secsTo(QDateTime::currentDateTime());
+        if (author == previousId && messagesTimeDiff < chatWidget->repNameAfter) {
             msg->hideSender();
+        }
 
         previousId = author;
         prevMsgDateTime = QDateTime::currentDateTime();
     }
 
-    insertChatMessage(msg);
-
-    if (isSent)
-        msg->markAsSent(datetime);
+    if (isSent) {
+        msg->markAsSent(dt);
+    }
 
     return msg;
 }
 
-ChatMessage::Ptr GenericChatForm::addSelfMessage(const QString& message, bool isAction,
-                                                 const QDateTime& datetime, bool isSent)
+ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, const QDateTime& dt,
+                                                    bool isAction, bool isSent)
 {
-    return addMessage(Core::getInstance()->getSelfId().getPublicKey(), message, isAction, datetime,
-                      isSent);
+    ToxPk selfPk = Core::getInstance()->getSelfId().getPublicKey();
+    return createMessage(selfPk, message, dt, isAction, isSent);
 }
 
-void GenericChatForm::addAlertMessage(const ToxPk& author, QString message, QDateTime datetime)
+void GenericChatForm::addMessage(const ToxPk& author, const QString& message, const QDateTime& dt,
+                                 bool isAction, bool isSent)
+{
+    insertChatMessage(createMessage(author, message, dt, isAction, isSent));
+}
+
+void  GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
+                                      bool isAction, bool isSent)
+{
+    insertChatMessage(createSelfMessage(message, datetime, isAction, isSent));
+}
+
+void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt)
 {
     QString authorStr = resolveToxId(author);
     bool isSelf = author == Core::getInstance()->getSelfId().getPublicKey();
-    ChatMessage::Ptr msg =
-        ChatMessage::createChatMessage(authorStr, message, ChatMessage::ALERT, isSelf, datetime);
-    insertChatMessage(msg);
+    auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt);
+    qint64 messagesTimeDiff = prevMsgDateTime.secsTo(QDateTime::currentDateTime());
+    if (author == previousId && messagesTimeDiff < chatWidget->repNameAfter) {
+        chatMsg->hideSender();
+    }
 
-    if ((author == previousId)
-        && (prevMsgDateTime.secsTo(QDateTime::currentDateTime()) < chatWidget->repNameAfter))
-        msg->hideSender();
-
+    insertChatMessage(chatMsg);
     previousId = author;
     prevMsgDateTime = QDateTime::currentDateTime();
 }
