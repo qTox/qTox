@@ -36,7 +36,6 @@ using IPCEventHandler = std::function<bool(const QByteArray&)>;
 class IPC : public QObject
 {
     Q_OBJECT
-    IPC(uint32_t profileId);
 
 protected:
     static const int EVENT_TIMER_MS = 1000;
@@ -45,9 +44,8 @@ protected:
     static const int OWNERSHIP_TIMEOUT_S = 5;
 
 public:
+    IPC(uint32_t profileId);
     ~IPC();
-
-    static IPC& getInstance();
 
     struct IPCEvent
     {
