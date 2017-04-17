@@ -117,8 +117,9 @@ GeneralForm::~GeneralForm()
 
 void GeneralForm::on_transComboBox_currentIndexChanged(int index)
 {
-    Settings::getInstance().setTranslation(locales[index]);
-    Translator::translate();
+    const QString& locale = locales[index];
+    Settings::getInstance().setTranslation(locale);
+    Translator::translate(locale);
 }
 
 void GeneralForm::on_cbAutorun_stateChanged()

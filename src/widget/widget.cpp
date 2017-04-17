@@ -95,7 +95,8 @@ Widget::Widget(QWidget* parent)
     , eventIcon(false)
 {
     installEventFilter(this);
-    Translator::translate();
+    QString locale = Settings::getInstance().getTranslation();
+    Translator::translate(locale);
 }
 
 void Widget::init()
