@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,14 +20,11 @@
 #ifndef GENERICCHATFORM_H
 #define GENERICCHATFORM_H
 
-#include <QDateTime>
-#include <QMenu>
-#include <QPoint>
-#include <QWidget>
-
 #include "src/chatlog/chatmessage.h"
-#include "src/core/corestructs.h"
 #include "src/core/toxid.h"
+
+#include <QMenu>
+#include <QWidget>
 
 /**
  * Spacing in px inserted when the author of the last message changes
@@ -37,19 +34,20 @@
 
 QString resolveToxId(const ToxPk& id);
 
-class QLabel;
-class QVBoxLayout;
-class QPushButton;
-class CroppingLabel;
-class ChatTextEdit;
 class ChatLog;
+class ChatTextEdit;
+class ContentLayout;
+class CroppingLabel;
+class FlyoutOverlayWidget;
+class GenericNetCamView;
 class MaskablePixmapWidget;
 class Widget;
-class FlyoutOverlayWidget;
-class ContentLayout;
+
+class QLabel;
+class QPushButton;
 class QSplitter;
-class GenericNetCamView;
 class QToolButton;
+class QVBoxLayout;
 
 namespace Ui {
 class MainWindow;
@@ -59,7 +57,7 @@ class GenericChatForm : public QWidget
 {
     Q_OBJECT
 public:
-    explicit GenericChatForm(QWidget* parent = 0);
+    explicit GenericChatForm(QWidget* parent = nullptr);
     ~GenericChatForm();
 
     void setName(const QString& newName);
@@ -123,30 +121,46 @@ protected:
     virtual bool eventFilter(QObject* object, QEvent* event) final override;
 
 protected:
-    QAction *saveChatAction, *clearAction, *quoteAction, *copyLinkAction;
-    ToxPk previousId;
-    QDateTime prevMsgDateTime;
-    Widget* parent;
-    QMenu menu;
-    int curRow;
-    CroppingLabel* nameLabel;
-    MaskablePixmapWidget* avatar;
-    QWidget* headWidget;
-    QPushButton *fileButton, *screenshotButton, *emoteButton, *callButton;
-    QPushButton* videoButton;
-    QToolButton *volButton, *micButton;
-    FlyoutOverlayWidget* fileFlyout;
-    QVBoxLayout* headTextLayout;
-    ChatTextEdit* msgEdit;
-    QPushButton* sendButton;
-    ChatLog* chatWidget;
-    QDateTime earliestMessage;
-
-    QDateTime historyBaselineDate = QDateTime::currentDateTime();
     bool audioInputFlag;
     bool audioOutputFlag;
+    int curRow;
+
+    QAction* saveChatAction;
+    QAction* clearAction;
+    QAction* quoteAction;
+    QAction* copyLinkAction;
+
+    ToxPk previousId;
+
+    QDateTime prevMsgDateTime;
+    QDateTime earliestMessage;
+    QDateTime historyBaselineDate = QDateTime::currentDateTime();
+
+    QMenu menu;
+
+    QPushButton* callButton;
+    QPushButton* emoteButton;
+    QPushButton* fileButton;
+    QPushButton* screenshotButton;
+    QPushButton* sendButton;
+    QPushButton* videoButton;
+
     QSplitter* bodySplitter;
+
+    QToolButton* volButton;
+    QToolButton* micButton;
+
+    QVBoxLayout* headTextLayout;
+
+    QWidget* headWidget;
+
+    ChatLog* chatWidget;
+    ChatTextEdit* msgEdit;
+    CroppingLabel* nameLabel;
+    FlyoutOverlayWidget* fileFlyout;
     GenericNetCamView* netcam;
+    MaskablePixmapWidget* avatar;
+    Widget* parent;
 };
 
 #endif // GENERICCHATFORM_H
