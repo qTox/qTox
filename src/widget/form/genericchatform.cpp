@@ -61,6 +61,17 @@
  *        (excluded)
  */
 
+static const QSize AVATAR_SIZE{40, 40};
+static const QSize CALL_BUTTONS_SIZE{50, 40};
+static const QSize VOL_MIC_BUTTONS_SIZE{22, 18};
+static const QSize FILE_FLYOUT_SIZE{24, 24};
+static const short FOOT_BUTTONS_SPACING = 2;
+static const short MESSAGE_EDIT_HEIGHT = 50;
+static const short MAIN_FOOT_LAYOUT_SPACING = 5;
+static const short MIC_BUTTONS_LAYOUT_SPACING = 4;
+static const short HEAD_LAYOUT_SPACING = 5;
+static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
+
 GenericChatForm::GenericChatForm(QWidget* parent)
     : QWidget(parent, Qt::Window)
     , audioInputFlag(false)
@@ -75,7 +86,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     nameLabel->setEditable(true);
     nameLabel->setTextFormat(Qt::PlainText);
 
-    avatar = new MaskablePixmapWidget(this, QSize(40, 40), ":/img/avatar_mask.svg");
+    avatar = new MaskablePixmapWidget(this, AVATAR_SIZE, ":/img/avatar_mask.svg");
     QHBoxLayout *mainFootLayout = new QHBoxLayout(), *headLayout = new QHBoxLayout();
 
     QVBoxLayout *mainLayout = new QVBoxLayout(), *footButtonsSmall = new QVBoxLayout(),
@@ -100,17 +111,17 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     // Setting the sizes in the CSS doesn't work (glitch with high DPIs)
     fileButton = new QPushButton();
     screenshotButton = new QPushButton;
-    callButton = new QPushButton();
-    callButton->setFixedSize(50, 40);
 
+    callButton = new QPushButton();
+    callButton->setFixedSize(CALL_BUTTONS_SIZE);
     videoButton = new QPushButton();
-    videoButton->setFixedSize(50, 40);
+    videoButton->setFixedSize(CALL_BUTTONS_SIZE);
 
     volButton = new QToolButton();
-    volButton->setFixedSize(22, 18);
-
+    volButton->setFixedSize(VOL_MIC_BUTTONS_SIZE);
     micButton = new QToolButton();
-    micButton->setFixedSize(22, 18);
+    micButton->setFixedSize(VOL_MIC_BUTTONS_SIZE);
+
     // TODO: Make updateCallButtons (see ChatForm) abstract
     //       and call here to set tooltips.
 
@@ -119,19 +130,19 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     fileLayout->addWidget(screenshotButton);
     fileLayout->setContentsMargins(0, 0, 0, 0);
 
-    footButtonsSmall->setSpacing(2);
+    footButtonsSmall->setSpacing(FOOT_BUTTONS_SPACING);
     fileLayout->setSpacing(0);
     fileLayout->setMargin(0);
 
     msgEdit->setStyleSheet(Style::getStylesheet(":/ui/msgEdit/msgEdit.css")
                            + fontToCss(s.getChatMessageFont(), "QTextEdit"));
-    msgEdit->setFixedHeight(50);
+    msgEdit->setFixedHeight(MESSAGE_EDIT_HEIGHT);
     msgEdit->setFrameStyle(QFrame::NoFrame);
 
     sendButton->setStyleSheet(Style::getStylesheet(":/ui/sendButton/sendButton.css"));
     fileButton->setStyleSheet(Style::getStylesheet(":/ui/fileButton/fileButton.css"));
-    screenshotButton->setStyleSheet(
-        Style::getStylesheet(":/ui/screenshotButton/screenshotButton.css"));
+    QString screenshotBtnStyle{Style::getStylesheet(":/ui/screenshotButton/screenshotButton.css")};
+    screenshotButton->setStyleSheet(screenshotBtnStyle);
     emoteButton->setStyleSheet(Style::getStylesheet(":/ui/emoteButton/emoteButton.css"));
 
     callButton->setObjectName("green");
@@ -167,7 +178,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
 
     mainFootLayout->addWidget(msgEdit);
     mainFootLayout->addLayout(footButtonsSmall);
-    mainFootLayout->addSpacing(5);
+    mainFootLayout->addSpacing(MAIN_FOOT_LAYOUT_SPACING);
     mainFootLayout->addWidget(sendButton);
     mainFootLayout->setSpacing(0);
 
@@ -175,7 +186,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     headTextLayout->addWidget(nameLabel);
     headTextLayout->addStretch();
 
-    micButtonsLayout->setSpacing(4);
+    micButtonsLayout->setSpacing(MIC_BUTTONS_LAYOUT_SPACING);
     micButtonsLayout->addWidget(micButton, Qt::AlignTop | Qt::AlignRight);
     micButtonsLayout->addWidget(volButton, Qt::AlignTop | Qt::AlignRight);
 
@@ -183,10 +194,10 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     buttonsLayout->addWidget(callButton, 0, 1, 2, 1, Qt::AlignTop);
     buttonsLayout->addWidget(videoButton, 0, 2, 2, 1, Qt::AlignTop);
     buttonsLayout->setVerticalSpacing(0);
-    buttonsLayout->setHorizontalSpacing(4);
+    buttonsLayout->setHorizontalSpacing(BUTTONS_LAYOUT_HOR_SPACING);
 
     headLayout->addWidget(avatar);
-    headLayout->addSpacing(5);
+    headLayout->addSpacing(HEAD_LAYOUT_SPACING);
     headLayout->addLayout(headTextLayout);
     headLayout->addLayout(buttonsLayout);
 
@@ -226,7 +237,7 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     chatWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatArea.css"));
     headWidget->setStyleSheet(Style::getStylesheet(":/ui/chatArea/chatHead.css"));
 
-    fileFlyout->setFixedSize(24, 24);
+    fileFlyout->setFixedSize(FILE_FLYOUT_SIZE);
     fileFlyout->setParent(this);
     fileButton->installEventFilter(this);
     fileFlyout->installEventFilter(this);
