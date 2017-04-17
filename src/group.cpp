@@ -21,18 +21,20 @@
 #include "friend.h"
 #include "friendlist.h"
 #include "src/core/core.h"
+#include "src/persistence/settings.h"
 #include "widget/form/groupchatform.h"
 #include "widget/groupwidget.h"
 #include "widget/gui.h"
 #include <QDebug>
 #include <QTimer>
 
-Group::Group(int GroupId, QString Name, bool IsAvGroupchat)
-    : groupId(GroupId)
+Group::Group(int groupId, QString name, bool isAvGroupchat)
+    : groupId(groupId)
     , nPeers{0}
-    , avGroupchat{IsAvGroupchat}
+    , avGroupchat{isAvGroupchat}
 {
-    widget = new GroupWidget(groupId, Name);
+    bool compact = Settings::getInstance().getCompactLayout();
+    widget = new GroupWidget(groupId, name, compact);
     chatForm = new GroupChatForm(this);
 
     // in groupchats, we only notify on messages containing your name <-- dumb

@@ -36,8 +36,8 @@ void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
         emit chatWidget->chatroomWidgetClicked(chatWidget);
 }
 
-CategoryWidget::CategoryWidget(QWidget* parent)
-    : GenericChatItemWidget(parent)
+CategoryWidget::CategoryWidget(bool compact, QWidget* parent)
+    : GenericChatItemWidget(compact, parent)
 {
     container = new QWidget(this);
     container->setObjectName("circleWidgetContainer");

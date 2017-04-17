@@ -25,8 +25,8 @@
 #include <QBoxLayout>
 #include <QMouseEvent>
 
-GenericChatroomWidget::GenericChatroomWidget(QWidget* parent)
-    : GenericChatItemWidget(parent)
+GenericChatroomWidget::GenericChatroomWidget(bool compact, QWidget* parent)
+    : GenericChatItemWidget(compact, parent)
     , active{false}
 {
     // avatar

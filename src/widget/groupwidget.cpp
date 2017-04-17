@@ -35,25 +35,25 @@
 #include "src/friendlist.h"
 #include "src/group.h"
 #include "src/grouplist.h"
-#include "src/persistence/settings.h"
 #include "src/widget/friendwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/translator.h"
 #include "tool/croppinglabel.h"
 
-GroupWidget::GroupWidget(int GroupId, QString Name)
-    : groupId{GroupId}
+GroupWidget::GroupWidget(int groupId, const QString& name, bool compact)
+    : GenericChatroomWidget(compact)
+    , groupId{groupId}
 {
     avatar->setPixmap(Style::scaleSvgImage(":img/group.svg", avatar->width(), avatar->height()));
     statusPic.setPixmap(QPixmap(":img/status/dot_online.svg"));
     statusPic.setMargin(3);
-    nameLabel->setText(Name);
+    nameLabel->setText(name);
 
     onUserListChanged();
 
     setAcceptDrops(true);
 
-    connect(nameLabel, &CroppingLabel::editFinished, [this](const QString& newName) {
+    connect(nameLabel, &CroppingLabel::editFinished, [=](const QString& newName) {
         if (!newName.isEmpty()) {
             Group* g = GroupList::findGroup(groupId);
             emit renameRequested(this, newName);

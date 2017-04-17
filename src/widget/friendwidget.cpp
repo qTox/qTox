@@ -56,8 +56,9 @@
  * When you click should open the chat with friend. Widget has a context menu.
  */
 
-FriendWidget::FriendWidget(int FriendId, QString id)
-    : friendId(FriendId)
+FriendWidget::FriendWidget(int friendId, const QString& id, bool compact)
+    : GenericChatroomWidget(compact)
+    , friendId(friendId)
     , isDefaultAvatar{true}
     , historyLoaded{false}
 {

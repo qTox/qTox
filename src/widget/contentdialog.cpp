@@ -165,7 +165,8 @@ ContentDialog::~ContentDialog()
 
 FriendWidget* ContentDialog::addFriend(int friendId, QString id)
 {
-    FriendWidget* friendWidget = new FriendWidget(friendId, id);
+    bool compact = Settings::getInstance().getCompactLayout();
+    FriendWidget* friendWidget = new FriendWidget(friendId, id, compact);
     Friend* frnd = friendWidget->getFriend();
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
@@ -189,7 +190,8 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
 
 GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
 {
-    GroupWidget* groupWidget = new GroupWidget(groupId, name);
+    bool compact = Settings::getInstance().getCompactLayout();
+    GroupWidget* groupWidget = new GroupWidget(groupId, name, compact);
     groupLayout.addSortedWidget(groupWidget);
 
     Group* group = groupWidget->getGroup();

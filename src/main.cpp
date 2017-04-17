@@ -151,7 +151,8 @@ int main(int argc, char* argv[])
 
     qsrand(time(0));
     Settings::getInstance();
-    Translator::translate();
+    QString locale = Settings::getInstance().getTranslation();
+    Translator::translate(locale);
 
     // Process arguments
     QCommandLineParser parser;
