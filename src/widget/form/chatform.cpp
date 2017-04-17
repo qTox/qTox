@@ -559,7 +559,7 @@ void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
     }
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getPublicKey(), message, isAction, timestamp, true);
+    addMessage(f->getPublicKey(), message, timestamp, isAction, true);
 }
 
 void ChatForm::onStatusMessage(const QString& message)
@@ -966,7 +966,7 @@ void ChatForm::SendMessageStr(QString msg)
         }
 
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
-        ChatMessage::Ptr ma = addSelfMessage(part, isAction, timestamp, false);
+        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
         Core* core = Core::getInstance();
         uint32_t friendId = f->getFriendId();
         int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);

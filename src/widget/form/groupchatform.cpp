@@ -155,10 +155,10 @@ void GroupChatForm::onSendTriggered()
         }
     } else {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
-            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), true,
-                           QDateTime::currentDateTime(), true);
+            addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), QDateTime::currentDateTime(),
+                           true, true);
         else
-            addSelfMessage(msg, false, QDateTime::currentDateTime(), true);
+            addSelfMessage(msg, QDateTime::currentDateTime(), false, true);
     }
 }
 
