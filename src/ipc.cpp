@@ -18,7 +18,6 @@
 */
 
 #include "src/ipc.h"
-#include "src/persistence/settings.h"
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
@@ -89,15 +88,6 @@ IPC::~IPC()
             globalMemory.unlock();
         }
     }
-}
-
-/**
- * @brief Returns the singleton instance.
- */
-IPC& IPC::getInstance()
-{
-    static IPC instance(Settings::getInstance().getCurrentProfileId());
-    return instance;
 }
 
 /**

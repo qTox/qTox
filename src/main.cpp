@@ -165,7 +165,8 @@ int main(int argc, char* argv[])
                            QObject::tr("profile")));
     parser.process(a);
 
-    IPC& ipc = IPC::getInstance();
+    uint32_t profileId = Settings::getInstance().getCurrentProfileId();
+    IPC ipc(profileId);
 
     if (sodium_init() < 0) // For the auto-updater
     {
