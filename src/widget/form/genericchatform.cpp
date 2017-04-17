@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -19,16 +19,6 @@
 
 #include "genericchatform.h"
 
-#include <QClipboard>
-#include <QDebug>
-#include <QFileDialog>
-#include <QHBoxLayout>
-#include <QKeyEvent>
-#include <QPushButton>
-#include <QShortcut>
-#include <QSplitter>
-#include <QToolButton>
-
 #include "src/chatlog/chatlog.h"
 #include "src/chatlog/content/timestamp.h"
 #include "src/core/core.h"
@@ -45,10 +35,14 @@
 #include "src/widget/maskablepixmapwidget.h"
 #include "src/widget/style.h"
 #include "src/widget/tool/chattextedit.h"
-#include "src/widget/tool/croppinglabel.h"
 #include "src/widget/tool/flyoutoverlaywidget.h"
 #include "src/widget/translator.h"
 #include "src/widget/widget.h"
+
+#include <QClipboard>
+#include <QFileDialog>
+#include <QKeyEvent>
+#include <QShortcut>
 
 /**
  * @class GenericChatForm
