@@ -41,7 +41,7 @@
  */
 
 static const unsigned int BUFFER_COUNT = 16;
-static const unsigned int PROXY_BUFFER_COUNT = 16;
+static const unsigned int PROXY_BUFFER_COUNT = 4;
 
 OpenAL2::OpenAL2() :
       audioThread{new QThread}
@@ -324,10 +324,9 @@ bool OpenAL2::initOutput(const QString& deviceName)
     }
 
     if(echoCancelSupported) {
+        qDebug() << "Echo cancelation supported with this device";
         // source for proxy output
         alGenSources(1, &alProxySource);
-
-        qDebug() << "Echo cancelation supported with this device";
 
         LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT =
                 reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT> (alcGetProcAddress(alOutDev, "alcLoopbackOpenDeviceSOFT"));
@@ -543,38 +542,43 @@ void OpenAL2::doAudio()
 {
     QMutexLocker lock(&audioLock);
 
+    static ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
+
     // output section
     if(echoCancelSupported && outputInitialized) {
-        alcMakeContextCurrent(alProxyContext);
-        LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
-                reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
-        uint sampleCount = AUDIO_FRAME_SAMPLE_COUNT / 2;
-        ALshort outBuf[sampleCount * AUDIO_CHANNELS];
-        alcRenderSamplesSOFT(alProxyDev, outBuf, sampleCount);
         alcMakeContextCurrent(alOutContext);
-
         ALuint bufids[PROXY_BUFFER_COUNT];
         ALint processed = 0, queued = 0;
         alGetSourcei(alProxySource, AL_BUFFERS_PROCESSED, &processed);
         alGetSourcei(alProxySource, AL_BUFFERS_QUEUED, &queued);
 
-        if (processed == 0) {
-            if (queued >= PROXY_BUFFER_COUNT) {
-                // reached limit, drop audio
-                qDebug() << "Proxy source overflow detected";
-                return;
-            }
-            // create new buffer if none got free and we're below the limit
+        //qDebug() << "Speedtest processed: " << processed << " queued: " << queued;
+
+        if (processed > 0) {
+            // unqueue all processed buffers
+            alSourceUnqueueBuffers(alProxySource, 1, bufids);
+        } else if (queued < PROXY_BUFFER_COUNT) {
+            // create new buffer until the maximum is reached
             alGenBuffers(1, bufids);
         } else {
-            // unqueue all processed buffers
-            alSourceUnqueueBuffers(alProxySource, processed, bufids);
-            // delete all but the first buffer, reuse first for new data
-            alDeleteBuffers(processed - 1, bufids + 1);
+            return;
         }
 
+        LPALGETSOURCEDVSOFT alGetSourcedvSOFT =
+                reinterpret_cast<LPALGETSOURCEDVSOFT> (alcGetProcAddress(alOutDev, "alGetSourcedvSOFT"));
+        ALdouble latency[2] = {0};
+        alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
+        checkAlError();
+        qDebug() << "Playback latency: " << latency[1];
+
+        alcMakeContextCurrent(alProxyContext);
+        LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
+                reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
+        alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+
+        alcMakeContextCurrent(alOutContext);
         alBufferData(bufids[0], (AUDIO_CHANNELS == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, outBuf,
-                     sampleCount * 2 * AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+                     AUDIO_FRAME_SAMPLE_COUNT * 2 * AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
         alSourceQueueBuffers(alProxySource, 1, bufids);
 
         ALint state;
@@ -607,7 +611,7 @@ void OpenAL2::doAudio()
         buf[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
 }
 
 /**
