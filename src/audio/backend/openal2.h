@@ -125,8 +125,8 @@ private:
     QList<ALuint> peerSources;
     qreal gain;
     qreal gainFactor;
-    qreal minInGain;
-    qreal maxInGain;
+    qreal minInGain = -30;
+    qreal maxInGain = 30;
 };
 
 #endif // OPENAL2_H
