@@ -187,7 +187,7 @@ void AddFriendForm::onSendTriggered()
 void AddFriendForm::onIdChanged(const QString& id)
 {
     QString tId = id.trimmed();
-    QRegularExpression dnsIdExpression("^\\S+@\\S+$");
+    QRegularExpression dnsIdExpression("^\\S+@\\S+\.\\S+$");
     bool isValidId = tId.isEmpty() || ToxId::isToxId(tId) || tId.contains(dnsIdExpression);
 
     QString toxIdText(tr("Tox ID", "Tox ID of the person you're sending a friend request to"));
