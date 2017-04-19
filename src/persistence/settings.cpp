@@ -232,8 +232,9 @@ void Settings::loadGlobal()
 
         const QString DEFAULT_SMILEYS = ":/smileys/emojione/emoticons.xml";
         smileyPack = s.value("smileyPack", DEFAULT_SMILEYS).toString();
-        if (!SmileyPack::isValid(smileyPack))
+        if (!QFile::exists(smileyPack)) {
             smileyPack = DEFAULT_SMILEYS;
+        }
 
         emojiFontPointSize = s.value("emojiFontPointSize", 24).toInt();
         firstColumnHandlePos = s.value("firstColumnHandlePos", 50).toInt();

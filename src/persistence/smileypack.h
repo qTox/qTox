@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -20,12 +20,9 @@
 #ifndef SMILEYPACK_H
 #define SMILEYPACK_H
 
-#include <QHash>
 #include <QIcon>
+#include <QMap>
 #include <QMutex>
-#include <QObject>
-#include <QString>
-#include <QStringList>
 
 class SmileyPack : public QObject
 {
@@ -35,11 +32,9 @@ public:
     static SmileyPack& getInstance();
     static QList<QPair<QString, QString>> listSmileyPacks(const QStringList& paths);
     static QList<QPair<QString, QString>> listSmileyPacks();
-    static bool isValid(const QString& filename);
 
-    QString smileyfied(QString msg);
+    QString smileyfied(const QString& msg);
     QList<QStringList> getEmoticons() const;
-    QString getAsRichText(const QString& key);
     QIcon getAsIcon(const QString& key);
 
 private slots:
@@ -51,15 +46,11 @@ private:
     SmileyPack& operator=(const SmileyPack&) = delete;
 
     bool load(const QString& filename);
-    void cacheSmiley(const QString& name);
-    QIcon getCachedSmiley(const QString& key);
-    static QStringList loadDefaultPaths();
 
-    QHash<QString, QString> filenameTable;
-    QHash<QString, QIcon> iconCache;
+    QVector<QIcon> icons;
+    QMap<QString, const QIcon*> emoticonToIcon;
     QList<QStringList> emoticons;
     QString path;
-    static QStringList defaultPaths;
     mutable QMutex loadingMutex;
 };
 
