@@ -67,6 +67,12 @@ static const short HEAD_LAYOUT_SPACING = 5;
 static const short BUTTONS_LAYOUT_HOR_SPACING = 4;
 static const QString FONT_STYLE[]{"normal", "italic", "oblique"};
 
+/**
+ * @brief Creates CSS style string for needed class with specified font
+ * @param font Font that needs to be represented for a class
+ * @param name Class name
+ * @return Style string
+ */
 QString fontToCss(const QFont& font, const QString& name)
 {
     QString result{"%1{"
@@ -77,15 +83,21 @@ QString fontToCss(const QFont& font, const QString& name)
     return result.arg(name).arg(font.family()).arg(font.pixelSize()).arg(FONT_STYLE[font.style()]);
 }
 
-QString resolveToxId(const ToxPk& id)
+/**
+ * @brief Searches for name (possibly alias) of someone with specified public key among all of your
+ * friends or groups you are participated
+ * @param pk Searched public key
+ * @return Name or alias of someone with such public key
+ */
+QString resolveToxId(const ToxPk& pk)
 {
-    Friend* f = FriendList::findFriend(id);
+    Friend* f = FriendList::findFriend(pk);
     if (f) {
         return f->getDisplayedName();
     }
 
     for (Group* it : GroupList::getAllGroups()) {
-        QString res = it->resolveToxId(id);
+        QString res = it->resolveToxId(pk);
         if (!res.isEmpty()) {
             return res;
         }
@@ -366,6 +378,15 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
     menu.exec(pos);
 }
 
+/**
+ * @brief Creates ChatMessage shared object that later will be inserted into ChatLog
+ * @param author Author of the message
+ * @param message Message text
+ * @param dt Date and time when message was sent
+ * @param isAction True if this is an action message, false otherwise
+ * @param isSent True if message was received by your friend
+ * @return ChatMessage object
+ */
 ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QString& message,
                                                 const QDateTime& dt, bool isAction, bool isSent)
 {
@@ -400,6 +421,9 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
     return msg;
 }
 
+/**
+ * @brief Same, as createMessage, but creates message that you will send to someone
+ */
 ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, const QDateTime& dt,
                                                     bool isAction, bool isSent)
 {
@@ -407,12 +431,18 @@ ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, cons
     return createMessage(selfPk, message, dt, isAction, isSent);
 }
 
+/**
+ * @brief Inserts message into ChatLog
+ */
 void GenericChatForm::addMessage(const ToxPk& author, const QString& message, const QDateTime& dt,
                                  bool isAction, bool isSent)
 {
     insertChatMessage(createMessage(author, message, dt, isAction, isSent));
 }
 
+/**
+ * @brief Inserts int ChatLog message that you have sent
+ */
 void  GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
                                       bool isAction, bool isSent)
 {
