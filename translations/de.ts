@@ -262,6 +262,14 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <source>Input field for notes about the contact</source>
         <translation>Eingabefeld für Notizen über den Kontakt</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -675,22 +683,6 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
         <translation>Toxe mit qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Du musst eine Nachricht zu deiner Anfrage schreiben</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Deine Nachricht ist zu lang!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Dieser Freund wurde bereits hinzugefügt</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me macht eine Freundschaftsanfrage.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me macht eine Freundschaftsanfrage:
 
@@ -698,7 +690,23 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Ungültige Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Ungültige Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Du musst eine Nachricht zu deiner Anfrage schreiben</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Deine Nachricht ist zu lang!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Dieser Freund wurde bereits hinzugefügt</translation>
     </message>
 </context>
 <context>
@@ -808,33 +816,27 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Heute</translation>
+        <translation type="unfinished">Heute</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Gestern</translation>
+        <translation type="unfinished">Gestern</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>letzte Woche</translation>
+        <translation type="unfinished">letzte Woche</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Diesen Monat</translation>
+        <translation type="unfinished">Diesen Monat</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Älter als 6 Monate</translation>
+        <translation type="unfinished">Älter als 6 Monate</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Unbekannt</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1247,11 +1249,11 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Beitreten</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablehnen</translation>
     </message>
 </context>
 <context>
@@ -1906,6 +1908,17 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2098,6 +2111,10 @@ Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
         <source>Current profile location: %1</source>
         <translation>Aktuelles Profil in: %1</translation>
     </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2210,10 +2227,6 @@ It will be installed when qTox restarts.</source>
 Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
-        <source>Resizing</source>
-        <translation>Größe ändern</translation>
-    </message>
-    <message>
         <source>Tox URI to parse</source>
         <translation>Zu parsende Tox-URI</translation>
     </message>
@@ -2320,6 +2333,10 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
         <source>Internal ToxMe error</source>
         <translation>Interner ToxMe Fehler</translation>
     </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
@@ -2412,7 +2429,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation type="unfinished">Passworteingabefeld, mindestens 6 Zeichen lang</translation>
+        <translation>Passworteingabefeld, mindestens 6 Zeichen lang</translation>
     </message>
 </context>
 <context>
