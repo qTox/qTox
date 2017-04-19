@@ -68,8 +68,7 @@ public:
 
     void addMessage(const ToxPk& author, const QString& message, const QDateTime& datetime,
                     bool isAction, bool isSent);
-    void addSelfMessage(const QString& message, const QDateTime& datetime,
-                        bool isAction, bool isSent);
+    void addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction, bool isSent);
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
