@@ -1245,7 +1245,7 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingeladen von %1 am %2 um %3.</translation>
     </message>
     <message>
         <source>Join</source>
