@@ -85,6 +85,7 @@ AddFriendForm::AddFriendForm()
     messageLabel.setAccessibleDescription(tr("Friend request message"));
     message.setAccessibleDescription(tr(
         "Type message to send with the friend request or leave empty to send a default message"));
+    message.setTabChangesFocus(true);
 
     retranslateUi();
     Translator::registerHandler(std::bind(&AddFriendForm::retranslateUi, this), this);
