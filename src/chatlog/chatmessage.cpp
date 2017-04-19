@@ -173,27 +173,6 @@ ChatMessage::Ptr ChatMessage::createTypingNotification()
     return msg;
 }
 
-/**
- * @brief Create message placeholder while chatform restructures text
- *
- * It can take a while for chatform to resize large amounts of text, thus
- * a message placeholder is needed to inform users about it.
- *
- * @return created message
- */
-ChatMessage::Ptr ChatMessage::createBusyNotification()
-{
-    ChatMessage::Ptr msg = ChatMessage::Ptr(new ChatMessage);
-    QFont baseFont = Settings::getInstance().getChatMessageFont();
-    baseFont.setPixelSize(baseFont.pixelSize() + 2);
-    baseFont.setBold(true);
-
-    msg->addColumn(new Text(QObject::tr("Reformatting text in progress.."), baseFont, false, ""),
-                   ColumnFormat(1.0, ColumnFormat::VariableSize, ColumnFormat::Center));
-
-    return msg;
-}
-
 void ChatMessage::markAsSent(const QDateTime& time)
 {
     QFont baseFont = Settings::getInstance().getChatMessageFont();
