@@ -1463,7 +1463,7 @@ ContentDialog* Widget::createContentDialog() const
     connect(&s, &Settings::groupchatPositionChanged, contentDialog, &ContentDialog::reorderLayouts);
 
 #ifdef Q_OS_MAC
-    Nexus &n = Nexus::getInstance();
+    Nexus& n = Nexus::getInstance();
     connect(contentDialog, &ContentDialog::destroyed, &n, &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &n, &Nexus::onWindowStateChanged);
     connect(contentDialog->windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);

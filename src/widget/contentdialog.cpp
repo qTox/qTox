@@ -69,11 +69,8 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     friendLayout->setMargin(0);
     friendLayout->setSpacing(0);
 
-    layouts = {
-        friendLayout->getLayoutOnline(),
-        groupLayout.getLayout(),
-        friendLayout->getLayoutOffline()
-    };
+    layouts = {friendLayout->getLayoutOnline(), groupLayout.getLayout(),
+               friendLayout->getLayoutOffline()};
 
     if (s.getGroupchatPosition()) {
         layouts.swap(0, 1);
@@ -141,8 +138,9 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     Translator::registerHandler(std::bind(&ContentDialog::retranslateUi, this), this);
 }
 
-void ContentDialog::removeCurrent(QHash<int, ContactInfo>& infos) {
-    for (auto it = infos.begin(); it != infos.end(); ) {
+void ContentDialog::removeCurrent(QHash<int, ContactInfo>& infos)
+{
+    for (auto it = infos.begin(); it != infos.end();) {
         if (std::get<0>(*it) == this) {
             it = infos.erase(it);
         } else {
@@ -352,9 +350,9 @@ void ContentDialog::cycleContacts(bool forward, bool inverse)
         bool isCurOffline = currentLayout == friendLayout->getLayoutOffline();
         bool isCurOnline = currentLayout == friendLayout->getLayoutOnline();
         bool isCurGroup = currentLayout == groupLayout.getLayout();
-        bool nextIsEmpty = (isCurOnline && offlineEmpty && (groupsEmpty || groupsOnTop)) ||
-                           (isCurGroup  && offlineEmpty && (onlineEmpty || !groupsOnTop)) ||
-                           isCurOffline;
+        bool nextIsEmpty = (isCurOnline && offlineEmpty && (groupsEmpty || groupsOnTop))
+                           || (isCurGroup && offlineEmpty && (onlineEmpty || !groupsOnTop))
+                           || isCurOffline;
 
         if (nextIsEmpty) {
             forward = !forward;
@@ -507,12 +505,10 @@ void ContentDialog::updateTitleAndStatusIcon()
 
     Status currentStatus = activeChatroomWidget->getFriend()->getStatus();
 
-    QMap<Status, QIcon> icons {
-        {Status::Online,  QIcon(":/img/status/dot_online.svg")},
-        {Status::Away,    QIcon(":/img/status/dot_away.svg")},
-        {Status::Busy,    QIcon(":/img/status/dot_busy.svg")},
-        {Status::Offline, QIcon(":/img/status/dot_offline.svg")}
-    };
+    QMap<Status, QIcon> icons{{Status::Online, QIcon(":/img/status/dot_online.svg")},
+                              {Status::Away, QIcon(":/img/status/dot_away.svg")},
+                              {Status::Busy, QIcon(":/img/status/dot_busy.svg")},
+                              {Status::Offline, QIcon(":/img/status/dot_offline.svg")}};
 
     setWindowIcon(icons[currentStatus]);
 }
@@ -819,8 +815,7 @@ bool ContentDialog::hasWidget(int id, GenericChatroomWidget* chatroomWidget,
         return false;
     }
 
-    return std::get<0>(*iter) == this &&
-        std::get<1>(*iter) == chatroomWidget;
+    return std::get<0>(*iter) == this && std::get<1>(*iter) == chatroomWidget;
 }
 
 /**
