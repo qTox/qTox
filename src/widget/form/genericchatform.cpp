@@ -443,8 +443,8 @@ void GenericChatForm::addMessage(const ToxPk& author, const QString& message, co
 /**
  * @brief Inserts int ChatLog message that you have sent
  */
-void  GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
-                                      bool isAction, bool isSent)
+void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
+                                     bool isAction, bool isSent)
 {
     insertChatMessage(createSelfMessage(message, datetime, isAction, isSent));
 }
