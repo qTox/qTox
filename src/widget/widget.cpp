@@ -1601,7 +1601,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     if (targeted && !isAction) {
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     } else {
-        g->getChatForm()->addMessage(author, message, QDateTime::currentDateTime(), isAction, true);
+        g->getChatForm()->addMessage(author, message, QDateTime::currentDateTime(), isAction);
     }
 
     newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify());
