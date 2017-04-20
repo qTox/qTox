@@ -112,7 +112,8 @@ private:
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, ContactInfo>& list);
+    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget,
+                   const QHash<int, ContactInfo>& list);
     void removeCurrent(QHash<int, ContactInfo>& infos);
     static bool existsWidget(int id, const QHash<int, ContactInfo>& list);
     static void focusDialog(int id, const QHash<int, ContactInfo>& list);

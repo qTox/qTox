@@ -156,9 +156,9 @@ void GroupChatForm::onSendTriggered()
     } else {
         if (msg.startsWith(ChatForm::ACTION_PREFIX, Qt::CaseInsensitive))
             addSelfMessage(msg.mid(ChatForm::ACTION_PREFIX.length()), QDateTime::currentDateTime(),
-                           true, true);
+                           true);
         else
-            addSelfMessage(msg, QDateTime::currentDateTime(), false, true);
+            addSelfMessage(msg, QDateTime::currentDateTime(), false);
     }
 }
 
