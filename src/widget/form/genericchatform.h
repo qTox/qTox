@@ -21,7 +21,7 @@
 #define GENERICCHATFORM_H
 
 #include "src/chatlog/chatmessage.h"
-#include "src/core/toxid.h"
+#include "src/core/toxpk.h"
 
 #include <QMenu>
 #include <QWidget>
@@ -31,8 +31,6 @@
  * @note Why the hell is this a thing? surely the different font is enough?
  *        - Even a different font is not enough – TODO #1307 ~~zetok
  */
-
-QString resolveToxId(const ToxPk& id);
 
 class ChatLog;
 class ChatTextEdit;
@@ -67,11 +65,12 @@ public:
     virtual void show(ContentLayout* contentLayout);
 
     void addMessage(const ToxPk& author, const QString& message, const QDateTime& datetime,
-                    bool isAction, bool isSent);
-    void addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction, bool isSent);
+                    bool isAction);
+    void addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction);
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
+    static QString resolveToxId(const ToxPk& id);
     QDate getLatestDate() const;
 
 signals:
@@ -108,6 +107,7 @@ protected:
                                    const QDateTime& datetime, bool isAction, bool isSent);
     ChatMessage::Ptr createSelfMessage(const QString& message, const QDateTime& datetime,
                                        bool isAction, bool isSent);
+    bool needsToHideName(const ToxPk& author) const;
     void showNetcam();
     void hideNetcam();
     virtual GenericNetCamView* createNetcam() = 0;
