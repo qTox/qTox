@@ -78,6 +78,7 @@ function(search_dependency pkg)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
     endforeach()
     set(ALL_LIBRARIES ${ALL_LIBRARIES} ${${pkg}_LIBRARIES} PARENT_SCOPE)
+    message(STATUS "${pkg} found")
   endif()
 
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
@@ -102,11 +103,12 @@ search_dependency(TOXENCRYPTSAVE      PACKAGE toxencryptsave   OPTIONAL)
 if (NOT TOXCORE_FOUND OR
         NOT TOXAV_FOUND OR
         NOT TOXENCRYPTSAVE_FOUND)
-    search_dependency(TOXCORE             PACKAGE libtoxcore)
-    search_dependency(TOXAV               PACKAGE libtoxav)
+    search_dependency(TOXCORE         PACKAGE libtoxcore)
+    search_dependency(TOXAV           PACKAGE libtoxav)
 endif()
 
 search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
+search_dependency(FILTERAUDIO         LIBRARY filteraudio)
 
 # Automatic auto-away support. (X11 also using for capslock detection)
 search_dependency(X11                 PACKAGE x11 OPTIONAL)
