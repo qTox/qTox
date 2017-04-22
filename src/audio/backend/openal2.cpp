@@ -32,6 +32,10 @@
 
 #include <cassert>
 
+extern "C" {
+#include <filter_audio.h>
+}
+
 /**
  * @class OpenAL
  * @brief Provides the OpenAL audio backend
@@ -542,7 +546,8 @@ void OpenAL2::doAudio()
 {
     QMutexLocker lock(&audioLock);
 
-    static ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
+    static int outBufcnt = 0;
+    static double outLatency = 0;
 
     // output section
     if(echoCancelSupported && outputInitialized) {
@@ -569,8 +574,10 @@ void OpenAL2::doAudio()
         ALdouble latency[2] = {0};
         alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
         checkAlError();
-        qDebug() << "Playback latency: " << latency[1];
+        //qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
+        outLatency = latency[1];
 
+        ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
         alcMakeContextCurrent(alProxyContext);
         LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
                 reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
@@ -580,6 +587,18 @@ void OpenAL2::doAudio()
         alBufferData(bufids[0], (AUDIO_CHANNELS == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, outBuf,
                      AUDIO_FRAME_SAMPLE_COUNT * 2 * AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
         alSourceQueueBuffers(alProxySource, 1, bufids);
+        ++outBufcnt;
+
+        // initialize echo canceler if supported
+        if(!filterer) {
+            filterer = new_filter_audio(AUDIO_SAMPLE_RATE);
+            int16_t filterLatency = outLatency*1000 + AUDIO_FRAME_DURATION;
+            qDebug() << "Setting filter delay to: " << filterLatency << "ms";
+            set_echo_delay_ms(filterer, filterLatency);
+        }
+
+        // do echo cancel
+        pass_audio_output(filterer, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
 
         ALint state;
         alGetSourcei(alProxySource, AL_SOURCE_STATE, &state);
@@ -598,9 +617,18 @@ void OpenAL2::doAudio()
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
     if (curSamples < AUDIO_FRAME_SAMPLE_COUNT)
         return;
+    // check for dropped buffers in echo cancel
+    if(outBufcnt > 1) {
+        qDebug() << "Echo cancel frame dropped";
+    }
+    outBufcnt = 0;
 
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
+
+    if(echoCancelSupported && filterer) {
+        filter_audio(filterer, buf, AUDIO_FRAME_SAMPLE_COUNT);
+    }
 
     for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i) {
         // gain amplification with clipping to 16-bit boundaries

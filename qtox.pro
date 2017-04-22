@@ -249,7 +249,8 @@ win32 {
                 -lavutil \
                 -lswscale \
                 -lqrencode \
-                -lsqlcipher
+                -lsqlcipher \
+                -lfilteraudio
     }
 
     contains(DEFINES, QTOX_PLATFORM_EXT) {
@@ -334,6 +335,7 @@ RESOURCES += res.qrc \
 HEADERS  += \
     src/audio/audio.h \
     src/audio/backend/openal.h \
+    src/audio/backend/openal2.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
@@ -455,6 +457,7 @@ HEADERS  += \
 SOURCES += \
     src/audio/audio.cpp \
     src/audio/backend/openal.cpp \
+    src/audio/backend/openal2.cpp \
     src/chatlog/chatline.cpp \
     src/chatlog/chatlinecontent.cpp \
     src/chatlog/chatlinecontentproxy.cpp \
