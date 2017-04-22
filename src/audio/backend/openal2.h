@@ -42,6 +42,10 @@
 #include <AL/alext.h>
 #endif
 
+extern "C" {
+#include <filter_audio.h>
+}
+
 class OpenAL2 : public Audio
 {
     Q_OBJECT
@@ -127,6 +131,7 @@ private:
     qreal gainFactor;
     qreal minInGain = -30;
     qreal maxInGain = 30;
+    Filter_Audio* filterer = nullptr;
 };
 
 #endif // OPENAL2_H
