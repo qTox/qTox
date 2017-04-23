@@ -141,7 +141,7 @@ Profile* Profile::loadProfile(QString name, const QString& password)
     saveFile.close();
     p = new Profile(name, password, false, data);
     p->passkey = std::move(tmpKey);
-    if (tmpKey) {
+    if (p->passkey) {
         p->encrypted = true;
     }
 
@@ -192,7 +192,7 @@ Profile* Profile::createProfile(QString name, QString password)
     Settings::getInstance().createPersonal(name);
     Profile* p = new Profile(name, password, true, QByteArray());
     p->passkey = std::move(tmpKey);
-    if (tmpKey) {
+    if (p->passkey) {
         p->encrypted = true;
     }
 
@@ -393,10 +393,10 @@ QPixmap Profile::loadAvatar(const QString& ownerId)
 QByteArray Profile::loadAvatarData(const QString& ownerId)
 {
     QString path = avatarPath(ownerId);
-
+    bool avatarEncrypted = encrypted;
     // If the encrypted avatar isn't found, try loading the unencrypted one for the same ID
-    if (encrypted && !QFile::exists(path)) {
-        encrypted = false;
+    if (avatarEncrypted && !QFile::exists(path)) {
+        avatarEncrypted = false;
         path = avatarPath(ownerId, true);
     }
 
@@ -406,7 +406,7 @@ QByteArray Profile::loadAvatarData(const QString& ownerId)
     }
 
     QByteArray pic = file.readAll();
-    if (encrypted && !pic.isEmpty()) {
+    if (avatarEncrypted && !pic.isEmpty()) {
         pic = passkey->decrypt(pic);
     }
 
