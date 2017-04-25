@@ -89,9 +89,10 @@ static QString fontToCss(const QFont& font, const QString& name)
  * @brief Searches for name (possibly alias) of someone with specified public key among all of your
  * friends or groups you are participated
  * @param pk Searched public key
- * @return Name or alias of someone with such public key
+ * @return Name or alias of someone with such public key, or public key string representation if no
+ * one was found
  */
-QString GenericChatForm::resolveToxId(const ToxPk& pk)
+QString GenericChatForm::resolveToxPk(const ToxPk& pk)
 {
     Friend* f = FriendList::findFriend(pk);
     if (f) {
@@ -105,7 +106,7 @@ QString GenericChatForm::resolveToxId(const ToxPk& pk)
         }
     }
 
-    return QString{};
+    return pk.toString();
 }
 
 GenericChatForm::GenericChatForm(QWidget* parent)
@@ -375,9 +376,9 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
 }
 
 /**
- * @brief Show, is it needed to repeat message author name or not
+ * @brief Show, is it needed to hide message author name or not
  * @param messageAuthor Author of the sent message
- * @return True if it's needed to repeat name, false otherwise
+ * @return True if it's needed to hide name, ufalse otherwise
  */
 bool GenericChatForm::needsToHideName(const ToxPk &messageAuthor) const
 {
@@ -399,7 +400,7 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
 {
     const Core* core = Core::getInstance();
     bool isSelf = author == core->getSelfId().getPublicKey();
-    QString authorStr = isSelf ? core->getUsername() : resolveToxId(author);
+    QString authorStr = isSelf ? core->getUsername() : resolveToxPk(author);
     if (getLatestDate() != QDate::currentDate()) {
         const Settings& s = Settings::getInstance();
         QString dateText = QDate::currentDate().toString(s.getDateFormat());
@@ -457,7 +458,7 @@ void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& da
 
 void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt)
 {
-    QString authorStr = resolveToxId(author);
+    QString authorStr = resolveToxPk(author);
     bool isSelf = author == Core::getInstance()->getSelfId().getPublicKey();
     auto chatMsg = ChatMessage::createChatMessage(authorStr, msg, ChatMessage::ALERT, isSelf, dt);
     if (needsToHideName(author)) {

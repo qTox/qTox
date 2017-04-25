@@ -723,7 +723,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         } else if (isSelf) {
             authorStr = core->getUsername();
         } else {
-            authorStr = resolveToxId(authorPk);
+            authorStr = resolveToxPk(authorPk);
         }
 
         bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
