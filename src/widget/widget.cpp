@@ -1463,7 +1463,7 @@ ContentDialog* Widget::createContentDialog() const
     connect(&s, &Settings::groupchatPositionChanged, contentDialog, &ContentDialog::reorderLayouts);
 
 #ifdef Q_OS_MAC
-    Nexus &n = Nexus::getInstance();
+    Nexus& n = Nexus::getInstance();
     connect(contentDialog, &ContentDialog::destroyed, &n, &Nexus::updateWindowsClosed);
     connect(contentDialog, &ContentDialog::windowStateChanged, &n, &Nexus::onWindowStateChanged);
     connect(contentDialog->windowHandle(), &QWindow::windowTitleChanged, &n, &Nexus::updateWindows);
@@ -1601,7 +1601,7 @@ void Widget::onGroupMessageReceived(int groupnumber, int peernumber, const QStri
     if (targeted && !isAction) {
         g->getChatForm()->addAlertMessage(author, message, QDateTime::currentDateTime());
     } else {
-        g->getChatForm()->addMessage(author, message, isAction, QDateTime::currentDateTime(), true);
+        g->getChatForm()->addMessage(author, message, QDateTime::currentDateTime(), isAction);
     }
 
     newGroupMessageAlert(g->getGroupId(), targeted || Settings::getInstance().getGroupAlwaysNotify());

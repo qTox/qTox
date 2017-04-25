@@ -559,7 +559,7 @@ void ChatForm::onFriendMessageReceived(quint32 friendId, const QString& message,
     }
 
     QDateTime timestamp = QDateTime::currentDateTime();
-    addMessage(f->getPublicKey(), message, isAction, timestamp, true);
+    addMessage(f->getPublicKey(), message, timestamp, isAction);
 }
 
 void ChatForm::onStatusMessage(const QString& message)
@@ -694,8 +694,8 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
     QString pk = f->getPublicKey().toString();
     QList<History::HistMessage> msgs = history->getChatHistory(pk, since, now);
 
-    ToxPk storedPrevId = previousId;
-    ToxPk prevId;
+    ToxPk prevIdBackup = previousId;
+    previousId = ToxPk{};
 
     QList<ChatLine::Ptr> historyMessages;
 
@@ -723,7 +723,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         } else if (isSelf) {
             authorStr = core->getUsername();
         } else {
-            authorStr = resolveToxId(authorPk);
+            authorStr = resolveToxPk(authorPk);
         }
 
         bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
@@ -733,13 +733,11 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         ChatMessage::MessageType type = isAction ? ChatMessage::ACTION : ChatMessage::NORMAL;
         QDateTime dateTime = needSending ? QDateTime() : msgDateTime;
         auto msg = ChatMessage::createChatMessage(authorStr, messageText, type, isSelf, dateTime);
-
-        uint prev = prevMsgDateTime.secsTo(msgDateTime);
-        if (!isAction && prevId == authorPk && prev < getChatLog()->repNameAfter) {
+        if (!isAction && needsToHideName(authorPk)) {
             msg->hideSender();
         }
 
-        prevId = authorPk;
+        previousId = authorPk;
         prevMsgDateTime = msgDateTime;
 
         if (needSending && processUndelivered) {
@@ -754,7 +752,7 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
         historyMessages.append(msg);
     }
 
-    previousId = storedPrevId;
+    previousId = prevIdBackup;
     earliestMessage = since;
 
     QScrollBar* verticalBar = chatWidget->verticalScrollBar();
@@ -966,7 +964,7 @@ void ChatForm::SendMessageStr(QString msg)
         }
 
         bool status = !Settings::getInstance().getFauxOfflineMessaging();
-        ChatMessage::Ptr ma = addSelfMessage(part, isAction, timestamp, false);
+        ChatMessage::Ptr ma = createSelfMessage(part, timestamp, isAction, false);
         Core* core = Core::getInstance();
         uint32_t friendId = f->getFriendId();
         int rec = isAction ? core->sendAction(friendId, part) : core->sendMessage(friendId, part);
