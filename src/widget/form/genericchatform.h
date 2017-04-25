@@ -70,7 +70,7 @@ public:
     void addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                               const QDateTime& datetime);
     void addAlertMessage(const ToxPk& author, const QString& message, const QDateTime& datetime);
-    static QString resolveToxId(const ToxPk& id);
+    static QString resolveToxPk(const ToxPk& pk);
     QDate getLatestDate() const;
 
 signals:
