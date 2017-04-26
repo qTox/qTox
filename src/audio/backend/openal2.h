@@ -106,6 +106,8 @@ private:
     void playMono16SoundCleanup();
     void doAudio();
     qreal inputGainFactor() const;
+    void doInput();
+    void doOutput();
 
 private:
     QThread* audioThread;
