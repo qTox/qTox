@@ -284,6 +284,112 @@ bool OpenAL2::initInput(const QString& deviceName)
 }
 
 /**
+ * @brief Loads the OpenAL extension methods needed for echo cancellation
+ * @param dev OpenAL device used for the output
+ * @return True when functions successfully loaded, false otherwise
+ */
+bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
+{
+    // load OpenAL extension functions
+    alcLoopbackOpenDeviceSOFT = reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT>
+            (alcGetProcAddress(dev, "alcLoopbackOpenDeviceSOFT"));
+
+    checkAlcError(dev);
+    if(!alcLoopbackOpenDeviceSOFT) {
+        qDebug() << "Failed to load alcLoopbackOpenDeviceSOFT function!";
+        return false;
+    }
+    alcIsRenderFormatSupportedSOFT = reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT>
+            (alcGetProcAddress(dev, "alcIsRenderFormatSupportedSOFT"));
+
+    checkAlcError(dev);
+    if(!alcIsRenderFormatSupportedSOFT) {
+        qDebug() << "Failed to load alcIsRenderFormatSupportedSOFT function!";
+        return false;
+    }
+    alGetSourcedvSOFT = reinterpret_cast<LPALGETSOURCEDVSOFT>
+            (alcGetProcAddress(dev, "alGetSourcedvSOFT"));
+
+    checkAlcError(dev);
+    if(!alGetSourcedvSOFT) {
+        qDebug() << "Failed to load alGetSourcedvSOFT function!";
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * @brief Initializes the output with echo cancelling enabled
+ * @return true on success, false otherwise
+ * Creates a loopback device and a proxy source on the main output device.
+ * If this function returns true only the proxy source should be used for
+ * audio output.
+ */
+bool OpenAL2::initOutputEchoCancel()
+{
+    // check for the needed extensions for echo cancelation
+    if (alcIsExtensionPresent(alOutDev, "ALC_SOFT_loopback") != AL_TRUE) {
+        qDebug() << "Device doesn't support loopback";
+        return false;
+    }
+    if (alIsExtensionPresent("AL_SOFT_source_latency") != AL_TRUE) {
+        qDebug() << "Device doesn't support source latency";
+        return false;
+    }
+
+    if(!loadOpenALExtensions(alOutDev)) {
+        qDebug() << "Couldn't load needed OpenAL extensions";
+        return false;
+    }
+
+    // source for proxy output
+    alGenSources(1, &alProxySource);
+    checkAlError();
+
+    // configuration for the loopback device
+    ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, AUDIO_CHANNELS == 1 ? ALC_MONO_SOFT : ALC_STEREO_SOFT,
+                     ALC_FORMAT_TYPE_SOFT, ALC_SHORT_SOFT,
+                     ALC_FREQUENCY, Audio::AUDIO_SAMPLE_RATE,
+                     0 }; // End of List
+
+    alProxyDev = alcLoopbackOpenDeviceSOFT(NULL);
+    checkAlcError(alProxyDev);
+    if(!alProxyDev) {
+        qDebug() << "Couldn't create proxy device";
+        alDeleteSources(1, &alProxySource); // cleanup source
+        return false;
+    }
+
+    if(!alcIsRenderFormatSupportedSOFT(alProxyDev, attrs[5], attrs[1], attrs[3])) {
+        qDebug() << "Unsupported format for loopback";
+        alcCloseDevice(alProxyDev);         // cleanup loopback dev
+        alDeleteSources(1, &alProxySource); // cleanup source
+        return false;
+    }
+
+    alProxyContext = alcCreateContext(alProxyDev, attrs);
+    checkAlcError(alProxyDev);
+    if(!alProxyContext) {
+        qDebug() << "Couldn't create proxy context";
+        alcCloseDevice(alProxyDev);         // cleanup loopback dev
+        alDeleteSources(1, &alProxySource); // cleanup source
+        return false;
+    }
+
+    if (!alcMakeContextCurrent(alProxyContext)) {
+        qDebug() << "Cannot activate proxy context";
+        alcDestroyContext(alProxyContext);
+        alcCloseDevice(alProxyDev);         // cleanup loopback dev
+        alDeleteSources(1, &alProxySource); // cleanup source
+        return false;
+    }
+
+    qDebug() << "Echo cancelation enabled";
+    return true;
+}
+
+/**
  * @brief Open an audio output device
  */
 bool OpenAL2::initOutput(const QString& deviceName)
@@ -315,45 +421,12 @@ bool OpenAL2::initOutput(const QString& deviceName)
         return false;
     }
 
-    // check for the needed extensions for echo cancelation
-    if (echoCancelSupported = (alcIsExtensionPresent(alOutDev, "ALC_SOFT_loopback") == AL_TRUE)) {
-        qDebug() << "Device supports loopback";
-    }
-    if (alIsExtensionPresent("AL_SOFT_source_latency") == AL_TRUE) {
-        qDebug() << "Device supports source latency";
-    }
-    else
-    {
-        echoCancelSupported = false;
-    }
+    // try to init echo cancellation
+    echoCancelSupported = initOutputEchoCancel();
 
-    if(echoCancelSupported) {
-        qDebug() << "Echo cancelation supported with this device";
-        // source for proxy output
-        alGenSources(1, &alProxySource);
-
-        LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT =
-                reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT> (alcGetProcAddress(alOutDev, "alcLoopbackOpenDeviceSOFT"));
-        LPALCISRENDERFORMATSUPPORTEDSOFT alcIsRenderFormatSupportedSOFT =
-                reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT> (alcGetProcAddress(alOutDev, "alcIsRenderFormatSupportedSOFT"));
-
-        ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, AUDIO_CHANNELS == 1 ? ALC_MONO_SOFT : ALC_STEREO_SOFT,
-                         ALC_FORMAT_TYPE_SOFT, ALC_SHORT_SOFT,
-                         ALC_FREQUENCY, Audio::AUDIO_SAMPLE_RATE,
-                         0 }; // End of List
-
-        alProxyDev = alcLoopbackOpenDeviceSOFT(NULL);
-        checkAlcError(alProxyDev);
-        if(!alcIsRenderFormatSupportedSOFT(alProxyDev, attrs[5], attrs[1], attrs[3])) {
-            qDebug() << "Unsupported format for loopback";
-        }
-
-        alProxyContext = alcCreateContext(alProxyDev, attrs);
-        checkAlcError(alProxyDev);
-        alcMakeContextCurrent(alProxyContext);
-    }
-    else {
-        // no proxy device needed
+    if(!echoCancelSupported) {
+        // fallback to normal, no proxy device needed
+        qDebug() << "Echo cancellation disabled";
         alProxyDev = alOutDev;
         alProxyContext = alOutContext;
     }
@@ -562,8 +635,6 @@ void OpenAL2::doOutput()
         return;
     }
 
-    LPALGETSOURCEDVSOFT alGetSourcedvSOFT =
-            reinterpret_cast<LPALGETSOURCEDVSOFT> (alcGetProcAddress(alOutDev, "alGetSourcedvSOFT"));
     ALdouble latency[2] = {0};
     if(alGetSourcedvSOFT) {
         alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
