@@ -108,6 +108,8 @@ private:
     qreal inputGainFactor() const;
     void doInput();
     void doOutput();
+    bool loadOpenALExtensions(ALCdevice* dev);
+    bool initOutputEchoCancel();
 
 private:
     QThread* audioThread;
@@ -134,6 +136,9 @@ private:
     qreal minInGain = -30;
     qreal maxInGain = 30;
     Filter_Audio* filterer = nullptr;
+    LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT = nullptr;
+    LPALCISRENDERFORMATSUPPORTEDSOFT alcIsRenderFormatSupportedSOFT = nullptr;
+    LPALGETSOURCEDVSOFT alGetSourcedvSOFT = nullptr;
 };
 
 #endif // OPENAL2_H
