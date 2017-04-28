@@ -387,7 +387,7 @@ bool GenericChatForm::needsToHideName(const ToxPk &messageAuthor) const
 }
 
 /**
- * @brief Creates ChatMessage shared object that later will be inserted into ChatLog
+ * @brief Creates ChatMessage shared object and inserts it into ChatLog
  * @param author Author of the message
  * @param message Message text
  * @param dt Date and time when message was sent
@@ -425,6 +425,7 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
         msg->markAsSent(dt);
     }
 
+    insertChatMessage(msg);
     return msg;
 }
 
@@ -444,7 +445,7 @@ ChatMessage::Ptr GenericChatForm::createSelfMessage(const QString& message, cons
 void GenericChatForm::addMessage(const ToxPk& author, const QString& message, const QDateTime& dt,
                                  bool isAction)
 {
-    insertChatMessage(createMessage(author, message, dt, isAction, true));
+    createMessage(author, message, dt, isAction, true);
 }
 
 /**
@@ -453,7 +454,7 @@ void GenericChatForm::addMessage(const ToxPk& author, const QString& message, co
 void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
                                      bool isAction)
 {
-    insertChatMessage(createSelfMessage(message, datetime, isAction, true));
+    createSelfMessage(message, datetime, isAction, true);
 }
 
 void GenericChatForm::addAlertMessage(const ToxPk& author, const QString& msg, const QDateTime& dt)
