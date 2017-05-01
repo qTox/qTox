@@ -13,7 +13,7 @@ QRadioButton::indicator
      height: 10px;
 }
 
-QRadioButton::indicator::unchecked
+QRadioButton::indicator:unchecked
 {
      image: url(:/ui/emoticonWidget/dot_page.svg);
 }
@@ -28,7 +28,7 @@ QRadioButton::indicator:unchecked:pressed
      image: url(:/ui/emoticonWidget/dot_page_hover.svg);
 }
 
-QRadioButton::indicator::checked
+QRadioButton::indicator:checked
 {
      image: url(:/ui/emoticonWidget/dot_page_current.svg);
 }
