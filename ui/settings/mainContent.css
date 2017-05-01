@@ -39,6 +39,11 @@ QSpinBox
     background: white;
 }
 
+QSpinBox:disabled
+{
+    background: lightGrey;
+}
+
 QPushButton
 {
     background: white;
@@ -64,6 +69,11 @@ QComboBox QAbstractItemView {
 QLineEdit
 {
     background-color: white;
+}
+
+QLineEdit:disabled
+{
+    background-color: lightGrey;
 }
 
 QTabWidget
