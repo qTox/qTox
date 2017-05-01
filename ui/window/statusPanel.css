@@ -92,12 +92,12 @@ QListView {
 }
 
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
-#statusPanel > #statusHead > #statusButton:hover 
+#statusPanel > #statusHead > #statusButton:hover
 {
   background-color: @themeLight;
 }
 
-#statusPanel > #statusHead > #statusButton:pressed 
+#statusPanel > #statusHead > #statusButton:pressed
 {
   background-color: @themeMedium;
 }
@@ -108,7 +108,7 @@ QListView {
 
 #statusPanel > #statusHead > #statusButton::menu-indicator {image: none;}
 
-#statusPanel > #statusHead > #statusButton::menu-indicator:pressed, #statusPanel > #statusHead > #statusButton::menu-indicator:open 
+#statusPanel > #statusHead > #statusButton::menu-indicator:pressed, #statusPanel > #statusHead > #statusButton::menu-indicator:open
 {
   image: url(":ui/statusButton/menu_indicator.png");
   subcontrol-origin: padding;
