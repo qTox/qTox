@@ -117,18 +117,6 @@ Easy qTox install is provided for variety of distributions:
 * [Gentoo](#gentoo)
 * [Slackware](#slackware)
 
-#### Community builds
-
-There are community builds for wide range of distrubutions:
-
-Link | Distros | Architecture
----- | ------- | ------------
-[OBS] | Arch, CentOS, Debian, Fedora, openSUSE, Ubuntu | x86, x86_64
-[Ubuntu PPA] | Ubuntu | arm64, armhf, ppc64el
-
-For release version, install `qtox`. To get latest changes, install
-`qtox-alpha`.
-
 ---
 
 <a name="arch-easy" />
@@ -865,7 +853,6 @@ Switches:
 [libX11]: https://www.x.org/wiki/
 [libXScrnSaver]: https://www.x.org/wiki/Releases/ModuleVersions/
 [MinGW]: http://www.mingw.org/
-[OBS]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
 [OpenAL Soft]: http://kcat.strangesoft.net/openal.html
 [Pango]: http://www.pango.org/
 [pkg-config]: https://www.freedesktop.org/wiki/Software/pkg-config/
@@ -873,4 +860,3 @@ Switches:
 [Qt]: https://www.qt.io/
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
-[Ubuntu PPA]: https://launchpad.net/~abbat/+archive/ubuntu/tox

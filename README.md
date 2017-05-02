@@ -42,8 +42,8 @@ while running on all major platforms.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit installer]**, [signature][sig-64] | **[CentOS, Debian, Fedora, openSUSE, Ubuntu]** | **[Building instructions]** | **[Port]**
-[32 bit installer], [signature][sig-32] | **[Arch]**, **[Gentoo]** | [Experimental download] |
+**[64 bit installer]**, [signature][sig-64] | **[Arch]**, **[Gentoo]** | **[Building instructions]** | **[Port]**
+[32 bit installer], [signature][sig-32] | | [Experimental download] |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
 
 _**Bold** options are recommended._
@@ -112,7 +112,6 @@ and possibly other stuff.
 Active qTox maintainers:
 
 ```
-1157 616B BD86 0C53 9926  F813 9591 A163 FF9B E04C      – antis81
 3103 9166 FA90 2CA5 0D05  D608 5AF9 F2E2 9107 C727      – Diadlo
 C7A2 552D 0B25 0F98 3827  742C 1332 03A3 AC39 9151      – initramfs
 DA26 2CC9 3C0E 1E52 5AD2  1C85 9677 5D45 4B8E BF44      – sudden6
@@ -124,6 +123,7 @@ Past qTox maintainers:
 
 ```
 F365 8D0A 04A5 76A4 1072  FC0D 296F 0B76 4741 106C      – agilob
+1157 616B BD86 0C53 9926  F813 9591 A163 FF9B E04C      – antis81
 1D29 8BC7 25B7 BE82 65BA  EAB9 3DB8 E053 15C2 20AA      – Dubslow
 ```
 
@@ -133,12 +133,6 @@ Windows updates, managed by `tux3`:
 AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 ```
 
-Linux OBS repositories, managed by `abbat`:
-
-```
-3EB5 027B 3CD8 D7CA AC30  EB6B F2AA 0B1E 5EF8 303B
-```
-
 [#qtox@freenode]: https://webchat.freenode.net/?channels=qtox
 [32 bit installer]: https://qtox-win.pkg.tox.chat/qtox/win32/download
 [32portable]: https://qtox-win.pkg.tox.chat/qtox/win32/download-portable
@@ -146,7 +140,6 @@ Linux OBS repositories, managed by `abbat`:
 [64portable]: https://qtox-win.pkg.tox.chat/qtox/win64/download-portable
 [Arch]: /INSTALL.md#arch
 [Building instructions]: /INSTALL.md#os-x
-[CentOS, Debian, Fedora, openSUSE, Ubuntu]: https://software.opensuse.org/download.html?project=home%3Aantonbatenev%3Atox&package=qtox
 [Contributing]: /CONTRIBUTING.md#how-to-start-contributing
 [easy issues]: https://github.com/qTox/qTox/labels/E-easy
 [Experimental download]: https://github.com/qTox/qTox/releases/latest
