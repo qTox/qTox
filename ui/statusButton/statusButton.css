@@ -8,13 +8,13 @@ QPushButton
     height: 40px;
 }
 
-QPushButton:default 
+QPushButton:default
 {
    background-color: @themeMediumDark;
 }
 
 /*Bugged in Qt, but it's probably better to leave enabled so that users can tell it's clickable*/
-QPushButton:hover 
+QPushButton:hover
 {
    background-color: @themeMedium;
 }
@@ -30,7 +30,7 @@ QPushButton:focus {
 
 QPushButton::menu-indicator {image: none;}
 
-QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open 
+QPushButton::menu-indicator:pressed, QPushButton::menu-indicator:open
 {
   image: url(":ui/statusButton/menu_indicator.svg");
   subcontrol-origin: padding;

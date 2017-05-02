@@ -26,7 +26,7 @@ QMessageBox
 QCheckBox
 {
     background: white;
-    color: black;    
+    color: black;
 }
 
 QCheckBox:disabled
@@ -37,6 +37,11 @@ QCheckBox:disabled
 QSpinBox
 {
     background: white;
+}
+
+QSpinBox:disabled
+{
+    background: lightGrey;
 }
 
 QPushButton
@@ -66,6 +71,11 @@ QLineEdit
     background-color: white;
 }
 
+QLineEdit:disabled
+{
+    background-color: lightGrey;
+}
+
 QTabWidget
 {
     background-color: white;
@@ -79,11 +89,11 @@ QTabBar
 QScrollArea
 {
     background-color: white;
-    background: transparent; 
+    background: transparent;
 }
 
-QScrollArea > QWidget > QWidget 
-{ 
+QScrollArea > QWidget > QWidget
+{
     background: transparent;
 }
 
@@ -148,7 +158,7 @@ QScrollBar:QScrollBar::up-arrow:vertical
     height: 10px;
     background: white;
 }
- 
+
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
 {
     background: none;
@@ -208,7 +218,7 @@ QScrollBar:QScrollBar::up-arrow:horizontal
     height: 10px;
     background: white;
 }
- 
+
 QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
 {
     background: none;

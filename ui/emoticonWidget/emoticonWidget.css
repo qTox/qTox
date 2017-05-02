@@ -1,7 +1,7 @@
 QPushButton
 {
     background-color: transparent;
-    background-repeat: none;    
+    background-repeat: none;
     border: none;
     width: 24px;
     height: 24px;
@@ -13,22 +13,22 @@ QRadioButton::indicator
      height: 10px;
 }
 
-QRadioButton::indicator::unchecked 
+QRadioButton::indicator:unchecked
 {
      image: url(:/ui/emoticonWidget/dot_page.svg);
 }
 
-QRadioButton::indicator:unchecked:hover 
+QRadioButton::indicator:unchecked:hover
 {
      image: url(:/ui/emoticonWidget/dot_page_hover.svg);
 }
 
-QRadioButton::indicator:unchecked:pressed 
+QRadioButton::indicator:unchecked:pressed
 {
      image: url(:/ui/emoticonWidget/dot_page_hover.svg);
 }
 
-QRadioButton::indicator::checked 
+QRadioButton::indicator:checked
 {
      image: url(:/ui/emoticonWidget/dot_page_current.svg);
 }

@@ -5,7 +5,7 @@ QScrollArea {
 QScrollBar:vertical  {
     background: @themeMedium;
     width: 16px;
-    padding: 0px 3px 0px 3px; 
+    padding: 0px 3px 0px 3px;
 }
 
 QScrollBar:handle:vertical  {
@@ -26,7 +26,7 @@ QScrollBar:handle:vertical:pressed  {
 QScrollBar:add-line:vertical {height: 0px;subcontrol-position: bottom;subcontrol-origin: margin;}
 
 QScrollBar:sub-line:vertical {height: 0px;subcontrol-position: top;subcontrol-origin: margin;}
- 
+
 QScrollBar:add-page:vertical, QScrollBar::sub-page:vertical  {
     background: none;
 }

@@ -53,6 +53,6 @@ QLabel, QCheckBox, QProgressBar {
   color: black;
 }
 
-QCheckBox::disabled {
+QCheckBox:disabled {
   color: gray;
 }
