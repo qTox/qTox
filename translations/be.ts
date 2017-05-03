@@ -266,11 +266,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўтаматычны прымаць запрашэнні ў групавы чат ад гэтага кантакта.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Аўтапрыём групавых запрашэнняў</translation>
     </message>
 </context>
 <context>
@@ -638,6 +638,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation>Гук можа быць адключаны толькі ў час размовы</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Захаваць журнал чату</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -691,22 +699,22 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Некарэктны Tox ID</translation>
+        <translation>Некарэктны Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Вам трэба напісаць паведамленне да вашага запыта</translation>
+        <translation>Вам трэба напісаць паведамленне да вашага запыта</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ваша паведамленне занадта вялікае!</translation>
+        <translation>Ваша паведамленне занадта вялікае!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Сябра ўжо даданы</translation>
+        <translation>Сябра ўжо даданы</translation>
     </message>
 </context>
 <context>
@@ -816,27 +824,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Сёння</translation>
+        <translation>Сёння</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Учора</translation>
+        <translation>Учора</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Апошнія 7 дзён</translation>
+        <translation>Апошнія 7 дзён</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Апошні месяц</translation>
+        <translation>Апошні месяц</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Старэй 6 месяцаў</translation>
+        <translation>Старэй 6 месяцаў</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Ніколі</translation>
     </message>
 </context>
 <context>
@@ -1527,6 +1535,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Загрузіць гісторыю пачынаючы з:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1910,11 +1922,11 @@ Save format changes are possible, which may result in data loss.</source>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася стварыць ключ з пароля — профіль не будзе выкарыстоваць новы пароль.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не атрымалася змяніць пароль у базе дадзеных, яна можа быць пашкоджана або выкарыстоўваць стары пароль.</translation>
     </message>
 </context>
 <context>
@@ -2029,12 +2041,6 @@ Please use another image.</source>
         <translation>Калі ласка, увядзіце новы пароль.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Гэта звязка сімвалаў гаворыць іншым кліентам як звязацца з вамі.
-Падзяліцеся гэтым з сябрамі каб камунікаваць.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Вы ўпэўнены, што хочаце выдаліць гэты профіль?</translation>
@@ -2112,6 +2118,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>Не атрымалася змяніць пароль</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2197,10 +2210,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 — некарэктны адрас Toxme.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Добра</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2334,7 +2343,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Ідзе перафарматаванне тэксту..</translation>
     </message>
 </context>
 <context>
