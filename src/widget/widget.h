@@ -217,9 +217,7 @@ private slots:
     void groupInvitesUpdate();
     void groupInvitesClear();
     void onDialogShown(GenericChatroomWidget* widget);
-
-private:
-    int icon_size;
+    void incomingNotification(uint32_t friendId);
 
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
@@ -287,6 +285,7 @@ private:
     QPushButton* friendRequestsButton;
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
+    int icon_size;
 
     QMap<int, FriendWidget*> friendWidgets;
 
