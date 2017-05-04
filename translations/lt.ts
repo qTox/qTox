@@ -266,11 +266,11 @@ vaizdo skambučiais.</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jei nustatyta, automatiškai priimti grupės pokalbio pakvietimus nuo šio kontakto.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai priimti grupės pakvietimus</translation>
     </message>
 </context>
 <context>
@@ -287,7 +287,7 @@ vaizdo skambučiais.</translation>
     <message>
         <source>either 76 hexadecimal characters or name@example.com</source>
         <comment>Tox ID format description</comment>
-        <translation>76 šešioliktainės sistemos skaitmenys arba vardas@pavyzdys.lt</translation>
+        <translation>76 šešioliktainės sistemos skaitmenys arba vardas@example.com</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
@@ -637,6 +637,14 @@ vaizdo skambučiais.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation>Garsas gali būti išjungtas tik skambučio metu</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Išsaugoti pokalbio žurnalą</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -690,22 +698,22 @@ vaizdo skambučiais.</translation>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Neteisingas Tox ID</translation>
+        <translation>Neteisingas Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Turite parašyti adresatui žinutę su savo užklausa</translation>
+        <translation>Turite parašyti adresatui žinutę su savo užklausa</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Žinutė per ilga!</translation>
+        <translation>Žinutė per ilga!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Toks kontaktas jau pridėtas</translation>
+        <translation>Toks kontaktas jau yra pridėtas</translation>
     </message>
 </context>
 <context>
@@ -810,27 +818,27 @@ vaizdo skambučiais.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Šiandien</translation>
+        <translation>Šiandien</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Vakar</translation>
+        <translation>Vakar</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Per paskutinias 7 dienas</translation>
+        <translation>Per paskutinias 7 dienas</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Šį mėnesį</translation>
+        <translation>Šį mėnesį</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Seniau nei prieš 6 mėnesius</translation>
+        <translation>Seniau nei prieš 6 mėnesius</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Niekada</translation>
     </message>
 </context>
 <context>
@@ -1522,6 +1530,10 @@ Pokalbių žurnalas nebus išsaugotas.</translation>
         <source>Load history from:</source>
         <translation>Įkelti pokalbių žurnalą nuo:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1907,11 +1919,11 @@ Failo formatas dar gali pasikeisti, todėl galite prarasti sukauptus duomenis.</
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko įgauti rakto iš slaptažodžio, profilis nenaudos naujojo slaptažodžio.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko pakeisti slaptažodžio duomenų bazėje, ji gali būti sugadinta arba gali naudoti seną slaptažodį.</translation>
     </message>
 </context>
 <context>
@@ -2036,12 +2048,6 @@ Pasirinkite kitą.</translation>
         <translation>Įveskite naują slaptažodį.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Ši simbolių seka leidžia kitiems Tox naudotojams jus surasti.
-Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Ar tikrai norite ištrinti šį profilį?</translation>
@@ -2109,6 +2115,13 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>Nepavyko pakeisti slaptažodžio</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2194,10 +2207,6 @@ Nusiųskite ją tiems, su kuriais norite bendrauti.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 nėra taisyklingas Toxme adresas.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Gerai</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2331,7 +2340,7 @@ Ji bus įdiegta paleidus qTox iš naujo.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksto reformatavimas eigoje..</translation>
     </message>
 </context>
 <context>
