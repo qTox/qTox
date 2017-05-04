@@ -409,6 +409,10 @@ void Settings::loadPersonal(Profile* profile)
     {
         // TODO: Default values in this block should be changed @ v1.8
         compactLayout = ps.value("compactLayout", compactLayout).toBool();
+        useProfileColor = ps.value("useProfileColor", false).toBool();
+        profileColor = ps.value("profileColor").value<QColor>();
+        if (!profileColor.isValid())
+            profileColor = Qt::lightGray;
     }
     ps.endGroup();
 
@@ -678,6 +682,8 @@ void Settings::savePersonal(QString profileName, const ToxEncrypt* passkey)
     ps.beginGroup("GUI");
     {
         ps.setValue("compactLayout", compactLayout);
+        ps.setValue("useProfileColor", useProfileColor);
+        ps.setValue("profileColor", profileColor);
     }
     ps.endGroup();
 
@@ -2056,6 +2062,23 @@ void Settings::setFauxOfflineMessaging(bool value)
     if (value != fauxOfflineMessaging) {
         fauxOfflineMessaging = value;
         emit fauxOfflineMessagingChanged(fauxOfflineMessaging);
+    }
+}
+
+QPair<bool, QColor> Settings::getProfileColor() const
+{
+    QMutexLocker locker{&bigLock};
+    return {useProfileColor, profileColor};
+}
+
+void Settings::setProfileColor(bool enabled, const QColor& color)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (enabled != useProfileColor || color != profileColor) {
+        useProfileColor = enabled;
+        profileColor = color;
+        emit profileColorChanged(useProfileColor, profileColor);
     }
 }
 
