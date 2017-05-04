@@ -353,10 +353,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                       ChatMessage::INFO, QDateTime::currentDateTime());
         insertChatMessage(msg);
-        Widget::getInstance()->newFriendMessageAlert(friendId, false);
-        Audio& audio = Audio::getInstance();
-        audio.startLoop();
-        audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
+        emit incomingNotification(friendId);
     }
 }
 

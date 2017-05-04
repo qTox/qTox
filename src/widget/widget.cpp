@@ -918,6 +918,15 @@ void Widget::reloadHistory()
     }
 }
 
+void Widget::incomingNotification(uint32_t friendId)
+{
+    newFriendMessageAlert(friendId, false);
+
+    Audio& audio = Audio::getInstance();
+    audio.startLoop();
+    audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
+}
+
 void Widget::addFriend(int friendId, const ToxPk& friendPk)
 {
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
@@ -941,6 +950,8 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     connect(newfriend, &Friend::aliasChanged, this, &Widget::onFriendAliasChanged);
     connect(newfriend, &Friend::nameChanged, this, &Widget::onFriendAliasChanged);
+
+    connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
 
     connect(widget, &FriendWidget::chatroomWidgetClicked, this, &Widget::onChatroomWidgetClicked);
     connect(widget, &FriendWidget::chatroomWidgetClicked, friendForm, &ChatForm::focusInput);
