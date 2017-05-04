@@ -386,7 +386,6 @@ void ChatForm::onAvEnd(uint32_t friendId)
         netcam->showNormal();
     }
 
-    Audio::getInstance().stopLoop();
     updateCallButtons();
     stopCounter();
     hideNetcam();
@@ -406,10 +405,11 @@ void ChatForm::showOutgoingCall(bool video)
 void ChatForm::onAnswerCallTriggered()
 {
     delete callConfirm;
-    Audio::getInstance().stopLoop();
+    uint32_t friendId = f->getFriendId();
+    emit acceptCall(friendId);
+
     updateCallButtons();
     CoreAV* av = Core::getInstance()->getAv();
-    uint32_t friendId = f->getFriendId();
     if (!av->answerCall(friendId)) {
         updateCallButtons();
         stopCounter();
@@ -423,9 +423,7 @@ void ChatForm::onAnswerCallTriggered()
 void ChatForm::onRejectCallTriggered()
 {
     delete callConfirm;
-    Audio::getInstance().stopLoop();
-    CoreAV* av = Core::getInstance()->getAv();
-    av->cancelCall(f->getFriendId());
+    emit rejectCall(f->getFriendId());
 }
 
 void ChatForm::onCallTriggered()

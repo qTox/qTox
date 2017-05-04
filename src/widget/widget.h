@@ -218,6 +218,9 @@ private slots:
     void groupInvitesClear();
     void onDialogShown(GenericChatroomWidget* widget);
     void incomingNotification(uint32_t friendId);
+    void onRejectCall(uint32_t friendId);
+    void onAcceptCall(uint32_t friendId);
+    void onCallEnd(uint32_t friendId);
 
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
