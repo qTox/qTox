@@ -139,6 +139,7 @@ private:
     LPALCLOOPBACKOPENDEVICESOFT alcLoopbackOpenDeviceSOFT = nullptr;
     LPALCISRENDERFORMATSUPPORTEDSOFT alcIsRenderFormatSupportedSOFT = nullptr;
     LPALGETSOURCEDVSOFT alGetSourcedvSOFT = nullptr;
+    LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT = nullptr;
 };
 
 #endif // OPENAL2_H
