@@ -288,26 +288,33 @@ bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
     // load OpenAL extension functions
     alcLoopbackOpenDeviceSOFT = reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT>
             (alcGetProcAddress(dev, "alcLoopbackOpenDeviceSOFT"));
-
     checkAlcError(dev);
     if(!alcLoopbackOpenDeviceSOFT) {
         qDebug() << "Failed to load alcLoopbackOpenDeviceSOFT function!";
         return false;
     }
+
     alcIsRenderFormatSupportedSOFT = reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT>
             (alcGetProcAddress(dev, "alcIsRenderFormatSupportedSOFT"));
-
     checkAlcError(dev);
     if(!alcIsRenderFormatSupportedSOFT) {
         qDebug() << "Failed to load alcIsRenderFormatSupportedSOFT function!";
         return false;
     }
+
     alGetSourcedvSOFT = reinterpret_cast<LPALGETSOURCEDVSOFT>
             (alcGetProcAddress(dev, "alGetSourcedvSOFT"));
-
     checkAlcError(dev);
     if(!alGetSourcedvSOFT) {
         qDebug() << "Failed to load alGetSourcedvSOFT function!";
+        return false;
+    }
+
+    alcRenderSamplesSOFT = reinterpret_cast<LPALCRENDERSAMPLESSOFT>
+            (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
+    checkAlcError(dev);
+    if(!alcRenderSamplesSOFT) {
+        qDebug() << "Failed to load alcRenderSamplesSOFT function!";
         return false;
     }
 
@@ -631,17 +638,14 @@ void OpenAL2::doOutput()
     }
 
     ALdouble latency[2] = {0};
-    if(alGetSourcedvSOFT) {
-        alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
-        checkAlError();
-    }
+    alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
+    checkAlError();
     //qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
 
     ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
     alcMakeContextCurrent(alProxyContext);
-    LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
-            reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
     alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
+    checkAlcError(alProxyDev);
 
     alcMakeContextCurrent(alOutContext);
     alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf,
