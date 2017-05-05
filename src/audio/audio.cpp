@@ -20,6 +20,7 @@
 #include "audio.h"
 #include "src/audio/backend/openal.h"
 #include "src/audio/backend/openal2.h"
+#include "src/persistence/settings.h"
 
 #include <QDebug>
 
@@ -168,6 +169,19 @@
  */
 Audio& Audio::getInstance()
 {
-    static OpenAL2 instance;
-    return instance;
+    static bool initialized = false;
+    static bool Backend2 = false;
+
+    if(!initialized) {
+        Backend2 = Settings::getInstance().getEnableBackend2();
+        initialized = true;
+    }
+
+    if(Backend2) {
+        static OpenAL2 instance;
+        return instance;
+    } else {
+        static OpenAL instance;
+        return instance;
+    }
 }
