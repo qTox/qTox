@@ -93,7 +93,6 @@ signals:
                         uint32_t sampling_rate);
 
 private:
-
     static void checkAlError() noexcept;
     static void checkAlcError(ALCdevice* device) noexcept;
 
