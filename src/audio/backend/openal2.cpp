@@ -258,16 +258,11 @@ bool OpenAL2::initInput(const QString& deviceName)
     qDebug() << "Opening audio input" << deviceName;
     assert(!alInDev);
 
-    // TODO: Try to actually detect if our audio source is stereo
-    int stereoFlag = AUDIO_CHANNELS == 1 ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-    const uint32_t sampleRate = AUDIO_SAMPLE_RATE;
-    const uint16_t frameDuration = AUDIO_FRAME_DURATION;
-    const uint32_t chnls = AUDIO_CHANNELS;
-    const ALCsizei bufSize = (frameDuration * sampleRate * 4) / 1000 * chnls;
+    const ALCsizei bufSize = AUDIO_FRAME_SAMPLE_COUNT * 4 * 2;
 
     const QByteArray qDevName = deviceName.toUtf8();
     const ALchar* tmpDevName = qDevName.isEmpty() ? nullptr : qDevName.constData();
-    alInDev = alcCaptureOpenDevice(tmpDevName, sampleRate, stereoFlag, bufSize);
+    alInDev = alcCaptureOpenDevice(tmpDevName, AUDIO_SAMPLE_RATE, AL_FORMAT_MONO16, bufSize);
 
     // Restart the capture if necessary
     if (!alInDev) {
@@ -348,7 +343,7 @@ bool OpenAL2::initOutputEchoCancel()
     checkAlError();
 
     // configuration for the loopback device
-    ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, AUDIO_CHANNELS == 1 ? ALC_MONO_SOFT : ALC_STEREO_SOFT,
+    ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, ALC_MONO_SOFT,
                      ALC_FORMAT_TYPE_SOFT, ALC_SHORT_SOFT,
                      ALC_FREQUENCY, Audio::AUDIO_SAMPLE_RATE,
                      0 }; // End of List
@@ -642,15 +637,15 @@ void OpenAL2::doOutput()
     }
     //qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
 
-    ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS] = {0};
+    ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
     alcMakeContextCurrent(alProxyContext);
     LPALCRENDERSAMPLESSOFT alcRenderSamplesSOFT =
             reinterpret_cast<LPALCRENDERSAMPLESSOFT> (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
     alcRenderSamplesSOFT(alProxyDev, outBuf, AUDIO_FRAME_SAMPLE_COUNT);
 
     alcMakeContextCurrent(alOutContext);
-    alBufferData(bufids[0], (AUDIO_CHANNELS == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16, outBuf,
-                 AUDIO_FRAME_SAMPLE_COUNT * 2 * AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf,
+                 AUDIO_FRAME_SAMPLE_COUNT * 2, AUDIO_SAMPLE_RATE);
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
     // initialize echo canceler if supported
@@ -684,7 +679,7 @@ void OpenAL2::doInput()
         return;
     }
 
-    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
+    int16_t buf[AUDIO_FRAME_SAMPLE_COUNT];
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
     int retVal = 0;
@@ -693,7 +688,7 @@ void OpenAL2::doInput()
     }
 
     // gain amplification with clipping to 16-bit boundaries
-    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS; ++i) {
+    for (quint32 i = 0; i < AUDIO_FRAME_SAMPLE_COUNT; ++i) {
         int ampPCM =
             qBound<int>(std::numeric_limits<int16_t>::min(), qRound(buf[i] * inputGainFactor()),
                         std::numeric_limits<int16_t>::max());
@@ -701,7 +696,7 @@ void OpenAL2::doInput()
         buf[i] = static_cast<int16_t>(ampPCM);
     }
 
-    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, AUDIO_CHANNELS, AUDIO_SAMPLE_RATE);
+    emit Audio::frameAvailable(buf, AUDIO_FRAME_SAMPLE_COUNT, 1, AUDIO_SAMPLE_RATE);
 }
 
 /**
