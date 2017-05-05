@@ -172,12 +172,12 @@ Audio& Audio::getInstance()
     static bool initialized = false;
     static bool Backend2 = false;
 
-    if(!initialized) {
+    if (!initialized) {
         Backend2 = Settings::getInstance().getEnableBackend2();
         initialized = true;
     }
 
-    if(Backend2) {
+    if (Backend2) {
         static OpenAL2 instance;
         return instance;
     } else {
