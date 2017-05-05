@@ -239,6 +239,10 @@ void Core::makeTox(QByteArray savedata)
  */
 void Core::makeAv()
 {
+    if(!tox) {
+        qCritical() << "No Tox instance, can't create ToxAV";
+        return;
+    }
     av = new CoreAV(tox);
     if (!av->getToxAv()) {
         qCritical() << "Toxav core failed to start";
