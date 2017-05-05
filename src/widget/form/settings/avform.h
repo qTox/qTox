@@ -73,6 +73,8 @@ private slots:
 
     void rescanDevices();
 
+    void on_cbEnableBackend2_stateChanged();
+
 protected:
     void updateVideoModes(int curIndex);
 

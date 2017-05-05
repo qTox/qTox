@@ -267,6 +267,10 @@ void Settings::loadGlobal()
         audioOutDevEnabled = s.value("audioOutDevEnabled", true).toBool();
         audioInGainDecibel = s.value("inGain", 0).toReal();
         outVolume = s.value("outVolume", 100).toInt();
+        enableBackend2 = false;
+        #ifdef USE_FILTERAUDIO
+        enableBackend2 = s.value("enableBackend2", false).toBool();
+        #endif
     }
     s.endGroup();
 
@@ -563,6 +567,7 @@ void Settings::saveGlobal()
         s.setValue("audioOutDevEnabled", audioOutDevEnabled);
         s.setValue("inGain", audioInGainDecibel);
         s.setValue("outVolume", outVolume);
+        s.setValue("enableBackend2", enableBackend2);
     }
     s.endGroup();
 
@@ -1839,6 +1844,22 @@ void Settings::setOutVolume(int volume)
     if (volume != outVolume) {
         outVolume = volume;
         emit outVolumeChanged(outVolume);
+    }
+}
+
+bool Settings::getEnableBackend2() const
+{
+    QMutexLocker locker{&bigLock};
+    return enableBackend2;
+}
+
+void Settings::setEnableBackend2(bool enabled)
+{
+    QMutexLocker locker{&bigLock};
+
+    if (enabled != enableBackend2) {
+        enableBackend2 = enabled;
+        emit enableBackend2Changed(enabled);
     }
 }
 
