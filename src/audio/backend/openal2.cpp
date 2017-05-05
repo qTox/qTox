@@ -47,8 +47,8 @@ extern "C" {
 static const unsigned int BUFFER_COUNT = 16;
 static const unsigned int PROXY_BUFFER_COUNT = 4;
 
-OpenAL2::OpenAL2() :
-      audioThread{new QThread}
+OpenAL2::OpenAL2()
+    : audioThread{new QThread}
     , alInDev{nullptr}
     , inSubscriptions{0}
     , alOutDev{nullptr}
@@ -286,34 +286,34 @@ bool OpenAL2::initInput(const QString& deviceName)
 bool OpenAL2::loadOpenALExtensions(ALCdevice* dev)
 {
     // load OpenAL extension functions
-    alcLoopbackOpenDeviceSOFT = reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT>
-            (alcGetProcAddress(dev, "alcLoopbackOpenDeviceSOFT"));
+    alcLoopbackOpenDeviceSOFT = reinterpret_cast<LPALCLOOPBACKOPENDEVICESOFT>(
+        alcGetProcAddress(dev, "alcLoopbackOpenDeviceSOFT"));
     checkAlcError(dev);
-    if(!alcLoopbackOpenDeviceSOFT) {
+    if (!alcLoopbackOpenDeviceSOFT) {
         qDebug() << "Failed to load alcLoopbackOpenDeviceSOFT function!";
         return false;
     }
 
-    alcIsRenderFormatSupportedSOFT = reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT>
-            (alcGetProcAddress(dev, "alcIsRenderFormatSupportedSOFT"));
+    alcIsRenderFormatSupportedSOFT = reinterpret_cast<LPALCISRENDERFORMATSUPPORTEDSOFT>(
+        alcGetProcAddress(dev, "alcIsRenderFormatSupportedSOFT"));
     checkAlcError(dev);
-    if(!alcIsRenderFormatSupportedSOFT) {
+    if (!alcIsRenderFormatSupportedSOFT) {
         qDebug() << "Failed to load alcIsRenderFormatSupportedSOFT function!";
         return false;
     }
 
-    alGetSourcedvSOFT = reinterpret_cast<LPALGETSOURCEDVSOFT>
-            (alcGetProcAddress(dev, "alGetSourcedvSOFT"));
+    alGetSourcedvSOFT =
+        reinterpret_cast<LPALGETSOURCEDVSOFT>(alcGetProcAddress(dev, "alGetSourcedvSOFT"));
     checkAlcError(dev);
-    if(!alGetSourcedvSOFT) {
+    if (!alGetSourcedvSOFT) {
         qDebug() << "Failed to load alGetSourcedvSOFT function!";
         return false;
     }
 
-    alcRenderSamplesSOFT = reinterpret_cast<LPALCRENDERSAMPLESSOFT>
-            (alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
+    alcRenderSamplesSOFT = reinterpret_cast<LPALCRENDERSAMPLESSOFT>(
+        alcGetProcAddress(alOutDev, "alcRenderSamplesSOFT"));
     checkAlcError(dev);
-    if(!alcRenderSamplesSOFT) {
+    if (!alcRenderSamplesSOFT) {
         qDebug() << "Failed to load alcRenderSamplesSOFT function!";
         return false;
     }
@@ -340,7 +340,7 @@ bool OpenAL2::initOutputEchoCancel()
         return false;
     }
 
-    if(!loadOpenALExtensions(alOutDev)) {
+    if (!loadOpenALExtensions(alOutDev)) {
         qDebug() << "Couldn't load needed OpenAL extensions";
         return false;
     }
@@ -350,20 +350,23 @@ bool OpenAL2::initOutputEchoCancel()
     checkAlError();
 
     // configuration for the loopback device
-    ALCint attrs[] = { ALC_FORMAT_CHANNELS_SOFT, ALC_MONO_SOFT,
-                     ALC_FORMAT_TYPE_SOFT, ALC_SHORT_SOFT,
-                     ALC_FREQUENCY, Audio::AUDIO_SAMPLE_RATE,
-                     0 }; // End of List
+    ALCint attrs[] = {ALC_FORMAT_CHANNELS_SOFT,
+                      ALC_MONO_SOFT,
+                      ALC_FORMAT_TYPE_SOFT,
+                      ALC_SHORT_SOFT,
+                      ALC_FREQUENCY,
+                      Audio::AUDIO_SAMPLE_RATE,
+                      0}; // End of List
 
     alProxyDev = alcLoopbackOpenDeviceSOFT(NULL);
     checkAlcError(alProxyDev);
-    if(!alProxyDev) {
+    if (!alProxyDev) {
         qDebug() << "Couldn't create proxy device";
         alDeleteSources(1, &alProxySource); // cleanup source
         return false;
     }
 
-    if(!alcIsRenderFormatSupportedSOFT(alProxyDev, attrs[5], attrs[1], attrs[3])) {
+    if (!alcIsRenderFormatSupportedSOFT(alProxyDev, attrs[5], attrs[1], attrs[3])) {
         qDebug() << "Unsupported format for loopback";
         alcCloseDevice(alProxyDev);         // cleanup loopback dev
         alDeleteSources(1, &alProxySource); // cleanup source
@@ -372,7 +375,7 @@ bool OpenAL2::initOutputEchoCancel()
 
     alProxyContext = alcCreateContext(alProxyDev, attrs);
     checkAlcError(alProxyDev);
-    if(!alProxyContext) {
+    if (!alProxyContext) {
         qDebug() << "Couldn't create proxy context";
         alcCloseDevice(alProxyDev);         // cleanup loopback dev
         alDeleteSources(1, &alProxySource); // cleanup source
@@ -426,7 +429,7 @@ bool OpenAL2::initOutput(const QString& deviceName)
     // try to init echo cancellation
     echoCancelSupported = initOutputEchoCancel();
 
-    if(!echoCancelSupported) {
+    if (!echoCancelSupported) {
         // fallback to normal, no proxy device needed
         qDebug() << "Echo cancellation disabled";
         alProxyDev = alOutDev;
@@ -492,7 +495,7 @@ void OpenAL2::playMono16Sound(const QByteArray& data)
 }
 
 void OpenAL2::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                            int sampleRate)
+                              int sampleRate)
 {
     assert(channels == 1 || channels == 2);
     QMutexLocker locker(&audioLock);
@@ -582,7 +585,7 @@ void OpenAL2::cleanupOutput()
     if (echoCancelSupported) {
         alcMakeContextCurrent(alOutContext);
         alSourceStop(alProxySource);
-        //TODO: delete buffers
+        // TODO: delete buffers
         alcDestroyContext(alOutContext);
         alOutContext = nullptr;
         alcCloseDevice(alOutDev);
@@ -606,9 +609,7 @@ void OpenAL2::playMono16SoundCleanup()
         alSourcei(alMainSource, AL_BUFFER, AL_NONE);
         alDeleteBuffers(1, &alMainBuffer);
         alMainBuffer = 0;
-    }
-    else
-    {
+    } else {
         // the audio didn't finish, try again later
         playMono16Timer.start(10);
     }
@@ -625,7 +626,7 @@ void OpenAL2::doOutput()
     alGetSourcei(alProxySource, AL_BUFFERS_PROCESSED, &processed);
     alGetSourcei(alProxySource, AL_BUFFERS_QUEUED, &queued);
 
-    //qDebug() << "Speedtest processed: " << processed << " queued: " << queued;
+    // qDebug() << "Speedtest processed: " << processed << " queued: " << queued;
 
     if (processed > 0) {
         // unqueue all processed buffers
@@ -640,7 +641,7 @@ void OpenAL2::doOutput()
     ALdouble latency[2] = {0};
     alGetSourcedvSOFT(alProxySource, AL_SEC_OFFSET_LATENCY_SOFT, latency);
     checkAlError();
-    //qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
+    // qDebug() << "Playback latency: " << latency[1] << "offset: " << latency[0];
 
     ALshort outBuf[AUDIO_FRAME_SAMPLE_COUNT] = {0};
     alcMakeContextCurrent(alProxyContext);
@@ -648,14 +649,13 @@ void OpenAL2::doOutput()
     checkAlcError(alProxyDev);
 
     alcMakeContextCurrent(alOutContext);
-    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf,
-                 AUDIO_FRAME_SAMPLE_COUNT * 2, AUDIO_SAMPLE_RATE);
+    alBufferData(bufids[0], AL_FORMAT_MONO16, outBuf, AUDIO_FRAME_SAMPLE_COUNT * 2, AUDIO_SAMPLE_RATE);
     alSourceQueueBuffers(alProxySource, 1, bufids);
 
     // initialize echo canceler if supported
-    if(!filterer) {
+    if (!filterer) {
         filterer = new_filter_audio(AUDIO_SAMPLE_RATE);
-        int16_t filterLatency = latency[1]*1000*2 + AUDIO_FRAME_DURATION;
+        int16_t filterLatency = latency[1] * 1000 * 2 + AUDIO_FRAME_DURATION;
         qDebug() << "Setting filter delay to: " << filterLatency << "ms";
         set_echo_delay_ms(filterer, filterLatency);
         enable_disable_filters(filterer, 1, 1, 1, 0);
@@ -687,7 +687,7 @@ void OpenAL2::doInput()
     alcCaptureSamples(alInDev, buf, AUDIO_FRAME_SAMPLE_COUNT);
 
     int retVal = 0;
-    if(echoCancelSupported && filterer) {
+    if (echoCancelSupported && filterer) {
         retVal = filter_audio(filterer, buf, AUDIO_FRAME_SAMPLE_COUNT);
     }
 
@@ -711,7 +711,7 @@ void OpenAL2::doAudio()
     QMutexLocker lock(&audioLock);
 
     // output section
-    if(echoCancelSupported && outputInitialized && !peerSources.isEmpty()) {
+    if (echoCancelSupported && outputInitialized && !peerSources.isEmpty()) {
         doOutput();
     } else {
         kill_filter_audio(filterer);
@@ -737,8 +737,8 @@ QStringList OpenAL2::outDeviceNames()
 {
     QStringList list;
     const ALchar* pDeviceList = (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-                                ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
-                                : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+                                    ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
+                                    : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 
     if (pDeviceList) {
         while (*pDeviceList) {
