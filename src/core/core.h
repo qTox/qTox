@@ -78,7 +78,6 @@ public:
 
 public slots:
     void start(const QByteArray& savedata);
-    void reset();
     void process();
     void bootstrapDht();
 
