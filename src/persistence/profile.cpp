@@ -440,6 +440,24 @@ void Profile::loadDatabase(const ToxId& id, QString password)
 }
 
 /**
+ * @brief Adds history message about friendship request attempt if history is enabled
+ * @param friendPk Pk of a friend which request is destined to
+ * @param message Friendship request message
+ */
+void Profile::onRequestSended(const ToxPk& friendPk, const QString& message)
+{
+    if (!isHistoryEnabled()) {
+        return;
+    }
+
+    QString pkStr = friendPk.toString();
+    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
+    QString selfStr = core->getSelfPublicKey().toString();
+    QDateTime datetime = QDateTime::currentDateTime();
+    history->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, QString());
+}
+
+/**
  * @brief Save an avatar to cache.
  * @param pic Picture to save.
  * @param ownerId ID of avatar owner.
