@@ -122,7 +122,6 @@ signals:
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
 
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
-    void friendshipChanged(uint32_t friendId);
     void requestSended(const ToxPk& friendPk, const QString& message);
 
     void friendStatusChanged(uint32_t friendId, Status status);
