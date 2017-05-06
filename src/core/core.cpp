@@ -561,7 +561,6 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
     } else {
         profile.saveToxSave();
         emit friendAdded(friendId, friendPk);
-        emit friendshipChanged(friendId);
     }
 }
 
@@ -613,7 +612,6 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         Settings::getInstance().updateFriendAddress(friendId.toString());
 
         emit friendAdded(friendNumber, friendPk);
-        emit friendshipChanged(friendNumber);
         emit requestSent(friendPk, message);
     }
 
