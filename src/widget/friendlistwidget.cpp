@@ -57,16 +57,12 @@ Time getTime(const QDate& date)
     }
 
     QDate today = QDate::currentDate();
-    const QMap<Time, QDate> dates {
-        { Time::Today,     today.addDays(0)    },
-        { Time::Yesterday, today.addDays(-1)   },
-        { Time::ThisWeek,  today.addDays(-6)   },
-        { Time::ThisMonth, today.addMonths(-1) },
-        { Time::Month1Ago, today.addMonths(-2) },
-        { Time::Month2Ago, today.addMonths(-3) },
-        { Time::Month3Ago, today.addMonths(-4) },
-        { Time::Month4Ago, today.addMonths(-5) },
-        { Time::Month5Ago, today.addMonths(-6) },
+    const QMap<Time, QDate> dates{
+        {Time::Today, today.addDays(0)},        {Time::Yesterday, today.addDays(-1)},
+        {Time::ThisWeek, today.addDays(-6)},    {Time::ThisMonth, today.addMonths(-1)},
+        {Time::Month1Ago, today.addMonths(-2)}, {Time::Month2Ago, today.addMonths(-3)},
+        {Time::Month3Ago, today.addMonths(-4)}, {Time::Month4Ago, today.addMonths(-5)},
+        {Time::Month5Ago, today.addMonths(-6)},
     };
 
     for (Time time : dates.keys()) {
@@ -193,18 +189,18 @@ void FriendListWidget::setMode(Mode mode)
         QLocale ql(Settings::getInstance().getTranslation());
         QDate today = QDate::currentDate();
 #define COMMENT "Category for sorting friends by activity"
-        const QMap<Time, QString> names {
-            { Time::Today,     tr("Today",                      COMMENT) },
-            { Time::Yesterday, tr("Yesterday",                  COMMENT) },
-            { Time::ThisWeek,  tr("Last 7 days",                COMMENT) },
-            { Time::ThisMonth, tr("This month",                 COMMENT) },
-            { Time::LongAgo,   tr("Older than 6 Months",        COMMENT) },
-            { Time::Never,     tr("Never",                      COMMENT) },
-            { Time::Month1Ago, ql.monthName(today.addMonths(-1).month()) },
-            { Time::Month2Ago, ql.monthName(today.addMonths(-2).month()) },
-            { Time::Month3Ago, ql.monthName(today.addMonths(-3).month()) },
-            { Time::Month4Ago, ql.monthName(today.addMonths(-4).month()) },
-            { Time::Month5Ago, ql.monthName(today.addMonths(-5).month()) },
+        const QMap<Time, QString> names{
+            {Time::Today, tr("Today", COMMENT)},
+            {Time::Yesterday, tr("Yesterday", COMMENT)},
+            {Time::ThisWeek, tr("Last 7 days", COMMENT)},
+            {Time::ThisMonth, tr("This month", COMMENT)},
+            {Time::LongAgo, tr("Older than 6 Months", COMMENT)},
+            {Time::Never, tr("Never", COMMENT)},
+            {Time::Month1Ago, ql.monthName(today.addMonths(-1).month())},
+            {Time::Month2Ago, ql.monthName(today.addMonths(-2).month())},
+            {Time::Month3Ago, ql.monthName(today.addMonths(-3).month())},
+            {Time::Month4Ago, ql.monthName(today.addMonths(-4).month())},
+            {Time::Month5Ago, ql.monthName(today.addMonths(-5).month())},
         };
 #undef COMMENT
 

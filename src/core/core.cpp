@@ -141,8 +141,7 @@ Tox_Options initToxOptions(const QByteArray& savedata)
     toxOptions.proxy_type = TOX_PROXY_TYPE_NONE;
     toxOptions.proxy_host = nullptr;
     toxOptions.proxy_port = 0;
-    toxOptions.savedata_type = !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE
-                                                  : TOX_SAVEDATA_TYPE_NONE;
+    toxOptions.savedata_type = !savedata.isNull() ? TOX_SAVEDATA_TYPE_TOX_SAVE : TOX_SAVEDATA_TYPE_NONE;
     toxOptions.savedata_data = reinterpret_cast<const uint8_t*>(savedata.data());
     toxOptions.savedata_length = savedata.size();
 
@@ -443,11 +442,7 @@ void Core::onFriendMessage(Tox*, uint32_t friendId, TOX_MESSAGE_TYPE type, const
     emit static_cast<Core*>(core)->friendMessageReceived(friendId, msg, isAction);
 }
 
-void Core::onFriendNameChange(Tox*,
-                              uint32_t friendId,
-                              const uint8_t* cName,
-                              size_t cNameSize,
-                              void* core)
+void Core::onFriendNameChange(Tox*, uint32_t friendId, const uint8_t* cName, size_t cNameSize, void* core)
 {
     QString newName = ToxString(cName, cNameSize).getQString();
     emit static_cast<Core*>(core)->friendUsernameChanged(friendId, newName);
