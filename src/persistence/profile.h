@@ -61,6 +61,7 @@ public:
     QPixmap loadAvatar();
     QPixmap loadAvatar(const QString& ownerId);
     QByteArray loadAvatarData(const QString& ownerId);
+    void setAvatar(QByteArray pic, const QString& ownerId);
     void saveAvatar(QByteArray pic, const QString& ownerId);
     QByteArray getAvatarHash(const QString& ownerId);
     void removeAvatar(const QString& ownerId);
@@ -79,6 +80,9 @@ public:
     static bool exists(QString name);
     static bool isEncrypted(QString name);
     static QString getDbPath(const QString& profileName);
+
+signals:
+    void selfAvatarChanged(const QPixmap& pixmap);
 
 private slots:
     void loadDatabase(const ToxId& id, QString password);

@@ -22,7 +22,6 @@
 #include "corefile.h"
 #include "src/core/coreav.h"
 #include "src/core/toxstring.h"
-#include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -311,13 +310,6 @@ void Core::start(const QByteArray& savedata)
     tox_callback_file_recv(tox, CoreFile::onFileReceiveCallback);
     tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback);
     tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback);
-
-    QByteArray data = profile.loadAvatarData(getSelfPublicKey().toString());
-    if (data.isEmpty()) {
-        qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
-    }
-
-    setAvatar(data);
 
     ready = true;
 
@@ -859,21 +851,6 @@ void Core::setUsername(const QString& username)
     if (ready) {
         profile.saveToxSave();
     }
-}
-
-void Core::setAvatar(const QByteArray& data)
-{
-    if (!data.isEmpty()) {
-        QPixmap pic;
-        pic.loadFromData(data);
-        profile.saveAvatar(data, getSelfPublicKey().toString());
-        emit selfAvatarChanged(pic);
-    } else {
-        emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
-    }
-
-    AvatarBroadcaster::setAvatar(data);
-    AvatarBroadcaster::enableAutoBroadcast();
 }
 
 /**
