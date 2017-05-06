@@ -144,7 +144,7 @@ GroupNetCamView::GroupNetCamView(int group, QWidget* parent)
     connect(timer, &QTimer::timeout, this, &GroupNetCamView::onUpdateActivePeer);
     timer->start();
 
-    connect(Core::getInstance(), &Core::selfAvatarChanged, [this](const QPixmap& pixmap) {
+    connect(Nexus::getProfile(), &Profile::selfAvatarChanged, [this](const QPixmap& pixmap) {
         selfVideoSurface->getVideoSurface()->setAvatar(pixmap);
         setActive();
     });

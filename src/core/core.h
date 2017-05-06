@@ -94,7 +94,6 @@ public slots:
     void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
-    void setAvatar(const QByteArray& data);
 
     int sendMessage(uint32_t friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -145,7 +144,6 @@ signals:
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
     void idSet(const ToxId& id);
-    void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);
     void groupSentResult(int groupId, const QString& message, int result);

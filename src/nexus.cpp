@@ -198,6 +198,8 @@ void Nexus::showMainGUI()
     GUI::setEnabled(false);
 
     // Connections
+    connect(profile, &Profile::selfAvatarChanged, widget, &Widget::onSelfAvatarLoaded);
+
     Core* core = profile->getCore();
     connect(core, &Core::requestSent, profile, &Profile::onRequestSent);
 
@@ -209,7 +211,6 @@ void Nexus::showMainGUI()
     connect(core, &Core::statusSet, widget, &Widget::onStatusSet);
     connect(core, &Core::usernameSet, widget, &Widget::setUsername);
     connect(core, &Core::statusMessageSet, widget, &Widget::setStatusMessage);
-    connect(core, &Core::selfAvatarChanged, widget, &Widget::onSelfAvatarLoaded);
     connect(core, &Core::friendAdded, widget, &Widget::addFriend);
     connect(core, &Core::failedToAddFriend, widget, &Widget::addFriendFailed);
     connect(core, &Core::friendUsernameChanged, widget, &Widget::onFriendUsernameChanged);

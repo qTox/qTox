@@ -232,6 +232,9 @@ void Widget::init()
     // connect logout tray menu action
     connect(actionLogout, &QAction::triggered, profileForm, &ProfileForm::onLogoutClicked);
 
+    Profile* profile = Nexus::getProfile();
+    connect(profile, &Profile::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
+
     const Settings& s = Settings::getInstance();
     Core* core = Nexus::getCore();
     CoreAV* av = core->getAv();
@@ -239,7 +242,6 @@ void Widget::init()
 
     connect(core, &Core::fileDownloadFinished, filesForm, &FilesForm::onFileDownloadComplete);
     connect(core, &Core::fileUploadFinished, filesForm, &FilesForm::onFileUploadComplete);
-    connect(core, &Core::selfAvatarChanged, profileForm, &ProfileForm::onSelfAvatarLoaded);
     connect(ui->addButton, &QPushButton::clicked, this, &Widget::onAddClicked);
     connect(ui->groupButton, &QPushButton::clicked, this, &Widget::onGroupClicked);
     connect(ui->transferButton, &QPushButton::clicked, this, &Widget::onTransferClicked);
