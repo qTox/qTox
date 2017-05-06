@@ -123,6 +123,7 @@ signals:
 
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
     void friendshipChanged(uint32_t friendId);
+    void requestSent(const ToxPk& friendPk, const QString& message);
 
     void friendStatusChanged(uint32_t friendId, Status status);
     void friendStatusMessageChanged(uint32_t friendId, const QString& message);
