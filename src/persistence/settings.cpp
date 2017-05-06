@@ -165,22 +165,6 @@ void Settings::loadGlobal()
 
     s.beginGroup("General");
     {
-        {
-            // TODO: values in this block are moved -> remove @ v1.8
-            enableIPv6 = s.value("enableIPv6", true).toBool();
-            makeToxPortable = s.value("makeToxPortable", false).toBool();
-            forceTCP = s.value("forceTCP", false).toBool();
-            proxyType = static_cast<ProxyType>(s.value("proxyType", 0).toInt());
-            proxyAddr = s.value("proxyAddr", "").toString();
-            proxyPort = static_cast<quint16>(s.value("proxyPort", 0).toUInt());
-            showWindow = s.value("showWindow", true).toBool();
-            showInFront = s.value("showInFront", false).toBool();
-            groupAlwaysNotify = s.value("groupAlwaysNotify", false).toBool();
-            separateWindow = s.value("separateWindow", false).toBool();
-            dontGroupWindows = s.value("dontGroupWindows", true).toBool();
-            groupchatPosition = s.value("groupchatPosition", true).toBool();
-        }
-
         translation = s.value("translation", "en").toString();
         showSystemTray = s.value("showSystemTray", true).toBool();
         autostartInTray = s.value("autostartInTray", false).toBool();
@@ -398,17 +382,9 @@ void Settings::loadPersonal(Profile* profile)
     }
     ps.endGroup();
 
-    // TODO: values in this group are moved -> remove @ v1.8
-    ps.beginGroup("General");
-    {
-        compactLayout = ps.value("compactLayout", true).toBool();
-    }
-    ps.endGroup();
-
     ps.beginGroup("GUI");
     {
-        // TODO: Default values in this block should be changed @ v1.8
-        compactLayout = ps.value("compactLayout", compactLayout).toBool();
+        compactLayout = ps.value("compactLayout", true).toBool();
     }
     ps.endGroup();
 
