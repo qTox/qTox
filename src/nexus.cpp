@@ -199,6 +199,8 @@ void Nexus::showMainGUI()
 
     // Connections
     Core* core = profile->getCore();
+    connect(core, &Core::requestSent, profile, &Profile::onRequestSent);
+
     connect(core, &Core::connected, widget, &Widget::onConnected);
     connect(core, &Core::disconnected, widget, &Widget::onDisconnected);
     connect(core, &Core::failedToStart, widget, &Widget::onFailedToStartCore,

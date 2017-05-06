@@ -593,26 +593,6 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
     return QString{};
 }
 
-/**
- * @brief Adds history message about friendship request attempt if history is enabled
- * @param friendPk Pk of a friend which request is destined to
- * @param selfPk Self public key
- * @param message Friendship request message
- */
-void tryAddFriendRequestToHistory(const ToxPk& friendPk, const ToxPk& selfPk, const QString& msg)
-{
-    Profile* profile = Nexus::getProfile();
-    if (!profile->isHistoryEnabled()) {
-        return;
-    }
-
-    QString pkStr = friendPk.toString();
-    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(msg);
-    QString selfStr = selfPk.toString();
-    QDateTime datetime = QDateTime::currentDateTime();
-    profile->getHistory()->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, QString());
-}
-
 void Core::requestFriendship(const ToxId& friendId, const QString& message)
 {
     ToxPk friendPk = friendId.getPublicKey();
@@ -632,11 +612,9 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         qDebug() << "Requested friendship of " << friendNumber;
         Settings::getInstance().updateFriendAddress(friendId.toString());
 
-        // TODO: this really shouldn't be in Core
-        tryAddFriendRequestToHistory(friendPk, getSelfPublicKey(), message);
-
         emit friendAdded(friendNumber, friendPk);
         emit friendshipChanged(friendNumber);
+        emit requestSent(friendPk, message);
     }
 
     profile.saveToxSave();

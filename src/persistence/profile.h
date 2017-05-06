@@ -80,6 +80,9 @@ public:
     static bool isEncrypted(QString name);
     static QString getDbPath(const QString& profileName);
 
+public slots:
+    void onRequestSent(const ToxPk& friendPk, const QString& message);
+
 private slots:
     void loadDatabase(const ToxId& id, QString password);
 
