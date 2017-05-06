@@ -638,6 +638,14 @@ se pueden producir problemas con las videollamadas.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation>El sonido sólo puede ser inhabilitado durante una llamada</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Guardar historial de chat</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -1523,6 +1531,10 @@ El perfil no contiene tu historial.</translation>
         <source>Load history from:</source>
         <translation>Cargar historial desde:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1618,7 +1630,9 @@ Por favor reporta este error.</translation>
         <source>There is no selected profile.
 
 You may want to create one.</source>
-        <translation>No has seleccionado ningún perfil.
+        <translation>No ha seleccionado ningún perfil.
+
+Tal vez quieras crear uno.
 
 ¿Quizás quieres crear uno nuevo?</translation>
     </message>
@@ -1957,11 +1971,11 @@ Por favor usa otra.</translation>
     <message>
         <source>Failed to rename</source>
         <comment>rename failed title</comment>
-        <translation>No se pudo renombrar.</translation>
+        <translation>No se pudo renombrar</translation>
     </message>
     <message>
         <source>Couldn&apos;t rename the profile to &quot;%1&quot;</source>
-        <translation>No se pudo renombrar el perfil a &quot;%1&quot;.</translation>
+        <translation>No se pudo renombrar el perfil a &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -2017,12 +2031,6 @@ Por favor usa otra.</translation>
     <message>
         <source>Please enter a new password.</source>
         <translation>Ingresa tu nueva contraseña.</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Tox usa este grupo de caracteres para saber cómo has de ser contactado.
-Compártelo con tus amigos para poder comunicarte.</translation>
     </message>
     <message>
         <source>Are you sure you want to delete this profile?</source>
@@ -2108,6 +2116,13 @@ Compártelo con tus amigos para poder comunicarte.</translation>
         <source>Couldn&apos;t change password</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2191,10 +2206,6 @@ Compártelo con tus amigos para poder comunicarte.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation type="unfinished">%1 no es una dirección Toxme válida.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2660,15 +2671,15 @@ Será instalada cuando reinicies qTox.</translation>
     <message numerus="yes">
         <source>%n New Friend Request(s)</source>
         <translation>
+            <numerusform>%n Nueva Solicitud de Amistad</numerusform>
             <numerusform>%n Nueva(s) Solicitud(es) de Amistad</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n New Group Invite(s)</source>
         <translation>
-            <numerusform>%n Nueva(s) Invitacion(es) a Grupos</numerusform>
-            <numerusform></numerusform>
+            <numerusform>%n Nueva Invitación a Grupos</numerusform>
+            <numerusform>%n Nuevas Invitaciones a Grupos</numerusform>
         </translation>
     </message>
     <message>
