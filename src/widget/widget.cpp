@@ -996,6 +996,8 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
 
     FilterCriteria filter = getFilterCriteria();
     widget->search(ui->searchContactText->text(), filterOffline(filter));
+
+    updateFriendActivity(newfriend);
 }
 
 void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
@@ -1006,12 +1008,6 @@ void Widget::addFriendFailed(const ToxPk&, const QString& errorInfo)
     }
 
     QMessageBox::critical(0, "Error", info);
-}
-
-void Widget::onFriendshipChanged(int friendId)
-{
-    Friend* who = FriendList::findFriend(friendId);
-    updateFriendActivity(who);
 }
 
 void Widget::onFriendStatusChanged(int friendId, Status status)
