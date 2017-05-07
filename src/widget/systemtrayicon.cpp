@@ -20,6 +20,7 @@
 
 #include "systemtrayicon.h"
 #include "src/persistence/settings.h"
+#include "icon.h"
 #include <QDebug>
 #include <QFile>
 #include <QMenu>
@@ -290,18 +291,22 @@ void SystemTrayIcon::setVisible(bool newState)
 
 void SystemTrayIcon::setIcon(QIcon& icon)
 {
+    suppliedIcon = icon;
+    auto profileColor = Settings::getInstance().getProfileColor();
+    QIcon finalIcon = profileColor.first ? Icon::drawProfileColor(icon, profileColor.second) : icon;
+
     if (false)
         ;
 #ifdef ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
     else if (backendType == SystrayBackendType::StatusNotifier) {
-        GdkPixbuf* pixbuf = convertQIconToPixbuf(icon);
+        GdkPixbuf* pixbuf = convertQIconToPixbuf(finalIcon);
         status_notifier_set_from_pixbuf(statusNotifier, STATUS_NOTIFIER_ICON, pixbuf);
         g_object_unref(pixbuf);
     }
 #endif
 #ifdef ENABLE_SYSTRAY_GTK_BACKEND
     else if (backendType == SystrayBackendType::GTK) {
-        GdkPixbuf* pixbuf = convertQIconToPixbuf(icon);
+        GdkPixbuf* pixbuf = convertQIconToPixbuf(finalIcon);
         gtk_status_icon_set_from_pixbuf(gtkIcon, pixbuf);
         g_object_unref(pixbuf);
     }
@@ -310,20 +315,25 @@ void SystemTrayIcon::setIcon(QIcon& icon)
     else if (backendType == SystrayBackendType::Unity) {
         // Alternate file names or appindicator will not reload the icon
         if (app_indicator_get_icon(unityIndicator) == QString("icon2")) {
-            extractIconToFile(icon, "icon");
+            extractIconToFile(finalIcon, "icon");
             app_indicator_set_icon_full(unityIndicator, "icon", "qtox");
         } else {
-            extractIconToFile(icon, "icon2");
+            extractIconToFile(finalIcon, "icon2");
             app_indicator_set_icon_full(unityIndicator, "icon2", "qtox");
         }
     }
 #endif
     else if (backendType == SystrayBackendType::Qt) {
-        qtIcon->setIcon(icon);
+        qtIcon->setIcon(finalIcon);
     }
 }
 
 SystrayBackendType SystemTrayIcon::backend() const
 {
     return backendType;
+}
+
+void SystemTrayIcon::onProfileColorChanged(bool, const QColor&)
+{
+     setIcon(suppliedIcon);
 }

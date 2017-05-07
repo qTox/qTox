@@ -374,6 +374,8 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/groupwidget.h
   src/widget/gui.cpp
   src/widget/gui.h
+  src/widget/icon.cpp
+  src/widget/icon.h
   src/widget/loginscreen.cpp
   src/widget/loginscreen.h
   src/widget/maskablepixmapwidget.cpp
