@@ -114,9 +114,16 @@ void GroupInviteForm::show(ContentLayout* contentLayout)
  * @param friendId Id of a friend that invited you
  * @param type Type of the invitation - text or AV
  * @param invite Information that invited person needs to see an invitation
+ * @return true if notification is needed, false otherwise
  */
-void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
+bool GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite)
 {
+    // supress duplicate invite messages
+    for (GroupInviteWidget* existing : invites) {
+        if (existing->getInviteInfo().getInvite() == invite) {
+            return false;
+        }
+    }
     GroupInviteWidget* widget = new GroupInviteWidget(this, GroupInvite(friendId, type, invite));
     scroll->widget()->layout()->addWidget(widget);
     invites.append(widget);
@@ -129,7 +136,9 @@ void GroupInviteForm::addGroupInvite(int32_t friendId, uint8_t type, QByteArray 
             [this](const GroupInvite& inviteInfo) { deleteInviteWidget(inviteInfo); });
     if (isVisible()) {
         emit groupInvitesSeen();
+        return false;
     }
+    return true;
 }
 
 void GroupInviteForm::showEvent(QShowEvent* event)

@@ -1565,10 +1565,12 @@ void Widget::onGroupInviteReceived(int32_t friendId, uint8_t type, QByteArray in
         if (Settings::getInstance().getAutoGroupInvite(f->getPublicKey())) {
             onGroupInviteAccepted(friendId, type, invite);
         } else {
+            if (!groupInviteForm->addGroupInvite(friendId, type, invite)) {
+                return;
+            }
             ++unreadGroupInvites;
             groupInvitesUpdate();
             newMessageAlert(window(), isActiveWindow(), true, true);
-            groupInviteForm->addGroupInvite(friendId, type, invite);
         }
     } else {
         qWarning() << "onGroupInviteReceived: Unknown groupchat type:" << type;

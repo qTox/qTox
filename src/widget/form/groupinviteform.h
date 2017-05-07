@@ -46,7 +46,7 @@ public:
     ~GroupInviteForm();
 
     void show(ContentLayout* contentLayout);
-    void addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
+    bool addGroupInvite(int32_t friendId, uint8_t type, QByteArray invite);
     bool isShown() const;
 
 signals:
