@@ -17,6 +17,9 @@
 <img src="https://hosted.weblate.org/widgets/tox/-/svg-badge.svg"
      alt="Translate on Weblate" />
 </a>
+<a href="https://gitter.im/qtox/qTox?utm_source=badge">
+<img src="https://badges.gitter.im/Join Chat.svg" alt="Gitter">
+</a>
 <a href="https://github.com/qTox/release-schedule/blob/master/README.md">
 <img src="https://qtox.github.io/release-schedule/status.svg"
 title="Week of Merges: population of Merges increases!
