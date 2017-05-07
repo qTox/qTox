@@ -84,7 +84,7 @@ git config --global alias.logs 'log --show-signature'
 # Issues
 
 - tag issues
-  - `help wanted` tag should be used whenever no one is currently working on
+  - `up for grabs` tag should be used whenever no one is currently working on
     the issue, and you're not going to work on it in foreseeable future (hours,
     day or two).
   - when you request more info to be provided in the issue, tag it with
