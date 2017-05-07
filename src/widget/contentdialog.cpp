@@ -414,12 +414,12 @@ ContentDialog* ContentDialog::current()
     return currentDialog;
 }
 
-bool ContentDialog::existsFriendWidget(int friendId)
+bool ContentDialog::friendWidgetExists(int friendId)
 {
     return existsWidget(friendId, friendList);
 }
 
-bool ContentDialog::existsGroupWidget(int groupId)
+bool ContentDialog::groupWidgetExists(int groupId)
 {
     return existsWidget(groupId, groupList);
 }

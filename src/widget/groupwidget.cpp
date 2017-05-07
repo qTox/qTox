@@ -205,7 +205,7 @@ bool GroupWidget::chatFormIsSet(bool focus) const
         ContentDialog::focusGroup(groupId);
     }
 
-    bool exist = ContentDialog::existsGroupWidget(groupId);
+    bool exist = ContentDialog::groupWidgetExists(groupId);
     return exist || g->getChatForm()->isVisible();
 }
 
