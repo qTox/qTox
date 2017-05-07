@@ -172,13 +172,6 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
-    connect(friendWidget, &FriendWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
-
-    ContentDialog* lastDialog = getFriendDialog(friendId);
-    if (lastDialog) {
-        lastDialog->removeFriend(friendId);
-    }
-
     friendList.insert(friendId, std::make_tuple(this, friendWidget));
     // FIXME: emit should be removed
     emit friendWidget->chatroomWidgetClicked(friendWidget);
