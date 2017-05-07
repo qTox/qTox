@@ -37,8 +37,6 @@ Friend::Friend(uint32_t friendId, const ToxPk& friendPk, const QString& userAlia
     if (userName.isEmpty()) {
         userName = friendPk.toString();
     }
-
-    chatForm = new ChatForm(this);
 }
 
 Friend::~Friend()
@@ -141,4 +139,9 @@ Status Friend::getStatus() const
 ChatForm* Friend::getChatForm() const
 {
     return chatForm;
+}
+
+void Friend::setChatForm(ChatForm* form)
+{
+    chatForm = form;
 }
