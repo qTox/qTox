@@ -368,7 +368,7 @@ bool FriendWidget::chatFormIsSet(bool focus) const
         ContentDialog::focusFriend(friendId);
     }
 
-    bool exist = ContentDialog::existsFriendWidget(friendId);
+    bool exist = ContentDialog::friendWidgetExists(friendId);
     return exist || f->getChatForm()->isVisible();
 }
 

@@ -67,8 +67,8 @@ public:
     void onVideoHide();
 
     static ContentDialog* current();
-    static bool existsFriendWidget(int friendId);
-    static bool existsGroupWidget(int groupId);
+    static bool friendWidgetExists(int friendId);
+    static bool groupWidgetExists(int groupId);
     static void focusFriend(int friendId);
     static void focusGroup(int groupId);
     static void updateFriendStatus(int friendId);
