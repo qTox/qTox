@@ -1,4 +1,67 @@
 <a name=""></a>
+## v1.10.0 (2017-05-07)
+
+The more prominent new features are an option to autojoin groupchats and
+ability to select messages with triple click. More about new stuff below.
+
+#### Features
+
+*   stop using plaintext passwords in the code ([084f3b06](https://github.com/qTox/qTox/commit/084f3b06262b2ca8272238b2ec450d11840d7551))
+* **audio:**  don't use dynamic memory allocation and remove resource leak ([b68ad4ce](https://github.com/qTox/qTox/commit/b68ad4ced2ce985c4e53b1469681ed3ec807d2b6))
+* **chatform:**  mark message with triple click ([3acbc148](https://github.com/qTox/qTox/commit/3acbc148f51afc96bf5bd96e88da053bdd64f702))
+* **groups:**  add option to automatically accept groupchat invites ([6a16a2bd](https://github.com/qTox/qTox/commit/6a16a2bdbc94f9eb20386794652f8a1766498a00))
+* **l10n:**
+  *  add Romanian translation to UI ([0192e927](https://github.com/qTox/qTox/commit/0192e9275f1ceb1cc4caa0b810f87da92d56b75a))
+  *  add Romanian translation using Weblate ([8b22e962](https://github.com/qTox/qTox/commit/8b22e962edc1f3779525f678a2b1f1f99415c7f5))
+  *  update Belarusian translation from Weblate ([57615230](https://github.com/qTox/qTox/commit/576152305aabb64b9b05e705f0eb0dfcb68c9329))
+  *  update Chinese (Simplified) translation from Weblate ([9d6be415](https://github.com/qTox/qTox/commit/9d6be4151073762f323b497a9379cb67e5747898))
+  *  update Esperanto translation from Weblate ([2c158eb5](https://github.com/qTox/qTox/commit/2c158eb57c0ed5dd50420589b8f706f99ea9b5af))
+  *  update Estonian translation from Weblate ([e580edd1](https://github.com/qTox/qTox/commit/e580edd184c3426669014a036e7dd23db3c3dcae))
+  *  update Finnish translation from Weblate ([2f8e8b84](https://github.com/qTox/qTox/commit/2f8e8b840b426c27539e1b2e40caa890343ad481))
+  *  update French translation from Weblate ([0748b6c6](https://github.com/qTox/qTox/commit/0748b6c6c6abf16a1069c880554a1438ca268ea7))
+  *  update French translation from Weblate ([38bb82e5](https://github.com/qTox/qTox/commit/38bb82e59bdde27c62b8d836dfae47283c3cfd22))
+  *  update German translation from Weblate ([1dfb4a63](https://github.com/qTox/qTox/commit/1dfb4a630b865f7f0e17a1d948eb7e71eee98ddc), [87d66c01](https://github.com/qTox/qTox/commit/87d66c019c5607fdcc8d68167202967aa8f6f753))
+  *  update Greek translation from Weblate ([6e6d32a7](https://github.com/qTox/qTox/commit/6e6d32a7405a28fb76f28a542d90e7318ad02a40))
+  *  update Lithuanian translation from Weblate ([c970e065](https://github.com/qTox/qTox/commit/c970e065f681d8447c80c442df0f405f42ef1b97))
+  *  update Russian translation from Weblate ([e6b76561](https://github.com/qTox/qTox/commit/e6b76561062e85633305d0653cdb01c3c50dba88))
+  *  update Slovak translation from Weblate ([63d5caf3](https://github.com/qTox/qTox/commit/63d5caf37c03401398256a2443f10adc4b488850))
+  *  update Spanish translation from Weblate ([615c3614](https://github.com/qTox/qTox/commit/615c3614974678b2e4a9fca7af015ec65bcde1b0))
+  *  update Swedish translation from Weblate ([3145949c](https://github.com/qTox/qTox/commit/3145949cc27ed4445c6435726eb4e0f9b1eb655f))
+  *  update Ukrainian translation from Weblate ([9dd40bec](https://github.com/qTox/qTox/commit/9dd40bec63b7470bdb455129a1d1e5a2ec60751c))
+* **ui:**  grey out proxy settings if no proxy selected ([77aa2e92](https://github.com/qTox/qTox/commit/77aa2e92520de1323a3ac8ef9a154d0fdf041c0b))
+
+#### Bug Fixes
+
+*   fix segfault while trying to send messages ([b5f4628c](https://github.com/qTox/qTox/commit/b5f4628c8984d063cac385e5f2ae57e7371e58bd))
+*   fix OpenAL name ([8a77723a](https://github.com/qTox/qTox/commit/8a77723a893e0211fd1f02e099408e8a92aa8f1c))
+*   fixed segfault after accepting group invite ([532e05cb](https://github.com/qTox/qTox/commit/532e05cb0f135d763890f4146e14da036cc3b248))
+*   set CSS font-weight of editbox  always to normal ([96b2977a](https://github.com/qTox/qTox/commit/96b2977a5f4ddad2be1d7d22b4628ff960f174aa))
+*   remove useless line that caused a warning ([e9515f48](https://github.com/qTox/qTox/commit/e9515f4898aedfd9c70094d61a6f3b85debb9e3e))
+*   fixed wrong formatting for multiple URL's in one message ([08208e9a](https://github.com/qTox/qTox/commit/08208e9aa515270a190ff85a1ba704c8a130c5cd))
+*   silence various warnings ([f0cec44a](https://github.com/qTox/qTox/commit/f0cec44a8cb91a9867b5761fb3703a90691b892b))
+*   Stop using deprecated avcodec_decode_video2 ([f07daaf1](https://github.com/qTox/qTox/commit/f07daaf1595e320a19408321fcb62fe76d48d118))
+*   Remove unnecessary calls to av_frame_unref ([91414b4f](https://github.com/qTox/qTox/commit/91414b4fcef944765507112583787b887dd62966))
+*   Stop using deprecated AVStream::codec ([9674bff0](https://github.com/qTox/qTox/commit/9674bff0cfe05fcd5b667afca6df5b214644939d))
+*   silence warning by not using dynamic arrays on stack ([300ac12e](https://github.com/qTox/qTox/commit/300ac12e3f220265fdd4685efb8e75e9da0ef3cd))
+* **UI:**
+  *  rename `qTox.desktop` → `qtox.desktop` to fix displaying icon ([6de129fe](https://github.com/qTox/qTox/commit/6de129fef1122c20d356cfb5fe504cb2f0999128), closes [#4323](https://github.com/qTox/qTox/issues/4323))
+  *  improve unclear message about text being resized in chatform ([c8ed535b](https://github.com/qTox/qTox/commit/c8ed535bbad3300c02871cbc718bee03accc6c26))
+* **chatform:**  disable Tab in add friend message text  area ([195e891d](https://github.com/qTox/qTox/commit/195e891da156b87c4973b13e5decfb95445d885f))
+* **core:**
+  *  add missing nullptr check ([407413c6](https://github.com/qTox/qTox/commit/407413c65b1d7a43a1788e00935c02fa2d9ffe33))
+  *  don't continue when the tox file is corrupted ([20db8b74](https://github.com/qTox/qTox/commit/20db8b740bcccd0889b4d19210f98c1f902b87bd))
+* **groupinvite:**  prevent multiple groupinvites to the same group from showing up ([13029e30](https://github.com/qTox/qTox/commit/13029e3047cf021ff98ea816008e0f514b79fc0c))
+* **includes:**  Added missing #include <ctime> ([e597d391](https://github.com/qTox/qTox/commit/e597d391fcd9b1630ae2b049b361549d4a34f9fc))
+* **profile:**  toxsave wasn't correctly encrypted ([5b31cf6d](https://github.com/qTox/qTox/commit/5b31cf6d9d188d064b7151cdb21959b064c0cef6))
+* **settings:**
+  *  remove legacy code ([6a6e30d6](https://github.com/qTox/qTox/commit/6a6e30d6393f29b0e15b61d31267bcd60a9c8426))
+  *  changing language sets title to "Add Friend" ([4886868e](https://github.com/qTox/qTox/commit/4886868eceec38bdb13031f36fb916828a399f0a))
+* **ui:**  fixed typos of pseudo-states in stylesheets ([f35103e5](https://github.com/qTox/qTox/commit/f35103e547b517106cb5048b43dfe6dece5fe8d8))
+* **widget:**  Add friendWidget deletation ([c7202c8b](https://github.com/qTox/qTox/commit/c7202c8b243453d9630a51d7de1f745b4b865abb))
+
+
+
+<a name=""></a>
 ## v1.9.0 (2017-03-19)
 
 The most noticeable change to UI are moved buttons in file transfer widget,
