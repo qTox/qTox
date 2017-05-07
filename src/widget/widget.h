@@ -38,6 +38,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class ChatForm;
 class GenericChatroomWidget;
 class FriendWidget;
 class Group;
@@ -293,6 +294,7 @@ private:
     int icon_size;
 
     QMap<int, FriendWidget*> friendWidgets;
+    QMap<int, ChatForm*> chatForms;
 
 #ifdef Q_OS_MAC
     QAction* fileMenu;
