@@ -963,10 +963,11 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     Friend* newfriend = FriendList::addFriend(friendId, friendPk);
     bool compact = Settings::getInstance().getCompactLayout();
     FriendWidget* widget = new FriendWidget(newfriend, compact);
-
-    ChatForm* friendForm = newfriend->getChatForm();
+    ChatForm* friendForm = new ChatForm(newfriend);
+    newfriend->setChatForm(friendForm);
 
     friendWidgets[friendId] = widget;
+    chatForms[friendId] = friendForm;
     newfriend->loadHistory();
 
     const Settings& s = Settings::getInstance();

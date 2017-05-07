@@ -57,9 +57,9 @@ public:
     Status getStatus() const;
 
     ChatForm* getChatForm() const;
+    void setChatForm(ChatForm* form);
 
 signals:
-    // TODO: move signals to DB object
     void nameChanged(uint32_t friendId, const QString& name);
     void aliasChanged(uint32_t friendId, QString alias);
     void statusChanged(uint32_t friendId, Status status);
