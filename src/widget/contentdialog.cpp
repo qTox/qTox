@@ -168,11 +168,9 @@ FriendWidget* ContentDialog::addFriend(const Friend* frnd)
     FriendWidget* friendWidget = new FriendWidget(frnd, compact);
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
-    ChatForm* form = frnd->getChatForm();
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
     connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
     connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDialog);
-    connect(friendWidget, &FriendWidget::chatroomWidgetClicked, form, &ChatForm::focusInput);
 
     ContentDialog* lastDialog = getFriendDialog(friendId);
     if (lastDialog) {
