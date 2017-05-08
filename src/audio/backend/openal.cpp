@@ -391,7 +391,7 @@ void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, un
     alSourcei(sourceId, AL_LOOPING, AL_FALSE);
 
     if (processed == 0) {
-        if (queued >= BUFFER_COUNT) {
+        if (static_cast<ALuint>(queued) >= BUFFER_COUNT) {
             // reached limit, drop audio
             return;
         }
@@ -495,7 +495,7 @@ void OpenAL::doCapture()
 
     ALint curSamples = 0;
     alcGetIntegerv(alInDev, ALC_CAPTURE_SAMPLES, sizeof(curSamples), &curSamples);
-    if (curSamples < AUDIO_FRAME_SAMPLE_COUNT)
+    if (static_cast<ALuint>(curSamples) < AUDIO_FRAME_SAMPLE_COUNT)
         return;
 
     int16_t buf[AUDIO_FRAME_SAMPLE_COUNT * AUDIO_CHANNELS];
