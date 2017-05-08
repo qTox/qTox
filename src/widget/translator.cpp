@@ -44,8 +44,7 @@ void Translator::translate(const QString& localeName)
 
     // Load translations
     QCoreApplication::removeTranslator(translator);
-    QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0)
-                                          : localeName;
+    QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0) : localeName;
 
     if (locale != "en") {
         if (translator->load(locale, ":translations/")) {

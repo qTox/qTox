@@ -366,9 +366,8 @@ QString Text::extractSanitizedText(int from, int to) const
     QTextBlock end = doc->findBlock(to);
     for (QTextBlock block = begin; block != end.next() && block.isValid(); block = block.next()) {
         for (QTextBlock::Iterator itr = block.begin(); itr != block.end(); ++itr) {
-            int pos =
-                itr.fragment()
-                    .position(); // fragment position -> position of the first character in the fragment
+            int pos = itr.fragment().position(); // fragment position -> position of the first
+                                                 // character in the fragment
 
             if (itr.fragment().charFormat().isImageFormat()) {
                 QTextImageFormat imgFmt = itr.fragment().charFormat().toImageFormat();
