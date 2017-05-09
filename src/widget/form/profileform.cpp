@@ -56,6 +56,10 @@ ProfileForm::ProfileForm(QWidget* parent)
     bodyUI->setupUi(this);
     core = Core::getInstance();
 
+    bodyUI->userNameLabel->setToolTip(tr("Tox user names cannot exceed %1 characters.")
+                                      .arg(TOX_MAX_NAME_LENGTH));
+    bodyUI->userName->setMaxLength(TOX_MAX_NAME_LENGTH);
+
     // tox
     toxId = new ClickableTE();
     toxId->setReadOnly(true);
