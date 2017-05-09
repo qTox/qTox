@@ -144,6 +144,9 @@ the owner of the server. For 100% privacy use Tox IDs.
 After registration, you can give your new alias, e.g. `user@example.com` to
 your friends instead of the long Tox ID.
 
+In case where you register using qTox, removing entry on the service would be
+as simple as pressing the delete button.
+
 ### Profile
 
 qTox allows you to use multiple Tox IDs with different profiles, each of which
