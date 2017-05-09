@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="bg_BG">
+<TS version="2.1" language="bg_BG">
 <context>
     <name>AVForm</name>
     <message>
@@ -131,13 +131,18 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>bug-tracker</source>
-        <comment>Replaces `%1` in the `A list of all knownâ¦`</comment>
-        <translation>бъг-тракер</translation>
+        <comment>Replaces `%1` in the `A list of all known…`</comment>
+        <translation type="unfinished">бъг-тракер</translation>
     </message>
     <message>
         <source>Writing Useful Bug Reports</source>
-        <comment>Replaces `%2` in the `A list of all knownâ¦`</comment>
-        <translation>Полезни Доклади За Бъгове</translation>
+        <comment>Replaces `%2` in the `A list of all known…`</comment>
+        <translation type="unfinished">Полезни Доклади За Бъгове</translation>
+    </message>
+    <message>
+        <source>contributors</source>
+        <comment>Replaces `%1` in `See a full list of…`</comment>
+        <translation type="unfinished">сътрудници</translation>
     </message>
     <message>
         <source>Click here to report a bug.</source>
@@ -147,11 +152,6 @@ which may lead to problems with video calls.</source>
         <source>See a full list of %1 at Github</source>
         <comment>`%1` is replaced with translation of word `contributors`</comment>
         <translation>Вижте пълен лист със %1 при Github</translation>
-    </message>
-    <message>
-        <source>contributors</source>
-        <comment>Replaces `%1` in `See a full list ofâ¦`</comment>
-        <translation>сътрудници</translation>
     </message>
 </context>
 <context>
