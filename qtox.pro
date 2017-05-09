@@ -424,6 +424,7 @@ RESOURCES += res.qrc \
 
 HEADERS  += \
     src/audio/audio.h \
+    src/audio/backend/openal.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
@@ -545,6 +546,7 @@ HEADERS  += \
 
 SOURCES += \
     src/audio/audio.cpp \
+    src/audio/backend/openal.cpp \
     src/chatlog/chatline.cpp \
     src/chatlog/chatlinecontent.cpp \
     src/chatlog/chatlinecontentproxy.cpp \
