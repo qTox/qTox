@@ -16,6 +16,10 @@ AboutUser::AboutUser(ToxPk& toxId, QWidget* parent)
     ui->label_4->hide();
     ui->aliases->hide();
 
+#if QT_MAJOR_VERSION > 5 || QT_MAJOR_VERSION == 5 && QT_MINOR_VERSION >= 3
+    ui->note->setPlaceholderText(tr("You can save comment about this contact here."));
+#endif
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &AboutUser::onAcceptedClicked);
     connect(ui->autoacceptfile, &QCheckBox::clicked, this, &AboutUser::onAutoAcceptDirClicked);
     connect(ui->autoacceptcall, SIGNAL(activated(int)), this, SLOT(onAutoAcceptCallClicked(void)));
