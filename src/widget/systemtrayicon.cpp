@@ -31,9 +31,11 @@ SystemTrayIcon::SystemTrayIcon()
     QString desktop = getenv("XDG_CURRENT_DESKTOP");
     if (desktop.isEmpty())
         desktop = getenv("DESKTOP_SESSION");
+
     desktop = desktop.toLower();
-    if (false)
-        ;
+
+    if (false) {
+    }
 #ifdef ENABLE_SYSTRAY_UNITY_BACKEND
     else if (desktop == "unity") {
         qDebug() << "Using Unity backend";
@@ -56,8 +58,7 @@ SystemTrayIcon::SystemTrayIcon()
     }
 #endif
 #ifdef ENABLE_SYSTRAY_GTK_BACKEND
-    else if (desktop == "xfce" || desktop.contains("gnome") || desktop == "mate"
-             || desktop == "x-cinnamon") {
+    else if (desktop.contains("gnome") || desktop == "mate" || desktop == "x-cinnamon") {
         qDebug() << "Using GTK backend";
         backendType = SystrayBackendType::GTK;
         gtk_init(nullptr, nullptr);
