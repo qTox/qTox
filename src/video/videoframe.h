@@ -54,8 +54,8 @@ class VideoFrame
 {
 public:
     // Declare type aliases
-    using IDType = std::uint_fast64_t;
-    using AtomicIDType = std::atomic_uint_fast64_t;
+    using IDType = std::uint_fast32_t;
+    using AtomicIDType = std::atomic_uint_fast32_t;
 
 public:
     VideoFrame(IDType sourceID, AVFrame* sourceFrame, QRect dimensions, int pixFmt,
