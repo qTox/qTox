@@ -610,7 +610,7 @@ void ChatForm::dropEvent(QDropEvent* ev)
         QFile file(info.absoluteFilePath());
 
         QString urlString = url.toString();
-        if (url.isValid() && !url.isLocalFile() && urlString.length() < TOX_MAX_MESSAGE_LENGTH) {
+        if (url.isValid() && !url.isLocalFile() && urlString.length() < static_cast<int>(tox_max_message_length())) {
             SendMessageStr(urlString);
             continue;
         }
@@ -949,7 +949,7 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QStringList splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QStringList splittedMsg = Core::splitMessage(msg, tox_max_message_length());
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {
