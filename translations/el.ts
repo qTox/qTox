@@ -266,11 +266,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη αποδοχή προσκλήσεων συνομιλίας ομάδας από αυτήν την επαφή, αν έχει οριστεί.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Αυτόματη αποδοχή προσκλήσεων ομάδας</translation>
     </message>
 </context>
 <context>
@@ -639,6 +639,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation>Ο ήχος μπορεί να απενεργοποιηθεί μόνο κατά τη διάρκεια μιας κλήσης</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Αποθήκευση αρχείου καταγραφής της συνομιλίας</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -692,22 +700,22 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Μη έγκυρη Tox Ταυτότητα (ID)</translation>
+        <translation>Μη έγκυρη Tox ταυτότητα (ID)</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Θα πρέπει να γράψετε ένα μήνυμα με το αίτημα σας</translation>
+        <translation>Χρειάζεται να γράψετε ένα μήνυμα με το αίτημα σας</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Το μήνυμα σας είναι πολύ μεγάλο!</translation>
+        <translation>Το μήνυμα σας είναι πολύ μεγάλο!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ο/η φίλος/η έχει ήδη προστεθεί</translation>
+        <translation>Ο/η φίλος/η έχει ήδη προστεθεί</translation>
     </message>
 </context>
 <context>
@@ -812,27 +820,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Σήμερα</translation>
+        <translation>Σήμερα</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Εχθές</translation>
+        <translation>Εχθές</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Τελευταίες 7 ημέρες</translation>
+        <translation>Τελευταίες 7 ημέρες</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Αυτό το μήνα</translation>
+        <translation>Αυτόν το μήνα</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Παλαιότερα από 6 μήνες</translation>
+        <translation>Παλαιότερα από 6 μήνες</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Ποτέ</translation>
     </message>
 </context>
 <context>
@@ -1522,6 +1530,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Φόρτωση ιστορικού από:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1903,11 +1915,11 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Απέτυχε η εξαγωγή κλειδιού από τον κωδικό πρόσβασης, το προφίλ δεν θα χρησιμοποιήσει τον νέο κωδικό πρόσβασης.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Δεν ήταν δυνατή η αλλαγή του κωδικού πρόσβασης στη βάση δεδομένων, ενδέχεται να είναι κατεστραμμένο ή να χρησιμοποιεί τον παλιό κωδικό πρόσβασης.</translation>
     </message>
 </context>
 <context>
@@ -2037,12 +2049,6 @@ Please use another image.</source>
         <translation>Παρακαλώ εισάγετε έναν νέο κωδικό πρόσβασης.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Αυτή η δέσμη χαρακτήρων λέει σε άλλα προγράμματα-πελάτες Tox πως να επικοινωνήσουν μαζί σας.
-Μοιραστείτε την με τους φίλους σας για να επικοινωνήσετε.</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation>Τα ακόλουθα αρχεία δεν μπορούν να διαγραφούν:</translation>
@@ -2105,6 +2111,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>Αδύνατη αλλαγή του κωδικού πρόσβασης</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2190,10 +2203,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 δεν είναι έγκυρη διεύθυνση Toxme.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Οκ</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2327,7 +2336,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Επαναδιαμόρφωση κειμένου σε εξέλιξη ..</translation>
     </message>
 </context>
 <context>
