@@ -413,7 +413,9 @@ void Core::bootstrapDht()
         QString name = dhtServer.name;
         qDebug() << QString("Connecting to %1:%2 (%3)").arg(dhtServerAddress, port, name);
         QByteArray address = dhtServer.address.toLatin1();
-        ToxPk pk{dhtServer.userId.toLatin1()};
+        // TODO: constucting the pk via ToxId is a workaround
+        ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
+
 
         const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.getBytes());
 
