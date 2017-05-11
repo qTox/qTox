@@ -124,7 +124,7 @@ ContentDialog::ContentDialog(SettingsWidget* settingsWidget, QWidget* parent)
     }
 
     SplitterRestorer restorer(splitter);
-    restorer.restore(s.getDialogSettingsGeometry(), size());
+    restorer.restore(s.getDialogSplitterState(), size());
 
     currentDialog = this;
     setAcceptDrops(true);
