@@ -637,6 +637,14 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Tallenna keskustelu</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -700,7 +708,7 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Viestisi on liian pitkä!</translation>
+        <translation>Viestisi on liian pitkä!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
@@ -810,19 +818,19 @@ jolloin videopuheluissa saattaa ilmetä ongelmia.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Tänään</translation>
+        <translation>Tänään</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Eilen</translation>
+        <translation>Eilen</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Edelliset 7 päivää</translation>
+        <translation>Edelliset 7 päivää</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Tässä kuussa</translation>
+        <translation>Tässä kuussa</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
@@ -1380,7 +1388,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">Päivitys</translation>
+        <translation>Päivitys</translation>
     </message>
     <message>
         <source>Register on ToxMe</source>
@@ -1473,7 +1481,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Poista profiili.</translation>
+        <translation>Poista profiili.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1517,6 +1525,10 @@ Profile does not contain your history.</source>
     <message>
         <source>Load history from:</source>
         <translation>Lataa historia täältä:</translation>
+    </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2026,11 +2038,6 @@ Please use another image.</source>
         <translation>Syötä uusi salasana.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Tämän merkkijonon avulla toiset Tox käyttäjät voivat ottaa yhteyttä sinuun. Jaa merkkijono ystävillesi.</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation type="unfinished"></translation>
@@ -2095,6 +2102,13 @@ Share it with your friends to communicate.</source>
         <source>Couldn&apos;t change password</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProfileImporter</name>
@@ -2153,15 +2167,15 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">Kyllä</translation>
+        <translation>Kyllä</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">Ei</translation>
+        <translation>Ei</translation>
     </message>
     <message>
         <source>LTR</source>
@@ -2177,10 +2191,6 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2445,7 +2455,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Cancel</source>
         <comment>Don&apos;t send a friend request</comment>
-        <translation type="unfinished">Peru</translation>
+        <translation>Peru</translation>
     </message>
 </context>
 <context>
@@ -2612,7 +2622,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished">Dein Status</translation>
+        <translation>Teidän status</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2703,7 +2713,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Logout</source>
         <comment>Tray action menu to logout user</comment>
-        <translation type="unfinished">Kirjaudu ulos</translation>
+        <translation>Kirjaudu ulos</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -2753,7 +2763,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>&lt;Empty&gt;</source>
         <comment>Placeholder when someone&apos;s name in a group chat is empty</comment>
-        <translation type="unfinished">&lt;Tyhjä&gt;</translation>
+        <translation>&lt;Tyhjä&gt;</translation>
     </message>
     <message>
         <source>Groupchat #%1</source>
