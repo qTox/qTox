@@ -532,7 +532,6 @@ HEADERS  += \
     src/widget/tool/croppinglabel.h \
     src/widget/tool/flyoutoverlaywidget.h \
     src/widget/tool/friendrequestdialog.h \
-    src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/movablewidget.h \
     src/widget/tool/profileimporter.h \
     src/widget/tool/removefrienddialog.h \
@@ -653,7 +652,6 @@ SOURCES += \
     src/widget/tool/croppinglabel.cpp \
     src/widget/tool/flyoutoverlaywidget.cpp \
     src/widget/tool/friendrequestdialog.cpp \
-    src/widget/tool/micfeedbackwidget.cpp \
     src/widget/tool/movablewidget.cpp \
     src/widget/tool/profileimporter.cpp \
     src/widget/tool/removefrienddialog.cpp \
