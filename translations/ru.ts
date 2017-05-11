@@ -641,6 +641,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation>Звук может быть выключен только во время звонка</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Сохранить журнал чата</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -695,22 +703,22 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Некорректный Tox ID</translation>
+        <translation>Некорректный Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Вам нужно написать сообщение с текстом запроса</translation>
+        <translation>Вам нужно написать сообщение с текстом запроса</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ваше сообщение слишком длинное!</translation>
+        <translation>Ваше сообщение слишком длинное!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Друг уже добавлен</translation>
+        <translation>Друг уже добавлен</translation>
     </message>
 </context>
 <context>
@@ -815,19 +823,19 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Сегодня</translation>
+        <translation>Сегодня</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Вчера</translation>
+        <translation>Вчера</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">За последние 7 дней</translation>
+        <translation>За последние 7 дней</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">За этот месяц</translation>
+        <translation>За этот месяц</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
@@ -835,7 +843,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Никогда</translation>
     </message>
 </context>
 <context>
@@ -1529,6 +1537,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Загрузить историю с:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -2032,12 +2044,6 @@ Please use another image.</source>
         <translation>Пожалуйста, введите новый пароль.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Этот набор символов говорит другим пользователям Tox, как связаться с вами.
-Отправьте его своим друзьям для связи.</translation>
-    </message>
-    <message>
         <source>Failed to copy file</source>
         <translation>Не удалось скопировать файл</translation>
     </message>
@@ -2113,6 +2119,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2198,10 +2211,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 - не корректный адрес Toxme.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ок</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
