@@ -633,6 +633,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -696,7 +704,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Via mesaĝo tro longas!</translation>
+        <translation>Via mesaĝo tro longas!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
@@ -806,15 +814,15 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Hodiaŭ</translation>
+        <translation>Hodiaŭ</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Hieraŭ</translation>
+        <translation>Hieraŭ</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Pasintaj 7 tagoj</translation>
+        <translation>Pasintaj 7 tagoj</translation>
     </message>
     <message>
         <source>This month</source>
@@ -1227,7 +1235,7 @@ instead of closing itself.</source>
     </message>
     <message>
         <source>Group invites</source>
-        <translation type="unfinished">Grupo-invitoj</translation>
+        <translation>Grupo-invitoj</translation>
     </message>
 </context>
 <context>
@@ -1512,6 +1520,10 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Load history from:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2044,11 +2056,6 @@ Please use another image.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2086,6 +2093,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2171,10 +2185,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Bone</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
