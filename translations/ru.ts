@@ -267,11 +267,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматически принимать приглашения в чат от этого контакта</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически принимать приглашения в группу</translation>
     </message>
 </context>
 <context>
@@ -839,7 +839,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">За полгода</translation>
+        <translation>За 6 месяцев</translation>
     </message>
     <message>
         <source>Never</source>
@@ -1923,11 +1923,11 @@ Save format changes are possible, which may result in data loss.</source>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка извлечения ключа из пароля, новый пароль на профиль не установлен.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно изменить пароль в базе данных, должно быть база повреждена или вы используете старый пароль.</translation>
     </message>
 </context>
 <context>
@@ -2119,7 +2119,7 @@ Please use another image.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно изменить пароль</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2347,7 +2347,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Переформатирование текста..</translation>
     </message>
 </context>
 <context>
