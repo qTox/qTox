@@ -136,7 +136,7 @@ public:
 public slots:
     void onShowSettings();
     void onSeparateWindowClicked(bool separate);
-    void onSeparateWindowChanged(bool separate, bool clicked);
+    void updateSeparate(bool separate);
     void setWindowTitle(const QString& title);
     void forceShow();
     void onConnected();

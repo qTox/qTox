@@ -346,7 +346,7 @@ void Widget::init()
 #endif
 
     contentLayout = nullptr;
-    onSeparateWindowChanged(s.getSeparateWindow(), false);
+    updateSeparate(s.getSeparateWindow());
 
     ui->addButton->setCheckable(true);
     ui->groupButton->setCheckable(true);
@@ -356,12 +356,6 @@ void Widget::init()
     if (contentLayout) {
         onAddClicked();
     }
-
-    // restore window state
-    restoreGeometry(s.getWindowGeometry());
-    restoreState(s.getWindowState());
-    SplitterRestorer restorer(ui->mainSplitter);
-    restorer.restore(s.getSplitterState(), size());
 
 #if (AUTOUPDATE_ENABLED)
     if (s.getCheckUpdates())
@@ -642,12 +636,55 @@ void Widget::onStatusSet(Status status)
 
 void Widget::onSeparateWindowClicked(bool separate)
 {
-    onSeparateWindowChanged(separate, true);
+    updateSeparate(separate);
+
+    if (!separate) {
+        return;
+    }
+
+    QSize size;
+    QPoint pos;
+    int width = ui->friendList->size().width();
+    if (contentLayout) {
+        pos = mapToGlobal(ui->mainSplitter->widget(1)->pos());
+        size = ui->mainSplitter->widget(1)->size();
+    }
+
+    showNormal();
+    resize(width, height());
+
+    if (settingsWidget) {
+        ContentLayout* contentLayout = createContentDialog(DialogType::SettingDialog);
+        contentLayout->parentWidget()->resize(size);
+        contentLayout->parentWidget()->move(pos);
+        settingsWidget->show(contentLayout);
+    }
 }
 
-void Widget::onSeparateWindowChanged(bool separate, bool clicked)
+void Widget::updateSeparate(bool separate)
 {
-    if (!separate) {
+    const Settings& s = Settings::getInstance();
+
+    //restore window state
+    restoreGeometry(s.getWindowGeometry());
+    restoreState(s.getWindowState());
+    SplitterRestorer restorer(ui->mainSplitter);
+    restorer.restore(s.getSplitterState(), size());
+
+    if (separate) {
+        if (contentLayout) {
+            contentLayout->clear();
+            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
+            contentLayout->parentWidget()->hide();
+            contentLayout->parentWidget()->deleteLater();
+            contentLayout->deleteLater();
+            contentLayout = nullptr;
+        }
+
+        setMinimumWidth(ui->tooliconsZone->sizeHint().width());
+        setWindowTitle(QString());
+        setActiveToolMenuButton(ActiveToolMenuButton::None);
+    } else {
         QWindowList windowList = QGuiApplication::topLevelWindows();
 
         for (QWindow* window : windowList) {
@@ -663,42 +700,6 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         setMinimumWidth(775);
 
         onAddClicked();
-    } else {
-        int width = ui->friendList->size().width();
-        QSize size;
-        QPoint pos;
-
-        if (contentLayout) {
-            pos = mapToGlobal(ui->mainSplitter->widget(1)->pos());
-            size = ui->mainSplitter->widget(1)->size();
-        }
-
-        if (contentLayout) {
-            contentLayout->clear();
-            contentLayout->parentWidget()->setParent(0); // Remove from splitter.
-            contentLayout->parentWidget()->hide();
-            contentLayout->parentWidget()->deleteLater();
-            contentLayout->deleteLater();
-            contentLayout = nullptr;
-        }
-
-        setMinimumWidth(ui->tooliconsZone->sizeHint().width());
-
-        if (clicked) {
-            showNormal();
-            resize(width, height());
-
-            if (settingsWidget) {
-                ContentLayout* contentLayout = createContentDialog((DialogType::SettingDialog));
-                contentLayout->parentWidget()->resize(size);
-                contentLayout->parentWidget()->move(pos);
-                settingsWidget->show(contentLayout);
-                setActiveToolMenuButton(ActiveToolMenuButton::None);
-            }
-        }
-
-        setWindowTitle(QString());
-        setActiveToolMenuButton(ActiveToolMenuButton::None);
     }
 }
 
