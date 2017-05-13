@@ -147,7 +147,7 @@ emerge qtox
 #### Slackware
 
 qTox SlackBuild and all of its dependencies can be found here:
-http://slackbuilds.org/repository/14.1/network/qTox/
+http://slackbuilds.org/repository/14.2/network/qTox/
 
 <a name="freebsd-easy" />
 
@@ -344,7 +344,7 @@ sudo zypper install \
 #### Slackware
 
 List of all the qTox dependencies and their SlackBuilds can be found here:
-http://slackbuilds.org/repository/14.1/network/qTox/
+http://slackbuilds.org/repository/14.2/network/qTox/
 
 
 <a name="ubuntu-other-deps" />
@@ -511,7 +511,7 @@ patterns-openSUSE-devel_basis
 #### Slackware
 
 List of all the toxcore dependencies and their SlackBuilds can be found
-here: http://slackbuilds.org/repository/14.1/network/toxcore/
+here: http://slackbuilds.org/repository/14.2/network/toxcore/
 
 
 <a name="ubuntu-toxcore" />
