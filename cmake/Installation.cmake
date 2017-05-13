@@ -5,7 +5,7 @@
 ################################################################################
 
 # set correct version to update files
-set(QTOX_VERSION "1.8.1")
+set(QTOX_VERSION "1.10.1")
 execute_process(COMMAND ${CMAKE_SOURCE_DIR}/tools/update-versions.sh
     ${QTOX_VERSION})
 
