@@ -11,6 +11,7 @@
 #include <QVector>
 #include <atomic>
 #include <memory>
+#include <functional>
 
 struct sqlite3;
 struct sqlite3_stmt;
