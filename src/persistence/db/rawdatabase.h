@@ -10,6 +10,7 @@
 #include <QVariant>
 #include <QVector>
 #include <atomic>
+#include <functional>
 #include <memory>
 
 struct sqlite3;
