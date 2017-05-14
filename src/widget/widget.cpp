@@ -665,7 +665,7 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
         SplitterRestorer restorer(ui->mainSplitter);
         restorer.restore(Settings::getInstance().getSplitterState(), size());
 
-        onAddClicked();
+        onShowSettings();
     } else {
         int width = ui->friendList->size().width();
         QSize size;
