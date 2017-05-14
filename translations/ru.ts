@@ -267,7 +267,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Автоматически принимать приглашения в чат от этого контакта</translation>
+        <translation>Автоматически принимать приглашения в груповой чат от этого контакта.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
