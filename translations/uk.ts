@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Використовуйте повзунок для регулювання гучності пристрою відтворення.</translation>
+        <translation>Використовуйте повзунок для регулювання гучності динаміків.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -645,6 +645,14 @@ It&apos;s difficult to translate &quot;Tox me maybe&quot; because in Ukrainian n
     <message>
         <source>Sound can be disabled only during a call</source>
         <translation>Звук можливо вимкнути лише під час дзвінка</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Зберегти чат</translation>
     </message>
 </context>
 <context>
@@ -1527,6 +1535,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>Завантажити історію від:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -2033,11 +2045,6 @@ Please use another image.</source>
         <translation>Введіть новий пароль, будь ласка.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Цей набір символів дозволяє клієнтам Tox зв&apos;язатись з Вами. Для комунікації поділіться ним з своїм друзями.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Ви впевнені, що хочете видалити цей профіль?</translation>
@@ -2115,6 +2122,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2200,10 +2214,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 - неправильна адреса ToxMe.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ок</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
