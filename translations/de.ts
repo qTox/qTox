@@ -264,7 +264,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Akzeptieren Sie automatisch Gruppe Chat-Einladungen von diesem Kontakt, wenn eingestellt.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
@@ -635,6 +635,14 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>Sound can be disabled only during a call</source>
         <translation>Die Soundausgabe kann nur während eines Gesprächs deaktiviert werden</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Gesprächsverlauf speichern</translation>
     </message>
 </context>
 <context>
@@ -1527,6 +1535,10 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
         <source>Load history from:</source>
         <translation>Den Verlauf von einem bestimmten Datum bis heute anzeigen:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -2030,12 +2042,6 @@ Bitte benutze ein anderes.</translation>
         <translation>Bitte gib ein neues Passwort ein.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Das ist deine persönliche Adresse. Damit können dich andere Tox-Nutzer erreichen.
-Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Bist du sicher, dass das gewählte Profil gelöschen werden soll?</translation>
@@ -2113,6 +2119,13 @@ Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2198,10 +2211,6 @@ Gebe sie an deine Bekannte weiter, um mit ihnen zu kommunizieren.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 ist keine gültige Toxme-Adresse.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
