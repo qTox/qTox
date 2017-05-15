@@ -140,6 +140,13 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 cd ..
 
+# filteraudio
+git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio filteraudio
+cd filteraudio
+CC="ccache $CC" CXX="ccache $CXX" sudo make install -j$(nproc)
+sudo ldconfig
+cd ..
+
 $CC --version
 $CXX --version
 
