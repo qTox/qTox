@@ -41,6 +41,7 @@ QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1
 QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
 
 TOXCORE_DIR="${MAIN_DIR}/toxcore" # Change to Git location
+FILTERAUIO_DIR="${MAIN_DIR}/filter_audio" # Change to Git location
 
 LIB_INSTALL_PREFIX="${QTOX_DIR}/libs"
 
@@ -80,7 +81,6 @@ build_toxcore() {
     fcho "Installing toxcore."
     make install > /dev/null || exit 1
 }
-
 install() {
     fcho "=============================="
     fcho "This script will install the necessary applications and libraries needed to compile qTox properly."
@@ -167,6 +167,12 @@ install() {
         brew install cmake
     fi
     brew install ffmpeg qrencode qt5 sqlcipher
+    
+    fcho "Cloning filter_audio ... "
+	git clone --branch v0.0.1 --depth=1 https://github.com/irungentoo/filter_audio "$FILTERAUIO_DIR"
+	cd "$FILTERAUIO_DIR"
+	fcho "Installing filter_audio ... "
+	sudo make install
 
     QT_VER=($(ls ${QT_DIR} | sed -n -e 's/^\([0-9]*\.([0-9]*\.([0-9]*\).*/\1/' -e '1p;$p'))
     QT_DIR_VER="${QT_DIR}/${QT_VER[1]}"
