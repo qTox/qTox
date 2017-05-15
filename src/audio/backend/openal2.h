@@ -32,15 +32,9 @@
 
 #include <cassert>
 
-#if defined(__APPLE__) && defined(__MACH__)
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#include <OpenAL/alext.h>
-#else
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <AL/alext.h>
-#endif
 
 extern "C" {
 #include <filter_audio.h>
