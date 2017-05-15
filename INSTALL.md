@@ -51,6 +51,7 @@
 | [qrencode]    | >= 3.0.3    |                                                   |
 | [sqlcipher]   | >= 3.2.0    |                                                   |
 | [pkg-config]  | >= 0.28     |                                                   |
+| [filteraudio] | >= 0.0.1    |                                                   |
 
 ## Optional dependencies
 
