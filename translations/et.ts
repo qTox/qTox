@@ -266,11 +266,11 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kui on valitud, siis nõustu automaatselt grupivestluste kutsetega sellelt kontaktilt.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaatnõustu grupi kutsetega</translation>
     </message>
 </context>
 <context>
@@ -639,6 +639,14 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
         <source>Sound can be disabled only during a call</source>
         <translation>Heli saab välja lülitada vaid kõne ajal</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Salvesta vestluse logi</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -693,22 +701,22 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Vale Tox ID</translation>
+        <translation>Vale Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Pead oma kutsele ka teate lisama</translation>
+        <translation>Pead oma kutsele ka teate lisama</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Sinu teade on liialt pikk!</translation>
+        <translation>Sinu teade on liialt pikk!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Sõber on juba lisatud</translation>
+        <translation>Sõber on juba lisatud</translation>
     </message>
 </context>
 <context>
@@ -813,27 +821,27 @@ mis omakorda võib tekitada videokõnede pidamisel probleeme.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Täna</translation>
+        <translation>Täna</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Eile</translation>
+        <translation>Eile</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Viimase 7 päeva jooksul</translation>
+        <translation>Viimased 7 päeva</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Sel kuul</translation>
+        <translation>Sel kuul</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Enam kui 6 kuu eest</translation>
+        <translation>Vanemad kui 6 kuud</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Mitte kunagi</translation>
     </message>
 </context>
 <context>
@@ -1524,6 +1532,10 @@ Profiil ei sisalda vestluste ajalugu.</translation>
         <source>Load history from:</source>
         <translation>Lae vestluste ajalugu kp-st:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1906,11 +1918,11 @@ Kui saad hulgaliselt soovimatuid sõbrakutseid, muuda seda väärtust.</translat
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salasõnast ei suudetud võtit tuletada; profiil ei kasuta uut salasõna.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Salasõna vahetamine andmebaasis nurjus; andmebaas võib olla rikutud või kasutada vana salasõna.</translation>
     </message>
 </context>
 <context>
@@ -2040,12 +2052,6 @@ Palun kasuta teist pilti.</translation>
         <translation>Palun sisesta uus salasõna.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>See märgijada annab teistele Tox võrgu liikmetele teada, kuidas sinuga ühendust saada.
-Sõpradega suhtlemiseks jaga seda nendega.</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation>Järgmiste failide kustutamine nurjus:</translation>
@@ -2108,6 +2114,13 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>Salasõna vahetamine nurjus</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2193,10 +2206,6 @@ Sõpradega suhtlemiseks jaga seda nendega.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 pole õige Toxme aadress.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Olgu</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2331,7 +2340,7 @@ See paigaldatakse qToxi taaskäivitamisel.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Toimub teksti vormindamine...</translation>
     </message>
 </context>
 <context>
