@@ -32,14 +32,8 @@
 
 #include <cassert>
 
-#if defined(__APPLE__) && defined(__MACH__)
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#else
 #include <AL/al.h>
 #include <AL/alc.h>
-#endif
-
 
 #ifndef ALC_ALL_DEVICES_SPECIFIER
 // compatibility with older versions of OpenAL
