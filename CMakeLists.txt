@@ -8,6 +8,7 @@ cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
+option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -15,6 +16,12 @@ endif()
 
 set(ENV{PKG_CONFIG_PATH}
   ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig:/opt/ffmpeg/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
+
+# necessary to find openal-soft on mac os
+if(APPLE)
+  set(ENV{PKG_CONFIG_PATH}
+    /usr/local/opt/openal-soft/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
+endif()
 
 execute_process(
   COMMAND brew --prefix qt5
@@ -185,8 +192,6 @@ set(${PROJECT_NAME}_SOURCES
   src/audio/audio.h
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
-  src/audio/backend/openal2.cpp
-  src/audio/backend/openal2.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
@@ -517,6 +522,19 @@ if(${ENABLE_GTK_SYSTRAY})
   if(GTK_FOUND)
     add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
   endif()
+endif()
+
+if(${USE_FILTERAUDIO})
+    search_dependency(FILTERAUDIO LIBRARY filteraudio OPTIONAL)
+    if(${FILTERAUDIO_FOUND})
+        set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+            src/audio/backend/openal2.cpp
+            src/audio/backend/openal2.h)
+        add_definitions(-DUSE_FILTERAUDIO=1)
+        message(STATUS "using filteraudio")
+    else()
+         message(STATUS "not using filteraudio, libfilteraudio not found")
+    endif()
 endif()
 
 # the compiler flags for compiling C sources
