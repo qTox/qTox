@@ -89,13 +89,14 @@ public:
     virtual void playMono16Sound(const QString& path) = 0;
 
     virtual void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                         int sampleRate) = 0;
+                                 int sampleRate) = 0;
 
 public:
     // Public default audio settings
     static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
     static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
-    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
+    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT =
+        AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     static constexpr uint32_t AUDIO_CHANNELS = 2;
 
 signals:

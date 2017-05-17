@@ -99,10 +99,8 @@ FileTransferWidget::FileTransferWidget(QWidget* parent, ToxFile file)
             &FileTransferWidget::fileTransferRemotePausedUnpaused);
     connect(Core::getInstance(), &Core::fileTransferBrokenUnbroken, this,
             &FileTransferWidget::fileTransferBrokenUnbroken);
-    connect(ui->leftButton, &QPushButton::clicked, this,
-            &FileTransferWidget::onLeftButtonClicked);
-    connect(ui->rightButton, &QPushButton::clicked, this,
-            &FileTransferWidget::onRightButtonClicked);
+    connect(ui->leftButton, &QPushButton::clicked, this, &FileTransferWidget::onLeftButtonClicked);
+    connect(ui->rightButton, &QPushButton::clicked, this, &FileTransferWidget::onRightButtonClicked);
     connect(ui->previewButton, &QPushButton::clicked, this,
             &FileTransferWidget::onPreviewButtonClicked);
 
@@ -222,32 +220,32 @@ void FileTransferWidget::paintEvent(QPaintEvent*)
     if (drawButtonAreaNeeded()) {
         // Draw the button background:
         QPainterPath buttonBackground;
-        buttonBackground.addRoundRect(width()-2*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth,
-                                      buttonFieldWidth+lineWidth, 50, 50);
-        buttonBackground.addRect(width()-2*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth*2,
-                                 buttonFieldWidth/2);
-        buttonBackground.addRect(width()-1.5*buttonFieldWidth-lineWidth*2, 0, buttonFieldWidth*2,
-                                 buttonFieldWidth+1);
+        buttonBackground.addRoundRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,
+                                      buttonFieldWidth, buttonFieldWidth + lineWidth, 50, 50);
+        buttonBackground.addRect(width() - 2 * buttonFieldWidth - lineWidth * 2, 0,
+                                 buttonFieldWidth * 2, buttonFieldWidth / 2);
+        buttonBackground.addRect(width() - 1.5 * buttonFieldWidth - lineWidth * 2, 0,
+                                 buttonFieldWidth * 2, buttonFieldWidth + 1);
         buttonBackground.setFillRule(Qt::WindingFill);
         painter.setBrush(QBrush(buttonBackgroundColor));
         painter.drawPath(buttonBackground);
 
         // Draw the left button:
         QPainterPath leftButton;
-        leftButton.addRoundRect(QRect(width()-2*buttonFieldWidth-lineWidth, 0, buttonFieldWidth,
-                                      buttonFieldWidth), 50, 50);
-        leftButton.addRect(QRect(width()-2*buttonFieldWidth-lineWidth, 0, buttonFieldWidth/2,
-                                 buttonFieldWidth/2));
-        leftButton.addRect(QRect(width()-1.5*buttonFieldWidth-lineWidth, 0, buttonFieldWidth/2,
-                                 buttonFieldWidth));
+        leftButton.addRoundRect(QRect(width() - 2 * buttonFieldWidth - lineWidth, 0,
+                                      buttonFieldWidth, buttonFieldWidth),
+                                50, 50);
+        leftButton.addRect(QRect(width() - 2 * buttonFieldWidth - lineWidth, 0,
+                                 buttonFieldWidth / 2, buttonFieldWidth / 2));
+        leftButton.addRect(QRect(width() - 1.5 * buttonFieldWidth - lineWidth, 0,
+                                 buttonFieldWidth / 2, buttonFieldWidth));
         leftButton.setFillRule(Qt::WindingFill);
         painter.setBrush(QBrush(buttonColor));
         painter.drawPath(leftButton);
 
         // Draw the right button:
         painter.setBrush(QBrush(buttonColor));
-        painter.setClipRect(QRect(width()-buttonFieldWidth, 0, buttonFieldWidth,
-                                  buttonFieldWidth));
+        painter.setClipRect(QRect(width() - buttonFieldWidth, 0, buttonFieldWidth, buttonFieldWidth));
         painter.drawRoundRect(geometry(), r * ratio, r);
     }
 }

@@ -55,7 +55,7 @@
  *        (excluded)
  */
 
-#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/"#x"/"#x".css"))
+#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/" #x "/" #x ".css"))
 
 static const QSize AVATAR_SIZE{40, 40};
 static const QSize CALL_BUTTONS_SIZE{50, 40};
@@ -380,7 +380,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
  * @param messageAuthor Author of the sent message
  * @return True if it's needed to hide name, false otherwise
  */
-bool GenericChatForm::needsToHideName(const ToxPk &messageAuthor) const
+bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor) const
 {
     qint64 messagesTimeDiff = prevMsgDateTime.secsTo(QDateTime::currentDateTime());
     return messageAuthor == previousId && messagesTimeDiff < chatWidget->repNameAfter;
@@ -451,8 +451,7 @@ void GenericChatForm::addMessage(const ToxPk& author, const QString& message, co
 /**
  * @brief Inserts int ChatLog message that you have sent
  */
-void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
-                                     bool isAction)
+void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction)
 {
     createSelfMessage(message, datetime, isAction, true);
 }

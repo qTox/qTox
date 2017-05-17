@@ -89,7 +89,6 @@ public:
                          int sampleRate);
 
 private:
-
     static void checkAlError() noexcept;
     static void checkAlcError(ALCdevice* device) noexcept;
 

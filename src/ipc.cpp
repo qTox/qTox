@@ -21,9 +21,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
+#include <ctime>
 #include <random>
 #include <unistd.h>
-#include <ctime>
 
 /**
  * @var time_t IPC::lastEvent
@@ -45,9 +45,7 @@ IPC::IPC(uint32_t profileId)
 
     timer.setInterval(EVENT_TIMER_MS);
     timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, [=]() {
-        processEvents(profileId);
-    });
+    connect(&timer, &QTimer::timeout, [=]() { processEvents(profileId); });
 
     // The first started instance gets to manage the shared memory by taking ownership
     // Every time it processes events it updates the global shared timestamp "lastProcessed"
@@ -212,8 +210,7 @@ IPC::IPCEvent* IPC::fetchEvent(uint32_t profileId)
             memset(evt, 0, sizeof(IPCEvent));
 
         if (evt->posted && !evt->processed && evt->sender != getpid()
-            && (evt->dest == profileId
-                || (evt->dest == 0 && isCurrentOwner())))
+            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwner())))
             return evt;
     }
 

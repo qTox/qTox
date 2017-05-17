@@ -93,14 +93,17 @@ CameraSource::CameraSource()
     : deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
-    , cctx{nullptr}
+    , cctx
+{
+    nullptr
+}
 #if LIBAVCODEC_VERSION_INT < 3747941
-    , cctxOrig{nullptr}
+, cctxOrig
+{
+    nullptr
+}
 #endif
-    , videoStreamIndex{-1}
-    , _isOpen{false}
-    , streamBlocker{false}
-    , subscriptions{0}
+, videoStreamIndex{-1}, _isOpen{false}, streamBlocker{false}, subscriptions{0}
 {
     subscriptions = 0;
     av_register_all();
