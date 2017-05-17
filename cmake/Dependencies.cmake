@@ -107,7 +107,7 @@ if (NOT TOXCORE_FOUND OR
     search_dependency(TOXAV           PACKAGE libtoxav)
 endif()
 
-search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
+search_dependency(OPENAL              PACKAGE openal)
 search_dependency(FILTERAUDIO         LIBRARY filteraudio)
 
 # Automatic auto-away support. (X11 also using for capslock detection)
