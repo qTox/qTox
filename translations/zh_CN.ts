@@ -266,11 +266,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果设置此项则自动接受来自该联系人的群聊邀请。</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>自动接受群邀请</translation>
     </message>
 </context>
 <context>
@@ -637,6 +637,14 @@ which may lead to problems with video calls.</source>
         <source>Sound can be disabled only during a call</source>
         <translation>只有在通话过程中才能执行禁用声音操作</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">保存聊天记录</translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -690,22 +698,22 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">无效的 Tox ID</translation>
+        <translation>无效的 Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">你需要写一封邮件说明你的请求</translation>
+        <translation>你需要发一则消息说明你的请求</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">你的消息太长了！</translation>
+        <translation>您的消息太长了！</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">此人已被添加为好友</translation>
+        <translation>已添加为好友</translation>
     </message>
 </context>
 <context>
@@ -810,27 +818,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">今天</translation>
+        <translation>今天</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">昨天</translation>
+        <translation>昨天</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">近七天</translation>
+        <translation>近七天</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">本月</translation>
+        <translation>本月</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">6 个月以上</translation>
+        <translation>6 个月以上</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>永不</translation>
     </message>
 </context>
 <context>
@@ -1522,6 +1530,10 @@ Profile does not contain your history.</source>
         <source>Load history from:</source>
         <translation>从此处加载历史记录：</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1902,11 +1914,11 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>从密码获取密钥失败，该帐户将不会使用新的密码。</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法修改数据库中的密码。数据库可能损坏或使用了旧的密码。</translation>
     </message>
 </context>
 <context>
@@ -1971,12 +1983,6 @@ Please use another image.</source>
     <message>
         <source>Please enter a new password.</source>
         <translation>请输入新密码。</translation>
-    </message>
-    <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>这组字符告诉其他 Tox 客户端如何与你联系。
-将它分享给你的朋友们，邀请他们使用 Tox 通信。</translation>
     </message>
     <message>
         <source>Register (processing)</source>
@@ -2104,6 +2110,13 @@ Share it with your friends to communicate.</source>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>无法修改密码</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2189,10 +2202,6 @@ Share it with your friends to communicate.</source>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation>%1 不是一个有效的 Toxme 地址。</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>确认</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
@@ -2326,7 +2335,7 @@ It will be installed when qTox restarts.</source>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>正在重新设置文本格式...</translation>
     </message>
 </context>
 <context>
