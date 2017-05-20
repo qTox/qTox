@@ -40,14 +40,13 @@
 
 IPC::IPC(uint32_t profileId)
     : globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
+    , profileId{profileId}
 {
     qRegisterMetaType<IPCEventHandler>("IPCEventHandler");
 
     timer.setInterval(EVENT_TIMER_MS);
     timer.setSingleShot(true);
-    connect(&timer, &QTimer::timeout, [=]() {
-        processEvents(profileId);
-    });
+    processEvents();
 
     // The first started instance gets to manage the shared memory by taking ownership
     // Every time it processes events it updates the global shared timestamp "lastProcessed"
@@ -77,7 +76,7 @@ IPC::IPC(uint32_t profileId)
         return; // We won't be able to do any IPC without being attached, let's get outta here
     }
 
-    processEvents(profileId);
+    processEvents();
 }
 
 IPC::~IPC()
@@ -194,11 +193,16 @@ bool IPC::waitUntilAccepted(time_t postTime, int32_t timeout /*=-1*/)
     return result;
 }
 
+void IPC::setProfileId(uint32_t profileId)
+{
+    this->profileId = profileId;
+}
+
 /**
  * @brief Only called when global memory IS LOCKED.
  * @return nullptr if no evnts present, IPC event otherwise
  */
-IPC::IPCEvent* IPC::fetchEvent(uint32_t profileId)
+IPC::IPCEvent* IPC::fetchEvent()
 {
     IPCMemory* mem = global();
     for (uint32_t i = 0; i < EVENT_QUEUE_SIZE; ++i) {
@@ -233,7 +237,7 @@ bool IPC::runEventHandler(IPCEventHandler handler, const QByteArray& arg)
     return result;
 }
 
-void IPC::processEvents(uint32_t profileId)
+void IPC::processEvents()
 {
     if (globalMemory.lock()) {
         IPCMemory* mem = global();
@@ -255,7 +259,7 @@ void IPC::processEvents(uint32_t profileId)
             // Non-main instance is limited to events destined for specific profile it runs
         }
 
-        while (IPCEvent* evt = fetchEvent(profileId)) {
+        while (IPCEvent* evt = fetchEvent()) {
             QString name = QString::fromUtf8(evt->name);
             auto it = eventHandlers.find(name);
             if (it != eventHandlers.end()) {

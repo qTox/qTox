@@ -74,16 +74,19 @@ public:
     bool isEventAccepted(time_t time);
     bool waitUntilAccepted(time_t time, int32_t timeout = -1);
 
-protected slots:
-    void processEvents(uint32_t profileId);
+public slots:
+    void setProfileId(uint32_t profileId);
 
-protected:
+private:
     IPCMemory* global();
     bool runEventHandler(IPCEventHandler handler, const QByteArray& arg);
-    IPCEvent* fetchEvent(uint32_t profileId);
+    IPCEvent* fetchEvent();
+    void processEvents();
 
+private:
     QTimer timer;
     uint64_t globalId;
+    uint32_t profileId;
     QSharedMemory globalMemory;
     QMap<QString, IPCEventHandler> eventHandlers;
 };
