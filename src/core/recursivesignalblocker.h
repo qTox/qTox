@@ -22,6 +22,9 @@
 
 #include <QVector>
 
+#define HAVE_QSIGNAL_BLOCKER (QT_MAJOR_VERSION > 5 \
+                              || QT_MAJOR_VERSION == 5 && QT_MINOR_VERSION >= 3)
+
 class QObject;
 class QSignalBlocker;
 
@@ -31,10 +34,12 @@ public:
     explicit RecursiveSignalBlocker(QObject* object);
     ~RecursiveSignalBlocker();
 
+#if HAVE_QSIGNAL_BLOCKER
     void recursiveBlock(QObject* object);
 
 private:
     QVector<const QSignalBlocker*> mBlockers;
+#endif
 };
 
 #endif
