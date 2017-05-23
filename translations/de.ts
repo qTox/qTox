@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Use slider to set volume of your speakers.</source>
-        <translation>Verwende den Schieberegler, um die Wiedergabelautstärke anzupassen.</translation>
+        <translation>Verwende den Schieberegler, um die Wiedergabelautstärke der Lautsprecher anzupassen.</translation>
     </message>
     <message>
         <source>Capture device</source>
@@ -70,8 +70,8 @@ Note though that with better video quality there is needed better internet conne
 Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Wähle deine Kameraauflösung.
-Höhere Werte führen zu einem schärferen Bild, allerdings nimmt damit die Netzwerkauslastung zu.
-Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</translation>
+Höhere Werte führen zu einem schärferen Bild für deine Freunde, allerdings wird eine bessere Internetverbindung benötigt.
+Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn die Verbindung nicht schnell genug ist.</translation>
     </message>
     <message>
         <source>Resolution</source>
