@@ -699,7 +699,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ungültige Tox ID</translation>
+        <translation>Ungültige Tox ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
@@ -709,12 +709,12 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Deine Nachricht ist zu lang!</translation>
+        <translation>Deine Nachricht ist zu lang!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Dieser Freund wurde bereits hinzugefügt</translation>
+        <translation>Dieser Freund wurde bereits hinzugefügt</translation>
     </message>
 </context>
 <context>
@@ -824,23 +824,23 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen, wenn di
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Heute</translation>
+        <translation>Heute</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Gestern</translation>
+        <translation>Gestern</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">letzte Woche</translation>
+        <translation>letzte Woche</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Diesen Monat</translation>
+        <translation>Diesen Monat</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Älter als 6 Monate</translation>
+        <translation>Älter als 6 Monate</translation>
     </message>
     <message>
         <source>Never</source>
@@ -1490,7 +1490,7 @@ Das Profil beinhaltet keine Gesprächsverläufe.</translation>
     </message>
     <message>
         <source>Delete profile.</source>
-        <translation type="unfinished">Profil löschen.</translation>
+        <translation>Profil löschen.</translation>
     </message>
     <message>
         <source>Export profile</source>
@@ -1660,7 +1660,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
-        <translation type="unfinished">Neues Profil erstellen Knopf</translation>
+        <translation>Neues Profil erstellen</translation>
     </message>
     <message>
         <source>Profile list</source>
@@ -1788,7 +1788,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
-        <translation type="unfinished">Öffne die Dateitransferhistorie</translation>
+        <translation>Öffne Dateitransferhistorie</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2344,7 +2344,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished">Neuformatierung des Textes in Arbeit...</translation>
+        <translation>Neuformatierung des Textes in Arbeit...</translation>
     </message>
 </context>
 <context>
