@@ -264,11 +264,11 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished">Akzeptieren Sie automatisch Gruppe Chat-Einladungen von diesem Kontakt, wenn eingestellt.</translation>
+        <translation>Von diesem Kontakt Gruppen-Chat-Einladungen automatisch akzeptieren.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppeneinladungen automatisch annehmen</translation>
     </message>
 </context>
 <context>
@@ -704,7 +704,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Du musst eine Nachricht zu deiner Anfrage schreiben</translation>
+        <translation>Du musst eine Nachricht mit deiner Anfrage schreiben</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
@@ -844,7 +844,7 @@ Zu hohe Auflösungen können daher zu Problemen in Videoanrufen führen.</transl
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie</translation>
     </message>
 </context>
 <context>
@@ -1080,7 +1080,7 @@ instead of system taskbar.</source>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation type="unfinished">Hinweis bei Statusänderungen deiner Freunde anzeigen</translation>
+        <translation>Statusänderungen deiner Freunde anzeigen</translation>
     </message>
     <message>
         <source>On new message:</source>
@@ -1684,7 +1684,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation type="unfinished">Gewähltes Profil laden Knopf</translation>
+        <translation>Ausgewähltes Profil laden</translation>
     </message>
     <message>
         <source>New profile creation page</source>
@@ -1692,7 +1692,7 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Loading existing profile page</source>
-        <translation type="unfinished">Seite zum laden eines existierenden Profils</translation>
+        <translation>Lade bestehende Profilseite</translation>
     </message>
 </context>
 <context>
@@ -1768,11 +1768,11 @@ Möglicherweise möchtest du ein neues Profil erstellen.</translation>
     </message>
     <message>
         <source>Set friends sorting and visibility</source>
-        <translation type="unfinished">Setze Sortierung für Freunde und Sichtbarkeit</translation>
+        <translation>Einstellungen bzgl. Sortierung und Sichtbarkeit deiner Freunde</translation>
     </message>
     <message>
         <source>Open Add friends page</source>
-        <translation type="unfinished">Öffne die Seite um Freunde hinzuzufügen</translation>
+        <translation>Öffne diese Seite um Freunde hinzuzufügen</translation>
     </message>
     <message>
         <source>Groupchat</source>
@@ -1927,7 +1927,7 @@ Formatierungsänderungen beim Speichern sind möglich, die zu Datenverlust führ
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Datenbankänderung des Passwortes nicht möglich, es ist möglich, dass ein älteres Passwort verwendet wurde</translation>
     </message>
 </context>
 <context>
@@ -2119,7 +2119,7 @@ Bitte benutze ein anderes.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Passwortänderung nicht möglich</translation>
     </message>
     <message>
         <source>This bunch of characters tells other Tox clients how to contact you.
@@ -2344,7 +2344,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Neuformatierung des Textes in Arbeit...</translation>
     </message>
 </context>
 <context>
@@ -2367,7 +2367,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Remove all chat history with the friend if set</source>
-        <translation type="unfinished">Löscht den Chatverlauf mit diesem Freund wenn aktiviert</translation>
+        <translation>Löscht den gesamten Chatverlauf mit diesem Freund, wenn aktiviert</translation>
     </message>
 </context>
 <context>
@@ -2430,7 +2430,7 @@ Sie wird beim nächsten Neustart von qTox automatisch installiert.</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation type="unfinished">Passwort bestätigen Eingabefeld</translation>
+        <translation>Bestätige Passworteingabe</translation>
     </message>
     <message>
         <source>Password input</source>
