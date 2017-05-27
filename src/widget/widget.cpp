@@ -2000,7 +2000,9 @@ void Widget::saveWindowGeometry()
 
 void Widget::saveSplitterGeometry()
 {
-    Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+    if (!Settings::getInstance().getSeparateWindow()) {
+        Settings::getInstance().setSplitterState(ui->mainSplitter->saveState());
+    }
 }
 
 void Widget::onSplitterMoved(int pos, int index)
