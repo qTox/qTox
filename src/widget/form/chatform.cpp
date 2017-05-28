@@ -569,7 +569,7 @@ void ChatForm::onStatusMessage(const QString& message)
 void ChatForm::onReceiptReceived(quint32 friendId, int receipt)
 {
     if (friendId == f->getFriendId()) {
-        f->getChatForm()->getOfflineMsgEngine()->dischargeReceipt(receipt);
+        offlineEngine->dischargeReceipt(receipt);
     }
 }
 
@@ -654,12 +654,12 @@ void ChatForm::onAvatarRemoved(uint32_t friendId)
 void ChatForm::clearChatArea(bool notInForm)
 {
     GenericChatForm::clearChatArea(notInForm);
-    f->getChatForm()->getOfflineMsgEngine()->removeAllReceipts();
+    offlineEngine->removeAllReceipts();
 }
 
 void ChatForm::onDeliverOfflineMessages()
 {
-    f->getChatForm()->getOfflineMsgEngine()->deliverOfflineMsgs();
+    offlineEngine->deliverOfflineMsgs();
 }
 
 void ChatForm::onLoadChatHistory()
