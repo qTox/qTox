@@ -196,7 +196,8 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void showProfile();
-    void onChatroomWidgetClicked(GenericChatroomWidget*, bool group);
+    void openNewDialog(GenericChatroomWidget* widget);
+    void onChatroomWidgetClicked(GenericChatroomWidget* widget);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -240,6 +241,7 @@ private:
     static bool filterOffline(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
+    void openDialog(GenericChatroomWidget* widget, bool newWindow);
 
 private:
     SystemTrayIcon* icon = nullptr;

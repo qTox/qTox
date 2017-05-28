@@ -30,10 +30,11 @@
 
 void CategoryWidget::emitChatroomWidget(QLayout* layout, int index)
 {
-    GenericChatroomWidget* chatWidget =
-        qobject_cast<GenericChatroomWidget*>(layout->itemAt(index)->widget());
-    if (chatWidget != nullptr)
+    QWidget* widget = layout->itemAt(index)->widget();
+    GenericChatroomWidget* chatWidget = qobject_cast<GenericChatroomWidget*>(widget);
+    if (chatWidget != nullptr) {
         emit chatWidget->chatroomWidgetClicked(chatWidget);
+    }
 }
 
 CategoryWidget::CategoryWidget(bool compact, QWidget* parent)
