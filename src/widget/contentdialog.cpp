@@ -171,8 +171,8 @@ FriendWidget* ContentDialog::addFriend(int friendId, QString id)
     friendLayout->addFriendWidget(friendWidget, frnd->getStatus());
 
     connect(frnd, &Friend::aliasChanged, this, &ContentDialog::updateFriendWidget);
-    connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this,
-            &ContentDialog::onChatroomWidgetClicked);
+    connect(friendWidget, &FriendWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
+    connect(friendWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDiadlog);
     connect(friendWidget, SIGNAL(chatroomWidgetClicked(GenericChatroomWidget*)),
             frnd->getChatForm(), SLOT(focusInput()));
 
@@ -197,8 +197,8 @@ GroupWidget* ContentDialog::addGroup(int groupId, const QString& name)
     Group* group = groupWidget->getGroup();
     connect(group, &Group::titleChanged, this, &ContentDialog::updateGroupWidget);
     connect(group, &Group::userListChanged, this, &ContentDialog::updateGroupWidget);
-    connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this,
-            &ContentDialog::onChatroomWidgetClicked);
+    connect(groupWidget, &GroupWidget::chatroomWidgetClicked, this, &ContentDialog::activate);
+    connect(groupWidget, &FriendWidget::newWindowOpened, this, &ContentDialog::openNewDiadlog);
 
     ContentDialog* lastDialog = getGroupDialog(groupId);
 
@@ -695,30 +695,32 @@ void ContentDialog::keyPressEvent(QKeyEvent* event)
 }
 
 /**
- * @brief Show ContentDialog, activate chatroom widget.
- * @param widget Widget which was clicked.
- * @param group Seems always `false`. TODO: Remove
+ * @brief Open a new dialog window associated with widget
+ * @param widget Widget associated with contact.
  */
-void ContentDialog::onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group)
+void ContentDialog::openNewDiadlog(GenericChatroomWidget* widget)
 {
-    if (group) {
-        ContentDialog* contentDialog = new ContentDialog(settingsWidget);
-        contentDialog->show();
+    ContentDialog* contentDialog = new ContentDialog(settingsWidget);
+    contentDialog->show();
 
-        if (widget->getFriend()) {
-            removeFriend(widget->getFriend()->getFriendId());
-            Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
-        } else {
-            removeGroup(widget->getGroup()->getGroupId());
-            Widget::getInstance()->addGroupDialog(widget->getGroup(), contentDialog);
-        }
-
-        contentDialog->raise();
-        contentDialog->activateWindow();
-
-        return;
+    if (widget->getFriend()) {
+        removeFriend(widget->getFriend()->getFriendId());
+        Widget::getInstance()->addFriendDialog(widget->getFriend(), contentDialog);
+    } else {
+        removeGroup(widget->getGroup()->getGroupId());
+        Widget::getInstance()->addGroupDialog(widget->getGroup(), contentDialog);
     }
 
+    contentDialog->raise();
+    contentDialog->activateWindow();
+}
+
+/**
+ * @brief Show ContentDialog, activate chatroom widget.
+ * @param widget Widget which should be activated.
+ */
+void ContentDialog::activate(GenericChatroomWidget* widget)
+{
     // If we clicked on the currently active widget, don't reload and relayout everything
     if (activeChatroomWidget == widget) {
         return;
