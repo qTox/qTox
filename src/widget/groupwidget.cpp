@@ -101,19 +101,19 @@ void GroupWidget::contextMenuEvent(QContextMenuEvent* event)
     if (!active)
         setBackgroundRole(QPalette::Window);
 
-    if (selectedItem) {
-        if (selectedItem == quitGroup) {
-            emit removeGroup(groupId);
-        } else if (selectedItem == openChatWindow) {
-            emit chatroomWidgetClicked(this, true);
-            return;
-        } else if (selectedItem == removeChatWindow) {
-            ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
-            contentDialog->removeGroup(groupId);
-            return;
-        } else if (selectedItem == setTitle) {
-            editName();
-        }
+    if (!selectedItem) {
+        return;
+    }
+
+    if (selectedItem == quitGroup) {
+        emit removeGroup(groupId);
+    } else if (selectedItem == openChatWindow) {
+        emit newWindowOpened(this);
+    } else if (selectedItem == removeChatWindow) {
+        ContentDialog* contentDialog = ContentDialog::getGroupDialog(groupId);
+        contentDialog->removeGroup(groupId);
+    } else if (selectedItem == setTitle) {
+        editName();
     }
 }
 
