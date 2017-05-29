@@ -31,7 +31,7 @@ fi
 
 ## qrencode
 if [ ! -f "qrencode-3.4.4.tar.gz" ]; then
-    wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+    wget --no-check-certificate http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
 fi
 
 if [ ! -d "$QTOX_DIR/libs/qrencode-3.4.4" ]; then
