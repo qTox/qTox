@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Default resolution</source>
-        <translation>Standard upplösning</translation>
+        <translation>Standardupplösning</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Play a test sound while changing the output volume.</source>
-        <translation>Spela en testljud när du byter utgångsvolymen.</translation>
+        <translation>Spela ett testljud när du byter utgångsvolymen.</translation>
     </message>
     <message>
         <source>Use slider to set the gain of your input device ranging from %1dB to %2dB.</source>
@@ -71,7 +71,7 @@ Sometimes your connection may not be good enough to handle higher video quality,
 which may lead to problems with video calls.</source>
         <translation>Ange upplösning för din kamera.
 Ju högre värden, desto bättre bildkvalitet kan dina vänner få.
-Tänk dock på att med bättre bildkvalitet behövs bättre internet-anslutning.
+Tänk dock på att med bättre bildkvalitet behövs bättre internetanslutning.
 Ibland kanske din anslutning inte är bra nog för att hantera högre videokvalitet,
 vilket kan leda till problem med videosamtal.</translation>
     </message>
@@ -113,7 +113,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Commit hash: %1</source>
-        <translation>Begå-röra: %1</translation>
+        <translation>Inchecknings-hash: %1</translation>
     </message>
     <message>
         <source>toxcore version: %1</source>
@@ -127,7 +127,7 @@ vilket kan leda till problem med videosamtal.</translation>
         <source>A list of all known issues may be found at our %1 at Github. If you discover a bug or security vulnerability within qTox, please report it according to the guidelines in our %2 wiki article.</source>
         <comment>`%1` is replaced by translation of `bug tracker`
 `%2` is replaced by translation of `Writing Useful Bug Reports`</comment>
-        <translation>En lista över alla kända problem kan hittas på vår %1 på Github. Om du upptäcker ett fel eller säkerhetsproblem inom qTox, vänligen rapportera det i enlighet med riktlinjerna i vår %2 wikiartikeln.</translation>
+        <translation>En lista över alla kända problem kan hittas på vår %1 på Github. Om du upptäcker ett fel eller säkerhetsproblem inom qTox, vänligen rapportera det i enlighet med riktlinjerna i vår wikiartikel %2.</translation>
     </message>
     <message>
         <source>bug-tracker</source>
@@ -193,7 +193,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Public key:</source>
-        <translation>Publik nyckel:</translation>
+        <translation>Öppen nyckel:</translation>
     </message>
     <message>
         <source>Used aliases:</source>
@@ -201,11 +201,11 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>HISTORY OF ALIASES</source>
-        <translation>HISTORIk AV ALIAS</translation>
+        <translation>HISTORIK AV ALIAS</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standard katalog för att spara filer:</translation>
+        <translation>Standardkatalog för att spara filer:</translation>
     </message>
     <message>
         <source>Auto accept for this contact is disabled</source>
@@ -238,7 +238,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Chat history with %1 removed!</source>
-        <translation>Chatthistoria med %1 raderad!</translation>
+        <translation>Chatthistorik med %1 raderad!</translation>
     </message>
     <message>
         <source>Auto accept call:</source>
@@ -266,11 +266,11 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Acceptera automatiskt gruppchattsinbjudningar från denna kontakt om inställd.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Acceptera automatiskt gruppinbjudningar</translation>
     </message>
 </context>
 <context>
@@ -309,7 +309,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Invalid Tox ID format</source>
-        <translation>Ogiltigt Tox-ID format</translation>
+        <translation>Ogiltigt format på Tox-ID</translation>
     </message>
     <message>
         <source>%1 here! Tox me maybe?</source>
@@ -334,7 +334,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Tox ID, either 76 hexadecimal characters or name@example.com</source>
-        <translation>Tox-ID, antingen 76 hexadecimaltecken eller name@example.com</translation>
+        <translation>Tox-ID, antingen 76 hexadecimala tecken eller name@example.com</translation>
     </message>
     <message>
         <source>Type in Tox ID of your friend</source>
@@ -362,7 +362,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation>Om du inte %1 vet vad du gör, gör inga %2 ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
+        <translation>Om du inte %1 vet vad du gör, gör %2 ändringar här. Ändringar som görs här kan leda till problem med qTox, och även till förlust av data, t.ex. historik.</translation>
     </message>
     <message>
         <source>really</source>
@@ -465,7 +465,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Inga</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>SOCKS5</source>
@@ -478,7 +478,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Reconnect</source>
         <comment>reconnect button</comment>
-        <translation type="unfinished">Återanslut</translation>
+        <translation>Återanslut</translation>
     </message>
     <message>
         <source>Debug</source>
@@ -599,12 +599,12 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>away</source>
         <comment>contact status</comment>
-        <translation type="unfinished">borta</translation>
+        <translation>borta</translation>
     </message>
     <message>
         <source>busy</source>
         <comment>contact status</comment>
-        <translation type="unfinished">upptagen</translation>
+        <translation>upptagen</translation>
     </message>
     <message>
         <source>offline</source>
@@ -614,12 +614,12 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>online</source>
         <comment>contact status</comment>
-        <translation type="unfinished">tillgänglig</translation>
+        <translation>tillgänglig</translation>
     </message>
     <message>
         <source>%1 is now %2</source>
         <comment>e.g. &quot;Dubslow is now online&quot;</comment>
-        <translation type="unfinished">%1 är nu %2</translation>
+        <translation>%1 är nu %2</translation>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
@@ -636,6 +636,14 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Sound can be disabled only during a call</source>
         <translation>Ljud kan endast avaktiveras under ett samtal</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Spara chattlogg</translation>
     </message>
 </context>
 <context>
@@ -690,22 +698,22 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Invalid Tox ID</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ogiltigt Tox-ID</translation>
+        <translation>Ogiltigt Tox-ID</translation>
     </message>
     <message>
         <source>You need to write a message with your request</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Du måste skriva ett meddelande med din förfrågan</translation>
+        <translation>Du måste skriva ett meddelande med din förfrågan</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Ditt meddelande är för långt!</translation>
+        <translation>Ditt meddelande är för långt!</translation>
     </message>
     <message>
         <source>Friend is already added</source>
         <comment>Error while sending friendship request</comment>
-        <translation type="unfinished">Vän är redan tillagd</translation>
+        <translation>Vän är redan tillagd</translation>
     </message>
 </context>
 <context>
@@ -743,7 +751,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished">Plats ej skrivbar</translation>
+        <translation>Plats ej skrivbar</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
@@ -753,7 +761,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Save a file</source>
         <comment>Title of the file saving dialog</comment>
-        <translation type="unfinished">Spara en fil</translation>
+        <translation>Spara en fil</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -810,27 +818,27 @@ vilket kan leda till problem med videosamtal.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Idag</translation>
+        <translation>Idag</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Igår</translation>
+        <translation>Igår</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Senaste 7 dagar</translation>
+        <translation>Senaste 7 dagar</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Denna månad</translation>
+        <translation>Denna månad</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Äldre än 6 månader</translation>
+        <translation>Äldre än 6 månader</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Aldrig</translation>
     </message>
 </context>
 <context>
@@ -873,7 +881,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Auto accept files from this friend</source>
         <comment>context menu entry</comment>
-        <translation>Acceptera automatiskt filer från denna vännen</translation>
+        <translation>Acceptera automatiskt filer från denna vän</translation>
     </message>
     <message>
         <source>Invite to group</source>
@@ -905,7 +913,7 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Invite to group &apos;%1&apos;</source>
-        <translation>Bjuda in till grupp &apos;%1&apos;</translation>
+        <translation>Bjud in till grupp &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Move to circle...</source>
@@ -934,15 +942,15 @@ vilket kan leda till problem med videosamtal.</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Tillgänglig</translation>
+        <translation>Tillgänglig</translation>
     </message>
     <message>
         <source>Away</source>
-        <translation type="unfinished">Borta</translation>
+        <translation>Borta</translation>
     </message>
     <message>
         <source>Busy</source>
-        <translation type="unfinished">Upptagen</translation>
+        <translation>Upptagen</translation>
     </message>
     <message>
         <source>Offline</source>
@@ -997,7 +1005,7 @@ vilket kan leda till problem med videosamtal.</translation>
     <message>
         <source>Enable light tray icon.</source>
         <comment>toolTip for light icon setting</comment>
-        <translation>Aktivera ljus ikonen i aktivitetsfältet.</translation>
+        <translation>Aktivera Ljus-ikon i aktivitetsfältet.</translation>
     </message>
     <message>
         <source>Light icon</source>
@@ -1049,7 +1057,7 @@ istället för aktivitetsfältet för systemet.</translation>
     <message>
         <source>You can set this on a per-friend basis by right clicking them.</source>
         <comment>autoaccept cb tooltip</comment>
-        <translation>Du kan ställa in detta på en per-vän basis genom att högerklicka på dem.</translation>
+        <translation>Du kan ställa in detta för varje enskild vän genom att högerklicka på dem.</translation>
     </message>
     <message>
         <source>Your status is changed to Away after set period of inactivity.</source>
@@ -1061,7 +1069,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Show contacts&apos; status changes</source>
-        <translation>Visa kontaktstatus ändringar</translation>
+        <translation>Visa kontakters statusändringar</translation>
     </message>
     <message>
         <source>Set to 0 to disable</source>
@@ -1069,7 +1077,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>On new message:</source>
-        <translation>På nytt meddelande:</translation>
+        <translation>Vid nytt meddelande:</translation>
     </message>
     <message>
         <source>Faux offline messaging</source>
@@ -1081,11 +1089,11 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Start qTox on operating system startup (current profile).</source>
-        <translation>Starta qTox på operativsystemets uppstart (nuvarande profil).</translation>
+        <translation>Starta qTox vid operativsystemets uppstart (nuvarande profil).</translation>
     </message>
     <message>
         <source>Default directory to save files:</source>
-        <translation>Standard katalog för att spara filer:</translation>
+        <translation>Standardkatalog för att spara filer:</translation>
     </message>
     <message>
         <source>Play sound</source>
@@ -1104,7 +1112,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Smileys</source>
-        <translation>Uttryckssymboler</translation>
+        <translation>Humörsymboler</translation>
     </message>
     <message>
         <source>Send file(s)</source>
@@ -1167,7 +1175,7 @@ istället för aktivitetsfältet för systemet.</translation>
     <name>GenericNetCamView</name>
     <message>
         <source>Tox video</source>
-        <translation type="unfinished">Tox-video</translation>
+        <translation>Tox-video</translation>
     </message>
     <message>
         <source>Show Messages</source>
@@ -1250,7 +1258,7 @@ istället för aktivitetsfältet för systemet.</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation>Avböja</translation>
+        <translation>Avböj</translation>
     </message>
 </context>
 <context>
@@ -1295,7 +1303,7 @@ istället för aktivitetsfältet för systemet.</translation>
         <source>This bunch of characters tells other Tox clients how to contact you.
 Share it with your friends to communicate.</source>
         <comment>Tox ID tooltip</comment>
-        <translation>Detta gäng karaktärer berättar andra Tox-klienter din kontaktinformation.
+        <translation>Detta gäng tecken berättar andra Tox-klienter din kontaktinformation.
 Dela den med dina vänner för att kommunicera.</translation>
     </message>
     <message>
@@ -1400,12 +1408,12 @@ Profilen innehåller inte din historik.</translation>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography text.</comment>
-        <translation>Tillval. Något om dig. Eller din katt.</translation>
+        <translation>Valfritt. Något om dig. Eller din katt.</translation>
     </message>
     <message>
         <source>Optional. Something about you. Or your cat.</source>
         <comment>Tooltip for the Biography field.</comment>
-        <translation>Tillval. Något om dig. Eller din katt.</translation>
+        <translation>Valfritt. Något om dig. Eller din katt.</translation>
     </message>
     <message>
         <source>ToxMe service to register on.</source>
@@ -1414,7 +1422,7 @@ Profilen innehåller inte din historik.</translation>
     <message>
         <source>If not set, ToxMe entries are publicly visible.</source>
         <comment>Tooltip for the `Hide my name from public list` ToxMe checkbox.</comment>
-        <translation>Om ej inställt, visas ToxMe poster offentligt.</translation>
+        <translation>Om ej inställt, visas ToxMe-poster offentligt.</translation>
     </message>
     <message>
         <source>Remove your password and encryption from your profile.</source>
@@ -1427,15 +1435,15 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Name visible to contacts</source>
-        <translation>Namn synlig för kontakter</translation>
+        <translation>Namn synligt för kontakter</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Statusmeddelande inmatning</translation>
+        <translation>Statusmeddelande-inmatning</translation>
     </message>
     <message>
         <source>Status message visible to contacts</source>
-        <translation>Statusmeddelande synlig för kontakter</translation>
+        <translation>Statusmeddelande synligt för kontakter</translation>
     </message>
     <message>
         <source>Your Tox ID</source>
@@ -1451,11 +1459,11 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>ToxMe username to be shown on ToxMe</source>
-        <translation>ToxMe användarnamn att visas på ToxMe</translation>
+        <translation>ToxMe-användarnamn att visas på ToxMe</translation>
     </message>
     <message>
         <source>Optional ToxMe biography to be shown on ToxMe</source>
-        <translation>Tillval ToxMe biografi som ska visas på ToxMe</translation>
+        <translation>Valfri ToxMe-biografi som visas på ToxMe</translation>
     </message>
     <message>
         <source>ToxMe service address</source>
@@ -1471,7 +1479,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation>Uppdatera ToxMe inlägg</translation>
+        <translation>Uppdatera ToxMe-inlägg</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1483,7 +1491,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Export profile</source>
-        <translation type="unfinished">Exportera profil</translation>
+        <translation>Exportera profil</translation>
     </message>
     <message>
         <source>Remove password from profile</source>
@@ -1524,6 +1532,10 @@ Profilen innehåller inte din historik.</translation>
         <source>Load history from:</source>
         <translation>Ladda in historik från:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -1561,7 +1573,7 @@ Profilen innehåller inte din historik.</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished">Ladda</translation>
+        <translation>Ladda</translation>
     </message>
     <message>
         <source>New Profile</source>
@@ -1633,7 +1645,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Username input field</source>
-        <translation>Användarnamn inmatningsfält</translation>
+        <translation>Inmatningsfält för användarnamn</translation>
     </message>
     <message>
         <source>Password input field, you can leave it empty (no password), or type at least 6 characters</source>
@@ -1641,7 +1653,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Password confirmation field</source>
-        <translation>Lösenordsbekräftelse fält</translation>
+        <translation>Fält för lösenordsbekräftelse</translation>
     </message>
     <message>
         <source>Create a new profile button</source>
@@ -1657,7 +1669,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Lösenord inmatning</translation>
+        <translation>Lösenordsinmatning</translation>
     </message>
     <message>
         <source>Load automatically checkbox</source>
@@ -1665,11 +1677,11 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Import profile</source>
-        <translation type="unfinished">Importera profil</translation>
+        <translation>Importera profil</translation>
     </message>
     <message>
         <source>Load selected profile button</source>
-        <translation>Ladda vald profilknappen</translation>
+        <translation>Ladda vald profilknapp</translation>
     </message>
     <message>
         <source>New profile creation page</source>
@@ -1725,7 +1737,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Status message input</source>
-        <translation>Statusmeddelande inmatning</translation>
+        <translation>Statusmeddelande-inmatning</translation>
     </message>
     <message>
         <source>Set your status message that will be shown to others</source>
@@ -1733,7 +1745,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Set availability status</source>
@@ -1745,7 +1757,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation>Kontakta söks ingång för kända vänner</translation>
+        <translation>Kontaktsökningsinmatning för kända vänner</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1769,7 +1781,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>File transfers history</source>
-        <translation>Filöverföringar historik</translation>
+        <translation>Filöverföringshistorik</translation>
     </message>
     <message>
         <source>Open File transfers history</source>
@@ -1817,7 +1829,7 @@ Du kanske vill skapa en.</translation>
     </message>
     <message>
         <source>Enter Fullscreen</source>
-        <translation>Använda helskärm</translation>
+        <translation>Använd helskärm</translation>
     </message>
 </context>
 <context>
@@ -1864,7 +1876,7 @@ Du kanske vill skapa en.</translation>
 Save format changes are possible, which may result in data loss.</source>
         <comment>toolTip for Keep History setting</comment>
         <translation>Chatthistorik fortfarande under utveckling.
-Spara formatförändringar är möjligt, vilket kan resultera i dataförlust.</translation>
+Ändringar i sparningsformatet är möjliga, vilket kan resultera i dataförlust.</translation>
     </message>
     <message>
         <source>Send typing notifications</source>
@@ -1899,18 +1911,18 @@ Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished">Integritet</translation>
+        <translation>Integritet</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades att härleda nyckel från lösenord, profilen kommer inte använda det nya lösenordet.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte byta lösenord på databasen, den kan vara trasig eller använda det gamla lösenordet.</translation>
     </message>
 </context>
 <context>
@@ -1925,11 +1937,11 @@ Om du blir spammad med vänförfrågningar, ändra NoSpam.</translation>
     </message>
     <message>
         <source>Choose a profile picture</source>
-        <translation type="unfinished">Välj en profilbild</translation>
+        <translation>Välj en profilbild</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>Unable to open this file.</source>
@@ -1953,7 +1965,7 @@ Använd en annan bild.</translation>
     <message>
         <source>Profile already exists</source>
         <comment>rename failure title</comment>
-        <translation type="unfinished">Profil finns redan</translation>
+        <translation>Profil finns redan</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists.</source>
@@ -1972,17 +1984,17 @@ Använd en annan bild.</translation>
     <message>
         <source>Export profile</source>
         <comment>save dialog title</comment>
-        <translation type="unfinished">Exportera profil</translation>
+        <translation>Exportera profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>save dialog filter</comment>
-        <translation type="unfinished">Tox sparningsfil (*.tox)</translation>
+        <translation>Tox-sparningsfil (*.tox)</translation>
     </message>
     <message>
         <source>Location not writable</source>
         <comment>Title of permissions popup</comment>
-        <translation type="unfinished">Plats ej skrivbar</translation>
+        <translation>Plats ej skrivbar</translation>
     </message>
     <message>
         <source>You do not have permission to write that location. Choose another, or cancel the save dialog.</source>
@@ -2055,12 +2067,6 @@ Använd en annan bild.</translation>
         <translation>Vänligen ange ett nytt lösenord.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Detta gäng karaktärer berättar för andra Tox-klienter hur man kan kontakta dig.
-Dela det med dina vänner för att kommunicera.</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation>Registrera (bearbetning)</translation>
     </message>
@@ -2078,11 +2084,11 @@ Dela det med dina vänner för att kommunicera.</translation>
     </message>
     <message>
         <source>Successfully added %1@%2 to the database. Save your password</source>
-        <translation>Framgångsrikt lagt %1@%2 till databasen. Spara ditt lösenord</translation>
+        <translation>Lade framgångsrikt %1@%2 till databasen. Spara ditt lösenord</translation>
     </message>
     <message>
         <source>Toxme error</source>
-        <translation>Toxme fel</translation>
+        <translation>Toxme-fel</translation>
     </message>
     <message>
         <source>Register</source>
@@ -2108,6 +2114,13 @@ Dela det med dina vänner för att kommunicera.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation>Kunde inte ändra lösenord</translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2116,17 +2129,17 @@ Dela det med dina vänner för att kommunicera.</translation>
     <message>
         <source>Import profile</source>
         <comment>import dialog title</comment>
-        <translation type="unfinished">Importera profil</translation>
+        <translation>Importera profil</translation>
     </message>
     <message>
         <source>Tox save file (*.tox)</source>
         <comment>import dialog filter</comment>
-        <translation type="unfinished">Tox sparningsfil (*.tox)</translation>
+        <translation>Tox-sparningsfil (*.tox)</translation>
     </message>
     <message>
         <source>Ignoring non-Tox file</source>
         <comment>popup title</comment>
-        <translation type="unfinished">Ignorerar icke-Toxfil</translation>
+        <translation>Ignorerar icke-Toxfil</translation>
     </message>
     <message>
         <source>Warning: You have chosen a file that is not a Tox save file; ignoring.</source>
@@ -2136,7 +2149,7 @@ Dela det med dina vänner för att kommunicera.</translation>
     <message>
         <source>Profile already exists</source>
         <comment>import confirm title</comment>
-        <translation type="unfinished">Profil finns redan</translation>
+        <translation>Profil finns redan</translation>
     </message>
     <message>
         <source>A profile named &quot;%1&quot; already exists. Do you want to erase it?</source>
@@ -2195,13 +2208,9 @@ Dela det med dina vänner för att kommunicera.</translation>
         <translation>%1 är inte en giltig Toxme-adress.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Du kan inte lägga till dig själv som vän!</translation>
+        <translation>Du kan inte lägga till dig själv som vän!</translation>
     </message>
 </context>
 <context>
@@ -2304,7 +2313,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>qTox couldn&apos;t open your chat logs, they will be disabled.</source>
@@ -2313,7 +2322,7 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>None</source>
         <comment>No camera device set</comment>
-        <translation type="unfinished">Inga</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>Desktop</source>
@@ -2326,18 +2335,18 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Internal ToxMe error</source>
-        <translation>Internt ToxMe fel</translation>
+        <translation>Internt ToxMe-fel</translation>
     </message>
     <message>
         <source>Reformatting text in progress..</source>
-        <translation type="unfinished"></translation>
+        <translation>Formaterar om text...</translation>
     </message>
 </context>
 <context>
     <name>RemoveFriendDialog</name>
     <message>
         <source>Remove friend</source>
-        <translation type="unfinished">Ta bort vän</translation>
+        <translation>Ta bort vän</translation>
     </message>
     <message>
         <source>Also remove chat history</source>
@@ -2376,7 +2385,7 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Press %1 to send a screenshot of the selection, %2 to hide/show qTox window, or %3 to cancel.</source>
         <comment>Help text shown when a region has been selected</comment>
-        <translation>Tryck på %1 för att skicka en skärmdump av urvalet, %2 för att visa/dölj qTox-fönster eller %3 för att avbryta.</translation>
+        <translation>Tryck på %1 för att skicka en skärmdump av urvalet, %2 för att visa/dölja qTox-fönster eller %3 för att avbryta.</translation>
     </message>
     <message>
         <source>Enter</source>
@@ -2416,15 +2425,15 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Confirm password input</source>
-        <translation>Bekräfta lösenord inmatning</translation>
+        <translation>Bekräfta lösenordsinmatning</translation>
     </message>
     <message>
         <source>Password input</source>
-        <translation>Lösenord inmatning</translation>
+        <translation>Lösenordsinmatning</translation>
     </message>
     <message>
         <source>Password input field, minimum 6 characters long</source>
-        <translation>Lösenord inmatningsfält, minst 6 tecken långt</translation>
+        <translation>Lösenordsinmatningsfält, minst 6 tecken långt</translation>
     </message>
 </context>
 <context>
@@ -2447,7 +2456,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>User ID:</source>
-        <translation type="unfinished">Användar-ID:</translation>
+        <translation>Användar-ID:</translation>
     </message>
     <message>
         <source>Friend request message:</source>
@@ -2468,7 +2477,7 @@ Den kommer att installeras när qTox startas om.</translation>
     <name>UserInterfaceForm</name>
     <message>
         <source>None</source>
-        <translation type="unfinished">Inga</translation>
+        <translation>Inget</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -2524,11 +2533,11 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>Open qTox&apos;s window when you receive a new message and no window is open yet.</source>
         <comment>tooltip for Show window setting</comment>
-        <translation>Öppna qToxs fönster när du får ett nytt meddelande och inga fönster är öppna ännu.</translation>
+        <translation>Öppna qTox fönster när du får ett nytt meddelande och inga fönster är öppna ännu.</translation>
     </message>
     <message>
         <source>Open window</source>
-        <translation>Öppet fönster</translation>
+        <translation>Öppna fönster</translation>
     </message>
     <message>
         <source>Focus qTox when you receive message.</source>
@@ -2537,7 +2546,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Focus window</source>
-        <translation>Fokus fönster</translation>
+        <translation>Fokusera fönster</translation>
     </message>
     <message>
         <source>Contact list</source>
@@ -2555,7 +2564,7 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>If checked, groupchats will be placed at the top of the friends list, otherwise, they&apos;ll be placed below online friends.</source>
         <comment>toolTip for groupchat positioning</comment>
-        <translation>Om ifylld, kommer gruppchattar att placeras överst i vänlistan, annars kommer de att placeras nedanför vänner på nätet.</translation>
+        <translation>Om ifylld, kommer gruppchattar att placeras överst i vänlistan, annars kommer de att placeras nedanför uppkopplade vänner.</translation>
     </message>
     <message>
         <source>Place groupchats at top of friend list</source>
@@ -2572,7 +2581,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Multiple windows mode</source>
-        <translation>Fler fönsterläge</translation>
+        <translation>Flerfönsterläge</translation>
     </message>
     <message>
         <source>Open each chat in an individual window</source>
@@ -2580,20 +2589,20 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Emoticons</source>
-        <translation>Uttryckssymboler</translation>
+        <translation>Humörsymboler</translation>
     </message>
     <message>
         <source>Use emoticons</source>
-        <translation type="unfinished">Använd emoticons</translation>
+        <translation>Använd humörsymboler</translation>
     </message>
     <message>
         <source>Smiley Pack:</source>
         <extracomment>Text on smiley pack label</extracomment>
-        <translation>Uttryckssymbol-paket:</translation>
+        <translation>Humörsymbol-paket:</translation>
     </message>
     <message>
         <source>Emoticon size:</source>
-        <translation>Uttryckssymbol storlek:</translation>
+        <translation>Humörsymbolstorlek:</translation>
     </message>
     <message>
         <source> px</source>
@@ -2601,7 +2610,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation type="unfinished">Tema</translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>Style:</source>
@@ -2613,7 +2622,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Timestamp format:</source>
-        <translation>Tidsstämpel format:</translation>
+        <translation>Tidsstämpelformat:</translation>
     </message>
     <message>
         <source>Date format:</source>
@@ -2640,7 +2649,7 @@ Den kommer att installeras när qTox startas om.</translation>
     <message>
         <source>toxcore failed to start with your proxy settings. qTox cannot run; please modify your settings and restart.</source>
         <comment>popup text</comment>
-        <translation>Texcore misslyckades att starta med dina proxy-inställningar. qTox kan inte köras; ändra dina inställningar och starta om.</translation>
+        <translation>toxcore misslyckades att starta med dina proxy-inställningar. qTox kan inte köras; ändra dina inställningar och starta om.</translation>
     </message>
     <message>
         <source>Couldn&apos;t request friendship</source>
@@ -2656,7 +2665,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>toxcore failed to start, the application will terminate after you close this message.</source>
@@ -2674,11 +2683,11 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Your name</source>
-        <translation type="unfinished">Ditt namn</translation>
+        <translation>Ditt namn</translation>
     </message>
     <message>
         <source>Your status</source>
-        <translation type="unfinished">Din status</translation>
+        <translation>Din status</translation>
     </message>
     <message>
         <source>&lt;Empty&gt;</source>
@@ -2725,7 +2734,7 @@ Den kommer att installeras när qTox startas om.</translation>
     </message>
     <message>
         <source>Online</source>
-        <translation type="unfinished">Tillgänglig</translation>
+        <translation>Tillgänglig</translation>
     </message>
     <message>
         <source>Offline</source>
