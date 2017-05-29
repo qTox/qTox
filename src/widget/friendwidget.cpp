@@ -363,15 +363,14 @@ void FriendWidget::search(const QString& searchString, bool hide)
         circleWidget->search(searchString);
 }
 
+// TODO: Remove
 bool FriendWidget::chatFormIsSet(bool focus) const
 {
-    Friend* f = FriendList::findFriend(friendId);
     if (focus) {
         ContentDialog::focusFriend(friendId);
     }
 
-    bool exist = ContentDialog::friendWidgetExists(friendId);
-    return exist || f->getChatForm()->isVisible();
+    return ContentDialog::friendWidgetExists(friendId);
 }
 
 void FriendWidget::setChatForm(ContentLayout* contentLayout)

@@ -198,15 +198,14 @@ Group* GroupWidget::getGroup() const
     return GroupList::findGroup(groupId);
 }
 
+// TODO: Remove
 bool GroupWidget::chatFormIsSet(bool focus) const
 {
-    Group* g = GroupList::findGroup(groupId);
     if (focus) {
         ContentDialog::focusGroup(groupId);
     }
 
-    bool exist = ContentDialog::groupWidgetExists(groupId);
-    return exist || g->getChatForm()->isVisible();
+    return ContentDialog::groupWidgetExists(groupId);
 }
 
 void GroupWidget::setChatForm(ContentLayout* contentLayout)

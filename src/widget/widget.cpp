@@ -1117,7 +1117,14 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     widget->resetEventFlags();
     widget->updateStatusLight();
 
-    if (widget->chatFormIsSet(true) && !newWindow) {
+    GenericChatForm* form;
+    if (widget->getFriend()) {
+        form = widget->getFriend()->getChatForm();
+    } else {
+        form = widget->getGroup()->getChatForm();
+    }
+
+    if ((widget->chatFormIsSet(true) || form->isVisible()) && !newWindow) {
         return;
     }
 
