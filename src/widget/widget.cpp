@@ -1515,7 +1515,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
     {
     public:
         explicit Dialog(DialogType type)
-            : ActivateDialog()
+            : ActivateDialog(nullptr, Qt::Window)
             , type(type)
         {
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
