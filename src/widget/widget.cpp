@@ -858,7 +858,9 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
         }
 
         setActiveToolMenuButton(ActiveToolMenuButton::None);
-        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
+        if (settingsWidget) {
+            settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
+        }
     } else {
         hideMainForms(nullptr);
         profileForm->show(contentLayout);
