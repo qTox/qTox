@@ -100,7 +100,8 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-    void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
+    void activate(GenericChatroomWidget* widget);
+    void openNewDiadlog(GenericChatroomWidget* widget);
     void updateFriendWidget(uint32_t friendId, QString alias);
     void updateGroupWidget(GroupWidget* w);
     void onGroupchatPositionChanged(bool top);

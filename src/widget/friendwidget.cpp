@@ -199,18 +199,20 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     removeEventFilter(this);
 
-    if (!active)
+    if (!active) {
         setBackgroundRole(QPalette::Window);
+    }
 
-    if (!selectedItem)
+    if (!selectedItem) {
         return;
+    }
 
     if (selectedItem == setAlias) {
         nameLabel->editBegin();
     } else if (selectedItem == removeFriendAction) {
         emit removeFriend(friendId);
     } else if (selectedItem == openChatWindow) {
-        emit chatroomWidgetClicked(this, true);
+        emit newWindowOpened(this);
     } else if (selectedItem == removeChatWindow) {
         ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
         contentDialog->removeFriend(friendId);
