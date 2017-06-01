@@ -841,7 +841,6 @@ void Widget::onShowSettings()
         }
 
         setActiveToolMenuButton(ActiveToolMenuButton::None);
-        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     } else {
         hideMainForms(nullptr);
         settingsWidget->show(contentLayout);
@@ -858,7 +857,6 @@ void Widget::showProfile() // onAvatarClicked, onUsernameClicked
         }
 
         setActiveToolMenuButton(ActiveToolMenuButton::None);
-        settingsWidget->setWindowIcon(QIcon(":/img/icons/qtox.svg"));
     } else {
         hideMainForms(nullptr);
         profileForm->show(contentLayout);
@@ -1521,6 +1519,7 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
             restoreGeometry(Settings::getInstance().getDialogSettingsGeometry());
             Translator::registerHandler(std::bind(&Dialog::retranslateUi, this), this);
             retranslateUi();
+            setWindowIcon(QIcon(":/img/icons/qtox.svg"));
 
             connect(Core::getInstance(), &Core::usernameSet, this, &Dialog::retranslateUi);
         }
@@ -1536,7 +1535,6 @@ ContentLayout* Widget::createContentDialog(DialogType type) const
         {
             setWindowTitle(Core::getInstance()->getUsername() + QStringLiteral(" - ")
                            + Widget::fromDialogType(type));
-            setWindowIcon(QIcon(":/img/icons/qtox.svg"));
         }
 
     protected:
