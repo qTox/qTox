@@ -93,7 +93,7 @@ CameraSource::CameraSource()
     : deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
-// clang-format off
+    // clang-format off
     , cctx{nullptr}
 #if LIBAVCODEC_VERSION_INT < 3747941
     , cctxOrig{nullptr}

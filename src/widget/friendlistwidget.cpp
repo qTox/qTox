@@ -209,7 +209,7 @@ void FriendListWidget::setMode(Mode mode)
             { Time::Month4Ago, ql.monthName(today.addMonths(-4).month()) },
             { Time::Month5Ago, ql.monthName(today.addMonths(-5).month()) },
         };
-        // clang-format on
+// clang-format on
 #undef COMMENT
 
         activityLayout = new QVBoxLayout();

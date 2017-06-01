@@ -91,7 +91,8 @@ bool handleToxURI(const QString& toxURI)
         return false;
     }
 
-    const QString defaultMessage = QObject::tr("%1 here! Tox me maybe?",
+    const QString defaultMessage =
+        QObject::tr("%1 here! Tox me maybe?",
                     "Default message in Tox URI friend requests. Write something appropriate!");
     const QString username = Nexus::getCore()->getUsername();
     ToxURIDialog* dialog = new ToxURIDialog(nullptr, toxaddr, defaultMessage.arg(username));

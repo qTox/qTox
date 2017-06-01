@@ -75,7 +75,7 @@ static const StringToString multilineCode{
     {QStringLiteral("```int main()\n{\n    return 0;\n}```"),
      QStringLiteral("<font color=#595959><code>int main()\n{\n    return 0;\n}</code></font>")}};
 
-static const StringToString urlCases {
+static const StringToString urlCases{
     {QStringLiteral("https://github.com/qTox/qTox/issues/4233"),
      QStringLiteral("<a href=\"https://github.com/qTox/qTox/issues/4233\">"
                     "https://github.com/qTox/qTox/issues/4233</a>")},

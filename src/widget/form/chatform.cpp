@@ -610,7 +610,8 @@ void ChatForm::dropEvent(QDropEvent* ev)
         QFile file(info.absoluteFilePath());
 
         QString urlString = url.toString();
-        if (url.isValid() && !url.isLocalFile() && urlString.length() < static_cast<int>(tox_max_message_length())) {
+        if (url.isValid() && !url.isLocalFile()
+            && urlString.length() < static_cast<int>(tox_max_message_length())) {
             SendMessageStr(urlString);
             continue;
         }

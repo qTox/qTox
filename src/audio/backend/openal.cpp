@@ -42,8 +42,8 @@
 
 static const unsigned int BUFFER_COUNT = 16;
 
-OpenAL::OpenAL() :
-      audioThread{new QThread}
+OpenAL::OpenAL()
+    : audioThread{new QThread}
     , alInDev{nullptr}
     , inSubscriptions{0}
     , alOutDev{nullptr}
@@ -364,7 +364,7 @@ void OpenAL::playMono16Sound(const QByteArray& data)
 }
 
 void OpenAL::playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
-                            int sampleRate)
+                             int sampleRate)
 {
     assert(channels == 1 || channels == 2);
     QMutexLocker locker(&audioLock);
@@ -463,9 +463,7 @@ void OpenAL::playMono16SoundCleanup()
         alSourcei(alMainSource, AL_BUFFER, AL_NONE);
         alDeleteBuffers(1, &alMainBuffer);
         alMainBuffer = 0;
-    }
-    else
-    {
+    } else {
         // the audio didn't finish, try again later
         playMono16Timer.start(10);
     }
@@ -514,8 +512,8 @@ QStringList OpenAL::outDeviceNames()
 {
     QStringList list;
     const ALchar* pDeviceList = (alcIsExtensionPresent(NULL, "ALC_ENUMERATE_ALL_EXT") != AL_FALSE)
-                                ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
-                                : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+                                    ? alcGetString(NULL, ALC_ALL_DEVICES_SPECIFIER)
+                                    : alcGetString(NULL, ALC_DEVICE_SPECIFIER);
 
     if (pDeviceList) {
         while (*pDeviceList) {

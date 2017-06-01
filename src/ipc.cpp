@@ -21,9 +21,9 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QThread>
+#include <ctime>
 #include <random>
 #include <unistd.h>
-#include <ctime>
 
 /**
  * @var time_t IPC::lastEvent
@@ -216,8 +216,7 @@ IPC::IPCEvent* IPC::fetchEvent()
             memset(evt, 0, sizeof(IPCEvent));
 
         if (evt->posted && !evt->processed && evt->sender != getpid()
-            && (evt->dest == profileId
-                || (evt->dest == 0 && isCurrentOwner())))
+            && (evt->dest == profileId || (evt->dest == 0 && isCurrentOwner())))
             return evt;
     }
 

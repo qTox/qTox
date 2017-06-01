@@ -830,21 +830,21 @@ void ChatLog::handleMultiClickEvent()
         return;
 
     switch (clickCount) {
-        case 3:
-            QPointF scenePos = mapToScene(lastClickPos);
-            ChatLineContent* content = getContentFromPos(scenePos);
+    case 3:
+        QPointF scenePos = mapToScene(lastClickPos);
+        ChatLineContent* content = getContentFromPos(scenePos);
 
-            if (content) {
-                content->selectionTripleClick(scenePos);
-                selClickedCol = content->getColumn();
-                selClickedRow = content->getRow();
-                selFirstRow = content->getRow();
-                selLastRow = content->getRow();
-                selectionMode = Precise;
+        if (content) {
+            content->selectionTripleClick(scenePos);
+            selClickedCol = content->getColumn();
+            selClickedRow = content->getRow();
+            selFirstRow = content->getRow();
+            selLastRow = content->getRow();
+            selectionMode = Precise;
 
-                emit selectionChanged();
-            }
-            break;
+            emit selectionChanged();
+        }
+        break;
     }
 }
 
