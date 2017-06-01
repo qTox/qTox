@@ -347,7 +347,6 @@ void Widget::init()
     connect(this, &Widget::windowStateChanged, &Nexus::getInstance(), &Nexus::onWindowStateChanged);
 #endif
 
-    contentLayout = nullptr;
     onSeparateWindowChanged(s.getSeparateWindow(), false);
 
     ui->addButton->setCheckable(true);
@@ -516,7 +515,6 @@ Widget::~Widget()
     delete filesForm;
     delete timer;
     delete offlineMsgTimer;
-    delete contentLayout;
 
     FriendList::clear();
     GroupList::clear();
@@ -684,7 +682,6 @@ void Widget::onSeparateWindowChanged(bool separate, bool clicked)
             contentLayout->parentWidget()->hide();
             contentLayout->parentWidget()->deleteLater();
             contentLayout->deleteLater();
-            contentLayout = nullptr;
         }
 
         setMinimumWidth(ui->tooliconsZone->sizeHint().width());
