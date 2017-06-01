@@ -57,6 +57,7 @@ Time getTime(const QDate& date)
     }
 
     QDate today = QDate::currentDate();
+    // clang-format off
     const QMap<Time, QDate> dates {
         { Time::Today,     today.addDays(0)    },
         { Time::Yesterday, today.addDays(-1)   },
@@ -68,6 +69,7 @@ Time getTime(const QDate& date)
         { Time::Month4Ago, today.addMonths(-5) },
         { Time::Month5Ago, today.addMonths(-6) },
     };
+    // clang-format on
 
     for (Time time : dates.keys()) {
         if (dates[time] <= date) {
@@ -193,6 +195,7 @@ void FriendListWidget::setMode(Mode mode)
         QLocale ql(Settings::getInstance().getTranslation());
         QDate today = QDate::currentDate();
 #define COMMENT "Category for sorting friends by activity"
+        // clang-format off
         const QMap<Time, QString> names {
             { Time::Today,     tr("Today",                      COMMENT) },
             { Time::Yesterday, tr("Yesterday",                  COMMENT) },
@@ -206,6 +209,7 @@ void FriendListWidget::setMode(Mode mode)
             { Time::Month4Ago, ql.monthName(today.addMonths(-4).month()) },
             { Time::Month5Ago, ql.monthName(today.addMonths(-5).month()) },
         };
+        // clang-format on
 #undef COMMENT
 
         activityLayout = new QVBoxLayout();

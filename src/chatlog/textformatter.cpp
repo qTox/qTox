@@ -38,6 +38,7 @@ enum TextStyle
 
 static const QString HTML_CHARACTER_CODE = QStringLiteral("&#%1");
 
+// clang-format off
 static const QVector<char> MARKDOWN_SYMBOLS {
     '*',
     '/',
@@ -97,6 +98,7 @@ static const QVector<QRegularExpression> urlPatterns {
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
 };
 
+// clang-format on
 /**
  * @class TextFormatter
  *
