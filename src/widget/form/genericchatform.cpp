@@ -133,7 +133,17 @@ GenericChatForm::GenericChatForm(QWidget* parent)
     QGridLayout* buttonsLayout = new QGridLayout();
 
     chatWidget = new ChatLog(this);
-    chatWidget->setBusyNotification(ChatMessage::createBusyNotification());
+    QString busyText = QObject::tr("Reformatting text in progress..");
+
+    /**
+     * Create message placeholder while chatform restructures text
+     * It can take a while for chatform to resize large amounts of text, thus
+     * a message placeholder is needed to inform users about it.
+     */
+    ChatMessage::SystemMessageType type = ChatMessage::SystemMessageType::ERROR;
+    QDateTime curTime = QDateTime::currentDateTime();
+    ChatMessage::Ptr msg = ChatMessage::createChatInfoMessage(busyText, type, curTime);
+    chatWidget->setBusyNotification(msg);
 
     // settings
     const Settings& s = Settings::getInstance();
