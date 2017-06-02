@@ -18,15 +18,14 @@
 */
 
 #include "src/chatlog/textformatter.h"
-#include "test/common.h"
 
+#include <QtTest/QtTest>
 #include <QList>
 #include <QMap>
 #include <QString>
 #include <QVector>
 #include <QVector>
 
-#include <check.h>
 #include <ctime>
 
 using StringToString = QMap<QString, QString>;
@@ -129,7 +128,7 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
         QString source = key.arg(signs);
         TextFormatter tf = TextFormatter(source);
         QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
-        ck_assert(tf.applyStyling(showSymbols) == result);
+        QVERIFY(tf.applyStyling(showSymbols) == result);
     }
 }
 
@@ -141,7 +140,7 @@ static void commonExceptionsTest(const QString signs)
 {
     for (QString source : commonExceptions) {
         TextFormatter tf = TextFormatter(source.arg(signs));
-        ck_assert(tf.applyStyling(false) == source.arg(signs));
+        QVERIFY(tf.applyStyling(false) == source.arg(signs));
     }
 }
 
@@ -153,126 +152,100 @@ static void specialTest(const StringToString map)
 {
     for (QString key : map.keys()) {
         TextFormatter tf = TextFormatter(key);
-        ck_assert(tf.applyStyling(false) == map[key]);
+        QVERIFY(tf.applyStyling(false) == map[key]);
     }
 }
 
-START_TEST(singleSignNoSymbolsTest)
+class TestTextFormatter : public QObject
+{
+    Q_OBJECT
+private slots:
+    void singleSignNoSymbolsTest();
+    void slashNoSymbolsTest();
+    void doubleSignNoSymbolsTest();
+    void singleSignWithSymbolsTest();
+    void slashWithSymbolsTest();
+    void doubleSignWithSymbolsTest();
+    void singleSignExceptionsTest();
+    void slashExceptionsTest();
+    void doubleSignExceptionsTest();
+    void slashSpecialTest();
+    void doubleSignSpecialTest();
+    void mixedFormattingTest();
+    void multilineCodeTest();
+    void urlTest();
+};
+
+void TestTextFormatter::singleSignNoSymbolsTest()
 {
     commonTest(false, commonWorkCases, "*");
 }
-END_TEST
 
-START_TEST(slashNoSymbolsTest)
+void TestTextFormatter::slashNoSymbolsTest()
 {
     commonTest(false, commonWorkCases, "/");
 }
-END_TEST
 
-START_TEST(doubleSignNoSymbolsTest)
+void TestTextFormatter::doubleSignNoSymbolsTest()
 {
     commonTest(false, commonWorkCases, "**");
 }
-END_TEST
 
-START_TEST(singleSignWithSymbolsTest)
+void TestTextFormatter::singleSignWithSymbolsTest()
 {
     commonTest(true, commonWorkCases, "*");
 }
-END_TEST
 
-START_TEST(slashWithSymbolsTest)
+void TestTextFormatter::slashWithSymbolsTest()
 {
     commonTest(true, commonWorkCases, "/");
 }
-END_TEST
 
-START_TEST(doubleSignWithSymbolsTest)
+void TestTextFormatter::doubleSignWithSymbolsTest()
 {
     commonTest(true, commonWorkCases, "**");
 }
-END_TEST
 
-START_TEST(singleSignExceptionsTest)
+void TestTextFormatter::singleSignExceptionsTest()
 {
     commonExceptionsTest("*");
 }
-END_TEST
 
-START_TEST(slashExceptionsTest)
+void TestTextFormatter::slashExceptionsTest()
 {
     commonExceptionsTest("/");
 }
-END_TEST
 
-START_TEST(doubleSignExceptionsTest)
+void TestTextFormatter::doubleSignExceptionsTest()
 {
     commonExceptionsTest("**");
 }
-END_TEST
 
-START_TEST(slashSpecialTest)
+void TestTextFormatter::slashSpecialTest()
 {
     specialTest(singleSlash);
 }
-END_TEST
 
-START_TEST(doubleSignSpecialTest)
+void TestTextFormatter::doubleSignSpecialTest()
 {
     specialTest(doubleSign);
 }
-END_TEST
 
-START_TEST(mixedFormattingTest)
+void TestTextFormatter::mixedFormattingTest()
 {
     specialTest(mixedFormatting);
 }
-END_TEST
 
-START_TEST(multilineCodeTest)
+void TestTextFormatter::multilineCodeTest()
 {
     specialTest(multilineCode);
 }
-END_TEST
 
-START_TEST(urlTest)
+void TestTextFormatter::urlTest()
 {
     specialTest(urlCases);
 }
-END_TEST
 
-static Suite* textFormatterSuite(void)
-{
-    Suite* s = suite_create("TextFormatter");
+QTEST_GUILESS_MAIN(TestTextFormatter)
+#include "textformatter_test.moc"
 
-    DEFTESTCASE(singleSignNoSymbols);
-    DEFTESTCASE(slashNoSymbols);
-    DEFTESTCASE(doubleSignNoSymbols);
-    DEFTESTCASE(singleSignWithSymbols);
-    DEFTESTCASE(slashWithSymbols);
-    DEFTESTCASE(doubleSignWithSymbols);
-    DEFTESTCASE(singleSignExceptions);
-    DEFTESTCASE(slashExceptions);
-    DEFTESTCASE(doubleSignExceptions);
-    DEFTESTCASE(slashSpecial);
-    DEFTESTCASE(doubleSignSpecial);
-    DEFTESTCASE(mixedFormatting);
-    DEFTESTCASE(multilineCode);
-    DEFTESTCASE(url);
-
-    return s;
-}
-
-int main(int argc, char* argv[])
-{
-    srand((unsigned int)time(NULL));
-
-    Suite* tf = textFormatterSuite();
-    SRunner* runner = srunner_create(tf);
-    srunner_run_all(runner, CK_NORMAL);
-
-    int res = srunner_ntests_failed(runner);
-    srunner_free(runner);
-
-    return res;
-}
