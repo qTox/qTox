@@ -101,6 +101,7 @@ protected slots:
 
 private:
     void retranslateUi();
+    void addSystemDateMessage();
 
 protected:
     ChatMessage::Ptr createMessage(const ToxPk& author, const QString& message,
