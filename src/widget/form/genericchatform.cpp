@@ -402,9 +402,7 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
     bool isSelf = author == core->getSelfId().getPublicKey();
     QString authorStr = isSelf ? core->getUsername() : resolveToxPk(author);
     if (getLatestDate() != QDate::currentDate()) {
-        const Settings& s = Settings::getInstance();
-        QString dateText = QDate::currentDate().toString(s.getDateFormat());
-        addSystemInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+        addSystemDateMessage();
     }
 
     ChatMessage::Ptr msg;
@@ -553,8 +551,21 @@ void GenericChatForm::onChatMessageFontChanged(const QFont& font)
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                                            const QDateTime& datetime)
 {
+    if (getLatestDate() != QDate::currentDate()) {
+        addSystemDateMessage();
+    }
+
     previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
+}
+
+void GenericChatForm::addSystemDateMessage()
+{
+    const Settings& s = Settings::getInstance();
+    QString dateText = QDate::currentDate().toString(s.getDateFormat());
+
+    previousId = ToxPk();
+    insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
 void GenericChatForm::clearChatArea()
