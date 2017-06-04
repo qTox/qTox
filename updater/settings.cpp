@@ -108,9 +108,15 @@ QString Settings::getSettingsDirPath() const
     }
 
     if (isOld) {
+#if (QT_VERSION < QT_VERSION_CHECK(5, 4, 0))
         return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                                + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
                                + QDir::separator() + "tox" + QDir::separator());
+#else
+        return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                               + QDir::separator() + "tox" + QDir::separator());
+#endif
+
     } else {
         QString pathStr = QString::fromStdWString(path);
         pathStr.replace("\\", "/");
