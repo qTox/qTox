@@ -59,9 +59,6 @@
  * @var Audio::AUDIO_FRAME_SAMPLE_COUNT
  * @brief Frame sample count
  *
- * @var Audio::AUDIO_CHANNELS
- * @brief Ideally, we'd auto-detect, but that's a sane default
- *
  * @fn qreal Audio::outputVolume() const
  * @brief Returns the current output volume (between 0 and 1)
  *
