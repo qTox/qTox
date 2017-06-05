@@ -93,7 +93,7 @@ static const QVector<QRegularExpression> urlPatterns {
     QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
                        "[^. \\n]+\\.[^ \\n]+"),
     QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
-    QRegularExpression("\\bfile://(localhost)?/[^ \\n]+"),
+    QRegularExpression("\\bfile://((localhost)|(\\d{1,3}(\\.\\d{1,3}){3}))?/[^ \\n]+"),
     QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
 };
