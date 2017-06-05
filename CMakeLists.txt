@@ -7,6 +7,8 @@
 cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+option(USE_FILTERAUDIO "Enable the echo canceling backend" ON)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
@@ -190,8 +192,6 @@ set(${PROJECT_NAME}_SOURCES
   src/audio/audio.h
   src/audio/backend/openal.cpp
   src/audio/backend/openal.h
-  src/audio/backend/openal2.cpp
-  src/audio/backend/openal2.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
@@ -514,6 +514,13 @@ if(${ENABLE_GTK_SYSTRAY})
   if(GTK_FOUND)
     add_definitions(-DENABLE_SYSTRAY_GTK_BACKEND=1)
   endif()
+endif()
+
+if(${USE_FILTERAUDIO})
+    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+        src/audio/backend/openal2.cpp
+        src/audio/backend/openal2.h)
+    add_definitions(-DUSE_FILTERAUDIO=1)
 endif()
 
 add_library(${PROJECT_NAME}_static

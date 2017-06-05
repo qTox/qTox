@@ -19,7 +19,9 @@
 
 #include "audio.h"
 #include "src/audio/backend/openal.h"
+#ifdef USE_FILTERAUDIO
 #include "src/audio/backend/openal2.h"
+#endif
 #include "src/persistence/settings.h"
 
 #include <QDebug>
@@ -167,6 +169,7 @@
  */
 Audio& Audio::getInstance()
 {
+#ifdef USE_FILTERAUDIO
     static bool initialized = false;
     static bool Backend2 = false;
 
@@ -178,7 +181,9 @@ Audio& Audio::getInstance()
     if (Backend2) {
         static OpenAL2 instance;
         return instance;
-    } else {
+    } else
+#endif
+    {
         static OpenAL instance;
         return instance;
     }
