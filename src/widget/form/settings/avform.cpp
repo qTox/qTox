@@ -60,6 +60,9 @@ AVForm::AVForm()
 
     cbEnableTestSound->setToolTip(tr("Play a test sound while changing the output volume."));
 
+#ifndef USE_FILTERAUDIO
+    cbEnableBackend2->setVisible(false);
+#endif
     cbEnableBackend2->setChecked(s.getEnableBackend2());
 
     connect(rescanButton, &QPushButton::clicked, this, &AVForm::rescanDevices);
