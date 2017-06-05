@@ -117,7 +117,6 @@ if (NOT TOXCORE_FOUND OR
 endif()
 
 search_dependency(OPENAL              PACKAGE openal)
-search_dependency(FILTERAUDIO         LIBRARY filteraudio)
 
 if (PLATFORM_EXTENSIONS AND UNIX AND NOT APPLE)
   # Automatic auto-away support. (X11 also using for capslock detection)
