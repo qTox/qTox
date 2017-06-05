@@ -38,9 +38,13 @@
  *
  * @var BUFFER_COUNT
  * @brief Number of buffers to use per audio source
+ *
+ * @var AUDIO_CHANNELS
+ * @brief Ideally, we'd auto-detect, but that's a sane default
  */
 
 static const unsigned int BUFFER_COUNT = 16;
+static const uint32_t AUDIO_CHANNELS = 2;
 
 OpenAL::OpenAL()
     : audioThread{new QThread}
