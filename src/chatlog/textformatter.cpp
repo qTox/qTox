@@ -89,11 +89,14 @@ static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
     REGEX_MARKDOWN_PAIR(STRIKE, 2),
     {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
 
+static const QString IP_PART = "(([01]?\\d{1,2})|(2(([0-4]\\d)|(5[0-5]))))";
+static const QString IPV4 = QString("\\bfile://((localhost)|(%1(\\.%1){3}))?/[^ \\n]+").arg(IP_PART);
+
 static const QVector<QRegularExpression> urlPatterns {
     QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
                        "[^. \\n]+\\.[^ \\n]+"),
     QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
-    QRegularExpression("\\bfile://((localhost)|(\\d{1,3}(\\.\\d{1,3}){3}))?/[^ \\n]+"),
+    QRegularExpression(IPV4),
     QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
 };
