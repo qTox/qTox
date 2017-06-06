@@ -258,19 +258,19 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     </message>
     <message>
         <source>Automatically accept files from contact if set</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky prijímať súbory od tohto kontaktu</translation>
     </message>
     <message>
         <source>Input field for notes about the contact</source>
-        <translation type="unfinished"></translation>
+        <translation>Pole na poznámky o kontakte</translation>
     </message>
     <message>
         <source>Automatically accept group chat invitations from this contact if set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatické prijímanie pozvánok do skupín od tohto kontaktu.</translation>
     </message>
     <message>
         <source>Auto accept group invites</source>
-        <translation type="unfinished"></translation>
+        <translation>Automaticky prijať pozvánky do skupín</translation>
     </message>
 </context>
 <context>
@@ -638,6 +638,14 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
         <source>Sound can be disabled only during a call</source>
         <translation>Zvuk môže byť zakázaný iba počas hovoru</translation>
     </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatLog</name>
@@ -816,27 +824,27 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <translation type="unfinished">Dnes</translation>
+        <translation>Dnes</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <translation type="unfinished">Včera</translation>
+        <translation>Včera</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <translation type="unfinished">Posledných 7 dní</translation>
+        <translation>Posledných 7 dní</translation>
     </message>
     <message>
         <source>This month</source>
-        <translation type="unfinished">Tento mesiac</translation>
+        <translation>Tento mesiac</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <translation type="unfinished">Staršie ako 6 mesiacov</translation>
+        <translation>Staršie ako 6 mesiacov</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"></translation>
+        <translation>Nikdy</translation>
     </message>
 </context>
 <context>
@@ -861,12 +869,12 @@ Rýchlosť vášho připojenia nemusí byť vždy dostačujúca pre vyššiu kva
     <message>
         <source>Accept</source>
         <comment>Accept a friend request</comment>
-        <translation type="unfinished">Prijať</translation>
+        <translation>Prijať</translation>
     </message>
     <message>
         <source>Reject</source>
         <comment>Reject a friend request</comment>
-        <translation type="unfinished">Odmietnuť</translation>
+        <translation>Odmietnuť</translation>
     </message>
 </context>
 <context>
@@ -1529,6 +1537,10 @@ Profil neobsahuje históriu.</translation>
         <source>Load history from:</source>
         <translation>Načítať históriu od:</translation>
     </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LoginScreen</name>
@@ -2029,12 +2041,6 @@ Prosím, použite iný.</translation>
         <translation>Prosím zadajte nové heslo.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation type="unfinished">Táto séria znakov vás umožní kontaktovať pomocou ostatných Tox klientov.
-Pre komunikáciu ju zdeľte vašim priateľom.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Naozaj chcete odstrániť tento profil?</translation>
@@ -2112,6 +2118,13 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     </message>
     <message>
         <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2197,10 +2210,6 @@ Pre komunikáciu ju zdeľte vašim priateľom.</translation>
     <message>
         <source>%1 is not a valid Toxme address.</source>
         <translation type="unfinished">%1 nie je platná Toxme adresa.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
