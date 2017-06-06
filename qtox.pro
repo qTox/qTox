@@ -22,7 +22,7 @@ message("Warning: This project file is deprecated and should not be used anymore
 message("Use the CMakeLists.txt file instead to open this as a CMake project.")
 message()
 
-unix:!freebsd {
+!win32: {
     error("qmake builds are not supported on this platform anymore")
 }
 
@@ -59,17 +59,6 @@ CONFIG   += silent
 QMAKE_CXXFLAGS += -fPIE \
                   -Wstrict-overflow \
                   -Wstrict-aliasing
-
-!win32 {
-    QMAKE_LFLAGS   += -pie
-    QMAKE_CXXFLAGS += -fstack-protector-all \
-                      -Wstack-protector
-}
-
-# osx & windows cannot into security (build on it fails with those enabled)
-unix:!macx {
-    QMAKE_LFLAGS += -Wl,-z,now -Wl,-z,relro
-}
 
 # needed, since `rtti_off` doesn't work
 QMAKE_CXXFLAGS += -fno-rtti
@@ -170,133 +159,7 @@ win32 {
             -lshlwapi \
             -luuid
     LIBS += -lstrmiids # For DirectShow
-} else {
-    isEmpty(PREFIX) {
-        PREFIX = /usr
-    }
-
-    BINDIR = $$PREFIX/bin
-    DATADIR = $$PREFIX/share
-    target.path = $$BINDIR
-    desktop.path = $$DATADIR/applications
-    desktop.files += qtox.desktop
-    appdata.path = $$DATADIR/appdata
-    appdata.files += res/qTox.appdata.xml
-    INSTALLS += target desktop appdata
-
-    # Install application icons according to the XDG spec
-    ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
-    for(icon_size, ICON_SIZES) {
-        icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
-        icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
-        INSTALLS += icon_$${icon_size}
-    }
-    icon_scalable.files = img/icons/qtox.svg
-    icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
-    INSTALLS += icon_scalable
-
-    # If we're building a package, static link libtox[core,av] and
-    # libsodium, since they are not provided by any package
-    contains(STATICPKG, YES) {
-        LIBS += -L$$PWD/libs/lib/ \
-                -lopus \
-                -lvpx \
-                -lopenal \
-                -Wl,-Bstatic \
-                -ltoxcore \
-                -ltoxav \
-                -ltoxencryptsave \
-                -lsodium \
-                -lavformat \
-                -lavdevice \
-                -lavcodec \
-                -lavutil \
-                -lswscale \
-                -lz \
-                -ljpeg \
-                -ltiff \
-                -lpng \
-                -ljasper \
-                -lIlmImf \
-                -lIlmThread \
-                -lIex \
-                -ldc1394 \
-                -lraw1394 \
-                -lHalf \
-                -llzma \
-                -ljbig \
-                -Wl,-Bdynamic \
-                -lv4l1 \
-                -lv4l2 \
-                -lavformat \
-                -lavcodec \
-                -lavutil \
-                -lswscale \
-                -lusb-1.0 \
-                -lqrencode \
-                -lsqlcipher
-    } else {
-        LIBS += -L$$PWD/libs/lib/ \
-                -ltoxcore \
-                -ltoxav \
-                -ltoxencryptsave \
-                -lvpx \
-                -lsodium \
-                -lopenal \
-                -lavformat \
-                -lavdevice \
-                -lavcodec \
-                -lavutil \
-                -lswscale \
-                -lqrencode \
-                -lsqlcipher
-    }
-
-    contains(DEFINES, QTOX_PLATFORM_EXT) {
-        LIBS += -lX11 \
-                -lXss
-    }
-}
-
-unix:!macx {
-    # The systray Unity backend implements the system tray icon on Unity (Ubuntu) and GNOME desktops.
-    contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-        DEFINES += ENABLE_SYSTRAY_UNITY_BACKEND
-
-        PKGCONFIG += glib-2.0 gtk+-2.0 atk
-        PKGCONFIG += cairo gdk-pixbuf-2.0 pango
-        PKGCONFIG += appindicator-0.1 dbusmenu-glib-0.4
-    }
-
-    # The systray Status Notifier backend implements the system tray icon on KDE and compatible desktops
-    !contains(ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND, NO) {
-        DEFINES += ENABLE_SYSTRAY_STATUSNOTIFIER_BACKEND
-
-        PKGCONFIG += glib-2.0 gtk+-2.0 atk
-        PKGCONFIG += cairo gdk-pixbuf-2.0 pango
-
-        SOURCES +=     src/platform/statusnotifier/closures.c \
-        src/platform/statusnotifier/enums.c \
-        src/platform/statusnotifier/statusnotifier.c
-
-        HEADERS += src/platform/statusnotifier/closures.h \
-        src/platform/statusnotifier/enums.h \
-        src/platform/statusnotifier/interfaces.h \
-        src/platform/statusnotifier/statusnotifier.h
-    }
-
-    # The systray GTK backend implements a system tray icon compatible with many systems
-    !contains(ENABLE_SYSTRAY_GTK_BACKEND, NO) {
-        DEFINES += ENABLE_SYSTRAY_GTK_BACKEND
-
-        PKGCONFIG += glib-2.0 gtk+-2.0 atk
-        PKGCONFIG += gdk-pixbuf-2.0 cairo pango
-    }
-
-    # ffmpeg
-    PKGCONFIG += libavformat libavdevice libavcodec
-    PKGCONFIG += libavutil libswscale
-}
+} 
 
 win32 {
     HEADERS += \
@@ -304,21 +167,6 @@ win32 {
 
     SOURCES += \
         src/platform/camera/directshow.cpp
-}
-
-freebsd {
-    HEADERS += \
-        src/platform/camera/v4l2.h
-
-    SOURCES += \
-        src/platform/camera/v4l2.cpp
-
-    desktop.files = qtox.desktop
-
-    icon.files = img/qtox.png
-    icon.path = $$PREFIX/share/pixmaps
-
-    INSTALLS = target desktop icon
 }
 
 RESOURCES += res.qrc \
