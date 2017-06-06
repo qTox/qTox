@@ -31,7 +31,7 @@ main() {
     fi
 
     cd qTox
-    git checkout $(git describe --abbrev=0) -b for-jenkins-release
+    git checkout "$TRAVIS_BRANCH" -b for-jenkins-release
     git push --force "https://${GH_DEPLOY_JENKINS}@github.com/qTox/qTox.git"
 }
 main
