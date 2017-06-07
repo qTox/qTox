@@ -280,6 +280,13 @@ void Settings::loadGlobal()
     }
     s.endGroup();
 
+    s.beginGroup("Network");
+    {
+        startUDPPort = s.value("startUDPPort", 33445).toUInt();
+        endUDPPort = s.value("endUDPPort", 33545).toUInt();
+    }
+    s.endGroup();
+
     // Read the embedded DHT bootstrap nodes list if needed
     if (dhtServerList.isEmpty()) {
         QSettings rcs(":/conf/settings.ini", QSettings::IniFormat);
@@ -573,6 +580,13 @@ void Settings::saveGlobal()
         s.setValue("camVideoFPS", camVideoFPS);
         s.setValue("screenRegion", screenRegion);
         s.setValue("screenGrabbed", screenGrabbed);
+    }
+    s.endGroup();
+
+    s.beginGroup("Network");
+    {
+        s.setValue("startUDPPort", startUDPPort);
+        s.setValue("endUDPPort", endUDPPort);
     }
     s.endGroup();
 }
@@ -2276,6 +2290,38 @@ void Settings::setAutoLogin(bool state)
     if (state != autoLogin) {
         autoLogin = state;
         emit autoLoginChanged(autoLogin);
+    }
+}
+
+quint16 Settings::getStartUDPPort() const
+{
+    QMutexLocker locker{&bigLock};
+    return startUDPPort;
+}
+
+void Settings::setStartUDPPort(quint16 port)
+{
+    QMutexLocker locker{&bigLock};
+    if (port > 1023)
+    {
+        startUDPPort = port;
+        emit startUDPPortChanged(port);
+    }
+}
+
+quint16 Settings::getEndUDPPort() const
+{
+    QMutexLocker locker{&bigLock};
+    return endUDPPort;
+}
+
+void Settings::setEndUDPPort(quint16 port)
+{
+    QMutexLocker locker{&bigLock};
+    if (port > 1023)
+    {
+        endUDPPort = port;
+        emit endUDPPortChanged(port);
     }
 }
 
