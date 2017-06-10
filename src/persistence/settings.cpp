@@ -715,35 +715,21 @@ QString Settings::getSettingsDirPath() const
     if (makeToxPortable)
         return qApp->applicationDirPath() + QDir::separator();
 
-    QString path;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 4, 0))
 // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-# ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
                            + QDir::separator() + "tox")
            + QDir::separator();
-# elif defined(Q_OS_OSX)
+#elif defined(Q_OS_OSX)
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "Library" + QDir::separator()
                            + "Application Support" + QDir::separator() + "Tox")
            + QDir::separator();
-# else
+#else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
                            + QDir::separator() + "tox")
            + QDir::separator();
-# endif
-#else
-# ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "tox") + QDir::separator();
-# elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "Tox") + QDir::separator();
-# else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation)
-                           + QDir::separator() + "tox") + QDir::separator();
-# endif
 #endif
 }
 
@@ -757,31 +743,25 @@ QString Settings::getAppDataDirPath() const
     if (makeToxPortable)
         return qApp->applicationDirPath() + QDir::separator();
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 4, 0))
 // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-# ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
                            + QDir::separator() + "tox")
            + QDir::separator();
-# elif defined(Q_OS_OSX)
+#elif defined(Q_OS_OSX)
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "Library" + QDir::separator()
                            + "Application Support" + QDir::separator() + "Tox")
            + QDir::separator();
-# else
+#else
+    /*
+     * TODO: Change QStandardPaths::DataLocation to AppDataLocation when upgrate Qt to 5.4+
+     * For now we need support Qt 5.3, so we use deprecated DataLocation
+     * BTW, it's not a big deal since for linux AppDataLocation and DataLocation are equal
+     */
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::DataLocation))
            + QDir::separator();
-# endif
-#else
-# if defined(Q_OS_OSX)
-# elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "Tox") + QDir::separator();
-# else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "tox") + QDir::separator();
-# endif
 #endif
 }
 
@@ -795,33 +775,20 @@ QString Settings::getAppCacheDirPath() const
     if (makeToxPortable)
         return qApp->applicationDirPath() + QDir::separator();
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 4, 0))
 // workaround for https://bugreports.qt-project.org/browse/QTBUG-38845
-# ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "AppData" + QDir::separator() + "Roaming"
                            + QDir::separator() + "tox")
            + QDir::separator();
-# elif defined(Q_OS_OSX)
+#elif defined(Q_OS_OSX)
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
                            + QDir::separator() + "Library" + QDir::separator()
                            + "Application Support" + QDir::separator() + "Tox")
            + QDir::separator();
-# else
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))
-           + QDir::separator();
-# endif
 #else
-# ifdef Q_OS_WIN
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "tox") + QDir::separator();
-# elif defined(Q_OS_OSX)
-    return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                           + QDir::separator() + "Tox") + QDir::separator();
-# else
     return QDir::cleanPath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation))
            + QDir::separator();
-# endif
 #endif
 }
 
