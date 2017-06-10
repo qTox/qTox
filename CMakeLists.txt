@@ -510,6 +510,12 @@ if(${ENABLE_GTK_SYSTRAY})
   endif()
 endif()
 
+# the compiler flags for compiling C sources 
+MESSAGE( STATUS "CMAKE_C_FLAGS: " ${CMAKE_C_FLAGS} )
+
+# the compiler flags for compiling C++ sources 
+MESSAGE( STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS} )
+
 add_library(${PROJECT_NAME}_static
   STATIC
   ${${PROJECT_NAME}_FORMS}
