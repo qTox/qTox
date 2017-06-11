@@ -989,7 +989,7 @@ QByteArray Core::getToxSaveData()
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);
-    if (friendCount <= 0) {
+    if (friendCount == 0) {
         return;
     }
 
