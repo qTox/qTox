@@ -1077,20 +1077,21 @@ uint32_t Core::getGroupNumberPeers(int groupId) const
  */
 QString Core::getGroupPeerName(int groupId, int peerId) const
 {
-    uint8_t nameArray[tox_max_name_length()];
     TOX_ERR_CONFERENCE_PEER_QUERY error;
     size_t length = tox_conference_peer_get_name_size(tox, groupId, peerId, &error);
     if (!parsePeerQueryError(error)) {
         return QString{};
     }
 
-    bool success = tox_conference_peer_get_name(tox, groupId, peerId, nameArray, &error);
+    QByteArray name(length, Qt::Uninitialized);
+    uint8_t* namePtr = static_cast<uint8_t*>(static_cast<void*>(name.data()));
+    bool success = tox_conference_peer_get_name(tox, groupId, peerId, namePtr, &error);
     if (!parsePeerQueryError(error) || !success) {
         qWarning() << "getGroupPeerName: Unknown error";
         return QString{};
     }
 
-    return ToxString(nameArray, length).getQString();
+    return ToxString(name).getQString();
 }
 
 /**
@@ -1138,12 +1139,12 @@ QStringList Core::getGroupPeerNames(int groupId) const
 
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
-        uint8_t name[tox_max_name_length()];
-        memset(name, 0, tox_max_name_length());
         size_t length = tox_conference_peer_get_name_size(tox, groupId, i, &error);
-        bool ok = tox_conference_peer_get_name(tox, groupId, i, name, &error);
+        QByteArray name(length, Qt::Uninitialized);
+        uint8_t* namePtr = static_cast<uint8_t*>(static_cast<void*>(name.data()));
+        bool ok = tox_conference_peer_get_name(tox, groupId, i, namePtr, &error);
         if (ok && parsePeerQueryError(error)) {
-            names.append(ToxString(name, length).getQString());
+            names.append(ToxString(name).getQString());
         }
     }
 
