@@ -1074,7 +1074,7 @@ uint32_t Core::getGroupNumberPeers(int groupId) const
  */
 QString Core::getGroupPeerName(int groupId, int peerId) const
 {
-    uint8_t nameArray[tox_max_name_length()];
+    uint8_t nameArray[TOX_MAX_NAME_LENGTH];
     TOX_ERR_CONFERENCE_PEER_QUERY error;
     size_t length = tox_conference_peer_get_name_size(tox, groupId, peerId, &error);
     if (!parsePeerQueryError(error)) {
@@ -1135,7 +1135,7 @@ QStringList Core::getGroupPeerNames(int groupId) const
 
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
-        uint8_t name[tox_max_name_length()];
+        uint8_t name[TOX_MAX_NAME_LENGTH];
         memset(name, 0, tox_max_name_length());
         size_t length = tox_conference_peer_get_name_size(tox, groupId, i, &error);
         bool ok = tox_conference_peer_get_name(tox, groupId, i, name, &error);
