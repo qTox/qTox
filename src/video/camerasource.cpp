@@ -151,7 +151,7 @@ void CameraSource::open(const QString& deviceName)
     open(deviceName, mode);
 }
 
-void CameraSource::open(const QString& DeviceName, VideoMode Mode)
+void CameraSource::open(const QString& DeviceName, const VideoMode& Mode)
 {
     QWriteLocker locker{&streamMutex};
 

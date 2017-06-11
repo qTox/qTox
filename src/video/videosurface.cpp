@@ -139,7 +139,7 @@ void VideoSurface::unsubscribe()
     disconnect(source, &VideoSource::sourceStopped, this, &VideoSurface::onSourceStopped);
 }
 
-void VideoSurface::onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame)
+void VideoSurface::onNewFrameAvailable(const std::shared_ptr<VideoFrame>& newFrame)
 {
     QSize newSize;
 

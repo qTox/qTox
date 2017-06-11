@@ -133,7 +133,7 @@ private:
 
     template <typename T>
     T toGenericObject(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
-                      const std::function<T(AVFrame* const)> objectConstructor, const T& nullObject);
+                      const std::function<T(AVFrame* const)>& objectConstructor, const T& nullObject);
 
 private:
     // ID
