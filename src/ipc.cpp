@@ -39,8 +39,8 @@
  */
 
 IPC::IPC(uint32_t profileId)
-    : globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
-    , profileId{profileId}
+    : profileId{profileId}
+    , globalMemory{"qtox-" IPC_PROTOCOL_VERSION}
 {
     qRegisterMetaType<IPCEventHandler>("IPCEventHandler");
 
