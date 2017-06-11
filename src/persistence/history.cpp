@@ -228,7 +228,7 @@ History::generateNewMessageQueries(const QString& friendPk, const QString& messa
  */
 void History::addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
                             const QDateTime& time, bool isSent, QString dispName,
-                            std::function<void(int64_t)> insertIdCallback)
+                            const std::function<void(int64_t)>& insertIdCallback)
 {
     if (!isValid()) {
         return;

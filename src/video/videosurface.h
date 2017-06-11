@@ -54,7 +54,7 @@ protected:
     virtual void showEvent(QShowEvent* event) final override;
 
 private slots:
-    void onNewFrameAvailable(std::shared_ptr<VideoFrame> newFrame);
+    void onNewFrameAvailable(const std::shared_ptr<VideoFrame>& newFrame);
     void onSourceStopped();
 
 private:
