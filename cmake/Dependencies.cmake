@@ -74,10 +74,14 @@ function(search_dependency pkg)
   else()
     link_directories(${${pkg}_LIBRARY_DIRS})
     include_directories(${${pkg}_INCLUDE_DIRS})
+
     foreach(flag ${${pkg}_CFLAGS_OTHER})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
     endforeach()
-    set(ALL_LIBRARIES ${ALL_LIBRARIES} ${${pkg}_LIBRARIES} PARENT_SCOPE)
+
+    foreach(lib ${${pkg}_LIBRARIES})
+        set(ALL_LIBRARIES ${ALL_LIBRARIES} ${lib} PARENT_SCOPE)
+    endforeach()
   endif()
 
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
