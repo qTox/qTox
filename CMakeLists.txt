@@ -522,5 +522,14 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
+# Workaround for CMake bug when using it with pkg-config.
+# Workaround from: https://cmake.org/pipermail/cmake/2013-June/055182.html
+# qTox issues: #4175 #4457
+# Upstream issue: https://gitlab.kitware.com/cmake/cmake/issues/16958
+#
+# Remove this workaround when we no longer need to support CMake that does
+# not include the fix.
+string(REPLACE ";" " " CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+
 include(Testing)
 include(Installation)
