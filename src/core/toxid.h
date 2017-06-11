@@ -35,6 +35,8 @@ public:
     explicit ToxId(const QString& id);
     explicit ToxId(const QByteArray& rawId);
     explicit ToxId(const uint8_t* rawId, int len);
+    ToxId& operator=(const ToxId& other) = default;
+    ToxId& operator=(ToxId&& other) = default;
 
     bool operator==(const ToxId& other) const;
     bool operator!=(const ToxId& other) const;
