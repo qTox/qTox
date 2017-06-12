@@ -419,7 +419,7 @@ int VideoFrame::getSourcePixelFormat() const
  * @param pixFmt the pixel format of the frame.
  * @param lineAligned whether the linesize matches the width of the image.
  */
-VideoFrame::FrameBufferKey::FrameBufferKey(const int pixFmt, const int width, const int height,
+VideoFrame::FrameBufferKey::FrameBufferKey(const int width, const int height, const int pixFmt,
                                            const bool lineAligned)
     : frameWidth(width)
     , frameHeight(height)
