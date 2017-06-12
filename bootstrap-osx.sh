@@ -31,7 +31,6 @@ copy_libs() {
         /usr/local/lib/libswscale*
         /usr/local/lib/libqrencode*
         /usr/local/lib/libsqlcipher*
-        /usr/local/lib/libfilteraudio*
     )
     echo Copying libraries…
     for lib in "${libs[@]}"
@@ -50,7 +49,6 @@ copy_includes() {
         /usr/local/include/libav*
         /usr/local/include/libswscale*
         /usr/local/include/sqlcipher*
-        /usr/local/include/filter_audio*
     )
     echo Copying include files…
     for include in "${includes[@]}"
