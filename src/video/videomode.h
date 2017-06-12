@@ -32,7 +32,7 @@ struct VideoMode
 
     VideoMode(int width = 0, int height = 0, int x = 0, int y = 0, int FPS = 0, int format = 0);
 
-    VideoMode(QRect rect);
+    explicit VideoMode(QRect rect);
 
     QRect toRect() const;
 
