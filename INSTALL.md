@@ -882,3 +882,4 @@ Switches:
 [Qt]: https://www.qt.io/
 [sqlcipher]: https://www.zetetic.net/sqlcipher/
 [toxcore]: https://github.com/TokTok/c-toxcore/
+[filteraudio]: https://github.com/irungentoo/filter_audio
