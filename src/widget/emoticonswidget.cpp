@@ -171,8 +171,7 @@ void EmoticonsWidget::wheelEvent(QWheelEvent* e)
 void EmoticonsWidget::PageButtonsUpdate()
 {
     QList<QRadioButton*> pageButtons = this->findChildren<QRadioButton*>(QString());
-    QRadioButton* t_pageButton;
-    foreach (t_pageButton, pageButtons) {
+    foreach (QRadioButton* t_pageButton, pageButtons) {
         if (t_pageButton->property("pageIndex").toInt() == stack.currentIndex())
             t_pageButton->setChecked(true);
         else
