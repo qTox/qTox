@@ -95,6 +95,11 @@ search_dependency(LIBAVUTIL           PACKAGE libavutil)
 search_dependency(LIBQRENCODE         PACKAGE libqrencode)
 search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
+
+if(WIN32)
+  search_dependency(OPENSSL           PACKAGE openssl)
+endif()
+
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
 search_dependency(VPX                 PACKAGE vpx)
 
