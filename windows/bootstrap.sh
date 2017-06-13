@@ -31,7 +31,22 @@ fi
 
 ## qrencode
 if [ ! -f "qrencode-3.4.4.tar.gz" ]; then
-    wget http://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+    wget https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+fi
+
+if [ ! -f "qrencode-3.4.4.tar.gz" ]; then
+    echo "Warning: Failed to download libqrencode."
+    echo "Warning: This is usually due to https certificate issues."
+    echo
+    echo "Would you like to continue without verifying the certificate?"
+    read -p "(yes/No): " input
+    input=$(echo $input | tr "[:upper:]" "[:lower:]")
+    if [ "$input" == "y" ]; then
+        wget --no-check-certificate https://fukuchi.org/works/qrencode/qrencode-3.4.4.tar.gz
+    else
+        echo "Error: Could not download libqrencode."
+        exit -1
+    fi
 fi
 
 if [ ! -d "$QTOX_DIR/libs/qrencode-3.4.4" ]; then
