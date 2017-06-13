@@ -217,6 +217,7 @@ private slots:
     void groupInvitesUpdate();
     void groupInvitesClear();
     void onDialogShown(GenericChatroomWidget* widget);
+    void outgoingNotification();
     void incomingNotification(uint32_t friendId);
     void onRejectCall(uint32_t friendId);
     void onAcceptCall(uint32_t friendId);
