@@ -369,6 +369,7 @@ void ChatForm::onAvStart(uint32_t friendId, bool video)
         hideNetcam();
     }
 
+    Audio::getInstance().stopLoop();
     updateCallButtons();
     startCounter();
 }
@@ -399,6 +400,7 @@ void ChatForm::showOutgoingCall(bool video)
     btn->setToolTip(video ? tr("Cancel video call") : tr("Cancel audio call"));
     addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()), ChatMessage::INFO,
                          QDateTime::currentDateTime());
+    emit outgoingNotification();
     Widget::getInstance()->updateFriendActivity(f);
 }
 

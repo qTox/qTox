@@ -99,5 +99,6 @@
         <file>img/caps_lock.svg</file>
         <file>ui/contentDialog/contentDialog.css</file>
         <file>ui/tooliconsZone/tooliconsZone.css</file>
+        <file>audio/ToxOutgoingCall.pcm</file>
     </qresource>
 </RCC>
