@@ -757,73 +757,90 @@ to assemble your Qt toolchain. Take the most recent version of Qt compiled with
 MinGW. Although the installer provides its own bundled MinGW compiler toolchain
 its recommend installing it separately because Qt is missing MSYS which is
 needed to compile and install OpenAL. Thus you can - if needed - deselect the
-tab `Tools`. The following steps assume that Qt is installed at `C:\Qt`. If you
-decided to choose another location, replace corresponding parts.
+tab `Tools`.
+
+The following steps assume that Qt is installed at `C:\Qt`. If you decide to
+choose another location, you will have to replace the corresponding parts
+later.
 
 ### MinGW
 
-Download the MinGW installer for Windows from
-[sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/). Make
-sure to install MSYS (a set of Unix tools for Windows). The following steps
-assume that MinGW is installed at `C:\MinGW`. If you decided to choose another
-location, replace corresponding parts. Select `mingw-developer-toolkit`, 
-`mingw32-base`, `mingw32-gcc-g++`, `msys-base` and `mingw32-pthreads-w32` 
-packages using MinGW Installation Manager (`mingw-get.exe`). Check that the 
-version of MinGW, corresponds to the version of the QT component!
+Download [MinGW from
+sourceforge.net](http://sourceforge.net/projects/mingw/files/Installer/) and
+install the mingw-get package manager. Don’t install any packages yet – this
+will be done automatically during the bootstrap script lateron.
+
+The following steps assume that MinGW is installed at `C:\MinGW\`. If you
+decide to choose another location, you will have to replace the corresponding
+parts later.
 
 ### Wget
 
-Download the Wget installer for Windows from
-http://gnuwin32.sourceforge.net/packages/wget.htm. Install them. The following
-steps assume that Wget is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
+Download [Wget for Windows](http://gnuwin32.sourceforge.net/packages/wget.htm)
+and install it.
+
+The following steps assume that Wget is installed at
+`C:\Program Files (x86)\GnuWin32\`. If you decide to choose another location,
+you will have to replace the corresponding parts later.
 
 ### UnZip
 
-Download the UnZip installer for Windows from
-http://gnuwin32.sourceforge.net/packages/unzip.htm. Install it. The following
-steps assume that UnZip is installed at `C:\Program Files (x86)\GnuWin32\`. If you
-decided to choose another location, replace corresponding parts.
+Download
+[UnZip for Windows](http://gnuwin32.sourceforge.net/packages/unzip.htm) and
+install it.
+
+The following steps assume that UnZip is installed at
+`C:\Program Files (x86)\GnuWin32\`. If you decide to choose another location,
+you will have to replace the corresponding parts later.
 
 ### Setting up Path
 
-Add MinGW/MSYS/CMake binaries to the system path to make them globally
-accessible. Open `Control Panel` -> `System and Security` -> `System` ->
-`Advanced system settings` -> `Environment Variables...` (or run `sysdm.cpl`
-select tab `Advanced system settings` -> button `Environment Variables`). In the
-second box search for the `PATH` variable and press `Edit...`. The input box
-`Variable value:` should already contain some directories. Each directory is
-separated with a semicolon. Extend the input box by adding
-`;C:\MinGW\bin;C:\MinGW\msys\1.0\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin`.
-The very first semicolon must only be added if it is missing. CMake may be added
-by installer automatically. Make sure that paths containing alternative `sh`, 
-`bash` implementations such as `C:\Program Files\OpenSSH\bin` are at the end of
-`PATH` or build may fail.
+Add the MinGW, CMake, Wget and UnZip binaries to the system path to make them
+globally accessible.
+
+Open `Start Menu` → Context menu on `Computer` → `Properties` → `Advanced
+system settings` → `Environment Variables...` 
+
+(or run `sysdm.cpl` → select tab `Advanced` → `Environment Variables...`)
+
+In the second box called `System variables` search for the `PATH` variable and
+press `Edit...`. The input box `Variable value:` should already contain some
+directories. Each directory is separated with a semicolon. Extend the input box
+by prepending
+`C:\MinGW\bin;C:\Program Files (x86)\CMake 2.8\bin;C:\Program Files (x86)\GnuWin32\bin;`
+to the value.
+
+Note that CMake may be added by its installer automatically so you might not
+have to add it yourself. Make sure there are no folders containing alternative
+`sh` and `bash` implementations such as `C:\Program Files\OpenSSH\bin` in your
+path as they might clash with CMake.
 
 ### Cloning the Repository
 
 Clone the repository (https://github.com/qTox/qTox.git) with your preferred Git
 client. [SmartGit](http://www.syntevo.com/smartgit/) or
 [TorteiseGit](https://tortoisegit.org) are both very nice for this task
-(you may need to add `git.exe` to your `PATH` system variable). The
-following steps assume that you cloned the repository at `C:\qTox`. If you
-decided to choose another location, replace corresponding parts.
+(you may need to add `git.exe` to your `PATH` system variable).
 
 ### Getting dependencies
 
-Run `bootstrap.bat` in the previously cloned `C:\qTox` repository. The script will
+Run `bootstrap.bat` in the previously cloned qTox repository. The script will
 download the other necessary dependencies, compile them and put them into their
 appropriate directories.
 
-Note that there have been detections of false positives by some anti virus software
-in the past within some of the libraries used. Please refer to the wiki page
+Note that there have been detections of false positives by some anti virus
+software in the past within some of the libraries used. Please refer to the
+wiki page 
 [problematic antiviruses](https://github.com/qTox/qTox/wiki/Problematic-antiviruses)
 for more information if you run into troubles on that front.
 
+Congratulations. You should be able to compile qTox now.
+
 ## Compile-time switches
 
-They are passed as an argument to `cmake` command. E.g. with a switch `SWITCH`
-that has value `YES` it would be passed to `cmake` in a following manner:
+They are passed as an argument to the `cmake` command. E.g. with a switch
+`SWITCH` that has value `YES` it would be passed to `cmake` in a following
+manner:
 
 ```bash
 cmake -DSWITCH=yes

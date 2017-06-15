@@ -1,10 +1,11 @@
-################################################################################
+﻿################################################################################
 #
 # :: Dependencies
 #
 ################################################################################
 
 # This should go into subdirectories later.
+message(STATUS "# Reading external packages.")
 find_package(PkgConfig        REQUIRED)
 find_package(Qt5Core          REQUIRED)
 find_package(Qt5Gui           REQUIRED)
@@ -32,8 +33,29 @@ add_dependency(
   Qt5::Widgets
   Qt5::Xml)
 
+message(STATUS "# Starting to parse CMakeParseArguments.cmake")
 include(CMakeParseArguments)
+
+message(STATUS "# Starting to parse Qt5CorePatches.cmake")
 include(Qt5CorePatches)
+
+message(STATUS "# Checking pkg-config tool")
+if (DEFINED PKG_CONFIG_EXECUTABLE)
+  message(STATUS "Path to pkg-config: ${PKG_CONFIG_EXECUTABLE}")
+  if(EXISTS "${PKG_CONFIG_EXECUTABLE}")
+    message(STATUS "OK - pkg-config found at specified location.")
+
+    if (DEFINED ENV{PKG_CONFIG_PATH} )
+      message(STATUS "Environment variable: PKG_CONFIG_PATH = $ENV{PKG_CONFIG_PATH}")
+    else()
+      message(STATUS "PKG_CONFIG_PATH environment variable not defined.")
+    endif()
+  else()
+    message(FATAL_ERROR " ! ! !   Error: pkg-config could not be found at the specified location.\n ! ! !   Please check whether it is properly installed.")
+  endif()
+else()
+   message(FATAL_ERROR "Error: pkg-config could not be found on your system but is required by this project.")
+endif()
 
 function(search_dependency pkg)
   set(options OPTIONAL)
@@ -69,9 +91,19 @@ function(search_dependency pkg)
 
   if(NOT ${pkg}_FOUND)
     if(NOT arg_OPTIONAL)
-      message(FATAL_ERROR "${pkg} package, library or framework not found")
+      if(arg_LIBRARY)
+        set(PKG_TYPE "library")
+      elseif(arg_FRAMEWORK)
+        set(PKG_TYPE "framework")
+      elseif(arg_PACKAGE)
+        set(PKG_TYPE "package")
+      else()
+        set(PKG_TYPE "ERROR")
+      endif()
+      message(FATAL_ERROR "${pkg} ${PKG_TYPE} not found.")
     endif()
   else()
+    message(STATUS "${pkg} ${PKG_TYPE} found: ${${pkg}_LIBRARY_DIRS}.")
     link_directories(${${pkg}_LIBRARY_DIRS})
     include_directories(${${pkg}_INCLUDE_DIRS})
     foreach(flag ${${pkg}_CFLAGS_OTHER})
@@ -83,6 +115,7 @@ function(search_dependency pkg)
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
 endfunction()
 
+message(STATUS "# Starting to look for internal dependencies.")
 search_dependency(LIBAVCODEC          PACKAGE libavcodec)
 search_dependency(LIBAVDEVICE         PACKAGE libavdevice)
 search_dependency(LIBAVFORMAT         PACKAGE libavformat)

@@ -1,4 +1,4 @@
-################################################################################
+﻿################################################################################
 #
 # :: CMake configuration
 #
@@ -11,12 +11,17 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(ENV{PKG_CONFIG_PATH}
-  ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig:/opt/ffmpeg/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
-set(ENV{PKG_CONFIG_PATH_i686_w64_mingw32_shared}
-  ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
-set(ENV{PKG_CONFIG_PATH_x86_64_w64_mingw32_shared}
-  ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
+if(WIN32)
+  set(ENV{PKG_CONFIG_PATH}
+    ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
+else()
+  set(ENV{PKG_CONFIG_PATH}
+    ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig:/opt/ffmpeg/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
+  set(ENV{PKG_CONFIG_PATH_i686_w64_mingw32_shared}
+    ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
+  set(ENV{PKG_CONFIG_PATH_x86_64_w64_mingw32_shared}
+    ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
+endif()
 
 execute_process(
   COMMAND brew --prefix qt5
@@ -70,6 +75,7 @@ endif()
 include_directories(${CMAKE_BINARY_DIR})
 include_directories(${CMAKE_SOURCE_DIR})
 
+message(STATUS "# Starting to parse Dependencies.cmake")
 include(Dependencies)
 
 ################################################################################
