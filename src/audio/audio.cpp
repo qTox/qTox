@@ -34,6 +34,7 @@
  * @value NewMessage Returns the new message notification sound.
  * @value Test Returns the test sound.
  * @value IncomingCall Returns the incoming call sound.
+ * @value OutgoingCall Returns the outgoing call sound.
  *
  * @fn QString Audio::getSound(Sound s)
  * @brief Function to get the path of the requested sound.

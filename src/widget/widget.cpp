@@ -934,6 +934,13 @@ void Widget::incomingNotification(uint32_t friendId)
     audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
 }
 
+void Widget::outgoingNotification()
+{
+    Audio& audio = Audio::getInstance();
+    audio.startLoop();
+    audio.playMono16Sound(Audio::getSound(Audio::Sound::OutgoingCall));
+}
+
 void Widget::onRejectCall(uint32_t friendId)
 {
     Audio::getInstance().stopLoop();
@@ -977,6 +984,7 @@ void Widget::addFriend(int friendId, const ToxPk& friendPk)
     connect(newfriend, &Friend::nameChanged, this, &Widget::onFriendAliasChanged);
 
     connect(friendForm, &ChatForm::incomingNotification, this, &Widget::incomingNotification);
+    connect(friendForm, &ChatForm::outgoingNotification, this, &Widget::outgoingNotification);
     connect(friendForm, &ChatForm::rejectCall, this, &Widget::onRejectCall);
     connect(friendForm, &ChatForm::acceptCall, this, &Widget::onAcceptCall);
 
