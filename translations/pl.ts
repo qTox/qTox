@@ -267,6 +267,14 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <source>Input field for notes about the contact</source>
         <translation>Pole na notatki o znajomym</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -349,7 +357,7 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ten ID Tox jest niepoprawny lub nie istnieje</translation>
     </message>
 </context>
 <context>
@@ -634,11 +642,19 @@ co może spowodować problemy z połączeniami wideo.</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrofon może być wyciszony tylko podczas połączenia</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
+        <translation>Dźwięk może być wyłączony tylko podczas połączenia</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Zapisz historię rozmowy</translation>
     </message>
 </context>
 <context>
@@ -689,28 +705,28 @@ co może spowodować problemy z połączeniami wideo.</translation>
         <translation>Toxuję na qTox</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>Musisz napisać wiadomość z zapytaniem</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>Twoja wiadomość jest za długa!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>Znajomy jest już dodany</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me oferuje znajomość.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me oferuje znajomość, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation>Niepoprawne Tox ID</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Niepoprawne Tox ID</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Musisz napisać wiadomość z zapytaniem</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Twoja wiadomość jest za długa!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Znajomy jest już dodany</translation>
     </message>
 </context>
 <context>
@@ -817,33 +833,27 @@ co może spowodować problemy z połączeniami wideo.</translation>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Dziś</translation>
+        <translation type="unfinished">Dziś</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Wczoraj</translation>
+        <translation type="unfinished">Wczoraj</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ostatnie 7 dni</translation>
+        <translation type="unfinished">Ostatnie 7 dni</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Ten miesiąc</translation>
+        <translation type="unfinished">Ten miesiąc</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Starsze niż 6 miesięcy</translation>
+        <translation type="unfinished">Starsze niż 6 miesięcy</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Nieznane</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1266,11 +1276,11 @@ zamiast do paska zadań.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>Dołącz</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Odmów</translation>
     </message>
 </context>
 <context>
@@ -1536,7 +1546,7 @@ Profil nie zawiera twojej historii.</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Mój profil</translation>
     </message>
 </context>
 <context>
@@ -1548,6 +1558,10 @@ Profil nie zawiera twojej historii.</translation>
     <message>
         <source>Load history from:</source>
         <translation>Wczytaj historię od:</translation>
+    </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1764,11 +1778,11 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Set availability status</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustaw status dostępności</translation>
     </message>
     <message>
         <source>Contact search</source>
-        <translation type="unfinished"></translation>
+        <translation>Wyszukiwanie kontaktu</translation>
     </message>
     <message>
         <source>Contact search input for known friends</source>
@@ -1792,7 +1806,7 @@ Możesz otworzyć nowy.</translation>
     </message>
     <message>
         <source>Open groupchat management page</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz stronę menadżera czatu grupowego</translation>
     </message>
     <message>
         <source>File transfers history</source>
@@ -1936,6 +1950,17 @@ Możliwe są zmianay formatu zapisu, co może skutkować utratą danych.</transl
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Choose a profile picture</source>
@@ -2045,12 +2070,6 @@ Proszę, użyj innego obrazka.</translation>
         <translation>Proszę, podaj nowe hasło.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Ten zlepek znaków mówi innym klientom Tox jak się z tobą skontaktować.
-Podziel się tym ze znajomymi by się komunikować.</translation>
-    </message>
-    <message>
         <source>Are you sure you want to delete this profile?</source>
         <comment>deletion confirmation text</comment>
         <translation>Czy masz pewność, iż chcesz usunąć ten profil?</translation>
@@ -2130,6 +2149,17 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
     <message>
         <source>Current profile location: %1</source>
         <translation>Obecna lokalizacja profilu: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2216,10 +2246,6 @@ Podziel się tym ze znajomymi by się komunikować.</translation>
         <translation type="unfinished">%1 nie jest prawidłowym adresem Toxme.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
         <translation type="unfinished">Nie możesz dodać siebie jako znajomego!</translation>
@@ -2280,11 +2306,6 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
         <source>%1 here! Tox me maybe?</source>
         <comment>Default message in Tox URI friend requests. Write something appropriate!</comment>
         <translation>Tutaj %1. Toxnij ze mną?</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translatorcomment>better translation?</translatorcomment>
-        <translation>Zmiana rozmiaru</translation>
     </message>
     <message>
         <source>None</source>
@@ -2356,6 +2377,10 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Wewnętrzny błąd ToxMe</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2853,7 +2878,7 @@ Zostanie zainstalowana po restarcie qToxa.</translation>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mój profil</translation>
     </message>
 </context>
 </TS>
