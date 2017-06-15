@@ -37,6 +37,7 @@
 #include <QApplication>
 #include <QBuffer>
 #include <QClipboard>
+#include <QTextDocument>
 #include <QComboBox>
 #include <QFileDialog>
 #include <QGroupBox>
@@ -62,8 +63,6 @@ ProfileForm::ProfileForm(QWidget* parent)
 
     // tox
     toxId = new ClickableTE();
-    toxId->setReadOnly(true);
-    toxId->setFrame(false);
     toxId->setFont(Style::getFont(Style::Small));
     toxId->setToolTip(bodyUI->toxId->toolTip());
 
@@ -213,13 +212,13 @@ void ProfileForm::showProfilePictureContextMenu(const QPoint& point)
 
 void ProfileForm::copyIdClicked()
 {
-    toxId->selectAll();
     QString txt = toxId->text();
-    txt.replace('\n', "");
+    QTextDocument doc;
+    doc.setHtml(txt);
+    txt = doc.toPlainText();
     QApplication::clipboard()->setText(txt, QClipboard::Clipboard);
     if (QApplication::clipboard()->supportsSelection())
         QApplication::clipboard()->setText(txt, QClipboard::Selection);
-    toxId->setCursorPosition(0);
 
     if (!hasCheck) {
         bodyUI->toxIdLabel->setText(bodyUI->toxIdLabel->text() + " ✔");
@@ -245,8 +244,11 @@ void ProfileForm::onSelfAvatarLoaded(const QPixmap& pic)
 
 void ProfileForm::setToxId(const ToxId& id)
 {
-    toxId->setText(id.toString());
-    toxId->setCursorPosition(0);
+    auto idString = id.toString();
+    toxId->setText(QString("%1<span style='color:blue'>%2</span><span style='color:gray'>%3</span>")
+      .arg(idString.mid(0, 64))
+      .arg(idString.mid(64, 8))
+      .arg(idString.mid(72, 4)));
 
     delete qr;
     qr = new QRWidget();
@@ -466,7 +468,8 @@ void ProfileForm::retranslateUi()
     // We have to add the toxId tooltip here and not in the .ui or Qt won't know how to translate it
     // dynamically
     toxId->setToolTip(tr("This bunch of characters tells other Tox clients how to contact "
-                         "you.\nShare it with your friends to communicate."));
+                         "you.\nShare it with your friends to communicate.\n\n"
+                         "This ID includes the NoSpam code (in blue), and the checksum (in gray)."));
 }
 
 void ProfileForm::showRegisterToxme()
