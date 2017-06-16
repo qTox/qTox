@@ -36,7 +36,7 @@ namespace Ui {
 class IdentitySettings;
 }
 
-class ClickableTE : public QLineEdit
+class ClickableTE : public QLabel
 {
     Q_OBJECT
 public:
