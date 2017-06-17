@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>Въведи бележка за абонат</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -355,7 +363,7 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Unless you %1 know what you are doing, please do %2 change anything here. Changes made here may lead to problems with qTox, and even to loss of your data, e.g. history.</source>
-        <translation type="unfinished">Освен ако %1 знаете какво правите, моля %2 сменяйте нищо тук. Промените направени тук може да доведат до проблеми с qTox и дори загуба на данни, например история.</translation>
+        <translation>Освен ако %1 знаете какво правите, моля %2 сменяйте нищо тук. Промените направени тук може да доведат до проблеми с qTox и дори загуба на данни, например история.</translation>
     </message>
     <message>
         <source>really</source>
@@ -616,11 +624,11 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished">Видео обаждане неможе да започне</translation>
+        <translation>Видео обаждане не може да започне</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished">Аудио повикване неможе да започне</translation>
+        <translation>Аудио повикване не може да започне</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
@@ -629,6 +637,14 @@ which may lead to problems with video calls.</source>
     <message>
         <source>Sound can be disabled only during a call</source>
         <translation>Звукът може да бъде изключен само по време на обаждане</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">Запазване на логовете от чата</translation>
     </message>
 </context>
 <context>
@@ -678,28 +694,28 @@ which may lead to problems with video calls.</source>
         <translation>Tox-ва в qTox</translation>
     </message>
     <message>
-        <source>Friend is already added</source>
-        <translation>Този приятел вече е прибавен</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me предлага приятелство.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me преглага приятелство, &quot;%1&quot;</translation>
     </message>
     <message>
+        <source>Invalid Tox ID</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Невалиден Tox ID</translation>
+    </message>
+    <message>
         <source>You need to write a message with your request</source>
-        <translation>Трябва да напишете съобщение заедно с вашата молба</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Трябва да напишете съобщение заедно с вашата молба</translation>
     </message>
     <message>
         <source>Your message is too long!</source>
-        <translation>Вашето съобщение е твърде дълго!</translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Вашето съобщение е твърде дълго!</translation>
     </message>
     <message>
-        <source>Invalid Tox ID</source>
-        <translation>Невалиден Tox ID</translation>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">Този приятел вече е прибавен</translation>
     </message>
 </context>
 <context>
@@ -804,33 +820,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Днес</translation>
+        <translation type="unfinished">Днес</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Вчера</translation>
+        <translation type="unfinished">Вчера</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Последните 7 дни</translation>
+        <translation type="unfinished">Последните 7 дни</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Този месец</translation>
+        <translation type="unfinished">Този месец</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>По-стари от 6 месеца</translation>
+        <translation type="unfinished">По-стари от 6 месеца</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>Неизвестно</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1242,15 +1252,15 @@ instead of system taskbar.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Поканен от %1 на %2 в %3</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Присъедини се</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>Откажи</translation>
     </message>
 </context>
 <context>
@@ -1495,23 +1505,23 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Моето име:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>Моят статус:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>Моето потребителско име</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>Моята биография</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Моят профил</translation>
     </message>
 </context>
 <context>
@@ -1523,6 +1533,10 @@ Profile does not contain your history.</source>
     <message>
         <source>Load history from:</source>
         <translation>Зареди история от:</translation>
+    </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1902,6 +1916,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2043,12 +2068,6 @@ Please use another image.</source>
         <translation>Моля въведете нова парола.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>Тези символи казват на другите Tox клиенти как да се свържат с вас.
-Споделете ги с вашите приятели за да можете да комуникирате.</translation>
-    </message>
-    <message>
         <source>Register (processing)</source>
         <translation>Регистриране (преработване)</translation>
     </message>
@@ -2093,6 +2112,17 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Current profile location: %1</source>
         <translation>Местоположение на профила: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2165,7 +2195,7 @@ Share it with your friends to communicate.</source>
     <message>
         <source>LTR</source>
         <comment>Translate this string to the string &apos;RTL&apos; in right-to-left languages (for example Hebrew and Arabic) to get proper widget layout</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">отляво надясно</translation>
     </message>
 </context>
 <context>
@@ -2179,13 +2209,9 @@ Share it with your friends to communicate.</source>
         <translation type="unfinished">%1 не е валиден адрес на Toxme.</translation>
     </message>
     <message>
-        <source>Ok</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">Не можете да добавите себе си като приятел!</translation>
+        <translation>Не можете да добавите себе си като приятел!</translation>
     </message>
 </context>
 <context>
@@ -2236,10 +2262,6 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Incoming call...</source>
         <translation>Входящо обаждане...</translation>
-    </message>
-    <message>
-        <source>Resizing</source>
-        <translation>Променяне на размер</translation>
     </message>
     <message>
         <source>Version %1, %2</source>
@@ -2315,6 +2337,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>Вътрешна ToxMe грешка</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2806,7 +2832,7 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Моят профил</translation>
     </message>
 </context>
 </TS>
