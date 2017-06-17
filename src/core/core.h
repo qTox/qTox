@@ -223,6 +223,7 @@ private:
     QTimer* toxTimer;
     Profile& profile;
     QMutex messageSendMutex;
+    mutable QMutex initializeMutex;
     bool ready;
 
     static QThread* coreThread;
