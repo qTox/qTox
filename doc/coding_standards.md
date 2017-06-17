@@ -467,8 +467,71 @@ someWidget->setTooltip(QStringLiteral("<html><!-- some HTML text -->") + tr("Tra
                        + QStringLiteral("</html>"));
 ```
 
+## Strings
+
+* Use `QStringLiteral` macro when creating new string.
+In this example, string is not intended to be modified or copied (like
+appending) into other string:
+```
+    QApplication a(argc, argv);
+    a.setApplicationName(QStringLiteral("qTox"));
+```
+
+* Use `QLatin1String` when specialized overload exists.
+Overload such as `QString::operator==(QLatin1String)` helps to avoid creating 
+temporary QString and thus avoids malloc:
+```
+   if (eventType == QLatin1String("uri"))
+        handleToxURI(firstParam.toUtf8());
+    else if (eventType == QLatin1String("save"))
+        handleToxSave(firstParam.toUtf8());
+```
+
+* Use `QLatin1String` when appending to string, joining two strings. 
+QLatin1String is literal type and knows string length at compile time 
+(compared to `QString(const char*)` run-time cost with plain C++ 
+string literal). Also, copying 8-bit latin string requires less memory
+bandwith compared to 16-bit `QStringLiteral` mentioned earlier, and
+copying here is unavoidable (and thus `QStringLiteral` loses it's purpose):
+```
+        if (!dir.rename(logFileDir + QLatin1String("qtox.log"), 
+	                logFileDir + QLatin1String("qtox.log.1")))
+            qCritical() << "Unable to move logs";
+```
+
+* Use `QStringBuilder` when joining more than two strings (and chars) together.
+Include `<QStringBuilder>` and use `%` operator for optimized single-pass 
+concatination with help of expression template's lazy evaluation:
+```
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QLatin1String("qTox, version: ") 
+    % QLatin1String(GIT_VERSION) % QLatin1String("\nBuilt: ")
+    % QLatin1String(__TIME__) % QLatin1Char(' ') % QLatin1String(__DATE__));
+```
+
+* Use `QLatin1Char` to avoid UTF-16-char handling (same as in previous example):
+```
+    QString path = QString(__FILE__);
+    path = path.left(path.lastIndexOf(QLatin1Char('/')) + 1);
+```
+
+* Use `QLatin1String` and `QLatin1Char` _only_ for Latin-1 strings and chars.
+[Latin-1][Latin-1] is ASCII-based standard character encoding, use
+`QStringLiteral` for Unicode instead.
+
+For more info, see:
+
+* [Using QString Effectively]
+* [QStringLiteral explained]
+* [String concatenation with QStringBuilder]
+
 <!-- Markdown links -->
 [ISO/IEC/C++11]: http://www.iso.org/iso/catalogue_detail.htm?csnumber=50372
 [Exceptions]: https://en.wikipedia.org/wiki/C%2B%2B#Exception_handling
 [RTTI]: https://en.wikipedia.org/wiki/Run-time_type_information
 [`tools/format-code.sh`]: /tools/format-code.sh
+[Using QString Effectively]: https://wiki.qt.io/Using_QString_Effectively
+[QStringLiteral explained]: https://woboq.com/blog/qstringliteral.html
+[String concatenation with QStringBuilder]: https://blog.qt.io/blog/2011/06/13/string-concatenation-with-qstringbuilder/
+[Latin-1]: https://en.wikipedia.org/wiki/ISO/IEC_8859-1
+
