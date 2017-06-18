@@ -130,10 +130,10 @@ int main(int argc, char* argv[])
 
     qInstallMessageHandler(logMessageHandler);
 
-    QApplication a(argc, argv);
-    a.setApplicationName("qTox");
-    a.setOrganizationName("Tox");
-    a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+    QApplication* a = new QApplication(argc, argv);
+    a->setApplicationName("qTox");
+    a->setOrganizationName("Tox");
+    a->setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
 
     // Install Unicode 6.1 supporting font
     // Keep this as close to the beginning of `main()` as possible, otherwise
@@ -164,7 +164,7 @@ int main(int argc, char* argv[])
     parser.addOption(
         QCommandLineOption("p", QObject::tr("Starts new instance and loads specified profile."),
                            QObject::tr("profile")));
-    parser.process(a);
+    parser.process(*a);
 
     uint32_t profileId = Settings::getInstance().getCurrentProfileId();
     IPC ipc(profileId);
@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
 
     // Windows platform plugins DLL hell fix
     QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath());
-    a.addLibraryPath("platforms");
+    a->addLibraryPath("platforms");
 
     qDebug() << "built on: " << __TIME__ << __DATE__ << "(" << TIMESTAMP << ")";
     qDebug() << "commit: " << GIT_VERSION << "\n";
@@ -297,10 +297,11 @@ int main(int argc, char* argv[])
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
 
+
     // Run (unless we already quit before starting!)
     int errorcode = 0;
     if (nexus.isRunning())
-        errorcode = a.exec();
+        errorcode = a->exec();
 
     Nexus::destroyInstance();
     CameraSource::destroyInstance();
@@ -311,5 +312,7 @@ int main(int argc, char* argv[])
     logFileFile.store(nullptr); // atomically disable logging to file
     fclose(mainLogFilePtr);
 #endif
+
+    delete a;
     return errorcode;
 }
