@@ -556,6 +556,11 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 ```
 
+If you are compiling on Fedora 25, you must add libtoxcore to the `PKG_CONFIG_PATH` environment variable manually:
+
+```
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
+```
 
 ### Compile qTox
 
