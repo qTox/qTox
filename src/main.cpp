@@ -42,6 +42,11 @@
 #include <sodium.h>
 #include <stdio.h>
 
+#if defined(Q_OS_UNIX)
+# include <signal.h>
+# include <unistd.h>
+#endif
+
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
 #endif
@@ -120,6 +125,17 @@ void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QSt
 #endif
 }
 
+void catchUnixSignals(const std::vector<int>& quitSignals) {
+
+    auto handler = [](int sig) {
+        qDebug() << "Signal" << sig << "received. Quit";
+        QApplication::quit();
+    };
+
+    for (int sig : quitSignals)
+        signal(sig, handler);
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -134,6 +150,10 @@ int main(int argc, char* argv[])
     a.setApplicationName("qTox");
     a.setOrganizationName("Tox");
     a.setApplicationVersion("\nGit commit: " + QString(GIT_VERSION));
+
+#if defined(Q_OS_UNIX)
+    catchUnixSignals({SIGQUIT, SIGINT, SIGTERM, SIGHUP});
+#endif
 
     // Install Unicode 6.1 supporting font
     // Keep this as close to the beginning of `main()` as possible, otherwise
