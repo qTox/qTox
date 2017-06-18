@@ -53,6 +53,20 @@ static QList<QByteArray>* logBuffer =
 QMutex* logBufferMutex = new QMutex();
 #endif
 
+void cleanup()
+{
+    Nexus::destroyInstance();
+    CameraSource::destroyInstance();
+    Settings::destroyInstance();
+    qDebug() << "Cleanup success";
+
+#ifdef LOG_TO_FILE
+    FILE* f = logFileFile.load();
+    fclose(f);
+    logFileFile.store(nullptr); // atomically disable logging to file
+#endif
+}
+
 void logMessageHandler(QtMsgType type, const QMessageLogContext& ctxt, const QString& msg)
 {
     // Silence qWarning spam due to bug in QTextBrowser (trying to open a file for base64 images)
@@ -297,22 +311,14 @@ int main(int argc, char* argv[])
     else if (eventType == "save")
         handleToxSave(firstParam.toUtf8());
 
+    QObject::connect(a, &QApplication::aboutToQuit, cleanup);
 
     // Run (unless we already quit before starting!)
     int errorcode = 0;
     if (nexus.isRunning())
         errorcode = a->exec();
 
-    Nexus::destroyInstance();
-    CameraSource::destroyInstance();
-    Settings::destroyInstance();
-    qDebug() << "Clean exit with status" << errorcode;
-
-#ifdef LOG_TO_FILE
-    logFileFile.store(nullptr); // atomically disable logging to file
-    fclose(mainLogFilePtr);
-#endif
-
+    qDebug() << "Exit with status" << errorcode;
     delete a;
     return errorcode;
 }
