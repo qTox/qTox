@@ -37,6 +37,8 @@ project(qtox)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
+set(RCC_OPTIONS -compress 9 -threshold 0)
+
 # Use C++11.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
@@ -138,6 +140,7 @@ qt5_add_resources(
   res.qrc
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
   DEPENDS ${${PROJECT_NAME}_QM_FILES}
+  OPTIONS ${RCC_OPTIONS}
 )
 
 if(NOT SMILEYS)
@@ -147,12 +150,14 @@ endif()
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
   qt5_add_resources(
           ${PROJECT_NAME}_RESOURCES
-          smileys/emojione.qrc)
+          smileys/emojione.qrc
+          OPTIONS ${RCC_OPTIONS})
 
   if(NOT "${SMILEYS}" STREQUAL "MIN")
     qt5_add_resources(
             ${PROJECT_NAME}_RESOURCES
-            smileys/smileys.qrc)
+            smileys/smileys.qrc
+            OPTIONS ${RCC_OPTIONS})
   endif()
 
 endif()
