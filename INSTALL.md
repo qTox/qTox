@@ -422,7 +422,7 @@ export PREFIX_DIR="$PWD"
 cd ../ffmpeg
 wget http://ffmpeg.org/releases/ffmpeg-3.2.2.tar.bz2
 tar xf ffmpeg*
-cd ffmpeg*
+cd ffmpeg*/
 
 
 ./configure --prefix="$PREFIX_DIR" \
