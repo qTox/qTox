@@ -170,11 +170,13 @@
     </emoticon>
     <emoticon file="../emojione/1f633">
         <string>😳</string>
+        <string>:$</string>
+        <string>:blush:</string>
     </emoticon>
     <emoticon file="../emojione/1f634">
         <string>😴</string>
-	<string>:sleep:</string>
-	<string>:sleeping:</string>
+        <string>:sleep:</string>
+        <string>:sleeping:</string>
     </emoticon>
     <emoticon file="../emojione/1f635">
         <string>😵</string>
