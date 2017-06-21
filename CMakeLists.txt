@@ -439,7 +439,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     src/platform/camera/directshow.cpp
     src/platform/camera/directshow.h
   )
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/v4l2.cpp
     src/platform/camera/v4l2.h
