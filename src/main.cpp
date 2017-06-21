@@ -38,9 +38,9 @@
 #include <QMutex>
 #include <QMutexLocker>
 
+#include <ctime>
 #include <sodium.h>
 #include <stdio.h>
-#include <ctime>
 
 #if defined(Q_OS_OSX)
 #include "platform/install_osx.h"
@@ -168,6 +168,8 @@ int main(int argc, char* argv[])
 
     uint32_t profileId = Settings::getInstance().getCurrentProfileId();
     IPC ipc(profileId);
+    QObject::connect(&Settings::getInstance(), &Settings::currentProfileIdChanged, &ipc,
+                     &IPC::setProfileId);
 
     if (sodium_init() < 0) // For the auto-updater
     {

@@ -84,7 +84,7 @@ git config --global alias.logs 'log --show-signature'
 # Issues
 
 - tag issues
-  - `help wanted` tag should be used whenever no one is currently working on
+  - `up for grabs` tag should be used whenever no one is currently working on
     the issue, and you're not going to work on it in foreseeable future (hours,
     day or two).
   - when you request more info to be provided in the issue, tag it with
@@ -184,8 +184,12 @@ Follow steps for adding translations from Weblate up to step 5. Next:
   - `PATCH` – bump when there have been only fixes added. If changes include
     something more than just bugfixes, bump `MAJOR` or `MINOR` version
     accordingly.
-- update version for windows/osx packages using [`./tools/update-versions.sh`]
-  script
+- bumping a higher-level version "resets" lower-version numbers, e.g.
+  `v1.7.1 → v2.0.0`
+- update version:
+  - bump version number in `cmake/Installation.cmake`
+  - for windows/osx packages use the [`./tools/update-versions.sh`] script,
+    e.g. `./tools/update-versions.sh 1.11.0`
 - before creating a `MAJOR`/`MINOR` release generate changelog with `clog`.
   - in a `MAJOR`/`MINOR` release tag should include information that changelog
     is located in the `CHANGELOG.md` file, e.g. `For details see CHANGELOG.md`
@@ -196,8 +200,6 @@ Follow steps for adding translations from Weblate up to step 5. Next:
   - when making a `PATCH` tag, include in tag message short summary of what the
     tag release fixes, and to whom it's interesting (often only some
     OSes/distributions would find given `PATCH` release interesting).
-- bumping a higher-level version "resets" lower-version numbers, e.g.
-  `v1.7.1 → v2.0.0`
 - create and GPG-sign tarball using [`./tools/create-tarball.sh`] script, and
   upload the tarball to a github release.
 

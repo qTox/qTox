@@ -353,10 +353,7 @@ void ChatForm::onAvInvite(uint32_t friendId, bool video)
         auto msg = ChatMessage::createChatInfoMessage(tr("%1 calling").arg(displayedName),
                                                       ChatMessage::INFO, QDateTime::currentDateTime());
         insertChatMessage(msg);
-        Widget::getInstance()->newFriendMessageAlert(friendId, false);
-        Audio& audio = Audio::getInstance();
-        audio.startLoop();
-        audio.playMono16Sound(Audio::getSound(Audio::Sound::IncomingCall));
+        emit incomingNotification(friendId);
     }
 }
 
@@ -372,6 +369,7 @@ void ChatForm::onAvStart(uint32_t friendId, bool video)
         hideNetcam();
     }
 
+    Audio::getInstance().stopLoop();
     updateCallButtons();
     startCounter();
 }
@@ -389,7 +387,6 @@ void ChatForm::onAvEnd(uint32_t friendId)
         netcam->showNormal();
     }
 
-    Audio::getInstance().stopLoop();
     updateCallButtons();
     stopCounter();
     hideNetcam();
@@ -403,16 +400,18 @@ void ChatForm::showOutgoingCall(bool video)
     btn->setToolTip(video ? tr("Cancel video call") : tr("Cancel audio call"));
     addSystemInfoMessage(tr("Calling %1").arg(f->getDisplayedName()), ChatMessage::INFO,
                          QDateTime::currentDateTime());
+    emit outgoingNotification();
     Widget::getInstance()->updateFriendActivity(f);
 }
 
 void ChatForm::onAnswerCallTriggered()
 {
     delete callConfirm;
-    Audio::getInstance().stopLoop();
+    uint32_t friendId = f->getFriendId();
+    emit acceptCall(friendId);
+
     updateCallButtons();
     CoreAV* av = Core::getInstance()->getAv();
-    uint32_t friendId = f->getFriendId();
     if (!av->answerCall(friendId)) {
         updateCallButtons();
         stopCounter();
@@ -426,9 +425,7 @@ void ChatForm::onAnswerCallTriggered()
 void ChatForm::onRejectCallTriggered()
 {
     delete callConfirm;
-    Audio::getInstance().stopLoop();
-    CoreAV* av = Core::getInstance()->getAv();
-    av->cancelCall(f->getFriendId());
+    emit rejectCall(f->getFriendId());
 }
 
 void ChatForm::onCallTriggered()
@@ -615,7 +612,8 @@ void ChatForm::dropEvent(QDropEvent* ev)
         QFile file(info.absoluteFilePath());
 
         QString urlString = url.toString();
-        if (url.isValid() && !url.isLocalFile() && urlString.length() < TOX_MAX_MESSAGE_LENGTH) {
+        if (url.isValid() && !url.isLocalFile()
+            && urlString.length() < static_cast<int>(tox_max_message_length())) {
             SendMessageStr(urlString);
             continue;
         }
@@ -954,7 +952,7 @@ void ChatForm::SendMessageStr(QString msg)
         msg.remove(0, ACTION_PREFIX.length());
     }
 
-    QStringList splittedMsg = Core::splitMessage(msg, TOX_MAX_MESSAGE_LENGTH);
+    QStringList splittedMsg = Core::splitMessage(msg, tox_max_message_length());
     QDateTime timestamp = QDateTime::currentDateTime();
 
     for (const QString& part : splittedMsg) {

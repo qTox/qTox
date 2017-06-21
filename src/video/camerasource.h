@@ -41,7 +41,7 @@ public:
     static void destroyInstance();
     void open();
     void open(const QString& deviceName);
-    void open(const QString& deviceName, VideoMode mode);
+    void open(const QString& deviceName, const VideoMode& mode);
     void close();
     bool isOpen();
 

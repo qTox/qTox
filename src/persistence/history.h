@@ -59,7 +59,7 @@ public:
     };
 
 public:
-    History(std::shared_ptr<RawDatabase> db);
+    explicit History(std::shared_ptr<RawDatabase> db);
     ~History();
 
     bool isValid();
@@ -69,7 +69,7 @@ public:
     void removeFriendHistory(const QString& friendPk);
     void addNewMessage(const QString& friendPk, const QString& message, const QString& sender,
                        const QDateTime& time, bool isSent, QString dispName,
-                       std::function<void(int64_t)> insertIdCallback = {});
+                       const std::function<void(int64_t)>& insertIdCallback = {});
 
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to);

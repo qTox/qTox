@@ -44,8 +44,7 @@ void Translator::translate(const QString& localeName)
 
     // Load translations
     QCoreApplication::removeTranslator(translator);
-    QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0)
-                                          : localeName;
+    QString locale = localeName.isEmpty() ? QLocale::system().name().section('_', 0, 0) : localeName;
 
     if (locale != "en") {
         if (translator->load(locale, ":translations/")) {
@@ -85,7 +84,7 @@ void Translator::translate(const QString& localeName)
  * @param f Function, wich will called.
  * @param owner Widget to retanslate.
  */
-void Translator::registerHandler(std::function<void()> f, void* owner)
+void Translator::registerHandler(const std::function<void()>& f, void* owner)
 {
     QMutexLocker locker{&lock};
     callbacks.push_back({owner, f});

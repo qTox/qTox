@@ -206,12 +206,12 @@ Share it with your friends to communicate.</string>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="toxId">
+           <widget class="QLabel" name="toxId">
             <property name="accessibleDescription">
              <string>Your Tox ID</string>
             </property>
-            <property name="frame">
-             <bool>true</bool>
+            <property name="textFormat">
+             <enum>Qt::RichText</enum>
             </property>
            </widget>
           </item>

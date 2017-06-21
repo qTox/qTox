@@ -68,7 +68,8 @@ public slots:
     void compactChange(bool compact);
 
 signals:
-    void chatroomWidgetClicked(GenericChatroomWidget* widget, bool group = false);
+    void chatroomWidgetClicked(GenericChatroomWidget* widget);
+    void newWindowOpened(GenericChatroomWidget* widget);
 
 protected:
     virtual void mouseReleaseEvent(QMouseEvent* event) override;

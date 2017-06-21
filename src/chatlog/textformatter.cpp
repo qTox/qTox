@@ -38,6 +38,7 @@ enum TextStyle
 
 static const QString HTML_CHARACTER_CODE = QStringLiteral("&#%1");
 
+// clang-format off
 static const QVector<char> MARKDOWN_SYMBOLS {
     '*',
     '/',
@@ -97,6 +98,7 @@ static const QVector<QRegularExpression> urlPatterns {
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
 };
 
+// clang-format on
 /**
  * @class TextFormatter
  *
@@ -172,7 +174,7 @@ static void processUrl(QString& str, std::function<QString(QString&)> func)
  */
 void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
-    processUrl(message, [] (QString& str) {
+    processUrl(message, [](QString& str) {
         for (char c : MARKDOWN_SYMBOLS) {
             QString charCode = QString::number(static_cast<int>(c));
             str.replace(c, HTML_CHARACTER_CODE.arg(charCode));
@@ -215,7 +217,7 @@ void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
  */
 void TextFormatter::wrapUrl()
 {
-    processUrl(message, [] (QString& str) {
+    processUrl(message, [](QString& str) {
         return htmlPatterns[TextStyle::HREF].arg(str.startsWith("www") ? "http://" : "", str);
     });
 }

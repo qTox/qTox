@@ -73,9 +73,9 @@ void AboutForm::replaceVersions()
     // TODO: When we finally have stable releases: build-in a way to tell
     // nightly builds from stable releases.
 
-    QString TOXCORE_VERSION = QString::number(TOX_VERSION_MAJOR) + "."
-                              + QString::number(TOX_VERSION_MINOR) + "."
-                              + QString::number(TOX_VERSION_PATCH);
+    QString TOXCORE_VERSION = QString::number(tox_version_major()) + "."
+                              + QString::number(tox_version_minor()) + "."
+                              + QString::number(tox_version_patch());
 
     bodyUI->youAreUsing->setText(tr("You are using qTox version %1.").arg(QString(GIT_DESCRIBE)));
 

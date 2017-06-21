@@ -147,7 +147,7 @@ emerge qtox
 #### Slackware
 
 qTox SlackBuild and all of its dependencies can be found here:
-http://slackbuilds.org/repository/14.1/network/qTox/
+http://slackbuilds.org/repository/14.2/network/qTox/
 
 <a name="freebsd-easy" />
 
@@ -344,7 +344,7 @@ sudo zypper install \
 #### Slackware
 
 List of all the qTox dependencies and their SlackBuilds can be found here:
-http://slackbuilds.org/repository/14.1/network/qTox/
+http://slackbuilds.org/repository/14.2/network/qTox/
 
 
 <a name="ubuntu-other-deps" />
@@ -422,7 +422,7 @@ export PREFIX_DIR="$PWD"
 cd ../ffmpeg
 wget http://ffmpeg.org/releases/ffmpeg-3.2.2.tar.bz2
 tar xf ffmpeg*
-cd ffmpeg*
+cd ffmpeg*/
 
 
 ./configure --prefix="$PREFIX_DIR" \
@@ -511,7 +511,7 @@ patterns-openSUSE-devel_basis
 #### Slackware
 
 List of all the toxcore dependencies and their SlackBuilds can be found
-here: http://slackbuilds.org/repository/14.1/network/toxcore/
+here: http://slackbuilds.org/repository/14.2/network/toxcore/
 
 
 <a name="ubuntu-toxcore" />
@@ -556,12 +556,18 @@ echo '/usr/local/lib/' | sudo tee -a /etc/ld.so.conf.d/locallib.conf
 sudo ldconfig
 ```
 
-
 ### Compile qTox
 
 **Make sure that all the dependencies are installed.**  If you experience
 problems with compiling, it's most likely due to missing dependencies, so please
 make sure that you did install *all of them*.
+
+If you are compiling on Fedora 25, you must add libtoxcore to the
+`PKG_CONFIG_PATH` environment variable manually:
+
+```
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig"
+```
 
 Run in qTox directory to compile:
 

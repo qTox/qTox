@@ -67,8 +67,8 @@ public:
     void onVideoHide();
 
     static ContentDialog* current();
-    static bool existsFriendWidget(int friendId);
-    static bool existsGroupWidget(int groupId);
+    static bool friendWidgetExists(int friendId);
+    static bool groupWidgetExists(int groupId);
     static void focusFriend(int friendId);
     static void focusGroup(int groupId);
     static void updateFriendStatus(int friendId);
@@ -100,7 +100,8 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
-    void onChatroomWidgetClicked(GenericChatroomWidget* widget, bool group);
+    void activate(GenericChatroomWidget* widget);
+    void openNewDialog(GenericChatroomWidget* widget);
     void updateFriendWidget(uint32_t friendId, QString alias);
     void updateGroupWidget(GroupWidget* w);
     void onGroupchatPositionChanged(bool top);
@@ -112,8 +113,7 @@ private:
     QLayout* nextLayout(QLayout* layout, bool forward) const;
     int getCurrentLayout(QLayout*& layout);
 
-    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget,
-                   const QHash<int, ContactInfo>& list);
+    bool hasWidget(int id, GenericChatroomWidget* chatroomWidget, const QHash<int, ContactInfo>& list);
     void removeCurrent(QHash<int, ContactInfo>& infos);
     static bool existsWidget(int id, const QHash<int, ContactInfo>& list);
     static void focusDialog(int id, const QHash<int, ContactInfo>& list);

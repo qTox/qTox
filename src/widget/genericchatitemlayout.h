@@ -24,6 +24,7 @@ class GenericChatItemLayout
 {
 public:
     GenericChatItemLayout();
+    GenericChatItemLayout(const GenericChatItemLayout& layout) = delete;
     ~GenericChatItemLayout();
 
     void addSortedWidget(GenericChatItemWidget* widget, int stretch = 0, Qt::Alignment alignment = 0);

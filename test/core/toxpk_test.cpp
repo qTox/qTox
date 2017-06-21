@@ -19,12 +19,9 @@
 
 #include "src/core/toxid.h"
 
-#include "test/common.h"
-
+#include <QtTest/QtTest>
 #include <QByteArray>
 #include <QString>
-
-#include <check.h>
 
 const uint8_t testPkArray[32] = {0xC7, 0x71, 0x9C, 0x68, 0x08, 0xC1, 0x4B, 0x77, 0x34, 0x80, 0x04,
                                  0x95, 0x6D, 0x1D, 0x98, 0x04, 0x6C, 0xE0, 0x9A, 0x34, 0x37, 0x0E,
@@ -38,74 +35,57 @@ const QString echoStr =
     QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39");
 const QByteArray echoPk = QByteArray::fromHex(echoStr.toLatin1());
 
-START_TEST(toStringTest)
+class TestToxPk : public QObject
+{
+    Q_OBJECT
+private slots:
+    void toStringTest();
+    void equalTest();
+    void clearTest();
+    void copyTest();
+    void publicKeyTest();
+};
+
+void TestToxPk::toStringTest()
 {
     ToxPk pk(testPk);
-    ck_assert(testStr == pk.toString());
+    QVERIFY(testStr == pk.toString());
 }
-END_TEST
 
-START_TEST(equalTest)
+void TestToxPk::equalTest()
 {
     ToxPk pk1(testPk);
     ToxPk pk2(testPk);
     ToxPk pk3(echoPk);
-    ck_assert(pk1 == pk2);
-    ck_assert(pk1 != pk3);
-    ck_assert(!(pk1 != pk2));
+    QVERIFY(pk1 == pk2);
+    QVERIFY(pk1 != pk3);
+    QVERIFY(!(pk1 != pk2));
 }
-END_TEST
 
-START_TEST(clearTest)
+void TestToxPk::clearTest()
 {
     ToxPk empty;
     ToxPk pk(testPk);
-    ck_assert(empty.isEmpty());
-    ck_assert(!pk.isEmpty());
+    QVERIFY(empty.isEmpty());
+    QVERIFY(!pk.isEmpty());
 }
-END_TEST
 
-START_TEST(copyTest)
+void TestToxPk::copyTest()
 {
     ToxPk src(testPk);
     ToxPk copy = src;
-    ck_assert(copy == src);
+    QVERIFY(copy == src);
 }
-END_TEST
 
-START_TEST(publicKeyTest)
+void TestToxPk::publicKeyTest()
 {
     ToxPk pk(testPk);
-    ck_assert(testPk == pk.getKey());
+    QVERIFY(testPk == pk.getKey());
     for (int i = 0; i < ToxPk::getPkSize(); i++) {
-        ck_assert(testPkArray[i] == pk.getBytes()[i]);
+        QVERIFY(testPkArray[i] == pk.getBytes()[i]);
     }
 }
-END_TEST
 
-static Suite* toxPkSuite(void)
-{
-    Suite* s = suite_create("ToxPk");
+QTEST_GUILESS_MAIN(TestToxPk)
+#include "toxpk_test.moc"
 
-    DEFTESTCASE(toString);
-    DEFTESTCASE(equal);
-    DEFTESTCASE(clear);
-    DEFTESTCASE(publicKey);
-    DEFTESTCASE(copy);
-
-    return s;
-}
-
-int main(int argc, char* argv[])
-{
-    srand((unsigned int)time(NULL));
-
-    Suite* toxPk = toxPkSuite();
-    SRunner* runner = srunner_create(toxPk);
-    srunner_run_all(runner, CK_NORMAL);
-
-    int res = srunner_ntests_failed(runner);
-    srunner_free(runner);
-
-    return res;
-}

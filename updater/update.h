@@ -32,7 +32,7 @@ struct UpdateFileMeta
     unsigned char sig[crypto_sign_BYTES]; ///< Signature of the file (ed25519)
     QString id;                           ///< Unique id of the file
     QString installpath; ///< Local path including the file name. May be relative to qtox-updater or
-                         ///absolute
+                         /// absolute
     uint64_t size;       ///< Size in bytes of the file
 
     bool operator==(const UpdateFileMeta& other)

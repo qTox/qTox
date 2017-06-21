@@ -1,5 +1,5 @@
 /*
-    Copyright © 2014-2015 by The qTox Project Contributors
+    Copyright © 2014-2017 by The qTox Project Contributors
 
     This file is part of qTox, a Qt-based graphical interface for Tox.
 
@@ -30,32 +30,17 @@
 
 #include <cassert>
 
-#if defined(__APPLE__) && defined(__MACH__)
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
-#else
-#include <AL/al.h>
-#include <AL/alc.h>
-#endif
-
-
-#ifndef ALC_ALL_DEVICES_SPECIFIER
-// compatibility with older versions of OpenAL
-#include <AL/alext.h>
-#endif
-
 class Audio : public QObject
 {
     Q_OBJECT
-
-    class Private;
 
 public:
     enum class Sound
     {
         NewMessage,
         Test,
-        IncomingCall
+        IncomingCall,
+        OutgoingCall
     };
 
     inline static QString getSound(Sound s)
@@ -67,91 +52,59 @@ public:
             return QStringLiteral(":/audio/notification.pcm");
         case Sound::IncomingCall:
             return QStringLiteral(":/audio/ToxIncomingCall.pcm");
+        case Sound::OutgoingCall:
+            return QStringLiteral(":/audio/ToxOutgoingCall.pcm");
         }
         assert(false);
         return QString();
     }
     static Audio& getInstance();
 
-    qreal outputVolume() const;
-    void setOutputVolume(qreal volume);
+    virtual qreal outputVolume() const = 0;
+    virtual void setOutputVolume(qreal volume) = 0;
 
-    qreal minInputGain() const;
-    void setMinInputGain(qreal dB);
+    virtual qreal minInputGain() const = 0;
+    virtual void setMinInputGain(qreal dB) = 0;
 
-    qreal maxInputGain() const;
-    void setMaxInputGain(qreal dB);
+    virtual qreal maxInputGain() const = 0;
+    virtual void setMaxInputGain(qreal dB) = 0;
 
-    qreal inputGain() const;
-    void setInputGain(qreal dB);
+    virtual qreal inputGain() const = 0;
+    virtual void setInputGain(qreal dB) = 0;
 
-    void reinitInput(const QString& inDevDesc);
-    bool reinitOutput(const QString& outDevDesc);
+    virtual void reinitInput(const QString& inDevDesc) = 0;
+    virtual bool reinitOutput(const QString& outDevDesc) = 0;
 
-    bool isOutputReady() const;
+    virtual bool isOutputReady() const = 0;
 
-    static QStringList outDeviceNames();
-    static QStringList inDeviceNames();
+    virtual QStringList outDeviceNames() = 0;
+    virtual QStringList inDeviceNames() = 0;
 
-    void subscribeOutput(ALuint& sid);
-    void unsubscribeOutput(ALuint& sid);
+    virtual void subscribeOutput(uint& sourceId) = 0;
+    virtual void unsubscribeOutput(uint& sourceId) = 0;
 
-    void subscribeInput();
-    void unsubscribeInput();
+    virtual void subscribeInput() = 0;
+    virtual void unsubscribeInput() = 0;
 
-    void startLoop();
-    void stopLoop();
-    void playMono16Sound(const QByteArray& data);
-    void playMono16Sound(const QString& path);
+    virtual void startLoop() = 0;
+    virtual void stopLoop() = 0;
+    virtual void playMono16Sound(const QByteArray& data) = 0;
+    virtual void playMono16Sound(const QString& path) = 0;
 
-    void playAudioBuffer(ALuint alSource, const int16_t* data, int samples, unsigned channels,
-                         int sampleRate);
+    virtual void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
+                                 int sampleRate) = 0;
 
 public:
     // Public default audio settings
     static constexpr uint32_t AUDIO_SAMPLE_RATE = 48000;
     static constexpr uint32_t AUDIO_FRAME_DURATION = 20;
-    static constexpr ALint AUDIO_FRAME_SAMPLE_COUNT = AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
+    static constexpr uint32_t AUDIO_FRAME_SAMPLE_COUNT =
+        AUDIO_FRAME_DURATION * AUDIO_SAMPLE_RATE / 1000;
     static constexpr uint32_t AUDIO_CHANNELS = 2;
 
 signals:
     void frameAvailable(const int16_t* pcm, size_t sample_count, uint8_t channels,
                         uint32_t sampling_rate);
-
-private:
-    Audio();
-    ~Audio();
-
-    static void checkAlError() noexcept;
-    static void checkAlcError(ALCdevice* device) noexcept;
-
-    bool autoInitInput();
-    bool autoInitOutput();
-    bool initInput(const QString& deviceName);
-    bool initOutput(const QString& outDevDescr);
-    void cleanupInput();
-    void cleanupOutput();
-    void playMono16SoundCleanup();
-    void doCapture();
-
-private:
-    Private* d;
-
-private:
-    QThread* audioThread;
-    mutable QMutex audioLock;
-
-    ALCdevice* alInDev;
-    quint32 inSubscriptions;
-    QTimer captureTimer, playMono16Timer;
-
-    ALCdevice* alOutDev;
-    ALCcontext* alOutContext;
-    ALuint alMainSource;
-    ALuint alMainBuffer;
-    bool outputInitialized;
-
-    QList<ALuint> outSources;
 };
 
 #endif // AUDIO_H

@@ -55,7 +55,7 @@
  *        (excluded)
  */
 
-#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/"#x"/"#x".css"))
+#define SET_STYLESHEET(x) (x)->setStyleSheet(Style::getStylesheet(":/ui/" #x "/" #x ".css"))
 
 static const QSize AVATAR_SIZE{40, 40};
 static const QSize CALL_BUTTONS_SIZE{50, 40};
@@ -380,7 +380,7 @@ void GenericChatForm::onChatContextMenuRequested(QPoint pos)
  * @param messageAuthor Author of the sent message
  * @return True if it's needed to hide name, false otherwise
  */
-bool GenericChatForm::needsToHideName(const ToxPk &messageAuthor) const
+bool GenericChatForm::needsToHideName(const ToxPk& messageAuthor) const
 {
     qint64 messagesTimeDiff = prevMsgDateTime.secsTo(QDateTime::currentDateTime());
     return messageAuthor == previousId && messagesTimeDiff < chatWidget->repNameAfter;
@@ -402,9 +402,7 @@ ChatMessage::Ptr GenericChatForm::createMessage(const ToxPk& author, const QStri
     bool isSelf = author == core->getSelfId().getPublicKey();
     QString authorStr = isSelf ? core->getUsername() : resolveToxPk(author);
     if (getLatestDate() != QDate::currentDate()) {
-        const Settings& s = Settings::getInstance();
-        QString dateText = QDate::currentDate().toString(s.getDateFormat());
-        addSystemInfoMessage(dateText, ChatMessage::INFO, QDateTime());
+        addSystemDateMessage();
     }
 
     ChatMessage::Ptr msg;
@@ -451,8 +449,7 @@ void GenericChatForm::addMessage(const ToxPk& author, const QString& message, co
 /**
  * @brief Inserts int ChatLog message that you have sent
  */
-void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime,
-                                     bool isAction)
+void GenericChatForm::addSelfMessage(const QString& message, const QDateTime& datetime, bool isAction)
 {
     createSelfMessage(message, datetime, isAction, true);
 }
@@ -554,8 +551,21 @@ void GenericChatForm::onChatMessageFontChanged(const QFont& font)
 void GenericChatForm::addSystemInfoMessage(const QString& message, ChatMessage::SystemMessageType type,
                                            const QDateTime& datetime)
 {
+    if (getLatestDate() != QDate::currentDate()) {
+        addSystemDateMessage();
+    }
+
     previousId = ToxPk();
     insertChatMessage(ChatMessage::createChatInfoMessage(message, type, datetime));
+}
+
+void GenericChatForm::addSystemDateMessage()
+{
+    const Settings& s = Settings::getInstance();
+    QString dateText = QDate::currentDate().toString(s.getDateFormat());
+
+    previousId = ToxPk();
+    insertChatMessage(ChatMessage::createChatInfoMessage(dateText, ChatMessage::INFO, QDateTime()));
 }
 
 void GenericChatForm::clearChatArea()

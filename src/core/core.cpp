@@ -22,7 +22,6 @@
 #include "corefile.h"
 #include "src/core/coreav.h"
 #include "src/core/toxstring.h"
-#include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/settings.h"
@@ -315,13 +314,6 @@ void Core::start(const QByteArray& savedata)
     tox_callback_file_recv_chunk(tox, CoreFile::onFileRecvChunkCallback);
     tox_callback_file_recv_control(tox, CoreFile::onFileControlCallback);
 
-    QByteArray data = profile.loadAvatarData(getSelfPublicKey().toString());
-    if (data.isEmpty()) {
-        qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
-    }
-
-    setAvatar(data);
-
     ready = true;
 
     if (isNewProfile) {
@@ -413,7 +405,9 @@ void Core::bootstrapDht()
         QString name = dhtServer.name;
         qDebug() << QString("Connecting to %1:%2 (%3)").arg(dhtServerAddress, port, name);
         QByteArray address = dhtServer.address.toLatin1();
-        ToxPk pk{dhtServer.userId.toLatin1()};
+        // TODO: constucting the pk via ToxId is a workaround
+        ToxPk pk = ToxId{dhtServer.userId}.getPublicKey();
+
 
         const uint8_t* pkPtr = reinterpret_cast<const uint8_t*>(pk.getBytes());
 
@@ -560,7 +554,6 @@ void Core::acceptFriendRequest(const ToxPk& friendPk)
     } else {
         profile.saveToxSave();
         emit friendAdded(friendId, friendPk);
-        emit friendshipChanged(friendId);
     }
 }
 
@@ -581,7 +574,7 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
                   "Error while sending friendship request");
     }
 
-    if (message.length() > TOX_MAX_FRIEND_REQUEST_LENGTH) {
+    if (message.length() > static_cast<int>(tox_max_friend_request_length())) {
         return tr("Your message is too long!", "Error while sending friendship request");
     }
 
@@ -590,26 +583,6 @@ QString Core::getFriendRequestErrorMessage(const ToxId& friendId, const QString&
     }
 
     return QString{};
-}
-
-/**
- * @brief Adds history message about friendship request attempt if history is enabled
- * @param friendId Id of a friend which request is destined to
- * @param selfPk Self public key
- * @param message Friendship request message
- */
-void tryAddFriendRequestToHistory(const ToxId& friendId, const ToxPk& selfPk, const QString& msg)
-{
-    Profile* profile = Nexus::getProfile();
-    if (!profile->isHistoryEnabled()) {
-        return;
-    }
-
-    QString idStr = friendId.toString();
-    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(msg);
-    QString pkStr = selfPk.toString();
-    QDateTime datetime = QDateTime::currentDateTime();
-    profile->getHistory()->addNewMessage(idStr, inviteStr, pkStr, datetime, true, QString());
 }
 
 void Core::requestFriendship(const ToxId& friendId, const QString& message)
@@ -631,11 +604,8 @@ void Core::requestFriendship(const ToxId& friendId, const QString& message)
         qDebug() << "Requested friendship of " << friendNumber;
         Settings::getInstance().updateFriendAddress(friendId.toString());
 
-        // TODO: this really shouldn't be in Core
-        tryAddFriendRequestToHistory(friendId, getSelfPublicKey(), message);
-
         emit friendAdded(friendNumber, friendPk);
-        emit friendshipChanged(friendNumber);
+        emit requestSent(friendPk, message);
     }
 
     profile.saveToxSave();
@@ -860,21 +830,6 @@ void Core::setUsername(const QString& username)
     }
 }
 
-void Core::setAvatar(const QByteArray& data)
-{
-    if (!data.isEmpty()) {
-        QPixmap pic;
-        pic.loadFromData(data);
-        profile.saveAvatar(data, getSelfPublicKey().toString());
-        emit selfAvatarChanged(pic);
-    } else {
-        emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
-    }
-
-    AvatarBroadcaster::setAvatar(data);
-    AvatarBroadcaster::enableAutoBroadcast();
-}
-
 /**
  * @brief Returns our Tox ID
  */
@@ -1034,7 +989,7 @@ QByteArray Core::getToxSaveData()
 void Core::loadFriends()
 {
     const uint32_t friendCount = tox_self_get_friend_list_size(tox);
-    if (friendCount <= 0) {
+    if (friendCount == 0) {
         return;
     }
 
@@ -1122,20 +1077,21 @@ uint32_t Core::getGroupNumberPeers(int groupId) const
  */
 QString Core::getGroupPeerName(int groupId, int peerId) const
 {
-    uint8_t nameArray[TOX_MAX_NAME_LENGTH];
     TOX_ERR_CONFERENCE_PEER_QUERY error;
     size_t length = tox_conference_peer_get_name_size(tox, groupId, peerId, &error);
     if (!parsePeerQueryError(error)) {
         return QString{};
     }
 
-    bool success = tox_conference_peer_get_name(tox, groupId, peerId, nameArray, &error);
+    QByteArray name(length, Qt::Uninitialized);
+    uint8_t* namePtr = static_cast<uint8_t*>(static_cast<void*>(name.data()));
+    bool success = tox_conference_peer_get_name(tox, groupId, peerId, namePtr, &error);
     if (!parsePeerQueryError(error) || !success) {
         qWarning() << "getGroupPeerName: Unknown error";
         return QString{};
     }
 
-    return ToxString(nameArray, length).getQString();
+    return ToxString(name).getQString();
 }
 
 /**
@@ -1183,11 +1139,12 @@ QStringList Core::getGroupPeerNames(int groupId) const
 
     QStringList names;
     for (uint32_t i = 0; i < nPeers; ++i) {
-        uint8_t name[TOX_MAX_NAME_LENGTH] = {0};
         size_t length = tox_conference_peer_get_name_size(tox, groupId, i, &error);
-        bool ok = tox_conference_peer_get_name(tox, groupId, i, name, &error);
+        QByteArray name(length, Qt::Uninitialized);
+        uint8_t* namePtr = static_cast<uint8_t*>(static_cast<void*>(name.data()));
+        bool ok = tox_conference_peer_get_name(tox, groupId, i, namePtr, &error);
         if (ok && parsePeerQueryError(error)) {
-            names.append(ToxString(name, length).getQString());
+            names.append(ToxString(name).getQString());
         }
     }
 
@@ -1432,7 +1389,7 @@ QString Core::getPeerName(const ToxPk& id) const
         return name;
     }
 
-    uint8_t* cname = new uint8_t[nameSize < TOX_MAX_NAME_LENGTH ? TOX_MAX_NAME_LENGTH : nameSize];
+    uint8_t* cname = new uint8_t[nameSize < tox_max_name_length() ? tox_max_name_length() : nameSize];
     if (!tox_friend_get_name(tox, friendId, cname, nullptr)) {
         qWarning() << "getPeerName: Can't get name of friend " + QString().setNum(friendId);
         delete[] cname;
@@ -1477,20 +1434,4 @@ void Core::killTimers(bool onlyStop)
         delete toxTimer;
         toxTimer = nullptr;
     }
-}
-
-/**
- * @brief Reinitialized the core.
- * @warning Must be called from the Core thread, with the GUI thread ready to process events.
- */
-void Core::reset()
-{
-    assert(QThread::currentThread() == coreThread);
-    QByteArray toxsave = getToxSaveData();
-    ready = false;
-    killTimers(true);
-    deadifyTox();
-    emit selfAvatarChanged(QPixmap(":/img/contact_dark.svg"));
-    GUI::clearContacts();
-    start(toxsave);
 }

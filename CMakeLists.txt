@@ -37,6 +37,8 @@ project(qtox)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 
+set(RCC_OPTIONS -compress 9 -threshold 0)
+
 # Use C++11.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions")
@@ -138,6 +140,7 @@ qt5_add_resources(
   res.qrc
   ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc
   DEPENDS ${${PROJECT_NAME}_QM_FILES}
+  OPTIONS ${RCC_OPTIONS}
 )
 
 if(NOT SMILEYS)
@@ -147,12 +150,14 @@ endif()
 if(NOT "${SMILEYS}" STREQUAL "DISABLED")
   qt5_add_resources(
           ${PROJECT_NAME}_RESOURCES
-          smileys/emojione.qrc)
+          smileys/emojione.qrc
+          OPTIONS ${RCC_OPTIONS})
 
   if(NOT "${SMILEYS}" STREQUAL "MIN")
     qt5_add_resources(
             ${PROJECT_NAME}_RESOURCES
-            smileys/smileys.qrc)
+            smileys/smileys.qrc
+            OPTIONS ${RCC_OPTIONS})
   endif()
 
 endif()
@@ -179,6 +184,8 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
 set(${PROJECT_NAME}_SOURCES
   src/audio/audio.cpp
   src/audio/audio.h
+  src/audio/backend/openal.cpp
+  src/audio/backend/openal.h
   src/chatlog/chatlinecontent.cpp
   src/chatlog/chatlinecontent.h
   src/chatlog/chatlinecontentproxy.cpp
@@ -407,8 +414,6 @@ set(${PROJECT_NAME}_SOURCES
   src/widget/tool/flyoutoverlaywidget.h
   src/widget/tool/friendrequestdialog.cpp
   src/widget/tool/friendrequestdialog.h
-  src/widget/tool/micfeedbackwidget.cpp
-  src/widget/tool/micfeedbackwidget.h
   src/widget/tool/movablewidget.cpp
   src/widget/tool/movablewidget.h
   src/widget/tool/profileimporter.cpp
@@ -522,8 +527,5 @@ target_link_libraries(${PROJECT_NAME}
   ${PROJECT_NAME}_static
   ${ALL_LIBRARIES})
 
-# test(s?) are broken on osx (just travis?)
-if (NOT APPLE)
-    include(Testing)
-endif()
+include(Testing)
 include(Installation)

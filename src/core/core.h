@@ -78,7 +78,6 @@ public:
 
 public slots:
     void start(const QByteArray& savedata);
-    void reset();
     void process();
     void bootstrapDht();
 
@@ -95,7 +94,6 @@ public slots:
     void setStatus(Status status);
     void setUsername(const QString& username);
     void setStatusMessage(const QString& message);
-    void setAvatar(const QByteArray& data);
 
     int sendMessage(uint32_t friendId, const QString& message);
     void sendGroupMessage(int groupId, const QString& message);
@@ -122,7 +120,7 @@ signals:
     void friendMessageReceived(uint32_t friendId, const QString& message, bool isAction);
 
     void friendAdded(uint32_t friendId, const ToxPk& friendPk);
-    void friendshipChanged(uint32_t friendId);
+    void requestSent(const ToxPk& friendPk, const QString& message);
 
     void friendStatusChanged(uint32_t friendId, Status status);
     void friendStatusMessageChanged(uint32_t friendId, const QString& message);
@@ -146,7 +144,6 @@ signals:
     void statusMessageSet(const QString& message);
     void statusSet(Status status);
     void idSet(const ToxId& id);
-    void selfAvatarChanged(const QPixmap& pic);
 
     void messageSentResult(uint32_t friendId, const QString& message, int messageId);
     void groupSentResult(int groupId, const QString& message, int result);

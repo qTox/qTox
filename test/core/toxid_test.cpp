@@ -19,10 +19,8 @@
 
 #include "src/core/toxid.h"
 
-#include "test/common.h"
-
+#include <QtTest/QtTest>
 #include <QString>
-#include <check.h>
 #include <ctime>
 
 const QString corrupted =
@@ -34,82 +32,63 @@ const QString publicKey =
 const QString echoToxId =
     QStringLiteral("76518406F6A9F2217E8DC487CC783C25CC16A15EB36FF32E335A235342C48A39218F515C39A6");
 
-START_TEST(toStringTest)
+class TestToxId : public QObject
+{
+    Q_OBJECT
+private slots:
+    void toStringTest();
+    void equalTest();
+    void notEqualTest();
+    void clearTest();
+    void copyTest();
+    void validationTest();
+};
+
+void TestToxId::toStringTest()
 {
     ToxId toxId(testToxId);
-    ck_assert(testToxId == toxId.toString());
+    QVERIFY(testToxId == toxId.toString());
 }
-END_TEST
 
-START_TEST(equalTest)
+void TestToxId::equalTest()
 {
     ToxId toxId1(testToxId);
     ToxId toxId2(publicKey);
-    ck_assert(toxId1 == toxId2);
-    ck_assert(!(toxId1 != toxId2));
+    QVERIFY(toxId1 == toxId2);
+    QVERIFY(!(toxId1 != toxId2));
 }
-END_TEST
 
-START_TEST(notEqualTest)
+void TestToxId::notEqualTest()
 {
     ToxId toxId1(testToxId);
     ToxId toxId2(echoToxId);
-    ck_assert(toxId1 != toxId2);
+    QVERIFY(toxId1 != toxId2);
 }
-END_TEST
 
-START_TEST(clearTest)
+void TestToxId::clearTest()
 {
     ToxId empty;
     ToxId test(testToxId);
-    ck_assert(empty != test);
+    QVERIFY(empty != test);
     test.clear();
-    ck_assert(empty == test);
+    QVERIFY(empty == test);
 }
-END_TEST
 
-START_TEST(copyTest)
+void TestToxId::copyTest()
 {
     ToxId src(testToxId);
     ToxId copy = src;
-    ck_assert(copy == src);
+    QVERIFY(copy == src);
 }
-END_TEST
 
-START_TEST(validationTest)
+void TestToxId::validationTest()
 {
-    ck_assert(ToxId(testToxId).isValid());
-    ck_assert(!ToxId(publicKey).isValid());
-    ck_assert(!ToxId(corrupted).isValid());
+    QVERIFY(ToxId(testToxId).isValid());
+    QVERIFY(!ToxId(publicKey).isValid());
+    QVERIFY(!ToxId(corrupted).isValid());
     QString deadbeef = "DEADBEEF";
-    ck_assert(!ToxId(deadbeef).isValid());
-}
-END_TEST
-
-static Suite* toxIdSuite(void)
-{
-    Suite* s = suite_create("ToxId");
-
-    DEFTESTCASE(toString);
-    DEFTESTCASE(equal);
-    DEFTESTCASE(notEqual);
-    DEFTESTCASE(clear);
-    DEFTESTCASE(copy);
-    DEFTESTCASE(validation);
-
-    return s;
+    QVERIFY(!ToxId(deadbeef).isValid());
 }
 
-int main(int argc, char* argv[])
-{
-    srand((unsigned int)time(NULL));
-
-    Suite* toxId = toxIdSuite();
-    SRunner* runner = srunner_create(toxId);
-    srunner_run_all(runner, CK_NORMAL);
-
-    int res = srunner_ntests_failed(runner);
-    srunner_free(runner);
-
-    return res;
-}
+QTEST_GUILESS_MAIN(TestToxId)
+#include "toxid_test.moc"

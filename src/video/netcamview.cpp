@@ -73,7 +73,7 @@ NetCamView::NetCamView(int friendId, QWidget* parent)
         selfFrame->resetBoundary(boundingRect);
     });
 
-    connections += connect(Core::getInstance(), &Core::selfAvatarChanged,
+    connections += connect(Nexus::getProfile(), &Profile::selfAvatarChanged,
                            [this](const QPixmap& pixmap) { selfVideoSurface->setAvatar(pixmap); });
 
     connections += connect(Core::getInstance(), &Core::friendAvatarChanged,

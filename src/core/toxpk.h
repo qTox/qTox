@@ -12,6 +12,8 @@ public:
     ToxPk(const ToxPk& other);
     explicit ToxPk(const QByteArray& rawId);
     explicit ToxPk(const uint8_t* rawId);
+    ToxPk& operator=(const ToxPk& other) = default;
+    ToxPk& operator=(ToxPk&& other) = default;
 
     bool operator==(const ToxPk& other) const;
     bool operator!=(const ToxPk& other) const;

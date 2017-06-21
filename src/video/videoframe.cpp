@@ -419,7 +419,7 @@ int VideoFrame::getSourcePixelFormat() const
  * @param pixFmt the pixel format of the frame.
  * @param lineAligned whether the linesize matches the width of the image.
  */
-VideoFrame::FrameBufferKey::FrameBufferKey(const int pixFmt, const int width, const int height,
+VideoFrame::FrameBufferKey::FrameBufferKey(const int width, const int height, const int pixFmt,
                                            const bool lineAligned)
     : frameWidth(width)
     , frameHeight(height)
@@ -718,7 +718,7 @@ void VideoFrame::deleteFrameBuffer()
  */
 template <typename T>
 T VideoFrame::toGenericObject(const QSize& dimensions, const int pixelFormat, const bool requireAligned,
-                              const std::function<T(AVFrame* const)> objectConstructor,
+                              const std::function<T(AVFrame* const)>& objectConstructor,
                               const T& nullObject)
 {
     frameLock.lockForRead();
@@ -762,10 +762,10 @@ T VideoFrame::toGenericObject(const QSize& dimensions, const int pixelFormat, co
 // Explicitly specialize VideoFrame::toGenericObject() function
 template QImage VideoFrame::toGenericObject<QImage>(
     const QSize& dimensions, const int pixelFormat, const bool requireAligned,
-    const std::function<QImage(AVFrame* const)> objectConstructor, const QImage& nullObject);
+    const std::function<QImage(AVFrame* const)> &objectConstructor, const QImage& nullObject);
 template ToxYUVFrame VideoFrame::toGenericObject<ToxYUVFrame>(
     const QSize& dimensions, const int pixelFormat, const bool requireAligned,
-    const std::function<ToxYUVFrame(AVFrame* const)> objectConstructor, const ToxYUVFrame& nullObject);
+    const std::function<ToxYUVFrame(AVFrame* const)> &objectConstructor, const ToxYUVFrame& nullObject);
 
 /**
  * @brief Returns whether the given ToxYUVFrame represents a valid frame or not.

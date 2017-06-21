@@ -32,6 +32,7 @@
 #include "profilelocker.h"
 #include "settings.h"
 #include "src/core/core.h"
+#include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
@@ -65,7 +66,17 @@ Profile::Profile(QString name, const QString& password, bool isNewProfile, const
                      [this, password](const ToxId& id) { loadDatabase(id, password); },
                      Qt::QueuedConnection);
     core->moveToThread(coreThread);
-    QObject::connect(coreThread, &QThread::started, core, [=]() { core->start(toxsave); });
+    QObject::connect(coreThread, &QThread::started, core, [=]() {
+        core->start(toxsave);
+
+        QString selfPk = core->getSelfPublicKey().toString();
+        QByteArray data = loadAvatarData(selfPk);
+        if (data.isEmpty()) {
+            qDebug() << "Self avatar not found, will broadcast empty avatar to friends";
+        }
+
+        setAvatar(data, core->getSelfPublicKey().toString());
+    });
 }
 
 /**
@@ -439,6 +450,40 @@ void Profile::loadDatabase(const ToxId& id, QString password)
     }
 }
 
+void Profile::setAvatar(QByteArray pic, const QString& ownerId)
+{
+    QPixmap pixmap;
+    if (!pic.isEmpty()) {
+        pixmap.loadFromData(pic);
+    } else {
+        pixmap.load(":/img/contact_dark.svg");
+    }
+
+    saveAvatar(pic, ownerId);
+
+    emit selfAvatarChanged(pixmap);
+    AvatarBroadcaster::setAvatar(pic);
+    AvatarBroadcaster::enableAutoBroadcast();
+}
+
+/**
+ * @brief Adds history message about friendship request attempt if history is enabled
+ * @param friendPk Pk of a friend which request is destined to
+ * @param message Friendship request message
+ */
+void Profile::onRequestSent(const ToxPk& friendPk, const QString& message)
+{
+    if (!isHistoryEnabled()) {
+        return;
+    }
+
+    QString pkStr = friendPk.toString();
+    QString inviteStr = Core::tr("/me offers friendship, \"%1\"").arg(message);
+    QString selfStr = core->getSelfPublicKey().toString();
+    QDateTime datetime = QDateTime::currentDateTime();
+    history->addNewMessage(pkStr, inviteStr, selfStr, datetime, true, QString());
+}
+
 /**
  * @brief Save an avatar to cache.
  * @param pic Picture to save.
@@ -512,8 +557,9 @@ History* Profile::getHistory()
 void Profile::removeAvatar(const QString& ownerId)
 {
     QFile::remove(avatarPath(ownerId));
-    if (ownerId == core->getSelfId().getPublicKey().toString())
-        core->setAvatar({});
+    if (ownerId == core->getSelfId().getPublicKey().toString()) {
+        setAvatar({}, core->getSelfPublicKey().toString());
+    }
 }
 
 bool Profile::exists(QString name)

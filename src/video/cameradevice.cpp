@@ -28,7 +28,11 @@ extern "C" {
 #include "cameradevice.h"
 #include "src/persistence/settings.h"
 
-#define USING_V4L defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#if defined(Q_OS_LINUX) || defined(Q_OS_FREEBSD)
+#define USING_V4L 1
+#else
+#define USING_V4L 0
+#endif
 
 #ifdef Q_OS_WIN
 #include "src/platform/camera/directshow.h"

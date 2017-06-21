@@ -10,6 +10,7 @@
 #include <QVariant>
 #include <QVector>
 #include <atomic>
+#include <functional>
 #include <memory>
 
 struct sqlite3;
@@ -24,18 +25,18 @@ public:
     {
     public:
         Query(QString query, QVector<QByteArray> blobs = {},
-              std::function<void(int64_t)> insertCallback = {})
+              const std::function<void(int64_t)>& insertCallback = {})
             : query{query.toUtf8()}
             , blobs{blobs}
             , insertCallback{insertCallback}
         {
         }
-        Query(QString query, std::function<void(int64_t)> insertCallback)
+        Query(QString query, const std::function<void(int64_t)>& insertCallback)
             : query{query.toUtf8()}
             , insertCallback{insertCallback}
         {
         }
-        Query(QString query, std::function<void(const QVector<QVariant>&)> rowCallback)
+        Query(QString query, const std::function<void(const QVector<QVariant>&)>& rowCallback)
             : query{query.toUtf8()}
             , rowCallback{rowCallback}
         {

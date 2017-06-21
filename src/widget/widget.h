@@ -149,7 +149,6 @@ public slots:
     void setStatusMessage(const QString& statusMessage);
     void addFriend(int friendId, const ToxPk& friendPk);
     void addFriendFailed(const ToxPk& userId, const QString& errorInfo = QString());
-    void onFriendshipChanged(int friendId);
     void onFriendStatusChanged(int friendId, Status status);
     void onFriendStatusMessageChanged(int friendId, const QString& message);
     void onFriendUsernameChanged(int friendId, const QString& username);
@@ -197,7 +196,8 @@ private slots:
     void onGroupClicked();
     void onTransferClicked();
     void showProfile();
-    void onChatroomWidgetClicked(GenericChatroomWidget*, bool group);
+    void openNewDialog(GenericChatroomWidget* widget);
+    void onChatroomWidgetClicked(GenericChatroomWidget* widget);
     void onStatusMessageChanged(const QString& newStatusMessage);
     void removeFriend(int friendId);
     void copyFriendIdToClipboard(int friendId);
@@ -217,9 +217,11 @@ private slots:
     void groupInvitesUpdate();
     void groupInvitesClear();
     void onDialogShown(GenericChatroomWidget* widget);
-
-private:
-    int icon_size;
+    void outgoingNotification();
+    void incomingNotification(uint32_t friendId);
+    void onRejectCall(uint32_t friendId);
+    void onAcceptCall(uint32_t friendId);
+    void onCallEnd(uint32_t friendId);
 
 private:
     bool newMessageAlert(QWidget* currentWindow, bool isActive, bool sound = true, bool notify = true);
@@ -240,6 +242,7 @@ private:
     static bool filterOffline(FilterCriteria index);
     void retranslateUi();
     void focusChatInput();
+    void openDialog(GenericChatroomWidget* widget, bool newWindow);
 
 private:
     SystemTrayIcon* icon = nullptr;
@@ -287,6 +290,7 @@ private:
     QPushButton* friendRequestsButton;
     QPushButton* groupInvitesButton;
     unsigned int unreadGroupInvites;
+    int icon_size;
 
     QMap<int, FriendWidget*> friendWidgets;
 

@@ -22,6 +22,10 @@ message("Warning: This project file is deprecated and should not be used anymore
 message("Use the CMakeLists.txt file instead to open this as a CMake project.")
 message()
 
+unix:!freebsd {
+    error("qmake builds are not supported on this platform anymore")
+}
+
 
 QT       += core gui network xml opengl sql svg widgets
 
@@ -167,163 +171,90 @@ win32 {
             -luuid
     LIBS += -lstrmiids # For DirectShow
 } else {
-    macx {
-        BUNDLEID = chat.tox.qtox
-        ICON = img/icons/qtox.icns
-        QMAKE_INFO_PLIST = osx/info.plist
-        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.7
+    isEmpty(PREFIX) {
+        PREFIX = /usr
+    }
+
+    BINDIR = $$PREFIX/bin
+    DATADIR = $$PREFIX/share
+    target.path = $$BINDIR
+    desktop.path = $$DATADIR/applications
+    desktop.files += qtox.desktop
+    appdata.path = $$DATADIR/appdata
+    appdata.files += res/qTox.appdata.xml
+    INSTALLS += target desktop appdata
+
+    # Install application icons according to the XDG spec
+    ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
+    for(icon_size, ICON_SIZES) {
+        icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
+        icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
+        INSTALLS += icon_$${icon_size}
+    }
+    icon_scalable.files = img/icons/qtox.svg
+    icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
+    INSTALLS += icon_scalable
+
+    # If we're building a package, static link libtox[core,av] and
+    # libsodium, since they are not provided by any package
+    contains(STATICPKG, YES) {
         LIBS += -L$$PWD/libs/lib/ \
+                -lopus \
+                -lvpx \
+                -lopenal \
+                -Wl,-Bstatic \
                 -ltoxcore \
                 -ltoxav \
                 -ltoxencryptsave \
                 -lsodium \
-                -lvpx \
-                -lopus \
-                -framework OpenAL \
                 -lavformat \
                 -lavdevice \
                 -lavcodec \
                 -lavutil \
                 -lswscale \
-                -mmacosx-version-min=10.7 \
-                -framework AVFoundation \
-                -framework Foundation \
-                -framework CoreMedia \
-                -framework ApplicationServices \
+                -lz \
+                -ljpeg \
+                -ltiff \
+                -lpng \
+                -ljasper \
+                -lIlmImf \
+                -lIlmThread \
+                -lIex \
+                -ldc1394 \
+                -lraw1394 \
+                -lHalf \
+                -llzma \
+                -ljbig \
+                -Wl,-Bdynamic \
+                -lv4l1 \
+                -lv4l2 \
+                -lavformat \
+                -lavcodec \
+                -lavutil \
+                -lswscale \
+                -lusb-1.0 \
                 -lqrencode \
                 -lsqlcipher
-        contains(DEFINES, QTOX_PLATFORM_EXT) {
-            LIBS += -framework IOKit \
-                    -framework CoreFoundation
-        }
-
-        # Files to be includes into the qTox.app/Contents/Resources folder
-        # OSX-Migrater.sh part of migrateProfiles() compatabilty code
-        APP_RESOURCE.files = img/icons/qtox_profile.icns \
-                             OSX-Migrater.sh
-        APP_RESOURCE.path = Contents/Resources
-        QMAKE_BUNDLE_DATA += APP_RESOURCE
-        #Dynamic versioning for Info.plist
-        INFO_PLIST_PATH = $$shell_quote($${OUT_PWD}/$${TARGET}.app/Contents/Info.plist)
-        QMAKE_POST_LINK += /usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $${GIT_DESCRIBE}\" $${INFO_PLIST_PATH}
     } else {
-        isEmpty(PREFIX) {
-            PREFIX = /usr
-        }
+        LIBS += -L$$PWD/libs/lib/ \
+                -ltoxcore \
+                -ltoxav \
+                -ltoxencryptsave \
+                -lvpx \
+                -lsodium \
+                -lopenal \
+                -lavformat \
+                -lavdevice \
+                -lavcodec \
+                -lavutil \
+                -lswscale \
+                -lqrencode \
+                -lsqlcipher
+    }
 
-        BINDIR = $$PREFIX/bin
-        DATADIR = $$PREFIX/share
-        target.path = $$BINDIR
-        desktop.path = $$DATADIR/applications
-        desktop.files += qtox.desktop
-        appdata.path = $$DATADIR/appdata
-        appdata.files += res/qTox.appdata.xml
-        INSTALLS += target desktop appdata
-
-        # Install application icons according to the XDG spec
-        ICON_SIZES = 14 16 22 24 32 36 48 64 72 96 128 192 256 512
-        for(icon_size, ICON_SIZES) {
-            icon_$${icon_size}.files = img/icons/$${icon_size}x$${icon_size}/qtox.png
-            icon_$${icon_size}.path = $$DATADIR/icons/hicolor/$${icon_size}x$${icon_size}/apps
-            INSTALLS += icon_$${icon_size}
-        }
-        icon_scalable.files = img/icons/qtox.svg
-        icon_scalable.path = $$DATADIR/icons/hicolor/scalable/apps
-        INSTALLS += icon_scalable
-
-        # If we're building a package, static link libtox[core,av] and
-        # libsodium, since they are not provided by any package
-        contains(STATICPKG, YES) {
-            LIBS += -L$$PWD/libs/lib/ \
-                    -lopus \
-                    -lvpx \
-                    -lopenal \
-                    -Wl,-Bstatic \
-                    -ltoxcore \
-                    -ltoxav \
-                    -ltoxencryptsave \
-                    -lsodium \
-                    -lavformat \
-                    -lavdevice \
-                    -lavcodec \
-                    -lavutil \
-                    -lswscale \
-                    -lz \
-                    -ljpeg \
-                    -ltiff \
-                    -lpng \
-                    -ljasper \
-                    -lIlmImf \
-                    -lIlmThread \
-                    -lIex \
-                    -ldc1394 \
-                    -lraw1394 \
-                    -lHalf \
-                    -llzma \
-                    -ljbig \
-                    -Wl,-Bdynamic \
-                    -lv4l1 \
-                    -lv4l2 \
-                    -lavformat \
-                    -lavcodec \
-                    -lavutil \
-                    -lswscale \
-                    -lusb-1.0 \
-                    -lqrencode \
-                    -lsqlcipher
-        } else {
-            LIBS += -L$$PWD/libs/lib/ \
-                    -ltoxcore \
-                    -ltoxav \
-                    -ltoxencryptsave \
-                    -lvpx \
-                    -lsodium \
-                    -lopenal \
-                    -lavformat \
-                    -lavdevice \
-                    -lavcodec \
-                    -lavutil \
-                    -lswscale \
-                    -lqrencode \
-                    -lsqlcipher
-        }
-
-        contains(DEFINES, QTOX_PLATFORM_EXT) {
-            LIBS += -lX11 \
-                    -lXss
-        }
-
-        contains(JENKINS, YES) {
-            LIBS = ./libs/lib/libtoxav.a \
-                   ./libs/lib/libvpx.a \
-                   ./libs/lib/libopus.a \
-                   ./libs/lib/libtoxencryptsave.a \
-                   ./libs/lib/libtoxcore.a \
-                   ./libs/lib/libtoxgroup.a \
-                   ./libs/lib/libtoxmessenger.a \
-                   ./libs/lib/libtoxfriends.a \
-                   ./libs/lib/libtoxnetcrypto.a \
-                   ./libs/lib/libtoxdht.a \
-                   ./libs/lib/libtoxnetwork.a \
-                   ./libs/lib/libtoxcrypto.a \
-                   ./libs/lib/libopenal.a \
-                   ./libs/lib/libsodium.a \
-                   ./libs/lib/libavdevice.a \
-                   ./libs/lib/libavformat.a \
-                   ./libs/lib/libavcodec.a \
-                   ./libs/lib/libavutil.a \
-                   ./libs/lib/libswscale.a \
-                   ./libs/lib/libqrencode.a \
-                   -ldl \
-                   -lX11 \
-                   -lXss
-            contains(ENABLE_SYSTRAY_UNITY_BACKEND, YES) {
-                LIBS += -lgobject-2.0 \
-                        -lappindicator \
-                        -lgtk-x11-2.0
-            }
-            LIBS += -s
-        }
+    contains(DEFINES, QTOX_PLATFORM_EXT) {
+        LIBS += -lX11 \
+                -lXss
     }
 }
 
@@ -375,36 +306,14 @@ win32 {
         src/platform/camera/directshow.cpp
 }
 
-unix:!macx {
+freebsd {
     HEADERS += \
         src/platform/camera/v4l2.h
 
     SOURCES += \
         src/platform/camera/v4l2.cpp
-}
-
-macx {
-    SOURCES += \
-        src/platform/install_osx.cpp
-
-    HEADERS += \
-        src/platform/install_osx.h \
-        src/platform/camera/avfoundation.h
-
-    OBJECTIVE_SOURCES += \
-        src/platform/camera/avfoundation.mm
-}
-
-macx {
-    INCLUDEPATH += /usr/local/include
-    LIBPATH += /usr/local/lib
-}
-
-freebsd {
-    target.path  = $$PREFIX/bin
 
     desktop.files = qtox.desktop
-    desktop.path = $$PREFIX/share/applications
 
     icon.files = img/qtox.png
     icon.path = $$PREFIX/share/pixmaps
@@ -424,6 +333,7 @@ RESOURCES += res.qrc \
 
 HEADERS  += \
     src/audio/audio.h \
+    src/audio/backend/openal.h \
     src/chatlog/chatline.h \
     src/chatlog/chatlinecontent.h \
     src/chatlog/chatlinecontentproxy.h \
@@ -532,7 +442,6 @@ HEADERS  += \
     src/widget/tool/croppinglabel.h \
     src/widget/tool/flyoutoverlaywidget.h \
     src/widget/tool/friendrequestdialog.h \
-    src/widget/tool/micfeedbackwidget.h \
     src/widget/tool/movablewidget.h \
     src/widget/tool/profileimporter.h \
     src/widget/tool/removefrienddialog.h \
@@ -545,6 +454,7 @@ HEADERS  += \
 
 SOURCES += \
     src/audio/audio.cpp \
+    src/audio/backend/openal.cpp \
     src/chatlog/chatline.cpp \
     src/chatlog/chatlinecontent.cpp \
     src/chatlog/chatlinecontentproxy.cpp \
@@ -653,7 +563,6 @@ SOURCES += \
     src/widget/tool/croppinglabel.cpp \
     src/widget/tool/flyoutoverlaywidget.cpp \
     src/widget/tool/friendrequestdialog.cpp \
-    src/widget/tool/micfeedbackwidget.cpp \
     src/widget/tool/movablewidget.cpp \
     src/widget/tool/profileimporter.cpp \
     src/widget/tool/removefrienddialog.cpp \

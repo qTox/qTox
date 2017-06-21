@@ -48,9 +48,7 @@
  */
 
 GroupChatForm::GroupChatForm(Group* chatGroup)
-    : audioInputFlag(false)
-    , audioOutputFlag(false)
-    , group(chatGroup)
+    : group(chatGroup)
     , inCall(false)
 {
     nusersLabel = new QLabel();

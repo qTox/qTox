@@ -199,18 +199,20 @@ void FriendWidget::onContextMenuCalled(QContextMenuEvent* event)
 
     removeEventFilter(this);
 
-    if (!active)
+    if (!active) {
         setBackgroundRole(QPalette::Window);
+    }
 
-    if (!selectedItem)
+    if (!selectedItem) {
         return;
+    }
 
     if (selectedItem == setAlias) {
         nameLabel->editBegin();
     } else if (selectedItem == removeFriendAction) {
         emit removeFriend(friendId);
     } else if (selectedItem == openChatWindow) {
-        emit chatroomWidgetClicked(this, true);
+        emit newWindowOpened(this);
     } else if (selectedItem == removeChatWindow) {
         ContentDialog* contentDialog = ContentDialog::getFriendDialog(friendId);
         contentDialog->removeFriend(friendId);
@@ -368,7 +370,7 @@ bool FriendWidget::chatFormIsSet(bool focus) const
         ContentDialog::focusFriend(friendId);
     }
 
-    bool exist = ContentDialog::existsFriendWidget(friendId);
+    bool exist = ContentDialog::friendWidgetExists(friendId);
     return exist || f->getChatForm()->isVisible();
 }
 
@@ -432,7 +434,7 @@ void FriendWidget::mouseMoveEvent(QMouseEvent* ev)
 
 void FriendWidget::setAlias(const QString& _alias)
 {
-    QString alias = _alias.left(128); // same as TOX_MAX_NAME_LENGTH
+    QString alias = _alias.left(tox_max_name_length());
     Friend* f = FriendList::findFriend(friendId);
     f->setAlias(alias);
     Settings::getInstance().setFriendAlias(f->getPublicKey(), alias);

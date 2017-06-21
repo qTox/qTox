@@ -62,10 +62,6 @@ private:
     void retranslateUi();
 
 private:
-    // TODO: flags are deprecated -> remove
-    bool audioInputFlag;
-    bool audioOutputFlag;
-
     Group* group;
     QList<QLabel*> peerLabels;
     QMap<int, QTimer*> peerAudioTimers;

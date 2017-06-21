@@ -93,6 +93,7 @@ CameraSource::CameraSource()
     : deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
+    // clang-format off
     , cctx{nullptr}
 #if LIBAVCODEC_VERSION_INT < 3747941
     , cctxOrig{nullptr}
@@ -106,6 +107,8 @@ CameraSource::CameraSource()
     av_register_all();
     avdevice_register_all();
 }
+
+// clang-format on
 
 /**
  * @brief Returns the singleton instance.
@@ -148,7 +151,7 @@ void CameraSource::open(const QString& deviceName)
     open(deviceName, mode);
 }
 
-void CameraSource::open(const QString& DeviceName, VideoMode Mode)
+void CameraSource::open(const QString& DeviceName, const VideoMode& Mode)
 {
     QWriteLocker locker{&streamMutex};
 
