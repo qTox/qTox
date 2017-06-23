@@ -517,10 +517,13 @@ if(${ENABLE_GTK_SYSTRAY})
 endif()
 
 if(${USE_FILTERAUDIO})
-    set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
-        src/audio/backend/openal2.cpp
-        src/audio/backend/openal2.h)
-    add_definitions(-DUSE_FILTERAUDIO=1)
+    search_dependency(FILTERAUDIO LIBRARY filteraudio OPTIONAL)
+    if(${FILTERAUDIO_FOUND})
+        set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+            src/audio/backend/openal2.cpp
+            src/audio/backend/openal2.h)
+        add_definitions(-DUSE_FILTERAUDIO=1)
+    endif()
 endif()
 
 add_library(${PROJECT_NAME}_static
