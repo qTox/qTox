@@ -169,6 +169,7 @@
  */
 Audio& Audio::getInstance()
 {
+    // TODO: replace backend selection by inversion of control
 #ifdef USE_FILTERAUDIO
     static bool initialized = false;
     static bool Backend2 = false;
