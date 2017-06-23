@@ -1117,14 +1117,21 @@ void Widget::openDialog(GenericChatroomWidget* widget, bool newWindow)
     widget->resetEventFlags();
     widget->updateStatusLight();
 
+    uint32_t id;
     GenericChatForm* form;
     if (widget->getFriend()) {
-        form = widget->getFriend()->getChatForm();
+        Friend* f = widget->getFriend();
+        form = f->getChatForm();
+        id = f->getFriendId();
     } else {
-        form = widget->getGroup()->getChatForm();
+        Group* g = widget->getGroup();
+        form = g->getChatForm();
+        id = g->getGroupId();
     }
 
-    if ((widget->chatFormIsSet(true) || form->isVisible()) && !newWindow) {
+    ContentDialog::focusFriend(id);
+    bool chatFormIsSet = ContentDialog::friendWidgetExists(id);
+    if ((chatFormIsSet || form->isVisible()) && !newWindow) {
         return;
     }
 

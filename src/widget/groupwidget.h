@@ -31,7 +31,6 @@ public:
     void setAsInactiveChatroom() final override;
     void setAsActiveChatroom() final override;
     void updateStatusLight() final override;
-    bool chatFormIsSet(bool focus) const final override;
     void setChatForm(ContentLayout* contentLayout) final override;
     void resetEventFlags() final override;
     QString getStatusString() const final override;
