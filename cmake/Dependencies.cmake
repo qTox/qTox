@@ -108,9 +108,6 @@ if (NOT TOXCORE_FOUND OR
 endif()
 
 search_dependency(OPENAL              PACKAGE openal)
-if (${USE_FILTERAUDIO})
-    search_dependency(FILTERAUDIO         LIBRARY filteraudio)
-endif()
 
 # Automatic auto-away support. (X11 also using for capslock detection)
 search_dependency(X11                 PACKAGE x11 OPTIONAL)
