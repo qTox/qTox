@@ -53,6 +53,7 @@ public:
     ~ToxFriendCall();
 
     ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
+    void enableVideo();
 
     void startTimeout(uint32_t callId);
     void stopTimeout();
@@ -73,6 +74,7 @@ public:
 
 private:
     quint32 alSource;
+    uint32_t friendId;
     bool videoEnabled;
     bool nullVideoBitrate;
     CoreVideoSource* videoSource;

@@ -182,6 +182,7 @@ void ToxFriendCall::setAlSource(const quint32& value)
 
 ToxFriendCall::ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av)
     : ToxCall()
+    , friendId{friendId}
     , videoEnabled{VideoEnabled}
     , nullVideoBitrate{false}
     , videoSource{nullptr}
@@ -203,16 +204,7 @@ ToxFriendCall::ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av)
     audio.subscribeOutput(alSource);
 
     if (videoEnabled) {
-        videoSource = new CoreVideoSource;
-        CameraSource& source = CameraSource::getInstance();
-
-        if (source.isNone())
-            source.setupDefault();
-        source.subscribe();
-        QObject::connect(&source, &VideoSource::frameAvailable,
-                         [friendId, &av](shared_ptr<VideoFrame> frame) {
-                             av.sendCallVideo(friendId, frame);
-                         });
+        enableVideo();
     }
 }
 
@@ -272,6 +264,23 @@ ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
     other.alSource = 0;
 
     return *this;
+}
+
+void ToxFriendCall::enableVideo()
+{
+    videoSource = new CoreVideoSource;
+    CameraSource& source = CameraSource::getInstance();
+
+    if (source.isNone()) {
+        source.setupDefault();
+    }
+
+    videoEnabled = true;
+    source.subscribe();
+    QObject::connect(&source, &VideoSource::frameAvailable,
+                     [this](shared_ptr<VideoFrame> frame) {
+                         av->sendCallVideo(friendId, frame);
+                     });
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)
