@@ -562,5 +562,3 @@ void AVForm::retranslateUi()
 {
     Ui::AVForm::retranslateUi(this);
 }
-
-
