@@ -329,7 +329,7 @@ bool CoreAV::changeVideo(uint32_t friendId, bool video)
     ToxFriendCall& call = calls[friendId];
     uint32_t videoBitrate = video ? VIDEO_DEFAULT_BITRATE : 0;
     TOXAV_ERR_BIT_RATE_SET error;
-    toxav_bit_rate_set(toxav, friendId, AUDIO_DEFAULT_BITRATE, videoBitrate, &error);
+    toxav_bit_rate_set(toxav, friendId, -1, videoBitrate, &error);
     if (error != TOXAV_ERR_BIT_RATE_SET_OK)
         return false;
 

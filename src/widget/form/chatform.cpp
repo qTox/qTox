@@ -439,13 +439,21 @@ void ChatForm::onVideoCallTriggered()
     CoreAV* av = Core::getInstance()->getAv();
     uint32_t friendId = f->getId();
     if (av->isCallStarted(f)) {
-        // TODO: We want to activate video on the active call.
-        if (av->isCallVideoEnabled(f)) {
-            av->cancelCall(friendId);
+        bool nextVideo = !av->isCallVideoEnabled(f);
+        if (!av->changeVideo(friendId, nextVideo)) {
+            return;
+        }
+
+        if (nextVideo) {
+            showNetcam();
+        } else {
+            hideNetcam();
         }
     } else if (av->startCall(friendId, true)) {
         showOutgoingCall(true);
     }
+
+    updateCallButtons();
 }
 
 void ChatForm::updateCallButtons()
