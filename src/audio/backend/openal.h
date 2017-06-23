@@ -46,7 +46,7 @@ class OpenAL : public Audio
 
 public:
     OpenAL();
-    ~OpenAL();
+    virtual ~OpenAL();
 
     qreal outputVolume() const;
     void setOutputVolume(qreal volume);
@@ -82,21 +82,26 @@ public:
     void playAudioBuffer(uint sourceId, const int16_t* data, int samples, unsigned channels,
                          int sampleRate);
 
-private:
+protected:
     static void checkAlError() noexcept;
     static void checkAlcError(ALCdevice* device) noexcept;
 
+    qreal inputGainFactor() const;
+    virtual void cleanupInput();
+    virtual void cleanupOutput();
+
     bool autoInitInput();
     bool autoInitOutput();
-    bool initInput(const QString& deviceName);
-    bool initOutput(const QString& outDevDescr);
-    void cleanupInput();
-    void cleanupOutput();
-    void playMono16SoundCleanup();
-    void doCapture();
-    qreal inputGainFactor() const;
+
+    bool initInput(const QString& deviceName, uint32_t channels);
 
 private:
+    virtual bool initInput(const QString& deviceName);
+    virtual bool initOutput(const QString& outDevDescr);
+    void playMono16SoundCleanup();
+    void doCapture();
+
+protected:
     QThread* audioThread;
     mutable QMutex audioLock;
 
@@ -110,7 +115,7 @@ private:
     ALuint alMainBuffer;
     bool outputInitialized;
 
-    QList<ALuint> outSources;
+    QList<ALuint> peerSources;
     qreal gain;
     qreal gainFactor;
     qreal minInGain = -30;
