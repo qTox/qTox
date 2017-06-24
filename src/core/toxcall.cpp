@@ -204,7 +204,7 @@ ToxFriendCall::ToxFriendCall(uint32_t friendId, bool VideoEnabled, CoreAV& av)
     audio.subscribeOutput(alSource);
 
     if (videoEnabled) {
-        enableVideo();
+        changeVideo(true);
     }
 }
 
@@ -236,11 +236,7 @@ ToxFriendCall::~ToxFriendCall()
         // CameraSource locks,
         // so we unsuscribe asynchronously, it's fine if the webcam takes a couple milliseconds more
         // to poweroff.
-        QtConcurrent::run([]() { CameraSource::getInstance().unsubscribe(); });
-        if (videoSource) {
-            videoSource->setDeleteOnClose(true);
-            videoSource = nullptr;
-        }
+        changeVideo(false);
     }
     if (valid) {
         Audio::getInstance().unsubscribeOutput(alSource);
@@ -266,21 +262,29 @@ ToxFriendCall& ToxFriendCall::operator=(ToxFriendCall&& other) noexcept
     return *this;
 }
 
-void ToxFriendCall::enableVideo()
+void ToxFriendCall::changeVideo(bool video)
 {
-    videoSource = new CoreVideoSource;
-    CameraSource& source = CameraSource::getInstance();
+    videoEnabled = video;
+    if (video) {
+        videoSource = new CoreVideoSource;
+        CameraSource& source = CameraSource::getInstance();
 
-    if (source.isNone()) {
-        source.setupDefault();
+        if (source.isNone()) {
+            source.setupDefault();
+        }
+
+        source.subscribe();
+        QObject::connect(&source, &VideoSource::frameAvailable,
+                         [this](shared_ptr<VideoFrame> frame) {
+                             av->sendCallVideo(friendId, frame);
+                         });
+    } else {
+        QtConcurrent::run([]() { CameraSource::getInstance().unsubscribe(); });
+        if (videoSource) {
+            videoSource->setDeleteOnClose(true);
+            videoSource = nullptr;
+        }
     }
-
-    videoEnabled = true;
-    source.subscribe();
-    QObject::connect(&source, &VideoSource::frameAvailable,
-                     [this](shared_ptr<VideoFrame> frame) {
-                         av->sendCallVideo(friendId, frame);
-                     });
 }
 
 ToxGroupCall::ToxGroupCall(int GroupNum, CoreAV& av)

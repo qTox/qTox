@@ -333,7 +333,7 @@ bool CoreAV::changeVideo(uint32_t friendId, bool video)
     if (error != TOXAV_ERR_BIT_RATE_SET_OK)
         return false;
 
-    call.enableVideo();
+    call.changeVideo(video);
     return true;
 }
 

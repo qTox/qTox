@@ -53,7 +53,7 @@ public:
     ~ToxFriendCall();
 
     ToxFriendCall& operator=(ToxFriendCall&& other) noexcept;
-    void enableVideo();
+    void changeVideo(bool video);
 
     void startTimeout(uint32_t callId);
     void stopTimeout();
