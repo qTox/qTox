@@ -27,6 +27,7 @@
 #include <cstdint>
 #include <tox/toxencryptsave.h>
 
+#include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
 
 class Profile;
@@ -73,6 +74,10 @@ public:
 
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to);
+
+    QList<QPair<uint, uint>> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from,
+                                                  const QDate& to);
+
     void markAsSent(qint64 messageId);
 
 protected:
