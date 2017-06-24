@@ -24,6 +24,7 @@
 #include "profile.h"
 #include "settings.h"
 #include "db/rawdatabase.h"
+#include <QPair>
 
 /**
  * @class History
@@ -283,6 +284,47 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
     db->execNow({queryText, rowCallback});
 
     return messages;
+}
+
+/**
+ * @brief Fetches chat messages counts for each day from the database.
+ * @param friendPk Friend public key to fetch.
+ * @param from Start of period to fetch.
+ * @param to End of period to fetch.
+ * @return List of pairs. First item contains days from start. Second item contains message count.
+ */
+QList<QPair<uint, uint>> History::getChatHistoryCounts(const ToxPk& friendPk, const QDate& from,
+                                                       const QDate& to)
+{
+    if (!isValid()) {
+        return {};
+    }
+    QDateTime fromTime(from);
+    QDateTime toTime(to);
+
+    QList<QPair<uint, uint>> counts;
+
+    auto rowCallback = [&counts](const QVector<QVariant>& row) {
+        counts.append(qMakePair(row[1].toUInt(), row[0].toUInt()));
+    };
+
+    QString queryText =
+        QString("SELECT COUNT(history.id), ((timestamp / 1000 / 60 / 60 / 24) - %4 ) AS day "
+                "FROM history "
+                "LEFT JOIN faux_offline_pending ON history.id = faux_offline_pending.id "
+                "JOIN peers chat ON chat_id = chat.id "
+                "JOIN aliases ON sender_alias = aliases.id "
+                "JOIN peers sender ON aliases.owner = sender.id "
+                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'"
+                "GROUP BY day;")
+            .arg(fromTime.toMSecsSinceEpoch())
+            .arg(toTime.toMSecsSinceEpoch())
+            .arg(friendPk.toString())
+            .arg(QDateTime::fromMSecsSinceEpoch(0).daysTo(fromTime));
+
+    db->execNow({queryText, rowCallback});
+
+    return counts;
 }
 
 /**
