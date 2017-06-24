@@ -27,6 +27,7 @@
 #include <cstdint>
 #include <tox/toxencryptsave.h>
 
+#include "src/core/toxpk.h"
 #include "src/persistence/db/rawdatabase.h"
 
 class Profile;
@@ -58,6 +59,12 @@ public:
         bool isSent;
     };
 
+    struct DateMessages
+    {
+        uint offsetDays;
+        uint count;
+    };
+
 public:
     explicit History(std::shared_ptr<RawDatabase> db);
     ~History();
@@ -73,6 +80,9 @@ public:
 
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to);
+
+    QList<DateMessages> getChatHistoryCounts(const ToxPk& friendPk, const QDate& from, const QDate& to);
+
     void markAsSent(qint64 messageId);
 
 protected:
