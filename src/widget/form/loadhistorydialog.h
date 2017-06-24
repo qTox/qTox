@@ -20,6 +20,7 @@
 #ifndef LOADHISTORYDIALOG_H
 #define LOADHISTORYDIALOG_H
 
+#include "src/core/toxpk.h"
 #include <QDateTime>
 #include <QDialog>
 
@@ -32,13 +33,17 @@ class LoadHistoryDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit LoadHistoryDialog(QWidget* parent = 0);
+    explicit LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent = 0);
     ~LoadHistoryDialog();
 
     QDateTime getFromDate();
 
+public slots:
+    void HighlightDates(int year, int month);
+
 private:
     Ui::LoadHistoryDialog* ui;
+    const ToxPk friendPk;
 };
 
 #endif // LOADHISTORYDIALOG_H

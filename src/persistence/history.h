@@ -73,6 +73,10 @@ public:
 
     QList<HistMessage> getChatHistory(const QString& friendPk, const QDateTime& from,
                                       const QDateTime& to);
+
+    QList<QPair<uint, uint>> getChatHistoryCounts(const QString& friendPk, const QDate& from,
+                                                  const QDate& to);
+
     void markAsSent(qint64 messageId);
 
 protected:
