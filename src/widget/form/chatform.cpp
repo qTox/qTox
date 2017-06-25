@@ -49,6 +49,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QScrollBar>
+#include <QStringBuilder>
 
 #include <cassert>
 
@@ -146,6 +147,9 @@ ChatForm::ChatForm(Friend* chatFriend)
 
     loadHistoryAction = menu.addAction(QString(), this, SLOT(onLoadHistory()));
     copyStatusAction = statusMessageMenu.addAction(QString(), this, SLOT(onCopyStatusMessage()));
+
+    exportChatAction =
+        menu.addAction(QIcon::fromTheme("document-save"), QString(), this, SLOT(onExportChat()));
 
     const Core* core = Core::getInstance();
     connect(core, &Core::fileReceiveRequested, this, &ChatForm::onFileRecvRequest);
@@ -669,6 +673,23 @@ void ChatForm::onLoadChatHistory()
     }
 }
 
+QString getMsgAuthorDispName(const History::HistMessage& msg)
+{
+    QString authorStr;
+    const Core* core = Core::getInstance();
+    ToxPk authorPk(ToxId(msg.sender).getPublicKey());
+    bool isSelf = authorPk == core->getSelfId().getPublicKey();
+
+    if (!msg.dispName.isEmpty()) {
+        authorStr = msg.dispName;
+    } else if (isSelf) {
+        authorStr = core->getUsername();
+    } else {
+        authorStr = ChatForm::resolveToxPk(authorPk);
+    }
+    return authorStr;
+}
+
 // TODO: Split on smaller methods (style)
 void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
 {
@@ -712,17 +733,9 @@ void ChatForm::loadHistory(const QDateTime& since, bool processUndelivered)
 
         // Show each messages
         const Core* core = Core::getInstance();
+        QString authorStr = getMsgAuthorDispName(it);
         ToxPk authorPk(ToxId(it.sender).getPublicKey());
-        QString authorStr;
         bool isSelf = authorPk == core->getSelfId().getPublicKey();
-
-        if (!it.dispName.isEmpty()) {
-            authorStr = it.dispName;
-        } else if (isSelf) {
-            authorStr = core->getUsername();
-        } else {
-            authorStr = resolveToxPk(authorPk);
-        }
 
         bool isAction = it.message.startsWith(ACTION_PREFIX, Qt::CaseInsensitive);
         bool needSending = !it.isSent && isSelf;
@@ -994,6 +1007,7 @@ void ChatForm::retranslateUi()
     QString micObjectName = micButton->objectName();
     loadHistoryAction->setText(tr("Load chat history..."));
     copyStatusAction->setText(tr("Copy"));
+    exportChatAction->setText(tr("Export to file"));
 
     updateMuteMicButton();
     updateMuteVolButton();
@@ -1001,4 +1015,33 @@ void ChatForm::retranslateUi()
     if (netcam) {
         netcam->setShowMessages(chatWidget->isVisible());
     }
+}
+
+void ChatForm::onExportChat()
+{
+    History* history = Nexus::getProfile()->getHistory();
+    QString pk = f->getPublicKey().toString();
+    QDateTime epochStart = QDateTime::fromMSecsSinceEpoch(0);
+    QDateTime now = QDateTime::currentDateTime();
+    QList<History::HistMessage> msgs = history->getChatHistory(pk, epochStart, now);
+
+    QString path = QFileDialog::getSaveFileName(0, tr("Save chat log"), QString{}, QString{}, 0,
+                                                QFileDialog::DontUseNativeDialog);
+    if (path.isEmpty())
+        return;
+
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
+
+    QString buffer;
+    for (const auto& it : msgs) {
+        QString timestamp = it.timestamp.toString();
+        QString author = getMsgAuthorDispName(it);
+
+        QString line = QString("%1\t%2\t%3\n").arg(timestamp, author, it.message);
+        buffer = buffer % line;
+    }
+    file.write(buffer.toUtf8());
+    file.close();
 }
