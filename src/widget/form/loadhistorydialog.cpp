@@ -24,6 +24,7 @@
 #include "src/persistence/profile.h"
 #include <QDate>
 #include <QTextCharFormat>
+#include <QCalendarWidget>
 
 LoadHistoryDialog::LoadHistoryDialog(const ToxPk& friendPk, QWidget* parent)
     : QDialog(parent)
@@ -61,11 +62,12 @@ void LoadHistoryDialog::highlightDates(int year, int month)
     QList<History::DateMessages> counts =
         history->getChatHistoryCounts(this->friendPk, monthStart, monthEnd);
 
-    QTextCharFormat bold;
-    bold.setFontWeight(QFont::Bold);
+    QTextCharFormat format;
+    format.setFontWeight(QFont::Bold);
 
     QCalendarWidget* calendar = ui->fromDate;
     for (History::DateMessages p : counts) {
-        calendar->setDateTextFormat(monthStart.addDays(p.offsetDays), bold);
+        format.setToolTip(tr("%1 messages").arg(p.count));
+        calendar->setDateTextFormat(monthStart.addDays(p.offsetDays), format);
     }
 }
