@@ -27,6 +27,7 @@
 
 #include "genericchatform.h"
 #include "src/core/corestructs.h"
+#include "src/persistence/history.h"
 #include "src/widget/tool/screenshotgrabber.h"
 
 class Friend;
@@ -49,6 +50,7 @@ public:
 
     void dischargeReceipt(int receipt);
     void setFriendTyping(bool isTyping);
+    static QString getMsgAuthorDispName(const History::HistMessage& msg);
     OfflineMsgEngine* getOfflineMsgEngine();
 
     virtual void show(ContentLayout* contentLayout) final override;
@@ -99,6 +101,7 @@ private slots:
     void onScreenshotTaken(const QPixmap& pixmap);
     void doScreenshot();
     void onCopyStatusMessage();
+    void onExportChat();
 
 private:
     void updateMuteMicButton();
@@ -129,6 +132,7 @@ private:
     OfflineMsgEngine* offlineEngine;
     QAction* loadHistoryAction;
     QAction* copyStatusAction;
+    QAction* exportChatAction;
 
     QHash<uint, FileTransferInstance*> ftransWidgets;
     QPointer<CallConfirmWidget> callConfirm;
