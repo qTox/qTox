@@ -102,11 +102,10 @@ void CoreVideoSource::pushFrame(const vpx_image_t* vpxframe)
     emit frameAvailable(vframe);
 }
 
-bool CoreVideoSource::subscribe()
+void CoreVideoSource::subscribe()
 {
     QMutexLocker locker(&biglock);
     ++subscribers;
-    return true;
 }
 
 void CoreVideoSource::unsubscribe()
