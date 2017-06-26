@@ -210,10 +210,7 @@ void CameraSource::subscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (_isNone) {
-        ++subscriptions;
-    }
-
+    ++subscriptions;
     openDevice();
 }
 
@@ -221,22 +218,10 @@ void CameraSource::unsubscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (_isNone) {
-        --subscriptions;
-        return;
-    }
-
-    if (!device) {
-        qWarning() << "Unsubscribing with zero subscriber";
-        return;
-    }
-
-    if (subscriptions - 1 == 0) {
+    --subscriptions;
+    if (subscriptions == 0) {
         closeDevice();
-    } else {
-        device->close();
     }
-    subscriptions--;
 }
 
 /**
