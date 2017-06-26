@@ -168,15 +168,21 @@ void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
         return;
     }
 
-    if (subscriptions)
+    if (subscriptions) {
+        // To force close, ignoring optimization
+        int subs = subscriptions;
+        subscriptions = 0;
         closeDevice();
+        subscriptions = subs;
+    }
 
     deviceName = DeviceName;
     mode = Mode;
     _isNone = (deviceName == "none");
 
-    if (subscriptions && !_isNone)
+    if (subscriptions && !_isNone) {
         openDevice();
+    }
 }
 
 bool CameraSource::isNone() const
@@ -253,6 +259,10 @@ void CameraSource::openDevice()
     }
 
     QWriteLocker locker{&streamMutex};
+    if (subscriptions == 0) {
+        return;
+    }
+
     qDebug() << "Opening device " << deviceName;
 
     if (device) {
@@ -365,6 +375,10 @@ void CameraSource::closeDevice()
     }
 
     QWriteLocker locker{&streamMutex};
+    if (subscriptions != 0) {
+        return;
+    }
+
     qDebug() << "Closing device " << deviceName;
 
     // Free all remaining VideoFrame
