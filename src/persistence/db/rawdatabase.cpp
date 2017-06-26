@@ -19,6 +19,8 @@
 
 #include "rawdatabase.h"
 
+#include "src/persistence/checkdisk.h"
+#include "src/widget/gui.h"
 #include <cassert>
 #include <tox/toxencryptsave.h>
 
@@ -628,7 +630,14 @@ void RawDatabase::process()
                     qWarning() << "Constraint error executing query" << anonQuery;
                     goto cleanupStatements;
                 default:
-                    qWarning() << "Unknown error" << result << "executing query" << anonQuery;
+                    bool ok;
+                    if (CheckDisk::diskFull(this->path, ok)) {
+                        QString message = (ok) ? "Disk full error" : "Disk write error";
+                        qCritical() << message << "while executing query" << anonQuery;
+                        GUI::showError("Disk error", message);
+                    } else {
+                        qWarning() << "Unknown error" << result << "executing query" << anonQuery;
+                    }
                     goto cleanupStatements;
                 }
             }
