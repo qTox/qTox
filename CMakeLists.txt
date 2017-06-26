@@ -259,6 +259,8 @@ set(${PROJECT_NAME}_SOURCES
   src/net/toxuri.h
   src/nexus.cpp
   src/nexus.h
+  src/persistence/checkdisk.cpp
+  src/persistence/checkdisk.h
   src/persistence/db/rawdatabase.cpp
   src/persistence/db/rawdatabase.h
   src/persistence/history.cpp
