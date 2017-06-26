@@ -90,7 +90,8 @@ extern "C" {
 CameraSource* CameraSource::instance{nullptr};
 
 CameraSource::CameraSource()
-    : deviceName{"none"}
+    : deviceThread{new QThread}
+    , deviceName{"none"}
     , device{nullptr}
     , mode(VideoMode())
     // clang-format off
@@ -103,6 +104,10 @@ CameraSource::CameraSource()
     , streamBlocker{false}
     , subscriptions{0}
 {
+    deviceThread->setObjectName("Device thread");
+    deviceThread->start();
+    moveToThread(deviceThread);
+
     subscriptions = 0;
     av_register_all();
     avdevice_register_all();
@@ -205,6 +210,10 @@ CameraSource::~CameraSource()
     // Synchronize with our stream thread
     while (streamFuture.isRunning())
         QThread::yieldCurrentThread();
+
+    deviceThread->exit(0);
+    deviceThread->wait();
+    delete deviceThread;
 }
 
 void CameraSource::subscribe()
