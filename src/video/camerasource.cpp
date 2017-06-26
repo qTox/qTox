@@ -99,7 +99,7 @@ CameraSource::CameraSource()
     , cctxOrig{nullptr}
 #endif
     , videoStreamIndex{-1}
-    , _isOpen{false}
+    , _isNotNone{false}
     , streamBlocker{false}
     , subscriptions{0}
 {
@@ -129,29 +129,19 @@ void CameraSource::destroyInstance()
 }
 
 /**
- * @brief Opens the source for the camera device.
+ * @brief Setup default device
  * @note If a device is already open, the source will seamlessly switch to the new device.
- *
- * Opens the source for the camera device in argument, in the settings, or the system default.
  */
-void CameraSource::open()
+void CameraSource::setupDefault()
 {
-    open(CameraDevice::getDefaultDeviceName());
+    setupDevice(CameraDevice::getDefaultDeviceName());
 }
 
-void CameraSource::open(const QString& deviceName)
-{
-    bool isScreen = CameraDevice::isScreen(deviceName);
-    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
-    if (!isScreen) {
-        mode = VideoMode(Settings::getInstance().getCamVideoRes());
-        mode.FPS = Settings::getInstance().getCamVideoFPS();
-    }
-
-    open(deviceName, mode);
-}
-
-void CameraSource::open(const QString& DeviceName, const VideoMode& Mode)
+/**
+ * @brief Change the device and mode.
+ * @note If a device is already open, the source will seamlessly switch to the new device.
+ */
+void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
 {
     QWriteLocker locker{&streamMutex};
 
@@ -164,32 +154,22 @@ void CameraSource::open(const QString& DeviceName, const VideoMode& Mode)
 
     deviceName = DeviceName;
     mode = Mode;
-    _isOpen = (deviceName != "none");
+    _isNotNone = (deviceName != "none");
 
-    if (subscriptions && _isOpen)
+    if (subscriptions && _isNotNone)
         openDevice();
 }
 
-/**
- * @brief Stops streaming.
- *
- * Equivalent to opening the source with the video device "none".
- */
-void CameraSource::close()
+bool CameraSource::isNotNone() const
 {
-    open("none");
-}
-
-bool CameraSource::isOpen()
-{
-    return _isOpen;
+    return _isNotNone;
 }
 
 CameraSource::~CameraSource()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isNotNone) {
         return;
     }
 
@@ -223,7 +203,7 @@ bool CameraSource::subscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isNotNone) {
         ++subscriptions;
         return true;
     }
@@ -248,7 +228,7 @@ void CameraSource::unsubscribe()
 {
     QWriteLocker locker{&streamMutex};
 
-    if (!_isOpen) {
+    if (!_isNotNone) {
         --subscriptions;
         return;
     }

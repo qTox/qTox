@@ -130,8 +130,8 @@ ToxFriendCall::ToxFriendCall(uint32_t FriendNum, bool VideoEnabled, CoreAV& av)
         videoSource = new CoreVideoSource;
         CameraSource& source = CameraSource::getInstance();
 
-        if (!source.isOpen())
-            source.open();
+        if (!source.isNotNone())
+            source.setupDefault();
         source.subscribe();
         QObject::connect(&source, &VideoSource::frameAvailable,
                          [FriendNum, &av](shared_ptr<VideoFrame> frame) {

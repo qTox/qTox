@@ -39,11 +39,10 @@ class CameraSource : public VideoSource
 public:
     static CameraSource& getInstance();
     static void destroyInstance();
-    void open();
-    void open(const QString& deviceName);
-    void open(const QString& deviceName, const VideoMode& mode);
-    void close();
-    bool isOpen();
+    void setupDefault();
+    void setupDevice(const QString& deviceName);
+    void setupDevice(const QString& deviceName, const VideoMode& mode);
+    bool isNotNone() const;
 
     // VideoSource interface
     virtual bool subscribe() override;
@@ -69,7 +68,8 @@ private:
     AVCodecContext* cctxOrig;
     int videoStreamIndex;
     QReadWriteLock streamMutex;
-    std::atomic_bool _isOpen;
+
+    std::atomic_bool _isNotNone;
     std::atomic_bool streamBlocker;
     std::atomic_int subscriptions;
 
