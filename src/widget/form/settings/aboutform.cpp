@@ -87,11 +87,11 @@ void AboutForm::replaceVersions()
     bodyUI->qtVersion->setText(tr("Qt version: %1").arg(QT_VERSION_STR));
 
     QString issueBody = QString("##### Brief Description\n\n"
-                                "OS: Windows / OS X / Linux (include version and/or distro)\n"
-                                "qTox version: %1\n"
-                                "Commit hash: %2\n"
-                                "toxcore: %3\n"
-                                "Qt: %4\n"
+                                "OS: %1\n"
+                                "qTox version: %2\n"
+                                "Commit hash: %3\n"
+                                "toxcore: %4\n"
+                                "Qt: %5\n"
                                 "Hardware: \n…\n\n"
                                 "Reproducible: Always / Almost Always / Sometimes"
                                 " / Rarely / Couldn't Reproduce\n\n"
@@ -105,7 +105,8 @@ void AboutForm::replaceVersions()
                                 "More information on how to write good bug reports in the wiki: "
                                 "https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports.\n\n"
                                 "Please remove any unnecessary template section before submitting.")
-                            .arg(GIT_DESCRIBE, GIT_VERSION, TOXCORE_VERSION, QT_VERSION_STR);
+                            .arg(QSysInfo::prettyProductName(),  GIT_DESCRIBE, GIT_VERSION,
+                                 TOXCORE_VERSION, QT_VERSION_STR);
 
     issueBody.replace("#", "%23").replace(":", "%3A");
 
