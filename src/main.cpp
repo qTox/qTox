@@ -22,6 +22,7 @@
 #include "src/net/autoupdate.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
+#include "src/persistence/checkdisk.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/toxsave.h"
 #include "src/video/camerasource.h"
@@ -34,6 +35,8 @@
 #include <QDebug>
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QMessageBox>
 #include <QFontDatabase>
 #include <QMutex>
 #include <QMutexLocker>
@@ -313,9 +316,35 @@ int main(int argc, char* argv[])
 
     QObject::connect(a, &QApplication::aboutToQuit, cleanup);
 
-    // Run (unless we already quit before starting!)
+    QString cacheDir = Settings::getInstance().getAppCacheDirPath();
+    QString dataDir = Settings::getInstance().getAppDataDirPath();
+    QString settingsDir = Settings::getInstance().getSettingsDirPath();
+    bool diskFull = false;
+    if (QFileInfo::exists(cacheDir)) {
+        diskFull = diskFull || CheckDisk::diskFull(cacheDir);
+    }
+    if (QFileInfo::exists(dataDir)) {
+        diskFull = diskFull || CheckDisk::diskFull(dataDir);
+    }
+    if (QFileInfo::exists(settingsDir)) {
+        diskFull = diskFull || CheckDisk::diskFull(settingsDir);
+    }
+    if (diskFull) {
+        CheckDisk::errorDialog();
+    }
+
+    if (!diskFull && (CheckDisk::diskUsage(cacheDir) > DISK_WARN_THRESHOLD
+                      || CheckDisk::diskUsage(dataDir) > DISK_WARN_THRESHOLD
+                      || CheckDisk::diskUsage(settingsDir) > DISK_WARN_THRESHOLD)) {
+        qWarning() << "Disk almost full";
+        QMessageBox messageBox;
+        messageBox.warning(0, "Warning", "Disk almost full! Consider creating disk space.");
+        messageBox.setFixedSize(500, 200);
+    }
+
+    // Run (unless we already quit before starting or encounter full disk!)
     int errorcode = 0;
-    if (nexus.isRunning())
+    if (nexus.isRunning() && !diskFull)
         errorcode = a->exec();
 
     qDebug() << "Exit with status" << errorcode;
