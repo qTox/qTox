@@ -56,6 +56,8 @@ private:
     CameraSource();
     ~CameraSource();
     void stream();
+
+private slots:
     void openDevice();
     void closeDevice();
 

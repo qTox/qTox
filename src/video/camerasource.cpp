@@ -241,6 +241,11 @@ void CameraSource::unsubscribe()
  */
 void CameraSource::openDevice()
 {
+    if (QThread::currentThread() != deviceThread) {
+        QMetaObject::invokeMethod(this, "openDevice");
+        return;
+    }
+
     QWriteLocker locker{&streamMutex};
     qDebug() << "Opening device " << deviceName;
 
@@ -348,6 +353,11 @@ void CameraSource::openDevice()
  */
 void CameraSource::closeDevice()
 {
+    if (QThread::currentThread() != deviceThread) {
+        QMetaObject::invokeMethod(this, "closeDevice");
+        return;
+    }
+
     QWriteLocker locker{&streamMutex};
     qDebug() << "Closing device " << deviceName;
 
