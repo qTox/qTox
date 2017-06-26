@@ -155,7 +155,7 @@ void CameraSource::setupDefault()
  */
 void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
 {
-    QWriteLocker locker{&streamMutex};
+    QWriteLocker locker{&deviceMutex};
 
     if (DeviceName == deviceName && Mode == mode) {
         return;
@@ -180,6 +180,7 @@ bool CameraSource::isNone() const
 CameraSource::~CameraSource()
 {
     QWriteLocker locker{&streamMutex};
+    QWriteLocker locker2{&deviceMutex};
 
     if (_isNone) {
         return;
@@ -217,7 +218,7 @@ CameraSource::~CameraSource()
 
 void CameraSource::subscribe()
 {
-    QWriteLocker locker{&streamMutex};
+    QWriteLocker locker{&deviceMutex};
 
     ++subscriptions;
     openDevice();
@@ -225,7 +226,7 @@ void CameraSource::subscribe()
 
 void CameraSource::unsubscribe()
 {
-    QWriteLocker locker{&streamMutex};
+    QWriteLocker locker{&deviceMutex};
 
     --subscriptions;
     if (subscriptions == 0) {
@@ -239,6 +240,7 @@ void CameraSource::unsubscribe()
  */
 void CameraSource::openDevice()
 {
+    QWriteLocker locker{&streamMutex};
     qDebug() << "Opening device " << deviceName;
 
     if (device) {
@@ -345,6 +347,7 @@ void CameraSource::openDevice()
  */
 void CameraSource::closeDevice()
 {
+    QWriteLocker locker{&streamMutex};
     qDebug() << "Closing device " << deviceName;
 
     // Free all remaining VideoFrame
