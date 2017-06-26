@@ -31,7 +31,7 @@ class CoreVideoSource : public VideoSource
     Q_OBJECT
 public:
     // VideoSource interface
-    virtual bool subscribe() override;
+    virtual void subscribe() override;
     virtual void unsubscribe() override;
 
 private:

@@ -47,7 +47,7 @@ public:
      * @brief If subscribe sucessfully opens the source, it will start emitting frameAvailable
      * signals.
      */
-    virtual bool subscribe() = 0;
+    virtual void subscribe() = 0;
     /**
      * @brief Stop emitting frameAvailable signals, and free associated resources if necessary.
      */

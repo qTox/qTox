@@ -44,17 +44,18 @@ public:
     bool isNone() const;
 
     // VideoSource interface
-    virtual bool subscribe() override;
+    virtual void subscribe() override;
     virtual void unsubscribe() override;
 
 signals:
     void deviceOpened();
+    void openFailed();
 
 private:
     CameraSource();
     ~CameraSource();
     void stream();
-    bool openDevice();
+    void openDevice();
     void closeDevice();
 
 private:
