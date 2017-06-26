@@ -95,9 +95,6 @@ CameraSource::CameraSource()
     , mode(VideoMode())
     // clang-format off
     , cctx{nullptr}
-#if LIBAVCODEC_VERSION_INT < 3747941
-    , cctxOrig{nullptr}
-#endif
     , videoStreamIndex{-1}
     , _isOpen{false}
     , streamBlocker{false}
@@ -199,11 +196,6 @@ CameraSource::~CameraSource()
     if (cctx) {
         avcodec_free_context(&cctx);
     }
-#if LIBAVCODEC_VERSION_INT < 3747941
-    if (cctxOrig) {
-        avcodec_close(cctxOrig);
-    }
-#endif
 
     if (device) {
         for (int i = 0; i < subscriptions; ++i)
@@ -236,9 +228,6 @@ bool CameraSource::subscribe()
         }
         device = nullptr;
         cctx = nullptr;
-#if LIBAVCODEC_VERSION_INT < 3747941
-        cctxOrig = nullptr;
-#endif
         videoStreamIndex = -1;
         return false;
     }
@@ -297,11 +286,7 @@ bool CameraSource::openDevice()
     // Find the first video stream, if any
     for (unsigned i = 0; i < device->context->nb_streams; ++i) {
         AVMediaType type;
-#if LIBAVCODEC_VERSION_INT < 3747941
-        type = device->context->streams[i]->codec->codec_type;
-#else
         type = device->context->streams[i]->codecpar->codec_type;
-#endif
         if (type == AVMEDIA_TYPE_VIDEO) {
             videoStreamIndex = i;
             break;
@@ -314,14 +299,9 @@ bool CameraSource::openDevice()
     }
 
     AVCodecID codecId;
-#if LIBAVCODEC_VERSION_INT < 3747941
-    cctxOrig = device->context->streams[videoStreamIndex]->codec;
-    codecId = cctxOrig->codec_id;
-#else
     // Get the stream's codec's parameters and find a matching decoder
     AVCodecParameters* cparams = device->context->streams[videoStreamIndex]->codecpar;
     codecId = cparams->codec_id;
-#endif
     codec = avcodec_find_decoder(codecId);
     if (!codec) {
         qWarning() << "Codec not found";
@@ -329,21 +309,12 @@ bool CameraSource::openDevice()
     }
 
 
-#if LIBAVCODEC_VERSION_INT < 3747941
-    // Copy context, since we apparently aren't allowed to use the original
-    cctx = avcodec_alloc_context3(codec);
-    if (avcodec_copy_context(cctx, cctxOrig) != 0) {
-        qWarning() << "Can't copy context";
-        return false;
-    }
-#else
     // Create a context for our codec, using the existing parameters
     cctx = avcodec_alloc_context3(codec);
     if (avcodec_parameters_to_context(cctx, cparams) < 0) {
         qWarning() << "Can't create AV context from parameters";
         return false;
     }
-#endif
 
     cctx->refcounted_frames = 1;
 
@@ -382,10 +353,6 @@ void CameraSource::closeDevice()
     // Free our resources and close the device
     videoStreamIndex = -1;
     avcodec_free_context(&cctx);
-#if LIBAVCODEC_VERSION_INT < 3747941
-    avcodec_close(cctxOrig);
-    cctxOrig = nullptr;
-#endif
     while (device && !device->close()) {
     }
     device = nullptr;
@@ -403,26 +370,6 @@ void CameraSource::stream()
             return;
         }
 
-#if LIBAVCODEC_VERSION_INT < 3747941
-        AVFrame* frame = av_frame_alloc();
-        if (!frame) {
-            return;
-        }
-
-        // Only keep packets from the right stream;
-        if (packet.stream_index == videoStreamIndex) {
-            // Decode video frame
-            int frameFinished;
-            avcodec_decode_video2(cctx, frame, &frameFinished, &packet);
-            if (!frameFinished) {
-                return;
-            }
-
-            VideoFrame* vframe = new VideoFrame(id, frame);
-            emit frameAvailable(vframe->trackFrame());
-        }
-#else
-
         // Forward packets to the decoder and grab the decoded frame
         bool isVideo = packet.stream_index == videoStreamIndex;
         bool readyToRecive = isVideo && !avcodec_send_packet(cctx, &packet);
@@ -436,7 +383,6 @@ void CameraSource::stream()
                 av_frame_free(&frame);
             }
         }
-#endif
 
         av_packet_unref(&packet);
     };
