@@ -60,6 +60,8 @@ private:
 
 private:
     QFuture<void> streamFuture;
+    QThread* deviceThread;
+
     QString deviceName;
     CameraDevice* device;
     VideoMode mode;
@@ -67,6 +69,7 @@ private:
     // TODO: Remove when ffmpeg version will be bumped to the 3.1.0
     AVCodecContext* cctxOrig;
     int videoStreamIndex;
+
     QReadWriteLock streamMutex;
 
     std::atomic_bool _isNone;
