@@ -820,7 +820,7 @@ void ChatForm::onLoadHistory()
         return;
     }
 
-    LoadHistoryDialog dlg;
+    LoadHistoryDialog dlg(f->getPublicKey());
     if (dlg.exec()) {
         QDateTime fromTime = dlg.getFromDate();
         loadHistory(fromTime);

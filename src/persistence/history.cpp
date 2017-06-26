@@ -286,6 +286,47 @@ QList<History::HistMessage> History::getChatHistory(const QString& friendPk, con
 }
 
 /**
+ * @brief Fetches chat messages counts for each day from the database.
+ * @param friendPk Friend public key to fetch.
+ * @param from Start of period to fetch.
+ * @param to End of period to fetch.
+ * @return List of structs containing days offset and message count for that day.
+ */
+QList<History::DateMessages> History::getChatHistoryCounts(const ToxPk& friendPk, const QDate& from,
+                                                           const QDate& to)
+{
+    if (!isValid()) {
+        return {};
+    }
+    QDateTime fromTime(from);
+    QDateTime toTime(to);
+
+    QList<DateMessages> counts;
+
+    auto rowCallback = [&counts](const QVector<QVariant>& row) {
+        DateMessages app;
+        app.count = row[0].toUInt();
+        app.offsetDays = row[1].toUInt();
+        counts.append(app);
+    };
+
+    QString queryText =
+        QString("SELECT COUNT(history.id), ((timestamp / 1000 / 60 / 60 / 24) - %4 ) AS day "
+                "FROM history "
+                "JOIN peers chat ON chat_id = chat.id "
+                "WHERE timestamp BETWEEN %1 AND %2 AND chat.public_key='%3'"
+                "GROUP BY day;")
+            .arg(fromTime.toMSecsSinceEpoch())
+            .arg(toTime.toMSecsSinceEpoch())
+            .arg(friendPk.toString())
+            .arg(QDateTime::fromMSecsSinceEpoch(0).daysTo(fromTime));
+
+    db->execNow({queryText, rowCallback});
+
+    return counts;
+}
+
+/**
  * @brief Marks a message as sent.
  * Removing message from the faux-offline pending messages list.
  *
