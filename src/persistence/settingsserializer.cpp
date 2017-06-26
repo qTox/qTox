@@ -21,7 +21,9 @@
 #include "serialize.h"
 
 #include "src/core/toxencrypt.h"
+#include "src/persistence/checkdisk.h"
 #include "src/persistence/profile.h"
+#include "src/widget/gui.h"
 
 #include <QDebug>
 #include <QFile>
@@ -311,6 +313,10 @@ void SettingsSerializer::save()
         f.commit();
     } else {
         f.cancelWriting();
+        if (!CheckDisk::canWrite(path, f)) {
+            GUI::showError(QObject::tr("Disk full"), QObject::tr("Operation failed due to full disk. Clear some space!"));
+            qCritical() << "Disk full!";
+        }
         qCritical() << "Failed to write, can't save!";
     }
 }

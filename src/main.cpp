@@ -22,9 +22,11 @@
 #include "src/net/autoupdate.h"
 #include "src/net/toxuri.h"
 #include "src/nexus.h"
+#include "src/persistence/checkdisk.h"
 #include "src/persistence/profile.h"
 #include "src/persistence/toxsave.h"
 #include "src/video/camerasource.h"
+#include "src/widget/gui.h"
 #include "src/widget/loginscreen.h"
 #include "src/widget/translator.h"
 #include "widget/widget.h"
@@ -313,9 +315,36 @@ int main(int argc, char* argv[])
 
     QObject::connect(a, &QApplication::aboutToQuit, cleanup);
 
-    // Run (unless we already quit before starting!)
+
+    QString cacheDir = Settings::getInstance().getAppCacheDirPath();
+    QString dataDir = Settings::getInstance().getAppDataDirPath();
+    QString settingsDir = Settings::getInstance().getSettingsDirPath();
+
+    bool cacheOk = true, dataOk = true, settingsOk = true;
+    // Every directory can be located on separate filesystem
+    bool diskFull = (QFileInfo::exists(cacheDir) && CheckDisk::diskFull(cacheDir, cacheOk))
+                    || (QFileInfo::exists(dataDir) && CheckDisk::diskFull(dataDir, dataOk))
+                    || (QFileInfo::exists(dataDir) && CheckDisk::diskFull(settingsDir, settingsOk));
+
+    if (!(cacheOk && dataOk && settingsOk)) {
+        qCritical() << "Disk reading error!";
+        GUI::showError(QObject::tr("Disk error"), QObject::tr("Error while reading disk. Proceed with caution!"));
+    }
+    if (diskFull) {
+        qCritical() << "Disk full, exiting!";
+        GUI::showError(QObject::tr("Disk full"), QObject::tr("Disk is full."));
+    }
+
+    if (!diskFull && (CheckDisk::diskUsage(cacheDir, cacheOk) > DISK_WARN_THRESHOLD
+                      || CheckDisk::diskUsage(dataDir, dataOk) > DISK_WARN_THRESHOLD
+                      || CheckDisk::diskUsage(settingsDir, settingsOk) > DISK_WARN_THRESHOLD)) {
+        qWarning() << "Disk almost full";
+        GUI::showError(QObject::tr("Disk warning"), QObject::tr("High disk usage. Consider freeing space."));
+    }
+
+    // Run (unless we already quit before starting or encounter full disk!)
     int errorcode = 0;
-    if (nexus.isRunning())
+    if (nexus.isRunning() && !diskFull)
         errorcode = a->exec();
 
     qDebug() << "Exit with status" << errorcode;
