@@ -103,6 +103,7 @@ CameraSource::CameraSource()
     , _isNone{true}
     , subscriptions{0}
 {
+    qRegisterMetaType<VideoMode>("VideoMode");
     deviceThread->setObjectName("Device thread");
     deviceThread->start();
     moveToThread(deviceThread);
@@ -155,6 +156,12 @@ void CameraSource::setupDefault()
  */
 void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
 {
+    if (QThread::currentThread() != deviceThread) {
+        QMetaObject::invokeMethod(this, "setupDevice", Q_ARG(const QString&, DeviceName),
+                                  Q_ARG(const VideoMode&, Mode));
+        return;
+    }
+
     QWriteLocker locker{&deviceMutex};
 
     if (DeviceName == deviceName && Mode == mode) {
@@ -240,6 +247,11 @@ void CameraSource::unsubscribe()
  */
 void CameraSource::openDevice()
 {
+    if (QThread::currentThread() != deviceThread) {
+        QMetaObject::invokeMethod(this, "openDevice");
+        return;
+    }
+
     QWriteLocker locker{&streamMutex};
     qDebug() << "Opening device " << deviceName;
 
@@ -347,6 +359,11 @@ void CameraSource::openDevice()
  */
 void CameraSource::closeDevice()
 {
+    if (QThread::currentThread() != deviceThread) {
+        QMetaObject::invokeMethod(this, "closeDevice");
+        return;
+    }
+
     QWriteLocker locker{&streamMutex};
     qDebug() << "Closing device " << deviceName;
 
