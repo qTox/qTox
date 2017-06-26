@@ -134,7 +134,15 @@ void CameraSource::destroyInstance()
  */
 void CameraSource::setupDefault()
 {
-    setupDevice(CameraDevice::getDefaultDeviceName());
+    QString deviceName = CameraDevice::getDefaultDeviceName();
+    bool isScreen = CameraDevice::isScreen(deviceName);
+    VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
+    if (!isScreen) {
+        mode = VideoMode(Settings::getInstance().getCamVideoRes());
+        mode.FPS = Settings::getInstance().getCamVideoFPS();
+    }
+
+    setupDevice(deviceName, mode);
 }
 
 /**
