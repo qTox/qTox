@@ -71,6 +71,7 @@ private:
     AVCodecContext* cctxOrig;
     int videoStreamIndex;
 
+    QReadWriteLock deviceMutex;
     QReadWriteLock streamMutex;
 
     std::atomic_bool _isNotNone;
