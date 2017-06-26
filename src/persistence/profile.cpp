@@ -34,6 +34,7 @@
 #include "src/core/core.h"
 #include "src/net/avatarbroadcaster.h"
 #include "src/nexus.h"
+#include "src/persistence/checkdisk.h"
 #include "src/widget/gui.h"
 #include "src/widget/widget.h"
 
@@ -343,6 +344,10 @@ void Profile::saveToxSave(QByteArray data)
         newProfile = false;
     } else {
         saveFile.cancelWriting();
+        if (!CheckDisk::canWrite(Settings::getInstance().getSettingsDirPath(), saveFile)) {
+            GUI::showError(tr("Disk full"), tr("Operation failed due to full disk. Clear some space!"));
+            qCritical() << "Disk full! Clear some space!";
+        }
         qCritical() << "Failed to write, can't save!";
     }
 }
@@ -505,8 +510,14 @@ void Profile::saveAvatar(QByteArray pic, const QString& ownerId)
             qWarning() << "Tox avatar " << path << " couldn't be saved";
             return;
         }
-        file.write(pic);
-        file.commit();
+        if (file.write(pic) == -1) {
+            bool sizeErr = !CheckDisk::canWrite(Settings::getInstance().getSettingsDirPath(), file);
+            QString message = (sizeErr) ? "Disk full. Clear some space!" : "Disk error";
+            GUI::showError(tr("Disk error"), tr(message.toStdString().c_str()));
+            qCritical() << message;
+        } else {
+            file.commit();
+        }
     }
 }
 
