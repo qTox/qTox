@@ -207,29 +207,15 @@ CameraSource::~CameraSource()
         QThread::yieldCurrentThread();
 }
 
-bool CameraSource::subscribe()
+void CameraSource::subscribe()
 {
     QWriteLocker locker{&streamMutex};
 
     if (!_isNotNone) {
         ++subscriptions;
-        return true;
     }
 
-    if (openDevice()) {
-        ++subscriptions;
-        return true;
-    } else {
-        while (device && !device->close()) {
-        }
-        device = nullptr;
-        cctx = nullptr;
-#if LIBAVCODEC_VERSION_INT < 3747941
-        cctxOrig = nullptr;
-#endif
-        videoStreamIndex = -1;
-        return false;
-    }
+    openDevice();
 }
 
 void CameraSource::unsubscribe()
@@ -257,15 +243,15 @@ void CameraSource::unsubscribe()
 /**
  * @brief Opens the video device and starts streaming.
  * @note Callers must own the biglock.
- * @return True if success, false otherwise.
  */
-bool CameraSource::openDevice()
+void CameraSource::openDevice()
 {
     qDebug() << "Opening device " << deviceName;
 
     if (device) {
         device->open();
-        return true;
+        emit openFailed();
+        return;
     }
 
     // We need to create a new CameraDevice
@@ -274,7 +260,8 @@ bool CameraSource::openDevice()
 
     if (!device) {
         qWarning() << "Failed to open device!";
-        return false;
+        emit openFailed();
+        return;
     }
 
     // We need to open the device as many time as we already have subscribers,
@@ -298,7 +285,8 @@ bool CameraSource::openDevice()
 
     if (videoStreamIndex == -1) {
         qWarning() << "Video stream not found";
-        return false;
+        emit openFailed();
+        return;
     }
 
     AVCodecID codecId;
@@ -313,7 +301,8 @@ bool CameraSource::openDevice()
     codec = avcodec_find_decoder(codecId);
     if (!codec) {
         qWarning() << "Codec not found";
-        return false;
+        emit openFailed();
+        return;
     }
 
 
@@ -322,14 +311,16 @@ bool CameraSource::openDevice()
     cctx = avcodec_alloc_context3(codec);
     if (avcodec_copy_context(cctx, cctxOrig) != 0) {
         qWarning() << "Can't copy context";
-        return false;
+        emit openFailed();
+        return;
     }
 #else
     // Create a context for our codec, using the existing parameters
     cctx = avcodec_alloc_context3(codec);
     if (avcodec_parameters_to_context(cctx, cparams) < 0) {
         qWarning() << "Can't create AV context from parameters";
-        return false;
+        emit openFailed();
+        return;
     }
 #endif
 
@@ -339,7 +330,8 @@ bool CameraSource::openDevice()
     if (avcodec_open2(cctx, codec, nullptr) < 0) {
         qWarning() << "Can't open codec";
         avcodec_free_context(&cctx);
-        return false;
+        emit openFailed();
+        return;
     }
 
     if (streamFuture.isRunning())
@@ -352,8 +344,6 @@ bool CameraSource::openDevice()
         QThread::yieldCurrentThread();
 
     emit deviceOpened();
-
-    return true;
 }
 
 /**
