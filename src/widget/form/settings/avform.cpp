@@ -131,7 +131,7 @@ void AVForm::open(const QString& devName, const VideoMode& mode)
     QRect rect = mode.toRect();
     Settings::getInstance().setCamVideoRes(rect);
     Settings::getInstance().setCamVideoFPS(static_cast<quint16>(mode.FPS));
-    camera.open(devName, mode);
+    camera.setupDevice(devName, mode);
 }
 
 void AVForm::rescanDevices()
@@ -393,7 +393,7 @@ void AVForm::on_videoDevCombobox_currentIndexChanged(int index)
     if (0 < modeIndex && modeIndex < videoModes.size())
         mode = videoModes[modeIndex];
 
-    camera.open(dev, mode);
+    camera.setupDevice(dev, mode);
     if (dev == "none")
         Core::getInstance()->getAv()->sendNoVideo();
 }
