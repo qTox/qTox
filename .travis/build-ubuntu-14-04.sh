@@ -20,7 +20,7 @@
 set -e -o pipefail
 
 # Qt 5.3, since that's the lowest supported version
-sudo add-apt-repository -y ppa:beineri/opt-qt532-trusty
+sudo add-apt-repository -y ppa:beineri/opt-qt562-trusty
 sudo apt-get update -qq
 
 # install needed Qt, OpenAL, opus, qrencode, GTK tray deps, sqlcipher
@@ -41,15 +41,15 @@ sudo apt-get install -y --force-yes \
     libtool \
     libvpx-dev \
     libxss-dev qrencode \
-    qt53base \
-    qt53script \
-    qt53svg \
-    qt53tools \
-    qt53xmlpatterns \
+    qt56base \
+    qt56script \
+    qt56svg \
+    qt56tools \
+    qt56xmlpatterns \
     pkg-config || yes
 
 # Qt
-source /opt/qt53/bin/qt53-env.sh || yes
+source /opt/qt56/bin/qt56-env.sh || yes
 
 # ffmpeg
 if [ ! -e "libs" ]; then mkdir libs; fi
@@ -59,7 +59,7 @@ cd libs/
 export PREFIX_DIR="$PWD"
 #
 cd ../ffmpeg
-wget http://ffmpeg.org/releases/ffmpeg-2.8.5.tar.bz2
+wget http://ffmpeg.org/releases/ffmpeg-3.2.4.tar.bz2
 tar xf ffmpeg*
 cd ffmpeg*
 # enabled:
