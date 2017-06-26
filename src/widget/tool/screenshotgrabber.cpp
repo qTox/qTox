@@ -48,10 +48,7 @@ ScreenshotGrabber::ScreenshotGrabber()
     window->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     window->setFrameShape(QFrame::NoFrame);
     window->installEventFilter(this);
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
     pixRatio = QApplication::primaryScreen()->devicePixelRatio();
-#endif
 
     setupScene();
 }

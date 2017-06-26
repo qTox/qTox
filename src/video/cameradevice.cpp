@@ -160,13 +160,7 @@ CameraDevice* CameraDevice::open(QString devName, VideoMode mode)
             screen.setHeight(mode.height);
         } else {
             QScreen* defaultScreen = QApplication::primaryScreen();
-            qreal pixRatio;
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
-            pixRatio = defaultScreen->devicePixelRatio();
-#else
-            pixRatio = 1.0;
-#endif
+            qreal pixRatio = defaultScreen->devicePixelRatio();
 
             screen = defaultScreen->size();
             // Workaround https://trac.ffmpeg.org/ticket/4574 by choping 1 px bottom and right
@@ -422,12 +416,7 @@ QVector<VideoMode> CameraDevice::getScreenModes()
     std::for_each(screens.begin(), screens.end(), [&result](QScreen* s) {
         QRect rect = s->geometry();
         QPoint p = rect.topLeft();
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0))
         qreal pixRatio = s->devicePixelRatio();
-#else
-        qreal pixRatio = 1.0;
-#endif
 
         VideoMode mode(rect.width() * pixRatio, rect.height() * pixRatio, p.x() * pixRatio,
                        p.y() * pixRatio);

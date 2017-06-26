@@ -76,12 +76,7 @@ QStringList loadDefaultPaths()
 
     // qTox exclusive emoticons
     QStandardPaths::StandardLocation location;
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 4, 0))
     location = QStandardPaths::AppDataLocation;
-#else
-#warning "Qt < 5.4.0 has a trouble with unicode symbols in path on few systems"
-    location = QStandardPaths::DataLocation;
-#endif
 
     QStringList locations = QStandardPaths::standardLocations(location);
     // system wide emoticons
