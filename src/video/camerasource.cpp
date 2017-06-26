@@ -100,7 +100,6 @@ CameraSource::CameraSource()
 #endif
     , videoStreamIndex{-1}
     , _isNone{true}
-    , streamBlocker{false}
     , subscriptions{0}
 {
     subscriptions = 0;
@@ -134,11 +133,7 @@ void CameraSource::destroyInstance()
  */
 void CameraSource::setupDefault()
 {
-    setupDevice(CameraDevice::getDefaultDeviceName());
-}
-
-void CameraSource::setupDevice(const QString& deviceName)
-{
+    QString deviceName = CameraDevice::getDefaultDeviceName();
     bool isScreen = CameraDevice::isScreen(deviceName);
     VideoMode mode = VideoMode(Settings::getInstance().getScreenRegion());
     if (!isScreen) {
@@ -170,11 +165,6 @@ void CameraSource::setupDevice(const QString& DeviceName, const VideoMode& Mode)
 
     if (subscriptions && !_isNone)
         openDevice();
-}
-
-void CameraSource::close()
-{
-    setupDevice("none");
 }
 
 bool CameraSource::isNone() const
