@@ -40,12 +40,14 @@ public:
     static CameraSource& getInstance();
     static void destroyInstance();
     void setupDefault();
-    void setupDevice(const QString& deviceName, const VideoMode& mode);
     bool isNone() const;
 
     // VideoSource interface
     virtual void subscribe() override;
     virtual void unsubscribe() override;
+
+public slots:
+    void setupDevice(const QString& deviceName, const VideoMode& mode);
 
 signals:
     void deviceOpened();
@@ -55,6 +57,8 @@ private:
     CameraSource();
     ~CameraSource();
     void stream();
+
+private slots:
     void openDevice();
     void closeDevice();
 
