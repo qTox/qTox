@@ -153,11 +153,18 @@ http://slackbuilds.org/repository/14.2/network/qTox/
 
 #### FreeBSD
 
-A qTox port is available at ``net-im/qTox``. To build and install qTox:
+qTox is available as a binary package. To install the qTox package:
 
 ```bash
-cd /usr/ports/net-im/qTox/
-make install
+pkg install qTox
+```
+
+The qTox port is also available at ``net-im/qTox``. To build and install qTox
+from sources using the port:
+
+```bash
+cd /usr/ports/net-im/qTox
+make install clean
 ```
 
 ----

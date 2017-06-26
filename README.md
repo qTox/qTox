@@ -45,7 +45,7 @@ while running on all major platforms.
 
 Windows | Linux | OS X | FreeBSD
 --------|-------|------|--------
-**[64 bit installer]**, [signature][sig-64] | **[Arch]**, **[Gentoo]** | **[Building instructions]** | **[Port]**
+**[64 bit installer]**, [signature][sig-64] | **[Arch]**, **[Gentoo]** | **[Building instructions]** | **[Package & Port]**
 [32 bit installer], [signature][sig-32] | | [Experimental download] |
 [64 bit][64portable], [32 bit][32portable] portable | [Other] | |
 
@@ -154,7 +154,7 @@ AED3 1134 9C23 A123 E5C4  AA4B 139C A045 3DA2 D773
 [Mailing list]: https://lists.tox.chat
 [Other]: /INSTALL.md#linux
 [qTox-dev mailing list]: https://lists.tox.chat/listinfo/qtox-dev
-[Port]: /INSTALL.md#freebsd-easy
+[Package & Port]: /INSTALL.md#freebsd-easy
 [Report bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
 [reporting bugs]: https://github.com/qTox/qTox/wiki/Writing-Useful-Bug-Reports
 [Reviewing and testing pull requests]: /CONTRIBUTING.md#reviews
