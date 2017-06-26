@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg4867"
    version="1.1"
-   inkscape:version="0.91 r13725"
-   width="27.5"
-   height="22.5"
-   viewBox="0 0 27.5 22.5"
-   sodipodi:docname="micButton.svg">
+   width="30"
+   height="28"
+   viewBox="0 0 28.124999 26.25">
   <metadata
      id="metadata4873">
     <rdf:RDF>
@@ -30,29 +24,9 @@
   </metadata>
   <defs
      id="defs4871" />
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1280"
-     inkscape:window-height="965"
-     id="namedview4869"
-     showgrid="false"
-     inkscape:zoom="22.627418"
-     inkscape:cx="11.743876"
-     inkscape:cy="5.7111464"
-     inkscape:window-x="0"
-     inkscape:window-y="96"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg4867" />
   <g
      id="g4144"
-     transform="matrix(1.1244169,0,0,1.1264917,-1.7361911,-1.4498809)">
+     transform="matrix(1.1279459,0,0,1.1264917,-1.4773586,0.42511766)">
     <rect
        ry="2.6881006"
        y="1.2870765"
@@ -80,8 +54,6 @@
        id="rect5427"
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.70899999;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <path
-       sodipodi:nodetypes="csc"
-       inkscape:connector-curvature="0"
        id="path5431"
        d="m 7.0765239,9.8278885 c 0,0 -0.9033248,7.8098235 6.4139421,7.8098235 7.317267,0 7.022576,-7.8534036 7.022576,-7.8534036"
        style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.89999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
