@@ -40,7 +40,7 @@
 
 | Name          | Version     | Modules                                           |
 |---------------|-------------|-------------------------------------------------- |
-| [Qt]          | >= 5.3.0    | core, gui, network, opengl, sql, svg, widget, xml |
+| [Qt]          | >= 5.5.0    | core, gui, network, opengl, sql, svg, widget, xml |
 | [GCC]/[MinGW] | >= 4.8      | C++11 enabled                                     |
 | [toxcore]     | = 0.1.\*    | core, av                                          |
 | [FFmpeg]      | >= 2.6.0    | avformat, avdevice, avcodec, avutil, swscale      |
