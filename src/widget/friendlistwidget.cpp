@@ -552,9 +552,10 @@ void FriendListWidget::dropEvent(QDropEvent* event)
     if (!widget)
         return;
 
-    // Check, that the user has a friend with the same ToxId
-    ToxId toxId(event->mimeData()->text());
-    Friend* f = FriendList::findFriend(toxId.getPublicKey());
+    // Check, that the user has a friend with the same ToxPk
+    const QByteArray data = QByteArray::fromHex(event->mimeData()->text().toLatin1());
+    const ToxPk toxPk{data};
+    Friend* f = FriendList::findFriend(toxPk);
     if (!f)
         return;
 
