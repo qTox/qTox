@@ -21,6 +21,7 @@
 #include "serialize.h"
 
 #include "src/core/toxencrypt.h"
+#include "src/persistence/checkdisk.h"
 #include "src/persistence/profile.h"
 
 #include <QDebug>
@@ -311,6 +312,9 @@ void SettingsSerializer::save()
         f.commit();
     } else {
         f.cancelWriting();
+        if (CheckDisk::diskFull(path)) {
+            CheckDisk::errorDialog();
+        }
         qCritical() << "Failed to write, can't save!";
     }
 }
