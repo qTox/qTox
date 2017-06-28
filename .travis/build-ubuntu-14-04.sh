@@ -19,7 +19,7 @@
 # stop as soon as one of steps will fail
 set -e -o pipefail
 
-# Qt 5.3, since that's the lowest supported version
+# Qt 5.5, since that's the lowest supported version
 sudo add-apt-repository -y ppa:beineri/opt-qt551-trusty
 sudo apt-get update -qq
 

@@ -25,9 +25,9 @@ imposed:
 ### Compatibility
 
 qTox is linked against Qt 5, allowing the use of Qt constructs and library
-features. The current minimum supported Qt version is Qt 5.3, meaning that all
-code must compile in a Qt 5.3 environment. Any usage post-Qt 5.3 features must
-be optional and be disabled when compiling/running in a Qt 5.3 environment.
+features. The current minimum supported Qt version is Qt 5.5, meaning that all
+code must compile in a Qt 5.5 environment. Any usage post-Qt 5.5 features must
+be optional and be disabled when compiling/running in a Qt 5.5 environment.
 
 ### No Exceptions
 
