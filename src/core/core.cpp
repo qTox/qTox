@@ -1435,3 +1435,18 @@ void Core::killTimers(bool onlyStop)
         toxTimer = nullptr;
     }
 }
+
+/**
+ * @brief Reinitialized the core.
+ * @warning Must be called from the Core thread, with the GUI thread ready to process events.
+ */
+void Core::reset()
+{
+    assert(QThread::currentThread() == coreThread);
+    QByteArray toxsave = getToxSaveData();
+    ready = false;
+    killTimers(true);
+    deadifyTox();
+    GUI::clearContacts();
+    start(toxsave);
+}
