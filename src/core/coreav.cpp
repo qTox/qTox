@@ -728,7 +728,7 @@ void CoreAV::stateCallback(ToxAV* toxav, uint32_t friendNum, uint32_t state, voi
     if (state & TOXAV_FRIEND_CALL_STATE_ERROR) {
         qWarning() << "Call with friend" << friendNum << "died of unnatural causes!";
         calls.remove(friendNum);
-        emit self->avEnd(friendNum);
+        emit self->avEnd(friendNum, true);
     } else if (state & TOXAV_FRIEND_CALL_STATE_FINISHED) {
         qDebug() << "Call with friend" << friendNum << "finished quietly";
         calls.remove(friendNum);
