@@ -264,6 +264,14 @@ which may lead to problems with video calls.</source>
         <source>Input field for notes about the contact</source>
         <translation>حقل لادخال للملاحظات عن جهة الاتصار</translation>
     </message>
+    <message>
+        <source>Automatically accept group chat invitations from this contact if set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto accept group invites</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddFriendForm</name>
@@ -343,7 +351,7 @@ which may lead to problems with video calls.</source>
     <message>
         <source>This Tox ID is invalid or does not exist</source>
         <comment>Toxme error</comment>
-        <translation type="unfinished"></translation>
+        <translation>معرف Tox هذا غير صالح أو غير موجود</translation>
     </message>
 </context>
 <context>
@@ -615,19 +623,27 @@ which may lead to problems with video calls.</source>
     </message>
     <message>
         <source>Can&apos;t start video call</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن بدء مكالمة فيديو</translation>
     </message>
     <message>
         <source>Can&apos;t start audio call</source>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن بدء المكالمة الصوتية</translation>
     </message>
     <message>
         <source>Microphone can be muted only during a call</source>
-        <translation type="unfinished"></translation>
+        <translation>يمكن كتم صوت الميكروفون فقط أثناء المكالمة</translation>
     </message>
     <message>
         <source>Sound can be disabled only during a call</source>
+        <translation>يمكن تعطيل الصوت فقط أثناء المكالمة</translation>
+    </message>
+    <message>
+        <source>Export to file</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save chat log</source>
+        <translation type="unfinished">حفظ سجل المحادثة</translation>
     </message>
 </context>
 <context>
@@ -676,28 +692,28 @@ which may lead to problems with video calls.</source>
         <translation>استخدم التوكس على كيوتوكس</translation>
     </message>
     <message>
-        <source>You need to write a message with your request</source>
-        <translation>تحتاج كتابة رسالة مع الطلب</translation>
-    </message>
-    <message>
-        <source>Your message is too long!</source>
-        <translation>رسالتك طويلة جدا!</translation>
-    </message>
-    <message>
-        <source>Friend is already added</source>
-        <translation>تمت الاضافة فعلاً</translation>
-    </message>
-    <message>
-        <source>/me offers friendship.</source>
-        <translation>/me طلب إضافة.</translation>
-    </message>
-    <message>
         <source>/me offers friendship, &quot;%1&quot;</source>
         <translation>/me طلب إضافة, &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Invalid Tox ID</source>
-        <translation type="unfinished"></translation>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">معرف Tox غير صالح</translation>
+    </message>
+    <message>
+        <source>You need to write a message with your request</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">تحتاج كتابة رسالة مع الطلب</translation>
+    </message>
+    <message>
+        <source>Your message is too long!</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">رسالتك طويلة جدا!</translation>
+    </message>
+    <message>
+        <source>Friend is already added</source>
+        <comment>Error while sending friendship request</comment>
+        <translation type="unfinished">تمت الاضافة فعلاً</translation>
     </message>
 </context>
 <context>
@@ -802,33 +818,27 @@ which may lead to problems with video calls.</source>
     <name>FriendListWidget</name>
     <message>
         <source>Today</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>اليوم</translation>
+        <translation type="unfinished">اليوم</translation>
     </message>
     <message>
         <source>Yesterday</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>امس</translation>
+        <translation type="unfinished">امس</translation>
     </message>
     <message>
         <source>Last 7 days</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>اخر سبع أيام</translation>
+        <translation type="unfinished">اخر سبع أيام</translation>
     </message>
     <message>
         <source>This month</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>هذا الشهر</translation>
+        <translation type="unfinished">هذا الشهر</translation>
     </message>
     <message>
         <source>Older than 6 Months</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>اكثر من 6 شهور</translation>
+        <translation type="unfinished">اكثر من 6 شهور</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <comment>Category for sorting friends by activity</comment>
-        <translation>غير معروف</translation>
+        <source>Never</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1236,15 +1246,15 @@ instead of closing itself.</source>
     <name>GroupInviteWidget</name>
     <message>
         <source>Invited by %1 on %2 at %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>تمت دعوتهم بنسبة٪ 1 على٪ 2 في٪ 3.</translation>
     </message>
     <message>
         <source>Join</source>
-        <translation type="unfinished"></translation>
+        <translation>انضم</translation>
     </message>
     <message>
         <source>Decline</source>
-        <translation type="unfinished"></translation>
+        <translation>انخفاض</translation>
     </message>
 </context>
 <context>
@@ -1464,7 +1474,7 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>Update ToxMe entry</source>
-        <translation type="unfinished"></translation>
+        <translation>تحديث إدخال ToxMe</translation>
     </message>
     <message>
         <source>Rename profile.</source>
@@ -1488,23 +1498,23 @@ Profile does not contain your history.</source>
     </message>
     <message>
         <source>My name:</source>
-        <translation type="unfinished"></translation>
+        <translation>الاسم:</translation>
     </message>
     <message>
         <source>My status:</source>
-        <translation type="unfinished"></translation>
+        <translation>حالتي:</translation>
     </message>
     <message>
         <source>My username</source>
-        <translation type="unfinished"></translation>
+        <translation>اسم المستخدم الخاص بي</translation>
     </message>
     <message>
         <source>My biography</source>
-        <translation type="unfinished"></translation>
+        <translation>سيرتي الذاتية</translation>
     </message>
     <message>
         <source>My profile</source>
-        <translation type="unfinished"></translation>
+        <translation>ملفي الشخصي</translation>
     </message>
 </context>
 <context>
@@ -1516,6 +1526,10 @@ Profile does not contain your history.</source>
     <message>
         <source>Load history from:</source>
         <translation>تحميل التاريخ من:</translation>
+    </message>
+    <message>
+        <source>%1 messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1737,7 +1751,7 @@ You may want to create one.</source>
     </message>
     <message>
         <source>Contact search input for known friends</source>
-        <translation type="unfinished"></translation>
+        <translation>ادخل اسم للبحث عنه في لائحة الاصدقاء المعروفين</translation>
     </message>
     <message>
         <source>Sorting and visibility</source>
@@ -1899,6 +1913,17 @@ If you are getting spammed with friend requests, change the NoSpam.</source>
     </message>
 </context>
 <context>
+    <name>Profile</name>
+    <message>
+        <source>Failed to derive key from password, the profile won&apos;t use the new password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password on the database, it might be corrupted or use the old password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileForm</name>
     <message>
         <source>Current profile: </source>
@@ -2025,12 +2050,6 @@ Please use another image.</source>
         <translation>يرجى إدخال كلمة مرور جديدة.</translation>
     </message>
     <message>
-        <source>This bunch of characters tells other Tox clients how to contact you.
-Share it with your friends to communicate.</source>
-        <translation>هذه الباقة من الحروف تسمح لبقية المستخدمين بالتواصل معك.
-شاركها مع اصدقائك لتتواصلوا.</translation>
-    </message>
-    <message>
         <source>The following files could not be deleted:</source>
         <comment>deletion failed text part 1</comment>
         <translation>لا يمكن حذف الملفات التالية:</translation>
@@ -2090,6 +2109,17 @@ Share it with your friends to communicate.</source>
     <message>
         <source>Current profile location: %1</source>
         <translation>مسار ملف الحساب الشخصي الحالي: %1</translation>
+    </message>
+    <message>
+        <source>Couldn&apos;t change password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This bunch of characters tells other Tox clients how to contact you.
+Share it with your friends to communicate.
+
+This ID includes the NoSpam code (in blue), and the checksum (in gray).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2169,28 +2199,20 @@ Share it with your friends to communicate.</source>
     <name>QMessageBox</name>
     <message>
         <source>Couldn&apos;t add friend</source>
-        <translation type="unfinished">لا يمكن اضافة صديق</translation>
+        <translation>لا يمكن اضافة صديق</translation>
     </message>
     <message>
         <source>%1 is not a valid Toxme address.</source>
-        <translation type="unfinished">%1 ليس عنوان ToxMe صحيح.</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">موافق</translation>
+        <translation>%1 ليس عنوان ToxMe صحيح.</translation>
     </message>
     <message>
         <source>You can&apos;t add yourself as a friend!</source>
         <comment>When trying to add your own Tox ID as friend</comment>
-        <translation type="unfinished">لا تستطيع اضافة نفسك كصديق!</translation>
+        <translation>لا تستطيع اضافة نفسك كصديق!</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Resizing</source>
-        <translation>تغيير الحجم</translation>
-    </message>
     <message>
         <source>Tox URI to parse</source>
         <translation>تحليل عنوان URI للتوكس</translation>
@@ -2312,6 +2334,10 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Internal ToxMe error</source>
         <translation>خطأ ToxMe داخلي</translation>
+    </message>
+    <message>
+        <source>Reformatting text in progress..</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2790,27 +2816,27 @@ It will be installed when qTox restarts.</source>
     <message>
         <source>Add friend</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">إضافة صديق</translation>
+        <translation>إضافة صديق</translation>
     </message>
     <message>
         <source>Group invites</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">إضافات المجموعة</translation>
+        <translation>دعوات المجموعة</translation>
     </message>
     <message>
         <source>File transfers</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">نقل الملفات</translation>
+        <translation>نقل الملفات</translation>
     </message>
     <message>
         <source>Settings</source>
         <comment>title of the window</comment>
-        <translation type="unfinished">الاعدادات</translation>
+        <translation>الاعدادات</translation>
     </message>
     <message>
         <source>My profile</source>
         <comment>title of the window</comment>
-        <translation type="unfinished"></translation>
+        <translation>ملفي</translation>
     </message>
 </context>
 </TS>
