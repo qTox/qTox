@@ -378,7 +378,7 @@ void ChatForm::onAvStart(uint32_t friendId, bool video)
     startCounter();
 }
 
-void ChatForm::onAvEnd(uint32_t friendId)
+void ChatForm::onAvEnd(uint32_t friendId, bool error)
 {
     if (friendId != f->getFriendId()) {
         return;
@@ -392,7 +392,7 @@ void ChatForm::onAvEnd(uint32_t friendId)
     }
 
     updateCallButtons();
-    stopCounter();
+    stopCounter(error);
     hideNetcam();
 }
 
@@ -891,14 +891,17 @@ void ChatForm::startCounter()
     callDuration->show();
 }
 
-void ChatForm::stopCounter()
+void ChatForm::stopCounter(bool error)
 {
     if (!callDurationTimer) {
         return;
     }
     QString dhms = secondsToDHMS(timeElapsed.elapsed() / 1000);
     QString name = f->getDisplayedName();
-    addSystemInfoMessage(tr("Call with %1 ended. %2").arg(name, dhms), ChatMessage::INFO,
+    QString mess = error ? "Call with %1 ended unexpectedly. %2" : "Call with %1 ended. %2";
+    // TODO: add notification once notifications are implemented
+
+    addSystemInfoMessage(tr(mess.toStdString().c_str()).arg(name, dhms), ChatMessage::INFO,
                          QDateTime::currentDateTime());
     callDurationTimer->stop();
     callDuration->setText("");
