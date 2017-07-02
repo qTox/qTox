@@ -48,10 +48,10 @@ function(search_dependency pkg)
 
   # Then, try OSX frameworks.
   if(NOT ${pkg}_FOUND AND arg_FRAMEWORK)
-    find_library(${pkg}_LIBRARIES 
-            NAMES ${arg_FRAMEWORK} 
-            PATHS ${CMAKE_OSX_SYSROOT}/System/Library 
-            PATH_SUFFIXES Frameworks 
+    find_library(${pkg}_LIBRARIES
+            NAMES ${arg_FRAMEWORK}
+            PATHS ${CMAKE_OSX_SYSROOT}/System/Library
+            PATH_SUFFIXES Frameworks
             NO_DEFAULT_PATH
     )
     if(${pkg}_LIBRARIES)
@@ -74,16 +74,18 @@ function(search_dependency pkg)
       message(STATUS "${pkg} not found")
     endif()
   else()
-  
     message(STATUS ${pkg} " LIBRARY_DIRS: " ${${pkg}_LIBRARY_DIRS} )
     message(STATUS ${pkg} " INCLUDE_DIRS: " ${${pkg}_INCLUDE_DIRS} )
     message(STATUS ${pkg} " CFLAGS_OTHER: " ${${pkg}_CFLAGS_OTHER} )
     message(STATUS ${pkg} " LIBRARIES:    " ${${pkg}_LIBRARIES} )
+
     link_directories(${${pkg}_LIBRARY_DIRS})
     include_directories(${${pkg}_INCLUDE_DIRS})
+
     foreach(flag ${${pkg}_CFLAGS_OTHER})
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
     endforeach()
+
     set(ALL_LIBRARIES ${ALL_LIBRARIES} ${${pkg}_LIBRARIES} PARENT_SCOPE)
     message(STATUS "${pkg} found")
   endif()
@@ -98,11 +100,6 @@ search_dependency(LIBAVUTIL           PACKAGE libavutil)
 search_dependency(LIBQRENCODE         PACKAGE libqrencode)
 search_dependency(LIBSODIUM           PACKAGE libsodium)
 search_dependency(LIBSWSCALE          PACKAGE libswscale)
-
-if(WIN32)
-  search_dependency(OPENSSL           PACKAGE openssl)
-endif()
-
 search_dependency(SQLCIPHER           PACKAGE sqlcipher)
 search_dependency(VPX                 PACKAGE vpx)
 
@@ -138,6 +135,8 @@ endif()
 
 if(WIN32)
   set(ALL_LIBRARIES ${ALL_LIBRARIES} strmiids)
+  # Qt doesn't provide openssl on windows
+  search_dependency(OPENSSL           PACKAGE openssl)
 endif()
 
 if (NOT GIT_DESCRIBE)
