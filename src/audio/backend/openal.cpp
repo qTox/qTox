@@ -285,7 +285,7 @@ bool OpenAL::initInput(const QString& deviceName)
  */
 bool OpenAL::initOutput(const QString& deviceName)
 {
-    outSources.clear();
+    peerSources.clear();
 
     outputInitialized = false;
     if (!Settings::getInstance().getAudioOutDevEnabled())
@@ -564,16 +564,16 @@ void OpenAL::subscribeOutput(uint& sid)
 
     alGenSources(1, &sid);
     assert(sid);
-    outSources << sid;
+    peerSources << sid;
 
-    qDebug() << "Audio source" << sid << "created. Sources active:" << outSources.size();
+    qDebug() << "Audio source" << sid << "created. Sources active:" << peerSources.size();
 }
 
 void OpenAL::unsubscribeOutput(uint& sid)
 {
     QMutexLocker locker(&audioLock);
 
-    outSources.removeAll(sid);
+    peerSources.removeAll(sid);
 
     if (sid) {
         if (alIsSource(sid)) {
@@ -588,7 +588,7 @@ void OpenAL::unsubscribeOutput(uint& sid)
             alDeleteBuffers(processed, bufids);
             delete[] bufids;
             alDeleteSources(1, &sid);
-            qDebug() << "Audio source" << sid << "deleted. Sources active:" << outSources.size();
+            qDebug() << "Audio source" << sid << "deleted. Sources active:" << peerSources.size();
         } else {
             qWarning() << "Trying to delete invalid audio source" << sid;
         }
@@ -596,7 +596,7 @@ void OpenAL::unsubscribeOutput(uint& sid)
         sid = 0;
     }
 
-    if (outSources.isEmpty())
+    if (peerSources.isEmpty())
         cleanupOutput();
 }
 
