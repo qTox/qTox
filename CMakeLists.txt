@@ -439,6 +439,9 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     src/platform/camera/directshow.cpp
     src/platform/camera/directshow.h
   )
+  set(${PROJECT_NAME}_RESOURCES ${${PROJECT_NAME}_RESOURCES}
+    windows/qtox.rc
+  )
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux" OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/camera/v4l2.cpp
