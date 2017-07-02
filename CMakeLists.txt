@@ -13,10 +13,6 @@ endif()
 
 set(ENV{PKG_CONFIG_PATH}
   ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig:/opt/ffmpeg/lib/pkgconfig:$ENV{PKG_CONFIG_PATH})
-set(ENV{PKG_CONFIG_PATH_i686_w64_mingw32_shared}
-  ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
-set(ENV{PKG_CONFIG_PATH_x86_64_w64_mingw32_shared}
-  ${CMAKE_SOURCE_DIR}/libs/lib/pkgconfig)
 
 execute_process(
   COMMAND brew --prefix qt5
