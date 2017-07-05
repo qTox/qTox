@@ -265,13 +265,24 @@ void ProfileForm::onAvatarClicked()
         return bytes;
     };
 
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"),
-                                                    QDir::homePath(), Nexus::getSupportedImageFilter(),
-                                                    0, QFileDialog::DontUseNativeDialog);
-    if (filename.isEmpty())
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    QString path;
+
+    // QFileDialog can sometimes crash on GNOME-based distros
+    // Just present Qt file picker instead
+    if (desktop.toUpper().contains("GNOME")) {
+        path = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"),
+                                            QDir::homePath(), Nexus::getSupportedImageFilter(), 0,
+                                            QFileDialog::DontUseNativeDialog);
+    } else {
+        path = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"),
+                                            QDir::homePath(), Nexus::getSupportedImageFilter(), 0);
+    }
+
+    if (path.isEmpty())
         return;
 
-    QFile file(filename);
+    QFile file(path);
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen()) {
         GUI::showError(tr("Error"), tr("Unable to open this file."));
