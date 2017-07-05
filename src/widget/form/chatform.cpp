@@ -245,8 +245,17 @@ void ChatForm::onTextEditChanged()
 
 void ChatForm::onAttachClicked()
 {
-    QStringList paths = QFileDialog::getOpenFileNames(this, tr("Send a file"), QDir::homePath(), 0,
-                                                      0, QFileDialog::DontUseNativeDialog);
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
+    QStringList paths;
+
+    // QFileDialog can sometimes crash on GNOME-based distros
+    // Just present Qt file picker instead
+    if (desktop.toUpper().contains("GNOME"))
+        paths = QFileDialog::getOpenFileNames(this, tr("Send a file"), QDir::homePath(), 0, 0,
+                                              QFileDialog::DontUseNativeDialog);
+    else
+        paths = QFileDialog::getOpenFileNames(this, tr("Send a file"), QDir::homePath(), 0, 0);
+
     if (paths.isEmpty()) {
         return;
     }

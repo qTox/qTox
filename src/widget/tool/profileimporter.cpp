@@ -48,9 +48,17 @@ bool ProfileImporter::importProfile()
 {
     QString title = tr("Import profile", "import dialog title");
     QString filter = tr("Tox save file (*.tox)", "import dialog filter");
+    QString desktop = getenv("XDG_CURRENT_DESKTOP");
     QString dir = QDir::homePath();
-    QString path =
-        QFileDialog::getOpenFileName(this, title, dir, filter, 0, QFileDialog::DontUseNativeDialog);
+    QString path;
+
+    // QFileDialog can sometimes crash on GNOME-based distros
+    // Just present Qt file picker instead
+    if (desktop.toUpper().contains("GNOME"))
+        path = QFileDialog::getOpenFileName(this, title, dir, filter, 0,
+               QFileDialog::DontUseNativeDialog);
+    else
+        path = QFileDialog::getOpenFileName(this, title, dir, filter, 0);
 
     return importProfile(path);
 }
