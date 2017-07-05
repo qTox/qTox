@@ -265,13 +265,12 @@ void ProfileForm::onAvatarClicked()
         return bytes;
     };
 
-    QString filename = QFileDialog::getOpenFileName(this, tr("Choose a profile picture"),
-                                                    QDir::homePath(), Nexus::getSupportedImageFilter(),
-                                                    0, QFileDialog::DontUseNativeDialog);
-    if (filename.isEmpty())
+    QString path = QFileDialog::getOpenFileName(Q_NULLPTR, tr("Choose a profile picture"),
+                                                QDir::homePath(), Nexus::getSupportedImageFilter(), 0);
+    if (path.isEmpty())
         return;
 
-    QFile file(filename);
+    QFile file(path);
     file.open(QIODevice::ReadOnly);
     if (!file.isOpen()) {
         GUI::showError(tr("Error"), tr("Unable to open this file."));
@@ -335,10 +334,9 @@ void ProfileForm::onRenameClicked()
 void ProfileForm::onExportClicked()
 {
     QString current = Nexus::getProfile()->getName() + Core::TOX_EXT;
-    QString path = QFileDialog::getSaveFileName(this, tr("Export profile", "save dialog title"),
+    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Export profile", "save dialog title"),
                                                 QDir::home().filePath(current),
-                                                tr("Tox save file (*.tox)", "save dialog filter"),
-                                                0, QFileDialog::DontUseNativeDialog);
+                                                tr("Tox save file (*.tox)", "save dialog filter"), 0);
     if (!path.isEmpty()) {
         if (!Nexus::tryRemoveFile(path)) {
             GUI::showWarning(tr("Location not writable", "Title of permissions popup"),
@@ -406,10 +404,9 @@ void ProfileForm::onCopyQrClicked()
 void ProfileForm::onSaveQrClicked()
 {
     QString current = Nexus::getProfile()->getName() + ".png";
-    QString path = QFileDialog::getSaveFileName(this, tr("Save", "save qr image"),
+    QString path = QFileDialog::getSaveFileName(Q_NULLPTR, tr("Save", "save qr image"),
                                                 QDir::home().filePath(current),
-                                                tr("Save QrCode (*.png)", "save dialog filter"), 0,
-                                                QFileDialog::DontUseNativeDialog);
+                                                tr("Save QrCode (*.png)", "save dialog filter"), 0);
     if (!path.isEmpty()) {
         if (!Nexus::tryRemoveFile(path)) {
             GUI::showWarning(tr("Location not writable", "Title of permissions popup"),

@@ -64,9 +64,8 @@ void AboutUser::onAutoAcceptDirClicked()
         Settings::getInstance().setAutoAcceptDir(this->friendPk, "");
         ui->selectSaveDir->setText(tr("Auto accept for this contact is disabled"));
     } else if (ui->autoacceptfile->isChecked()) {
-        dir = QFileDialog::getExistingDirectory(this, tr("Choose an auto accept directory",
-                                                         "popup title"),
-                                                dir, QFileDialog::DontUseNativeDialog);
+        dir = QFileDialog::getExistingDirectory(Q_NULLPTR, tr("Choose an auto accept directory",
+                                                         "popup title"), dir);
         if (dir.isEmpty()) {
             ui->autoacceptfile->setChecked(false);
             return; // user canellced
@@ -98,9 +97,9 @@ void AboutUser::onAutoGroupInvite()
 void AboutUser::onSelectDirClicked()
 {
     QString dir;
-    dir = QFileDialog::getExistingDirectory(this,
+    dir = QFileDialog::getExistingDirectory(Q_NULLPTR,
                                             tr("Choose an auto accept directory", "popup title"),
-                                            dir, QFileDialog::DontUseNativeDialog);
+                                            dir);
     ui->autoacceptfile->setChecked(true);
     Settings::getInstance().setAutoAcceptDir(this->friendPk, dir);
     Settings::getInstance().savePersonal();
