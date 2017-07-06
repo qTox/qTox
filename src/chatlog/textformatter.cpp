@@ -89,11 +89,22 @@ static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
     REGEX_MARKDOWN_PAIR(STRIKE, 2),
     {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
 
+static const QString IPV4_PART = "(([01]?\\d{1,2})|(2(([0-4]\\d)|(5[0-5]))))";
+static const QString IPV4 = QString("(%1(\\.%1){3})").arg(IPV4_PART);
+
+// according to RFC #4291: https://tools.ietf.org/html/rfc4291#section-2.2
+static const QString IPV6_PART = "([\\da-fA-F]{1,4})";
+static const QString IPV6_FULL = QString("(%1(:%1){7})").arg(IPV6_PART);
+static const QString MIXED_IPS = QString("(%1(:%1){5}:%2)").arg(IPV6_PART, IPV4);
+
+static const QString FILE_SCHEME = QString("\\bfile://((localhost)|%1|%2|%3)?/[^ \\n]*")
+        .arg(IPV4, IPV6_FULL, MIXED_IPS);
+
 static const QVector<QRegularExpression> urlPatterns {
     QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
                        "[^. \\n]+\\.[^ \\n]+"),
     QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
-    QRegularExpression("\\bfile://(localhost)?/[^ \\n]+"),
+    QRegularExpression(FILE_SCHEME),
     QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
     QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
 };
