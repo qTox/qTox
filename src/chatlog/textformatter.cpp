@@ -36,8 +36,6 @@ enum TextStyle
     HREF
 };
 
-static const QString HTML_CHARACTER_CODE = QStringLiteral("&#%1");
-
 // clang-format off
 static const QVector<char> MARKDOWN_SYMBOLS {
     '*',
@@ -70,7 +68,7 @@ static const QVector<QString> htmlPatterns{QStringLiteral("<b>%1</b>"),
                                                 QStringLiteral("<s>%1</s>"),
                                                 QStringLiteral(
                                                     "<font color=#595959><code>%1</code></font>"),
-                                                QStringLiteral("<a href=\"%1%2\">%2</a>")};
+                                                QStringLiteral("<a href=\"%1\">%1</a>")};
 
 #define STRING_FROM_TYPE(type) QString(MARKDOWN_SYMBOLS[type])
 
@@ -89,14 +87,37 @@ static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
     REGEX_MARKDOWN_PAIR(STRIKE, 2),
     {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
 
-static const QVector<QRegularExpression> urlPatterns {
-    QRegularExpression("((\\bhttp[s]?://(www\\.)?)|(\\bwww\\.))"
-                       "[^. \\n]+\\.[^ \\n]+"),
-    QRegularExpression("\\b(ftp|smb)://[^ \\n]+"),
-    QRegularExpression("\\bfile://(localhost)?/[^ \\n]+"),
-    QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
-    QRegularExpression("\\b(mailto|tox):[^ \\n]+@[^ \\n]+")
+static const QRegularExpression URL_PATTERNS[] = {
+        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)\\w+\\S+"),
+        QRegularExpression("\\b(file|smb)://([\\S| ]*)"),
+        QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
+        QRegularExpression("\\bmailto:\\S+@\\S+\\.\\S+"),
+        QRegularExpression("\\btox:\\S+@\\S+")
 };
+
+/**
+ * @brief Highlights URLs within passed message string
+ * @param message Where search for URLs
+ * @return Copy of message with highlighted URLs
+ */
+QString highlightURL(const QString& message)
+{
+    QString result = message;
+    for (QRegularExpression exp : URL_PATTERNS) {
+        int startLength = result.length();
+        int offset = 0;
+        QRegularExpressionMatchIterator iter = exp.globalMatch(result);
+        while (iter.hasNext()) {
+            QRegularExpressionMatch match = iter.next();
+            int startPos = match.capturedStart() + offset;
+            int length = match.capturedLength();
+            QString wrappedURL = htmlPatterns[TextStyle::HREF].arg(match.captured());
+            result.replace(startPos, length, wrappedURL);
+            offset = result.length() - startLength;
+        }
+    }
+    return result;
+}
 
 // clang-format on
 /**
@@ -146,41 +167,12 @@ static bool isTagIntersection(const QString& str)
 }
 
 /**
- * @brief Applies a function for URL's which can be extracted from passed string
- * @param str String in which we are looking for URL's
- * @param func Function which is applied to URL
- */
-static void processUrl(QString& str, std::function<QString(QString&)> func)
-{
-    int startLength = str.length();
-    int offset = 0;
-    for (QRegularExpression exp : urlPatterns) {
-        QRegularExpressionMatchIterator iter = exp.globalMatch(str);
-        while (iter.hasNext()) {
-            QRegularExpressionMatch match = iter.next();
-            int startPos = match.capturedStart() + offset;
-            int length = match.capturedLength();
-            QString url = str.mid(startPos, length);
-            str.replace(startPos, length, func(url));
-            offset = str.length() - startLength;
-        }
-    }
-}
-
-/**
  * @brief Applies styles to the font of text that was passed to the constructor
  * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
  * string
  */
 void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
 {
-    processUrl(message, [](QString& str) {
-        for (char c : MARKDOWN_SYMBOLS) {
-            QString charCode = QString::number(static_cast<int>(c));
-            str.replace(c, HTML_CHARACTER_CODE.arg(charCode));
-        }
-        return str;
-    });
     for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
         QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(message);
         int insertedTagSymbolsCount = 0;
@@ -206,20 +198,6 @@ void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
             insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
         }
     }
-    for (char c : MARKDOWN_SYMBOLS) {
-        QString charCode = QString::number(static_cast<int>(c));
-        message.replace(HTML_CHARACTER_CODE.arg(charCode), QString(c));
-    }
-}
-
-/**
- * @brief Wraps all found URL's in HTML hyperlink tag
- */
-void TextFormatter::wrapUrl()
-{
-    processUrl(message, [](QString& str) {
-        return htmlPatterns[TextStyle::HREF].arg(str.startsWith("www") ? "http://" : "", str);
-    });
 }
 
 /**
@@ -231,6 +209,5 @@ void TextFormatter::wrapUrl()
 QString TextFormatter::applyStyling(bool showFormattingSymbols)
 {
     applyHtmlFontStyling(showFormattingSymbols);
-    wrapUrl();
     return message;
 }
