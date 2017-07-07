@@ -22,6 +22,8 @@
 
 #include <QString>
 
+QString highlightURL(const QString& message);
+
 class TextFormatter
 {
 private:
