@@ -70,6 +70,8 @@ function(search_dependency pkg)
   if(NOT ${pkg}_FOUND)
     if(NOT arg_OPTIONAL)
       message(FATAL_ERROR "${pkg} package, library or framework not found")
+    else()
+      message(STATUS "${pkg} not found")
     endif()
   else()
     link_directories(${${pkg}_LIBRARY_DIRS})
@@ -78,6 +80,7 @@ function(search_dependency pkg)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
     endforeach()
     set(ALL_LIBRARIES ${ALL_LIBRARIES} ${${pkg}_LIBRARIES} PARENT_SCOPE)
+    message(STATUS "${pkg} found")
   endif()
 
   set(${pkg}_FOUND ${${pkg}_FOUND} PARENT_SCOPE)
@@ -108,9 +111,11 @@ endif()
 
 search_dependency(OPENAL              PACKAGE openal FRAMEWORK OpenAL)
 
-# Automatic auto-away support. (X11 also using for capslock detection)
-search_dependency(X11                 PACKAGE x11 OPTIONAL)
-search_dependency(XSS                 LIBRARY Xss OPTIONAL)
+if (PLATFORM_EXTENSIONS AND UNIX AND NOT APPLE)
+  # Automatic auto-away support. (X11 also using for capslock detection)
+  search_dependency(X11                 PACKAGE x11 OPTIONAL)
+  search_dependency(XSS                 LIBRARY Xss OPTIONAL)
+endif()
 
 if(APPLE)
   search_dependency(AVFOUNDATION      FRAMEWORK AVFoundation)
@@ -178,14 +183,16 @@ if (X11_FOUND AND XSS_FOUND)
   set(X11_EXT True)
 endif()
 
-if (${APPLE_EXT} OR ${X11_EXT})
-  add_definitions(
-    -DQTOX_PLATFORM_EXT=1
-  )
-else()
-  add_definitions(
-    -DQTOX_PLATFORM_EXT=0
-  )
+if (PLATFORM_EXTENSIONS)
+  if (${APPLE_EXT} OR ${X11_EXT})
+    add_definitions(
+      -DQTOX_PLATFORM_EXT
+    )
+    message(STATUS "Using platform extensions")
+  else()
+    message(WARNING "Not using platform extensions, dependencies not found")
+    set(PLATFORM_EXTENSIONS OFF)
+  endif()
 endif()
 
 add_definitions(

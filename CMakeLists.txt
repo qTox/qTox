@@ -7,6 +7,8 @@
 cmake_minimum_required(VERSION 2.8.11)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+option(PLATFORM_EXTENSIONS "Enable platform specific extensions, requires extra dependencies" ON)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
@@ -279,18 +281,6 @@ set(${PROJECT_NAME}_SOURCES
   src/persistence/smileypack.h
   src/persistence/toxsave.cpp
   src/persistence/toxsave.h
-  src/platform/autorun.h
-  src/platform/capslock.h
-  src/platform/timer.h
-  src/platform/autorun_osx.cpp
-  src/platform/autorun_win.cpp
-  src/platform/autorun_xdg.cpp
-  src/platform/capslock_osx.cpp
-  src/platform/capslock_win.cpp
-  src/platform/capslock_x11.cpp
-  src/platform/timer_osx.cpp
-  src/platform/timer_win.cpp
-  src/platform/timer_x11.cpp
   src/video/cameradevice.cpp
   src/video/cameradevice.h
   src/video/camerasource.cpp
@@ -448,6 +438,23 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
     src/platform/install_osx.cpp
     src/platform/install_osx.h
+  )
+endif()
+
+if (PLATFORM_EXTENSIONS)
+  set(${PROJECT_NAME}_SOURCES ${${PROJECT_NAME}_SOURCES}
+    src/platform/autorun.h
+    src/platform/capslock.h
+    src/platform/timer.h
+    src/platform/autorun_osx.cpp
+    src/platform/autorun_win.cpp
+    src/platform/autorun_xdg.cpp
+    src/platform/capslock_osx.cpp
+    src/platform/capslock_win.cpp
+    src/platform/capslock_x11.cpp
+    src/platform/timer_osx.cpp
+    src/platform/timer_win.cpp
+    src/platform/timer_x11.cpp
   )
 endif()
 
