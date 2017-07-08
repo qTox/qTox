@@ -61,8 +61,7 @@ ChatMessage::Ptr ChatMessage::createChatMessage(const QString& sender, const QSt
     // text styling
     Settings::StyleType styleType = Settings::getInstance().getStylePreference();
     if (styleType != Settings::StyleType::NONE) {
-        TextFormatter tf = TextFormatter(text);
-        text = tf.applyStyling(styleType == Settings::StyleType::WITH_CHARS);
+        text = applyMarkdown(text, styleType == Settings::StyleType::WITH_CHARS);
     }
 
 
