@@ -121,17 +121,6 @@ QString highlightURL(const QString& message)
 
 // clang-format on
 /**
- * @class TextFormatter
- *
- * @brief This class applies formatting to the text messages, e.g. font styling and URL highlighting
- */
-
-TextFormatter::TextFormatter(const QString& str)
-    : message(str)
-{
-}
-
-/**
  * @brief Counts equal symbols at the beginning of the string
  * @param str Source string
  * @return Amount of equal symbols at the beginning of the string
@@ -168,13 +157,16 @@ static bool isTagIntersection(const QString& str)
 
 /**
  * @brief Applies styles to the font of text that was passed to the constructor
+ * @param message Formatting string
  * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
  * string
+ * @return Copy of message with markdown applied
  */
-void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
+QString applyMarkdown(const QString& message, bool showFormattingSymbols)
 {
+    QString result = message;
     for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
-        QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(message);
+        QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(result);
         int insertedTagSymbolsCount = 0;
 
         while (matchesIterator.hasNext()) {
@@ -186,28 +178,17 @@ void TextFormatter::applyHtmlFontStyling(bool showFormattingSymbols)
             int capturedStart = match.capturedStart() + insertedTagSymbolsCount;
             int capturedLength = match.capturedLength();
 
-            QString stylingText = message.mid(capturedStart, capturedLength);
+            QString stylingText = result.mid(capturedStart, capturedLength);
             int choppingSignsCount = showFormattingSymbols ? 0 : patternSignsCount(stylingText);
             int textStart = capturedStart + choppingSignsCount;
             int textLength = capturedLength - 2 * choppingSignsCount;
 
-            QString styledText = pair.second.arg(message.mid(textStart, textLength));
+            QString styledText = pair.second.arg(result.mid(textStart, textLength));
 
-            message.replace(capturedStart, capturedLength, styledText);
+            result.replace(capturedStart, capturedLength, styledText);
             // Subtracting length of "%1"
             insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
         }
     }
-}
-
-/**
- * @brief Applies all styling for the text
- * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
- * string
- * @return Styled string
- */
-QString TextFormatter::applyStyling(bool showFormattingSymbols)
-{
-    applyHtmlFontStyling(showFormattingSymbols);
-    return message;
+    return result;
 }
