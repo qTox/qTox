@@ -126,9 +126,8 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
 {
     for (QString key : map.keys()) {
         QString source = key.arg(signs);
-        TextFormatter tf = TextFormatter(source);
         QString result = map[key].arg(showSymbols ? signs : "", signsToTags[signs]);
-        QVERIFY(tf.applyStyling(showSymbols) == result);
+        QVERIFY(applyMarkdown(source, showSymbols) == result);
     }
 }
 
@@ -139,8 +138,8 @@ static void commonTest(bool showSymbols, const StringToString map, const QString
 static void commonExceptionsTest(const QString signs)
 {
     for (QString source : commonExceptions) {
-        TextFormatter tf = TextFormatter(source.arg(signs));
-        QVERIFY(tf.applyStyling(false) == source.arg(signs));
+        QString message = source.arg(signs);
+        QVERIFY(applyMarkdown(message, false) == message);
     }
 }
 
@@ -151,8 +150,7 @@ static void commonExceptionsTest(const QString signs)
 static void specialTest(const StringToString map)
 {
     for (QString key : map.keys()) {
-        TextFormatter tf = TextFormatter(key);
-        QVERIFY(tf.applyStyling(false) == map[key]);
+        QVERIFY(applyMarkdown(key, false) == map[key]);
     }
 }
 
