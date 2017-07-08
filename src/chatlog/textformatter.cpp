@@ -23,46 +23,56 @@
 
 // clang-format off
 
-/* Easy way to get count of markdown symbols - through length of substring, captured by regex group.
+/* Easy way to get count of markdown symbols - through length of substring, captured by reex group.
  * If you suppose to change regexes, assure that this const points to right group.
  */
 static constexpr uint8_t MARKDOWN_SYMBOLS_GROUP_INDEX = 1;
 
-static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
+static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
                                                           "([%1])"
                                                           "(?!\\s)"
-                                                          "[^%1\\n]+"
+                                                          "[^%1\\n]+?"
                                                           "(?<!\\s)"
                                                           "[%1]"
-                                                          "(?=$|\\s|\\n)");
+                                                          "(?=$|[\\s\\n])");
 
-static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
+static const QString SINGLE_SLASH_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
+                                                           "(/)"
+                                                           "(?!\\s)"
+                                                           "[^/\\n]+?"
+                                                           "(?<!\\s)"
+                                                           "/"
+                                                           "(?=$|[\\s\\n])");
+
+static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|[\\s\\n])"
                                                           "([%1]{2})"
                                                           "(?!\\s)"
-                                                          "[^\\n]+"
+                                                          "[^\\n]+?"
                                                           "(?<!\\s)"
                                                           "[%1]{2}"
-                                                          "(?=$|\\s|\\n)");
+                                                          "(?=$|[\\s\\n])");
 
-static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
+static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[\\s\\n])"
                                                      "(```)"
-                                                     "(?!`)"
-                                                     "(.|\\n)+"
-                                                     "(?<!`)"
+                                                     "(?![`\\s\\n])"
+                                                     "(.|\\n)+?"
+                                                     "(?<![`\\s\\n])"
                                                      "```"
-                                                     "(?=$|[^`])");
+                                                     "(?=$|[\\s\\n])");
 
 static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('*')), "<b>%1</b>"},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('/')), "<i>%1</i>"},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('_')), "<u>%1</u>"},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('~')), "<s>%1</s>"},
-    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('`')),"<font color=#595959><code>%1</code></font>"},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('*')), "<b>%1</b>"},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('/')), "<i>%1</i>"},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('_')), "<u>%1</u>"},
-    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('~')), "<s>%1</s>"},
-    {QRegularExpression(MULTILINE_CODE), "<font color=#595959><code>%1</code></font>"}};
+    {QRegularExpression(SINGLE_SLASH_PATTERN), QStringLiteral("<i>%1</i>")},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('*')), QStringLiteral("<b>%1</b>")},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('_')), QStringLiteral("<u>%1</u>")},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('~')), QStringLiteral("<s>%1</s>")},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('`')), QStringLiteral("<font color=#595959><code>"
+                                                                      "%1</code></font>")},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('*')), QStringLiteral("<b>%1</b>")},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('/')), QStringLiteral("<i>%1</i>")},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('_')), QStringLiteral("<u>%1</u>")},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('~')), QStringLiteral("<s>%1</s>")},
+    {QRegularExpression(MULTILINE_CODE), QStringLiteral("<font color=#595959><code>"
+                                                        "%1</code></font>")}};
 
 static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
 
