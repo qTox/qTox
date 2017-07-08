@@ -24,19 +24,6 @@
 
 QString highlightURL(const QString& message);
 
-class TextFormatter
-{
-private:
-    QString message;
-
-    void wrapUrl();
-
-    void applyHtmlFontStyling(bool showFormattingSymbols);
-
-public:
-    explicit TextFormatter(const QString& str);
-
-    QString applyStyling(bool showFormattingSymbols);
-};
+QString applyMarkdown(const QString& message, bool showFormattingSymbols);
 
 #endif // TEXTFORMATTER_H
