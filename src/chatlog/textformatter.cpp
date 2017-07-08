@@ -19,39 +19,24 @@
 
 #include "textformatter.h"
 
-#include <QMap>
-#include <QPair>
 #include <QRegularExpression>
-#include <QVector>
-
-#include <functional>
-
-enum TextStyle
-{
-    BOLD = 0,
-    ITALIC,
-    UNDERLINE,
-    STRIKE,
-    CODE,
-    HREF
-};
 
 // clang-format off
-static const QVector<char> MARKDOWN_SYMBOLS {
-    '*',
-    '/',
-    '_',
-    '~',
-    '`'
-};
+static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
+                                                          "[%1]"
+                                                          "(?!\\s)"
+                                                          "[^%1\\n]+"
+                                                          "(?<!\\s)"
+                                                          "[%1]"
+                                                          "(?=$|\\s|\\n)");
 
-static const QString COMMON_PATTERN = QStringLiteral("(?<=^|[^%1<])"
-                                                     "[%1]{%2}"
-                                                     "(?![%1 \\n])"
-                                                     ".+?"
-                                                     "(?<![%1< \\n])"
-                                                     "[%1]{%2}"
-                                                     "(?=$|[^%1])");
+static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
+                                                          "[%1]{2}"
+                                                          "(?!\\s)"
+                                                          "[^\\n]+"
+                                                          "(?<!\\s)"
+                                                          "[%1]{2}"
+                                                          "(?=$|\\s|\\n)");
 
 static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
                                                      "```"
@@ -61,31 +46,19 @@ static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
                                                      "```"
                                                      "(?=$|[^`])");
 
-// Items in vector associated with TextStyle values respectively. Do NOT change this order
-static const QVector<QString> htmlPatterns{QStringLiteral("<b>%1</b>"),
-                                                QStringLiteral("<i>%1</i>"),
-                                                QStringLiteral("<u>%1</u>"),
-                                                QStringLiteral("<s>%1</s>"),
-                                                QStringLiteral(
-                                                    "<font color=#595959><code>%1</code></font>"),
-                                                QStringLiteral("<a href=\"%1\">%1</a>")};
+static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('*')), "<b>%1</b>"},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('/')), "<i>%1</i>"},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('_')), "<u>%1</u>"},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('~')), "<s>%1</s>"},
+    {QRegularExpression(SINGLE_SIGN_PATTERN.arg('`')),"<font color=#595959><code>%1</code></font>"},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('*')), "<b>%1</b>"},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('/')), "<i>%1</i>"},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('_')), "<u>%1</u>"},
+    {QRegularExpression(DOUBLE_SIGN_PATTERN.arg('~')), "<s>%1</s>"},
+    {QRegularExpression(MULTILINE_CODE), "<font color=#595959><code>%1</code></font>"}};
 
-#define STRING_FROM_TYPE(type) QString(MARKDOWN_SYMBOLS[type])
-
-#define REGEX_MARKDOWN_PAIR(type, count) \
-{QRegularExpression(COMMON_PATTERN.arg(STRING_FROM_TYPE(type), #count)), htmlPatterns[type]}
-
-static const QVector<QPair<QRegularExpression, QString>> textPatternStyle{
-    REGEX_MARKDOWN_PAIR(BOLD, 1),
-    REGEX_MARKDOWN_PAIR(ITALIC, 1),
-    REGEX_MARKDOWN_PAIR(UNDERLINE, 1),
-    REGEX_MARKDOWN_PAIR(STRIKE, 1),
-    REGEX_MARKDOWN_PAIR(CODE, 1),
-    REGEX_MARKDOWN_PAIR(BOLD, 2),
-    REGEX_MARKDOWN_PAIR(ITALIC, 2),
-    REGEX_MARKDOWN_PAIR(UNDERLINE, 2),
-    REGEX_MARKDOWN_PAIR(STRIKE, 2),
-    {QRegularExpression(MULTILINE_CODE), htmlPatterns[CODE]}};
+static const QString HREF_WRAPPER = QStringLiteral(R"(<a href="%1">%1</a>)");
 
 static const QRegularExpression URL_PATTERNS[] = {
         QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)\\w+\\S+"),
@@ -111,7 +84,7 @@ QString highlightURL(const QString& message)
             QRegularExpressionMatch match = iter.next();
             int startPos = match.capturedStart() + offset;
             int length = match.capturedLength();
-            QString wrappedURL = htmlPatterns[TextStyle::HREF].arg(match.captured());
+            QString wrappedURL = HREF_WRAPPER.arg(match.captured());
             result.replace(startPos, length, wrappedURL);
             offset = result.length() - startLength;
         }
@@ -165,7 +138,7 @@ static bool isTagIntersection(const QString& str)
 QString applyMarkdown(const QString& message, bool showFormattingSymbols)
 {
     QString result = message;
-    for (QPair<QRegularExpression, QString> pair : textPatternStyle) {
+    for (QPair<QRegularExpression, QString> pair : REGEX_TO_WRAPPER) {
         QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(result);
         int insertedTagSymbolsCount = 0;
 
