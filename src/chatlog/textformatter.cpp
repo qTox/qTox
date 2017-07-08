@@ -22,8 +22,14 @@
 #include <QRegularExpression>
 
 // clang-format off
+
+/* Easy way to get count of markdown symbols - through length of substring, captured by regex group.
+ * If you suppose to change regexes, assure that this const points to right group.
+ */
+static constexpr uint8_t MARKDOWN_SYMBOLS_GROUP_INDEX = 1;
+
 static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
-                                                          "[%1]"
+                                                          "([%1])"
                                                           "(?!\\s)"
                                                           "[^%1\\n]+"
                                                           "(?<!\\s)"
@@ -31,7 +37,7 @@ static const QString SINGLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
                                                           "(?=$|\\s|\\n)");
 
 static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
-                                                          "[%1]{2}"
+                                                          "([%1]{2})"
                                                           "(?!\\s)"
                                                           "[^\\n]+"
                                                           "(?<!\\s)"
@@ -39,7 +45,7 @@ static const QString DOUBLE_SIGN_PATTERN = QStringLiteral("(?<=^|\\s|\\n)"
                                                           "(?=$|\\s|\\n)");
 
 static const QString MULTILINE_CODE = QStringLiteral("(?<=^|[^`])"
-                                                     "```"
+                                                     "(```)"
                                                      "(?!`)"
                                                      "(.|\\n)+"
                                                      "(?<!`)"
@@ -94,22 +100,6 @@ QString highlightURL(const QString& message)
 
 // clang-format on
 /**
- * @brief Counts equal symbols at the beginning of the string
- * @param str Source string
- * @return Amount of equal symbols at the beginning of the string
- */
-static int patternSignsCount(const QString& str)
-{
-    QChar escapeSign = str.at(0);
-    int result = 0;
-    int length = str.length();
-    while (result < length && str[result] == escapeSign) {
-        ++result;
-    }
-    return result;
-}
-
-/**
  * @brief Checks HTML tags intersection while applying styles to the message text
  * @param str Checking string
  * @return True, if tag intersection detected
@@ -129,7 +119,7 @@ static bool isTagIntersection(const QString& str)
 }
 
 /**
- * @brief Applies styles to the font of text that was passed to the constructor
+ * @brief Applies markdown to passed message string
  * @param message Formatting string
  * @param showFormattingSymbols True, if it is supposed to include formatting symbols into resulting
  * string
@@ -138,29 +128,26 @@ static bool isTagIntersection(const QString& str)
 QString applyMarkdown(const QString& message, bool showFormattingSymbols)
 {
     QString result = message;
-    for (QPair<QRegularExpression, QString> pair : REGEX_TO_WRAPPER) {
-        QRegularExpressionMatchIterator matchesIterator = pair.first.globalMatch(result);
-        int insertedTagSymbolsCount = 0;
-
-        while (matchesIterator.hasNext()) {
-            QRegularExpressionMatch match = matchesIterator.next();
-            if (isTagIntersection(match.captured())) {
+    for (const QPair<QRegularExpression, QString>& pair : REGEX_TO_WRAPPER) {
+        QRegularExpressionMatchIterator iter = pair.first.globalMatch(result);
+        int offset = 0;
+        while (iter.hasNext()) {
+            const QRegularExpressionMatch match = iter.next();
+            QString captured = match.captured();
+            if (isTagIntersection(captured)) {
                 continue;
             }
 
-            int capturedStart = match.capturedStart() + insertedTagSymbolsCount;
-            int capturedLength = match.capturedLength();
+            const int length = match.capturedLength();
+            if (!showFormattingSymbols) {
+                const int choppingSignsCount = match.captured(MARKDOWN_SYMBOLS_GROUP_INDEX).length();
+                captured = captured.mid(choppingSignsCount, length - choppingSignsCount * 2);
+            }
 
-            QString stylingText = result.mid(capturedStart, capturedLength);
-            int choppingSignsCount = showFormattingSymbols ? 0 : patternSignsCount(stylingText);
-            int textStart = capturedStart + choppingSignsCount;
-            int textLength = capturedLength - 2 * choppingSignsCount;
-
-            QString styledText = pair.second.arg(result.mid(textStart, textLength));
-
-            result.replace(capturedStart, capturedLength, styledText);
-            // Subtracting length of "%1"
-            insertedTagSymbolsCount += pair.second.length() - 2 - 2 * choppingSignsCount;
+            const QString wrappedText = pair.second.arg(captured);
+            const int startPos = match.capturedStart() + offset;
+            result.replace(startPos, length, wrappedText);
+            offset += wrappedText.length() - length;
         }
     }
     return result;
