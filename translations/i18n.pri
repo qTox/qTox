@@ -32,6 +32,7 @@ TRANSLATIONS = \
     translations/sl.ts \
     translations/sv.ts \
     translations/sw.ts \
+    translations/ta.ts \
     translations/tr.ts \
     translations/ug.ts \
     translations/uk.ts \
