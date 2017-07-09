@@ -120,6 +120,51 @@ static const StringToString urlCases{
                     "and one more time "
                     "<a href=\"www.site.com/part1/part2\">www.site.com/part1/part2</a>"
                     )},
+    // IPs. Examples of IPv6 textual representation: https://tools.ietf.org/html/rfc4291#section-2.2
+    {QStringLiteral(
+                    "https://127.0.0.1/asd\n"
+                    "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\n"
+                    "ftp://2001:DB8::8:800:200C:417A/\n"
+                    "http://::1/\n"
+                    "http://::/\n"
+                    "https://127.0.0.1:8080/asd "
+                    "https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/ "
+                    "ftp://[2001:DB8::8:800:200C:417A]:21/ "
+                    "http://[::1]:22/ "
+                    "http://[::]:20/ "
+                    ),
+     QStringLiteral(
+                    "<a href=\"https://127.0.0.1/asd\">"
+                        "https://127.0.0.1/asd"
+                    "</a>\n"
+                    "<a href=\"https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/\">"
+                        "https://ABCD:EF01:2345:6789:ABCD:EF01:2345:6789/"
+                    "</a>\n"
+                    "<a href=\"ftp://2001:DB8::8:800:200C:417A/\">"
+                        "ftp://2001:DB8::8:800:200C:417A/"
+                    "</a>\n"
+                    "<a href=\"http://::1/\">"
+                        "http://::1/"
+                    "</a>\n"
+                    "<a href=\"http://::/\">"
+                        "http://::/"
+                    "</a>\n"
+                    "<a href=\"https://127.0.0.1:8080/asd\">"
+                        "https://127.0.0.1:8080/asd"
+                    "</a> "
+                    "<a href=\"https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/\">"
+                        "https://[ABCD:EF01:2345:6789:ABCD:EF01:2345:6789]:8080/"
+                    "</a> "
+                    "<a href=\"ftp://[2001:DB8::8:800:200C:417A]:21/\">"
+                        "ftp://[2001:DB8::8:800:200C:417A]:21/"
+                    "</a> "
+                    "<a href=\"http://[::1]:22/\">"
+                        "http://[::1]:22/"
+                    "</a> "
+                    "<a href=\"http://[::]:20/\">"
+                        "http://[::]:20/"
+                    "</a> "
+                    )},
 };
 
 /**
