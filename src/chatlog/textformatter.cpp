@@ -23,7 +23,7 @@
 
 // clang-format off
 
-/* Easy way to get count of markdown symbols - through length of substring, captured by reex group.
+/* Easy way to get count of markdown symbols - through length of substring, captured by regex group.
  * If you suppose to change regexes, assure that this const points to right group.
  */
 static const uint8_t MARKDOWN_SYMBOLS_GROUP_INDEX = 1;
@@ -75,12 +75,14 @@ static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
 static const QString HREF_WRAPPER = "<a href=\"%1\">%1</a>";
 
 static const QRegularExpression URL_PATTERNS[] = {
-        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)\\w+\\S+"),
+        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)(\\w|[:[])+\\S+"),
         QRegularExpression("\\b(file|smb)://([\\S| ]*)"),
         QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
         QRegularExpression("\\bmailto:\\S+@\\S+\\.\\S+"),
         QRegularExpression("\\btox:\\S+@\\S+")
 };
+
+// clang-format on
 
 /**
  * @brief Highlights URLs within passed message string
@@ -106,7 +108,6 @@ QString highlightURL(const QString& message)
     return result;
 }
 
-// clang-format on
 /**
  * @brief Checks HTML tags intersection while applying styles to the message text
  * @param str Checking string
