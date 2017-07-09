@@ -75,7 +75,7 @@ static const QPair<QRegularExpression, QString> REGEX_TO_WRAPPER[] {
 static const QString HREF_WRAPPER = "<a href=\"%1\">%1</a>";
 
 static const QRegularExpression URL_PATTERNS[] = {
-        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)\\w+\\S+"),
+        QRegularExpression("\\b(www\\.|((http[s]?)|ftp)://)(\\w|[:[])+\\S+"),
         QRegularExpression("\\b(file|smb)://([\\S| ]*)"),
         QRegularExpression("\\btox:[a-zA-Z\\d]{76}"),
         QRegularExpression("\\bmailto:\\S+@\\S+\\.\\S+"),
