@@ -130,6 +130,7 @@ qt5_add_translation(${PROJECT_NAME}_QM_FILES
   translations/sl.ts
   translations/sv.ts
   translations/sw.ts
+  translations/ta.ts
   translations/tr.ts
   translations/ug.ts
   translations/uk.ts
